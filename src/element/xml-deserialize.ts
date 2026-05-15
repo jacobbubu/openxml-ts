@@ -1,0 +1,145 @@
+/**
+ * XML → OpenXmlElement 树反序列化。
+ *
+ * 复用 Epic-1 的 `tokenizeXml`；本模块负责：
+ * 1. 跟踪 namespace prefix → URI 的作用域栈（XML 命名空间继承）；
+ * 2. 按 `(namespaceUri, localName)` 在 ElementRegistry 中查类；
+ * 3. 未注册的元素降级为 {@link OpenXmlUnknownElement}（不抛错）；
+ * 4. 文本节点写入当前栈顶元素的 `text` 字段（仅 Leaf 与 Unknown 接受文本）。
+ */
+
+import { OpenXmlPackageError } from "../packaging/errors.js";
+import { tokenizeXml } from "../packaging/xml/index.js";
+import { OpenXmlCompositeElement, type OpenXmlElement, OpenXmlLeafElement } from "./element.js";
+import { type ElementRegistry, elementRegistry } from "./registry.js";
+import { OpenXmlUnknownElement } from "./unknown-element.js";
+
+export interface DeserializeOptions {
+  /** 元素注册表；默认使用全局 {@link elementRegistry}。 */
+  readonly registry?: ElementRegistry;
+}
+
+type NsScope = ReadonlyMap<string, string>;
+
+interface Frame {
+  readonly element: OpenXmlElement;
+  readonly scope: NsScope;
+}
+
+export function deserialize(xml: string, options: DeserializeOptions = {}): OpenXmlElement {
+  const registry = options.registry ?? elementRegistry;
+  const stack: Frame[] = [];
+  let root: OpenXmlElement | undefined;
+
+  for (const token of tokenizeXml(xml)) {
+    if (token.kind === "decl") continue;
+
+    if (token.kind === "open") {
+      const parentScope = stack.length === 0 ? EMPTY_SCOPE : stack[stack.length - 1]?.scope;
+      const localDecls = collectNsDeclarations(token.attrs);
+      const fullScope = mergeScope(parentScope ?? EMPTY_SCOPE, localDecls);
+      const { prefix, localName, namespaceUri } = resolveQName(token.name, fullScope);
+
+      const ctor = registry.lookup(namespaceUri, localName);
+      const element: OpenXmlElement =
+        ctor !== undefined
+          ? new ctor()
+          : new OpenXmlUnknownElement(prefix, localName, namespaceUri);
+
+      for (const [key, value] of token.attrs) {
+        element.applyAttribute(key, value);
+      }
+
+      if (root === undefined) {
+        root = element;
+      } else {
+        const top = stack[stack.length - 1];
+        if (top === undefined) {
+          throw new OpenXmlPackageError({
+            code: "BACKEND_ERROR",
+            message: "Unexpected sibling root element",
+          });
+        }
+        if (!(top.element instanceof OpenXmlCompositeElement)) {
+          throw new OpenXmlPackageError({
+            code: "BACKEND_ERROR",
+            message: `Cannot append child to leaf element <${top.element.localName}>`,
+          });
+        }
+        top.element.appendChild(element);
+      }
+
+      if (!token.selfClosing) {
+        stack.push({ element, scope: fullScope });
+      }
+      continue;
+    }
+
+    if (token.kind === "close") {
+      if (stack.length === 0) {
+        throw new OpenXmlPackageError({
+          code: "BACKEND_ERROR",
+          message: `Unbalanced close tag </${token.name}>`,
+        });
+      }
+      stack.pop();
+      continue;
+    }
+
+    if (token.kind === "text") {
+      const top = stack[stack.length - 1];
+      if (top === undefined) continue;
+      if (top.element instanceof OpenXmlLeafElement) {
+        top.element.text = (top.element.text ?? "") + token.value;
+      } else if (top.element instanceof OpenXmlUnknownElement) {
+        top.element.text = (top.element.text ?? "") + token.value;
+      }
+    }
+  }
+
+  if (root === undefined) {
+    throw new OpenXmlPackageError({
+      code: "BACKEND_ERROR",
+      message: "XML did not produce any root element",
+    });
+  }
+  if (stack.length !== 0) {
+    throw new OpenXmlPackageError({
+      code: "BACKEND_ERROR",
+      message: "Unterminated element at end of XML",
+    });
+  }
+  return root;
+}
+
+const EMPTY_SCOPE: NsScope = new Map();
+
+function collectNsDeclarations(attrs: ReadonlyMap<string, string>): NsScope {
+  const out = new Map<string, string>();
+  for (const [k, v] of attrs) {
+    if (k === "xmlns") {
+      out.set("", v);
+    } else if (k.startsWith("xmlns:")) {
+      out.set(k.slice(6), v);
+    }
+  }
+  return out;
+}
+
+function mergeScope(parent: NsScope, local: NsScope): NsScope {
+  if (local.size === 0) return parent;
+  const merged = new Map(parent);
+  for (const [k, v] of local) merged.set(k, v);
+  return merged;
+}
+
+function resolveQName(
+  qname: string,
+  scope: NsScope,
+): { prefix: string; localName: string; namespaceUri: string } {
+  const colon = qname.indexOf(":");
+  const prefix = colon === -1 ? "" : qname.slice(0, colon);
+  const localName = colon === -1 ? qname : qname.slice(colon + 1);
+  const namespaceUri = scope.get(prefix) ?? "";
+  return { prefix, localName, namespaceUri };
+}

@@ -1,18 +1,20 @@
 /**
- * OpenXmlElement 基类层级（Story-2.1）。
+ * OpenXmlElement 基类层级。
  *
  * 对位 .NET `DocumentFormat.OpenXml.OpenXmlElement` / `OpenXmlLeafElement` /
  * `OpenXmlCompositeElement`：
  *
  * - **OpenXmlElement**：所有元素的抽象基类，持有 namespace prefix / 本地名 /
- *   namespace URI 与可选父节点；
+ *   namespace URI、可选父节点、扩展属性，并定义 `writeTo` 与 `applyAttribute` 钩子；
  * - **OpenXmlLeafElement**：叶子元素，可有属性与文本内容，不能有子元素（如 `w:t`）；
  * - **OpenXmlCompositeElement**：复合元素，持有子元素集合，支持树操作（如 `w:p`、`w:body`）。
  *
  * 设计原则（架构 §3 / ADR-009）：mutable 属性 + 显式 mutation 方法；不绕到 getter/setter
- * 包装层。Validator 的 setter 注入在 Story-2.7 由 codegen 完成。
+ * 包装层。Validator 的 setter 注入在 Story-2.7 由 codegen 完成；属性派发与
+ * `writeTo` 的覆盖也由 codegen 在 Story-2.5 完成。
  */
 
+import type { XmlWriter } from "../packaging/xml/index.js";
 import type { OpenXmlElementList } from "./element-list.js";
 
 /**
@@ -41,6 +43,31 @@ export abstract class OpenXmlElement {
    * 用 `Map` 保插入顺序，便于字节级稳定 diff。
    */
   readonly extendedAttributes = new Map<string, string>();
+
+  /** 序列化为 XML 片段；具体由 Leaf/Composite 子类提供默认实现，codegen 可重写。 */
+  abstract writeTo(writer: XmlWriter): void;
+
+  /**
+   * 反序列化期被 deserializer 调用——把属性塞入元素。默认实现把所有 qname →
+   * value 收纳到 {@link extendedAttributes}；codegen 生成的具体类会重写本方法，
+   * 把已知属性派发到 typed setter。
+   */
+  applyAttribute(qname: string, value: string): void {
+    this.extendedAttributes.set(qname, value);
+  }
+
+  /** XML 限定名（含 prefix），例如 `"w:p"`；空 prefix 时仅 `"p"`。 */
+  get qualifiedName(): string {
+    return this.prefix.length === 0 ? this.localName : `${this.prefix}:${this.localName}`;
+  }
+
+  /**
+   * 收集要输出的属性列表。默认实现仅返回 {@link extendedAttributes} 的副本；
+   * codegen 生成的具体类会重写为「先 typed 属性，后 extended」的合并。
+   */
+  protected collectAttributes(): Array<[string, string]> {
+    return [...this.extendedAttributes.entries()];
+  }
 }
 
 export abstract class OpenXmlLeafElement extends OpenXmlElement {
@@ -49,6 +76,16 @@ export abstract class OpenXmlLeafElement extends OpenXmlElement {
    * 未设置时为 `undefined`；空字符串 `""` 表示「确实是空文本节点」。
    */
   text: string | undefined;
+
+  override writeTo(writer: XmlWriter): void {
+    const qname = this.qualifiedName;
+    const attrs = this.collectAttributes();
+    if (this.text === undefined) {
+      writer.empty(qname, attrs);
+      return;
+    }
+    writer.open(qname, attrs).text(this.text).close(qname);
+  }
 }
 
 export abstract class OpenXmlCompositeElement extends OpenXmlElement {
@@ -116,5 +153,17 @@ export abstract class OpenXmlCompositeElement extends OpenXmlElement {
       }
     }
     return undefined;
+  }
+
+  override writeTo(writer: XmlWriter): void {
+    const qname = this.qualifiedName;
+    const attrs = this.collectAttributes();
+    if (this.children.count === 0) {
+      writer.empty(qname, attrs);
+      return;
+    }
+    writer.open(qname, attrs);
+    for (const c of this.children) c.writeTo(writer);
+    writer.close(qname);
   }
 }
