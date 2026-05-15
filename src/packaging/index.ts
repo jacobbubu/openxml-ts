@@ -38,6 +38,8 @@ export {
   type ParsedRelationship,
 } from "./relationships/index.js";
 export { RelationshipCollection } from "./core/relationship-collection.js";
+export { isDebugEnabled } from "./debug.js";
+export type { PackageDiagnostics } from "./diagnostics.js";
 export {
   FLAT_OPC_NS,
   fromFlatOpcAsync,

@@ -41,6 +41,8 @@ export interface ParsedZipPackage {
   readonly packageRelationships: ParsedRelationship[];
   /** Part 级关系，key 为 owner Part URI。 */
   readonly partRelationships: Map<PartUri, ParsedRelationship[]>;
+  /** 解析期发现但未阻断的异常情况（孤立 .rels 等），由 backend 转入 diagnostics。 */
+  readonly warnings: readonly string[];
 }
 
 export async function parseZipBytes(
@@ -151,10 +153,12 @@ async function assembleFromEntries(entries: Entry[], limits: ZipLimits): Promise
   }
 
   // 把 .rels 缓冲 attach 到 owner
+  const orphanRels: string[] = [];
   for (const [relsName, rels] of relsBuffer) {
     const ownerUri = ownerOfPartRels(relsName);
     if (!parts.has(ownerUri)) {
       // 孤立 .rels：忽略而非报错，保持鲁棒（与 .NET 可观察行为一致）
+      orphanRels.push(relsName);
       continue;
     }
     partRelationships.set(ownerUri, rels);
@@ -166,6 +170,7 @@ async function assembleFromEntries(entries: Entry[], limits: ZipLimits): Promise
     parts,
     packageRelationships,
     partRelationships,
+    warnings: orphanRels.map((name) => `Orphan part-level .rels ignored: ${name}`),
   };
 }
 

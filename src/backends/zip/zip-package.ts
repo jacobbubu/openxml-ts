@@ -69,6 +69,11 @@ export class ZipOpenXmlPackage extends MemoryOpenXmlPackage {
         });
       }
     }
+
+    // 5) 把解析期警告灌进 diagnostics
+    for (const warning of parsed.warnings) {
+      this.diagnosticsRecorder.warn(warning);
+    }
   }
 
   /**

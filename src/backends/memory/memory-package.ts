@@ -3,6 +3,8 @@ import { DisposalGuard } from "../../packaging/core/disposable.js";
 import { OpenXmlPackage } from "../../packaging/core/open-xml-package.js";
 import { assertPartUri } from "../../packaging/core/part-uri.js";
 import { RelationshipCollection } from "../../packaging/core/relationship-collection.js";
+import { debug } from "../../packaging/debug.js";
+import { DiagnosticsRecorder, type PackageDiagnostics } from "../../packaging/diagnostics.js";
 import { OpenXmlPackageError } from "../../packaging/errors.js";
 import {
   type FlatOpcWriteOptions,
@@ -45,6 +47,9 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
   /** ZIP 后端在初始化时记录原始 Part 顺序，用于 saveAsAsync 维持字节级稳定。 */
   protected readonly partOrder: PartUri[] = [];
 
+  /** Backend 子类可以通过 protected 入口记录 warning（孤立 .rels 等）。 */
+  protected readonly diagnosticsRecorder = new DiagnosticsRecorder();
+
   private readonly parts_ = new Map<PartUri, MemoryPackagePart>();
   private readonly guard = new DisposalGuard();
 
@@ -54,6 +59,11 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
     this.properties = new MemoryPackageProperties();
     this.relationships = new RelationshipCollection("/");
     this.contentTypes = new ContentTypeManifest();
+  }
+
+  /** 只读的诊断视图（PRD §NFR-5.1）。每次调用计算一次，避免与 mutation 不同步。 */
+  get diagnostics(): PackageDiagnostics {
+    return this.diagnosticsRecorder.snapshot(this);
   }
 
   override parts(): Iterable<MemoryPackagePart> {
@@ -113,6 +123,7 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
     const part = new MemoryPackagePart(this, validated, contentType, compression, initialContent);
     this.parts_.set(validated, part);
     this.partOrder.push(validated);
+    debug("memory", `insertPart ${validated} (${contentType})`);
     // 没有适配的 Default 时挂 Override；已存在 Override 则透传不重复添加
     if (
       !this.contentTypes.hasOverride(validated) &&
