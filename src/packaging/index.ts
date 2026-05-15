@@ -16,3 +16,13 @@ export {
   type DefaultEntry,
   type OverrideEntry,
 } from "./content-types/index.js";
+export {
+  createHyperlinkInput,
+  HYPERLINK_RELATIONSHIP_TYPE,
+  parseRelationshipsXml,
+  RELATIONSHIPS_NS,
+  serializeRelationshipsXml,
+  type CreateHyperlinkInput,
+  type ParsedRelationship,
+} from "./relationships/index.js";
+export { RelationshipCollection } from "./core/relationship-collection.js";

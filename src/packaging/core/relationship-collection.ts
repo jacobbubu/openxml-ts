@@ -5,18 +5,24 @@ import type {
   IRelationshipCollection,
 } from "../interfaces/relationship.js";
 import type { PartUri } from "../interfaces/types.js";
+import {
+  parseRelationshipsXml,
+  serializeRelationshipsXml,
+} from "../relationships/relationships-xml.js";
 
 /**
  * 与 backend 无关的关系集合实现。Memory / Zip / Flat 三个 backend 都直接复用本类。
  *
  * - 内部使用 `Map<id, IPackageRelationship>` 保插入顺序；
- * - rId 生成：从 `rId1` 起递增，跳过任何已占用的 id（与 .NET PackageRelationship
- *   的实际可观察行为一致，精确算法在 Story-1.4 还会被对照测试校准）。
+ * - rId 生成：以一个单调递增计数器维护，规则为 `next = max(existing rIdN) + 1`，与
+ *   .NET `System.IO.Packaging.PackageRelationship` 可观察行为一致——不回填 gap、
+ *   序列化顺序与生成顺序一致（Story-1.4 校准）。
  */
 export class RelationshipCollection implements IRelationshipCollection {
   private readonly relationships = new Map<string, IPackageRelationship>();
   private readonly sourceUri: PartUri | "/";
-  private nextIdHint = 1;
+  /** 下一个自动生成的 rId 编号，单调递增；不回填 gap。 */
+  private nextIdCounter = 1;
 
   constructor(sourceUri: PartUri | "/") {
     this.sourceUri = sourceUri;
@@ -65,11 +71,34 @@ export class RelationshipCollection implements IRelationshipCollection {
       targetMode: input.targetMode,
     };
     this.relationships.set(id, rel);
+    this.bumpCounterPast(id);
     return rel;
   }
 
   remove(id: string): void {
     this.relationships.delete(id);
+  }
+
+  /** 序列化为标准 `_rels/*.rels` XML。 */
+  serializeXml(): string {
+    return serializeRelationshipsXml(this);
+  }
+
+  /**
+   * 从 `.rels` 文本恢复成集合。`sourceUri` 由调用方决定（包级用 `"/"`，Part 级用 PartUri）。
+   * 顺序保留；rId 计数器自动 bump 到 max+1。
+   */
+  static fromXml(sourceUri: PartUri | "/", xml: string): RelationshipCollection {
+    const collection = new RelationshipCollection(sourceUri);
+    for (const parsed of parseRelationshipsXml(xml)) {
+      collection.create({
+        id: parsed.id,
+        type: parsed.type,
+        target: parsed.target,
+        targetMode: parsed.targetMode,
+      });
+    }
+    return collection;
   }
 
   /**
@@ -89,14 +118,23 @@ export class RelationshipCollection implements IRelationshipCollection {
   }
 
   private generateUniqueId(): string {
-    // 找最小未占用 N，使生成的 id 在「插入新条目即数 N」语义下保持紧凑递增。
-    let n = this.nextIdHint;
-    let candidate = `rId${n}`;
-    while (this.relationships.has(candidate)) {
-      n += 1;
-      candidate = `rId${n}`;
+    // .NET PackageRelationship: 持有内部计数器，自动 id 永远 > max(existing)，不回填 gap。
+    while (this.relationships.has(`rId${this.nextIdCounter}`)) {
+      this.nextIdCounter += 1;
     }
-    this.nextIdHint = n + 1;
-    return candidate;
+    const id = `rId${this.nextIdCounter}`;
+    this.nextIdCounter += 1;
+    return id;
+  }
+
+  /** 若 `id` 形如 `rIdN`，把计数器抬到 max(N+1, current)——保证后续自动 id 不撞 gap。 */
+  private bumpCounterPast(id: string): void {
+    if (!id.startsWith("rId")) return;
+    const numPart = id.slice(3);
+    if (!/^[1-9]\d*$/.test(numPart)) return;
+    const n = Number.parseInt(numPart, 10);
+    if (n >= this.nextIdCounter) {
+      this.nextIdCounter = n + 1;
+    }
   }
 }
