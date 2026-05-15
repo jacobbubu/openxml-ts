@@ -59,5 +59,8 @@
     "typescript",
     "bun",
     "esm"
-  ]
+  ],
+  "dependencies": {
+    "@zip.js/zip.js": "^2.8.26"
+  }
 }

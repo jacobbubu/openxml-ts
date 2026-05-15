@@ -1,3 +1,4 @@
+import { ContentTypeManifest } from "../../packaging/content-types/index.js";
 import { DisposalGuard } from "../../packaging/core/disposable.js";
 import { OpenXmlPackage } from "../../packaging/core/open-xml-package.js";
 import { assertPartUri } from "../../packaging/core/part-uri.js";
@@ -30,6 +31,15 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
   override readonly accessMode: AccessMode;
   override readonly properties: MemoryPackageProperties;
   override readonly relationships: RelationshipCollection;
+  /**
+   * 包的 ContentTypes 视图。createPart 自动把 contentType 注册为 Override；
+   * deletePart 自动反向清除。Default 条目只能通过 openAsync（Story-1.5）从已有
+   * ZIP 中读出，或者上层应用显式 `pkg.contentTypes.addDefault(...)`。
+   */
+  readonly contentTypes: ContentTypeManifest;
+
+  /** ZIP 后端在初始化时记录原始 Part 顺序，用于 saveAsAsync 维持字节级稳定。 */
+  protected readonly partOrder: PartUri[] = [];
 
   private readonly parts_ = new Map<PartUri, MemoryPackagePart>();
   private readonly guard = new DisposalGuard();
@@ -39,6 +49,7 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
     this.accessMode = options.accessMode ?? "readWrite";
     this.properties = new MemoryPackageProperties();
     this.relationships = new RelationshipCollection("/");
+    this.contentTypes = new ContentTypeManifest();
   }
 
   override parts(): Iterable<MemoryPackagePart> {
@@ -83,6 +94,14 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
     }
     const part = new MemoryPackagePart(this, validated, contentType, compression);
     this.parts_.set(validated, part);
+    this.partOrder.push(validated);
+    // 没有适配的 Default 时挂 Override；已存在 Override 则透传不重复添加
+    if (
+      !this.contentTypes.hasOverride(validated) &&
+      this.contentTypes.resolveContentType(validated) !== contentType
+    ) {
+      this.contentTypes.addOverride(validated, contentType);
+    }
     return part;
   }
 
@@ -91,6 +110,9 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
     this.assertWritable("deletePart");
     if (!this.parts_.has(uri)) return; // .NET 同款：不存在静默返回
     this.parts_.delete(uri);
+    const orderIdx = this.partOrder.indexOf(uri);
+    if (orderIdx !== -1) this.partOrder.splice(orderIdx, 1);
+    this.contentTypes.removeOverride(uri);
     // 级联清掉包级 + 所有 Part 级关系中指向该 Part 的内部关系
     this.relationships.removeInternalTargetsOf(uri);
     for (const other of this.parts_.values()) {
@@ -102,6 +124,14 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
     this.guard.ensureOpen("saveAsync");
     this.assertWritable("saveAsync");
     // 内存 backend：no-op（所有 mutation 立即生效）。
+  }
+
+  /**
+   * 返回 Part URI 在 ZIP / Flat OPC 中应当出现的顺序（open 时记录的原序 + 之后
+   * createPart 的追加序）。提供给 backend writer 做字节级稳定输出，不应被外部 mutate。
+   */
+  partOrderSnapshot(): readonly PartUri[] {
+    return this.partOrder.slice();
   }
 
   override async dispose(): Promise<void> {

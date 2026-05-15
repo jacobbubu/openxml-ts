@@ -9,7 +9,19 @@ export {
   type OpenXmlPackageErrorOptions,
 } from "./errors.js";
 export { OpenXmlPackage } from "./core/open-xml-package.js";
-export { createInMemory, openSync } from "./factories.js";
+export {
+  createInMemory,
+  openAsync,
+  openSync,
+  type OpenAsyncOptions,
+} from "./factories.js";
+export {
+  packageToZipBytes,
+  ZipOpenXmlPackage,
+  type ZipLimits,
+  type ZipPackageOptions,
+  type ZipSource,
+} from "../backends/zip/index.js";
 export {
   CONTENT_TYPES_NS,
   ContentTypeManifest,

@@ -2,8 +2,13 @@ import {
   MemoryOpenXmlPackage,
   type MemoryPackageOptions,
 } from "../backends/memory/memory-package.js";
+import { type ZipSource, readSourceToBytes } from "../backends/zip/source-reader.js";
+import type { ZipLimits } from "../backends/zip/zip-config.js";
+import { ZipOpenXmlPackage } from "../backends/zip/zip-package.js";
+import { parseZipBytes } from "../backends/zip/zip-reader.js";
 import type { OpenXmlPackage } from "./core/open-xml-package.js";
 import { OpenXmlPackageError } from "./errors.js";
+import type { AccessMode } from "./interfaces/types.js";
 
 /**
  * 创建一个空的内存 OPC 包。等同于「新建一个干净的 docx 容器」，但不写入任何文档族特有的 Part。
@@ -22,8 +27,7 @@ export function createInMemory(options?: MemoryPackageOptions): OpenXmlPackage {
  * 当前实现支持：
  * - 空 `Uint8Array`（length === 0）：等同于 {@link createInMemory}。
  *
- * 非空字节流暂未支持，等 Story-1.5 接入 ZIP backend 后再补充。在那之前会抛
- * `UNSUPPORTED_OPERATION`，让调用方知道异步路径 `openAsync` 是当前唯一选项。
+ * 非空字节流不走同步路径——请使用 {@link openAsync}。
  */
 export function openSync(bytes: Uint8Array, options?: MemoryPackageOptions): OpenXmlPackage {
   if (bytes.byteLength === 0) {
@@ -32,6 +36,42 @@ export function openSync(bytes: Uint8Array, options?: MemoryPackageOptions): Ope
   throw new OpenXmlPackageError({
     code: "UNSUPPORTED_OPERATION",
     message:
-      "openSync of non-empty packages will be supported when the ZIP backend lands in Story-1.5",
+      "Sync open of non-empty packages is not supported — use openAsync(bytes) for ZIP packages",
+  });
+}
+
+export interface OpenAsyncOptions {
+  readonly accessMode?: AccessMode;
+  readonly limits?: Partial<ZipLimits>;
+}
+
+/**
+ * 异步打开一个 OPC 包。
+ *
+ * 支持的 source 类型：
+ * - `string`：文件路径（Node/Bun，浏览器抛 UNSUPPORTED_OPERATION）；
+ * - `Uint8Array`：内存字节流；
+ * - `Blob`：浏览器友好；
+ * - `ReadableStream<Uint8Array>`：流式读入到内存后再解析。
+ *
+ * 返回 {@link ZipOpenXmlPackage}（向上转型为 OpenXmlPackage 暴露给调用方），
+ * 该实例支持 `saveAsBytesAsync()` / `saveAsAsync(path)`；当 source 是路径时
+ * `saveAsync()` 默认回写到该路径。
+ */
+export async function openAsync(
+  source: ZipSource,
+  options: OpenAsyncOptions = {},
+): Promise<ZipOpenXmlPackage> {
+  const bytes = await readSourceToBytes(source);
+  if (bytes.byteLength === 0) {
+    throw new OpenXmlPackageError({
+      code: "INVALID_ZIP",
+      message: "Cannot open empty input as a ZIP package",
+    });
+  }
+  const parsed = await parseZipBytes(bytes, options.limits);
+  return new ZipOpenXmlPackage(parsed, {
+    ...(options.accessMode !== undefined ? { accessMode: options.accessMode } : {}),
+    ...(typeof source === "string" ? { originPath: source } : {}),
   });
 }
