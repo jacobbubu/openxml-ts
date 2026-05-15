@@ -31,6 +31,7 @@
     "test:browser:install": "playwright install chromium",
     "bench": "vitest bench --run",
     "golden:gen": "bun run tools/golden-generator/generate.ts",
+    "gen:word": "bun run tools/schema-codegen/generate.ts",
     "format": "biome format --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --write ."
