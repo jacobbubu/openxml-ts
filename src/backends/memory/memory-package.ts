@@ -78,6 +78,19 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
   ): MemoryPackagePart {
     this.guard.ensureOpen("createPart");
     this.assertWritable("createPart");
+    return this.insertPart(uri, contentType, compression);
+  }
+
+  /**
+   * 内部插入路径——不做 accessMode 校验，供 backend 子类在 open 阶段从磁盘灌注 Part。
+   * 公共调用方请用 {@link createPart}。
+   */
+  protected insertPart(
+    uri: PartUri,
+    contentType: string,
+    compression: CompressionLevel = "normal",
+  ): MemoryPackagePart {
+    this.guard.ensureOpen("insertPart");
     const validated = assertPartUri(uri);
     if (this.parts_.has(validated)) {
       throw new OpenXmlPackageError({
@@ -89,7 +102,7 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
       throw new OpenXmlPackageError({
         code: "CONTENT_TYPE_MISSING",
         partUri: validated,
-        message: "createPart requires a non-empty contentType",
+        message: "insertPart requires a non-empty contentType",
       });
     }
     const part = new MemoryPackagePart(this, validated, contentType, compression);

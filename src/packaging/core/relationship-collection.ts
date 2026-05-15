@@ -104,10 +104,15 @@ export class RelationshipCollection implements IRelationshipCollection {
   /**
    * 由 backend 在做级联清理时调用（外部 Part 被删除 → 删掉所有指向它的内部关系）。
    * 不暴露到公共接口。
+   *
+   * 匹配规则：因为 OPC 内部关系 target 既可能是绝对（`/word/document.xml`）也可能是
+   * 相对包根（`word/document.xml`），这里两种形式都视作命中。
    */
   removeInternalTargetsOf(partUri: PartUri): void {
+    const stripped = partUri.startsWith("/") ? partUri.slice(1) : partUri;
     for (const [id, rel] of this.relationships) {
-      if (rel.targetMode === "internal" && rel.target === partUri) {
+      if (rel.targetMode !== "internal") continue;
+      if (rel.target === partUri || rel.target === stripped) {
         this.relationships.delete(id);
       }
     }

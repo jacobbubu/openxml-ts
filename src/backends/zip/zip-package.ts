@@ -37,11 +37,11 @@ export class ZipOpenXmlPackage extends MemoryOpenXmlPackage {
       this.contentTypes.addOverride(ov.partName, ov.contentType);
     }
 
-    // 2) Parts：按原序灌注
+    // 2) Parts：按原序灌注；用 insertPart 绕过 accessMode 校验，以支持 read-only 模式打开
     for (const uri of parsed.partOrder) {
       const parsedPart = parsed.parts.get(uri);
       if (parsedPart === undefined) continue;
-      const part = this.createPart(parsedPart.uri, parsedPart.contentType);
+      const part = this.insertPartInternal(parsedPart.uri, parsedPart.contentType);
       void part.writeAsync(parsedPart.content);
     }
 
@@ -69,6 +69,16 @@ export class ZipOpenXmlPackage extends MemoryOpenXmlPackage {
         });
       }
     }
+  }
+
+  /**
+   * 暴露父类的 protected `insertPart`，供本类构造期灌注。
+   *
+   * 用 thin wrapper 而不是直接 call `this.insertPart`，是为了把 TypeScript
+   * `protected` 边界守在构造期内、不外泄到运行时。
+   */
+  private insertPartInternal(uri: Parameters<typeof this.insertPart>[0], contentType: string) {
+    return this.insertPart(uri, contentType);
   }
 
   /** 序列化当前状态为 ZIP 字节流。 */
