@@ -8,3 +8,5 @@ export {
   type OpenXmlPackageErrorCode,
   type OpenXmlPackageErrorOptions,
 } from "./errors.js";
+export { OpenXmlPackage } from "./core/open-xml-package.js";
+export { createInMemory, openSync } from "./factories.js";
