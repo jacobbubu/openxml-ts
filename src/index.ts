@@ -6,3 +6,5 @@
  */
 
 export const PACKAGE_NAME = "openxml-ts" as const;
+
+export * from "./packaging/index.js";
