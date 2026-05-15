@@ -15,3 +15,5 @@ export {
 export { OpenXmlElementList } from "./element-list.js";
 
 export { OpenXmlUnknownElement } from "./unknown-element.js";
+
+export * from "./values/index.js";

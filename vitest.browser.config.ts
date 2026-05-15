@@ -28,6 +28,7 @@ export default defineConfig({
       "test/packaging/backends/memory.test.ts",
       "test/packaging/backends/zip/zip-crud.test.ts",
       "test/packaging/flat-opc/**/*.test.ts",
+      "test/element/**/*.test.ts",
     ],
     browser: {
       enabled: true,
