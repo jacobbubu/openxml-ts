@@ -32,4 +32,5 @@ export class GridColumn extends OpenXmlLeafElement {
     if (this.width !== undefined) out.push(["w:w", this.width.toString()]);
     return out;
   }
+
 }

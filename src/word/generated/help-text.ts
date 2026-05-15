@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Associated Help Text.
@@ -25,7 +26,7 @@ export class HelpText extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w:type": this.type = StringValue.parse(value); return;
-      case "w:val": this.val = StringValue.parse(value); return;
+      case "w:val": this.val = StringValue.parse(value); assertString(this.val, { maxLength: 255 }, { attribute: "w:val", elementClass: "HelpText" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -37,4 +38,5 @@ export class HelpText extends OpenXmlLeafElement {
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     return out;
   }
+
 }

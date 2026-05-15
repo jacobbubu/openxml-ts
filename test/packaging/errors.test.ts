@@ -99,7 +99,7 @@ describe("OpenXmlPackageError", () => {
   });
 
   it("错误码字面量联合的类型完整性（编译期）", () => {
-    // 把已知 12 个 code 排成数组——任何遗漏都会导致 expectTypeOf 失败
+    // 把已知 16 个 code 排成 union——任何遗漏都会导致 expectTypeOf 失败
     expectTypeOf<OpenXmlPackageErrorCode>().toEqualTypeOf<
       | "INVALID_ZIP"
       | "MISSING_CONTENT_TYPES"
@@ -113,6 +113,10 @@ describe("OpenXmlPackageError", () => {
       | "INVALID_PART_URI"
       | "STREAM_CLOSED"
       | "SECURITY_VIOLATION"
+      | "REQUIRED_ATTR_MISSING"
+      | "STRING_TOO_LONG"
+      | "NUMBER_OUT_OF_RANGE"
+      | "ENUM_VALUE_INVALID"
     >();
   });
 });

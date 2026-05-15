@@ -7,6 +7,7 @@ import {
   Int32Value,
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  assertNumber,
 } from "../../element/index.js";
 
 /** Latent Style Information.
@@ -39,7 +40,7 @@ export class LatentStyles extends OpenXmlCompositeElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w:defLockedState": this.defaultLockedState = BooleanValue.parse(value); return;
-      case "w:defUIPriority": this.defaultUiPriority = Int32Value.parse(value); return;
+      case "w:defUIPriority": this.defaultUiPriority = Int32Value.parse(value); assertNumber(this.defaultUiPriority, { min: 0, max: 99 }, { attribute: "w:defUIPriority", elementClass: "LatentStyles" }); return;
       case "w:defSemiHidden": this.defaultSemiHidden = BooleanValue.parse(value); return;
       case "w:defUnhideWhenUsed": this.defaultUnhideWhenUsed = BooleanValue.parse(value); return;
       case "w:defQFormat": this.defaultPrimaryStyle = BooleanValue.parse(value); return;
@@ -59,4 +60,5 @@ export class LatentStyles extends OpenXmlCompositeElement {
     if (this.count !== undefined) out.push(["w:count", this.count.toString()]);
     return out;
   }
+
 }

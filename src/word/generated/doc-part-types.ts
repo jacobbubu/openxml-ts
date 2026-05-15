@@ -33,4 +33,5 @@ export class DocPartTypes extends OpenXmlCompositeElement {
     if (this.all !== undefined) out.push(["w:all", this.all.toString()]);
     return out;
   }
+
 }

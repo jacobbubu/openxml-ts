@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the RelationshipType Class.
@@ -31,5 +32,10 @@ export abstract class RelationshipType extends OpenXmlLeafElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.id, { attribute: "r:id", elementClass: "RelationshipType" });
   }
 }

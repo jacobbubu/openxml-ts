@@ -6,6 +6,7 @@ import {
   OpenXmlLeafElement,
   StringValue,
   UInt32Value,
+  assertNumber,
 } from "../../element/index.js";
 
 /** Defines the PageSize Class.
@@ -31,8 +32,8 @@ export class PageSize extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:w": this.width = UInt32Value.parse(value); return;
-      case "w:h": this.height = UInt32Value.parse(value); return;
+      case "w:w": this.width = UInt32Value.parse(value); assertNumber(this.width, { max: 31680 }, { attribute: "w:w", elementClass: "PageSize" }); return;
+      case "w:h": this.height = UInt32Value.parse(value); assertNumber(this.height, { max: 31680 }, { attribute: "w:h", elementClass: "PageSize" }); return;
       case "w:orient": this.orient = StringValue.parse(value); return;
       case "w:code": this.code = StringValue.parse(value); return;
     }
@@ -48,4 +49,5 @@ export class PageSize extends OpenXmlLeafElement {
     if (this.code !== undefined) out.push(["w:code", this.code.toString()]);
     return out;
   }
+
 }

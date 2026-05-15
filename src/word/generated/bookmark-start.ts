@@ -6,6 +6,8 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the BookmarkStart Class.
@@ -34,7 +36,7 @@ export class BookmarkStart extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:name": this.name = StringValue.parse(value); return;
+      case "w:name": this.name = StringValue.parse(value); assertString(this.name, { maxLength: 40 }, { attribute: "w:name", elementClass: "BookmarkStart" }); return;
       case "w:colFirst": this.columnFirst = Int32Value.parse(value); return;
       case "w:colLast": this.columnLast = Int32Value.parse(value); return;
       case "w:displacedByCustomXml": this.displacedByCustomXml = StringValue.parse(value); return;
@@ -52,5 +54,11 @@ export class BookmarkStart extends OpenXmlLeafElement {
     if (this.displacedByCustomXml !== undefined) out.push(["w:displacedByCustomXml", this.displacedByCustomXml.toString()]);
     if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.name, { attribute: "w:name", elementClass: "BookmarkStart" });
+    assertRequired(this.id, { attribute: "w:id", elementClass: "BookmarkStart" });
   }
 }

@@ -6,6 +6,7 @@ import {
   BooleanValue,
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the ObjectLink Class.
@@ -57,5 +58,10 @@ export class ObjectLink extends OpenXmlLeafElement {
     if (this.shapeId !== undefined) out.push(["w:shapeId", this.shapeId.toString()]);
     if (this.fieldCodes !== undefined) out.push(["w:fieldCodes", this.fieldCodes.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.updateMode, { attribute: "w:updateMode", elementClass: "ObjectLink" });
   }
 }

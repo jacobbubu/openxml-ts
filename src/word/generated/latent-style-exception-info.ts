@@ -7,6 +7,8 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  assertNumber,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Latent Style Exception.
@@ -40,7 +42,7 @@ export class LatentStyleExceptionInfo extends OpenXmlLeafElement {
     switch (qname) {
       case "w:name": this.name = StringValue.parse(value); return;
       case "w:locked": this.locked = BooleanValue.parse(value); return;
-      case "w:uiPriority": this.uiPriority = Int32Value.parse(value); return;
+      case "w:uiPriority": this.uiPriority = Int32Value.parse(value); assertNumber(this.uiPriority, { min: 0, max: 99 }, { attribute: "w:uiPriority", elementClass: "LatentStyleExceptionInfo" }); return;
       case "w:semiHidden": this.semiHidden = BooleanValue.parse(value); return;
       case "w:unhideWhenUsed": this.unhideWhenUsed = BooleanValue.parse(value); return;
       case "w:qFormat": this.primaryStyle = BooleanValue.parse(value); return;
@@ -58,5 +60,10 @@ export class LatentStyleExceptionInfo extends OpenXmlLeafElement {
     if (this.unhideWhenUsed !== undefined) out.push(["w:unhideWhenUsed", this.unhideWhenUsed.toString()]);
     if (this.primaryStyle !== undefined) out.push(["w:qFormat", this.primaryStyle.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.name, { attribute: "w:name", elementClass: "LatentStyleExceptionInfo" });
   }
 }

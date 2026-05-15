@@ -43,4 +43,5 @@ export class DocGrid extends OpenXmlLeafElement {
     if (this.characterSpace !== undefined) out.push(["w:charSpace", this.characterSpace.toString()]);
     return out;
   }
+
 }

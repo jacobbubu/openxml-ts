@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the FontCharSet Class.
@@ -24,7 +25,7 @@ export class FontCharSet extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = StringValue.parse(value); return;
+      case "w:val": this.val = StringValue.parse(value); assertString(this.val, { maxLength: 2, minLength: 1 }, { attribute: "w:val", elementClass: "FontCharSet" }); return;
       case "w:characterSet": this.strictCharacterSet = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -37,4 +38,5 @@ export class FontCharSet extends OpenXmlLeafElement {
     if (this.strictCharacterSet !== undefined) out.push(["w:characterSet", this.strictCharacterSet.toString()]);
     return out;
   }
+
 }

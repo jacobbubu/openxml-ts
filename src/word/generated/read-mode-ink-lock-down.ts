@@ -7,6 +7,7 @@ import {
   OpenXmlLeafElement,
   StringValue,
   UInt32Value,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Freeze Document Layout.
@@ -48,5 +49,12 @@ export class ReadModeInkLockDown extends OpenXmlLeafElement {
     if (this.height !== undefined) out.push(["w:h", this.height.toString()]);
     if (this.fontSize !== undefined) out.push(["w:fontSz", this.fontSize.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.width, { attribute: "w:w", elementClass: "ReadModeInkLockDown" });
+    assertRequired(this.height, { attribute: "w:h", elementClass: "ReadModeInkLockDown" });
+    assertRequired(this.fontSize, { attribute: "w:fontSz", elementClass: "ReadModeInkLockDown" });
   }
 }

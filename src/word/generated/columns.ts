@@ -49,4 +49,5 @@ export class Columns extends OpenXmlCompositeElement {
     if (this.separator !== undefined) out.push(["w:sep", this.separator.toString()]);
     return out;
   }
+
 }

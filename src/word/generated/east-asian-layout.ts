@@ -54,4 +54,5 @@ export class EastAsianLayout extends OpenXmlLeafElement {
     if (this.verticalCompress !== undefined) out.push(["w:vertCompress", this.verticalCompress.toString()]);
     return out;
   }
+
 }

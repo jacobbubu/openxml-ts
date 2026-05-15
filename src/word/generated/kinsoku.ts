@@ -16,4 +16,5 @@ export class Kinsoku extends OpenXmlLeafElement {
 
 
 
+
 }

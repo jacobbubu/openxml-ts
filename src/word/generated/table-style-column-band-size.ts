@@ -16,4 +16,5 @@ export class TableStyleColumnBandSize extends OpenXmlLeafElement {
 
 
 
+
 }

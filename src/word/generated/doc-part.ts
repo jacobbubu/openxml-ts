@@ -17,4 +17,5 @@ export class DocPart extends OpenXmlCompositeElement {
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
 
+
 }

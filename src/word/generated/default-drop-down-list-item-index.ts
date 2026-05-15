@@ -5,6 +5,8 @@
 import {
   Int32Value,
   OpenXmlLeafElement,
+  assertNumber,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Default Drop-Down List Item Index.
@@ -21,7 +23,7 @@ export class DefaultDropDownListItemIndex extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = Int32Value.parse(value); return;
+      case "w:val": this.val = Int32Value.parse(value); assertNumber(this.val, { min: 0, max: 24 }, { attribute: "w:val", elementClass: "DefaultDropDownListItemIndex" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,5 +33,10 @@ export class DefaultDropDownListItemIndex extends OpenXmlLeafElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: "w:val", elementClass: "DefaultDropDownListItemIndex" });
   }
 }

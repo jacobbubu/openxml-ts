@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Form Field Name.
@@ -21,7 +22,7 @@ export class FormFieldName extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = StringValue.parse(value); return;
+      case "w:val": this.val = StringValue.parse(value); assertString(this.val, { maxLength: 20 }, { attribute: "w:val", elementClass: "FormFieldName" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -32,4 +33,5 @@ export class FormFieldName extends OpenXmlLeafElement {
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     return out;
   }
+
 }

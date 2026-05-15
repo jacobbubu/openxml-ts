@@ -6,6 +6,7 @@ import {
   Int32Value,
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the LevelOverride Class.
@@ -32,5 +33,10 @@ export class LevelOverride extends OpenXmlCompositeElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.levelIndex !== undefined) out.push(["w:ilvl", this.levelIndex.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.levelIndex, { attribute: "w:ilvl", elementClass: "LevelOverride" });
   }
 }

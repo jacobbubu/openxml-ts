@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the LanguageType Class.
@@ -27,9 +28,9 @@ export abstract class LanguageType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = StringValue.parse(value); return;
-      case "w:eastAsia": this.eastAsia = StringValue.parse(value); return;
-      case "w:bidi": this.bidi = StringValue.parse(value); return;
+      case "w:val": this.val = StringValue.parse(value); assertString(this.val, { maxLength: 84 }, { attribute: "w:val", elementClass: "LanguageType" }); return;
+      case "w:eastAsia": this.eastAsia = StringValue.parse(value); assertString(this.eastAsia, { maxLength: 84 }, { attribute: "w:eastAsia", elementClass: "LanguageType" }); return;
+      case "w:bidi": this.bidi = StringValue.parse(value); assertString(this.bidi, { maxLength: 84 }, { attribute: "w:bidi", elementClass: "LanguageType" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -42,4 +43,5 @@ export abstract class LanguageType extends OpenXmlLeafElement {
     if (this.bidi !== undefined) out.push(["w:bidi", this.bidi.toString()]);
     return out;
   }
+
 }

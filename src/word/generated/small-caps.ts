@@ -16,4 +16,5 @@ export class SmallCaps extends OpenXmlLeafElement {
 
 
 
+
 }

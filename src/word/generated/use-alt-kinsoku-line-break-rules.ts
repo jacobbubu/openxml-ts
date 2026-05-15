@@ -16,4 +16,5 @@ export class UseAltKinsokuLineBreakRules extends OpenXmlLeafElement {
 
 
 
+
 }

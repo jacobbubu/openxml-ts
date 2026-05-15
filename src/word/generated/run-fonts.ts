@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the RunFonts Class.
@@ -46,10 +47,10 @@ export class RunFonts extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w:hint": this.hint = StringValue.parse(value); return;
-      case "w:ascii": this.ascii = StringValue.parse(value); return;
-      case "w:hAnsi": this.highAnsi = StringValue.parse(value); return;
-      case "w:eastAsia": this.eastAsia = StringValue.parse(value); return;
-      case "w:cs": this.complexScript = StringValue.parse(value); return;
+      case "w:ascii": this.ascii = StringValue.parse(value); assertString(this.ascii, { maxLength: 31 }, { attribute: "w:ascii", elementClass: "RunFonts" }); return;
+      case "w:hAnsi": this.highAnsi = StringValue.parse(value); assertString(this.highAnsi, { maxLength: 31 }, { attribute: "w:hAnsi", elementClass: "RunFonts" }); return;
+      case "w:eastAsia": this.eastAsia = StringValue.parse(value); assertString(this.eastAsia, { maxLength: 31 }, { attribute: "w:eastAsia", elementClass: "RunFonts" }); return;
+      case "w:cs": this.complexScript = StringValue.parse(value); assertString(this.complexScript, { maxLength: 31 }, { attribute: "w:cs", elementClass: "RunFonts" }); return;
       case "w:asciiTheme": this.asciiTheme = StringValue.parse(value); return;
       case "w:hAnsiTheme": this.highAnsiTheme = StringValue.parse(value); return;
       case "w:eastAsiaTheme": this.eastAsiaTheme = StringValue.parse(value); return;
@@ -72,4 +73,5 @@ export class RunFonts extends OpenXmlLeafElement {
     if (this.complexScriptTheme !== undefined) out.push(["w:cstheme", this.complexScriptTheme.toString()]);
     return out;
   }
+
 }

@@ -7,6 +7,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Style Definition.
@@ -33,7 +34,7 @@ export class Style extends OpenXmlCompositeElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w:type": this.type = StringValue.parse(value); return;
-      case "w:styleId": this.styleId = StringValue.parse(value); return;
+      case "w:styleId": this.styleId = StringValue.parse(value); assertString(this.styleId, { maxLength: 253 }, { attribute: "w:styleId", elementClass: "Style" }); return;
       case "w:default": this.default = BooleanValue.parse(value); return;
       case "w:customStyle": this.customStyle = BooleanValue.parse(value); return;
     }
@@ -49,4 +50,5 @@ export class Style extends OpenXmlCompositeElement {
     if (this.customStyle !== undefined) out.push(["w:customStyle", this.customStyle.toString()]);
     return out;
   }
+
 }

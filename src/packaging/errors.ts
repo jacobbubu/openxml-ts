@@ -27,7 +27,12 @@ export type OpenXmlPackageErrorCode =
   | "BACKEND_ERROR"
   | "INVALID_PART_URI"
   | "STREAM_CLOSED"
-  | "SECURITY_VIOLATION";
+  | "SECURITY_VIOLATION"
+  // Story-2.7 validators
+  | "REQUIRED_ATTR_MISSING"
+  | "STRING_TOO_LONG"
+  | "NUMBER_OUT_OF_RANGE"
+  | "ENUM_VALUE_INVALID";
 
 /**
  * 构造 {@link OpenXmlPackageError} 的入参。
@@ -41,6 +46,10 @@ export interface OpenXmlPackageErrorOptions {
   readonly partUri?: PartUri;
   readonly relationshipId?: string;
   readonly cause?: unknown;
+  /** Story-2.7 validator 上下文：受违例的 schema 属性 qname（如 `"w:author"`）。 */
+  readonly attribute?: string;
+  /** Story-2.7 validator 上下文：所在 element 类名（如 `"Paragraph"`）。 */
+  readonly elementClass?: string;
 }
 
 const DEFAULT_MESSAGES: Readonly<Record<OpenXmlPackageErrorCode, string>> = {
@@ -56,6 +65,10 @@ const DEFAULT_MESSAGES: Readonly<Record<OpenXmlPackageErrorCode, string>> = {
   INVALID_PART_URI: "Part URI does not satisfy OPC §9.1 rules",
   STREAM_CLOSED: "Stream has already been closed",
   SECURITY_VIOLATION: "Operation refused by security policy (size/path/decoder limits)",
+  REQUIRED_ATTR_MISSING: "Required attribute is missing",
+  STRING_TOO_LONG: "Attribute value exceeds the schema MaxLength bound",
+  NUMBER_OUT_OF_RANGE: "Attribute numeric value is outside the schema-allowed range",
+  ENUM_VALUE_INVALID: "Attribute value is not a member of the schema-defined enumeration",
 };
 
 /**
@@ -73,6 +86,8 @@ export class OpenXmlPackageError extends Error {
   readonly code: OpenXmlPackageErrorCode;
   readonly partUri: PartUri | undefined;
   readonly relationshipId: string | undefined;
+  readonly attribute: string | undefined;
+  readonly elementClass: string | undefined;
 
   constructor(options: OpenXmlPackageErrorOptions) {
     const message = options.message ?? DEFAULT_MESSAGES[options.code];
@@ -80,6 +95,8 @@ export class OpenXmlPackageError extends Error {
     this.code = options.code;
     this.partUri = options.partUri;
     this.relationshipId = options.relationshipId;
+    this.attribute = options.attribute;
+    this.elementClass = options.elementClass;
   }
 
   /**

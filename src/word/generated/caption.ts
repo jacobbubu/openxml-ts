@@ -7,6 +7,8 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Single Caption Type Definition.
@@ -41,7 +43,7 @@ export class Caption extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:name": this.name = StringValue.parse(value); return;
+      case "w:name": this.name = StringValue.parse(value); assertString(this.name, { maxLength: 255 }, { attribute: "w:name", elementClass: "Caption" }); return;
       case "w:pos": this.position = StringValue.parse(value); return;
       case "w:chapNum": this.chapterNumber = BooleanValue.parse(value); return;
       case "w:heading": this.heading = Int32Value.parse(value); return;
@@ -63,5 +65,10 @@ export class Caption extends OpenXmlLeafElement {
     if (this.numberFormat !== undefined) out.push(["w:numFmt", this.numberFormat.toString()]);
     if (this.separator !== undefined) out.push(["w:sep", this.separator.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.name, { attribute: "w:name", elementClass: "Caption" });
   }
 }

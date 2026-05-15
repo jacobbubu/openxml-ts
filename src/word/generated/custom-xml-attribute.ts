@@ -5,6 +5,8 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Custom XML Attribute.
@@ -28,7 +30,7 @@ export class CustomXmlAttribute extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w:uri": this.uri = StringValue.parse(value); return;
-      case "w:name": this.name = StringValue.parse(value); return;
+      case "w:name": this.name = StringValue.parse(value); assertString(this.name, { maxLength: 255 }, { attribute: "w:name", elementClass: "CustomXmlAttribute" }); return;
       case "w:val": this.val = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -41,5 +43,11 @@ export class CustomXmlAttribute extends OpenXmlLeafElement {
     if (this.name !== undefined) out.push(["w:name", this.name.toString()]);
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.name, { attribute: "w:name", elementClass: "CustomXmlAttribute" });
+    assertRequired(this.val, { attribute: "w:val", elementClass: "CustomXmlAttribute" });
   }
 }

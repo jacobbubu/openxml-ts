@@ -32,4 +32,5 @@ export abstract class TextType extends OpenXmlLeafElement {
     if (this.space !== undefined) out.push(["xml:space", this.space.toString()]);
     return out;
   }
+
 }

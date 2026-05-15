@@ -47,4 +47,5 @@ export class ObjectEmbed extends OpenXmlLeafElement {
     if (this.fieldCodes !== undefined) out.push(["w:fieldCodes", this.fieldCodes.toString()]);
     return out;
   }
+
 }

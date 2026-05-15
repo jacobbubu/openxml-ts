@@ -6,6 +6,7 @@ import {
   BooleanValue,
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the FontRelationshipType Class.
@@ -42,5 +43,10 @@ export abstract class FontRelationshipType extends OpenXmlLeafElement {
     if (this.subsetted !== undefined) out.push(["w:subsetted", this.subsetted.toString()]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.id, { attribute: "r:id", elementClass: "FontRelationshipType" });
   }
 }

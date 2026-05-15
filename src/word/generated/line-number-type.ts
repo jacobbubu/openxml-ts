@@ -47,4 +47,5 @@ export class LineNumberType extends OpenXmlLeafElement {
     if (this.restart !== undefined) out.push(["w:restart", this.restart.toString()]);
     return out;
   }
+
 }

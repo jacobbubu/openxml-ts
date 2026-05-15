@@ -37,4 +37,5 @@ export class Column extends OpenXmlLeafElement {
     if (this.space !== undefined) out.push(["w:space", this.space.toString()]);
     return out;
   }
+
 }

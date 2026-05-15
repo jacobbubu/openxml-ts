@@ -6,6 +6,8 @@ import {
   Int32Value,
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  assertNumber,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Abstract Numbering Definition.
@@ -22,7 +24,7 @@ export class AbstractNum extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:abstractNumId": this.abstractNumberId = Int32Value.parse(value); return;
+      case "w:abstractNumId": this.abstractNumberId = Int32Value.parse(value); assertNumber(this.abstractNumberId, { min: 0 }, { attribute: "w:abstractNumId", elementClass: "AbstractNum" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -32,5 +34,10 @@ export class AbstractNum extends OpenXmlCompositeElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.abstractNumberId !== undefined) out.push(["w:abstractNumId", this.abstractNumberId.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.abstractNumberId, { attribute: "w:abstractNumId", elementClass: "AbstractNum" });
   }
 }

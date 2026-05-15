@@ -6,6 +6,8 @@ import {
   DateTimeValue,
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Vertically Merged/Split Table Cells.
@@ -39,7 +41,7 @@ export class CellMerge extends OpenXmlLeafElement {
     switch (qname) {
       case "w:vMerge": this.verticalMerge = StringValue.parse(value); return;
       case "w:vMergeOrig": this.verticalMergeOriginal = StringValue.parse(value); return;
-      case "w:author": this.author = StringValue.parse(value); return;
+      case "w:author": this.author = StringValue.parse(value); assertString(this.author, { maxLength: 255 }, { attribute: "w:author", elementClass: "CellMerge" }); return;
       case "w:date": this.date = DateTimeValue.parse(value); return;
       case "w16du:dateUtc": this.dateUtc = DateTimeValue.parse(value); return;
       case "w:id": this.id = StringValue.parse(value); return;
@@ -57,5 +59,11 @@ export class CellMerge extends OpenXmlLeafElement {
     if (this.dateUtc !== undefined) out.push(["w16du:dateUtc", this.dateUtc.toString()]);
     if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.author, { attribute: "w:author", elementClass: "CellMerge" });
+    assertRequired(this.id, { attribute: "w:id", elementClass: "CellMerge" });
   }
 }

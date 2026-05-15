@@ -28,3 +28,13 @@ export { type DeserializeOptions, deserialize } from "./xml-deserialize.js";
 export { type SerializeOptions, serialize } from "./xml-serialize.js";
 
 export * from "./values/index.js";
+
+export {
+  assertEnum,
+  assertNumber,
+  assertRequired,
+  assertString,
+  type NumberValidatorOptions,
+  type StringValidatorOptions,
+  type ValidationContext,
+} from "./validators/index.js";

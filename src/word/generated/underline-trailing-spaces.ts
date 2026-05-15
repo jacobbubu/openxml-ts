@@ -16,4 +16,5 @@ export class UnderlineTrailingSpaces extends OpenXmlLeafElement {
 
 
 
+
 }

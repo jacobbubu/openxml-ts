@@ -16,4 +16,5 @@ export class TableStyleRowBandSize extends OpenXmlLeafElement {
 
 
 
+
 }

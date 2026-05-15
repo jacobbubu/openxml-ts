@@ -69,4 +69,5 @@ export class Paragraph extends OpenXmlCompositeElement {
     if (this.noSpellError !== undefined) out.push(["w14:noSpellErr", this.noSpellError.toString()]);
     return out;
   }
+
 }

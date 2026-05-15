@@ -5,6 +5,8 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Custom Set of Characters Which Cannot End a Line.
@@ -24,8 +26,8 @@ export class NoLineBreaksAfterKinsoku extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:lang": this.language = StringValue.parse(value); return;
-      case "w:val": this.val = StringValue.parse(value); return;
+      case "w:lang": this.language = StringValue.parse(value); assertString(this.language, { maxLength: 84 }, { attribute: "w:lang", elementClass: "NoLineBreaksAfterKinsoku" }); return;
+      case "w:val": this.val = StringValue.parse(value); assertString(this.val, { maxLength: 50 }, { attribute: "w:val", elementClass: "NoLineBreaksAfterKinsoku" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -36,5 +38,11 @@ export class NoLineBreaksAfterKinsoku extends OpenXmlLeafElement {
     if (this.language !== undefined) out.push(["w:lang", this.language.toString()]);
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.language, { attribute: "w:lang", elementClass: "NoLineBreaksAfterKinsoku" });
+    assertRequired(this.val, { attribute: "w:val", elementClass: "NoLineBreaksAfterKinsoku" });
   }
 }

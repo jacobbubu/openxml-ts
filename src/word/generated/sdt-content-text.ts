@@ -32,4 +32,5 @@ export class SdtContentText extends OpenXmlLeafElement {
     if (this.multiLine !== undefined) out.push(["w:multiLine", this.multiLine.toString()]);
     return out;
   }
+
 }

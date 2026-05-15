@@ -37,4 +37,5 @@ export class Break extends OpenXmlLeafElement {
     if (this.clear !== undefined) out.push(["w:clear", this.clear.toString()]);
     return out;
   }
+
 }

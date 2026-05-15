@@ -71,6 +71,7 @@ describe("element-template · 5 种核心形态", () => {
           if (this.date !== undefined) out.push(["w:date", this.date.toString()]);
           return out;
         }
+
       }
       "
     `);
@@ -138,6 +139,7 @@ describe("element-template · 5 种核心形态", () => {
           if (this.rsidParagraphMarkRevision !== undefined) out.push(["w:rsidRPr", this.rsidParagraphMarkRevision.toString()]);
           return out;
         }
+
       }
       "
     `);

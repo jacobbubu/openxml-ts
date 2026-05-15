@@ -17,4 +17,5 @@ export class ParagraphProperties extends OpenXmlCompositeElement {
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
 
+
 }

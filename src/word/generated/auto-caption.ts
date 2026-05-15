@@ -5,6 +5,8 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Single Automatic Captioning Setting.
@@ -24,8 +26,8 @@ export class AutoCaption extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:name": this.name = StringValue.parse(value); return;
-      case "w:caption": this.caption = StringValue.parse(value); return;
+      case "w:name": this.name = StringValue.parse(value); assertString(this.name, { maxLength: 255 }, { attribute: "w:name", elementClass: "AutoCaption" }); return;
+      case "w:caption": this.caption = StringValue.parse(value); assertString(this.caption, { maxLength: 255 }, { attribute: "w:caption", elementClass: "AutoCaption" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -36,5 +38,11 @@ export class AutoCaption extends OpenXmlLeafElement {
     if (this.name !== undefined) out.push(["w:name", this.name.toString()]);
     if (this.caption !== undefined) out.push(["w:caption", this.caption.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.name, { attribute: "w:name", elementClass: "AutoCaption" });
+    assertRequired(this.caption, { attribute: "w:caption", elementClass: "AutoCaption" });
   }
 }

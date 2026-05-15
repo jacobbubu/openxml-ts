@@ -6,6 +6,7 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  assertNumber,
 } from "../../element/index.js";
 
 /** Defines the PageNumberType Class.
@@ -32,7 +33,7 @@ export class PageNumberType extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w:fmt": this.format = StringValue.parse(value); return;
-      case "w:start": this.start = Int32Value.parse(value); return;
+      case "w:start": this.start = Int32Value.parse(value); assertNumber(this.start, { min: 0 }, { attribute: "w:start", elementClass: "PageNumberType" }); return;
       case "w:chapStyle": this.chapterStyle = StringValue.parse(value); return;
       case "w:chapSep": this.chapterSeparator = StringValue.parse(value); return;
     }
@@ -48,4 +49,5 @@ export class PageNumberType extends OpenXmlLeafElement {
     if (this.chapterSeparator !== undefined) out.push(["w:chapSep", this.chapterSeparator.toString()]);
     return out;
   }
+
 }

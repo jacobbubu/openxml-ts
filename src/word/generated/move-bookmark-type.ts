@@ -7,6 +7,8 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the MoveBookmarkType Class.
@@ -43,7 +45,7 @@ export abstract class MoveBookmarkType extends OpenXmlLeafElement {
     switch (qname) {
       case "w:author": this.author = StringValue.parse(value); return;
       case "w:date": this.date = DateTimeValue.parse(value); return;
-      case "w:name": this.name = StringValue.parse(value); return;
+      case "w:name": this.name = StringValue.parse(value); assertString(this.name, { maxLength: 40 }, { attribute: "w:name", elementClass: "MoveBookmarkType" }); return;
       case "w:colFirst": this.columnFirst = Int32Value.parse(value); return;
       case "w:colLast": this.columnLast = Int32Value.parse(value); return;
       case "w:displacedByCustomXml": this.displacedByCustomXml = StringValue.parse(value); return;
@@ -63,5 +65,13 @@ export abstract class MoveBookmarkType extends OpenXmlLeafElement {
     if (this.displacedByCustomXml !== undefined) out.push(["w:displacedByCustomXml", this.displacedByCustomXml.toString()]);
     if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.author, { attribute: "w:author", elementClass: "MoveBookmarkType" });
+    assertRequired(this.date, { attribute: "w:date", elementClass: "MoveBookmarkType" });
+    assertRequired(this.name, { attribute: "w:name", elementClass: "MoveBookmarkType" });
+    assertRequired(this.id, { attribute: "w:id", elementClass: "MoveBookmarkType" });
   }
 }

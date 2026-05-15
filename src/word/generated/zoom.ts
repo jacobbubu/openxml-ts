@@ -37,4 +37,5 @@ export class Zoom extends OpenXmlLeafElement {
     if (this.percent !== undefined) out.push(["w:percent", this.percent.toString()]);
     return out;
   }
+
 }

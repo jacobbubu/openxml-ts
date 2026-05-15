@@ -6,6 +6,8 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  assertNumber,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the PermStart Class.
@@ -39,8 +41,8 @@ export class PermStart extends OpenXmlLeafElement {
     switch (qname) {
       case "w:edGrp": this.editorGroup = StringValue.parse(value); return;
       case "w:ed": this.ed = StringValue.parse(value); return;
-      case "w:colFirst": this.columnFirst = Int32Value.parse(value); return;
-      case "w:colLast": this.columnLast = Int32Value.parse(value); return;
+      case "w:colFirst": this.columnFirst = Int32Value.parse(value); assertNumber(this.columnFirst, { min: 0 }, { attribute: "w:colFirst", elementClass: "PermStart" }); return;
+      case "w:colLast": this.columnLast = Int32Value.parse(value); assertNumber(this.columnLast, { min: 0 }, { attribute: "w:colLast", elementClass: "PermStart" }); return;
       case "w:id": this.id = Int32Value.parse(value); return;
       case "w:displacedByCustomXml": this.displacedByCustomXml = StringValue.parse(value); return;
     }
@@ -57,5 +59,10 @@ export class PermStart extends OpenXmlLeafElement {
     if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
     if (this.displacedByCustomXml !== undefined) out.push(["w:displacedByCustomXml", this.displacedByCustomXml.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.id, { attribute: "w:id", elementClass: "PermStart" });
   }
 }

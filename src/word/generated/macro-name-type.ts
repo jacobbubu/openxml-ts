@@ -5,6 +5,8 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the MacroNameType Class.
@@ -21,7 +23,7 @@ export abstract class MacroNameType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = StringValue.parse(value); return;
+      case "w:val": this.val = StringValue.parse(value); assertString(this.val, { maxLength: 33 }, { attribute: "w:val", elementClass: "MacroNameType" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,5 +33,10 @@ export abstract class MacroNameType extends OpenXmlLeafElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: "w:val", elementClass: "MacroNameType" });
   }
 }

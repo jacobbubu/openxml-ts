@@ -37,4 +37,5 @@ export abstract class TableWidthType extends OpenXmlLeafElement {
     if (this.type !== undefined) out.push(["w:type", this.type.toString()]);
     return out;
   }
+
 }

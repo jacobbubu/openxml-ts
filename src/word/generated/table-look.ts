@@ -57,4 +57,5 @@ export class TableLook extends OpenXmlLeafElement {
     if (this.noVerticalBand !== undefined) out.push(["w:noVBand", this.noVerticalBand.toString()]);
     return out;
   }
+
 }

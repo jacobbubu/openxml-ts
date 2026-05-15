@@ -38,4 +38,5 @@ export class LevelText extends OpenXmlLeafElement {
     if (this.null !== undefined) out.push(["w:null", this.null.toString()]);
     return out;
   }
+
 }

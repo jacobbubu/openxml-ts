@@ -6,6 +6,7 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  assertNumber,
 } from "../../element/index.js";
 
 /** Defines the TablePositionProperties Class.
@@ -56,9 +57,9 @@ export class TablePositionProperties extends OpenXmlLeafElement {
       case "w:vertAnchor": this.verticalAnchor = StringValue.parse(value); return;
       case "w:horzAnchor": this.horizontalAnchor = StringValue.parse(value); return;
       case "w:tblpXSpec": this.tablePositionXAlignment = StringValue.parse(value); return;
-      case "w:tblpX": this.tablePositionX = Int32Value.parse(value); return;
+      case "w:tblpX": this.tablePositionX = Int32Value.parse(value); assertNumber(this.tablePositionX, { min: -31680, max: 31680 }, { attribute: "w:tblpX", elementClass: "TablePositionProperties" }); return;
       case "w:tblpYSpec": this.tablePositionYAlignment = StringValue.parse(value); return;
-      case "w:tblpY": this.tablePositionY = Int32Value.parse(value); return;
+      case "w:tblpY": this.tablePositionY = Int32Value.parse(value); assertNumber(this.tablePositionY, { min: -31680, max: 31680 }, { attribute: "w:tblpY", elementClass: "TablePositionProperties" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -78,4 +79,5 @@ export class TablePositionProperties extends OpenXmlLeafElement {
     if (this.tablePositionY !== undefined) out.push(["w:tblpY", this.tablePositionY.toString()]);
     return out;
   }
+
 }

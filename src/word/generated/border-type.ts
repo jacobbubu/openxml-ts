@@ -7,6 +7,9 @@ import {
   OpenXmlLeafElement,
   StringValue,
   UInt32Value,
+  assertNumber,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the BorderType Class.
@@ -48,12 +51,12 @@ export abstract class BorderType extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w:val": this.val = StringValue.parse(value); return;
-      case "w:color": this.color = StringValue.parse(value); return;
+      case "w:color": this.color = StringValue.parse(value); assertString(this.color, { maxLength: 3, minLength: 3 }, { attribute: "w:color", elementClass: "BorderType" }); return;
       case "w:themeColor": this.themeColor = StringValue.parse(value); return;
-      case "w:themeTint": this.themeTint = StringValue.parse(value); return;
-      case "w:themeShade": this.themeShade = StringValue.parse(value); return;
+      case "w:themeTint": this.themeTint = StringValue.parse(value); assertString(this.themeTint, { maxLength: 2, minLength: 1 }, { attribute: "w:themeTint", elementClass: "BorderType" }); return;
+      case "w:themeShade": this.themeShade = StringValue.parse(value); assertString(this.themeShade, { maxLength: 2, minLength: 1 }, { attribute: "w:themeShade", elementClass: "BorderType" }); return;
       case "w:sz": this.size = UInt32Value.parse(value); return;
-      case "w:space": this.space = UInt32Value.parse(value); return;
+      case "w:space": this.space = UInt32Value.parse(value); assertNumber(this.space, { min: 0, max: 31 }, { attribute: "w:space", elementClass: "BorderType" }); return;
       case "w:shadow": this.shadow = BooleanValue.parse(value); return;
       case "w:frame": this.frame = BooleanValue.parse(value); return;
     }
@@ -73,5 +76,10 @@ export abstract class BorderType extends OpenXmlLeafElement {
     if (this.shadow !== undefined) out.push(["w:shadow", this.shadow.toString()]);
     if (this.frame !== undefined) out.push(["w:frame", this.frame.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: "w:val", elementClass: "BorderType" });
   }
 }

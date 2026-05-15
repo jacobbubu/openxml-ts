@@ -6,6 +6,7 @@ import {
   Int32Value,
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Numbering Definition Instance.
@@ -32,5 +33,10 @@ export class NumberingInstance extends OpenXmlCompositeElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.numberID !== undefined) out.push(["w:numId", this.numberID.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.numberID, { attribute: "w:numId", elementClass: "NumberingInstance" });
   }
 }

@@ -7,6 +7,9 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  assertNumber,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Grammar Checking Settings.
@@ -38,9 +41,9 @@ export class ActiveWritingStyle extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:lang": this.language = StringValue.parse(value); return;
+      case "w:lang": this.language = StringValue.parse(value); assertString(this.language, { maxLength: 84 }, { attribute: "w:lang", elementClass: "ActiveWritingStyle" }); return;
       case "w:vendorID": this.vendorID = StringValue.parse(value); return;
-      case "w:dllVersion": this.dllVersion = Int32Value.parse(value); return;
+      case "w:dllVersion": this.dllVersion = Int32Value.parse(value); assertNumber(this.dllVersion, { min: 0 }, { attribute: "w:dllVersion", elementClass: "ActiveWritingStyle" }); return;
       case "w:nlCheck": this.naturalLanguageGrammarCheck = BooleanValue.parse(value); return;
       case "w:checkStyle": this.checkStyle = BooleanValue.parse(value); return;
       case "w:appName": this.applicationName = StringValue.parse(value); return;
@@ -58,5 +61,14 @@ export class ActiveWritingStyle extends OpenXmlLeafElement {
     if (this.checkStyle !== undefined) out.push(["w:checkStyle", this.checkStyle.toString()]);
     if (this.applicationName !== undefined) out.push(["w:appName", this.applicationName.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.language, { attribute: "w:lang", elementClass: "ActiveWritingStyle" });
+    assertRequired(this.vendorID, { attribute: "w:vendorID", elementClass: "ActiveWritingStyle" });
+    assertRequired(this.dllVersion, { attribute: "w:dllVersion", elementClass: "ActiveWritingStyle" });
+    assertRequired(this.checkStyle, { attribute: "w:checkStyle", elementClass: "ActiveWritingStyle" });
+    assertRequired(this.applicationName, { attribute: "w:appName", elementClass: "ActiveWritingStyle" });
   }
 }

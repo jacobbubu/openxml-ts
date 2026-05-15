@@ -16,4 +16,5 @@ export class SdtContentPicture extends OpenXmlLeafElement {
 
 
 
+
 }

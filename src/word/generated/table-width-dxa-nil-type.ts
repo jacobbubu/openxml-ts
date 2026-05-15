@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the TableWidthDxaNilType Class.
@@ -36,5 +37,11 @@ export abstract class TableWidthDxaNilType extends OpenXmlLeafElement {
     if (this.width !== undefined) out.push(["w:w", this.width.toString()]);
     if (this.type !== undefined) out.push(["w:type", this.type.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.width, { attribute: "w:w", elementClass: "TableWidthDxaNilType" });
+    assertRequired(this.type, { attribute: "w:type", elementClass: "TableWidthDxaNilType" });
   }
 }

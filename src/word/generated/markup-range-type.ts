@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the MarkupRangeType Class.
@@ -36,5 +37,10 @@ export abstract class MarkupRangeType extends OpenXmlLeafElement {
     if (this.displacedByCustomXml !== undefined) out.push(["w:displacedByCustomXml", this.displacedByCustomXml.toString()]);
     if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.id, { attribute: "w:id", elementClass: "MarkupRangeType" });
   }
 }

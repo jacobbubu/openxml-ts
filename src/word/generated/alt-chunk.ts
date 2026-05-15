@@ -33,4 +33,5 @@ export class AltChunk extends OpenXmlCompositeElement {
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
     return out;
   }
+
 }

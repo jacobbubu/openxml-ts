@@ -33,4 +33,5 @@ export class SdtContentDropDownList extends OpenXmlCompositeElement {
     if (this.lastValue !== undefined) out.push(["w:lastValue", this.lastValue.toString()]);
     return out;
   }
+
 }

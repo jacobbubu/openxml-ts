@@ -88,4 +88,5 @@ export class Indentation extends OpenXmlLeafElement {
     if (this.firstLineChars !== undefined) out.push(["w:firstLineChars", this.firstLineChars.toString()]);
     return out;
   }
+
 }

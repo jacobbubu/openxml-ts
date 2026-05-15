@@ -6,6 +6,11 @@
  * - 类继承 `OpenXmlLeafElement` 或 `OpenXmlCompositeElement`（按 IsLeafElement）；
  * - 每条 schema attribute → 同名 typed 字段 + applyAttribute switch 分支 +
  *   collectAttributes 输出（保留 schema 声明顺序）；
+ * - 各 attribute 的 schema Validators（Story-2.7）翻译为：
+ *   · `StringValidator` MaxLength/MinLength → applyAttribute 内联 `assertString` 调用；
+ *   · `NumberValidator` MinInclusive/MaxInclusive → 内联 `assertNumber` 调用；
+ *   · `RequiredValidator` → 类级 `validateRequired()` 方法的一行（不在 applyAttribute 内联，
+ *      因为 Required 检查需要看「整个属性集」是否凑齐，时机由调用方决定）；
  * - `qname` 形如 `"w:p"` 直接落到字符串字面量，运行时零分支；
  * - 输出确定性：同一份 SchemaType 输入永远产出同一份字符串。
  */
@@ -14,12 +19,25 @@ import { parseSchemaName } from "./transforms/names.js";
 import { prefixForUri } from "./transforms/namespaces.js";
 import { mapSchemaType } from "./transforms/types.js";
 
+export interface SchemaValidatorArg {
+  readonly Name?: string;
+  readonly Type?: string;
+  readonly Value?: string;
+}
+
+export interface SchemaValidator {
+  readonly Name: string;
+  readonly Arguments?: readonly SchemaValidatorArg[];
+  readonly IsInitialVersion?: boolean;
+}
+
 export interface SchemaAttribute {
   readonly QName: string;
   readonly PropertyName: string;
   readonly Type: string;
   readonly PropertyComments?: string;
   readonly Version?: string;
+  readonly Validators?: readonly SchemaValidator[];
 }
 
 export interface SchemaType {
@@ -63,8 +81,12 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
       a.QName.length > 0,
   );
   const attrLines = attrs.map((a) => renderAttrField(a, valueImports));
-  const applyAttrCases = attrs.map((a) => renderApplyAttrCase(a));
+  const applyAttrCases = attrs.map((a) => renderApplyAttrCase(a, type.ClassName, valueImports));
   const collectLines = attrs.map((a) => renderCollectLine(a));
+  const requiredLines = attrs
+    .filter((a) => hasValidator(a, "RequiredValidator"))
+    .map((a) => renderRequiredCheck(a, type.ClassName));
+  if (requiredLines.length > 0) valueImports.add("assertRequired");
 
   const imports: string[] = [baseImport];
   if (type.IsAbstract !== true && type.IsLeafElement !== true) {
@@ -115,6 +137,11 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
           .map((c) => `    ${c}`)
           .join("\n")}\n    return out;\n  }\n`;
 
+  const requiredBlock =
+    requiredLines.length === 0
+      ? ""
+      : `\n  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */\n  validateRequired(): void {\n${requiredLines.map((l) => `    ${l}`).join("\n")}\n  }\n`;
+
   return [
     "// THIS FILE IS GENERATED. DO NOT EDIT.",
     `// Source: ${options.sourcePath}`,
@@ -131,6 +158,7 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
     ...attrLines.map((l) => `\n${l}`),
     applyAttrBlock.trimEnd(),
     collectBlock.trimEnd(),
+    requiredBlock.trimEnd(),
     "}",
     "",
   ]
@@ -158,14 +186,75 @@ function renderAttrField(attr: SchemaAttribute, imports: Set<string>): string {
   return `  /** ${comment} (${attr.QName}) */\n  ${camelCase(attr.PropertyName)}: ${t.expr} | undefined;`;
 }
 
-function renderApplyAttrCase(attr: SchemaAttribute): string {
+const NUMERIC_VALUE_TYPES = new Set(["Int32Value", "Int64Value", "UInt32Value", "DecimalValue"]);
+// 仅对 StringValue 注入 StringValidator —— HexBinaryValue 的 schema MaxLength
+// 实际是「字节数」（每字节占 2 字符）；用字符长度算会双倍误判。字节级 hex
+// 校验留给后续 Story 单独建模。
+const STRING_VALUE_TYPES = new Set(["StringValue"]);
+
+function renderApplyAttrCase(
+  attr: SchemaAttribute,
+  className: string,
+  imports: Set<string>,
+): string {
   const t = mapSchemaType(attr.Type);
-  return `case ${quote(attr.QName)}: this.${camelCase(attr.PropertyName)} = ${t.expr}.parse(value); return;`;
+  const prop = camelCase(attr.PropertyName);
+  const ctx = `{ attribute: ${quote(attr.QName)}, elementClass: ${quote(className)} }`;
+  const calls: string[] = [`this.${prop} = ${t.expr}.parse(value);`];
+
+  // 值容器与 validator 的类型必须匹配——schema 里偶尔会出现「StringValue 上带
+  // NumberValidator」这种怪癖（比如 w:id），跳过即可，不强行注入会导致 TS 类型错。
+  for (const v of attr.Validators ?? []) {
+    if (v.Name === "StringValidator" && STRING_VALUE_TYPES.has(t.expr)) {
+      const args = argsToMap(v.Arguments);
+      const opts: string[] = [];
+      if (args.MaxLength !== undefined) opts.push(`maxLength: ${args.MaxLength}`);
+      if (args.MinLength !== undefined) opts.push(`minLength: ${args.MinLength}`);
+      if (args.Length !== undefined) {
+        opts.push(`maxLength: ${args.Length}, minLength: ${args.Length}`);
+      }
+      if (opts.length === 0) continue;
+      calls.push(`assertString(this.${prop}, { ${opts.join(", ")} }, ${ctx});`);
+      imports.add("assertString");
+    } else if (v.Name === "NumberValidator" && NUMERIC_VALUE_TYPES.has(t.expr)) {
+      const args = argsToMap(v.Arguments);
+      const opts: string[] = [];
+      if (args.MinInclusive !== undefined) opts.push(`min: ${args.MinInclusive}`);
+      if (args.MaxInclusive !== undefined) opts.push(`max: ${args.MaxInclusive}`);
+      if (opts.length === 0) continue;
+      calls.push(`assertNumber(this.${prop}, { ${opts.join(", ")} }, ${ctx});`);
+      imports.add("assertNumber");
+    }
+    // 其它 validator（OfficeVersionValidator / EnumValidator / RegexValidator 等）
+    // Story-2.7 暂不注入——Required 走 validateRequired() 单独处理。
+  }
+
+  return `case ${quote(attr.QName)}: ${calls.join(" ")} return;`;
 }
 
 function renderCollectLine(attr: SchemaAttribute): string {
   const prop = camelCase(attr.PropertyName);
   return `if (this.${prop} !== undefined) out.push([${quote(attr.QName)}, this.${prop}.toString()]);`;
+}
+
+function renderRequiredCheck(attr: SchemaAttribute, className: string): string {
+  const prop = camelCase(attr.PropertyName);
+  const ctx = `{ attribute: ${quote(attr.QName)}, elementClass: ${quote(className)} }`;
+  return `assertRequired(this.${prop}, ${ctx});`;
+}
+
+function hasValidator(attr: SchemaAttribute, name: string): boolean {
+  return (attr.Validators ?? []).some((v) => v.Name === name);
+}
+
+function argsToMap(args: readonly SchemaValidatorArg[] | undefined): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const a of args ?? []) {
+    if (typeof a.Name === "string" && typeof a.Value === "string") {
+      out[a.Name] = a.Value;
+    }
+  }
+  return out;
 }
 
 function camelCase(pascal: string): string {

@@ -52,4 +52,5 @@ export class RevisionView extends OpenXmlLeafElement {
     if (this.inkAnnotations !== undefined) out.push(["w:inkAnnotations", this.inkAnnotations.toString()]);
     return out;
   }
+
 }

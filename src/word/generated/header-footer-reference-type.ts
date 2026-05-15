@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the HeaderFooterReferenceType Class.
@@ -36,5 +37,11 @@ export abstract class HeaderFooterReferenceType extends OpenXmlLeafElement {
     if (this.type !== undefined) out.push(["w:type", this.type.toString()]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.type, { attribute: "w:type", elementClass: "HeaderFooterReferenceType" });
+    assertRequired(this.id, { attribute: "r:id", elementClass: "HeaderFooterReferenceType" });
   }
 }

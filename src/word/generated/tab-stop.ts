@@ -6,6 +6,8 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  assertNumber,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Custom Tab Stop.
@@ -30,7 +32,7 @@ export class TabStop extends OpenXmlLeafElement {
     switch (qname) {
       case "w:val": this.val = StringValue.parse(value); return;
       case "w:leader": this.leader = StringValue.parse(value); return;
-      case "w:pos": this.position = Int32Value.parse(value); return;
+      case "w:pos": this.position = Int32Value.parse(value); assertNumber(this.position, { min: -31680, max: 31680 }, { attribute: "w:pos", elementClass: "TabStop" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -42,5 +44,11 @@ export class TabStop extends OpenXmlLeafElement {
     if (this.leader !== undefined) out.push(["w:leader", this.leader.toString()]);
     if (this.position !== undefined) out.push(["w:pos", this.position.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: "w:val", elementClass: "TabStop" });
+    assertRequired(this.position, { attribute: "w:pos", elementClass: "TabStop" });
   }
 }

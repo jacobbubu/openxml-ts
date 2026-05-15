@@ -43,4 +43,5 @@ export class PageBorders extends OpenXmlCompositeElement {
     if (this.offsetFrom !== undefined) out.push(["w:offsetFrom", this.offsetFrom.toString()]);
     return out;
   }
+
 }

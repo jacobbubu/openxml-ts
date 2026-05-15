@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Footnote Numbering Format.
@@ -36,5 +37,10 @@ export class NumberingFormat extends OpenXmlLeafElement {
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     if (this.format !== undefined) out.push(["w:format", this.format.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: "w:val", elementClass: "NumberingFormat" });
   }
 }

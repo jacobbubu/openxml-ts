@@ -32,4 +32,5 @@ export class SdtDateMappingType extends OpenXmlLeafElement {
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     return out;
   }
+
 }

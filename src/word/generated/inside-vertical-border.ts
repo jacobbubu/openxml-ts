@@ -16,4 +16,5 @@ export class InsideVerticalBorder extends OpenXmlLeafElement {
 
 
 
+
 }

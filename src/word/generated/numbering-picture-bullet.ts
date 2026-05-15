@@ -6,6 +6,7 @@ import {
   Int32Value,
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Picture Numbering Symbol Definition.
@@ -32,5 +33,10 @@ export class NumberingPictureBullet extends OpenXmlCompositeElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.numberingPictureBulletId !== undefined) out.push(["w:numPicBulletId", this.numberingPictureBulletId.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.numberingPictureBulletId, { attribute: "w:numPicBulletId", elementClass: "NumberingPictureBullet" });
   }
 }

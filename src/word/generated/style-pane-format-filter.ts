@@ -102,4 +102,5 @@ export class StylePaneFormatFilter extends OpenXmlLeafElement {
     if (this.alternateStyleNames !== undefined) out.push(["w:alternateStyleNames", this.alternateStyleNames.toString()]);
     return out;
   }
+
 }

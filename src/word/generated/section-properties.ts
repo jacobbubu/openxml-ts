@@ -48,4 +48,5 @@ export class SectionProperties extends OpenXmlCompositeElement {
     if (this.rsidSect !== undefined) out.push(["w:rsidSect", this.rsidSect.toString()]);
     return out;
   }
+
 }

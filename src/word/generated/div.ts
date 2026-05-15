@@ -6,6 +6,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Information About Single HTML div Element.
@@ -32,5 +33,10 @@ export class Div extends OpenXmlCompositeElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.id, { attribute: "w:id", elementClass: "Div" });
   }
 }

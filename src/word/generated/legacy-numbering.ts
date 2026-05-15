@@ -43,4 +43,5 @@ export class LegacyNumbering extends OpenXmlLeafElement {
     if (this.legacyIndent !== undefined) out.push(["w:legacyIndent", this.legacyIndent.toString()]);
     return out;
   }
+
 }

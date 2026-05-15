@@ -6,6 +6,7 @@ import {
   HexBinaryValue,
   OpenXmlLeafElement,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Symbol Character.
@@ -25,7 +26,7 @@ export class SymbolChar extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:font": this.font = StringValue.parse(value); return;
+      case "w:font": this.font = StringValue.parse(value); assertString(this.font, { maxLength: 31 }, { attribute: "w:font", elementClass: "SymbolChar" }); return;
       case "w:char": this.char = HexBinaryValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -38,4 +39,5 @@ export class SymbolChar extends OpenXmlLeafElement {
     if (this.char !== undefined) out.push(["w:char", this.char.toString()]);
     return out;
   }
+
 }

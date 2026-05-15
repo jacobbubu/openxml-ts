@@ -6,6 +6,7 @@ import {
   OpenXmlLeafElement,
   StringValue,
   UInt32Value,
+  assertNumber,
 } from "../../element/index.js";
 
 /** Defines the TableRowHeight Class.
@@ -25,7 +26,7 @@ export class TableRowHeight extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = UInt32Value.parse(value); return;
+      case "w:val": this.val = UInt32Value.parse(value); assertNumber(this.val, { max: 31680 }, { attribute: "w:val", elementClass: "TableRowHeight" }); return;
       case "w:hRule": this.heightType = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -38,4 +39,5 @@ export class TableRowHeight extends OpenXmlLeafElement {
     if (this.heightType !== undefined) out.push(["w:hRule", this.heightType.toString()]);
     return out;
   }
+
 }

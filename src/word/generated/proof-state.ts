@@ -37,4 +37,5 @@ export class ProofState extends OpenXmlLeafElement {
     if (this.grammar !== undefined) out.push(["w:grammar", this.grammar.toString()]);
     return out;
   }
+
 }

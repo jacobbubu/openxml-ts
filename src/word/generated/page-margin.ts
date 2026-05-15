@@ -6,6 +6,7 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   UInt32Value,
+  assertNumber,
 } from "../../element/index.js";
 
 /** Defines the PageMargin Class.
@@ -40,13 +41,13 @@ export class PageMargin extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:top": this.top = Int32Value.parse(value); return;
-      case "w:right": this.right = UInt32Value.parse(value); return;
-      case "w:bottom": this.bottom = Int32Value.parse(value); return;
-      case "w:left": this.left = UInt32Value.parse(value); return;
-      case "w:header": this.header = UInt32Value.parse(value); return;
-      case "w:footer": this.footer = UInt32Value.parse(value); return;
-      case "w:gutter": this.gutter = UInt32Value.parse(value); return;
+      case "w:top": this.top = Int32Value.parse(value); assertNumber(this.top, { min: -31680, max: 31680 }, { attribute: "w:top", elementClass: "PageMargin" }); return;
+      case "w:right": this.right = UInt32Value.parse(value); assertNumber(this.right, { max: 31680 }, { attribute: "w:right", elementClass: "PageMargin" }); return;
+      case "w:bottom": this.bottom = Int32Value.parse(value); assertNumber(this.bottom, { min: -31680, max: 31680 }, { attribute: "w:bottom", elementClass: "PageMargin" }); return;
+      case "w:left": this.left = UInt32Value.parse(value); assertNumber(this.left, { max: 31680 }, { attribute: "w:left", elementClass: "PageMargin" }); return;
+      case "w:header": this.header = UInt32Value.parse(value); assertNumber(this.header, { max: 31680 }, { attribute: "w:header", elementClass: "PageMargin" }); return;
+      case "w:footer": this.footer = UInt32Value.parse(value); assertNumber(this.footer, { max: 31680 }, { attribute: "w:footer", elementClass: "PageMargin" }); return;
+      case "w:gutter": this.gutter = UInt32Value.parse(value); assertNumber(this.gutter, { max: 31680 }, { attribute: "w:gutter", elementClass: "PageMargin" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -63,4 +64,5 @@ export class PageMargin extends OpenXmlLeafElement {
     if (this.gutter !== undefined) out.push(["w:gutter", this.gutter.toString()]);
     return out;
   }
+
 }

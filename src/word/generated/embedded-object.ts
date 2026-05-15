@@ -38,4 +38,5 @@ export class EmbeddedObject extends OpenXmlCompositeElement {
     if (this.dyaOriginal !== undefined) out.push(["w:dyaOrig", this.dyaOriginal.toString()]);
     return out;
   }
+
 }

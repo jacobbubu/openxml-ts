@@ -8,6 +8,7 @@ import {
   OpenXmlLeafElement,
   StringValue,
   UInt32Value,
+  assertNumber,
 } from "../../element/index.js";
 
 /** Defines the FrameProperties Class.
@@ -67,9 +68,9 @@ export class FrameProperties extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w:dropCap": this.dropCap = StringValue.parse(value); return;
-      case "w:lines": this.lines = Int32Value.parse(value); return;
+      case "w:lines": this.lines = Int32Value.parse(value); assertNumber(this.lines, { min: 1, max: 10 }, { attribute: "w:lines", elementClass: "FrameProperties" }); return;
       case "w:w": this.width = StringValue.parse(value); return;
-      case "w:h": this.height = UInt32Value.parse(value); return;
+      case "w:h": this.height = UInt32Value.parse(value); assertNumber(this.height, { max: 31680 }, { attribute: "w:h", elementClass: "FrameProperties" }); return;
       case "w:vSpace": this.verticalSpace = StringValue.parse(value); return;
       case "w:hSpace": this.horizontalSpace = StringValue.parse(value); return;
       case "w:wrap": this.wrap = StringValue.parse(value); return;
@@ -105,4 +106,5 @@ export class FrameProperties extends OpenXmlLeafElement {
     if (this.anchorLock !== undefined) out.push(["w:anchorLock", this.anchorLock.toString()]);
     return out;
   }
+
 }

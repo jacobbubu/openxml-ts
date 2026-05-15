@@ -5,6 +5,7 @@
 import {
   Int32Value,
   OpenXmlLeafElement,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the DecimalNumberType Class.
@@ -31,5 +32,10 @@ export abstract class DecimalNumberType extends OpenXmlLeafElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: "w:val", elementClass: "DecimalNumberType" });
   }
 }

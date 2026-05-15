@@ -33,4 +33,5 @@ export class SdtContentDate extends OpenXmlCompositeElement {
     if (this.fullDate !== undefined) out.push(["w:fullDate", this.fullDate.toString()]);
     return out;
   }
+
 }

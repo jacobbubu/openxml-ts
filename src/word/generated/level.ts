@@ -8,6 +8,7 @@ import {
   Int32Value,
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Numbering Level Definition.
@@ -44,5 +45,10 @@ export class Level extends OpenXmlCompositeElement {
     if (this.templateCode !== undefined) out.push(["w:tplc", this.templateCode.toString()]);
     if (this.tentative !== undefined) out.push(["w:tentative", this.tentative.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.levelIndex, { attribute: "w:ilvl", elementClass: "Level" });
   }
 }

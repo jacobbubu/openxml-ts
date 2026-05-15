@@ -6,6 +6,8 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   UInt32Value,
+  assertNumber,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the FitText Class.
@@ -25,7 +27,7 @@ export class FitText extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = UInt32Value.parse(value); return;
+      case "w:val": this.val = UInt32Value.parse(value); assertNumber(this.val, { max: 31680 }, { attribute: "w:val", elementClass: "FitText" }); return;
       case "w:id": this.id = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -37,5 +39,10 @@ export class FitText extends OpenXmlLeafElement {
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: "w:val", elementClass: "FitText" });
   }
 }

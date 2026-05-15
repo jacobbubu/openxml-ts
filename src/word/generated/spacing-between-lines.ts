@@ -69,4 +69,5 @@ export class SpacingBetweenLines extends OpenXmlLeafElement {
     if (this.lineRule !== undefined) out.push(["w:lineRule", this.lineRule.toString()]);
     return out;
   }
+
 }

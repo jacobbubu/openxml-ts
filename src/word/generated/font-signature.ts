@@ -5,6 +5,7 @@
 import {
   HexBinaryValue,
   OpenXmlLeafElement,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the FontSignature Class.
@@ -56,5 +57,15 @@ export class FontSignature extends OpenXmlLeafElement {
     if (this.codePageSignature0 !== undefined) out.push(["w:csb0", this.codePageSignature0.toString()]);
     if (this.codePageSignature1 !== undefined) out.push(["w:csb1", this.codePageSignature1.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.unicodeSignature0, { attribute: "w:usb0", elementClass: "FontSignature" });
+    assertRequired(this.unicodeSignature1, { attribute: "w:usb1", elementClass: "FontSignature" });
+    assertRequired(this.unicodeSignature2, { attribute: "w:usb2", elementClass: "FontSignature" });
+    assertRequired(this.unicodeSignature3, { attribute: "w:usb3", elementClass: "FontSignature" });
+    assertRequired(this.codePageSignature0, { attribute: "w:csb0", elementClass: "FontSignature" });
+    assertRequired(this.codePageSignature1, { attribute: "w:csb1", elementClass: "FontSignature" });
   }
 }

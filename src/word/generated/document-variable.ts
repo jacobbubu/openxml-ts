@@ -5,6 +5,8 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Single Document Variable.
@@ -24,8 +26,8 @@ export class DocumentVariable extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:name": this.name = StringValue.parse(value); return;
-      case "w:val": this.val = StringValue.parse(value); return;
+      case "w:name": this.name = StringValue.parse(value); assertString(this.name, { maxLength: 255, minLength: 1 }, { attribute: "w:name", elementClass: "DocumentVariable" }); return;
+      case "w:val": this.val = StringValue.parse(value); assertString(this.val, { maxLength: 65280, minLength: 0 }, { attribute: "w:val", elementClass: "DocumentVariable" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -36,5 +38,11 @@ export class DocumentVariable extends OpenXmlLeafElement {
     if (this.name !== undefined) out.push(["w:name", this.name.toString()]);
     if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.name, { attribute: "w:name", elementClass: "DocumentVariable" });
+    assertRequired(this.val, { attribute: "w:val", elementClass: "DocumentVariable" });
   }
 }

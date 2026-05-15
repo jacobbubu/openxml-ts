@@ -6,6 +6,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Document Background.
@@ -31,10 +32,10 @@ export class DocumentBackground extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:color": this.color = StringValue.parse(value); return;
+      case "w:color": this.color = StringValue.parse(value); assertString(this.color, { maxLength: 3, minLength: 3 }, { attribute: "w:color", elementClass: "DocumentBackground" }); return;
       case "w:themeColor": this.themeColor = StringValue.parse(value); return;
-      case "w:themeTint": this.themeTint = StringValue.parse(value); return;
-      case "w:themeShade": this.themeShade = StringValue.parse(value); return;
+      case "w:themeTint": this.themeTint = StringValue.parse(value); assertString(this.themeTint, { maxLength: 2, minLength: 1 }, { attribute: "w:themeTint", elementClass: "DocumentBackground" }); return;
+      case "w:themeShade": this.themeShade = StringValue.parse(value); assertString(this.themeShade, { maxLength: 2, minLength: 1 }, { attribute: "w:themeShade", elementClass: "DocumentBackground" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -48,4 +49,5 @@ export class DocumentBackground extends OpenXmlCompositeElement {
     if (this.themeShade !== undefined) out.push(["w:themeShade", this.themeShade.toString()]);
     return out;
   }
+
 }

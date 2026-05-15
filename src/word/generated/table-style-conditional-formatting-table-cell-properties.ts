@@ -17,4 +17,5 @@ export class TableStyleConditionalFormattingTableCellProperties extends OpenXmlC
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
 
+
 }

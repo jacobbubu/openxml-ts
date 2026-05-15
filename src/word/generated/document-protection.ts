@@ -9,6 +9,7 @@ import {
   OpenXmlLeafElement,
   StringValue,
   UInt32Value,
+  assertNumber,
 } from "../../element/index.js";
 
 /** Document Editing Restrictions.
@@ -86,7 +87,7 @@ export class DocumentProtection extends OpenXmlLeafElement {
       case "w:cryptAlgorithmClass": this.cryptographicAlgorithmClass = StringValue.parse(value); return;
       case "w:cryptAlgorithmType": this.cryptographicAlgorithmType = StringValue.parse(value); return;
       case "w:cryptAlgorithmSid": this.cryptographicAlgorithmSid = Int32Value.parse(value); return;
-      case "w:cryptSpinCount": this.cryptographicSpinCount = UInt32Value.parse(value); return;
+      case "w:cryptSpinCount": this.cryptographicSpinCount = UInt32Value.parse(value); assertNumber(this.cryptographicSpinCount, { max: 5000000 }, { attribute: "w:cryptSpinCount", elementClass: "DocumentProtection" }); return;
       case "w:cryptProvider": this.cryptographicProvider = StringValue.parse(value); return;
       case "w:algIdExt": this.algorithmIdExtensibility = HexBinaryValue.parse(value); return;
       case "w:algIdExtSource": this.algorithmIdExtensibilitySource = StringValue.parse(value); return;
@@ -126,4 +127,5 @@ export class DocumentProtection extends OpenXmlLeafElement {
     if (this.spinCount !== undefined) out.push(["w:spinCount", this.spinCount.toString()]);
     return out;
   }
+
 }

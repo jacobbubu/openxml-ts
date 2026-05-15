@@ -17,4 +17,5 @@ export class TableStyleConditionalFormattingTableRowProperties extends OpenXmlCo
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
 
+
 }

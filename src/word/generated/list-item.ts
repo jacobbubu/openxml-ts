@@ -37,4 +37,5 @@ export class ListItem extends OpenXmlLeafElement {
     if (this.value !== undefined) out.push(["w:value", this.value.toString()]);
     return out;
   }
+
 }

@@ -87,4 +87,5 @@ export class ColorSchemeMapping extends OpenXmlLeafElement {
     if (this.followedHyperlink !== undefined) out.push(["w:followedHyperlink", this.followedHyperlink.toString()]);
     return out;
   }
+
 }

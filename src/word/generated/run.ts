@@ -43,4 +43,5 @@ export class Run extends OpenXmlCompositeElement {
     if (this.rsidRunAddition !== undefined) out.push(["w:rsidR", this.rsidRunAddition.toString()]);
     return out;
   }
+
 }

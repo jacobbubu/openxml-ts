@@ -16,4 +16,5 @@ export class SelectFieldWithFirstOrLastChar extends OpenXmlLeafElement {
 
 
 
+
 }

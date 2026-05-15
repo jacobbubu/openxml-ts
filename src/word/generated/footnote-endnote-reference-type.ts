@@ -6,6 +6,7 @@ import {
   BooleanValue,
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the FootnoteEndnoteReferenceType Class.
@@ -37,5 +38,10 @@ export abstract class FootnoteEndnoteReferenceType extends OpenXmlLeafElement {
     if (this.customMarkFollows !== undefined) out.push(["w:customMarkFollows", this.customMarkFollows.toString()]);
     if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.id, { attribute: "w:id", elementClass: "FootnoteEndnoteReferenceType" });
   }
 }

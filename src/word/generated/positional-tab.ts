@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Absolute Position Tab Character.
@@ -41,5 +42,12 @@ export class PositionalTab extends OpenXmlLeafElement {
     if (this.relativeTo !== undefined) out.push(["w:relativeTo", this.relativeTo.toString()]);
     if (this.leader !== undefined) out.push(["w:leader", this.leader.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.alignment, { attribute: "w:alignment", elementClass: "PositionalTab" });
+    assertRequired(this.relativeTo, { attribute: "w:relativeTo", elementClass: "PositionalTab" });
+    assertRequired(this.leader, { attribute: "w:leader", elementClass: "PositionalTab" });
   }
 }

@@ -7,6 +7,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the Hyperlink Class.
@@ -38,11 +39,11 @@ export class Hyperlink extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:tgtFrame": this.targetFrame = StringValue.parse(value); return;
-      case "w:tooltip": this.tooltip = StringValue.parse(value); return;
-      case "w:docLocation": this.docLocation = StringValue.parse(value); return;
+      case "w:tgtFrame": this.targetFrame = StringValue.parse(value); assertString(this.targetFrame, { maxLength: 255 }, { attribute: "w:tgtFrame", elementClass: "Hyperlink" }); return;
+      case "w:tooltip": this.tooltip = StringValue.parse(value); assertString(this.tooltip, { maxLength: 260 }, { attribute: "w:tooltip", elementClass: "Hyperlink" }); return;
+      case "w:docLocation": this.docLocation = StringValue.parse(value); assertString(this.docLocation, { maxLength: 255 }, { attribute: "w:docLocation", elementClass: "Hyperlink" }); return;
       case "w:history": this.history = BooleanValue.parse(value); return;
-      case "w:anchor": this.anchor = StringValue.parse(value); return;
+      case "w:anchor": this.anchor = StringValue.parse(value); assertString(this.anchor, { maxLength: 255 }, { attribute: "w:anchor", elementClass: "Hyperlink" }); return;
       case "r:id": this.id = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -59,4 +60,5 @@ export class Hyperlink extends OpenXmlCompositeElement {
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
     return out;
   }
+
 }

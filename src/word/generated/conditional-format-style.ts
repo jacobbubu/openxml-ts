@@ -6,6 +6,8 @@ import {
   BooleanValue,
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the ConditionalFormatStyle Class.
@@ -58,7 +60,7 @@ export class ConditionalFormatStyle extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = StringValue.parse(value); return;
+      case "w:val": this.val = StringValue.parse(value); assertString(this.val, { maxLength: 12, minLength: 12 }, { attribute: "w:val", elementClass: "ConditionalFormatStyle" }); return;
       case "w:firstRow": this.firstRow = BooleanValue.parse(value); return;
       case "w:lastRow": this.lastRow = BooleanValue.parse(value); return;
       case "w:firstColumn": this.firstColumn = BooleanValue.parse(value); return;
@@ -92,5 +94,10 @@ export class ConditionalFormatStyle extends OpenXmlLeafElement {
     if (this.lastRowFirstColumn !== undefined) out.push(["w:lastRowFirstColumn", this.lastRowFirstColumn.toString()]);
     if (this.lastRowLastColumn !== undefined) out.push(["w:lastRowLastColumn", this.lastRowLastColumn.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: "w:val", elementClass: "ConditionalFormatStyle" });
   }
 }

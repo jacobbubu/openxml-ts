@@ -16,4 +16,5 @@ export class AllowSpaceOfSameStyleInTable extends OpenXmlLeafElement {
 
 
 
+
 }

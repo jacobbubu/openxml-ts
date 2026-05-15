@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the Underline Class.
@@ -34,10 +35,10 @@ export class Underline extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w:val": this.val = StringValue.parse(value); return;
-      case "w:color": this.color = StringValue.parse(value); return;
+      case "w:color": this.color = StringValue.parse(value); assertString(this.color, { maxLength: 3, minLength: 3 }, { attribute: "w:color", elementClass: "Underline" }); return;
       case "w:themeColor": this.themeColor = StringValue.parse(value); return;
-      case "w:themeTint": this.themeTint = StringValue.parse(value); return;
-      case "w:themeShade": this.themeShade = StringValue.parse(value); return;
+      case "w:themeTint": this.themeTint = StringValue.parse(value); assertString(this.themeTint, { maxLength: 2, minLength: 1 }, { attribute: "w:themeTint", elementClass: "Underline" }); return;
+      case "w:themeShade": this.themeShade = StringValue.parse(value); assertString(this.themeShade, { maxLength: 2, minLength: 1 }, { attribute: "w:themeShade", elementClass: "Underline" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -52,4 +53,5 @@ export class Underline extends OpenXmlLeafElement {
     if (this.themeShade !== undefined) out.push(["w:themeShade", this.themeShade.toString()]);
     return out;
   }
+
 }

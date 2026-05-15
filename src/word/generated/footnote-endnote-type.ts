@@ -5,6 +5,7 @@
 import {
   OpenXmlCompositeElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the FootnoteEndnoteType Class.
@@ -36,5 +37,10 @@ export abstract class FootnoteEndnoteType extends OpenXmlCompositeElement {
     if (this.type !== undefined) out.push(["w:type", this.type.toString()]);
     if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.id, { attribute: "w:id", elementClass: "FootnoteEndnoteType" });
   }
 }

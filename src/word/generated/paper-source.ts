@@ -37,4 +37,5 @@ export class PaperSource extends OpenXmlLeafElement {
     if (this.other !== undefined) out.push(["w:other", this.other.toString()]);
     return out;
   }
+
 }

@@ -17,4 +17,5 @@ export class PreviousParagraphMarkRunProperties extends OpenXmlCompositeElement 
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
 
+
 }

@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertString,
 } from "../../element/index.js";
 
 /** Defines the Control Class.
@@ -28,7 +29,7 @@ export class Control extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w:name": this.name = StringValue.parse(value); return;
-      case "w:shapeid": this.shapeId = StringValue.parse(value); return;
+      case "w:shapeid": this.shapeId = StringValue.parse(value); assertString(this.shapeId, { maxLength: 254 }, { attribute: "w:shapeid", elementClass: "Control" }); return;
       case "r:id": this.id = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -42,4 +43,5 @@ export class Control extends OpenXmlLeafElement {
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
     return out;
   }
+
 }

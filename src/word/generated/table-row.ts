@@ -58,4 +58,5 @@ export class TableRow extends OpenXmlCompositeElement {
     if (this.textId !== undefined) out.push(["w14:textId", this.textId.toString()]);
     return out;
   }
+
 }

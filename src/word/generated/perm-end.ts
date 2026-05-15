@@ -6,6 +6,7 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the PermEnd Class.
@@ -37,5 +38,10 @@ export class PermEnd extends OpenXmlLeafElement {
     if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
     if (this.displacedByCustomXml !== undefined) out.push(["w:displacedByCustomXml", this.displacedByCustomXml.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.id, { attribute: "w:id", elementClass: "PermEnd" });
   }
 }

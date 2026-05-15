@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the DataBinding Class.
@@ -41,5 +42,11 @@ export class DataBinding extends OpenXmlLeafElement {
     if (this.xPath !== undefined) out.push(["w:xpath", this.xPath.toString()]);
     if (this.storeItemId !== undefined) out.push(["w:storeItemID", this.storeItemId.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.xPath, { attribute: "w:xpath", elementClass: "DataBinding" });
+    assertRequired(this.storeItemId, { attribute: "w:storeItemID", elementClass: "DataBinding" });
   }
 }

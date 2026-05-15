@@ -7,6 +7,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Complex Field Character.
@@ -43,5 +44,10 @@ export class FieldChar extends OpenXmlCompositeElement {
     if (this.fieldLock !== undefined) out.push(["w:fldLock", this.fieldLock.toString()]);
     if (this.dirty !== undefined) out.push(["w:dirty", this.dirty.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.fieldCharType, { attribute: "w:fldCharType", elementClass: "FieldChar" });
   }
 }

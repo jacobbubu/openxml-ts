@@ -6,6 +6,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Style Conditional Table Formatting Properties.
@@ -32,5 +33,10 @@ export class TableStyleProperties extends OpenXmlCompositeElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.type !== undefined) out.push(["w:type", this.type.toString()]);
     return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.type, { attribute: "w:type", elementClass: "TableStyleProperties" });
   }
 }
