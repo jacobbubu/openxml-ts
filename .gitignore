@@ -35,3 +35,11 @@ bun.lockb
 # misc local
 .local/
 *.local
+
+# bmad: per-user overrides and runtime output (planning artifacts live under docs/)
+_bmad-output/
+_bmad/config.user.toml
+_bmad/custom/config.user.toml
+
+# oh-my-claudecode plugin runtime state
+.omc/state/

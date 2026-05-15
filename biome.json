@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": ["dist", "node_modules", ".bmad-core", "coverage"]
+    "ignore": ["dist", "node_modules", "_bmad", "_bmad-output", ".claude", ".omc", "coverage"]
   },
   "formatter": {
     "enabled": true,
