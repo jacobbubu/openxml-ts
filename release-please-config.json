@@ -20,7 +20,8 @@
   ],
   "packages": {
     ".": {
-      "package-name": "openxml-ts"
+      "package-name": "openxml-ts",
+      "release-as": "0.1.0"
     }
   }
 }
