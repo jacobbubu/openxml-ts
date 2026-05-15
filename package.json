@@ -27,6 +27,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "golden:gen": "bun run tools/golden-generator/generate.ts",
     "format": "biome format --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --write ."

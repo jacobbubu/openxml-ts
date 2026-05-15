@@ -1,0 +1,392 @@
+{
+  "source": "basicspreadsheet.xlsx",
+  "generatedBy": "openxml-ts tools/golden-generator",
+  "parts": [
+    {
+      "uri": "/xl/diagrams/data1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml",
+      "contentByteLength": 11583,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/workbook.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml",
+      "contentByteLength": 720,
+      "relationships": [
+        {
+          "id": "rId3",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
+          "targetMode": "internal",
+          "target": "worksheets/sheet3.xml"
+        },
+        {
+          "id": "rId7",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings",
+          "targetMode": "internal",
+          "target": "sharedStrings.xml"
+        },
+        {
+          "id": "rId2",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
+          "targetMode": "internal",
+          "target": "worksheets/sheet2.xml"
+        },
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
+          "targetMode": "internal",
+          "target": "worksheets/sheet1.xml"
+        },
+        {
+          "id": "rId6",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles",
+          "targetMode": "internal",
+          "target": "styles.xml"
+        },
+        {
+          "id": "rId5",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
+          "targetMode": "internal",
+          "target": "theme/theme1.xml"
+        },
+        {
+          "id": "rId4",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheDefinition",
+          "targetMode": "internal",
+          "target": "pivotCache/pivotCacheDefinition1.xml"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/worksheets/sheet2.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+      "contentByteLength": 978,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/charts/chart1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.drawingml.chart+xml",
+      "contentByteLength": 2060,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/worksheets/sheet1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+      "contentByteLength": 6197,
+      "relationships": [
+        {
+          "id": "rId3",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
+          "targetMode": "internal",
+          "target": "../printerSettings/printerSettings1.bin"
+        },
+        {
+          "id": "rId2",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotTable",
+          "targetMode": "internal",
+          "target": "../pivotTables/pivotTable2.xml"
+        },
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotTable",
+          "targetMode": "internal",
+          "target": "../pivotTables/pivotTable1.xml"
+        },
+        {
+          "id": "rId6",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "targetMode": "internal",
+          "target": "../tables/table2.xml"
+        },
+        {
+          "id": "rId5",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "targetMode": "internal",
+          "target": "../tables/table1.xml"
+        },
+        {
+          "id": "rId4",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing",
+          "targetMode": "internal",
+          "target": "../drawings/drawing1.xml"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/diagrams/layout1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.drawingml.diagramLayout+xml",
+      "contentByteLength": 4118,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/diagrams/quickStyle1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.drawingml.diagramStyle+xml",
+      "contentByteLength": 20767,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/diagrams/colors1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.drawingml.diagramColors+xml",
+      "contentByteLength": 16863,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/worksheets/sheet3.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+      "contentByteLength": 486,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/drawings/drawing1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.drawing+xml",
+      "contentByteLength": 3980,
+      "relationships": [
+        {
+          "id": "rId3",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramLayout",
+          "targetMode": "internal",
+          "target": "../diagrams/layout1.xml"
+        },
+        {
+          "id": "rId2",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramData",
+          "targetMode": "internal",
+          "target": "../diagrams/data1.xml"
+        },
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart",
+          "targetMode": "internal",
+          "target": "../charts/chart1.xml"
+        },
+        {
+          "id": "rId5",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramColors",
+          "targetMode": "internal",
+          "target": "../diagrams/colors1.xml"
+        },
+        {
+          "id": "rId4",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/diagramQuickStyle",
+          "targetMode": "internal",
+          "target": "../diagrams/quickStyle1.xml"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/theme/theme1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.theme+xml",
+      "contentByteLength": 6880,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/styles.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml",
+      "contentByteLength": 5592,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/sharedStrings.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml",
+      "contentByteLength": 1763,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/pivotTables/pivotTable2.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotTable+xml",
+      "contentByteLength": 1440,
+      "relationships": [
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheDefinition",
+          "targetMode": "internal",
+          "target": "../pivotCache/pivotCacheDefinition1.xml"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/pivotTables/pivotTable1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotTable+xml",
+      "contentByteLength": 1441,
+      "relationships": [
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheDefinition",
+          "targetMode": "internal",
+          "target": "../pivotCache/pivotCacheDefinition1.xml"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/pivotCache/pivotCacheRecords1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotCacheRecords+xml",
+      "contentByteLength": 361,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/pivotCache/pivotCacheDefinition1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotCacheDefinition+xml",
+      "contentByteLength": 1098,
+      "relationships": [
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/pivotCacheRecords",
+          "targetMode": "internal",
+          "target": "pivotCacheRecords1.xml"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/tables/table2.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml",
+      "contentByteLength": 505,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/tables/table1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml",
+      "contentByteLength": 473,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/printerSettings/printerSettings1.bin",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.printerSettings",
+      "contentByteLength": 13892,
+      "relationships": []
+    },
+    {
+      "uri": "/docProps/core.xml",
+      "contentType": "application/vnd.openxmlformats-package.core-properties+xml",
+      "contentByteLength": 622,
+      "relationships": []
+    },
+    {
+      "uri": "/docProps/app.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.extended-properties+xml",
+      "contentByteLength": 848,
+      "relationships": []
+    }
+  ],
+  "packageRelationships": [
+    {
+      "id": "rId3",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties",
+      "targetMode": "internal",
+      "target": "docProps/app.xml"
+    },
+    {
+      "id": "rId2",
+      "type": "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
+      "targetMode": "internal",
+      "target": "docProps/core.xml"
+    },
+    {
+      "id": "rId1",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
+      "targetMode": "internal",
+      "target": "xl/workbook.xml"
+    }
+  ],
+  "contentTypes": {
+    "defaults": [
+      {
+        "extension": "bin",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.printerSettings"
+      },
+      {
+        "extension": "rels",
+        "contentType": "application/vnd.openxmlformats-package.relationships+xml"
+      },
+      {
+        "extension": "xml",
+        "contentType": "application/xml"
+      }
+    ],
+    "overrides": [
+      {
+        "partName": "/xl/diagrams/layout1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.drawingml.diagramLayout+xml"
+      },
+      {
+        "partName": "/xl/diagrams/quickStyle1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.drawingml.diagramStyle+xml"
+      },
+      {
+        "partName": "/xl/theme/theme1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.theme+xml"
+      },
+      {
+        "partName": "/xl/styles.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"
+      },
+      {
+        "partName": "/xl/tables/table1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
+      },
+      {
+        "partName": "/xl/tables/table2.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
+      },
+      {
+        "partName": "/xl/pivotTables/pivotTable1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotTable+xml"
+      },
+      {
+        "partName": "/xl/pivotTables/pivotTable2.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotTable+xml"
+      },
+      {
+        "partName": "/xl/diagrams/data1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml"
+      },
+      {
+        "partName": "/xl/diagrams/colors1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.drawingml.diagramColors+xml"
+      },
+      {
+        "partName": "/xl/workbook.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"
+      },
+      {
+        "partName": "/xl/charts/chart1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.drawingml.chart+xml"
+      },
+      {
+        "partName": "/docProps/app.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.extended-properties+xml"
+      },
+      {
+        "partName": "/xl/worksheets/sheet2.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
+      },
+      {
+        "partName": "/xl/worksheets/sheet3.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
+      },
+      {
+        "partName": "/xl/drawings/drawing1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.drawing+xml"
+      },
+      {
+        "partName": "/xl/worksheets/sheet1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
+      },
+      {
+        "partName": "/xl/pivotCache/pivotCacheDefinition1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotCacheDefinition+xml"
+      },
+      {
+        "partName": "/xl/sharedStrings.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"
+      },
+      {
+        "partName": "/xl/pivotCache/pivotCacheRecords1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.pivotCacheRecords+xml"
+      },
+      {
+        "partName": "/docProps/core.xml",
+        "contentType": "application/vnd.openxmlformats-package.core-properties+xml"
+      }
+    ]
+  }
+}

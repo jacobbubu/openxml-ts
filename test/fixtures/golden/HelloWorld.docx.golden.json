@@ -1,0 +1,151 @@
+{
+  "source": "HelloWorld.docx",
+  "generatedBy": "openxml-ts tools/golden-generator",
+  "parts": [
+    {
+      "uri": "/word/document.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+      "contentByteLength": 2930,
+      "relationships": [
+        {
+          "id": "rId3",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/webSettings",
+          "targetMode": "internal",
+          "target": "webSettings.xml"
+        },
+        {
+          "id": "rId2",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/settings",
+          "targetMode": "internal",
+          "target": "settings.xml"
+        },
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles",
+          "targetMode": "internal",
+          "target": "styles.xml"
+        },
+        {
+          "id": "rId5",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
+          "targetMode": "internal",
+          "target": "theme/theme1.xml"
+        },
+        {
+          "id": "rId4",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/fontTable",
+          "targetMode": "internal",
+          "target": "fontTable.xml"
+        }
+      ]
+    },
+    {
+      "uri": "/word/theme/theme1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.theme+xml",
+      "contentByteLength": 8397,
+      "relationships": []
+    },
+    {
+      "uri": "/word/settings.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml",
+      "contentByteLength": 3159,
+      "relationships": []
+    },
+    {
+      "uri": "/word/styles.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml",
+      "contentByteLength": 42667,
+      "relationships": []
+    },
+    {
+      "uri": "/word/webSettings.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml",
+      "contentByteLength": 976,
+      "relationships": []
+    },
+    {
+      "uri": "/word/fontTable.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml",
+      "contentByteLength": 1656,
+      "relationships": []
+    },
+    {
+      "uri": "/docProps/core.xml",
+      "contentType": "application/vnd.openxmlformats-package.core-properties+xml",
+      "contentByteLength": 757,
+      "relationships": []
+    },
+    {
+      "uri": "/docProps/app.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.extended-properties+xml",
+      "contentByteLength": 711,
+      "relationships": []
+    }
+  ],
+  "packageRelationships": [
+    {
+      "id": "rId3",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties",
+      "targetMode": "internal",
+      "target": "docProps/app.xml"
+    },
+    {
+      "id": "rId2",
+      "type": "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
+      "targetMode": "internal",
+      "target": "docProps/core.xml"
+    },
+    {
+      "id": "rId1",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
+      "targetMode": "internal",
+      "target": "word/document.xml"
+    }
+  ],
+  "contentTypes": {
+    "defaults": [
+      {
+        "extension": "rels",
+        "contentType": "application/vnd.openxmlformats-package.relationships+xml"
+      },
+      {
+        "extension": "xml",
+        "contentType": "application/xml"
+      }
+    ],
+    "overrides": [
+      {
+        "partName": "/word/document.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"
+      },
+      {
+        "partName": "/word/styles.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"
+      },
+      {
+        "partName": "/word/settings.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"
+      },
+      {
+        "partName": "/word/webSettings.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml"
+      },
+      {
+        "partName": "/word/fontTable.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml"
+      },
+      {
+        "partName": "/word/theme/theme1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.theme+xml"
+      },
+      {
+        "partName": "/docProps/core.xml",
+        "contentType": "application/vnd.openxmlformats-package.core-properties+xml"
+      },
+      {
+        "partName": "/docProps/app.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.extended-properties+xml"
+      }
+    ]
+  }
+}
