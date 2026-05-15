@@ -29,6 +29,8 @@ export interface SchemaType {
   readonly BaseClass?: string;
   readonly IsAbstract?: boolean;
   readonly IsLeafElement?: boolean;
+  /** schema 中 mixed-content leaf（如 `w:t`）专用标记；语义同 IsLeafElement。 */
+  readonly IsLeafText?: boolean;
   readonly Attributes?: readonly SchemaAttribute[];
 }
 
@@ -47,11 +49,22 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
   const elementName = parsed.elementName;
   const namespaceUri = elementPrefix.length === 0 ? "" : resolveNs(elementPrefix, options);
 
-  const baseImport = type.IsLeafElement === true ? "OpenXmlLeafElement" : "OpenXmlCompositeElement";
+  const baseImport =
+    type.IsLeafElement === true || type.IsLeafText === true
+      ? "OpenXmlLeafElement"
+      : "OpenXmlCompositeElement";
   const valueImports = new Set<string>();
-  const attrLines = (type.Attributes ?? []).map((a) => renderAttrField(a, valueImports));
-  const applyAttrCases = (type.Attributes ?? []).map((a) => renderApplyAttrCase(a));
-  const collectLines = (type.Attributes ?? []).map((a) => renderCollectLine(a));
+  // 过滤掉 schema 中偶尔出现的「无 PropertyName / 无 QName」记录，避免下游崩
+  const attrs = (type.Attributes ?? []).filter(
+    (a) =>
+      typeof a.PropertyName === "string" &&
+      a.PropertyName.length > 0 &&
+      typeof a.QName === "string" &&
+      a.QName.length > 0,
+  );
+  const attrLines = attrs.map((a) => renderAttrField(a, valueImports));
+  const applyAttrCases = attrs.map((a) => renderApplyAttrCase(a));
+  const collectLines = attrs.map((a) => renderCollectLine(a));
 
   const imports: string[] = [baseImport];
   if (type.IsAbstract !== true && type.IsLeafElement !== true) {
@@ -84,9 +97,9 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
   const nsLine = `  override readonly namespaceUri = ${quote(namespaceUri)} as const;`;
 
   const childrenLine =
-    type.IsAbstract === true || type.IsLeafElement === true
+    type.IsAbstract === true || type.IsLeafElement === true || type.IsLeafText === true
       ? ""
-      : "  override readonly children = new OpenXmlElementList(this);\n";
+      : "  override readonly children: OpenXmlElementList = new OpenXmlElementList(this);\n";
 
   const applyAttrBlock =
     applyAttrCases.length === 0
@@ -98,11 +111,9 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
   const collectBlock =
     collectLines.length === 0
       ? ""
-      : `\n  protected override collectAttributes(): Array<[string, string]> {\n    const out: Array<[string, string]> = [];\n${collectLines
+      : `\n  protected override collectAttributes(): Array<[string, string]> {\n    const out: Array<[string, string]> = [];\n    for (const [k, v] of this.extendedAttributes) out.push([k, v]);\n${collectLines
           .map((c) => `    ${c}`)
-          .join(
-            "\n",
-          )}\n    for (const [k, v] of this.extendedAttributes) out.push([k, v]);\n    return out;\n  }\n`;
+          .join("\n")}\n    return out;\n  }\n`;
 
   return [
     "// THIS FILE IS GENERATED. DO NOT EDIT.",

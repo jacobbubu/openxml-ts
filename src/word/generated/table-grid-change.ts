@@ -1,0 +1,36 @@
+// THIS FILE IS GENERATED. DO NOT EDIT.
+// Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_wordprocessingml_2006_main.json
+// @see DocumentFormat.OpenXml.Wordprocessing.TableGridChange
+
+import {
+  OpenXmlCompositeElement,
+  OpenXmlElementList,
+  StringValue,
+} from "../../element/index.js";
+
+/** Revision Information for Table Grid Column Definitions.
+ *
+ * Element: `w:tblGridChange` */
+export class TableGridChange extends OpenXmlCompositeElement {
+  override readonly localName = "tblGridChange" as const;
+  override readonly prefix = "w" as const;
+  override readonly namespaceUri = "http://schemas.openxmlformats.org/wordprocessingml/2006/main" as const;
+  override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
+
+  /** Annotation Identifier (w:id) */
+  id: StringValue | undefined;
+
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "w:id": this.id = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
+    return out;
+  }
+}

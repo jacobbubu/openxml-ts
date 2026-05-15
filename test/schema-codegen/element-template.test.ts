@@ -66,9 +66,9 @@ describe("element-template · 5 种核心形态", () => {
 
         protected override collectAttributes(): Array<[string, string]> {
           const out: Array<[string, string]> = [];
+          for (const [k, v] of this.extendedAttributes) out.push([k, v]);
           if (this.author !== undefined) out.push(["w:author", this.author.toString()]);
           if (this.date !== undefined) out.push(["w:date", this.date.toString()]);
-          for (const [k, v] of this.extendedAttributes) out.push([k, v]);
           return out;
         }
       }
@@ -115,7 +115,7 @@ describe("element-template · 5 种核心形态", () => {
         override readonly localName = "p" as const;
         override readonly prefix = "w" as const;
         override readonly namespaceUri = "http://schemas.openxmlformats.org/wordprocessingml/2006/main" as const;
-        override readonly children = new OpenXmlElementList(this);
+        override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
         /** w:rsidR (w:rsidR) */
         rsidParagraphAddition: HexBinaryValue | undefined;
@@ -133,9 +133,9 @@ describe("element-template · 5 种核心形态", () => {
 
         protected override collectAttributes(): Array<[string, string]> {
           const out: Array<[string, string]> = [];
+          for (const [k, v] of this.extendedAttributes) out.push([k, v]);
           if (this.rsidParagraphAddition !== undefined) out.push(["w:rsidR", this.rsidParagraphAddition.toString()]);
           if (this.rsidParagraphMarkRevision !== undefined) out.push(["w:rsidRPr", this.rsidParagraphMarkRevision.toString()]);
-          for (const [k, v] of this.extendedAttributes) out.push([k, v]);
           return out;
         }
       }
