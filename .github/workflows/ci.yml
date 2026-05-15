@@ -64,6 +64,27 @@ jobs:
       - name: Test (Bun runtime)
         run: bun run vitest run
 
+  verify-size:
+    name: Verify (Bundle Size)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Size limit (openxml-ts root + openxml-ts/word minimum + full)
+        run: pnpm size
+
   verify-browser:
     name: Verify (Chromium)
     runs-on: ubuntu-latest

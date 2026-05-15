@@ -1,8 +1,12 @@
 /**
- * `openxml-ts/word` 公共入口（Story-2.9 之前可以从这条路径深引）。
+ * `openxml-ts/word` 公共入口（Story-2.9 起作为 npm subpath）。
  *
- * 暴露 Word 子系统的门面 + typed Parts + 一组常用生成 element 类。完整生成类列表见
- * `src/word/generated/index.ts`（约 700 个，按需深引）。
+ * - 暴露 Word 子系统的强类型门面 `WordprocessingDocument`、6 个 typed Parts、
+ *   以及 30+ 常用 element 类的便捷 re-export；
+ * - 完整 ~720 个 element 类按需深引 `openxml-ts/word/generated/<name>.js`
+ *   （ADR-013），最小 bundle 友好；
+ * - `sideEffects: false` + tree-shake：用户只 import 几个常用类时打包器只拉
+ *   对应的 generated/*.js 模块。
  */
 
 export { WordprocessingDocument } from "./word-document.js";
@@ -17,20 +21,76 @@ export {
   WebSettingsPart,
 } from "./parts/index.js";
 
-// 常用生成 element 类——按 Architecture §9 ADR-013，方便用户从 root 入口拿核心类
+// ─── 核心结构 ─────────────────────────────────────────────────────────────────
+
 export { Document } from "./generated/document.js";
 export { Body } from "./generated/body.js";
+
+// ─── 段落 / 行 / 文本 ─────────────────────────────────────────────────────────
+
 export { Paragraph } from "./generated/paragraph.js";
+export { ParagraphProperties } from "./generated/paragraph-properties.js";
+export { ParagraphStyleId } from "./generated/paragraph-style-id.js";
 export { Run } from "./generated/run.js";
+export { RunProperties } from "./generated/run-properties.js";
+export { RunStyle } from "./generated/run-style.js";
 export { Text } from "./generated/text.js";
+export { Break } from "./generated/break.js";
+export { TabChar } from "./generated/tab-char.js";
+export { TabStop } from "./generated/tab-stop.js";
+export { Tabs } from "./generated/tabs.js";
+
+// ─── 文本格式 ────────────────────────────────────────────────────────────────
+
+export { Bold } from "./generated/bold.js";
+export { Italic } from "./generated/italic.js";
+export { Color } from "./generated/color.js";
+export { Shading } from "./generated/shading.js";
+export { Justification } from "./generated/justification.js";
+export { Indentation } from "./generated/indentation.js";
+export { SpacingBetweenLines } from "./generated/spacing-between-lines.js";
+
+// ─── 表格 ────────────────────────────────────────────────────────────────────
+
 export { Table } from "./generated/table.js";
+export { TableProperties } from "./generated/table-properties.js";
+export { TableGrid } from "./generated/table-grid.js";
+export { GridColumn } from "./generated/grid-column.js";
 export { TableRow } from "./generated/table-row.js";
+export { TableRowProperties } from "./generated/table-row-properties.js";
 export { TableCell } from "./generated/table-cell.js";
+export { TableCellProperties } from "./generated/table-cell-properties.js";
+export { TableBorders } from "./generated/table-borders.js";
+export { TableCellBorders } from "./generated/table-cell-borders.js";
+
+// ─── 链接 / 书签 / 字段 ──────────────────────────────────────────────────────
+
 export { Hyperlink } from "./generated/hyperlink.js";
-export { Settings } from "./generated/settings.js";
-export { Styles } from "./generated/styles.js";
+export { BookmarkStart } from "./generated/bookmark-start.js";
+export { BookmarkEnd } from "./generated/bookmark-end.js";
+
+// ─── 节 / 页面 ───────────────────────────────────────────────────────────────
+
+export { SectionProperties } from "./generated/section-properties.js";
+export { PageSize } from "./generated/page-size.js";
+export { PageMargin } from "./generated/page-margin.js";
+export { Header } from "./generated/header.js";
+export { Footer } from "./generated/footer.js";
+export { HeaderReference } from "./generated/header-reference.js";
+export { FooterReference } from "./generated/footer-reference.js";
+
+// ─── 样式表 ──────────────────────────────────────────────────────────────────
+
 export { Style } from "./generated/style.js";
+export { Styles } from "./generated/styles.js";
+export { Settings } from "./generated/settings.js";
 export { Fonts } from "./generated/fonts.js";
 export { WebSettings } from "./generated/web-settings.js";
+
+// ─── 绘图（占位透传，DrawingML schema 类未生成） ─────────────────────────────
+
+export { Drawing } from "./generated/drawing.js";
+
+// ─── 注册表 ──────────────────────────────────────────────────────────────────
 
 export { registerWordprocessingElements } from "./generated/_registry.js";

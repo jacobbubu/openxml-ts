@@ -2,7 +2,7 @@
 
 A TypeScript port of [Microsoft Open-XML-SDK](https://github.com/dotnet/Open-XML-SDK).
 
-> 状态：Epic-1（OPC Packaging 内核）已完成。下一步：Word/Excel/PowerPoint Schema 类。
+> 状态：Epic-1（OPC Packaging 内核） + Epic-2（WordprocessingML，~720 个 element 类、强类型 Parts、子 entry `openxml-ts/word`）已完成。下一步：Epic-3 SpreadsheetML / Epic-4 PresentationML。
 
 ## 设计目标
 
@@ -89,6 +89,49 @@ doc.relationships.create(
   createHyperlinkInput({ target: "https://example.com" }),
 );
 ```
+
+## Word 子系统（`openxml-ts/word`）
+
+Word 部分通过独立 subpath `openxml-ts/word` 暴露，根 entry 不强引 ~720 个 element 类，保证不用 Word 的用户 bundle 体积最小（root entry 当前 78 KB gzip，全量 Word entry 103 KB gzip）。
+
+```ts
+import { Paragraph, Run, Text, WordprocessingDocument } from "openxml-ts/word";
+
+// 从零造一份最小可用 docx
+const doc = WordprocessingDocument.create();
+const body = doc.mainDocumentPart!.document.firstChild()!; // Body
+
+for (const line of ["Hello", "from", "openxml-ts"]) {
+  const p = new Paragraph();
+  const r = new Run();
+  const t = new Text();
+  t.text = line;
+  r.appendChild(t);
+  p.appendChild(r);
+  body.appendChild(p);
+}
+
+await doc.saveAsAsync("./hello.docx");
+```
+
+```ts
+// 打开 → 强类型遍历 → 改字 → 写回
+import { WordprocessingDocument, Text } from "openxml-ts/word";
+
+await using doc = await WordprocessingDocument.openAsync("./template.docx");
+for (const t of doc.mainDocumentPart!.document.descendants(Text)) {
+  if (t.text === "{{name}}") t.text = "World";
+}
+await doc.saveAsAsync("./out.docx");
+```
+
+**Tree-shake 友好深引：** 单个 element 类可以走 `openxml-ts/word/generated/<name>` —— 只 `import { Paragraph }` 时打包结果 ≤ 50 KB gzip（CI `size-limit` 守护）。
+
+```ts
+import { Paragraph } from "openxml-ts/word/generated/paragraph";
+```
+
+更多用法见 [`examples/word-create.ts`](./examples/word-create.ts) 与 [`examples/word-replace.ts`](./examples/word-replace.ts)。
 
 ## OPC 心智地图
 

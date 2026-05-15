@@ -11,6 +11,14 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
+    "./word": {
+      "types": "./dist/word/index.d.ts",
+      "import": "./dist/word/index.js"
+    },
+    "./word/generated/*": {
+      "types": "./dist/word/generated/*.d.ts",
+      "import": "./dist/word/generated/*.js"
+    },
     "./package.json": "./package.json"
   },
   "files": ["dist", "README.md", "LICENSE"],
@@ -34,15 +42,20 @@
     "gen:word": "bun run tools/schema-codegen/generate.ts",
     "format": "biome format --write .",
     "lint": "biome check .",
-    "lint:fix": "biome check --write ."
+    "lint:fix": "biome check --write .",
+    "size": "size-limit",
+    "size:why": "size-limit --why"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@size-limit/esbuild-why": "^12.1.0",
+    "@size-limit/preset-small-lib": "^12.1.0",
     "@types/node": "^22.10.5",
     "@vitest/browser": "^2.1.9",
     "@vitest/coverage-v8": "^2.1.9",
     "bmad-method": "^6.6.0",
     "playwright": "^1.60.0",
+    "size-limit": "^12.1.0",
     "typescript": "^5.7.3",
     "vitest": "^2.1.8"
   },
@@ -69,5 +82,26 @@
   ],
   "dependencies": {
     "@zip.js/zip.js": "^2.8.26"
-  }
+  },
+  "size-limit": [
+    {
+      "name": "openxml-ts (root entry, OPC + ZIP backend)",
+      "path": "dist/index.js",
+      "limit": "100 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/word minimal (Paragraph + Run + Text)",
+      "path": "dist/word/generated/paragraph.js",
+      "import": "{ Paragraph }",
+      "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/word (full bundle including registry)",
+      "path": "dist/word/index.js",
+      "limit": "500 KB",
+      "gzip": true
+    }
+  ]
 }
