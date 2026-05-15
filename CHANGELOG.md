@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.1.0](https://github.com/jacobbubu/openxml-ts/compare/v0.1.0...v0.1.0) (2026-05-15)
+
+
+### Features
+
+* **codegen:** Story-2.4 Schema codegen 管线（吃 schema JSON → TS element 类）([#19](https://github.com/jacobbubu/openxml-ts/issues/19)) ([31dc96b](https://github.com/jacobbubu/openxml-ts/commit/31dc96b31ff1f01c76f8f2a637eedc42da4a2307))
+* **element:** Story-2.1 OpenXmlElement 基础 + 子元素树操作 ([#16](https://github.com/jacobbubu/openxml-ts/issues/16)) ([569651e](https://github.com/jacobbubu/openxml-ts/commit/569651edeb37acbc168f03d621b569eed5f9130d))
+* **element:** Story-2.2 强类型属性值（StringValue / EnumValue&lt;T&gt; / ...）([#17](https://github.com/jacobbubu/openxml-ts/issues/17)) ([3027452](https://github.com/jacobbubu/openxml-ts/commit/3027452a56232148db696f6eb3a6ed8a5e0b2973))
+* **element:** Story-2.3 XML ↔ Element 树双向序列化 + 注册表 ([#18](https://github.com/jacobbubu/openxml-ts/issues/18)) ([7cc21b1](https://github.com/jacobbubu/openxml-ts/commit/7cc21b12dbb8092cd70adbdd037d22c430261f45))
+* **element:** Story-2.7 属性级 Validator + codegen 注入 ([#22](https://github.com/jacobbubu/openxml-ts/issues/22)) ([88322a1](https://github.com/jacobbubu/openxml-ts/commit/88322a16a97b55eb2bad47d8cc0a12df9cca9b96))
+* **word:** Story-2.10 Word 性能基线 + Diagnostics 扩展 + 0.2.0 发版准备 ([#25](https://github.com/jacobbubu/openxml-ts/issues/25)) ([90a58f4](https://github.com/jacobbubu/openxml-ts/commit/90a58f44615795efe17244cc338be4e93723bbeb))
+* **word:** Story-2.5 生成 wordprocessingml 主 namespace 全部 element 类 ([#20](https://github.com/jacobbubu/openxml-ts/issues/20)) ([90b26eb](https://github.com/jacobbubu/openxml-ts/commit/90b26ebc4a71ea977329b459be0942e26946b083))
+* **word:** Story-2.6 WordprocessingDocument + typed Parts ([#21](https://github.com/jacobbubu/openxml-ts/issues/21)) ([300d6fb](https://github.com/jacobbubu/openxml-ts/commit/300d6fbc0c1b3afaf90d8e154ff1b27c0eebebed))
+* **word:** Story-2.8 Roundtrip 真实样例 + element golden 生成器 ([#23](https://github.com/jacobbubu/openxml-ts/issues/23)) ([b006b3e](https://github.com/jacobbubu/openxml-ts/commit/b006b3e132fe2f3a9f223008b0b15611f3a6be0a))
+* **word:** Story-2.9 子 entry openxml-ts/word + tree-shake size-limit 守护 ([#24](https://github.com/jacobbubu/openxml-ts/issues/24)) ([121760e](https://github.com/jacobbubu/openxml-ts/commit/121760e10a7b3a4397bac6a024b974dfd3fd597a))
+
+
+### Documentation
+
+* Epic-2 BMAD 规划阶段三件套（Word PRD / Architecture / Story 拆分） ([#14](https://github.com/jacobbubu/openxml-ts/issues/14)) ([a1a6237](https://github.com/jacobbubu/openxml-ts/commit/a1a6237087c17a7140c66b05ce40ca3dc0dc5bce))
+
 ## 0.1.0 (2026-05-15)
 
 
