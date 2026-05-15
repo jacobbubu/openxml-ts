@@ -10,3 +10,9 @@ export {
 } from "./errors.js";
 export { OpenXmlPackage } from "./core/open-xml-package.js";
 export { createInMemory, openSync } from "./factories.js";
+export {
+  CONTENT_TYPES_NS,
+  ContentTypeManifest,
+  type DefaultEntry,
+  type OverrideEntry,
+} from "./content-types/index.js";
