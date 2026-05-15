@@ -27,6 +27,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:browser": "vitest run --config vitest.browser.config.ts",
+    "test:browser:install": "playwright install chromium",
     "bench": "vitest bench --run",
     "golden:gen": "bun run tools/golden-generator/generate.ts",
     "format": "biome format --write .",
@@ -36,8 +38,10 @@
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@types/node": "^22.10.5",
+    "@vitest/browser": "^2.1.9",
     "@vitest/coverage-v8": "^2.1.9",
     "bmad-method": "^6.6.0",
+    "playwright": "^1.60.0",
     "typescript": "^5.7.3",
     "vitest": "^2.1.8"
   },
