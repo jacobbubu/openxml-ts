@@ -40,3 +40,41 @@ createInMemory + saveAsBytesAsync — 端到端构造
 pnpm bench         # 一次性
 pnpm bench --watch # 改动时持续跑
 ```
+
+---
+
+## Epic-2 Word 子系统基线（Story-2.10）
+
+`bench/word.bench.ts` 首次基线。合成 fixture：14000 段 `Paragraph × Run × Text`，每行
+确定性高熵 token，让 ZIP 压缩后体积接近 element 树规模（约 **1 MB zipped** /
+~3 MB 未压缩 XML）。环境同上（M-series MacBook，Node 20.x / vitest 2.x bench）。
+
+### NFR-1.1 / 1.2 阈值对照
+
+| 场景 | 目标（epic-2-prd §NFR-1） | 测得 | 状态 |
+| --- | --- | --- | --- |
+| openAsync + 主文档 descendants 全量遍历 | ≤ 300 ms p95（1.1） | mean **79.2 ms**, p99 187.4 ms | ✅ |
+| 修改 1 个 Text + saveAsBytes 整包写回 | ≤ 200 ms p95（1.2） | mean **101.4 ms**, p99 123.9 ms | ✅ |
+| create + 填 14000 段 + saveAsBytes | （参考，端到端） | mean **130.6 ms**, p99 163.5 ms | ✅ |
+
+### 完整 vitest bench 输出（首次基线 · 2026-05-16）
+
+```
+WordprocessingDocument.openAsync — 1 MB docx
+  · open + 主文档 descendants 遍历
+    hz 12.63  min 37.97ms  max 187.38ms  mean 79.21ms  p75 94.87ms  p99 187.38ms  rme ±40.73%  samples 10
+
+element 树 → bytes — 1 MB docx
+  · 修改 1 个 Text + saveAsBytes 整包写回
+    hz 9.86   min 80.28ms  max 123.92ms  mean 101.38ms p75 115.26ms p99 123.92ms  rme ±10.91%  samples 10
+
+WordprocessingDocument.create — 端到端 14000 段构造
+  · create + 填充 + saveAsBytes
+    hz 7.66   min 109.77ms max 163.49ms  mean 130.59ms p75 140.30ms p99 163.49ms  rme ±10.41%  samples 10
+```
+
+### 回归判定
+
+与 Epic-1 相同：p99 增长 > 50% 视作 release-blocking；mean 增长 > 25% 视作 perf-regression。
+bench `rme` 在小样本时可能到 ±40%，单次跑跳水视作噪声，PR review 时连续跑两轮取 mean。
+

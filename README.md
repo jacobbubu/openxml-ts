@@ -133,6 +133,46 @@ import { Paragraph } from "openxml-ts/word/generated/paragraph";
 
 更多用法见 [`examples/word-create.ts`](./examples/word-create.ts) 与 [`examples/word-replace.ts`](./examples/word-replace.ts)。
 
+### Element 心智地图
+
+WordprocessingML 文档在内存中是一棵 **OpenXmlElement** 树：
+
+```
+Document          ← /word/document.xml 的根
+└── Body
+    ├── Paragraph         ← <w:p>，块级容器
+    │   ├── ParagraphProperties  ← <w:pPr>，段落格式
+    │   │   └── Justification / Indentation / SpacingBetweenLines / ...
+    │   └── Run                  ← <w:r>，行内容器（同段可多个）
+    │       ├── RunProperties    ← <w:rPr>，字体/颜色/粗体/斜体
+    │       └── Text             ← <w:t>，叶子节点，承载实际字符
+    ├── Table             ← <w:tbl>
+    │   ├── TableProperties
+    │   ├── TableGrid
+    │   └── TableRow → TableCell → Paragraph → ...
+    └── SectionProperties ← <w:sectPr>，节属性（页面大小/页眉页脚引用等）
+```
+
+继承关系一共 3 层：
+
+| 抽象 | 角色 | 例子 |
+| --- | --- | --- |
+| `OpenXmlElement` | 树节点基类 | （抽象） |
+| `OpenXmlLeafElement` | 叶子，只承载属性 | `Bold`、`Color`、`TabStop` |
+| `OpenXmlCompositeElement` | 容器，含 `children` 与 `descendants()` | `Paragraph`、`Run`、`Table`、`Body`、`Document` |
+| `OpenXmlUnknownElement` | 反序列化时 schema 未识别的元素 | （降级，不丢字节） |
+
+每个具体 element 类都自带：
+
+- `static elementQualifiedName` —— XML qualified name（命名空间 + local name）
+- `extendedAttributes` / `typedAttributes` —— 原始字符串属性与强类型属性
+- `appendChild` / `removeChild` / `firstChild()` / `descendants(ctor?)` —— 树遍历
+- 各 schema 字段对应的 typed getter（如 `Paragraph.paragraphProperties`，`Run.runProperties`）
+
+读源码起点：[`src/element/element.ts`](./src/element/element.ts) 是基类，
+[`src/word/generated/`](./src/word/generated/) 是约 720 个 schema 类，
+[`docs/planning/architecture.md`](./docs/planning/architecture.md) §element 章节给完整继承图。
+
 ## OPC 心智地图
 
 每个 docx/xlsx/pptx 都是一个 **OPC Package**（ZIP 容器，部分场景是 Flat OPC 单 XML），里头有四样东西：
@@ -178,7 +218,7 @@ Package（一个 ZIP / Flat XML 容器）
 ## 路线图
 
 1. **Epic-1 OPC Packaging**（✅ 完成）：`IPackage`、Parts、Relationships、Content-Types、ZIP I/O、Flat OPC。
-2. Epic-2 WordprocessingML（下一里程碑）
+2. **Epic-2 WordprocessingML**（✅ 完成）：~720 个 element 类、6 个 typed Parts、`openxml-ts/word` 子 entry、size-limit 守护、性能基线达 NFR-1.1/1.2。
 3. Epic-3 SpreadsheetML
 4. Epic-4 PresentationML
 5. Epic-5 LINQ-to-XML 兼容层（可选）

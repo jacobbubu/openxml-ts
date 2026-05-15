@@ -20,3 +20,22 @@ Epic-1 收尾的人工验证结果。
 
 > Story-1.8 的 AC 接受「先写下流程占位」，Story-1.9 发版前补齐。
 > 任何「需要修复」的提示视作 release-blocking，需要在 Story-1.9 之前定位修复。
+
+## Epic-2 / Story-2.10 · Word 子系统手工验证
+
+新增覆盖 `examples/word-create.ts`（程序构造）与 `examples/word-replace.ts`（占位文本替换）
+两条用户路径。流程：
+
+1. `bun run examples/word-create.ts /tmp/wc-create.docx`
+   → 用 Word Desktop / Office Web 打开 `wc-create.docx`，确认能正常显示 3 行文本；
+2. 准备一份含 `{{client}}` 占位的 `template.docx`（任意 Word 客户端写一份），
+   `bun run examples/word-replace.ts /tmp/template.docx /tmp/wc-replace.docx Acme`
+   → 用 Word Desktop / Office Web 打开 `wc-replace.docx`，确认 `{{client}}` 已被替换为 `Acme`
+   且未弹「文件已损坏 / 需修复」对话框。
+
+| 日期 | 用例 | Word Desktop | Office Web | 备注 |
+| --- | --- | --- | --- | --- |
+| - | `examples/word-create.ts` 输出 | 待执行 | 待执行 | - |
+| - | `examples/word-replace.ts` 输出 | 待执行 | 待执行 | - |
+
+> 任一行弹「需要修复」视作 0.2.0 release-blocking，需先回归定位。

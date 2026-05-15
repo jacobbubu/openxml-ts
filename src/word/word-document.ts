@@ -19,7 +19,8 @@
 
 import type { MemoryOpenXmlPackage } from "../backends/memory/memory-package.js";
 import { writeFilePath } from "../backends/zip/source-reader.js";
-import { ElementRegistry, type OpenXmlElement } from "../element/index.js";
+import { ElementRegistry, OpenXmlCompositeElement, type OpenXmlElement } from "../element/index.js";
+import { OpenXmlUnknownElement } from "../element/unknown-element.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import {
   type IPackage,
@@ -60,7 +61,29 @@ export class WordprocessingDocument {
   /** 已加载的 typed Part 缓存——按 relationshipType 索引。 */
   private readonly typedParts = new Map<string, TypedXmlPart<OpenXmlElement>>();
 
-  constructor(private readonly pkg: MemoryOpenXmlPackage) {}
+  constructor(private readonly pkg: MemoryOpenXmlPackage) {
+    pkg.registerDiagnosticsElementCounter(() => this.countLoadedElements());
+  }
+
+  /**
+   * 走一遍已加载的 typed Part 缓存，统计 element 树规模 + Unknown 数。
+   * 未访问过的 Part 不计——保留「只 typed-loaded 才计费」的语义。
+   */
+  private countLoadedElements(): { elementCount: number; unknownElementCount: number } {
+    let elementCount = 0;
+    let unknownElementCount = 0;
+    for (const part of this.typedParts.values()) {
+      if (!part.isLoaded) continue;
+      const root = part.root;
+      elementCount += 1;
+      if (root instanceof OpenXmlUnknownElement) unknownElementCount += 1;
+      if (root instanceof OpenXmlCompositeElement) {
+        for (const _ of root.descendants()) elementCount += 1;
+        for (const _ of root.descendants(OpenXmlUnknownElement)) unknownElementCount += 1;
+      }
+    }
+    return { elementCount, unknownElementCount };
+  }
 
   /** 底层 OPC 包句柄；需要 OPC 级操作（addPart/relationships/contentTypes）时用。 */
   get package(): IPackage {

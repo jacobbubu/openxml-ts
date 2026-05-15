@@ -120,6 +120,25 @@ describe("WordprocessingDocument · 程序构造 Paragraph → Run → Text", ()
   });
 });
 
+describe("WordprocessingDocument · diagnostics 扩展（Story-2.10）", () => {
+  it("未触碰 typed Part 时 elementCount=0", async () => {
+    const doc = await WordprocessingDocument.openAsync(await loadHelloWorld());
+    const d = doc.package.diagnostics;
+    expect(d.elementCount).toBe(0);
+    expect(d.unknownElementCount).toBe(0);
+  });
+
+  it("触碰 mainDocumentPart 后 elementCount > 0、unknownElementCount = 0", async () => {
+    const doc = await WordprocessingDocument.openAsync(await loadHelloWorld());
+    // 触发 typed 加载 + 反序列化
+    void doc.mainDocumentPart?.document;
+    const d = doc.package.diagnostics;
+    expect(d.elementCount).toBeGreaterThan(0);
+    // HelloWorld.docx schema 已知全部命中——不应有 Unknown
+    expect(d.unknownElementCount).toBe(0);
+  });
+});
+
 describe("WordprocessingDocument · 不破坏 v0.1.0 公共 API", () => {
   it("doc.package 仍是 IPackage 形态，可读 parts/relationships", async () => {
     const doc = await WordprocessingDocument.openAsync(await loadHelloWorld());

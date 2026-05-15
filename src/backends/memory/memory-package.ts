@@ -66,6 +66,16 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
     return this.diagnosticsRecorder.snapshot(this);
   }
 
+  /**
+   * 让上层文档门面（如 `WordprocessingDocument`）注入 element 计数。
+   * OPC 层不感知 element 树，所以只是把回调存起来，snapshot 时调用。
+   */
+  registerDiagnosticsElementCounter(
+    counter: () => { elementCount: number; unknownElementCount: number },
+  ): void {
+    this.diagnosticsRecorder.registerElementCounter(counter);
+  }
+
   override parts(): Iterable<MemoryPackagePart> {
     this.guard.ensureOpen("Iterating parts");
     return this.parts_.values();
