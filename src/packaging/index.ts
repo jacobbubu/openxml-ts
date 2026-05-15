@@ -38,3 +38,13 @@ export {
   type ParsedRelationship,
 } from "./relationships/index.js";
 export { RelationshipCollection } from "./core/relationship-collection.js";
+export {
+  FLAT_OPC_NS,
+  fromFlatOpcAsync,
+  isXmlContentType,
+  packageToFlatOpc,
+  parseFlatOpc,
+  type FlatOpcEntry,
+  type FlatOpcWriteOptions,
+  type ParsedFlatOpc,
+} from "./flat-opc/index.js";

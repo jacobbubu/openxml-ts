@@ -4,6 +4,10 @@ import { OpenXmlPackage } from "../../packaging/core/open-xml-package.js";
 import { assertPartUri } from "../../packaging/core/part-uri.js";
 import { RelationshipCollection } from "../../packaging/core/relationship-collection.js";
 import { OpenXmlPackageError } from "../../packaging/errors.js";
+import {
+  type FlatOpcWriteOptions,
+  packageToFlatOpc,
+} from "../../packaging/flat-opc/flat-opc-writer.js";
 import type { AccessMode, CompressionLevel, PartUri } from "../../packaging/interfaces/types.js";
 import { MemoryPackagePart } from "./memory-package-part.js";
 import { MemoryPackageProperties } from "./memory-package-properties.js";
@@ -89,6 +93,7 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
     uri: PartUri,
     contentType: string,
     compression: CompressionLevel = "normal",
+    initialContent?: Uint8Array,
   ): MemoryPackagePart {
     this.guard.ensureOpen("insertPart");
     const validated = assertPartUri(uri);
@@ -105,7 +110,7 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
         message: "insertPart requires a non-empty contentType",
       });
     }
-    const part = new MemoryPackagePart(this, validated, contentType, compression);
+    const part = new MemoryPackagePart(this, validated, contentType, compression, initialContent);
     this.parts_.set(validated, part);
     this.partOrder.push(validated);
     // 没有适配的 Default 时挂 Override；已存在 Override 则透传不重复添加
@@ -137,6 +142,14 @@ export class MemoryOpenXmlPackage extends OpenXmlPackage {
     this.guard.ensureOpen("saveAsync");
     this.assertWritable("saveAsync");
     // 内存 backend：no-op（所有 mutation 立即生效）。
+  }
+
+  /**
+   * 序列化为 Flat OPC（单文件 XML 容器）。等价于 .NET 的
+   * `OpenXmlPackage.ToFlatOpcDocument()`。
+   */
+  toFlatOpc(options?: FlatOpcWriteOptions): string {
+    return packageToFlatOpc(this, options);
   }
 
   /**
