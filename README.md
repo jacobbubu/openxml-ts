@@ -2,7 +2,7 @@
 
 A TypeScript port of [Microsoft Open-XML-SDK](https://github.com/dotnet/Open-XML-SDK).
 
-> 状态：Epic-1（OPC Packaging 内核） + Epic-2（WordprocessingML，~720 个 element 类、强类型 Parts、子 entry `openxml-ts/word`）已完成。下一步：Epic-3 SpreadsheetML / Epic-4 PresentationML。
+> 状态：Epic-1（OPC Packaging 内核）+ Epic-2（WordprocessingML，v0.2.0 已发版）已完成。**Epic-3 SpreadsheetML 进行中**（~460 element 类、6 个 typed Parts、`openxml-ts/excel` 子 entry、SharedStringResolver + Cell.resolvedText + CalcChain 自动失效；0.3.0 待 bench + 人工验证）。下一步：Epic-4 PresentationML。
 
 ## 设计目标
 
@@ -172,6 +172,58 @@ Document          ← /word/document.xml 的根
 读源码起点：[`src/element/element.ts`](./src/element/element.ts) 是基类，
 [`src/word/generated/`](./src/word/generated/) 是约 720 个 schema 类，
 [`docs/planning/architecture.md`](./docs/planning/architecture.md) §element 章节给完整继承图。
+
+## Excel 子系统（`openxml-ts/excel`，0.3.0 预览）
+
+Excel 部分通过独立 subpath `openxml-ts/excel` 暴露，与 Word 同形态——HAS-A 包装 `MemoryOpenXmlPackage`，强类型 `WorkbookPart` / `WorksheetPart` / `SharedStringTablePart` / `WorkbookStylesPart` / `CalculationChainPart` / `ThemePart` 六位 typed Parts，~460 个 spreadsheetml element 类。
+
+```ts
+import { SpreadsheetDocument, Cell, CellValue, Row, SheetData } from "openxml-ts/excel";
+
+// 从零造一份最小可用 xlsx（含默认 Sheet1 + 空 SharedStringTable）
+const doc = SpreadsheetDocument.create();
+const sd = doc.workbookPart!.worksheetParts[0]!.worksheet.firstChild(SheetData)!;
+
+const row = new Row();
+const cell = new Cell();
+const v = new CellValue();
+v.text = "42";
+cell.appendChild(v);
+row.appendChild(cell);
+sd.appendChild(row);
+
+await doc.saveAsAsync("./hello.xlsx");
+```
+
+```ts
+// 打开 → 解 sharedString → 写回（CalcChain 自动失效）
+import { SpreadsheetDocument, Cell } from "openxml-ts/excel";
+
+await using doc = await SpreadsheetDocument.openAsync("./report.xlsx");
+for (const wsp of doc.workbookPart!.worksheetParts) {
+  for (const c of wsp.worksheet.descendants(Cell)) {
+    // `c.resolvedText` 自动解 `<c t="s"><v>idx</v></c>` 与 inlineStr，无需手算偏移
+    if (c.resolvedText === "{{client}}") {
+      const cv = c.firstChild(CellValue)!;
+      cv.text = "Acme"; // dataType=str/n 直接改文本；s 类型走 SharedStringResolver.intern
+    }
+  }
+}
+await doc.saveAsAsync("./out.xlsx"); // 任一 Cell 改动后 CalcChainPart 自动丢弃，Excel 重 open 时重算
+```
+
+**Tree-shake 友好深引：** 单类深 import 走 `openxml-ts/excel/generated/<name>`——`{ Cell, Row, Worksheet }` 最小用例 ≤ 50 KB gzip（CI `size-limit` 守护），完整 entry ≤ 600 KB。
+
+```ts
+import { Cell } from "openxml-ts/excel/generated/cell";
+```
+
+Excel 子系统的额外能力：
+- **`Cell.resolvedText`**——`dataType="s"` 走 SharedStringTable 解索引；`"inlineStr"` 拼 `<is><t>`；其它直接取 `<v>`。孤儿 Cell 返 `undefined`，不抛错。
+- **`SharedStringResolver.intern(phrase)`**——强制去重的 phrase → index 映射，O(1) Map 查询。
+- **`Cell.isDirty`**——`appendChild(CellValue | CellFormula)` / `remove(...)` 时自动标 dirty；`SpreadsheetDocument.saveAsync` 检测到任一 dirty Cell 即丢 `CalculationChainPart`。
+
+源码起点：[`src/excel/spreadsheet-document.ts`](./src/excel/spreadsheet-document.ts) 是门面，[`src/excel/generated/`](./src/excel/generated/) 是约 460 个 schema 类，[`docs/planning/epic-3-architecture.md`](./docs/planning/epic-3-architecture.md) §4 / §5 给跨 Part 解引用与 typed Parts 设计细节。
 
 ## OPC 心智地图
 

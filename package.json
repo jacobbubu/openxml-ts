@@ -19,6 +19,14 @@
       "types": "./dist/word/generated/*.d.ts",
       "import": "./dist/word/generated/*.js"
     },
+    "./excel": {
+      "types": "./dist/excel/index.d.ts",
+      "import": "./dist/excel/index.js"
+    },
+    "./excel/generated/*": {
+      "types": "./dist/excel/generated/*.d.ts",
+      "import": "./dist/excel/generated/*.js"
+    },
     "./package.json": "./package.json"
   },
   "files": ["dist", "README.md", "LICENSE"],
@@ -102,6 +110,19 @@
       "name": "openxml-ts/word (full bundle including registry)",
       "path": "dist/word/index.js",
       "limit": "500 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/excel minimal (Cell + Row + Worksheet)",
+      "path": "dist/excel/index.js",
+      "import": "{ Cell, Row, Worksheet }",
+      "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/excel (full bundle including registry)",
+      "path": "dist/excel/index.js",
+      "limit": "600 KB",
       "gzip": true
     }
   ]
