@@ -35,7 +35,7 @@ Epic-1 收尾的人工验证结果。
 
 | 日期 | 用例 | Word Desktop | Office Web | 备注 |
 | --- | --- | --- | --- | --- |
-| - | `examples/word-create.ts` 输出 | 待执行 | 待执行 | - |
-| - | `examples/word-replace.ts` 输出 | 待执行 | 待执行 | - |
+| 2026-05-16 | `examples/word-create.ts` 输出 | ✅ 正常打开，3 行文本一致，无修复提示 | ✅ 正常打开，3 行文本一致，无修复提示 | 0.2.0 release-blocking 已解除 |
+| 2026-05-16 | `examples/word-replace.ts` 输出 | ✅ 正常打开，`{{client}}` 已替换为 `Acme Corp`，无修复提示 | ✅ 正常打开，`{{client}}` 已替换为 `Acme Corp`，无修复提示 | 0.2.0 release-blocking 已解除 |
 
 > 任一行弹「需要修复」视作 0.2.0 release-blocking，需先回归定位。
