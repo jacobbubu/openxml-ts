@@ -1,7 +1,7 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import { Settings } from "../generated/settings.js";
-import { TypedXmlPart } from "./typed-xml-part.js";
 
 /** `.../settings` 关系下的 Part；根元素 `<w:settings>`。 */
 export class SettingsPart extends TypedXmlPart<Settings> {

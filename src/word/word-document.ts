@@ -33,7 +33,8 @@ import {
   openAsync,
   packageToZipBytes,
 } from "../packaging/index.js";
-import { type PartUri, isPartUri } from "../packaging/interfaces/types.js";
+import type { PartUri } from "../packaging/interfaces/types.js";
+import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { registerWordprocessingElements } from "./generated/_registry.js";
 import { Body } from "./generated/body.js";
 import { Document } from "./generated/document.js";
@@ -256,37 +257,4 @@ function findRelationship(
     if (rel.type === relationshipType && rel.targetMode === "internal") return rel;
   }
   return undefined;
-}
-
-/**
- * 把 OPC relationship target 解析为绝对 PartUri：
- * - 以 `/` 开头：视为绝对，原样返回；
- * - 其它：相对于 `base`（包级用 `"/"`，Part 级用所属 Part 的 URI），按 OPC §9.3
- *   的相对 URI 解析方式拼接 + 折叠 `.` / `..`。
- */
-function resolveRelativePartUri(base: string, target: string): PartUri | undefined {
-  if (target.length === 0) return undefined;
-  const baseDir = (() => {
-    if (base === "/") return "";
-    const slash = base.lastIndexOf("/");
-    return slash <= 0 ? "" : base.slice(0, slash);
-  })();
-  const raw = target.startsWith("/") ? target : `${baseDir}/${target}`;
-  const stack: string[] = [];
-  for (const seg of raw.split("/")) {
-    if (seg.length === 0 || seg === ".") continue;
-    if (seg === "..") {
-      stack.pop();
-      continue;
-    }
-    stack.push(seg);
-  }
-  const normalized = `/${stack.join("/")}`;
-  if (!isPartUri(normalized)) {
-    throw new OpenXmlPackageError({
-      code: "INVALID_PART_URI",
-      message: `Relationship target "${target}" (base "${base}") does not resolve to a valid Part URI`,
-    });
-  }
-  return normalized;
 }

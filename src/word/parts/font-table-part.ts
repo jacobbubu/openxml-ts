@@ -1,7 +1,7 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import { Fonts } from "../generated/fonts.js";
-import { TypedXmlPart } from "./typed-xml-part.js";
 
 /** `.../fontTable` 关系下的 Part；根元素 `<w:fonts>`。 */
 export class FontTablePart extends TypedXmlPart<Fonts> {

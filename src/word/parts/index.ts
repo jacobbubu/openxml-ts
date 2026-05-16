@@ -1,4 +1,4 @@
-export { TypedXmlPart } from "./typed-xml-part.js";
+export { TypedXmlPart } from "../../parts/typed-xml-part.js";
 export { MainDocumentPart } from "./main-document-part.js";
 export { StylesPart } from "./styles-part.js";
 export { SettingsPart } from "./settings-part.js";

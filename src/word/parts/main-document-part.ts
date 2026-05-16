@@ -1,7 +1,7 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import { Document } from "../generated/document.js";
-import { TypedXmlPart } from "./typed-xml-part.js";
 
 /**
  * Word 主文档 Part（包级关系 type 为 `.../officeDocument`）。

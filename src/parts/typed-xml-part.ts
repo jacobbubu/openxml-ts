@@ -8,14 +8,14 @@
  * - 空 part（新建场景）懒构造默认实例。
  */
 
-import type { MemoryPackagePart } from "../../backends/memory/memory-package-part.js";
+import type { MemoryPackagePart } from "../backends/memory/memory-package-part.js";
 import {
   type ElementRegistry,
   type OpenXmlElement,
   deserialize,
   serialize,
-} from "../../element/index.js";
-import type { IPackagePart } from "../../packaging/interfaces/part.js";
+} from "../element/index.js";
+import type { IPackagePart } from "../packaging/interfaces/part.js";
 
 export abstract class TypedXmlPart<T extends OpenXmlElement> {
   protected _root: T | undefined;

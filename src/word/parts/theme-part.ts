@@ -1,7 +1,7 @@
 import type { ElementRegistry, OpenXmlElement } from "../../element/index.js";
 import { OpenXmlUnknownElement } from "../../element/index.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
-import { TypedXmlPart } from "./typed-xml-part.js";
+import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 
 /**
  * `.../theme` 关系下的 Part；根元素 `<a:theme>`（DrawingML namespace）。
