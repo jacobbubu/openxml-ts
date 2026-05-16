@@ -1,0 +1,415 @@
+{
+  "source": "missingcalcchainpart.xlsx",
+  "generatedBy": "openxml-ts tools/golden-generator",
+  "parts": [
+    {
+      "uri": "/docMetadata/LabelInfo.xml",
+      "contentType": "application/vnd.ms-office.classificationlabels+xml",
+      "contentByteLength": 323,
+      "relationships": []
+    },
+    {
+      "uri": "/docProps/app.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.extended-properties+xml",
+      "contentByteLength": 1443,
+      "relationships": []
+    },
+    {
+      "uri": "/docProps/core.xml",
+      "contentType": "application/vnd.openxmlformats-package.core-properties+xml",
+      "contentByteLength": 763,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/printerSettings/printerSettings1.bin",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.printerSettings",
+      "contentByteLength": 220,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/printerSettings/printerSettings2.bin",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.printerSettings",
+      "contentByteLength": 220,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/printerSettings/printerSettings3.bin",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.printerSettings",
+      "contentByteLength": 220,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/printerSettings/printerSettings4.bin",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.printerSettings",
+      "contentByteLength": 220,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/printerSettings/printerSettings5.bin",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.printerSettings",
+      "contentByteLength": 220,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/printerSettings/printerSettings6.bin",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.printerSettings",
+      "contentByteLength": 220,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/sharedStrings.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml",
+      "contentByteLength": 6817,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/styles.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml",
+      "contentByteLength": 163633,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/tables/table1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml",
+      "contentByteLength": 2047,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/tables/table2.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml",
+      "contentByteLength": 2130,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/tables/table3.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml",
+      "contentByteLength": 3910,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/tables/table4.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml",
+      "contentByteLength": 4892,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/tables/table5.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml",
+      "contentByteLength": 4928,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/tables/table6.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml",
+      "contentByteLength": 3868,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/theme/theme1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.theme+xml",
+      "contentByteLength": 6796,
+      "relationships": []
+    },
+    {
+      "uri": "/xl/workbook.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml",
+      "contentByteLength": 2760,
+      "relationships": [
+        {
+          "id": "rId8",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles",
+          "targetMode": "internal",
+          "target": "styles.xml"
+        },
+        {
+          "id": "rId3",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
+          "targetMode": "internal",
+          "target": "worksheets/sheet3.xml"
+        },
+        {
+          "id": "rId7",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme",
+          "targetMode": "internal",
+          "target": "theme/theme1.xml"
+        },
+        {
+          "id": "rId2",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
+          "targetMode": "internal",
+          "target": "worksheets/sheet2.xml"
+        },
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
+          "targetMode": "internal",
+          "target": "worksheets/sheet1.xml"
+        },
+        {
+          "id": "rId6",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
+          "targetMode": "internal",
+          "target": "worksheets/sheet6.xml"
+        },
+        {
+          "id": "rId5",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
+          "targetMode": "internal",
+          "target": "worksheets/sheet5.xml"
+        },
+        {
+          "id": "rId4",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
+          "targetMode": "internal",
+          "target": "worksheets/sheet4.xml"
+        },
+        {
+          "id": "rId9",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings",
+          "targetMode": "internal",
+          "target": "sharedStrings.xml"
+        },
+        {
+          "id": "rId10",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/calcChain",
+          "targetMode": "internal",
+          "target": "calcChain.xml"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/worksheets/sheet1.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+      "contentByteLength": 6490,
+      "relationships": [
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
+          "targetMode": "internal",
+          "target": "../printerSettings/printerSettings1.bin"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/worksheets/sheet2.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+      "contentByteLength": 7904,
+      "relationships": [
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
+          "targetMode": "internal",
+          "target": "../printerSettings/printerSettings2.bin"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/worksheets/sheet3.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+      "contentByteLength": 11565,
+      "relationships": [
+        {
+          "id": "rId2",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "targetMode": "internal",
+          "target": "../tables/table1.xml"
+        },
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
+          "targetMode": "internal",
+          "target": "../printerSettings/printerSettings3.bin"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/worksheets/sheet4.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+      "contentByteLength": 11782,
+      "relationships": [
+        {
+          "id": "rId2",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "targetMode": "internal",
+          "target": "../tables/table2.xml"
+        },
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
+          "targetMode": "internal",
+          "target": "../printerSettings/printerSettings4.bin"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/worksheets/sheet5.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+      "contentByteLength": 29182,
+      "relationships": [
+        {
+          "id": "rId3",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "targetMode": "internal",
+          "target": "../tables/table4.xml"
+        },
+        {
+          "id": "rId2",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "targetMode": "internal",
+          "target": "../tables/table3.xml"
+        },
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
+          "targetMode": "internal",
+          "target": "../printerSettings/printerSettings5.bin"
+        }
+      ]
+    },
+    {
+      "uri": "/xl/worksheets/sheet6.xml",
+      "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
+      "contentByteLength": 64132,
+      "relationships": [
+        {
+          "id": "rId3",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "targetMode": "internal",
+          "target": "../tables/table6.xml"
+        },
+        {
+          "id": "rId2",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/table",
+          "targetMode": "internal",
+          "target": "../tables/table5.xml"
+        },
+        {
+          "id": "rId1",
+          "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings",
+          "targetMode": "internal",
+          "target": "../printerSettings/printerSettings6.bin"
+        }
+      ]
+    }
+  ],
+  "packageRelationships": [
+    {
+      "id": "rId3",
+      "type": "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties",
+      "targetMode": "internal",
+      "target": "docProps/core.xml"
+    },
+    {
+      "id": "rId2",
+      "type": "http://schemas.microsoft.com/office/2020/02/relationships/classificationlabels",
+      "targetMode": "internal",
+      "target": "docMetadata/LabelInfo.xml"
+    },
+    {
+      "id": "rId1",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
+      "targetMode": "internal",
+      "target": "xl/workbook.xml"
+    },
+    {
+      "id": "rId4",
+      "type": "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties",
+      "targetMode": "internal",
+      "target": "docProps/app.xml"
+    }
+  ],
+  "contentTypes": {
+    "defaults": [
+      {
+        "extension": "bin",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.printerSettings"
+      },
+      {
+        "extension": "rels",
+        "contentType": "application/vnd.openxmlformats-package.relationships+xml"
+      },
+      {
+        "extension": "xml",
+        "contentType": "application/xml"
+      }
+    ],
+    "overrides": [
+      {
+        "partName": "/xl/workbook.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"
+      },
+      {
+        "partName": "/xl/worksheets/sheet1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
+      },
+      {
+        "partName": "/xl/worksheets/sheet2.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
+      },
+      {
+        "partName": "/xl/worksheets/sheet3.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
+      },
+      {
+        "partName": "/xl/worksheets/sheet4.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
+      },
+      {
+        "partName": "/xl/worksheets/sheet5.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
+      },
+      {
+        "partName": "/xl/worksheets/sheet6.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
+      },
+      {
+        "partName": "/xl/theme/theme1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.theme+xml"
+      },
+      {
+        "partName": "/xl/styles.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"
+      },
+      {
+        "partName": "/xl/sharedStrings.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"
+      },
+      {
+        "partName": "/xl/tables/table1.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
+      },
+      {
+        "partName": "/xl/tables/table2.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
+      },
+      {
+        "partName": "/xl/tables/table3.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
+      },
+      {
+        "partName": "/xl/tables/table4.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
+      },
+      {
+        "partName": "/xl/tables/table5.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
+      },
+      {
+        "partName": "/xl/tables/table6.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml"
+      },
+      {
+        "partName": "/docMetadata/LabelInfo.xml",
+        "contentType": "application/vnd.ms-office.classificationlabels+xml"
+      },
+      {
+        "partName": "/docProps/core.xml",
+        "contentType": "application/vnd.openxmlformats-package.core-properties+xml"
+      },
+      {
+        "partName": "/docProps/app.xml",
+        "contentType": "application/vnd.openxmlformats-officedocument.extended-properties+xml"
+      }
+    ]
+  }
+}

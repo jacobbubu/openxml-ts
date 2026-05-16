@@ -50,6 +50,21 @@ export function deserialize(xml: string, options: DeserializeOptions = {}): Open
         element.applyAttribute(key, value);
       }
 
+      // 当 typed class 的固有 prefix（如 Workbook.prefix="x"）与 XML 用的
+      // prefix（如默认 namespace 下的空前缀）不一致时，re-serialize 会输出
+      // `<x:workbook>` 但 xmlns:x 没声明，下一轮反序列化会降级为 Unknown。
+      // 在此显式补 `xmlns:<typed.prefix>` 到 extendedAttributes，确保
+      // roundtrip 字节级稳定。
+      if (
+        ctor !== undefined &&
+        element.prefix.length > 0 &&
+        namespaceUri.length > 0 &&
+        element.prefix !== prefix &&
+        !element.extendedAttributes.has(`xmlns:${element.prefix}`)
+      ) {
+        element.extendedAttributes.set(`xmlns:${element.prefix}`, namespaceUri);
+      }
+
       if (root === undefined) {
         root = element;
       } else {

@@ -15,6 +15,7 @@
 import { readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { SpreadsheetDocument } from "../../src/excel/index.ts";
 import { openAsync } from "../../src/index.ts";
 import { WordprocessingDocument } from "../../src/word/index.ts";
 import { snapshotElement } from "./element-snapshot.ts";
@@ -126,6 +127,22 @@ async function elementSnapshot(filePath: string): Promise<unknown> {
   };
 }
 
+async function elementSnapshotXlsx(filePath: string): Promise<unknown> {
+  const bytes = new Uint8Array(await readFile(filePath));
+  const doc = await SpreadsheetDocument.openAsync(bytes);
+  const wp = doc.workbookPart;
+  if (wp === undefined) {
+    throw new Error("missing workbook part");
+  }
+  const worksheets = wp.worksheetParts.map((wsp) => snapshotElement(wsp.worksheet));
+  return {
+    source: filePath.split("/").slice(-1)[0],
+    generatedBy: "openxml-ts tools/golden-generator",
+    workbook: snapshotElement(wp.workbook),
+    worksheets,
+  };
+}
+
 async function main(): Promise<void> {
   const entries = await readdir(FIXTURES_DIR);
   for (const entry of entries) {
@@ -138,10 +155,16 @@ async function main(): Promise<void> {
     await writeFile(out, `${JSON.stringify(snap, null, 2)}\n`);
     process.stdout.write("opc");
 
-    // Story-2.8：仅 docx 有 Word typed element tree——xlsx/pptx schema 类未生成，
-    // 略过 element snapshot（OPC 结构 golden 已足以守护它们）。
+    // Story-2.8：docx 走 WordprocessingDocument element snapshot。
+    // Story-3.7：xlsx 走 SpreadsheetDocument element snapshot（workbook +
+    // 全部 worksheet 子树）。pptx schema 类要等 Epic-4 才落地，暂略。
     if (ext === ".docx") {
       const elemSnap = await elementSnapshot(filePath);
+      const elemOut = `${filePath}.element.golden.json`;
+      await writeFile(elemOut, `${JSON.stringify(elemSnap, null, 2)}\n`);
+      process.stdout.write(" + element");
+    } else if (ext === ".xlsx") {
+      const elemSnap = await elementSnapshotXlsx(filePath);
       const elemOut = `${filePath}.element.golden.json`;
       await writeFile(elemOut, `${JSON.stringify(elemSnap, null, 2)}\n`);
       process.stdout.write(" + element");

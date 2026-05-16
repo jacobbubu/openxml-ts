@@ -63,11 +63,17 @@ describe("Element-tree golden roundtrip · HelloWorld.docx", () => {
   });
 });
 
-describe("Element-tree golden · xlsx/pptx 形态校验（element 不存在合理）", () => {
-  it("xlsx/pptx fixture 不应存在 .element.golden.json", async () => {
-    await expect(
-      readFile(join(FIXTURES_DIR, "basicspreadsheet.xlsx.element.golden.json")),
-    ).rejects.toThrow();
+describe("Element-tree golden · pptx 形态校验（element 不存在合理）", () => {
+  it("pptx fixture 不应存在 .element.golden.json（Epic-4 才落地）", async () => {
     await expect(readFile(join(FIXTURES_DIR, "mcppt.pptx.element.golden.json"))).rejects.toThrow();
+  });
+
+  it("xlsx fixture 已在 Story-3.7 落 element golden", async () => {
+    // 仅形态：详细 roundtrip 在 test/excel/roundtrip.test.ts 覆盖
+    const text = await readFile(
+      join(FIXTURES_DIR, "basicspreadsheet.xlsx.element.golden.json"),
+      "utf-8",
+    );
+    expect(text).toContain('"className": "Workbook"');
   });
 });

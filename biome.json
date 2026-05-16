@@ -14,7 +14,8 @@
       ".claude",
       ".omc",
       "coverage",
-      "src/**/generated/**"
+      "src/**/generated/**",
+      "test/fixtures/golden/**/*.golden.json"
     ]
   },
   "formatter": {
