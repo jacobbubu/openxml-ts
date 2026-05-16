@@ -44,12 +44,27 @@ import { ThemePart } from "../parts/theme-part.js";
 import type { TypedXmlPart } from "../parts/typed-xml-part.js";
 import { clearCellDirty } from "./extensions/cell-extensions.js"; // 必要副作用：挂上 Cell.resolvedText + isDirty
 import { registerSpreadsheetElements } from "./generated/_registry.js";
+import { Border } from "./generated/border.js";
+import { Borders } from "./generated/borders.js";
+import { CellFormat } from "./generated/cell-format.js";
+import { CellFormats } from "./generated/cell-formats.js";
+import { CellStyleFormats } from "./generated/cell-style-formats.js";
+import { CellStyle } from "./generated/cell-style.js";
+import { CellStyles } from "./generated/cell-styles.js";
 import { CellValue } from "./generated/cell-value.js";
 import { Cell } from "./generated/cell.js";
+import { Fill } from "./generated/fill.js";
+import { Fills } from "./generated/fills.js";
+import { FontName } from "./generated/font-name.js";
+import { FontSize } from "./generated/font-size.js";
+import { Font } from "./generated/font.js";
+import { Fonts } from "./generated/fonts.js";
+import { PatternFill } from "./generated/pattern-fill.js";
 import { SharedStringTable } from "./generated/shared-string-table.js";
 import { SheetData } from "./generated/sheet-data.js";
 import { Sheet } from "./generated/sheet.js";
 import { Sheets } from "./generated/sheets.js";
+import { Stylesheet } from "./generated/stylesheet.js";
 import { Workbook } from "./generated/workbook.js";
 import { Worksheet } from "./generated/worksheet.js";
 import {
@@ -72,6 +87,7 @@ import { SharedStringResolver, registerSharedStringResolver } from "./shared-str
 const DEFAULT_WORKBOOK_URI = "/xl/workbook.xml" as PartUri;
 const DEFAULT_WORKSHEET_URI = "/xl/worksheets/sheet1.xml" as PartUri;
 const DEFAULT_SST_URI = "/xl/sharedStrings.xml" as PartUri;
+const DEFAULT_STYLES_URI = "/xl/styles.xml" as PartUri;
 const XNS = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
 const RNS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
 
@@ -218,13 +234,14 @@ export class SpreadsheetDocument {
   static create(): SpreadsheetDocument {
     const inMemory = createInMemory();
 
-    // 1. 创建 3 个 Part（字节先空，flush 时由 typed root 写入）
+    // 1. 创建 4 个 Part（字节先空，flush 时由 typed root 写入）
     inMemory.createPart(DEFAULT_WORKBOOK_URI, WorkbookPart.contentType);
     inMemory.createPart(
       DEFAULT_WORKSHEET_URI,
       "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml",
     );
     inMemory.createPart(DEFAULT_SST_URI, SharedStringTablePart.contentType);
+    inMemory.createPart(DEFAULT_STYLES_URI, WorkbookStylesPart.contentType);
 
     // 2. 包级关系：officeDocument → workbook
     inMemory.relationships.create({
@@ -233,11 +250,16 @@ export class SpreadsheetDocument {
       targetMode: "internal",
     });
 
-    // 3. workbook 的 part-level 关系：worksheet1 + sharedStrings
+    // 3. workbook 的 part-level 关系：worksheet1 + styles + sharedStrings
     const workbookPart = inMemory.getPart(DEFAULT_WORKBOOK_URI);
     const wsRel = workbookPart.relationships.create({
       type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet",
       target: "worksheets/sheet1.xml",
+      targetMode: "internal",
+    });
+    workbookPart.relationships.create({
+      type: WorkbookStylesPart.relationshipType,
+      target: "styles.xml",
       targetMode: "internal",
     });
     workbookPart.relationships.create({
@@ -279,6 +301,11 @@ export class SpreadsheetDocument {
       sst.extendedAttributes.set("count", "0");
       sst.extendedAttributes.set("uniqueCount", "0");
       sstPart.sharedStringTable = sst;
+    }
+
+    const stylesPart = doc.workbookStylesPart;
+    if (stylesPart !== undefined) {
+      stylesPart.stylesheet = buildMinimalStylesheet();
     }
 
     return doc;
@@ -423,4 +450,89 @@ function findRelationship(
     if (rel.type === relationshipType && rel.targetMode === "internal") return rel;
   }
   return undefined;
+}
+
+/**
+ * 构造 OOXML 规范要求的最小可用 `xl/styles.xml` typed root：
+ *
+ *     <styleSheet>
+ *       <fonts count="1"><font><sz val="11"/><name val="Calibri"/></font></fonts>
+ *       <fills count="2">
+ *         <fill><patternFill patternType="none"/></fill>
+ *         <fill><patternFill patternType="gray125"/></fill>
+ *       </fills>
+ *       <borders count="1"><border/></borders>
+ *       <cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
+ *       <cellXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/></cellXfs>
+ *       <cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>
+ *     </styleSheet>
+ *
+ * 缺这份 stylesheet 时 Excel Desktop 打开会弹「Repaired」（即便所有 cell 都没引用
+ * 任何 style）。`<fills>` 至少要 2 条（默认 + gray125 占位）；其它每个 count
+ * 至少 1。container `count` 属性用 extendedAttributes 设——schema 上无 typed 字段。
+ */
+function buildMinimalStylesheet(): Stylesheet {
+  const ss = new Stylesheet();
+  ss.extendedAttributes.set("xmlns:x", XNS);
+
+  const fonts = new Fonts();
+  fonts.extendedAttributes.set("count", "1");
+  const font = new Font();
+  const fontSize = new FontSize();
+  fontSize.val = new StringValue("11");
+  font.appendChild(fontSize);
+  const fontName = new FontName();
+  fontName.val = new StringValue("Calibri");
+  font.appendChild(fontName);
+  fonts.appendChild(font);
+  ss.appendChild(fonts);
+
+  const fills = new Fills();
+  fills.extendedAttributes.set("count", "2");
+  for (const patternType of ["none", "gray125"] as const) {
+    const fill = new Fill();
+    const pf = new PatternFill();
+    pf.patternType = new StringValue(patternType);
+    fill.appendChild(pf);
+    fills.appendChild(fill);
+  }
+  ss.appendChild(fills);
+
+  const borders = new Borders();
+  borders.extendedAttributes.set("count", "1");
+  borders.appendChild(new Border());
+  ss.appendChild(borders);
+
+  const cellStyleXfs = new CellStyleFormats();
+  cellStyleXfs.extendedAttributes.set("count", "1");
+  cellStyleXfs.appendChild(zeroCellFormat());
+  ss.appendChild(cellStyleXfs);
+
+  const cellXfs = new CellFormats();
+  cellXfs.extendedAttributes.set("count", "1");
+  const xf = zeroCellFormat();
+  xf.formatId = new UInt32Value(0);
+  cellXfs.appendChild(xf);
+  ss.appendChild(cellXfs);
+
+  const cellStyles = new CellStyles();
+  cellStyles.extendedAttributes.set("count", "1");
+  const cs = new CellStyle();
+  cs.name = new StringValue("Normal");
+  cs.formatId = new UInt32Value(0); // 对位 xfId
+  cs.builtinId = new UInt32Value(0);
+  cellStyles.appendChild(cs);
+  ss.appendChild(cellStyles);
+
+  return ss;
+}
+
+/** `numFmtId="0" fontId="0" fillId="0" borderId="0"` 的默认 CellFormat。 */
+function zeroCellFormat(): CellFormat {
+  const xf = new CellFormat();
+  xf.numberFormatId = new UInt32Value(0);
+  xf.fontId = new UInt32Value(0);
+  xf.fillId = new UInt32Value(0);
+  xf.borderId = new UInt32Value(0);
+  return xf;
 }

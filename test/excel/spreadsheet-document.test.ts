@@ -68,11 +68,12 @@ describe("SpreadsheetDocument · typed Part 缓存", () => {
     expect(doc.workbookPart).toBe(doc.workbookPart);
   });
 
-  it("sharedStringTablePart 多次访问同实例；workbookStylesPart 缺关系返回 undefined", () => {
+  it("sharedStringTablePart / workbookStylesPart 多次访问同实例；CalcChain / Theme 缺关系返回 undefined", () => {
     const doc = SpreadsheetDocument.create();
     expect(doc.sharedStringTablePart).toBe(doc.sharedStringTablePart);
-    // create() 没建 styles 关系，应为 undefined
-    expect(doc.workbookStylesPart).toBeUndefined();
+    expect(doc.workbookStylesPart).toBe(doc.workbookStylesPart);
+    expect(doc.workbookStylesPart).toBeDefined(); // create() 现在 seed 一份最小 stylesheet
+    // create() 没建 calcChain / theme 关系，应为 undefined
     expect(doc.calculationChainPart).toBeUndefined();
     expect(doc.themePart).toBeUndefined();
   });
