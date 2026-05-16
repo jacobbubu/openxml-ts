@@ -17,6 +17,16 @@ import {
 } from "../element/index.js";
 import type { IPackagePart } from "../packaging/interfaces/part.js";
 
+/**
+ * 全局「typed-part 加载中」计数。`TypedXmlPart.load` 在反序列化期间递增，
+ * 完成后递减——partial mixin（如 Cell.appendChild dirty tracking）通过
+ * `isTypedPartLoading()` 在加载阶段抑制副作用，避免把「读出来」误判为「改过」。
+ */
+let _activeLoads = 0;
+export function isTypedPartLoading(): boolean {
+  return _activeLoads > 0;
+}
+
 export abstract class TypedXmlPart<T extends OpenXmlElement> {
   protected _root: T | undefined;
   protected _loaded = false;
@@ -66,6 +76,11 @@ export abstract class TypedXmlPart<T extends OpenXmlElement> {
     this._loaded = true;
     if (bytes.byteLength === 0) return; // 留给 root getter 懒构造默认实例
     const xml = new TextDecoder("utf-8").decode(bytes);
-    this._root = deserialize(xml, { registry: this.registry }) as T;
+    _activeLoads += 1;
+    try {
+      this._root = deserialize(xml, { registry: this.registry }) as T;
+    } finally {
+      _activeLoads -= 1;
+    }
   }
 }

@@ -42,9 +42,10 @@ import type { PartUri } from "../packaging/interfaces/types.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { ThemePart } from "../parts/theme-part.js";
 import type { TypedXmlPart } from "../parts/typed-xml-part.js";
-import "./extensions/cell-extensions.js"; // 必要副作用：挂上 Cell.resolvedText getter
+import { clearCellDirty } from "./extensions/cell-extensions.js"; // 必要副作用：挂上 Cell.resolvedText + isDirty
 import { registerSpreadsheetElements } from "./generated/_registry.js";
 import { CellValue } from "./generated/cell-value.js";
+import { Cell } from "./generated/cell.js";
 import { SharedStringTable } from "./generated/shared-string-table.js";
 import { SheetData } from "./generated/sheet-data.js";
 import { Sheet } from "./generated/sheet.js";
@@ -285,20 +286,72 @@ export class SpreadsheetDocument {
 
   // ─── 内部 ─────────────────────────────────────────────────────────────────
 
-  private flushAllTypedParts(): Promise<void> {
+  private async flushAllTypedParts(): Promise<void> {
+    // Phase 1：扫描已加载 worksheet 的 dirty cells；命中即丢 CalcChainPart（ADR-019）。
+    const wp = this.typedParts.get(WorkbookPart.relationshipType) as WorkbookPart | undefined;
+    if (wp !== undefined) {
+      const dirtyCells = this.collectDirtyCells(wp);
+      if (dirtyCells.length > 0) {
+        this.dropCalculationChainPart(wp);
+      }
+    }
+
+    // Phase 2：正常 flush。
     const promises: Promise<void>[] = [];
     for (const part of this.typedParts.values()) {
       if (part.isLoaded) promises.push(part.flushAsync());
     }
-    // workbook 的 worksheetParts 不进 SpreadsheetDocument.typedParts（它们由
-    // WorkbookPart 自管）；这里显式遍历，仅 flush 被访问加载过的实例。
-    const wp = this.typedParts.get(WorkbookPart.relationshipType) as WorkbookPart | undefined;
     if (wp !== undefined) {
       for (const wsp of wp.worksheetParts) {
         if (wsp.isLoaded) promises.push(wsp.flushAsync());
       }
     }
-    return Promise.all(promises).then(() => undefined);
+    await Promise.all(promises);
+
+    // Phase 3：清掉本轮 dirty 标志，让用户下一轮修改才会再次失效 CalcChain。
+    if (wp !== undefined) {
+      for (const wsp of wp.worksheetParts) {
+        if (!wsp.isLoaded) continue;
+        for (const cell of wsp.worksheet.descendants(Cell)) {
+          if (cell.isDirty) clearCellDirty(cell);
+        }
+      }
+    }
+  }
+
+  /** 扫描已加载 worksheet 子树，收集 isDirty === true 的 Cell。 */
+  private collectDirtyCells(wp: WorkbookPart): Cell[] {
+    const out: Cell[] = [];
+    for (const wsp of wp.worksheetParts) {
+      if (!wsp.isLoaded) continue;
+      for (const cell of wsp.worksheet.descendants(Cell)) {
+        if (cell.isDirty) out.push(cell);
+      }
+    }
+    return out;
+  }
+
+  /**
+   * 丢弃 CalcChainPart：删 Part 字节 + 删 workbook 的 part-level 关系 +
+   * 从 typed Part 缓存里移除。若关系不存在则零开销返回（Excel 重 open 后
+   * 自动重新拓扑排序）。
+   */
+  private dropCalculationChainPart(wp: WorkbookPart): void {
+    let targetRelId: string | undefined;
+    for (const rel of wp.part.relationships) {
+      if (rel.type !== CalculationChainPart.relationshipType) continue;
+      if (rel.targetMode !== "internal") continue;
+      targetRelId = rel.id;
+      const targetUri = resolveRelativePartUri(wp.part.uri, rel.target);
+      if (targetUri !== undefined && this.pkg.hasPart(targetUri)) {
+        this.pkg.deletePart(targetUri);
+      }
+      break;
+    }
+    if (targetRelId !== undefined) {
+      wp.part.relationships.remove(targetRelId);
+    }
+    this.typedParts.delete(CalculationChainPart.relationshipType);
   }
 
   /** 加载（懒构造）workbook Part；不附带 SST resolver 自动注册。 */
