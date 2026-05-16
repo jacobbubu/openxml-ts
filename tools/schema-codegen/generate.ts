@@ -67,6 +67,7 @@ async function main(): Promise<void> {
   await mkdir(output, { recursive: true });
 
   const sourcePath = input.replace(`${REPO_ROOT}/`, "");
+  const subsystem = subsystemNameForNamespace(json.TargetNamespace);
   const generated: GeneratedClass[] = [];
   const seenFiles = new Set<string>();
   const skippedDuplicates: string[] = [];
@@ -83,6 +84,7 @@ async function main(): Promise<void> {
     const content = generateElement(type, {
       targetNamespace: json.TargetNamespace,
       sourcePath,
+      dotnetNamespace: subsystem.pascal,
     });
     await writeFile(join(output, `${fileName}.ts`), content);
 
@@ -105,7 +107,7 @@ async function main(): Promise<void> {
   generated.sort((a, b) => a.className.localeCompare(b.className));
 
   await writeFile(join(output, "index.ts"), buildIndex(generated, sourcePath));
-  await writeFile(join(output, "_registry.ts"), buildRegistry(generated, sourcePath));
+  await writeFile(join(output, "_registry.ts"), buildRegistry(generated, sourcePath, subsystem));
 
   process.stdout.write(
     `Generated ${generated.length} element classes into ${output}\n${
@@ -114,6 +116,45 @@ async function main(): Promise<void> {
         : ""
     }`,
   );
+}
+
+/**
+ * 从 schema 的 TargetNamespace 推导子系统名（用于 `register<Pascal>Elements`
+ * 函数名 + 注释里的 namespace label）。
+ *
+ * 例：
+ * - `.../wordprocessingml/2006/main` → `{ pascal: "Wordprocessing", label: "wordprocessingml" }`
+ * - `.../spreadsheetml/2006/main`    → `{ pascal: "Spreadsheet",    label: "spreadsheetml" }`
+ * - `.../presentationml/2006/main`   → `{ pascal: "Presentation",   label: "presentationml" }`
+ * - `.../drawingml/2006/main`        → `{ pascal: "Drawing",        label: "drawingml" }`
+ *
+ * 未知 namespace 走 fallback：取最末一段，PascalCase 化作为 pascal。
+ */
+function subsystemNameForNamespace(uri: string): { pascal: string; label: string } {
+  const known: Record<string, { pascal: string; label: string }> = {
+    "http://schemas.openxmlformats.org/wordprocessingml/2006/main": {
+      pascal: "Wordprocessing",
+      label: "wordprocessingml",
+    },
+    "http://schemas.openxmlformats.org/spreadsheetml/2006/main": {
+      pascal: "Spreadsheet",
+      label: "spreadsheetml",
+    },
+    "http://schemas.openxmlformats.org/presentationml/2006/main": {
+      pascal: "Presentation",
+      label: "presentationml",
+    },
+    "http://schemas.openxmlformats.org/drawingml/2006/main": {
+      pascal: "Drawing",
+      label: "drawingml",
+    },
+  };
+  const hit = known[uri];
+  if (hit !== undefined) return hit;
+  const segments = uri.replace(/\/$/, "").split("/");
+  const last = segments[segments.length - 1] ?? "Generated";
+  const pascal = last.charAt(0).toUpperCase() + last.slice(1);
+  return { pascal, label: last };
 }
 
 function buildIndex(classes: readonly GeneratedClass[], sourcePath: string): string {
@@ -125,7 +166,11 @@ function buildIndex(classes: readonly GeneratedClass[], sourcePath: string): str
   return lines.join("\n");
 }
 
-function buildRegistry(classes: readonly GeneratedClass[], sourcePath: string): string {
+function buildRegistry(
+  classes: readonly GeneratedClass[],
+  sourcePath: string,
+  subsystem: { pascal: string; label: string },
+): string {
   const concrete = classes.filter((c) => !c.isAbstract && c.localName.length > 0);
   const imports = concrete
     .map((c) => `import { ${c.className} } from "./${c.fileName}.js";`)
@@ -145,11 +190,11 @@ function buildRegistry(classes: readonly GeneratedClass[], sourcePath: string): 
     imports,
     "",
     "/**",
-    " * 把 wordprocessingml 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。",
+    ` * 把 ${subsystem.label} 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。`,
     " * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，",
     " * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。",
     " */",
-    "export function registerWordprocessingElements(registry: ElementRegistry): void {",
+    `export function register${subsystem.pascal}Elements(registry: ElementRegistry): void {`,
     registrations,
     "}",
     "",

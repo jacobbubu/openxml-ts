@@ -5,6 +5,7 @@ const WPNS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const OPTS = {
   targetNamespace: WPNS,
   sourcePath: "data/schemas/schemas_openxmlformats_org_wordprocessingml_2006_main.json",
+  dotnetNamespace: "Wordprocessing",
 };
 
 describe("element-template · 5 种核心形态", () => {

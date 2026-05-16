@@ -57,6 +57,11 @@ export interface GenerateElementOptions {
   readonly targetNamespace: string;
   /** 源 JSON 文件相对路径，写进 banner 便于追溯。 */
   readonly sourcePath: string;
+  /**
+   * .NET SDK 命名空间名（写进 `@see DocumentFormat.OpenXml.<x>.<class>` 注释）。
+   * 例：`Wordprocessing` / `Spreadsheet` / `Presentation` / `Drawing`。
+   */
+  readonly dotnetNamespace: string;
 }
 
 const ELEMENT_PKG = "../../element/index.js";
@@ -145,7 +150,7 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
   return [
     "// THIS FILE IS GENERATED. DO NOT EDIT.",
     `// Source: ${options.sourcePath}`,
-    `// @see DocumentFormat.OpenXml.Wordprocessing.${type.ClassName}`,
+    `// @see DocumentFormat.OpenXml.${options.dotnetNamespace}.${type.ClassName}`,
     "",
     importsBlock.trimEnd(),
     "",
