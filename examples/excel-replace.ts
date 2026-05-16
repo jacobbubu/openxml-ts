@@ -1,15 +1,17 @@
 /**
  * 例子：打开 xlsx，把每个含 `{{client}}` 的 Cell 文本替换为指定值，写回新文件。
  *
- * 仅替换 `dataType="str"` / `"inlineStr"` / 默认无 dataType（即不走 sharedString）的
- * cellValue.text；走 sharedString 的 cell 需要更复杂的 intern + 索引更新——本例
- * 不覆盖该路径。
+ * 覆盖三类路径：
+ * - `dataType="inlineStr"`：cell 含 `<is><t>...</t></is>`，遍历每个 `<t>` 改 text；
+ * - `dataType="str"` / `"n"` / 无：cell 含 `<v>text</v>`，直接改 `cellValue.text`；
+ * - **不覆盖** `dataType="s"`（sharedString）：那条路径要 intern + 改索引，
+ *   留给生产代码自己实现。
  *
  * 跑法：
  *   bun run examples/excel-replace.ts <input.xlsx> <output.xlsx> [<client-name>]
  */
 
-import { Cell, CellValue, SpreadsheetDocument } from "../src/excel/index.js";
+import { Cell, CellValue, SpreadsheetDocument, Text } from "../src/excel/index.js";
 
 async function main(): Promise<void> {
   const [inputPath, outputPath, client = "Acme Corp"] = process.argv.slice(2);
@@ -28,10 +30,18 @@ async function main(): Promise<void> {
   let replaced = 0;
   for (const wsp of wp.worksheetParts) {
     for (const c of wsp.worksheet.descendants(Cell)) {
+      // 直接值 `<v>`（dataType="str" / "n" / 无）
       const v = c.firstChild(CellValue);
       if (v?.text?.includes("{{client}}") === true) {
         v.text = v.text.replaceAll("{{client}}", client);
         replaced += 1;
+      }
+      // 内联富文本 `<is><t>...`（dataType="inlineStr"）：遍历每个 `<t>` 子段
+      for (const t of c.descendants(Text)) {
+        if (t.text?.includes("{{client}}") === true) {
+          t.text = t.text.replaceAll("{{client}}", client);
+          replaced += 1;
+        }
       }
     }
   }

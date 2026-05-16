@@ -178,17 +178,30 @@ Document          ← /word/document.xml 的根
 Excel 部分通过独立 subpath `openxml-ts/excel` 暴露，与 Word 同形态——HAS-A 包装 `MemoryOpenXmlPackage`，强类型 `WorkbookPart` / `WorksheetPart` / `SharedStringTablePart` / `WorkbookStylesPart` / `CalculationChainPart` / `ThemePart` 六位 typed Parts，~460 个 spreadsheetml element 类。
 
 ```ts
-import { SpreadsheetDocument, Cell, CellValue, Row, SheetData } from "openxml-ts/excel";
+import {
+  SpreadsheetDocument,
+  Cell,
+  InlineString,
+  Row,
+  SheetData,
+  Text,
+} from "openxml-ts/excel";
 
 // 从零造一份最小可用 xlsx（含默认 Sheet1 + 空 SharedStringTable）
 const doc = SpreadsheetDocument.create();
 const sd = doc.workbookPart!.worksheetParts[0]!.worksheet.firstChild(SheetData)!;
 
 const row = new Row();
+row.extendedAttributes.set("r", "1"); // Excel 用 r="N" 推断行号，缺则弹 Repaired
+
 const cell = new Cell();
-const v = new CellValue();
-v.text = "42";
-cell.appendChild(v);
+cell.extendedAttributes.set("r", "A1");           // 单元格引用 A1
+cell.extendedAttributes.set("t", "inlineStr");    // 字面字符串走 <is><t>，避开 sharedString 索引
+const is = new InlineString();
+const t = new Text();
+t.text = "Hello";
+is.appendChild(t);
+cell.appendChild(is);
 row.appendChild(cell);
 sd.appendChild(row);
 

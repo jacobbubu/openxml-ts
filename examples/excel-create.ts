@@ -5,7 +5,14 @@
  *   bun run examples/excel-create.ts <output.xlsx>
  */
 
-import { Cell, CellValue, Row, SheetData, SpreadsheetDocument } from "../src/excel/index.js";
+import {
+  Cell,
+  InlineString,
+  Row,
+  SheetData,
+  SpreadsheetDocument,
+  Text,
+} from "../src/excel/index.js";
 
 async function main(): Promise<void> {
   const [outputPath] = process.argv.slice(2);
@@ -26,15 +33,25 @@ async function main(): Promise<void> {
     ["row", "2", "with", "5", "cells"],
     ["row", "3", "more", "demo", "data"],
   ];
-  for (const cols of data) {
+  for (let rowIdx = 0; rowIdx < data.length; rowIdx += 1) {
+    const cols = data[rowIdx] as readonly string[];
     const r = new Row();
-    for (const text of cols) {
+    // Excel Desktop 用 `<row r="N">` 推断行号；缺这个属性会弹「Repaired」。
+    r.extendedAttributes.set("r", String(rowIdx + 1));
+    for (let colIdx = 0; colIdx < cols.length; colIdx += 1) {
+      const text = cols[colIdx] as string;
       const c = new Cell();
-      const v = new CellValue();
-      v.text = text;
-      // 默认 dataType=str（在 Excel 中按字符串显示，省去 sharedStringTable 索引绑定）
-      c.extendedAttributes.set("t", "str");
-      c.appendChild(v);
+      // 同上，`r="A1"` / `r="B1"` 给 Excel 单元格引用；缺会让 Excel strip 内容。
+      c.extendedAttributes.set("r", `${String.fromCharCode(65 + colIdx)}${rowIdx + 1}`);
+      // dataType="inlineStr" + `<is><t>text</t></is>`：在 cell 里直接放字符串字面值，
+      // 不走 sharedStringTable。`t="str"` 是形式上为「formula 返回的字符串」，没
+      // <f> 时 Excel Desktop 会弹「Repaired」警告，因此不要用。
+      c.extendedAttributes.set("t", "inlineStr");
+      const is = new InlineString();
+      const t = new Text();
+      t.text = text;
+      is.appendChild(t);
+      c.appendChild(is);
       r.appendChild(c);
     }
     sd.appendChild(r);
