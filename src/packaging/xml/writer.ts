@@ -58,7 +58,9 @@ export class XmlWriter {
     if (attrs === undefined) return;
     for (const [key, value] of attrs) {
       if (value === undefined) continue;
-      this.parts.push(" ", key, '="', xmlEscapeAttr(value), '"');
+      // Schema 的 attribute QName 形如 `:name`（空前缀）→ 输出 `name`；`r:id` 保留。
+      const normalized = key.startsWith(":") ? key.slice(1) : key;
+      this.parts.push(" ", normalized, '="', xmlEscapeAttr(value), '"');
     }
   }
 }
