@@ -20,6 +20,9 @@ const TITLES = [
 ];
 
 function buildSlideXml(title: string): string {
+  // shape 必须含 <a:xfrm>（位置 + 大小）+ <a:prstGeom>（图形预设）。缺任一项
+  // PowerPoint 渲染出来是空白页面（解析不报错，但没几何 → 没可见区域 → 文本看不到）。
+  // 位置 838200 EMU ≈ 0.875 inch；大小 7467600 × 1143000 EMU ≈ 7.78" × 1.19"。
   return (
     `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
     `<p:sld xmlns:p="${P}" xmlns:r="${R}" xmlns:a="${A}">` +
@@ -28,10 +31,14 @@ function buildSlideXml(title: string): string {
     `<p:grpSpPr/>` +
     `<p:sp>` +
     `<p:nvSpPr><p:cNvPr id="2" name="Title"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>` +
-    `<p:spPr/>` +
+    `<p:spPr>` +
+    `<a:xfrm><a:off x="838200" y="838200"/><a:ext cx="7467600" cy="1143000"/></a:xfrm>` +
+    `<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>` +
+    `<a:noFill/>` +
+    `</p:spPr>` +
     `<p:txBody>` +
-    `<a:bodyPr/><a:lstStyle/>` +
-    `<a:p><a:r><a:rPr lang="en-US"/><a:t>${escapeXml(title)}</a:t></a:r></a:p>` +
+    `<a:bodyPr wrap="square" rtlCol="0"/><a:lstStyle/>` +
+    `<a:p><a:r><a:rPr lang="en-US" dirty="0"/><a:t>${escapeXml(title)}</a:t></a:r></a:p>` +
     `</p:txBody>` +
     `</p:sp>` +
     `</p:spTree></p:cSld>` +

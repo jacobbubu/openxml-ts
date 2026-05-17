@@ -73,3 +73,37 @@ Epic-1 收尾的人工验证结果。
 | #43 | `excel-create.xlsx` 弹「We found a problem」recover 对话 | `[Content_Types].xml` 缺 `<Default Extension="rels"/>` + `<Default Extension="xml"/>`，Excel 无法解析 `.rels` content-type |
 | #44 | `basicspreadsheet.roundtrip.xlsx` + `Spreadsheet.roundtrip.xlsx` 弹 recover | deserializer 在每层 typed 子元素重复 `xmlns:x` 声明，文件 4x 暴胀触发严格客户端拒读 |
 | #45 | `basicspreadsheet.roundtrip.xlsx` Excel 恢复日志报「String properties from /xl/sharedStrings.xml」 | tokenizer 过滤元素内纯空白，`<t xml:space="preserve"> </t>` 单空格被吃 |
+
+## Epic-4 / Story-4.10 · PowerPoint 子系统手工验证
+
+覆盖 6 条用户路径：
+
+1. `examples/ppt-create.ts` 输出（从零造 3 张含标题文字 + `{{date}}` 占位的 pptx）；
+2. `examples/ppt-replace.ts` 输入（含占位的源 pptx）；
+3. `examples/ppt-replace.ts` 输出（`{{date}}` → `2026-05-17` 占位替换）；
+4. `mcppt.pptx` roundtrip（dotnet/Open-XML-SDK Markup Compatibility 测试 deck）；
+5. `autosave.pptx` roundtrip（基础 autosave 元素）；
+6. `Of16-02.pptx` roundtrip（Office 2016 完整 master/layout/theme 链路）。
+
+种子脚本：`examples/ppt-create.ts` + `examples/ppt-replace.ts` + `.omc/seed-4-10-inputs.ts`
+（构造 6 份输入到 `/tmp/openxml-verify-4-10/`）。
+
+| 日期 | 用例 | PowerPoint Desktop | Office Web | 备注 |
+| --- | --- | --- | --- | --- |
+| 2026-05-17 | `ppt-create.pptx` | ✅ 3 张 Slide 标题文字可见，无修复提示 | 未测（同 Epic-3） | issue #56 修 shape 缺 `<a:xfrm>` 几何属性导致白页后通过 |
+| 2026-05-17 | `ppt-replace-input.pptx` | ✅ 同上含 `{{date}}` 占位 | 未测 | - |
+| 2026-05-17 | `ppt-replace-output.pptx` | ✅ `{{date}}` → `2026-05-17` 替换 1 处，无修复提示 | 未测 | - |
+| 2026-05-17 | `mcppt.roundtrip.pptx` | ⚠️ PowerPoint Mac 弹「Repaired and removed it」——同源 fixture `test/ppt/fixtures/mcppt.pptx` 直开**同样**弹，与 roundtrip 无关 | 未测 | dotnet/Open-XML-SDK 这份 fixture 含 mc-extensions / `mc:Ignorable` 等元素，PowerPoint Mac 已知不完全兼容；非我们 0.4.0 release-blocking |
+| 2026-05-17 | `autosave.roundtrip.pptx` | ✅ 正常打开，无修复提示 | 未测 | - |
+| 2026-05-17 | `Of16-02.roundtrip.pptx` | ✅ 正常打开，无修复提示 | 未测 | 含完整 master/layout/theme 三级链路 |
+
+> Web 列同 Epic-3：成本不在 0.4.0 一轮内主动跳过。
+> 任一 Desktop 行弹「需要修复」且原 fixture 不弹视作 0.4.0 release-blocking。
+
+## Epic-4 调试记录
+
+本轮验证暴露并修复的 1 个 0.4.0 release-blocking bug：
+
+| Issue | 触发症状 | 根因 |
+| --- | --- | --- |
+| #56 | `examples/ppt-create.ts` 输出 PowerPoint 打开是 3 页全白 | slide XML 内 shape 缺 `<a:xfrm>`（位置/大小）+ `<a:prstGeom>`（图形预设），PowerPoint 渲染零几何 → 文本不可见。修复：补 `<a:xfrm><a:off/><a:ext/></a:xfrm>` + `<a:prstGeom prst="rect"/>` |
