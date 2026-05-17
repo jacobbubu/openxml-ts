@@ -330,6 +330,19 @@ Package（一个 ZIP / Flat XML 容器）
 - `package.diagnostics` 提供只读的 Part 计数、Relationship 计数、警告列表
 - 环境变量 `OPENXML_TS_DEBUG=1` 打开 verbose 日志（落到 `console.debug`）
 
+## 浏览器 playground
+
+`playground/` 是一个独立 Vite 工程，用于在真实浏览器里证明三栈（Word / Excel / PPT）都能 open + save。
+
+```bash
+pnpm install && pnpm build       # 先建出 dist/
+cd playground && pnpm install && pnpm dev
+```
+
+打开 `http://localhost:5173/`，拖入或选 docx/xlsx/pptx → 看 element 树统计 → 「修改 + 下载」生成 `*.mutated.{docx,xlsx,pptx}`。详见 [`playground/README.md`](./playground/README.md)。
+
+`pnpm test:browser` 用 Playwright chromium headless 跑同一套 vitest（覆盖 30 个测试文件 / 413 用例），守护「ADR-006：三端语义一致」。
+
 ## 工具链
 
 | 项目 | 版本约束 |
