@@ -323,10 +323,26 @@ const headings = Enumerable.from(doc.Descendants(W.GetName("p")))
 | `el.Element("name").Value` | `el.Element("name")?.Value` |
 | `xs.Where(...).Select(...).ToList()` | `Enumerable.from(xs).Where(...).Select(...).ToList()` |
 | LINQ 查询表达式 `from … in …` | 暂无糖；只能 method-chain |
+| `el.Add(new XElement(...))` | `el.Add(new XElement(...))` |
+| `el.SetAttributeValue(name, value)` | `el.SetAttributeValue(name, value)`（`undefined` 删属性） |
+| `el.Remove()` / `el.RemoveAttribute(name)` | 同名 |
+| `el.ReplaceAttributes(...)` | 同名 |
+| `doc.Save(stream)` | `doc.Save(): Uint8Array` + `doc.ToString()` |
 
 详见完整示例 [`examples/linq-tutorial.ts`](./examples/linq-tutorial.ts)（6 类 .NET 教程范式逐段翻译）。
 
-LINQ 层是**只读视图**（v0.6.0 预览），不暴露 Add / SetAttribute 等 mutator——这一档与 typed API 双写，更靠近「.NET 源码移植辅助」而非 TS 主流写法。
+Parse → Mutate → Save 闭环示例：
+
+```ts
+import { XDocument, XName } from "openxml-ts/linq";
+
+const doc = XDocument.Parse('<customers><customer country="CN" total="100"/></customers>');
+for (const c of doc.Descendants("customer")) {
+  const total = Number(c.Attribute("total")?.Value ?? "0");
+  c.SetAttributeValue("total", String(total * 2));
+}
+const bytes = doc.Save(); // 直接拿到 UTF-8 Uint8Array
+```
 
 ## OPC 心智地图
 

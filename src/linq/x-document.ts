@@ -5,10 +5,11 @@
  * 复用 openxml-ts 的 \`deserialize\` 管线（与 typed API 走同一条 XML 解析路径，
  * 后续 LINQ 树上的查询行为与 typed 树完全一致）。
  *
- * 本壳层不可变——返回 XDocument 后不能再换 root；mutator 设计留给后续 Story。
+ * Mutator 走 Root.Add / SetAttributeValue 等；序列化回字符串/字节流走
+ * \`ToString()\` / \`Save()\`，闭合「Parse → 改 → Save」流。
  */
 
-import { deserialize, elementRegistry } from "../element/index.js";
+import { deserialize, elementRegistry, serialize } from "../element/index.js";
 import type { ElementRegistry } from "../element/index.js";
 import { XElement } from "./x-element.js";
 import { XName } from "./x-name.js";
@@ -51,5 +52,23 @@ export class XDocument {
   /** 等价 \`Root!.Descendants(name?)\`。 */
   Descendants(name?: XName | string): XElement[] {
     return this.Root === undefined ? [] : this.Root.Descendants(name);
+  }
+
+  /**
+   * 序列化为 XML 字符串——对位 .NET \`XDocument.ToString()\`。
+   * \`options.withDeclaration\` 默认 true（含 \`<?xml ... ?>\` 头）。
+   */
+  ToString(options: { withDeclaration?: boolean } = {}): string {
+    if (this.Root === undefined) return "";
+    return serialize(this.Root.inner, options);
+  }
+
+  /**
+   * 序列化为 UTF-8 字节流——简化版 .NET \`XDocument.Save(stream)\`。
+   * .NET 还有 \`Save(string path)\` / \`Save(TextWriter)\` 等重载；TS 端不绑定
+   * 文件路径，统一返字节，调用方自行写 fs / Blob 下载等。
+   */
+  Save(): Uint8Array {
+    return new TextEncoder().encode(this.ToString());
   }
 }
