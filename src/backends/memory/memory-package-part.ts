@@ -51,6 +51,15 @@ export class MemoryPackagePart implements IPackagePart {
     this.content = await normalizeWriteInput(input);
   }
 
+  /**
+   * 同步写入字节流——给 typed 文档门面的 `create()` 工厂 seed XML 用，
+   * 避免「sync create + async writeAsync 的 microtask 隔阂」（首次访问 typed root
+   * 时 part 字节还没落地）。仅接 string / Uint8Array，不接 Blob / ReadableStream。
+   */
+  writeSync(input: string | Uint8Array): void {
+    this.content = input instanceof Uint8Array ? input : new TextEncoder().encode(input);
+  }
+
   /** 测试或更高层调用：直接读出当前缓冲（不通过流）。 */
   snapshot(): Uint8Array {
     return this.content;

@@ -1,10 +1,20 @@
 /**
- * `openxml-ts/ppt` 公共 entry（Story-4.3 起初建）。
+ * `openxml-ts/ppt` 公共 entry。
  *
- * 当前阶段仅暴露 typed Parts 与 generated element 类；
- * 门面 `PresentationDocument` 在 Story-4.5 接入，子 entry + size-limit 在 Story-4.8 落地。
+ * 用法：
+ * ```ts
+ * import { PresentationDocument } from "openxml-ts/ppt";
+ *
+ * await using doc = await PresentationDocument.openAsync("./deck.pptx");
+ * for (const sp of doc.presentationPart!.slideParts) {
+ *   console.log(sp.slide.localName);
+ * }
+ * ```
+ *
+ * 子 entry + size-limit 守护在 Story-4.8 落地；本文件 Story-4.3 起初建、4.5 接入门面。
  */
 
+export { PresentationDocument } from "./presentation-document.js";
 export {
   NotesMasterPart,
   NotesSlidePart,
