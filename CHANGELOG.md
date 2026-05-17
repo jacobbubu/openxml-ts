@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.4.0](https://github.com/jacobbubu/openxml-ts/compare/v0.3.0...v0.4.0) (2026-05-17)
+
+
+### Features
+
+* **drawing:** Story-4.1 DrawingML codegen 落地，产出 383 个 element 类 ([#46](https://github.com/jacobbubu/openxml-ts/issues/46)) ([124a877](https://github.com/jacobbubu/openxml-ts/commit/124a87780db543c2c1a74928ff6a90fd9cbad4d5))
+* **pkg:** Story-4.8 双子 entry openxml-ts/ppt + openxml-ts/drawing + size-limit 守护 ([#54](https://github.com/jacobbubu/openxml-ts/issues/54)) ([0a7b0ff](https://github.com/jacobbubu/openxml-ts/commit/0a7b0ff0a36347b94a0a8e1f7ab45542e264367e))
+* **ppt:** Story-4.2 PresentationML codegen 落地，产出 269 个 element 类 ([#48](https://github.com/jacobbubu/openxml-ts/issues/48)) ([e068d1a](https://github.com/jacobbubu/openxml-ts/commit/e068d1a65542e9e4396ba5c4c9d385ad42ec89ad))
+* **ppt:** Story-4.3 PresentationPart + SlidePart typed Parts ([#49](https://github.com/jacobbubu/openxml-ts/issues/49)) ([77c4c89](https://github.com/jacobbubu/openxml-ts/commit/77c4c89bfc8cb1b166ff4f76a0b0d743d1b5f548))
+* **ppt:** Story-4.4 补齐 5 个 typed Part，建立三级版式继承关系网络 ([#50](https://github.com/jacobbubu/openxml-ts/issues/50)) ([9fd3498](https://github.com/jacobbubu/openxml-ts/commit/9fd34988fd542d944521625fbfdffcbf16caf9b5))
+* **ppt:** Story-4.5 PresentationDocument 强类型门面 + create() 工厂 ([#51](https://github.com/jacobbubu/openxml-ts/issues/51)) ([9f0f1ed](https://github.com/jacobbubu/openxml-ts/commit/9f0f1edc79f48654c75e84e403d903146bde74cc))
+* **ppt:** Story-4.6 三级版式继承 effective* resolver ([#52](https://github.com/jacobbubu/openxml-ts/issues/52)) ([08e7316](https://github.com/jacobbubu/openxml-ts/commit/08e731603a28cc1a0cd81143519824092fb9e3f8))
+* **ppt:** Story-4.7 Roundtrip 真实样例 + element golden 生成器适配 ([#53](https://github.com/jacobbubu/openxml-ts/issues/53)) ([ff575ff](https://github.com/jacobbubu/openxml-ts/commit/ff575ff7f15806a40d0e80c7d6dbfe179279a64b))
+* **ppt:** Story-4.9 bench/ppt.bench.ts + examples/ppt-{create,replace}.ts + bench-baseline ([#55](https://github.com/jacobbubu/openxml-ts/issues/55)) ([87c5e90](https://github.com/jacobbubu/openxml-ts/commit/87c5e90129b576894b7494360a038e96c790ff8e))
+
 ## [0.3.0](https://github.com/jacobbubu/openxml-ts/compare/v0.2.0...v0.3.0) (2026-05-17)
 
 
