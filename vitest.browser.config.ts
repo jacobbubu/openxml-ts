@@ -29,6 +29,20 @@ export default defineConfig({
       "test/packaging/backends/zip/zip-crud.test.ts",
       "test/packaging/flat-opc/**/*.test.ts",
       "test/element/**/*.test.ts",
+      // Story-6.1：扩到 Word/Excel/PPT 子系统的纯逻辑测试（typed Parts /
+      // element 类 / create-from-zero / effective* resolver）。
+      // 3 个 roundtrip 文件依赖 `node:fs/promises` 读 fixture，留只 Node 跑。
+      "test/word/generated.test.ts",
+      "test/excel/typed-parts.test.ts",
+      "test/excel/parts.test.ts",
+      "test/excel/shared-string-table.test.ts",
+      "test/excel/calc-chain.test.ts",
+      "test/excel/spreadsheet-document.test.ts",
+      "test/excel/generated.test.ts",
+      "test/ppt/typed-parts.test.ts",
+      "test/ppt/typed-parts-extended.test.ts",
+      "test/ppt/presentation-document.test.ts",
+      "test/ppt/effective-resolver.test.ts",
     ],
     browser: {
       enabled: true,
