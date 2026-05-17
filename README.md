@@ -332,6 +332,8 @@ Package（一个 ZIP / Flat XML 容器）
 
 ## 浏览器 playground
 
+**Live demo**：<https://jacobbubu.github.io/openxml-ts/>（由 `.github/workflows/playground-deploy.yml` 在 main 分支变动时自动部署）。
+
 `playground/` 是一个独立 Vite 工程，用于在真实浏览器里证明三栈（Word / Excel / PPT）都能 open + save。
 
 ```bash
