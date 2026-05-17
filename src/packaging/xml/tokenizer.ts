@@ -54,8 +54,10 @@ export function* tokenizeXml(src: string, options: TokenizeOptions = {}): Genera
         if (!isWhitespace(slice)) {
           throw failAt(i, "Unexpected text outside root element");
         }
-      } else if (!isWhitespace(slice)) {
-        // OPC manifest 用例中，元素间纯空白只是缩进/换行；过滤掉以让消费者无需 trim。
+      } else if (slice.length > 0) {
+        // 元素内文本要全发——含纯空白（`<t xml:space="preserve"> </t>` 这类
+        // SST/Run 字符串的合法 payload）。composite 消费者自行丢弃 inter-element
+        // 缩进；leaf / Unknown 直接保留为 text，确保 roundtrip 字节稳定。
         yield { kind: "text", value: xmlUnescape(slice) };
       }
       i = next === -1 ? len : next;
