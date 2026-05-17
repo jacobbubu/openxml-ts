@@ -39,3 +39,37 @@ Epic-1 收尾的人工验证结果。
 | 2026-05-16 | `examples/word-replace.ts` 输出 | ✅ 正常打开，`{{client}}` 已替换为 `Acme Corp`，无修复提示 | ✅ 正常打开，`{{client}}` 已替换为 `Acme Corp`，无修复提示 | 0.2.0 release-blocking 已解除 |
 
 > 任一行弹「需要修复」视作 0.2.0 release-blocking，需先回归定位。
+
+## Epic-3 / Story-3.10 · Excel 子系统手工验证
+
+覆盖 5 条用户路径：
+
+1. `examples/excel-create.ts` 输出（从零造 3×5 inlineStr 单元格）；
+2. `examples/excel-replace.ts` 输出（`{{client}}` → `Acme Corp` 占位替换）；
+3. `basicspreadsheet.xlsx` roundtrip（含 pivotTables / pivotCache / tables / drawings / charts / 条件格式 / 富文本 SST）；
+4. `Spreadsheet.xlsx` roundtrip（含 drawings / charts / theme / vml）；
+5. `missingcalcchainpart.xlsx` roundtrip（多 sheet、ext namespace、`xr:revisionPtr` 类 Unknown 元素）。
+
+种子脚本：`.omc/seed-3-10-inputs.ts`（构造 5 份输入到 `/tmp/openxml-verify-3-10/`）。
+
+| 日期 | 用例 | Excel Desktop | Office Web | 备注 |
+| --- | --- | --- | --- | --- |
+| 2026-05-17 | `excel-create.xlsx` | ✅ 正常打开，3 行 × 5 列、无修复提示。B/D 列数字显示绿三角「数字以文本存」属 inlineStr 字面值预期，非数据错误 | 未测（依赖 Desktop 通过传递性） | issue #42 / #43 修复后通过 |
+| 2026-05-17 | `excel-replace-output.xlsx` | ✅ 正常打开，`{{client}}` 已替换为 `Acme Corp` 共 2 处，无修复提示 | 未测（同上） | - |
+| 2026-05-17 | `basicspreadsheet.roundtrip.xlsx` | ✅ 正常打开，pivot/chart/diagram/conditional formatting 全保留，无修复提示 | 未测（同上） | issue #45 修复 SST `xml:space="preserve"` 单空格丢失后通过 |
+| 2026-05-17 | `Spreadsheet.roundtrip.xlsx` | ✅ 正常打开，drawings/charts/theme 全保留，无修复提示 | 未测（同上） | issue #44 修复 deserializer xmlns 重复后通过 |
+| 2026-05-17 | `missingcalcchainpart.roundtrip.xlsx` | ✅ 多 sheet 正常打开，tab 配色/标题/表格布局完整，无修复提示 | 未测（同上） | - |
+
+> Web 列本轮主动跳过：Office Web 自动验证需 Microsoft 账号 OAuth / Playwright + 2FA，成本不在 0.3.0 一轮内。考虑 Excel Desktop 严格度 ≥ Web（OPC 校验/SST 校验/relationships 完整性都更严），Desktop 全过则 Web 通过性高。0.3.0 评审需明示该 gap。
+> 任一行弹「需要修复」视作 0.3.0 release-blocking。
+
+## Epic-3 调试记录
+
+本轮验证暴露并修复的 4 个 0.3.0 release-blocking bug：
+
+| Issue | 触发症状 | 根因 |
+| --- | --- | --- |
+| #42 | `excel-create.xlsx` Excel Desktop 弹 Repaired | `SpreadsheetDocument.create()` 未 seed `xl/styles.xml`，Excel 要求 stylesheet Part 存在 |
+| #43 | `excel-create.xlsx` 弹「We found a problem」recover 对话 | `[Content_Types].xml` 缺 `<Default Extension="rels"/>` + `<Default Extension="xml"/>`，Excel 无法解析 `.rels` content-type |
+| #44 | `basicspreadsheet.roundtrip.xlsx` + `Spreadsheet.roundtrip.xlsx` 弹 recover | deserializer 在每层 typed 子元素重复 `xmlns:x` 声明，文件 4x 暴胀触发严格客户端拒读 |
+| #45 | `basicspreadsheet.roundtrip.xlsx` Excel 恢复日志报「String properties from /xl/sharedStrings.xml」 | tokenizer 过滤元素内纯空白，`<t xml:space="preserve"> </t>` 单空格被吃 |
