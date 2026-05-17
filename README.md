@@ -238,6 +238,65 @@ Excel 子系统的额外能力：
 
 源码起点：[`src/excel/spreadsheet-document.ts`](./src/excel/spreadsheet-document.ts) 是门面，[`src/excel/generated/`](./src/excel/generated/) 是约 460 个 schema 类，[`docs/planning/epic-3-architecture.md`](./docs/planning/epic-3-architecture.md) §4 / §5 给跨 Part 解引用与 typed Parts 设计细节。
 
+## PowerPoint 子系统（`openxml-ts/ppt`，0.4.0 预览）
+
+PPT 部分通过独立 subpath `openxml-ts/ppt` 暴露，与 Word/Excel 同形态。强类型门面 `PresentationDocument` 配 7 个 typed Parts：`PresentationPart` / `SlidePart` / `SlideLayoutPart` / `SlideMasterPart` / `NotesSlidePart` / `NotesMasterPart` / `ThemePart`。270 个 presentationml element 类 + 380 个 drawingml element 类。
+
+```ts
+import { PresentationDocument } from "openxml-ts/ppt";
+
+// 从零造一份最小可用 pptx（1 张 Slide + 1 个 Layout + 1 个 Master + 1 个 Theme）
+const doc = PresentationDocument.create();
+await doc.saveAsAsync("./hello.pptx");
+```
+
+```ts
+// 打开 → 沿 slide → layout → master → theme 链解 effective 配色 / 字体 / 样式
+import { PresentationDocument } from "openxml-ts/ppt";
+
+await using doc = await PresentationDocument.openAsync("./deck.pptx");
+for (const sp of doc.presentationPart!.slideParts) {
+  // 三个 effective* getter 自动走 slide-level / layout-level theme override 兜底 master
+  console.log(sp.effectiveColorScheme?.localName); // "clrScheme"
+  console.log(sp.effectiveFontScheme?.localName);  // "fontScheme"
+  console.log(sp.effectiveFormatScheme?.localName);// "fmtScheme"
+}
+```
+
+**slideParts 顺序按 `<p:sldIdLst>` 而非关系遍历顺序**（ADR-024），与 PowerPoint UI 所见一致。每个 typed Part 都按 Story-2.6 缓存语义 lazy 加载、多次访问同实例。
+
+**Tree-shake 友好深引：**
+
+```ts
+import { Slide } from "openxml-ts/ppt/generated/slide";
+import { Shape } from "openxml-ts/ppt/generated/shape";
+```
+
+`{ Slide, Shape, TextBody } + drawing Paragraph` 组合最小用例 ≤ 80 KB gzip（CI `size-limit` 守护），完整 entry ≤ 800 KB。
+
+## DrawingML 子系统（`openxml-ts/drawing`，0.4.0 预览）
+
+DrawingML 是 OOXML 共用绘图层（PPT 必用，Word/Excel 也通过 ThemePart 间接依赖）。通过 `openxml-ts/drawing` 单独可用，含 Theme / ColorScheme / FontScheme / FormatScheme / Shape / TextBody / Paragraph / Run 等 ~380 类。
+
+```ts
+import { Theme, ColorScheme, FontScheme } from "openxml-ts/drawing";
+```
+
+**命名冲突（ADR-026）：** DrawingML 与 WordprocessingML / PresentationML 共享若干短名（`Paragraph` / `Text` / `Run` / `Shape` / `TextBody` 等）。**同时 import 多个子系统时必用 alias**：
+
+```ts
+import { Paragraph as DrawingParagraph } from "openxml-ts/drawing";
+import { Paragraph as WordParagraph } from "openxml-ts/word";
+
+// 或者用 namespace import
+import * as drawing from "openxml-ts/drawing";
+import * as ppt from "openxml-ts/ppt";
+```
+
+完整 entry ≤ 400 KB gzip（CI `size-limit` 守护）。
+
+源码起点：[`src/ppt/presentation-document.ts`](./src/ppt/presentation-document.ts) 是 PPT 门面，[`src/ppt/effective-resolver.ts`](./src/ppt/effective-resolver.ts) 是三级版式继承核心，[`docs/planning/epic-4-architecture.md`](./docs/planning/epic-4-architecture.md) §4 / §5 / §6 给典型链路、ADR-024（slide 顺序）、ADR-026（命名冲突）的设计依据。
+
 ## OPC 心智地图
 
 每个 docx/xlsx/pptx 都是一个 **OPC Package**（ZIP 容器，部分场景是 Flat OPC 单 XML），里头有四样东西：

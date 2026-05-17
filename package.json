@@ -27,6 +27,22 @@
       "types": "./dist/excel/generated/*.d.ts",
       "import": "./dist/excel/generated/*.js"
     },
+    "./ppt": {
+      "types": "./dist/ppt/index.d.ts",
+      "import": "./dist/ppt/index.js"
+    },
+    "./ppt/generated/*": {
+      "types": "./dist/ppt/generated/*.d.ts",
+      "import": "./dist/ppt/generated/*.js"
+    },
+    "./drawing": {
+      "types": "./dist/drawing/index.d.ts",
+      "import": "./dist/drawing/index.js"
+    },
+    "./drawing/generated/*": {
+      "types": "./dist/drawing/generated/*.d.ts",
+      "import": "./dist/drawing/generated/*.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
@@ -53,6 +69,8 @@
     "golden:gen": "bun run tools/golden-generator/generate.ts",
     "gen:word": "bun run tools/schema-codegen/generate.ts",
     "gen:excel": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_spreadsheetml_2006_main.json --output src/excel/generated",
+    "gen:drawing": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_main.json --output src/drawing/generated",
+    "gen:ppt": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_presentationml_2006_main.json --output src/ppt/generated",
     "format": "biome format --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -127,6 +145,29 @@
       "name": "openxml-ts/excel (full bundle including registry)",
       "path": "dist/excel/index.js",
       "limit": "600 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/ppt minimal (Slide + Shape + TextBody + Paragraph)",
+      "path": [
+        "dist/ppt/generated/slide.js",
+        "dist/ppt/generated/shape.js",
+        "dist/ppt/generated/text-body.js",
+        "dist/drawing/generated/paragraph.js"
+      ],
+      "limit": "80 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/ppt (full bundle including registry)",
+      "path": "dist/ppt/index.js",
+      "limit": "800 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/drawing (full bundle including registry)",
+      "path": "dist/drawing/index.js",
+      "limit": "400 KB",
       "gzip": true
     }
   ]
