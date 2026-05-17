@@ -19,6 +19,7 @@
 
 export { Enumerable } from "./enumerable.js";
 export { XAttribute } from "./x-attribute.js";
+export { XDocument } from "./x-document.js";
 export { XElement } from "./x-element.js";
 export { XName } from "./x-name.js";
 export { XNamespace } from "./x-namespace.js";
