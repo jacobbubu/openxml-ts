@@ -273,7 +273,7 @@ describe("SlideLayoutPart / NotesSlidePart · 最小骨架", () => {
       SlideLayoutPart.contentType,
     );
     await part.writeAsync(`<p:sldLayout xmlns:p="${PNS}"/>`);
-    const lp = new SlideLayoutPart(part, makeRegistry());
+    const lp = new SlideLayoutPart(part, makeRegistry(), pkg);
     expect(lp.slideLayout).toBeInstanceOf(SlideLayout);
 
     const fresh = new SlideLayout();
@@ -299,7 +299,7 @@ describe("SlideLayoutPart / NotesSlidePart · 最小骨架", () => {
       NotesSlidePart.contentType,
     );
     await part.writeAsync(`<p:notes xmlns:p="${PNS}"/>`);
-    const np = new NotesSlidePart(part, makeRegistry());
+    const np = new NotesSlidePart(part, makeRegistry(), pkg);
     expect(np.notesSlide).toBeInstanceOf(NotesSlide);
 
     const fresh = new NotesSlide();

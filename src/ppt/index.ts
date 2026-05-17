@@ -6,9 +6,11 @@
  */
 
 export {
+  NotesMasterPart,
   NotesSlidePart,
   PresentationPart,
   SlideLayoutPart,
+  SlideMasterPart,
   SlidePart,
 } from "./parts/index.js";
 export { TypedXmlPart } from "../parts/typed-xml-part.js";

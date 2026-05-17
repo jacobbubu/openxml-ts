@@ -13,9 +13,9 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
-import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import { Slide } from "../generated/slide.js";
+import { resolveSinglePart } from "./_helpers.js";
 import { NotesSlidePart } from "./notes-slide-part.js";
 import { SlideLayoutPart } from "./slide-layout-part.js";
 
@@ -52,7 +52,7 @@ export class SlidePart extends TypedXmlPart<Slide> {
     if (this._slideLayoutPart !== undefined) {
       return this._slideLayoutPart ?? undefined;
     }
-    const resolved = this.resolveSinglePartLevel(SlideLayoutPart);
+    const resolved = resolveSinglePart(this.part, this.pkg, this.registry, SlideLayoutPart);
     this._slideLayoutPart = resolved ?? null;
     return resolved;
   }
@@ -62,24 +62,8 @@ export class SlidePart extends TypedXmlPart<Slide> {
     if (this._notesSlidePart !== undefined) {
       return this._notesSlidePart ?? undefined;
     }
-    const resolved = this.resolveSinglePartLevel(NotesSlidePart);
+    const resolved = resolveSinglePart(this.part, this.pkg, this.registry, NotesSlidePart);
     this._notesSlidePart = resolved ?? null;
     return resolved;
   }
-
-  /** 从 slide 自己的 part-level 关系中找 type 匹配的单个 typed Part；无则返回 undefined。 */
-  private resolveSinglePartLevel<T>(Ctor: PartCtor<T>): T | undefined {
-    for (const rel of this.part.relationships) {
-      if (rel.type !== Ctor.relationshipType || rel.targetMode !== "internal") continue;
-      const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
-      if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
-      return new Ctor(this.pkg.getPart(targetUri), this.registry);
-    }
-    return undefined;
-  }
-}
-
-interface PartCtor<T> {
-  new (part: IPackagePart, registry: ElementRegistry): T;
-  readonly relationshipType: string;
 }
