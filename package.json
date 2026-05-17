@@ -43,6 +43,10 @@
       "types": "./dist/drawing/generated/*.d.ts",
       "import": "./dist/drawing/generated/*.js"
     },
+    "./linq": {
+      "types": "./dist/linq/index.d.ts",
+      "import": "./dist/linq/index.js"
+    },
     "./package.json": "./package.json"
   },
   "files": [
