@@ -1,5 +1,36 @@
 # Changelog
 
+## [0.3.0](https://github.com/jacobbubu/openxml-ts/compare/v0.2.0...v0.3.0) (2026-05-17)
+
+
+### Features
+
+* **excel:** Story-3.1 codegen 跑通 spreadsheetml namespace，产出 461 个 element 类 ([#32](https://github.com/jacobbubu/openxml-ts/issues/32)) ([119128c](https://github.com/jacobbubu/openxml-ts/commit/119128cb1bcac0d9cf60299df3ef54a2c03041ca))
+* **excel:** Story-3.2 WorkbookPart + WorksheetPart typed Parts ([#33](https://github.com/jacobbubu/openxml-ts/issues/33)) ([84c707f](https://github.com/jacobbubu/openxml-ts/commit/84c707fe264bb56efd61a7ae040bb5fc3dccd539))
+* **excel:** Story-3.3 SharedStringTable / WorkbookStyles / CalcChain / Theme typed Parts ([#34](https://github.com/jacobbubu/openxml-ts/issues/34)) ([90181b6](https://github.com/jacobbubu/openxml-ts/commit/90181b6b825c7bc0cdf2229d1c0f3a66ed3be487))
+* **excel:** Story-3.4 SharedStringResolver + Cell.resolvedText partial mixin ([#35](https://github.com/jacobbubu/openxml-ts/issues/35)) ([89576af](https://github.com/jacobbubu/openxml-ts/commit/89576afcb393349a0838fd4a9f2d9e10e1d51600))
+* **excel:** Story-3.5 SpreadsheetDocument 强类型门面 + create() 工厂 ([#36](https://github.com/jacobbubu/openxml-ts/issues/36)) ([c60eb91](https://github.com/jacobbubu/openxml-ts/commit/c60eb91ffe38247596513cd5a071df69eb75bad6))
+* **excel:** Story-3.6 CalcChain 自动失效 + Cell dirty tracking ([#37](https://github.com/jacobbubu/openxml-ts/issues/37)) ([a45eba8](https://github.com/jacobbubu/openxml-ts/commit/a45eba83b0616a02cdd7e005efa117354c099624))
+* **excel:** Story-3.7 Roundtrip 真实样例 + element golden 生成器适配 ([#38](https://github.com/jacobbubu/openxml-ts/issues/38)) ([6f0bf8e](https://github.com/jacobbubu/openxml-ts/commit/6f0bf8eefde70504e3d178fda8b67c6219dd25f9))
+* **excel:** Story-3.8 子 entry openxml-ts/excel + tree-shake size-limit 守护 ([#39](https://github.com/jacobbubu/openxml-ts/issues/39)) ([a01bd4a](https://github.com/jacobbubu/openxml-ts/commit/a01bd4a7d6dbdcb56c730c60fd2b2b7efd9a6079))
+* **excel:** Story-3.9 bench/excel.bench.ts + examples 落地 ([#40](https://github.com/jacobbubu/openxml-ts/issues/40)) ([90ba1ba](https://github.com/jacobbubu/openxml-ts/commit/90ba1bace08e2484116b61b05fb74d7f69d11652))
+
+
+### Bug Fixes
+
+* **element:** xmlns:x 只在 typed.prefix 未绑定时补一次，避免 4x 暴胀与 Excel 拒读 ([#44](https://github.com/jacobbubu/openxml-ts/issues/44)) ([2407ff8](https://github.com/jacobbubu/openxml-ts/commit/2407ff8402e5d3649d720a94c9336fb87283d312))
+* **excel:** [Content_Types].xml 补 Default rels/xml，彻底解 Excel Desktop 恢复对话 ([#43](https://github.com/jacobbubu/openxml-ts/issues/43)) ([fa6cf73](https://github.com/jacobbubu/openxml-ts/commit/fa6cf73fffbf3079802111903090598c068af09e))
+* **excel:** examples 加 r 引用属性 + 改用 inlineStr，解 Excel Desktop Repaired 警告 ([#41](https://github.com/jacobbubu/openxml-ts/issues/41)) ([0a5b466](https://github.com/jacobbubu/openxml-ts/commit/0a5b466d10a2458798af731efa4103f1d3998d35))
+* **excel:** SpreadsheetDocument.create() seed 最小可用 xl/styles.xml，彻底解 Excel Desktop Repaired ([#42](https://github.com/jacobbubu/openxml-ts/issues/42)) ([5f3e69b](https://github.com/jacobbubu/openxml-ts/commit/5f3e69b102ea2c1b33614eee43f05cf84b3dcdfd))
+* **packaging:** tokenizer 保留元素内纯空白文本，解 SST &lt;t xml:space=\"preserve\"&gt; &lt;/t&gt; 丢空格 → Excel Repaired ([#45](https://github.com/jacobbubu/openxml-ts/issues/45)) ([31e9dff](https://github.com/jacobbubu/openxml-ts/commit/31e9dff8b20f293bab3825da82b50fda82a4de99))
+
+
+### Documentation
+
+* **epic-3:** Story-3.10 manual-test 收尾，记录 5 份 Desktop 验证结果与 4 个 0.3.0 release-blocking 修复 ([62edb3a](https://github.com/jacobbubu/openxml-ts/commit/62edb3af162c7852933f561a6c49b059a29fe367))
+* **excel:** Epic-3 BMAD 规划阶段三件套（Excel PRD / Architecture / Story 拆分） ([#29](https://github.com/jacobbubu/openxml-ts/issues/29)) ([1a9dd00](https://github.com/jacobbubu/openxml-ts/commit/1a9dd00e9e6ffe7115a7ce236be3cb84cfa4d7d8))
+* **ppt:** Epic-4 BMAD 规划阶段三件套（PowerPoint PRD / Architecture / Story 拆分） ([#30](https://github.com/jacobbubu/openxml-ts/issues/30)) ([81c1c0a](https://github.com/jacobbubu/openxml-ts/commit/81c1c0af97e33815bfef5db222c95c5823f64ae7))
+
 ## [0.2.0](https://github.com/jacobbubu/openxml-ts/compare/v0.1.0...v0.2.0) (2026-05-16)
 
 
