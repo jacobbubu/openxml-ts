@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.5.0](https://github.com/jacobbubu/openxml-ts/compare/v0.4.0...v0.5.0) (2026-05-17)
+
+
+### Features
+
+* **playground:** Story-6.2 浏览器 Vite playground，三栈 docx/xlsx/pptx 在 chromium 跑通 ([#59](https://github.com/jacobbubu/openxml-ts/issues/59)) ([c71b6d6](https://github.com/jacobbubu/openxml-ts/commit/c71b6d6e22ee885efdac4fce120425db75ef5345))
+
+
+### Bug Fixes
+
+* **playground:** drop zone 用 display:block 修 label 默认 inline 导致的 dashed border 错位 ([6cd6ec7](https://github.com/jacobbubu/openxml-ts/commit/6cd6ec70a79f3d5eb5653ca44d44c336cc862c49))
+
+
+### Documentation
+
+* **epic-6:** Story-6.4 浏览器人工验证收尾，3 栈通过 live demo 烟雾测试 ([004f7bb](https://github.com/jacobbubu/openxml-ts/commit/004f7bb5e70834ae886964d1883dceb9dff02646))
+
 ## [0.4.0](https://github.com/jacobbubu/openxml-ts/compare/v0.3.0...v0.4.0) (2026-05-17)
 
 
