@@ -115,3 +115,39 @@ SpreadsheetDocument.create — 端到端 18000 行构造
 
 与 Epic-1/2 相同：p99 增长 > 50% 视作 release-blocking；mean 增长 > 25% 视作 perf-regression。
 
+---
+
+## Epic-4 PresentationML 子系统基线（Story-4.9）
+
+`bench/ppt.bench.ts` 首次基线。合成 fixture：`PresentationDocument.create()` 起追加
+120 张 Slide，每张挂 1 个 shape + 8 段 run，run 文本是确定性 xorshift32 token，让
+ZIP 压缩后接近 1 MB（约 **1.1 MB zipped** / ~3 MB 未压缩 XML）。环境同上（M-series
+MacBook，Node 20.x / vitest 2.x bench）。
+
+### NFR-4.1 / 4.2 阈值对照
+
+| 场景 | 目标（epic-4-prd §NFR-4） | 测得 | 状态 |
+| --- | --- | --- | --- |
+| openAsync + presentation + 全部 slide descendants 全量遍历 | ≤ 300 ms p95（4.1） | mean **34.0 ms**, p99 43.4 ms | ✅ |
+| 修改 1 个 slide 根 + saveAsBytes 整包写回 | ≤ 200 ms p95（4.2） | mean **79.4 ms**, p99 156.4 ms | ✅ |
+| create + 填 120 slides + saveAsBytes | （参考，端到端） | mean **61.8 ms**, p99 126.3 ms | ✅ |
+
+### 完整 vitest bench 输出（首次基线 · 2026-05-17）
+
+```
+PresentationDocument.openAsync — ~1 MB pptx
+  · open + presentation + 全部 slide descendants 遍历
+    hz 29.41  min 28.75ms  max 43.38ms  mean 34.00ms  p75 36.55ms  p99 43.38ms  rme ±6.15%  samples 15
+
+element 树 → bytes — ~1 MB pptx
+  · 修改 1 个 slide 根 + saveAsBytes 整包写回
+    hz 12.59  min 59.61ms  max 156.44ms mean 79.42ms  p75 79.80ms  p99 156.44ms rme ±25.11% samples 10
+
+PresentationDocument.create — 端到端 120 张 Slide 构造
+  · create + 填充 120 slides + saveAsBytes
+    hz 16.17  min 41.75ms  max 126.34ms mean 61.83ms  p75 60.51ms  p99 126.34ms rme ±27.68% samples 10
+```
+
+### 回归判定
+
+同 Excel：p99 增长 > 50% 视作 release-blocking；mean 增长 > 25% 视作 perf-regression。
