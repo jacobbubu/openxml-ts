@@ -53,16 +53,22 @@ export function deserialize(xml: string, options: DeserializeOptions = {}): Open
       // 当 typed class 的固有 prefix（如 Workbook.prefix="x"）与 XML 用的
       // prefix（如默认 namespace 下的空前缀）不一致时，re-serialize 会输出
       // `<x:workbook>` 但 xmlns:x 没声明，下一轮反序列化会降级为 Unknown。
-      // 在此显式补 `xmlns:<typed.prefix>` 到 extendedAttributes，确保
-      // roundtrip 字节级稳定。
+      // 仅在 typed.prefix 尚未绑定到 typed.namespaceUri 时补一次 `xmlns:<typed.prefix>`；
+      // 同步把 binding 写入 effectiveScope，让子孙看作 in-scope 不再重复声明（否则
+      // 每个 typed 元素都会冗余 `xmlns:x`，文件体积 4x 暴胀且部分严格客户端拒读）。
+      let effectiveScope = fullScope;
       if (
         ctor !== undefined &&
         element.prefix.length > 0 &&
         namespaceUri.length > 0 &&
-        element.prefix !== prefix &&
-        !element.extendedAttributes.has(`xmlns:${element.prefix}`)
+        fullScope.get(element.prefix) !== namespaceUri
       ) {
-        element.extendedAttributes.set(`xmlns:${element.prefix}`, namespaceUri);
+        if (!element.extendedAttributes.has(`xmlns:${element.prefix}`)) {
+          element.extendedAttributes.set(`xmlns:${element.prefix}`, namespaceUri);
+        }
+        const extended = new Map(fullScope);
+        extended.set(element.prefix, namespaceUri);
+        effectiveScope = extended;
       }
 
       if (root === undefined) {
@@ -85,7 +91,7 @@ export function deserialize(xml: string, options: DeserializeOptions = {}): Open
       }
 
       if (!token.selfClosing) {
-        stack.push({ element, scope: fullScope });
+        stack.push({ element, scope: effectiveScope });
       }
       continue;
     }
