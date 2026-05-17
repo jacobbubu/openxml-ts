@@ -232,7 +232,16 @@ export class SpreadsheetDocument {
    * flush 时统一序列化回 part bytes。
    */
   static create(): SpreadsheetDocument {
-    const inMemory = createInMemory();
+    const inMemory = createInMemory() as MemoryOpenXmlPackage;
+
+    // 0. `[Content_Types].xml` 的两条 `<Default>`：缺它们 Excel Desktop 无法把 `_rels/.rels`
+    // 与 `xl/_rels/workbook.xml.rels` 解析成 relationships+xml content-type，整个包当损坏 →
+    // 弹「We found a problem...recover」对话。OPC §10.1 规定，真 Excel 文件无一例外都有这两条。
+    inMemory.contentTypes.addDefault(
+      "rels",
+      "application/vnd.openxmlformats-package.relationships+xml",
+    );
+    inMemory.contentTypes.addDefault("xml", "application/xml");
 
     // 1. 创建 4 个 Part（字节先空，flush 时由 typed root 写入）
     inMemory.createPart(DEFAULT_WORKBOOK_URI, WorkbookPart.contentType);
@@ -269,7 +278,7 @@ export class SpreadsheetDocument {
     });
 
     // 4. 构造 typed 根，挂到 typed Part 上
-    const doc = new SpreadsheetDocument(inMemory as MemoryOpenXmlPackage);
+    const doc = new SpreadsheetDocument(inMemory);
     const wp = doc.workbookPart;
     if (wp !== undefined) {
       const wb = new Workbook();
