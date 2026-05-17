@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.6.0](https://github.com/jacobbubu/openxml-ts/compare/v0.5.0...v0.6.0) (2026-05-17)
+
+
+### Features
+
+* **linq:** Story-5.1 LINQ to XML 基础类型 XName/XNamespace/XElement/XAttribute ([#62](https://github.com/jacobbubu/openxml-ts/issues/62)) ([fc729d8](https://github.com/jacobbubu/openxml-ts/commit/fc729d8f7e540468259c93fd2302451886368dc0))
+* **linq:** Story-5.2 Enumerable&lt;T&gt; 链式 LINQ 操作子 ([#64](https://github.com/jacobbubu/openxml-ts/issues/64)) ([06a038e](https://github.com/jacobbubu/openxml-ts/commit/06a038ed6c3240aa27519c198c0f2fe63576a76d))
+* **linq:** Story-5.3 XDocument.Parse + Load 兼容入口 ([#65](https://github.com/jacobbubu/openxml-ts/issues/65)) ([5e0e16d](https://github.com/jacobbubu/openxml-ts/commit/5e0e16d222983d17f1153448bfdc1acc4272885e))
+* **linq:** Story-5.4 examples/linq-tutorial.ts + README LINQ 节段 ([#66](https://github.com/jacobbubu/openxml-ts/issues/66)) ([233230f](https://github.com/jacobbubu/openxml-ts/commit/233230fbacd147de59d3de932b61f585b401a222))
+
 ## [0.5.0](https://github.com/jacobbubu/openxml-ts/compare/v0.4.0...v0.5.0) (2026-05-17)
 
 
