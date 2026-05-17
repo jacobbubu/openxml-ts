@@ -13,6 +13,7 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import { Presentation } from "../generated/presentation.js";
@@ -67,7 +68,8 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
     }
     const relsById = new Map<string, string>();
     for (const rel of this.part.relationships) {
-      if (rel.type !== SlidePart.relationshipType || rel.targetMode !== "internal") continue;
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, SlidePart.relationshipType)) continue;
       relsById.set(rel.id, rel.target);
     }
     for (const sldId of idList.elements(SlideId)) {

@@ -38,3 +38,9 @@ export {
   type StringValidatorOptions,
   type ValidationContext,
 } from "./validators/index.js";
+
+export {
+  isStrictUri,
+  strictToTransitional,
+  transitionalToStrict,
+} from "./strict-namespace-map.js";

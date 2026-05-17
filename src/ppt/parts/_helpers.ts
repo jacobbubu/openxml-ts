@@ -12,6 +12,7 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 
 export interface PartCtor<T> {
@@ -31,7 +32,8 @@ export function resolveSinglePart<T>(
   Ctor: PartCtor<T> | SimplePartCtor<T>,
 ): T | undefined {
   for (const rel of source.relationships) {
-    if (rel.type !== Ctor.relationshipType || rel.targetMode !== "internal") continue;
+    if (rel.targetMode !== "internal") continue;
+    if (!relationshipTypeMatches(rel.type, Ctor.relationshipType)) continue;
     const targetUri = resolveRelativePartUri(source.uri, rel.target);
     if (targetUri === undefined || !pkg.hasPart(targetUri)) continue;
     return constructPart(Ctor, pkg.getPart(targetUri), registry, pkg);
@@ -47,7 +49,8 @@ export function resolveManyParts<T>(
 ): T[] {
   const out: T[] = [];
   for (const rel of source.relationships) {
-    if (rel.type !== Ctor.relationshipType || rel.targetMode !== "internal") continue;
+    if (rel.targetMode !== "internal") continue;
+    if (!relationshipTypeMatches(rel.type, Ctor.relationshipType)) continue;
     const targetUri = resolveRelativePartUri(source.uri, rel.target);
     if (targetUri === undefined || !pkg.hasPart(targetUri)) continue;
     out.push(constructPart(Ctor, pkg.getPart(targetUri), registry, pkg));

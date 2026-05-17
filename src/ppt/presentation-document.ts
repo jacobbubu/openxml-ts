@@ -32,6 +32,7 @@ import {
   packageToZipBytes,
 } from "../packaging/index.js";
 import type { PartUri } from "../packaging/interfaces/types.js";
+import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { ThemePart } from "../parts/theme-part.js";
 import type { TypedXmlPart } from "../parts/typed-xml-part.js";
@@ -318,7 +319,8 @@ function findRelationship(
   relationshipType: string,
 ): IPackageRelationship | undefined {
   for (const rel of collection) {
-    if (rel.type === relationshipType && rel.targetMode === "internal") return rel;
+    if (rel.targetMode !== "internal") continue;
+    if (relationshipTypeMatches(rel.type, relationshipType)) return rel;
   }
   return undefined;
 }

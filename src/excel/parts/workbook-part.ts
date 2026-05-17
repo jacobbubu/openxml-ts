@@ -11,6 +11,7 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import { Workbook } from "../generated/workbook.js";
@@ -52,7 +53,8 @@ export class WorkbookPart extends TypedXmlPart<Workbook> {
     if (this._worksheetParts !== undefined) return this._worksheetParts;
     const out: WorksheetPart[] = [];
     for (const rel of this.part.relationships) {
-      if (rel.type !== WorksheetPart.relationshipType || rel.targetMode !== "internal") continue;
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, WorksheetPart.relationshipType)) continue;
       const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
       if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
       out.push(new WorksheetPart(this.pkg.getPart(targetUri), this.registry));

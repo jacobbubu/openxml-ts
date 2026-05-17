@@ -14,6 +14,7 @@
  */
 
 import type { OpenXmlElement } from "./element.js";
+import { strictToTransitional } from "./strict-namespace-map.js";
 
 export type ElementFactory = new () => OpenXmlElement;
 
@@ -24,12 +25,23 @@ export class ElementRegistry {
     this.map.set(this.key(namespaceUri, localName), ctor);
   }
 
+  /**
+   * 按 (ns, localName) 查类。先按传入 ns 精确匹配；未命中时把 Strict URI
+   * 翻成 Transitional 等价再试一次（Epic-8 Strict ↔ Transitional 兜底）。
+   * 非 Strict 命名空间这层 fallback 零开销。
+   */
   lookup(namespaceUri: string, localName: string): ElementFactory | undefined {
-    return this.map.get(this.key(namespaceUri, localName));
+    const direct = this.map.get(this.key(namespaceUri, localName));
+    if (direct !== undefined) return direct;
+    const trans = strictToTransitional(namespaceUri);
+    if (trans === namespaceUri) return undefined;
+    return this.map.get(this.key(trans, localName));
   }
 
   has(namespaceUri: string, localName: string): boolean {
-    return this.map.has(this.key(namespaceUri, localName));
+    if (this.map.has(this.key(namespaceUri, localName))) return true;
+    const trans = strictToTransitional(namespaceUri);
+    return trans !== namespaceUri && this.map.has(this.key(trans, localName));
   }
 
   clear(): void {
