@@ -17,6 +17,7 @@
  * 类型，避免拉大 bundle。
  */
 
+export { Enumerable } from "./enumerable.js";
 export { XAttribute } from "./x-attribute.js";
 export { XElement } from "./x-element.js";
 export { XName } from "./x-name.js";
