@@ -297,6 +297,37 @@ import * as ppt from "openxml-ts/ppt";
 
 源码起点：[`src/ppt/presentation-document.ts`](./src/ppt/presentation-document.ts) 是 PPT 门面，[`src/ppt/effective-resolver.ts`](./src/ppt/effective-resolver.ts) 是三级版式继承核心，[`docs/planning/epic-4-architecture.md`](./docs/planning/epic-4-architecture.md) §4 / §5 / §6 给典型链路、ADR-024（slide 顺序）、ADR-026（命名冲突）的设计依据。
 
+## LINQ to XML 兼容层（`openxml-ts/linq`，0.6.0 预览）
+
+把 .NET `System.Xml.Linq` 同名 API 映射到 openxml-ts element 树上，让 .NET Open-XML 源码几乎 1:1 翻译到 TS。
+
+```ts
+import { Enumerable, XDocument, XName, XNamespace } from "openxml-ts/linq";
+
+const doc = XDocument.Parse(xml);
+const W = XNamespace.Get("http://schemas.openxmlformats.org/wordprocessingml/2006/main");
+
+const headings = Enumerable.from(doc.Descendants(W.GetName("p")))
+  .Where((p) => p.Attribute("pStyle")?.Value === "Heading1")
+  .Select((p) => p.Value)
+  .ToArray();
+```
+
+| .NET（C#） | openxml-ts |
+| --- | --- |
+| `XDocument.Parse(xml)` | `XDocument.Parse(xml)` |
+| `XDocument.Load(stream)` | `XDocument.Load(bytes: Uint8Array)` |
+| `XNamespace ns = "..."` | `const ns = XNamespace.Get("...")` |
+| `ns + "name"` 运算符 | `ns.GetName("name")` |
+| `doc.Descendants(W + "p")` | `doc.Descendants(W.GetName("p"))` |
+| `el.Element("name").Value` | `el.Element("name")?.Value` |
+| `xs.Where(...).Select(...).ToList()` | `Enumerable.from(xs).Where(...).Select(...).ToList()` |
+| LINQ 查询表达式 `from … in …` | 暂无糖；只能 method-chain |
+
+详见完整示例 [`examples/linq-tutorial.ts`](./examples/linq-tutorial.ts)（6 类 .NET 教程范式逐段翻译）。
+
+LINQ 层是**只读视图**（v0.6.0 预览），不暴露 Add / SetAttribute 等 mutator——这一档与 typed API 双写，更靠近「.NET 源码移植辅助」而非 TS 主流写法。
+
 ## OPC 心智地图
 
 每个 docx/xlsx/pptx 都是一个 **OPC Package**（ZIP 容器，部分场景是 Flat OPC 单 XML），里头有四样东西：
