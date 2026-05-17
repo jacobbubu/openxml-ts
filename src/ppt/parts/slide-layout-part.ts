@@ -10,6 +10,7 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { ThemePart } from "../../parts/theme-part.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import { SlideLayout } from "../generated/slide-layout.js";
 import { resolveSinglePart } from "./_helpers.js";
@@ -22,11 +23,13 @@ export class SlideLayoutPart extends TypedXmlPart<SlideLayout> {
     "application/vnd.openxmlformats-officedocument.presentationml.slideLayout+xml";
 
   private _slideMasterPart: SlideMasterPart | null | undefined;
+  private _themePart: ThemePart | null | undefined;
 
   constructor(
     part: IPackagePart,
     registry: ElementRegistry,
-    private readonly pkg: IPackage,
+    /** 内部仅供 effective* resolver 反查 part-level 关系；不暴露公共 API。 */
+    readonly pkg: IPackage,
   ) {
     super(part, registry, SlideLayout);
   }
@@ -47,6 +50,22 @@ export class SlideLayoutPart extends TypedXmlPart<SlideLayout> {
     }
     const resolved = resolveSinglePart(this.part, this.pkg, this.registry, SlideMasterPart);
     this._slideMasterPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * Layout 自己直接挂的 ThemePart（theme override 场景，OOXML 允许 layout 用
+   * 不同于 master 的主题）。多数模板无此关系 → undefined。
+   *
+   * Story-4.6 effective* resolver 用：链路第二档（slide → layout → master → theme）
+   * 命中即返回，不再下钻 master。
+   */
+  get themePart(): ThemePart | undefined {
+    if (this._themePart !== undefined) {
+      return this._themePart ?? undefined;
+    }
+    const resolved = resolveSinglePart(this.part, this.pkg, this.registry, ThemePart);
+    this._themePart = resolved ?? null;
     return resolved;
   }
 }
