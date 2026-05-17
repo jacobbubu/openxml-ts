@@ -107,3 +107,21 @@ Epic-1 收尾的人工验证结果。
 | Issue | 触发症状 | 根因 |
 | --- | --- | --- |
 | #56 | `examples/ppt-create.ts` 输出 PowerPoint 打开是 3 页全白 | slide XML 内 shape 缺 `<a:xfrm>`（位置/大小）+ `<a:prstGeom>`（图形预设），PowerPoint 渲染零几何 → 文本不可见。修复：补 `<a:xfrm><a:off/><a:ext/></a:xfrm>` + `<a:prstGeom prst="rect"/>` |
+
+## Epic-6 / Story-6.4 · 浏览器手工验证
+
+Live demo：<https://jacobbubu.github.io/openxml-ts/>（由
+`.github/workflows/playground-deploy.yml` 自动部署到 GitHub Pages）。
+
+验证流程：在 chromium-based 桌面浏览器（或 Safari）打开 live demo，拖入 / 选 fixture
+文件 → 看 status 显示的统计 → 点「修改 + 下载」生成 `*.mutated.{docx,xlsx,pptx}`
+→ 用对应 Office Desktop 重开 mutated 文件，确认无 repair / 损坏。
+
+| 日期 | 用例 | 浏览器统计 | mutated 文件 Office Desktop | 备注 |
+| --- | --- | --- | --- | --- |
+| 2026-05-17 | `test/fixtures/golden/HelloWorld.docx` | ✅ 段落数 = 1 | ✅ Word Desktop 重开无修复 | - |
+| 2026-05-17 | `test/fixtures/golden/basicspreadsheet.xlsx` | ✅ Worksheet 数 ≥ 3，Cell 总数 > 0 | ✅ Excel Desktop 重开无修复 | - |
+| 2026-05-17 | `test/ppt/fixtures/autosave.pptx` | ✅ Slide ≥ 1，effective color scheme = `clrScheme` | ✅ PowerPoint Desktop 重开无修复 | - |
+
+> 浏览器侧 chromium headless 已有 413 用例 vitest 守护（Story-6.1）。
+> Live demo 是手工烟雾测试入口，跑通 3 栈基本路径即视作 Epic-6 验收通过。
