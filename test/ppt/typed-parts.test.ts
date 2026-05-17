@@ -10,15 +10,15 @@
  */
 
 import { describe, expect, it } from "vitest";
+import { registerDrawingElements } from "../../src/drawing/generated/_registry.js";
 import { ElementRegistry } from "../../src/element/index.js";
 import { createInMemory } from "../../src/packaging/index.js";
 import type { PartUri } from "../../src/packaging/interfaces/types.js";
-import { registerDrawingElements } from "../../src/drawing/generated/_registry.js";
+import { registerPresentationElements } from "../../src/ppt/generated/_registry.js";
 import { NotesSlide } from "../../src/ppt/generated/notes-slide.js";
 import { Presentation } from "../../src/ppt/generated/presentation.js";
 import { SlideLayout } from "../../src/ppt/generated/slide-layout.js";
 import { Slide } from "../../src/ppt/generated/slide.js";
-import { registerPresentationElements } from "../../src/ppt/generated/_registry.js";
 import {
   NotesSlidePart,
   PresentationPart,
@@ -52,9 +52,7 @@ describe("PresentationPart · 静态常量 + typed root", () => {
   it("presentation 懒加载 → Presentation 实例；重复访问同一引用", async () => {
     const pkg = createInMemory();
     const part = pkg.createPart("/ppt/presentation.xml" as PartUri, PresentationPart.contentType);
-    await part.writeAsync(
-      `<p:presentation xmlns:p="${PNS}"><p:sldIdLst/></p:presentation>`,
-    );
+    await part.writeAsync(`<p:presentation xmlns:p="${PNS}"><p:sldIdLst/></p:presentation>`);
 
     const pp = new PresentationPart(part, makeRegistry(), pkg);
     expect(pp.presentation).toBeInstanceOf(Presentation);
@@ -111,11 +109,7 @@ describe("PresentationPart.slideParts · 按 <p:sldIdLst> 顺序解 SlidePart", 
   it("slideParts 顺序按 sldIdLst 而非关系顺序", async () => {
     const { pp } = await seedPkg();
     const uris = pp.slideParts.map((s) => s.part.uri);
-    expect(uris).toEqual([
-      "/ppt/slides/c.xml",
-      "/ppt/slides/a.xml",
-      "/ppt/slides/b.xml",
-    ]);
+    expect(uris).toEqual(["/ppt/slides/c.xml", "/ppt/slides/a.xml", "/ppt/slides/b.xml"]);
   });
 
   it("slideParts 多次访问返回同一数组引用（缓存）", async () => {
@@ -186,10 +180,7 @@ describe("SlidePart · 静态常量 + typed root + part-level 关系", () => {
 
   it("slideLayoutPart 解 part-level 关系；多次访问同实例；无关系返回 undefined", async () => {
     const pkg = createInMemory();
-    const slidePart = pkg.createPart(
-      "/ppt/slides/slide1.xml" as PartUri,
-      SlidePart.contentType,
-    );
+    const slidePart = pkg.createPart("/ppt/slides/slide1.xml" as PartUri, SlidePart.contentType);
     await slidePart.writeAsync(`<p:sld xmlns:p="${PNS}"/>`);
     const layoutPart = pkg.createPart(
       "/ppt/slideLayouts/slideLayout1.xml" as PartUri,
@@ -221,10 +212,7 @@ describe("SlidePart · 静态常量 + typed root + part-level 关系", () => {
 
   it("notesSlidePart 解 part-level 关系；缺失 part target 时也 undefined", async () => {
     const pkg = createInMemory();
-    const slidePart = pkg.createPart(
-      "/ppt/slides/slide1.xml" as PartUri,
-      SlidePart.contentType,
-    );
+    const slidePart = pkg.createPart("/ppt/slides/slide1.xml" as PartUri, SlidePart.contentType);
     await slidePart.writeAsync(`<p:sld xmlns:p="${PNS}"/>`);
     const notesPart = pkg.createPart(
       "/ppt/notesSlides/notesSlide1.xml" as PartUri,

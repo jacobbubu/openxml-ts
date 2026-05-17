@@ -17,8 +17,8 @@ import type { PartUri } from "../../src/packaging/interfaces/types.js";
 import { ThemePart } from "../../src/parts/theme-part.js";
 import { registerPresentationElements } from "../../src/ppt/generated/_registry.js";
 import { NotesMaster } from "../../src/ppt/generated/notes-master.js";
-import { Slide } from "../../src/ppt/generated/slide.js";
 import { SlideMaster } from "../../src/ppt/generated/slide-master.js";
+import { Slide } from "../../src/ppt/generated/slide.js";
 import {
   NotesMasterPart,
   NotesSlidePart,
@@ -240,10 +240,7 @@ describe("NotesMasterPart · 静态常量 + typed root + themePart", () => {
 describe("NotesSlidePart.slidePart · 反向关系", () => {
   it("解 single SlidePart；缓存；缺关系 undefined", async () => {
     const pkg = createInMemory();
-    const slidePart = pkg.createPart(
-      "/ppt/slides/slide1.xml" as PartUri,
-      SlidePart.contentType,
-    );
+    const slidePart = pkg.createPart("/ppt/slides/slide1.xml" as PartUri, SlidePart.contentType);
     await slidePart.writeAsync(`<p:sld xmlns:p="${PNS}"/>`);
     const notesPart = pkg.createPart(
       "/ppt/notesSlides/notesSlide1.xml" as PartUri,

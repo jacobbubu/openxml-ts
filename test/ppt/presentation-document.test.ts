@@ -12,12 +12,12 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { PresentationDocument } from "../../src/ppt/index.js";
 import { NotesSlide } from "../../src/ppt/generated/notes-slide.js";
 import { Presentation } from "../../src/ppt/generated/presentation.js";
-import { Slide } from "../../src/ppt/generated/slide.js";
 import { SlideLayout } from "../../src/ppt/generated/slide-layout.js";
 import { SlideMaster } from "../../src/ppt/generated/slide-master.js";
+import { Slide } from "../../src/ppt/generated/slide.js";
+import { PresentationDocument } from "../../src/ppt/index.js";
 
 describe("PresentationDocument · create() 最小可用空白 pptx", () => {
   it("create + saveAsBytes + openAsync 三轮等价", async () => {
@@ -31,7 +31,7 @@ describe("PresentationDocument · create() 最小可用空白 pptx", () => {
     const reopened = await PresentationDocument.openAsync(out);
     expect(reopened.presentationPart).toBeDefined();
     expect(reopened.presentationPart?.slideParts).toHaveLength(1);
-    const sp = reopened.presentationPart!.slideParts[0]!;
+    const sp = reopened.presentationPart?.slideParts[0]!;
     expect(sp.slide).toBeInstanceOf(Slide);
 
     // 再写一轮（第二轮）确保稳定
@@ -42,7 +42,7 @@ describe("PresentationDocument · create() 最小可用空白 pptx", () => {
 
   it("Slide → SlideLayout 关系完整，能解到默认 blank layout", async () => {
     const doc = PresentationDocument.create();
-    const sp = doc.presentationPart!.slideParts[0]!;
+    const sp = doc.presentationPart?.slideParts[0]!;
     const layout = sp.slideLayoutPart;
     expect(layout).toBeDefined();
     expect(layout?.slideLayout).toBeInstanceOf(SlideLayout);
@@ -50,7 +50,7 @@ describe("PresentationDocument · create() 最小可用空白 pptx", () => {
 
   it("Layout → Master + Master → Theme 关系完整", async () => {
     const doc = PresentationDocument.create();
-    const sp = doc.presentationPart!.slideParts[0]!;
+    const sp = doc.presentationPart?.slideParts[0]!;
     const master = sp.slideLayoutPart?.slideMasterPart;
     expect(master).toBeDefined();
     expect(master?.slideMaster).toBeInstanceOf(SlideMaster);
@@ -61,7 +61,7 @@ describe("PresentationDocument · create() 最小可用空白 pptx", () => {
 
   it("Master 的 slideLayoutParts 列表 ≥ 1", async () => {
     const doc = PresentationDocument.create();
-    const master = doc.presentationPart!.slideParts[0]!.slideLayoutPart!.slideMasterPart!;
+    const master = doc.presentationPart?.slideParts[0]?.slideLayoutPart?.slideMasterPart!;
     expect(master.slideLayoutParts.length).toBeGreaterThanOrEqual(1);
   });
 
@@ -81,7 +81,7 @@ describe("PresentationDocument · typed Part 缓存", () => {
 
   it("slide.slideLayoutPart 多次访问同实例（NotesSlidePart 缺关系 → undefined）", () => {
     const doc = PresentationDocument.create();
-    const sp = doc.presentationPart!.slideParts[0]!;
+    const sp = doc.presentationPart?.slideParts[0]!;
     expect(sp.slideLayoutPart).toBe(sp.slideLayoutPart);
     // create() 默认没造 notesSlide
     expect(sp.notesSlidePart).toBeUndefined();
@@ -99,7 +99,7 @@ describe("PresentationDocument · PackageDiagnostics elementCounter", () => {
     const doc = PresentationDocument.create();
     const fresh = await PresentationDocument.openAsync(await doc.saveAsBytesAsync());
     void fresh.presentationPart;
-    for (const sp of fresh.presentationPart!.slideParts) void sp.slide;
+    for (const sp of fresh.presentationPart?.slideParts) void sp.slide;
     expect(fresh.package.diagnostics.elementCount).toBeGreaterThan(0);
     expect(fresh.package.diagnostics.unknownElementCount).toBe(0);
   });
@@ -108,12 +108,12 @@ describe("PresentationDocument · PackageDiagnostics elementCounter", () => {
 describe("PresentationDocument · 用户对 typed 树的修改在 save 后保留", () => {
   it("修改 slide 后 saveAsBytes → reopen 还能读到修改", async () => {
     const doc = PresentationDocument.create();
-    const sp = doc.presentationPart!.slideParts[0]!;
+    const sp = doc.presentationPart?.slideParts[0]!;
     sp.slide.extendedAttributes.set("p:hello", "world");
 
     const out = await doc.saveAsBytesAsync();
     const reopened = await PresentationDocument.openAsync(out);
-    const reSp = reopened.presentationPart!.slideParts[0]!;
+    const reSp = reopened.presentationPart?.slideParts[0]!;
     expect(reSp.slide.extendedAttributes.get("p:hello")).toBe("world");
   });
 });

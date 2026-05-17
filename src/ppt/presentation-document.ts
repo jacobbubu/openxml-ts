@@ -14,20 +14,15 @@
  * ```
  */
 
-import { registerDrawingElements } from "../drawing/generated/_registry.js";
-import type { MemoryOpenXmlPackage } from "../backends/memory/memory-package.js";
 import type { MemoryPackagePart } from "../backends/memory/memory-package-part.js";
+import type { MemoryOpenXmlPackage } from "../backends/memory/memory-package.js";
 import { writeFilePath } from "../backends/zip/source-reader.js";
-import {
-  ElementRegistry,
-  OpenXmlCompositeElement,
-  type OpenXmlElement,
-} from "../element/index.js";
+import { registerDrawingElements } from "../drawing/generated/_registry.js";
+import { ElementRegistry, OpenXmlCompositeElement, type OpenXmlElement } from "../element/index.js";
 import { OpenXmlUnknownElement } from "../element/unknown-element.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import {
   type IPackage,
-  type IPackagePart,
   type IPackageRelationship,
   type OpenAsyncOptions,
   ZipOpenXmlPackage,
@@ -106,9 +101,9 @@ export class PresentationDocument {
       for (const sp of pp.slideParts) {
         if (sp.isLoaded) tally(sp.root);
         const layout = sp.slideLayoutPart;
-        if (layout !== undefined && layout.isLoaded) tally(layout.root);
+        if (layout?.isLoaded) tally(layout.root);
         const notes = sp.notesSlidePart;
-        if (notes !== undefined && notes.isLoaded) tally(notes.root);
+        if (notes?.isLoaded) tally(notes.root);
       }
     }
     return { elementCount, unknownElementCount };
@@ -193,17 +188,11 @@ export class PresentationDocument {
 
     // 0. `[Content_Types].xml` 必备的两条 Default —— 同 Excel #43，缺它们 Office Desktop
     // 拒解 .rels content-type，整个包当损坏。
-    pkg.contentTypes.addDefault(
-      "rels",
-      "application/vnd.openxmlformats-package.relationships+xml",
-    );
+    pkg.contentTypes.addDefault("rels", "application/vnd.openxmlformats-package.relationships+xml");
     pkg.contentTypes.addDefault("xml", "application/xml");
 
     // 1. 创建 5 个 Part（带 Override 注册 content-type）。
-    const presentation = pkg.createPart(
-      DEFAULT_PRESENTATION_URI,
-      PresentationPart.contentType,
-    );
+    const presentation = pkg.createPart(DEFAULT_PRESENTATION_URI, PresentationPart.contentType);
     const slide = pkg.createPart(
       DEFAULT_SLIDE_URI,
       "application/vnd.openxmlformats-officedocument.presentationml.slide+xml",
@@ -301,9 +290,9 @@ export class PresentationDocument {
       for (const sp of pp.slideParts) {
         if (sp.isLoaded) promises.push(sp.flushAsync());
         const layout = sp.slideLayoutPart;
-        if (layout !== undefined && layout.isLoaded) promises.push(layout.flushAsync());
+        if (layout?.isLoaded) promises.push(layout.flushAsync());
         const notes = sp.notesSlidePart;
-        if (notes !== undefined && notes.isLoaded) promises.push(notes.flushAsync());
+        if (notes?.isLoaded) promises.push(notes.flushAsync());
       }
     }
     await Promise.all(promises);

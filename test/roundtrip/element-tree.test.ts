@@ -63,9 +63,11 @@ describe("Element-tree golden roundtrip · HelloWorld.docx", () => {
   });
 });
 
-describe("Element-tree golden · pptx 形态校验（element 不存在合理）", () => {
-  it("pptx fixture 不应存在 .element.golden.json（Epic-4 才落地）", async () => {
-    await expect(readFile(join(FIXTURES_DIR, "mcppt.pptx.element.golden.json"))).rejects.toThrow();
+describe("Element-tree golden · pptx 形态校验（Story-4.7 已落 element snapshot）", () => {
+  it("pptx fixture 现已生成 .element.golden.json，含 presentation + slides 子树", async () => {
+    const text = await readFile(join(FIXTURES_DIR, "mcppt.pptx.element.golden.json"), "utf-8");
+    expect(text).toContain('"className": "Presentation"');
+    expect(text).toContain('"slides"');
   });
 
   it("xlsx fixture 已在 Story-3.7 落 element golden", async () => {

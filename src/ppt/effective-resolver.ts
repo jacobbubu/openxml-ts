@@ -20,8 +20,8 @@
 import { ColorScheme } from "../drawing/generated/color-scheme.js";
 import { FontScheme } from "../drawing/generated/font-scheme.js";
 import { FormatScheme } from "../drawing/generated/format-scheme.js";
-import { Theme } from "../drawing/generated/theme.js";
 import { ThemeElements } from "../drawing/generated/theme-elements.js";
+import { Theme } from "../drawing/generated/theme.js";
 import { OpenXmlCompositeElement, type OpenXmlElement } from "../element/index.js";
 import type { ThemePart } from "../parts/theme-part.js";
 import type { SlidePart } from "./parts/slide-part.js";
