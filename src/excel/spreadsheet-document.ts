@@ -39,6 +39,7 @@ import {
   packageToZipBytes,
 } from "../packaging/index.js";
 import type { PartUri } from "../packaging/interfaces/types.js";
+import { type AddImagePartOptions, type ImagePart, addImagePartTo } from "../parts/image-part.js";
 import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { ThemePart } from "../parts/theme-part.js";
@@ -54,6 +55,7 @@ import { CellStyle } from "./generated/cell-style.js";
 import { CellStyles } from "./generated/cell-styles.js";
 import { CellValue } from "./generated/cell-value.js";
 import { Cell } from "./generated/cell.js";
+import { Drawing } from "./generated/drawing.js";
 import { Fill } from "./generated/fill.js";
 import { Fills } from "./generated/fills.js";
 import { FontName } from "./generated/font-name.js";
@@ -70,6 +72,7 @@ import { Workbook } from "./generated/workbook.js";
 import { Worksheet } from "./generated/worksheet.js";
 import {
   CalculationChainPart,
+  DrawingPart,
   SharedStringTablePart,
   WorkbookPart,
   WorkbookStylesPart,
@@ -102,6 +105,8 @@ const excelRegistry: ElementRegistry = (() => {
 export class SpreadsheetDocument {
   /** 已加载的 typed Part 缓存——按 relationshipType 索引。 */
   private readonly typedParts = new Map<string, TypedXmlPart<OpenXmlElement>>();
+  /** DrawingPart 缓存——按 Part URI 索引；同一 worksheet 多次 addImagePart 复用。 */
+  private readonly drawingParts = new Map<string, DrawingPart>();
   /** SST resolver 是否已构建并注册到全部 worksheet（懒一次）。 */
   private _sstWired = false;
   /** SST resolver 缓存（一份对应 sharedStringTablePart 的 typed root）。 */
@@ -169,6 +174,100 @@ export class SpreadsheetDocument {
   /** Theme Part（workbook 的 part-level 关系）。 */
   get themePart(): ThemePart | undefined {
     return this.getOrLoadTypedPartFromWorkbook(ThemePart);
+  }
+
+  /**
+   * 把字节加成图片 Part 并挂到指定 worksheet（Story-13.2，Epic-13）。
+   *
+   * 比 Word/PPT 多一层：图片不直接挂 worksheet，要走中间的 \`DrawingPart\`。
+   * - worksheet \`<x:drawing r:id="...">\` 引用 DrawingPart；
+   * - DrawingPart 自己的 part-level relationships 持 image 关系。
+   *
+   * 本方法：
+   *   1. 找/创建 worksheet 的 DrawingPart（含 worksheet 端 \`<x:drawing>\` 引用）
+   *   2. 把图片字节通过共享实现写入 \`/xl/media/imageN.<ext>\`
+   *   3. 关系挂在 DrawingPart 上
+   *
+   * 返 \`{ part, drawingPart, relId }\`：调用方拿 \`relId\` 用
+   * \`createImageTwoCellAnchorForExcel(relId, from, to)\` 一行生成锚节点，挂到
+   * \`drawingPart.wsDr\` 即可。
+   *
+   * @throws OpenXmlPackageError 当 contentType 没传且字节首部嗅探不出已知 MIME、
+   *   worksheet 不存在时
+   */
+  addImagePart(
+    worksheet: WorksheetPart | number,
+    bytes: Uint8Array,
+    opts: AddImagePartOptions = {},
+  ): { part: ImagePart; drawingPart: DrawingPart; relId: string } {
+    const wp = this.workbookPart;
+    if (wp === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "addImagePart: workbookPart is missing",
+      });
+    }
+    const sheetParts = wp.worksheetParts;
+    const wsp =
+      typeof worksheet === "number"
+        ? sheetParts[worksheet]
+        : sheetParts.find((s) => s === worksheet);
+    if (wsp === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message:
+          typeof worksheet === "number"
+            ? `addImagePart: worksheet index ${worksheet} out of range (total ${sheetParts.length})`
+            : "addImagePart: provided WorksheetPart is not in this workbook",
+      });
+    }
+
+    const drawingPart = this.getOrCreateDrawingPart(wsp);
+    const { part, relId } = addImagePartTo(this.pkg, drawingPart.part, "/xl/media", bytes, opts);
+    return { part, drawingPart, relId };
+  }
+
+  /** 查或创建 worksheet 的 DrawingPart——必要时 wire 关系 + 插 \`<x:drawing>\` 引用。 */
+  private getOrCreateDrawingPart(wsp: WorksheetPart): DrawingPart {
+    // 1. 先看 worksheet part-level relationships 里有没有现成 drawing 关系
+    for (const rel of wsp.part.relationships) {
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, DrawingPart.relationshipType)) continue;
+      const partUri = resolveRelativePartUri(wsp.part.uri, rel.target);
+      if (partUri === undefined || !this.pkg.hasPart(partUri)) continue;
+      const cached = this.drawingParts.get(partUri);
+      if (cached !== undefined) return cached;
+      const dp = new DrawingPart(this.pkg.getPart(partUri), excelRegistry);
+      this.drawingParts.set(partUri, dp);
+      return dp;
+    }
+
+    // 2. 不存在则创建：分配 URI + Part + 关系 + worksheet 里 \`<x:drawing>\` 引用
+    const uri = this.nextDrawingPartUri();
+    const part = this.pkg.createPart(uri, DrawingPart.contentType);
+    // 从 worksheet (\`/xl/worksheets/sheet1.xml\`) 到 \`/xl/drawings/drawing1.xml\` 的相对路径 = \`../drawings/drawing1.xml\`
+    const target = `../drawings/${uri.split("/").pop()}`;
+    const rel = wsp.part.relationships.create({
+      type: DrawingPart.relationshipType,
+      target,
+      targetMode: "internal",
+    });
+    // 在 typed worksheet 里挂 \`<x:drawing r:id="..."/>\`——必须在 sheetData 之后；
+    // append 到末尾对新建 fixture / Open-XML 读取器都接受（schema 序列严格但实际宽松）。
+    const drawingEl = new Drawing();
+    drawingEl.id = StringValue.parse(rel.id);
+    wsp.worksheet.appendChild(drawingEl);
+
+    const dp = new DrawingPart(part, excelRegistry);
+    this.drawingParts.set(uri, dp);
+    return dp;
+  }
+
+  /** 找下一个未用的 \`/xl/drawings/drawing<N>.xml\`。 */
+  private nextDrawingPartUri(): PartUri {
+    let n = 1;
+    while (this.pkg.hasPart(`/xl/drawings/drawing${n}.xml` as PartUri)) n += 1;
+    return `/xl/drawings/drawing${n}.xml` as PartUri;
   }
 
   /**
@@ -342,6 +441,10 @@ export class SpreadsheetDocument {
       for (const wsp of wp.worksheetParts) {
         if (wsp.isLoaded) promises.push(wsp.flushAsync());
       }
+    }
+    // Epic-13：drawingParts 不在 typedParts map 里（按 Part URI 而非 relationshipType 索引）
+    for (const dp of this.drawingParts.values()) {
+      if (dp.isLoaded) promises.push(dp.flushAsync());
     }
     await Promise.all(promises);
 

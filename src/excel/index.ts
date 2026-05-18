@@ -25,6 +25,7 @@ import "./extensions/cell-extensions.js";
 export { SpreadsheetDocument } from "./spreadsheet-document.js";
 export {
   CalculationChainPart,
+  DrawingPart,
   SharedStringTablePart,
   ThemePart,
   TypedXmlPart,
@@ -32,6 +33,21 @@ export {
   WorkbookStylesPart,
   WorksheetPart,
 } from "./parts/index.js";
+
+export { BinaryPart } from "../parts/binary-part.js";
+export {
+  type AddImagePartOptions,
+  ImagePart,
+  extensionForMime,
+  mimeForExtension,
+  sniffImageMime,
+} from "../parts/image-part.js";
+
+export {
+  type CellAnchorPoint,
+  type CreateTwoCellAnchorOptions,
+  createImageTwoCellAnchorForExcel,
+} from "./image-markup.js";
 
 // SST resolver helper
 export {
