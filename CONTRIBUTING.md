@@ -96,6 +96,19 @@ scope 例：`feat(excel): 新增 ...`、`fix(linq): ...`、`docs(epic-3): ...`�
 
 PR 简短描述：要解决什么问题、怎么改、怎么测的。引用 issue 用 `(#NN)`。
 
+### API surface 改动
+
+任何动到 `openxml-ts` / `/word` / `/excel` / `/ppt` / `/drawing` / `/linq` 6 个公开 entry 的 PR：
+
+1. 本地 `pnpm build` 后跑 `pnpm api:update`，把 `api/*.api.md` 一起 commit；
+2. CI 跑 `pnpm api:check`，drift 检测到就阻塞；
+3. PR 描述里标其中一类：
+   - `api-update`：文档 / 注释 / 内部重构溢出（语义无变化）
+   - `api-add`：纯新增（非 breaking）
+   - `BREAKING`：1.0+ 之后构成 major bump 的改动
+
+具体规则见 [`docs/api-stability.md`](./docs/api-stability.md)。`<entry>/generated/*` 深引入路径不在承诺范围，codegen 重生成不算 breaking。
+
 ## BMAD 流程（项目内部约定）
 
 本项目按 BMAD（Brief → Model → Architect → Develop）阶段推进。已完成 Epic：

@@ -266,6 +266,14 @@ console.log(pkg.diagnostics.partCount, pkg.diagnostics.relationshipCount);
 
 `OPENXML_TS_DEBUG=1` 打开 verbose 日志（落到 `console.debug`）。性能基线数据见 [`docs/implementation/bench-baseline.md`](./docs/implementation/bench-baseline.md)。
 
+## API 稳定承诺
+
+当前 **0.x 是 pre-release**，破坏性改动会通过 minor bump 释放（按 semver pre-1.0 惯例）。
+
+进入 **1.0+ 后**：上面 6 个公开 entry（`openxml-ts` + `/word` / `/excel` / `/ppt` / `/drawing` / `/linq`）的命名导出 / 方法签名 / 类层级走严格 semver——任何破坏性改动需要 major bump。`<entry>/generated/*` 深引入路径不在承诺范围。详见 [`docs/api-stability.md`](./docs/api-stability.md)。
+
+CI 跑 `pnpm api:check`（基于 `@microsoft/api-extractor`），任何 surface 变化要求 PR 一起更新 `api/*.api.md`。
+
 ## 贡献
 
 欢迎 issue / PR。新贡献者从 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 起读，架构总览见 [`docs/architecture-overview.md`](./docs/architecture-overview.md)。

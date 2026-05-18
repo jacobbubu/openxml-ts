@@ -2,6 +2,7 @@
  * 跨运行时 base64 编解码。Node/Bun 走 Buffer；浏览器走分块 btoa/atob。
  */
 
+/** 把字节数组编码成 base64 字符串——Flat OPC `<pkg:binaryData>` 用。 */
 export function bytesToBase64(bytes: Uint8Array): string {
   if (typeof globalThis.Buffer !== "undefined") {
     return globalThis.Buffer.from(bytes).toString("base64");
@@ -16,6 +17,7 @@ export function bytesToBase64(bytes: Uint8Array): string {
   return globalThis.btoa(s);
 }
 
+/** base64 → 字节数组；自动忽略空白字符（Flat OPC 中常带换行）。 */
 export function base64ToBytes(b64: string): Uint8Array {
   // 去掉所有空白（Flat OPC 中 base64 常带换行）
   const clean = b64.replace(/\s+/g, "");

@@ -41,6 +41,10 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # Build 之后才能跑——api-extractor 读 dist/ 下的 .d.ts。drift 时报错。
+      - name: API report drift check
+        run: pnpm api:check
+
       - name: Test
         run: pnpm test
 

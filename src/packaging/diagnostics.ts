@@ -11,6 +11,7 @@
 
 import type { IPackage } from "./interfaces/package.js";
 
+/** `OpenXmlPackage.diagnostics` 的只读视图——只读，每次访问拍快照。 */
 export interface PackageDiagnostics {
   /** Part 总数；与 `[...pkg.parts()]` 长度一致。 */
   readonly partCount: number;

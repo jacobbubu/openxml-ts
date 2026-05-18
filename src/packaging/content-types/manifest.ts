@@ -17,18 +17,25 @@ import { OpenXmlPackageError } from "../errors.js";
 import { type PartUri, isPartUri } from "../interfaces/types.js";
 import { XmlWriter, tokenizeXml } from "../xml/index.js";
 
+/** `[Content_Types].xml` 的根命名空间。 */
 export const CONTENT_TYPES_NS = "http://schemas.openxmlformats.org/package/2006/content-types";
 
+/** `<Default Extension="..." ContentType="..."/>` 条目——同扩展名的 Part 自动应用此 MIME。 */
 export interface DefaultEntry {
   readonly extension: string;
   readonly contentType: string;
 }
 
+/** `<Override PartName="..." ContentType="..."/>` 条目——为特定 Part URI 单独指定 MIME，优先级高于 Default。 */
 export interface OverrideEntry {
   readonly partName: PartUri;
   readonly contentType: string;
 }
 
+/**
+ * `[Content_Types].xml` 的内存视图——维护 Default + Override 列表，提供按 Part URI
+ * 查 content-type 的能力（先 Override 再 Default，规则同 OPC §10.1.2.2）。
+ */
 export class ContentTypeManifest {
   private readonly defaultsMap = new Map<string, DefaultEntry>();
   private readonly overridesMap = new Map<string, OverrideEntry>();

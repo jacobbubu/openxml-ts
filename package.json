@@ -78,10 +78,13 @@
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "size": "size-limit",
-    "size:why": "size-limit --why"
+    "size:why": "size-limit --why",
+    "api:check": "node scripts/api-check.mjs",
+    "api:update": "node scripts/api-check.mjs --update"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@microsoft/api-extractor": "^7.58.7",
     "@size-limit/esbuild-why": "^12.1.0",
     "@size-limit/preset-small-lib": "^12.1.0",
     "@types/node": "^22.10.5",

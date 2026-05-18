@@ -10,6 +10,7 @@
 
 import { xmlEscapeAttr, xmlEscapeText } from "./escape.js";
 
+/** 增量构造 XML 字节流的小工具——所有 `writeTo` 实现共用一份输出器。 */
 export class XmlWriter {
   private readonly parts: string[] = [];
 

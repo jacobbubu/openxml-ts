@@ -7,9 +7,11 @@
 import { OpenXmlPackageError } from "../errors.js";
 import type { CreateRelationshipInput } from "../interfaces/relationship.js";
 
+/** OOXML Hyperlink Relationship 的 type 字符串——\`external\` targetMode 用。 */
 export const HYPERLINK_RELATIONSHIP_TYPE =
   "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink";
 
+/** `createHyperlinkInput` 入参：必填 target；可选 id（省略则由 RelationshipCollection 自动分配）。 */
 export interface CreateHyperlinkInput {
   readonly target: string;
   readonly id?: string;
