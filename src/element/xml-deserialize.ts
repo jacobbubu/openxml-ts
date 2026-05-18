@@ -47,7 +47,19 @@ export function deserialize(xml: string, options: DeserializeOptions = {}): Open
           : new OpenXmlUnknownElement(prefix, localName, namespaceUri);
 
       for (const [key, value] of token.attrs) {
-        element.applyAttribute(key, value);
+        // Deserialize 走 **lenient mode**：schema 长度 / 数值 / 枚举校验失败
+        // 不应让 parse 整个挂——真实 Office 文件含大量 schema 越界值（如
+        // `<w:color w:val="auto">` 的 4 chars 越过 maxLength=3）。把校验
+        // 异常吞掉，保留原始字符串属性即可，让用户能继续遍历 / 修改。严格
+        // 校验留给上层（OpenXmlElement.validateRequired() 等显式调用）。
+        try {
+          element.applyAttribute(key, value);
+        } catch {
+          // 校验失败时 typed 字段可能已写入，保留 raw 属性到 extendedAttributes
+          if (!element.extendedAttributes.has(key)) {
+            element.extendedAttributes.set(key, value);
+          }
+        }
       }
 
       // 当 typed class 的固有 prefix（如 Workbook.prefix="x"）与 XML 用的
