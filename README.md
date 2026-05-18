@@ -175,9 +175,9 @@ Document          ← /word/document.xml 的根
 [`src/word/generated/`](./src/word/generated/) 是约 720 个 schema 类，
 [`docs/planning/architecture.md`](./docs/planning/architecture.md) §element 章节给完整继承图。
 
-## Excel 子系统（`openxml-ts/excel`，0.3.0 预览）
+## Excel 子系统（`openxml-ts/excel`）
 
-Excel 部分通过独立 subpath `openxml-ts/excel` 暴露，与 Word 同形态——HAS-A 包装 `MemoryOpenXmlPackage`，强类型 `WorkbookPart` / `WorksheetPart` / `SharedStringTablePart` / `WorkbookStylesPart` / `CalculationChainPart` / `ThemePart` 六位 typed Parts，~460 个 spreadsheetml element 类。
+Excel 部分通过独立 subpath `openxml-ts/excel` 暴露，与 Word 同形态——HAS-A 包装 `MemoryOpenXmlPackage`，强类型 `WorkbookPart` / `WorksheetPart` / `SharedStringTablePart` / `WorkbookStylesPart` / `CalculationChainPart` / `ThemePart` 共 6 个 typed Parts（外加跨子系统共享的 `TypedXmlPart<T>` 基类），~460 个 spreadsheetml element 类。
 
 ```ts
 import {
@@ -240,7 +240,7 @@ Excel 子系统的额外能力：
 
 源码起点：[`src/excel/spreadsheet-document.ts`](./src/excel/spreadsheet-document.ts) 是门面，[`src/excel/generated/`](./src/excel/generated/) 是约 460 个 schema 类，[`docs/planning/epic-3-architecture.md`](./docs/planning/epic-3-architecture.md) §4 / §5 给跨 Part 解引用与 typed Parts 设计细节。
 
-## PowerPoint 子系统（`openxml-ts/ppt`，0.4.0 预览）
+## PowerPoint 子系统（`openxml-ts/ppt`）
 
 PPT 部分通过独立 subpath `openxml-ts/ppt` 暴露，与 Word/Excel 同形态。强类型门面 `PresentationDocument` 配 7 个 typed Parts：`PresentationPart` / `SlidePart` / `SlideLayoutPart` / `SlideMasterPart` / `NotesSlidePart` / `NotesMasterPart` / `ThemePart`。270 个 presentationml element 类 + 380 个 drawingml element 类。
 
@@ -276,7 +276,7 @@ import { Shape } from "openxml-ts/ppt/generated/shape";
 
 `{ Slide, Shape, TextBody } + drawing Paragraph` 组合最小用例 ≤ 80 KB gzip（CI `size-limit` 守护），完整 entry ≤ 800 KB。
 
-## DrawingML 子系统（`openxml-ts/drawing`，0.4.0 预览）
+## DrawingML 子系统（`openxml-ts/drawing`）
 
 DrawingML 是 OOXML 共用绘图层（PPT 必用，Word/Excel 也通过 ThemePart 间接依赖）。通过 `openxml-ts/drawing` 单独可用，含 Theme / ColorScheme / FontScheme / FormatScheme / Shape / TextBody / Paragraph / Run 等 ~380 类。
 
@@ -299,7 +299,7 @@ import * as ppt from "openxml-ts/ppt";
 
 源码起点：[`src/ppt/presentation-document.ts`](./src/ppt/presentation-document.ts) 是 PPT 门面，[`src/ppt/effective-resolver.ts`](./src/ppt/effective-resolver.ts) 是三级版式继承核心，[`docs/planning/epic-4-architecture.md`](./docs/planning/epic-4-architecture.md) §4 / §5 / §6 给典型链路、ADR-024（slide 顺序）、ADR-026（命名冲突）的设计依据。
 
-## LINQ to XML 兼容层（`openxml-ts/linq`，0.6.0 预览）
+## LINQ to XML 兼容层（`openxml-ts/linq`）
 
 把 .NET `System.Xml.Linq` 同名 API 映射到 openxml-ts element 树上，让 .NET Open-XML 源码几乎 1:1 翻译到 TS。
 
@@ -419,13 +419,21 @@ cd playground && pnpm install && pnpm dev
 
 ## 路线图
 
-1. **Epic-1 OPC Packaging**（✅ 完成）：`IPackage`、Parts、Relationships、Content-Types、ZIP I/O、Flat OPC。
-2. **Epic-2 WordprocessingML**（✅ 完成）：~720 个 element 类、6 个 typed Parts、`openxml-ts/word` 子 entry、size-limit 守护、性能基线达 NFR-1.1/1.2。
-3. Epic-3 SpreadsheetML
-4. Epic-4 PresentationML
-5. Epic-5 LINQ-to-XML 兼容层（可选）
+| Epic | 主题 | 状态 |
+| --- | --- | --- |
+| 1 | OPC Packaging 内核 | ✅ v0.1.0 |
+| 2 | WordprocessingML | ✅ v0.2.0 |
+| 3 | SpreadsheetML | ✅ v0.3.0 |
+| 4 | PresentationML | ✅ v0.4.0 |
+| 6 | 浏览器构建 + playground | ✅ v0.5.0 |
+| 5 | LINQ to XML 兼容层 | ✅ v0.6.0 |
+| 7 | LINQ mutator API | ✅ 已合 main |
+| 8 | OOXML Strict ↔ Transitional 兼容 | ✅ 已合 main |
+| 9 | CLI 工具（`openxml-ts inspect / cat`） | ✅ 已合 main |
+| 10 | 贡献指南 + 架构总览 | ✅ 已合 main |
 
-每个 Epic 拆分为 BMAD Stories，进度见 GitHub Issues。性能基线见 [`docs/implementation/bench-baseline.md`](./docs/implementation/bench-baseline.md)。
+性能基线见 [`docs/implementation/bench-baseline.md`](./docs/implementation/bench-baseline.md)。
+未来候选：npm publish CI、v1.0 RC、schema validator、long-tail fixture 持续补 (Epic-1~6 上游 64 份 OPC 层烟雾测试已守护)。
 
 ## 致谢
 
