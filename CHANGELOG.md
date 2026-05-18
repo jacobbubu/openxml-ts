@@ -1,5 +1,39 @@
 # Changelog
 
+## [0.8.0](https://github.com/jacobbubu/openxml-ts/compare/v0.7.0...v0.8.0) (2026-05-18)
+
+
+### Features
+
+* **element:** Phase C schema validator opt-in via collectValidationIssues() ([#75](https://github.com/jacobbubu/openxml-ts/issues/75)) ([31210cf](https://github.com/jacobbubu/openxml-ts/commit/31210cff3d258776db71670d4f5b9d26481ef050))
+* **excel:** Epic-13 Excel 图片嵌入 ([#85](https://github.com/jacobbubu/openxml-ts/issues/85)) ([92775ce](https://github.com/jacobbubu/openxml-ts/commit/92775ce9d756222e7ac4ca7b03b017ae65a363de))
+* **excel:** Epic-13 Excel 图片嵌入（DrawingPart + addImagePart + xdr:twoCellAnchor 助手） ([#85](https://github.com/jacobbubu/openxml-ts/issues/85)) ([6b20ace](https://github.com/jacobbubu/openxml-ts/commit/6b20aceacf93a05e04d2196d4126318106864f6b))
+* **packaging:** Phase D 加密 OOXML 检测（CFB 容器嗅探） ([2fe79fb](https://github.com/jacobbubu/openxml-ts/commit/2fe79fb9e879c91fef6327abe1da7542ec0f4351))
+* **parts:** Epic-12 跨子系统图片嵌入助手 ([#83](https://github.com/jacobbubu/openxml-ts/issues/83)) ([7bd0a89](https://github.com/jacobbubu/openxml-ts/commit/7bd0a8903d94af19a1d2b59a5067afaa8b44e084))
+* **parts:** Epic-12 跨子系统图片嵌入助手（BinaryPart + ImagePart + addImagePart + markup 助手） ([#83](https://github.com/jacobbubu/openxml-ts/issues/83)) ([9338255](https://github.com/jacobbubu/openxml-ts/commit/93382559290ca1ccf1d39a3557863cd901729195))
+* **word:** Epic-11 Word 便捷层 ([#77](https://github.com/jacobbubu/openxml-ts/issues/77)) ([c406009](https://github.com/jacobbubu/openxml-ts/commit/c406009dabfc3bfba57ce54db90a457c7c05753a))
+* **word:** Epic-11 Word 便捷层（Paragraph/Run.text 访问器 + effective 样式解析） ([#77](https://github.com/jacobbubu/openxml-ts/issues/77)) ([99aaa8f](https://github.com/jacobbubu/openxml-ts/commit/99aaa8f9e05d50a6d21a7f3c5bd5800fcd38fe42))
+
+
+### Bug Fixes
+
+* **ci:** Build 在 Test 之前 + Browser config 排除 validate.test.ts ([#80](https://github.com/jacobbubu/openxml-ts/issues/80)) ([8c77807](https://github.com/jacobbubu/openxml-ts/commit/8c7780712353904712d940f61e688006b163b35f))
+* **codegen:** 元素注册器去重 + 修 w:style → composite Style 优先级 ([#78](https://github.com/jacobbubu/openxml-ts/issues/78)) ([b8ab144](https://github.com/jacobbubu/openxml-ts/commit/b8ab144f53d7dc0a62c71d295f438d05d38eee0a))
+* **codegen:** 元素注册器去重 + 修 w:style 优先级 ([#78](https://github.com/jacobbubu/openxml-ts/issues/78)) ([1c45bc9](https://github.com/jacobbubu/openxml-ts/commit/1c45bc964a86a5a682e4077c5b63ae3cb26be3f2))
+* **lint:** 修 CI lint 基线 ([#80](https://github.com/jacobbubu/openxml-ts/issues/80)) ([9ff54f6](https://github.com/jacobbubu/openxml-ts/commit/9ff54f6cbee35e8af2c11f1cc751d34c022bbef5))
+* **lint:** 修 CI lint 基线——69 errors → 0 ([#80](https://github.com/jacobbubu/openxml-ts/issues/80)) ([c14654d](https://github.com/jacobbubu/openxml-ts/commit/c14654dcc7053cca27b23efde19403e335745663))
+
+
+### Refactor
+
+* **element:** element-list 自指检测从 \`as unknown\` 换成 \`as OpenXmlElement\` ([265c457](https://github.com/jacobbubu/openxml-ts/commit/265c457fd560f35340d929af04f5448cb3fff8cd))
+
+
+### Documentation
+
+* Phase A 文档卫生（CONTRIBUTING Epic 列表 + size-limit 不再硬编 + docs/planning 内部标注） ([#72](https://github.com/jacobbubu/openxml-ts/issues/72)) ([5267fde](https://github.com/jacobbubu/openxml-ts/commit/5267fded697cdba86c2771bacd7779360025ccca))
+* 代码与类型规范 docs/code-style.md + 审计结论 ([bce91be](https://github.com/jacobbubu/openxml-ts/commit/bce91be270750f7dd623a5ef99d9ec07fdebbec1))
+
 ## [0.7.0](https://github.com/jacobbubu/openxml-ts/compare/v0.6.0...v0.7.0) (2026-05-18)
 
 
