@@ -44,3 +44,8 @@ export {
   strictToTransitional,
   transitionalToStrict,
 } from "./strict-namespace-map.js";
+
+export {
+  type ValidationIssue,
+  collectValidationIssues,
+} from "./validate.js";
