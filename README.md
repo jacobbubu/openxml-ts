@@ -2,7 +2,9 @@
 
 A TypeScript port of [Microsoft Open-XML-SDK](https://github.com/dotnet/Open-XML-SDK).
 
-> 状态：Epic-1（OPC Packaging 内核）+ Epic-2（WordprocessingML，v0.2.0 已发版）已完成。**Epic-3 SpreadsheetML 进行中**（~460 element 类、6 个 typed Parts、`openxml-ts/excel` 子 entry、SharedStringResolver + Cell.resolvedText + CalcChain 自动失效；0.3.0 待 bench + 人工验证）。下一步：Epic-4 PresentationML。
+> **状态**（v0.6.0）：Epic-1 OPC 内核 / Epic-2 Word / Epic-3 Excel / Epic-4 PPT / Epic-5 LINQ to XML / Epic-6 浏览器 + Epic-7 LINQ mutator / Epic-8 OOXML Strict 兼容 / Epic-9 CLI / Epic-10 文档全部完成。Live demo：<https://jacobbubu.github.io/openxml-ts/>。
+
+> 新贡献者从 [`CONTRIBUTING.md`](./CONTRIBUTING.md) 与 [`docs/architecture-overview.md`](./docs/architecture-overview.md) 起读。
 
 ## 设计目标
 
