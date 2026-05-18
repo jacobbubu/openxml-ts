@@ -63,9 +63,13 @@ export function snapshotElement(el: OpenXmlElement): ElementSnapshot {
     snap.extendedAttributes = Object.fromEntries(sorted);
   }
 
-  // Text（Leaf 或 UnknownElement 的 mixed content）
-  const text = (el as { text?: string }).text;
-  if (text !== undefined) snap.text = text;
+  // Text（Leaf 或 UnknownElement 的 mixed content）。只看 own property——避免
+  // 把 partial mixin（如 `src/word/extensions/run-extensions.ts`）挂在 prototype
+  // 上的 `text` getter当成结构性文本节点（mixin 给空 Run 也会返 ""）。
+  if (Object.hasOwn(el, "text")) {
+    const text = (el as { text?: string }).text;
+    if (text !== undefined) snap.text = text;
+  }
 
   // Children
   if (el instanceof OpenXmlCompositeElement && el.children.count > 0) {

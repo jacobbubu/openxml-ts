@@ -7,9 +7,23 @@
  *   （ADR-013），最小 bundle 友好；
  * - `sideEffects: false` + tree-shake：用户只 import 几个常用类时打包器只拉
  *   对应的 generated/*.js 模块。
+ *
+ * 副作用：模块加载时通过 `extensions/paragraph-extensions.js` /
+ * `extensions/run-extensions.js` 给 `Paragraph.prototype` / `Run.prototype`
+ * 挂便捷 `text` 访问器（Story-11.1）。两份 mixin 都是显式 bare-import，
+ * 不会被 tree-shake 掉。
  */
 
+import "./extensions/paragraph-extensions.js";
+import "./extensions/run-extensions.js";
+
 export { WordprocessingDocument } from "./word-document.js";
+
+export {
+  EffectiveProperties,
+  resolveEffectiveParagraphProperties,
+  resolveEffectiveRunProperties,
+} from "./effective-resolver.js";
 
 export {
   FontTablePart,

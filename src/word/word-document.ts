@@ -39,6 +39,7 @@ import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { registerWordprocessingElements } from "./generated/_registry.js";
 import { Body } from "./generated/body.js";
 import { Document } from "./generated/document.js";
+import { Style } from "./generated/style.js";
 import {
   FontTablePart,
   MainDocumentPart,
@@ -53,6 +54,15 @@ import {
 const wordRegistry: ElementRegistry = (() => {
   const r = new ElementRegistry();
   registerWordprocessingElements(r);
+  // 修正 codegen 输出顺序导致的 (w:style, leaf StyleId) 覆盖 (w:style, composite Style)：
+  // StyleId 是 `<w:rPrChange><w:style w:val="..."/>` 用的 leaf，仅 1 个 w:val 属性；
+  // composite Style 是 `<w:styles><w:style w:styleId="..."><w:pPr/>...</w:style>` 用的根
+  // 容器。两者共享 qname 但语义差异大。leaf 胜出会让 StylesPart 反序列化抛错
+  // ("Cannot append child to leaf element <style>")。重新覆盖回 composite，让真实样式
+  // 表能正常解析；StyleId 那种自闭合 leaf 当作 composite 解析也不丢字节
+  // （w:val 走 extendedAttributes，no children）。
+  // 系统性 codegen 修复跟进 follow-up issue #78。
+  r.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "style", Style);
   return r;
 })();
 
