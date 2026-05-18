@@ -98,7 +98,21 @@ PR 简短描述：要解决什么问题、怎么改、怎么测的。引用 issu
 
 ## BMAD 流程（项目内部约定）
 
-本项目按 BMAD（Brief → Model → Architect → Develop）阶段推进，已完成 Epic-1～10。
+本项目按 BMAD（Brief → Model → Architect → Develop）阶段推进。已完成 Epic：
+
+| Epic | 主题 | release | 备注 |
+| --- | --- | --- | --- |
+| 1 | OPC Packaging 内核 | v0.1.0 | `IPackage` / Part / Relationships / ContentTypes / Flat OPC |
+| 2 | WordprocessingML | v0.2.0 | ~720 element 类、6 typed Parts、`openxml-ts/word` 子 entry |
+| 3 | SpreadsheetML | v0.3.0 | ~460 element 类、6 typed Parts、SharedString + CalcChain 自动失效 |
+| 4 | PresentationML | v0.4.0 | ~270 ppt + ~380 drawing element 类、7 typed Parts、effective\* resolver |
+| 5 | LINQ to XML 兼容层 | v0.6.0 | XDocument / XElement / XName / XNamespace / Enumerable |
+| 6 | 浏览器构建 + playground | v0.5.0 | Vite playground + GitHub Pages live demo |
+| 7 | LINQ mutator API | v0.7.0 | XElement.Add / SetAttributeValue / Remove + XDocument.ToString/Save |
+| 8 | OOXML Strict ↔ Transitional 兼容 | v0.7.0 | ElementRegistry + relationship type fallback |
+| 9 | CLI 工具 | v0.7.0 | `openxml-ts inspect / cat` |
+| 10 | 贡献指南 + 单页架构总览 | v0.7.0 | 本文件 + `docs/architecture-overview.md` |
+
 **外部贡献者**不必跟 BMAD 全套，只需：
 
 1. 看 issue 选一个 `feature` / `bug` / `chore` 标签的开始；
@@ -108,6 +122,9 @@ PR 简短描述：要解决什么问题、怎么改、怎么测的。引用 issu
 4. PR 描述带上「什么改了、怎么测的、有无新 fixture / 新 ADR」。
 
 需要大改动（跨多个子系统、引入新依赖、破坏 API）请先开 issue 讨论，避免做完了被拒。
+
+详细规划文档在 `docs/planning/`（**内部 BMAD 视角**——PRD / Architecture / Story 拆分；
+外部贡献者从 `docs/architecture-overview.md` 起即可）。
 
 ## 设计原则速查
 

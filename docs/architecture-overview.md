@@ -92,16 +92,11 @@
 
 ## 单包体积（size-limit gzip）
 
-| Entry | 阈值 | 实测 |
-| --- | --- | --- |
-| `openxml-ts`（root，OPC + ZIP backend） | ≤ 100 KB | 78.57 KB |
-| `openxml-ts/word minimal`（Paragraph + Run + Text） | ≤ 50 KB | 2.24 KB |
-| `openxml-ts/word`（full bundle + registry） | ≤ 500 KB | 102.94 KB |
-| `openxml-ts/excel minimal`（Cell + Row + Worksheet） | ≤ 50 KB | 2.29 KB |
-| `openxml-ts/excel`（full） | ≤ 600 KB | 121.42 KB |
-| `openxml-ts/ppt minimal`（Slide + Shape + TextBody + Paragraph） | ≤ 80 KB | 7.02 KB |
-| `openxml-ts/ppt`（full） | ≤ 800 KB | 105.09 KB |
-| `openxml-ts/drawing`（full） | ≤ 400 KB | 17.59 KB |
+阈值与各 entry 配置见 `package.json#size-limit`；实测当前值跑 `pnpm size` 看（CI 在
+每次 PR 守护）。手维护实测数字会随版本漂移，故不在文档里硬编。
+
+总览：root + 4 个子系统各有「minimal（最小用例 tree-shake 后）」与「full（完整
+entry 含 registry）」两档；DrawingML 仅 full 档。所有阈值都按 gzip 后字节数算。
 
 ## Roadmap
 
