@@ -36,11 +36,13 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
-      - name: Test
-        run: pnpm test
-
+      # Build 必须在 Test 之前——test/cli/cli.test.ts 需要 dist/bin/openxml-ts.js
+      # 这个已构建出来的产物（Epic-9 CLI）。
       - name: Build
         run: pnpm build
+
+      - name: Test
+        run: pnpm test
 
   verify-bun:
     name: Verify (Bun)
@@ -60,6 +62,10 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      # 同 verify job：Build → Test 顺序，CLI 套件依赖 dist/bin。
+      - name: Build
+        run: pnpm build
 
       - name: Test (Bun runtime)
         run: bun run vitest run

@@ -23,28 +23,7 @@ function buildSlideXml(title: string): string {
   // shape 必须含 <a:xfrm>（位置 + 大小）+ <a:prstGeom>（图形预设）。缺任一项
   // PowerPoint 渲染出来是空白页面（解析不报错，但没几何 → 没可见区域 → 文本看不到）。
   // 位置 838200 EMU ≈ 0.875 inch；大小 7467600 × 1143000 EMU ≈ 7.78" × 1.19"。
-  return (
-    `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
-    `<p:sld xmlns:p="${P}" xmlns:r="${R}" xmlns:a="${A}">` +
-    `<p:cSld><p:spTree>` +
-    `<p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>` +
-    `<p:grpSpPr/>` +
-    `<p:sp>` +
-    `<p:nvSpPr><p:cNvPr id="2" name="Title"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>` +
-    `<p:spPr>` +
-    `<a:xfrm><a:off x="838200" y="838200"/><a:ext cx="7467600" cy="1143000"/></a:xfrm>` +
-    `<a:prstGeom prst="rect"><a:avLst/></a:prstGeom>` +
-    `<a:noFill/>` +
-    `</p:spPr>` +
-    `<p:txBody>` +
-    `<a:bodyPr wrap="square" rtlCol="0"/><a:lstStyle/>` +
-    `<a:p><a:r><a:rPr lang="en-US" dirty="0"/><a:t>${escapeXml(title)}</a:t></a:r></a:p>` +
-    `</p:txBody>` +
-    `</p:sp>` +
-    `</p:spTree></p:cSld>` +
-    `<p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr>` +
-    `</p:sld>`
-  );
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:sld xmlns:p="${P}" xmlns:r="${R}" xmlns:a="${A}"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr/><p:sp><p:nvSpPr><p:cNvPr id="2" name="Title"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr><p:spPr><a:xfrm><a:off x="838200" y="838200"/><a:ext cx="7467600" cy="1143000"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom><a:noFill/></p:spPr><p:txBody><a:bodyPr wrap="square" rtlCol="0"/><a:lstStyle/><a:p><a:r><a:rPr lang="en-US" dirty="0"/><a:t>${escapeXml(title)}</a:t></a:r></a:p></p:txBody></p:sp></p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>`;
 }
 
 function escapeXml(s: string): string {
@@ -71,7 +50,7 @@ async function main(): Promise<void> {
 
   const doc = PresentationDocument.create();
   const pkg = doc.package;
-  const pres = doc.presentationPart!.part;
+  const pres = doc.presentationPart?.part;
 
   // create() 默认建好 1 slide + 1 layout + 1 master + 1 theme；这里覆盖 slide1 + 追加 2 张。
   for (let i = 0; i < TITLES.length; i += 1) {
@@ -105,15 +84,7 @@ async function main(): Promise<void> {
     const rid = i === 0 ? slide1Rid : `rIdSlide${i + 1}`;
     return `<p:sldId id="${256 + i}" r:id="${rid}"/>`;
   }).join("");
-  const presentationXml =
-    `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
-    `<p:presentation xmlns:p="${P}" xmlns:r="${R}" xmlns:a="${A}">` +
-    `<p:sldMasterIdLst><p:sldMasterId id="2147483648" r:id="${slideMasterRid}"/></p:sldMasterIdLst>` +
-    `<p:sldIdLst>${sldIds}</p:sldIdLst>` +
-    `<p:sldSz cx="9144000" cy="6858000" type="screen4x3"/>` +
-    `<p:notesSz cx="6858000" cy="9144000"/>` +
-    `<p:defaultTextStyle/>` +
-    `</p:presentation>`;
+  const presentationXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:presentation xmlns:p="${P}" xmlns:r="${R}" xmlns:a="${A}"><p:sldMasterIdLst><p:sldMasterId id="2147483648" r:id="${slideMasterRid}"/></p:sldMasterIdLst><p:sldIdLst>${sldIds}</p:sldIdLst><p:sldSz cx="9144000" cy="6858000" type="screen4x3"/><p:notesSz cx="6858000" cy="9144000"/><p:defaultTextStyle/></p:presentation>`;
   (pres as MemoryPackagePart).writeSync(presentationXml);
 
   await doc.saveAsAsync(outputPath);

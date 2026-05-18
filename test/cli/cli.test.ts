@@ -33,7 +33,7 @@ describe("openxml-ts CLI", () => {
   beforeAll(() => {
     if (!existsSync(CLI)) {
       throw new Error(
-        `dist/bin/openxml-ts.js missing; run \`pnpm build\` before \`pnpm test\` for CLI suite`,
+        "dist/bin/openxml-ts.js missing; run `pnpm build` before `pnpm test` for CLI suite",
       );
     }
   });

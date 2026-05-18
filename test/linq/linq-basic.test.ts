@@ -16,7 +16,12 @@ import { XAttribute, XElement, XName, XNamespace } from "../../src/linq/index.js
 const W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const A = "http://schemas.openxmlformats.org/drawingml/2006/main";
 
-function ue(prefix: string, local: string, namespaceUri: string, text?: string): OpenXmlUnknownElement {
+function ue(
+  prefix: string,
+  local: string,
+  namespaceUri: string,
+  text?: string,
+): OpenXmlUnknownElement {
   const el = new OpenXmlUnknownElement(prefix, local, namespaceUri);
   if (text !== undefined) el.text = text;
   return el;
@@ -194,7 +199,11 @@ describe("XElement · Element / Elements", () => {
 });
 
 describe("XElement · Descendants / Ancestors / Parent", () => {
-  function buildTree(): { root: OpenXmlUnknownElement; r1: OpenXmlUnknownElement; t1: OpenXmlUnknownElement } {
+  function buildTree(): {
+    root: OpenXmlUnknownElement;
+    r1: OpenXmlUnknownElement;
+    t1: OpenXmlUnknownElement;
+  } {
     const root = ue("w", "body", W);
     const p1 = ue("w", "p", W);
     const r1 = ue("w", "r", W);
@@ -215,7 +224,7 @@ describe("XElement · Descendants / Ancestors / Parent", () => {
     const { root } = buildTree();
     const ts = new XElement(root).Descendants(XName.Get(W, "t"));
     expect(ts.length).toBe(1);
-    expect(ts[0]!.Value).toBe("Hello");
+    expect(ts[0]?.Value).toBe("Hello");
   });
 
   it("Parent 返父 XElement；root 返 undefined", () => {
@@ -234,6 +243,6 @@ describe("XElement · Descendants / Ancestors / Parent", () => {
     const { t1 } = buildTree();
     const anc = new XElement(t1).Ancestors(XName.Get(W, "p"));
     expect(anc.length).toBe(1);
-    expect(anc[0]!.Name.LocalName).toBe("p");
+    expect(anc[0]?.Name.LocalName).toBe("p");
   });
 });

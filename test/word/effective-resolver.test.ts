@@ -34,12 +34,15 @@ import {
   resolveEffectiveRunProperties,
 } from "../../src/word/index.js";
 
-function makeStyle(styleId: string, opts: {
-  type?: "paragraph" | "character";
-  basedOn?: string;
-  ppr?: StyleParagraphProperties;
-  rpr?: StyleRunProperties;
-} = {}): Style {
+function makeStyle(
+  styleId: string,
+  opts: {
+    type?: "paragraph" | "character";
+    basedOn?: string;
+    ppr?: StyleParagraphProperties;
+    rpr?: StyleRunProperties;
+  } = {},
+): Style {
   const s = new Style();
   s.styleId = StringValue.parse(styleId);
   if (opts.type !== undefined) s.type = StringValue.parse(opts.type);

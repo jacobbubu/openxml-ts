@@ -14,7 +14,7 @@
  * Run.text 两个 mixin 共用。
  */
 
-import { OpenXmlCompositeElement } from "../../element/index.js";
+import type { OpenXmlCompositeElement } from "../../element/index.js";
 import { Break } from "../generated/break.js";
 import { TabChar } from "../generated/tab-char.js";
 import { Text } from "../generated/text.js";

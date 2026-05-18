@@ -28,7 +28,7 @@ describe("WordprocessingDocument · open & navigate", () => {
     const bytes = await loadHelloWorld();
     const doc = await WordprocessingDocument.openAsync(bytes);
     expect(doc.mainDocumentPart).toBeInstanceOf(MainDocumentPart);
-    expect(doc.mainDocumentPart!.document).toBeInstanceOf(Document);
+    expect(doc.mainDocumentPart?.document).toBeInstanceOf(Document);
   });
 
   it("typed Parts 多次访问返回同一实例（cache 行为）", async () => {
@@ -57,17 +57,17 @@ describe("WordprocessingDocument · mutate + saveAs + reopen", () => {
     const doc = await WordprocessingDocument.openAsync(bytes);
 
     // 找到第一个 Text
-    const body = doc.mainDocumentPart!.document;
+    const body = doc.mainDocumentPart?.document;
     const allText = [...body.descendants(Text)];
     expect(allText.length).toBeGreaterThan(0);
-    const original = allText[0]!.text;
+    const original = allText[0]?.text;
     allText[0]!.text = "MUTATED";
 
     const newBytes = await doc.saveAsBytesAsync();
     const reopened = await WordprocessingDocument.openAsync(newBytes);
     const reTexts = [...reopened.mainDocumentPart!.document.descendants(Text)];
-    expect(reTexts[0]!.text).toBe("MUTATED");
-    expect(reTexts[0]!.text).not.toBe(original);
+    expect(reTexts[0]?.text).toBe("MUTATED");
+    expect(reTexts[0]?.text).not.toBe(original);
   });
 
   it("未访问 typed Part 时 saveAsBytes 不会触碰其字节流", async () => {
@@ -88,20 +88,20 @@ describe("WordprocessingDocument.create() · 空白文档", () => {
     expect(doc.mainDocumentPart).toBeInstanceOf(MainDocumentPart);
 
     // 程序构造一段内容
-    const document = doc.mainDocumentPart!.document;
+    const document = doc.mainDocumentPart?.document;
     const body = document.firstChild();
     expect(body).toBeDefined(); // Body 是 EMPTY_DOC_XML 里的子节点
 
     const out = await doc.saveAsBytesAsync();
     const reopened = await WordprocessingDocument.openAsync(out);
-    expect(reopened.mainDocumentPart!.document.firstChild()).toBeDefined();
+    expect(reopened.mainDocumentPart?.document.firstChild()).toBeDefined();
   });
 });
 
 describe("WordprocessingDocument · 程序构造 Paragraph → Run → Text", () => {
   it("空白文档 → 添加段落 → 写出 → 重读 → 文本可见", async () => {
     const doc = WordprocessingDocument.create();
-    const document = doc.mainDocumentPart!.document;
+    const document = doc.mainDocumentPart?.document;
     const body = document.firstChild()!;
 
     const p = new Paragraph();
@@ -116,7 +116,7 @@ describe("WordprocessingDocument · 程序构造 Paragraph → Run → Text", ()
     const reopened = await WordprocessingDocument.openAsync(out);
     const texts = [...reopened.mainDocumentPart!.document.descendants(Text)];
     expect(texts.length).toBe(1);
-    expect(texts[0]!.text).toBe("Built programmatically");
+    expect(texts[0]?.text).toBe("Built programmatically");
   });
 });
 

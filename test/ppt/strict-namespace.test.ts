@@ -30,8 +30,6 @@ describe("PresentationDocument · OOXML Strict 兼容", () => {
     expect(pp?.slideParts.length).toBeGreaterThanOrEqual(1);
     const slide = pp?.slideParts[0]?.slide;
     expect(slide).toBeInstanceOf(Slide);
-    expect(slide?.namespaceUri).toBe(
-      "http://schemas.openxmlformats.org/presentationml/2006/main",
-    );
+    expect(slide?.namespaceUri).toBe("http://schemas.openxmlformats.org/presentationml/2006/main");
   });
 });

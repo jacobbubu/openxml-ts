@@ -35,7 +35,7 @@ let oneMegabyteXlsx: Uint8Array = new Uint8Array(0);
 
 async function build1MbXlsx(): Promise<Uint8Array> {
   const doc = SpreadsheetDocument.create();
-  const sd = doc.workbookPart!.worksheetParts[0]!.worksheet.firstChild(SheetData)!;
+  const sd = doc.workbookPart?.worksheetParts[0]?.worksheet.firstChild(SheetData)!;
   for (let i = 0; i < ROW_COUNT; i += 1) {
     const r = new Row();
     const c = new Cell();
@@ -69,7 +69,7 @@ describe("SpreadsheetDocument.openAsync — 1 MB xlsx", () => {
 describe("element 树 → bytes — 1 MB xlsx", () => {
   bench("修改 1 个 Cell + saveAsBytes 整包写回", async () => {
     const doc = await SpreadsheetDocument.openAsync(oneMegabyteXlsx);
-    const wsp = doc.workbookPart!.worksheetParts[0];
+    const wsp = doc.workbookPart?.worksheetParts[0];
     if (wsp === undefined) return;
     const [first] = wsp.worksheet.descendants(Cell);
     if (first !== undefined) {

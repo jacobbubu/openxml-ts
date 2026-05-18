@@ -43,7 +43,7 @@ describe("tokenizeXml — 正向", () => {
     expect(t.map((x) => x.kind)).toEqual(["open"]);
   });
 
-  it("根元素外的空白不产生 text 事件；根元素内的空白会保留为 text（SST `<t xml:space=\"preserve\"> </t>` 等场景必需）", () => {
+  it('根元素外的空白不产生 text 事件；根元素内的空白会保留为 text（SST `<t xml:space="preserve"> </t>` 等场景必需）', () => {
     const t = collect('<?xml version="1.0"?>\n<Root>\n  <Child/>\n</Root>');
     const kinds = t.map((x) => x.kind);
     expect(kinds).toEqual(["decl", "open", "text", "open", "text", "close"]);

@@ -85,12 +85,11 @@ const doc = XDocument.Parse(customersXml);
 //                .Element("name").Value;
 {
   const top = Enumerable.from(doc.Descendants("customer"))
-    .OrderByDescending(
-      (c) =>
-        Enumerable.from(c.Descendants("order"))
-          .Select((o) => Number.parseFloat(o.Attribute("amount")?.Value ?? "0"))
-          .ToArray()
-          .reduce((a, b) => a + b, 0),
+    .OrderByDescending((c) =>
+      Enumerable.from(c.Descendants("order"))
+        .Select((o) => Number.parseFloat(o.Attribute("amount")?.Value ?? "0"))
+        .ToArray()
+        .reduce((a, b) => a + b, 0),
     )
     .First()
     .Element("name")?.Value;

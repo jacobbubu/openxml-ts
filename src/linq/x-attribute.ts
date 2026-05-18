@@ -6,7 +6,7 @@
  * 我们的 LINQ 视图统一从那里读）。
  */
 
-import { XName } from "./x-name.js";
+import type { XName } from "./x-name.js";
 
 export class XAttribute {
   constructor(

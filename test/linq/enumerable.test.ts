@@ -35,7 +35,7 @@ describe("Enumerable · 工厂 + 迭代", () => {
 
 describe("Enumerable · 中间操作子", () => {
   it("Where 按 predicate 过滤；带 index", () => {
-    const e = Enumerable.from([10, 20, 30, 40]).Where((x, i) => i % 2 === 0);
+    const e = Enumerable.from([10, 20, 30, 40]).Where((_x, i) => i % 2 === 0);
     expect(e.ToArray()).toEqual([10, 30]);
   });
 

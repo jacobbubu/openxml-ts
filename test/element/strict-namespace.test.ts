@@ -11,7 +11,6 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { Paragraph } from "../../src/word/index.js";
 import {
   ElementRegistry,
   isStrictUri,
@@ -19,11 +18,13 @@ import {
   transitionalToStrict,
 } from "../../src/element/index.js";
 import { relationshipTypeMatches } from "../../src/parts/relationship-type-match.js";
+import { Paragraph } from "../../src/word/index.js";
 
 const STRICT_WORD = "http://purl.oclc.org/ooxml/wordprocessingml/main";
 const TRANS_WORD = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 const STRICT_REL = "http://purl.oclc.org/ooxml/officeDocument/relationships/officeDocument";
-const TRANS_REL = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+const TRANS_REL =
+  "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
 
 describe("strictToTransitional / transitionalToStrict", () => {
   it("已知主体 namespace 互译", () => {

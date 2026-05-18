@@ -5,13 +5,7 @@
  */
 
 import { describe, expect, it } from "vitest";
-import {
-  Break,
-  Paragraph,
-  Run,
-  TabChar,
-  Text,
-} from "../../src/word/index.js";
+import { Break, Paragraph, Run, TabChar, Text } from "../../src/word/index.js";
 
 function makeRun(...children: Array<Text | TabChar | Break>): Run {
   const r = new Run();

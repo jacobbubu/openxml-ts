@@ -41,7 +41,7 @@ let oneMegabyteDocx: Uint8Array = new Uint8Array(0);
 
 async function build1MbDocx(): Promise<Uint8Array> {
   const doc = WordprocessingDocument.create();
-  const body = doc.mainDocumentPart!.document.firstChild()!;
+  const body = doc.mainDocumentPart?.document.firstChild()!;
   for (let i = 0; i < LINE_COUNT; i += 1) {
     const p = new Paragraph();
     const r = new Run();
@@ -61,7 +61,7 @@ beforeAll(async () => {
 describe("WordprocessingDocument.openAsync — 1 MB docx", () => {
   bench("open + 主文档 descendants 遍历", async () => {
     const doc = await WordprocessingDocument.openAsync(oneMegabyteDocx);
-    const document = doc.mainDocumentPart!.document;
+    const document = doc.mainDocumentPart?.document;
     let count = 0;
     for (const _ of document.descendants()) count += 1;
     void count;
@@ -88,7 +88,7 @@ describe("WordprocessingDocument.create — 端到端 14000 段构造", () => {
 describe("Story-11.1 Paragraph.text 展平 — 14000 段", () => {
   bench("打开 1 MB docx 后遍历所有段落取 .text", async () => {
     const doc = await WordprocessingDocument.openAsync(oneMegabyteDocx);
-    const document = doc.mainDocumentPart!.document;
+    const document = doc.mainDocumentPart?.document;
     let total = 0;
     for (const p of document.descendants(Paragraph)) total += p.text.length;
     void total;
@@ -98,7 +98,7 @@ describe("Story-11.1 Paragraph.text 展平 — 14000 段", () => {
 describe("Story-11.2 resolveEffectiveRunProperties — 14000 段", () => {
   bench("对每个 Run 解析有效 rPr", async () => {
     const doc = await WordprocessingDocument.openAsync(oneMegabyteDocx);
-    const document = doc.mainDocumentPart!.document;
+    const document = doc.mainDocumentPart?.document;
     const styles = doc.stylesPart?.styles;
     let touched = 0;
     for (const r of document.descendants(Run)) {
