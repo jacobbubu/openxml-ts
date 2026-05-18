@@ -54,6 +54,8 @@ export {
   createHyperlinkRun,
 } from "./hyperlink-markup.js";
 
+export { createBookmarkPair } from "./bookmark-markup.js";
+
 // 复用 packaging 层 hyperlink 助手；高级用户想手工拼 input 时少钻一级路径。
 export {
   HYPERLINK_RELATIONSHIP_TYPE,

@@ -40,6 +40,7 @@ import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { registerWordprocessingElements } from "./generated/_registry.js";
 import { Body } from "./generated/body.js";
+import { BookmarkStart } from "./generated/bookmark-start.js";
 import { Document } from "./generated/document.js";
 import {
   FontTablePart,
@@ -157,6 +158,26 @@ export class WordprocessingDocument {
    * @throws OpenXmlPackageError 当 \`url\` 为空 / 仅空白字符（code="RELATIONSHIP_TARGET_INVALID"）
    *   或 mainDocumentPart 缺失（code="PART_NOT_FOUND"）
    */
+  /**
+   * 返回一个全文档唯一的 \`w:id\` 整数——给 \`createBookmarkPair(name, id)\` 用
+   * （Story-16.2，Epic-16）。
+   *
+   * 算法：扫 mainDocumentPart 元素树里所有现有 \`<w:bookmarkStart>\`，取 \`w:id\` 最大值 + 1。
+   * 文档为空 / 没书签时返 0。
+   */
+  nextBookmarkId(): number {
+    const main = this.mainDocumentPart;
+    if (main === undefined) return 0;
+    let maxId = -1;
+    for (const bm of main.document.descendants(BookmarkStart)) {
+      const v = bm.id?.toString();
+      if (v === undefined) continue;
+      const n = Number.parseInt(v, 10);
+      if (Number.isFinite(n) && n > maxId) maxId = n;
+    }
+    return maxId + 1;
+  }
+
   addHyperlinkRelationship(url: string, opts: { id?: string } = {}): { relId: string } {
     const main = this.mainDocumentPart;
     if (main === undefined) {
