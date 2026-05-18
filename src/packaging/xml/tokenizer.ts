@@ -17,8 +17,10 @@
 import { OpenXmlPackageError } from "../errors.js";
 import { xmlUnescape } from "./escape.js";
 
+/** XML 属性集合——按出现顺序的只读 Map（保字节级 diff 稳定）。 */
 export type XmlAttributes = ReadonlyMap<string, string>;
 
+/** Tokenizer 单次产出的事件类型——`decl` / `open` / `close` / `text`。 */
 export type XmlToken =
   | { readonly kind: "decl"; readonly attrs: XmlAttributes }
   | {
@@ -30,12 +32,19 @@ export type XmlToken =
   | { readonly kind: "close"; readonly name: string }
   | { readonly kind: "text"; readonly value: string };
 
+/** `tokenizeXml` 入参。`maxDepth` 超限抛 `OpenXmlPackageError(code="SECURITY_VIOLATION")`。 */
 export interface TokenizeOptions {
   readonly maxDepth?: number;
 }
 
 const DEFAULT_MAX_DEPTH = 64;
 
+/**
+ * 流式 XML 词法分析器——按字符遍历源串发 token，零中间字符串拷贝。
+ *
+ * 不保留注释 / 处理指令 / CDATA 之外的特性；OOXML 文档实测只用到声明 + 元素 + 文本。
+ * 限制由 `options.maxDepth` 守护（默认 64），用以挡 ZIP 炸弹的深嵌套变种。
+ */
 export function* tokenizeXml(src: string, options: TokenizeOptions = {}): Generator<XmlToken> {
   const maxDepth = options.maxDepth ?? DEFAULT_MAX_DEPTH;
   const len = src.length;

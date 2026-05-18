@@ -1,0 +1,51 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
+
+  "projectFolder": "..",
+
+  "compiler": {
+    "tsconfigFilePath": "<projectFolder>/tsconfig.json"
+  },
+
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "<projectFolder>/api/",
+    "includeForgottenExports": false
+  },
+
+  "docModel": {
+    "enabled": false
+  },
+
+  "dtsRollup": {
+    "enabled": false
+  },
+
+  "tsdocMetadata": {
+    "enabled": false
+  },
+
+  "messages": {
+    "compilerMessageReporting": {
+      "default": { "logLevel": "warning" }
+    },
+    "extractorMessageReporting": {
+      "default": { "logLevel": "warning" },
+      "ae-missing-release-tag": { "logLevel": "none" },
+      "ae-forgotten-export": { "logLevel": "none" },
+      "ae-internal-missing-underscore": { "logLevel": "none" },
+      "ae-unresolved-link": { "logLevel": "none" },
+      "ae-setter-with-docs": { "logLevel": "none" }
+    },
+    "tsdocMessageReporting": {
+      "default": { "logLevel": "warning" },
+      "tsdoc-undefined-tag": { "logLevel": "none" },
+      "tsdoc-malformed-html-name": { "logLevel": "none" },
+      "tsdoc-param-tag-missing-hyphen": { "logLevel": "none" },
+      "tsdoc-escape-greater-than": { "logLevel": "none" },
+      "tsdoc-html-tag-missing-greater-than": { "logLevel": "none" },
+      "tsdoc-escape-right-brace": { "logLevel": "none" },
+      "tsdoc-malformed-inline-tag": { "logLevel": "none" }
+    }
+  }
+}

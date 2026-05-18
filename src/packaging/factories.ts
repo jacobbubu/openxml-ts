@@ -40,6 +40,12 @@ export function openSync(bytes: Uint8Array, options?: MemoryPackageOptions): Ope
   });
 }
 
+/**
+ * `openAsync` 入参。所有字段都可省。
+ *
+ * - `accessMode` 默认 `"read-write"`，传 `"read"` 阻断任何 mutation 调用。
+ * - `limits` 透传给 ZIP backend 的解压安全阈值（最大 entry 字节、总字节、压缩比等）。
+ */
 export interface OpenAsyncOptions {
   readonly accessMode?: AccessMode;
   readonly limits?: Partial<ZipLimits>;

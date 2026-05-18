@@ -23,8 +23,10 @@ import type { IPackageRelationship } from "../interfaces/relationship.js";
 import type { TargetMode } from "../interfaces/types.js";
 import { XmlWriter, tokenizeXml } from "../xml/index.js";
 
+/** `.rels` 文件根命名空间。 */
 export const RELATIONSHIPS_NS = "http://schemas.openxmlformats.org/package/2006/relationships";
 
+/** 解析后的单条 Relationship——id、type、target、targetMode 四元组。 */
 export interface ParsedRelationship {
   readonly id: string;
   readonly type: string;
@@ -32,6 +34,7 @@ export interface ParsedRelationship {
   readonly targetMode: TargetMode;
 }
 
+/** 把 relationships 集合序列化成 `.rels` XML 字符串（包级或 Part 级共用一份格式）。 */
 export function serializeRelationshipsXml(rels: Iterable<IPackageRelationship>): string {
   const w = new XmlWriter();
   w.declaration();
@@ -51,6 +54,10 @@ export function serializeRelationshipsXml(rels: Iterable<IPackageRelationship>):
   return w.toString();
 }
 
+/**
+ * 解析 `.rels` XML 字符串到 {@link ParsedRelationship} 数组。
+ * 顺序遵循 XML 文档顺序——后续 save 会按解析顺序写回，方便字节级稳定 diff。
+ */
 export function parseRelationshipsXml(xml: string): ParsedRelationship[] {
   let sawRoot = false;
   let rootClosed = false;

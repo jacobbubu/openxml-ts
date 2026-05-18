@@ -1,0 +1,9 @@
+{
+  "extends": "./base.json",
+  "mainEntryPointFilePath": "<projectFolder>/dist/word/index.d.ts",
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "<projectFolder>/api/",
+    "reportFileName": "openxml-ts-word.api.md"
+  }
+}

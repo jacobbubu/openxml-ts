@@ -30,14 +30,17 @@ import { OpenXmlPackageError } from "../errors.js";
 import { type PartUri, isPartUri } from "../interfaces/types.js";
 import { base64ToBytes } from "./base64.js";
 
+/** Flat OPC（单文件 .xml 形式的 OOXML 包装）根命名空间。 */
 export const FLAT_OPC_NS = "http://schemas.microsoft.com/office/2006/xmlPackage";
 
+/** 解析后的单个 `<pkg:part>`——Part URI、content-type 与原字节流。 */
 export interface FlatOpcEntry {
   readonly name: PartUri;
   readonly contentType: string;
   readonly content: Uint8Array;
 }
 
+/** `parseFlatOpc` 的返回——含按出现顺序排列的 Part 数组。 */
 export interface ParsedFlatOpc {
   readonly entries: FlatOpcEntry[];
 }
@@ -49,6 +52,11 @@ const XML_DATA_CLOSE = "</pkg:xmlData>";
 const BINARY_DATA_OPEN_RE = /<pkg:binaryData\b[^>]*?>/;
 const BINARY_DATA_CLOSE = "</pkg:binaryData>";
 
+/**
+ * 解析一份 Flat OPC XML 字符串到 {@link ParsedFlatOpc}。
+ *
+ * 禁用 DTD / 外部实体（OOXML 安全要求）；遇到任一种立即抛 `BACKEND_ERROR`。
+ */
 export function parseFlatOpc(xml: string): ParsedFlatOpc {
   rejectDtdOrEntity(xml);
   const packageBody = extractPackageBody(xml);

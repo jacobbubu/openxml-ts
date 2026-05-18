@@ -8,6 +8,8 @@ build/
 *.tsbuildinfo
 coverage/
 .tmp/
+# api-extractor 在 check 模式下写入的临时报告
+temp/
 
 # editors / OS
 .DS_Store

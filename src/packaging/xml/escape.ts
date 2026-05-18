@@ -8,6 +8,7 @@
 
 import { OpenXmlPackageError } from "../errors.js";
 
+/** 转义 XML 元素文本——`&`、`<`、`>` 转命名实体；其它字符原样保留。 */
 export function xmlEscapeText(input: string): string {
   let out = "";
   for (let i = 0; i < input.length; i += 1) {
@@ -20,6 +21,7 @@ export function xmlEscapeText(input: string): string {
   return out;
 }
 
+/** 转义 XML 属性值——比 `xmlEscapeText` 多转一个双引号。 */
 export function xmlEscapeAttr(input: string): string {
   let out = "";
   for (let i = 0; i < input.length; i += 1) {
@@ -41,6 +43,10 @@ const NAMED_ENTITIES: Readonly<Record<string, string>> = {
   apos: "'",
 };
 
+/**
+ * 反转义 XML 文本：识别 5 个命名实体 + 数字实体（十/十六进制）；其它命名实体抛
+ * `OpenXmlPackageError(code="BACKEND_ERROR")`（我们禁 DTD，OPC 用例也不会用到）。
+ */
 export function xmlUnescape(input: string): string {
   if (input.indexOf("&") === -1) return input;
   let out = "";

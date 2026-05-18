@@ -15,6 +15,12 @@ import type { FlatOpcEntry, ParsedFlatOpc } from "./flat-opc-parser.js";
 const CONTENT_TYPES_NAME = "/[Content_Types].xml";
 const PACKAGE_RELS_NAME = "/_rels/.rels";
 
+/**
+ * 把 {@link parseFlatOpc} 解析出来的 Flat OPC 内容加载到一个内存 OpenXmlPackage。
+ *
+ * 用法：`new FlatOpcLoader().loadFromParsed(parseFlatOpc(xml))`——之后这个实例就
+ * 可以当一般 OPC 包用（hasPart / getPart / saveAs* 等）。
+ */
 export class FlatOpcLoader extends MemoryOpenXmlPackage {
   loadFromParsed(parsed: ParsedFlatOpc): void {
     const manifest = pickContentTypes(parsed.entries);

@@ -22,6 +22,7 @@ const CONTENT_TYPES_CT = "application/vnd.openxmlformats-package.content-types+x
 const PACKAGE_RELS_NAME = "/_rels/.rels";
 const RELS_CT = "application/vnd.openxmlformats-package.relationships+xml";
 
+/** `packageToFlatOpc` 入参。 */
 export interface FlatOpcWriteOptions {
   /**
    * 添加 `<?mso-application progid="..."?>` 处理指令，让 Office 客户端在双击时
@@ -30,6 +31,12 @@ export interface FlatOpcWriteOptions {
   readonly progId?: string;
 }
 
+/**
+ * 把一个 in-memory OPC 包序列化成 Flat OPC 字符串（单文件 XML）。
+ *
+ * 内嵌的 XML Parts 直接拼字符串；二进制 Parts 走 base64 编码。输出格式与
+ * Microsoft Office 自身的 Flat OPC 实现一致，能被 Word/Excel/PowerPoint 直接读。
+ */
 export function packageToFlatOpc(
   pkg: MemoryOpenXmlPackage,
   options: FlatOpcWriteOptions = {},
@@ -85,6 +92,12 @@ function buildBinaryPart(name: string, contentType: string, bytes: Uint8Array): 
   return `<pkg:part pkg:name="${xmlEscapeAttr(name)}" pkg:contentType="${xmlEscapeAttr(contentType)}"><pkg:binaryData>${b64}</pkg:binaryData></pkg:part>`;
 }
 
+/**
+ * 判定一个 MIME 是否是 OOXML 用的「XML 类」content-type：
+ * 大类 `application/xml` / `text/xml`、`+xml` 后缀（如 `…+xml`）或带 `+xml` 的
+ * `application/vnd.openxmlformats-officedocument.*` 都算。决定 Flat OPC 用
+ * `<pkg:xmlData>` 内嵌还是 `<pkg:binaryData>` base64。
+ */
 export function isXmlContentType(ct: string): boolean {
   const lower = ct.toLowerCase();
   if (lower === "application/xml" || lower === "text/xml") return true;
