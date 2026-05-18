@@ -38,3 +38,10 @@ export {
   type CreateImagePictureOptions,
   createImagePictureForPpt,
 } from "./image-markup.js";
+
+export {
+  type CreateSlideTableOptions,
+  createSlideTable,
+  getSlideTableCellText,
+  setSlideTableCellText,
+} from "./table-markup.js";

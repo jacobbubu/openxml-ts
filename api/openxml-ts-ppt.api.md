@@ -43,7 +43,31 @@ export interface CreateImagePictureOptions {
 }
 
 // @public
+export function createSlideTable(rows: number, cols: number, options?: CreateSlideTableOptions): OpenXmlUnknownElement;
+
+// @public (undocumented)
+export interface CreateSlideTableOptions {
+    readonly columnWidthsEmu?: readonly number[];
+    readonly extent?: {
+        cxEmu: number;
+        cyEmu: number;
+    };
+    readonly id?: number;
+    readonly name?: string;
+    readonly offset?: {
+        xEmu: number;
+        yEmu: number;
+    };
+    readonly rowHeightsEmu?: readonly number[];
+}
+
+// @public
 export function extensionForMime(mime: string): string | undefined;
+
+// Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
+//
+// @public
+export function getSlideTableCellText(table: OpenXmlElement, row: number, col: number): string;
 
 // @public (undocumented)
 export class ImagePart extends BinaryPart {
@@ -126,6 +150,9 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
     get slideParts(): readonly SlidePart[];
 }
 
+// @public
+export function setSlideTableCellText(table: OpenXmlElement, row: number, col: number, text: string): void;
+
 // Warning: (ae-forgotten-export) The symbol "SlideLayout" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -190,8 +217,6 @@ export class SlidePart extends TypedXmlPart<Slide> {
 // @public
 export function sniffImageMime(bytes: Uint8Array): string | undefined;
 
-// Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export abstract class TypedXmlPart<T extends OpenXmlElement> {
     constructor(_part: IPackagePart, registry: ElementRegistry, RootCtor: new () => T);
