@@ -12,7 +12,7 @@
 import { deserialize, elementRegistry, serialize } from "../element/index.js";
 import type { ElementRegistry } from "../element/index.js";
 import { XElement } from "./x-element.js";
-import { XName } from "./x-name.js";
+import type { XName } from "./x-name.js";
 
 export interface XDocumentOptions {
   /** 自定义 ElementRegistry——默认走全局 registry。 */

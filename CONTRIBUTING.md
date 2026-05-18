@@ -126,6 +126,9 @@ PR 简短描述：要解决什么问题、怎么改、怎么测的。引用 issu
 详细规划文档在 `docs/planning/`（**内部 BMAD 视角**——PRD / Architecture / Story 拆分；
 外部贡献者从 `docs/architecture-overview.md` 起即可）。
 
+代码与类型规范细则（`as any` 禁、命名约定、JSDoc 要求、错误处理模式、async/sync
+分层等）见 [`docs/code-style.md`](./docs/code-style.md)。
+
 ## 设计原则速查
 
 - **跟 ECMA-376 对齐**：API 表面与 .NET Open-XML-SDK 可识别映射；

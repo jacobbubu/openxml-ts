@@ -11,8 +11,8 @@
  */
 
 import {
-  type OpenXmlElement,
   OpenXmlCompositeElement,
+  type OpenXmlElement,
   OpenXmlLeafElement,
 } from "../element/index.js";
 import { OpenXmlUnknownElement } from "../element/unknown-element.js";

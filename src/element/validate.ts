@@ -10,8 +10,8 @@
  * 在 deserialize 阶段已被吞掉，要重新打开需要 codegen 改动，留到后续。
  */
 
-import { OpenXmlCompositeElement, type OpenXmlElement } from "./element.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
+import { OpenXmlCompositeElement, type OpenXmlElement } from "./element.js";
 
 export interface ValidationIssue {
   /** element 在树里的 path，如 `/document/body/p[2]/r[0]`。 */
