@@ -99,7 +99,7 @@ describe("PresentationDocument · PackageDiagnostics elementCounter", () => {
     const doc = PresentationDocument.create();
     const fresh = await PresentationDocument.openAsync(await doc.saveAsBytesAsync());
     void fresh.presentationPart;
-    for (const sp of fresh.presentationPart?.slideParts) void sp.slide;
+    for (const sp of fresh.presentationPart!.slideParts) void sp.slide;
     expect(fresh.package.diagnostics.elementCount).toBeGreaterThan(0);
     expect(fresh.package.diagnostics.unknownElementCount).toBe(0);
   });

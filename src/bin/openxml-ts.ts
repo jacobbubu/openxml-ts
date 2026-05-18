@@ -85,7 +85,7 @@ async function cmdInspect(file: string): Promise<void> {
     process.stdout.write(`    contentType: ${part.contentType}\n`);
     const partRels = [...part.relationships];
     if (partRels.length > 0) {
-      process.stdout.write(`    part-rels:\n`);
+      process.stdout.write("    part-rels:\n");
       for (const rel of partRels) {
         process.stdout.write(`      ${rel.id} (${rel.type}) → ${rel.target}\n`);
       }

@@ -13,8 +13,8 @@ import { dirname, extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { collectValidationIssues, deserialize } from "../../src/element/index.js";
-import { registerWordprocessingElements } from "../../src/word/generated/_registry.js";
 import { ElementRegistry } from "../../src/element/registry.js";
+import { registerWordprocessingElements } from "../../src/word/generated/_registry.js";
 import { WordprocessingDocument } from "../../src/word/index.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -73,7 +73,7 @@ describe("collectValidationIssues · 缺 required attribute 路径", () => {
   it("路径格式：/document[0]/.../<localName>[index]", () => {
     // 注：找一个有 RequiredValidator 标注的元素来验证 path。SlideId / PivotSelection
     // 等都有 r:id required。这里造 <p:sldId> 缺 r:id 来触发。
-    const xml = `<p:presentation xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:sldIdLst><p:sldId id="256"/></p:sldIdLst></p:presentation>`;
+    const _xml = `<p:presentation xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"><p:sldIdLst><p:sldId id="256"/></p:sldIdLst></p:presentation>`;
     // 用 presentation registry
     // 直接 inline 一个独立 registry 避免污染 word registry
     // ...这部分需要 PPT registry，简化测试：构造 SlideId 实例（不挂 r:id）然后验

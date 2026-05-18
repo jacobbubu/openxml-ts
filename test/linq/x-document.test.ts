@@ -17,7 +17,7 @@ const W_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 
 describe("XDocument · Parse / Load", () => {
   it("Parse 解 XML 字符串到 XDocument，Root 是 XElement", () => {
-    const doc = XDocument.Parse('<root><a>x</a><a>y</a></root>');
+    const doc = XDocument.Parse("<root><a>x</a><a>y</a></root>");
     expect(doc.Root).toBeDefined();
     expect(doc.Root?.Name.LocalName).toBe("root");
     expect(doc.Root?.Elements("a")).toHaveLength(2);
@@ -50,12 +50,7 @@ describe("XDocument · Parse / Load", () => {
 describe("XDocument · 顶层 Elements / Descendants", () => {
   function buildDoc(): XDocument {
     return XDocument.Parse(
-      `<w:document xmlns:w="${W_NS}">` +
-        `<w:body>` +
-        `<w:p><w:r><w:t>A</w:t></w:r></w:p>` +
-        `<w:p><w:r><w:t>B</w:t></w:r></w:p>` +
-        `</w:body>` +
-        `</w:document>`,
+      `<w:document xmlns:w="${W_NS}"><w:body><w:p><w:r><w:t>A</w:t></w:r></w:p><w:p><w:r><w:t>B</w:t></w:r></w:p></w:body></w:document>`,
     );
   }
 

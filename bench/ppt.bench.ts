@@ -43,24 +43,7 @@ function buildSlideXml(slideIdx: number): string {
   for (let i = 0; i < RUNS_PER_SLIDE; i += 1) {
     runs += `<a:r><a:rPr lang="en-US"/><a:t>${token(slideIdx * 31 + i)}</a:t></a:r>`;
   }
-  return (
-    `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
-    `<p:sld xmlns:p="${P}" xmlns:r="${R}" xmlns:a="${A}">` +
-    `<p:cSld><p:spTree>` +
-    `<p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr>` +
-    `<p:grpSpPr/>` +
-    `<p:sp>` +
-    `<p:nvSpPr><p:cNvPr id="2" name="Body"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr>` +
-    `<p:spPr/>` +
-    `<p:txBody>` +
-    `<a:bodyPr/><a:lstStyle/>` +
-    `<a:p>${runs}</a:p>` +
-    `</p:txBody>` +
-    `</p:sp>` +
-    `</p:spTree></p:cSld>` +
-    `<p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr>` +
-    `</p:sld>`
-  );
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:sld xmlns:p="${P}" xmlns:r="${R}" xmlns:a="${A}"><p:cSld><p:spTree><p:nvGrpSpPr><p:cNvPr id="1" name=""/><p:cNvGrpSpPr/><p:nvPr/></p:nvGrpSpPr><p:grpSpPr/><p:sp><p:nvSpPr><p:cNvPr id="2" name="Body"/><p:cNvSpPr txBox="1"/><p:nvPr/></p:nvSpPr><p:spPr/><p:txBody><a:bodyPr/><a:lstStyle/><a:p>${runs}</a:p></p:txBody></p:sp></p:spTree></p:cSld><p:clrMapOvr><a:masterClrMapping/></p:clrMapOvr></p:sld>`;
 }
 
 let oneMegabytePptx: Uint8Array = new Uint8Array(0);
@@ -68,7 +51,7 @@ let oneMegabytePptx: Uint8Array = new Uint8Array(0);
 async function build1MbPptx(): Promise<Uint8Array> {
   const doc = PresentationDocument.create();
   const pkg = doc.package;
-  const presentationPart = doc.presentationPart!.part;
+  const presentationPart = doc.presentationPart?.part;
   const slideLayoutTarget = "slideLayouts/slideLayout1.xml";
 
   // create() 已建第 1 张 slide：覆盖 + 追加 (SLIDE_COUNT-1) 张达到 ~1 MB。
@@ -100,20 +83,13 @@ async function build1MbPptx(): Promise<Uint8Array> {
   // slideParts 才能拿到完整列表，确保 bench traversal 计入所有 slide）。
   const sldIds = Array.from({ length: SLIDE_COUNT })
     .map((_, i) => {
-      const rid = i === 0 ? findRelIdFor(presentationPart, "slides/slide1.xml") : `rIdSlide${i + 1}`;
+      const rid =
+        i === 0 ? findRelIdFor(presentationPart, "slides/slide1.xml") : `rIdSlide${i + 1}`;
       return `<p:sldId id="${256 + i}" r:id="${rid}"/>`;
     })
     .join("");
   const slideMasterRid = findRelIdFor(presentationPart, "slideMasters/slideMaster1.xml");
-  const presentationXml =
-    `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>` +
-    `<p:presentation xmlns:p="${P}" xmlns:r="${R}" xmlns:a="${A}">` +
-    `<p:sldMasterIdLst><p:sldMasterId id="2147483648" r:id="${slideMasterRid}"/></p:sldMasterIdLst>` +
-    `<p:sldIdLst>${sldIds}</p:sldIdLst>` +
-    `<p:sldSz cx="9144000" cy="6858000" type="screen4x3"/>` +
-    `<p:notesSz cx="6858000" cy="9144000"/>` +
-    `<p:defaultTextStyle/>` +
-    `</p:presentation>`;
+  const presentationXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><p:presentation xmlns:p="${P}" xmlns:r="${R}" xmlns:a="${A}"><p:sldMasterIdLst><p:sldMasterId id="2147483648" r:id="${slideMasterRid}"/></p:sldMasterIdLst><p:sldIdLst>${sldIds}</p:sldIdLst><p:sldSz cx="9144000" cy="6858000" type="screen4x3"/><p:notesSz cx="6858000" cy="9144000"/><p:defaultTextStyle/></p:presentation>`;
   (presentationPart as MemoryPackagePart).writeSync(presentationXml);
 
   return doc.saveAsBytesAsync();

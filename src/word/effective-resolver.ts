@@ -37,25 +37,22 @@
  * - `<w:tblStyle>` 表格样式不在本 Epic 范围。
  */
 
-import {
-  OpenXmlCompositeElement,
-  type OpenXmlElement,
-} from "../element/index.js";
 import type { ElementCtor } from "../element/element.js";
+import type { OpenXmlCompositeElement, OpenXmlElement } from "../element/index.js";
 import { BasedOn } from "./generated/based-on.js";
 import { DocDefaults } from "./generated/doc-defaults.js";
-import { Paragraph } from "./generated/paragraph.js";
-import { ParagraphProperties } from "./generated/paragraph-properties.js";
 import { ParagraphPropertiesDefault } from "./generated/paragraph-properties-default.js";
+import { ParagraphProperties } from "./generated/paragraph-properties.js";
 import { ParagraphStyleId } from "./generated/paragraph-style-id.js";
-import { Run } from "./generated/run.js";
-import { RunProperties } from "./generated/run-properties.js";
+import { Paragraph } from "./generated/paragraph.js";
 import { RunPropertiesDefault } from "./generated/run-properties-default.js";
+import { RunProperties } from "./generated/run-properties.js";
 import { RunStyle } from "./generated/run-style.js";
-import { Style } from "./generated/style.js";
+import type { Run } from "./generated/run.js";
 import { StyleParagraphProperties } from "./generated/style-paragraph-properties.js";
 import { StyleRunProperties } from "./generated/style-run-properties.js";
-import { Styles } from "./generated/styles.js";
+import { Style } from "./generated/style.js";
+import type { Styles } from "./generated/styles.js";
 
 /** basedOn 递归上限——闭环 / 病态 fixture 不抛错。 */
 const MAX_BASED_ON_DEPTH = 8;
@@ -121,10 +118,7 @@ export function resolveEffectiveParagraphProperties(
 /**
  * 对一个 Run 解析有效 `rPr`。`styles` 可省。
  */
-export function resolveEffectiveRunProperties(
-  r: Run,
-  styles?: Styles,
-): EffectiveProperties {
+export function resolveEffectiveRunProperties(r: Run, styles?: Styles): EffectiveProperties {
   const chain: OpenXmlCompositeElement[] = [];
   const directRpr = r.firstChild(RunProperties);
   if (directRpr !== undefined) chain.push(directRpr);

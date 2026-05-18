@@ -41,7 +41,7 @@ describe("SpreadsheetDocument · create() 最小可用空白 xlsx", () => {
     const doc = SpreadsheetDocument.create();
     const wsp = doc.workbookPart?.worksheetParts[0];
     expect(wsp).toBeDefined();
-    const ws = wsp!.worksheet;
+    const ws = wsp?.worksheet;
     const sd = ws.firstChild(SheetData);
     expect(sd).toBeDefined();
 
@@ -51,11 +51,11 @@ describe("SpreadsheetDocument · create() 最小可用空白 xlsx", () => {
     v.text = "42";
     c.appendChild(v);
     r.appendChild(c);
-    sd!.appendChild(r);
+    sd?.appendChild(r);
 
     const out = await doc.saveAsBytesAsync();
     const reopened = await SpreadsheetDocument.openAsync(out);
-    const reSd = reopened.workbookPart!.worksheetParts[0]!.worksheet.firstChild(SheetData)!;
+    const reSd = reopened.workbookPart?.worksheetParts[0]?.worksheet.firstChild(SheetData)!;
     const reRow = reSd.firstChild(Row)!;
     const reCell = reRow.firstChild(Cell)!;
     expect(reCell.firstChild(CellValue)?.text).toBe("42");
@@ -83,7 +83,7 @@ describe("SpreadsheetDocument · SST resolver 自动注册", () => {
   it("openAsync 含 SST 的 xlsx 后，cell.resolvedText 能解 sharedString", async () => {
     // 先构造一份含 SST 的 xlsx
     const seed = SpreadsheetDocument.create();
-    const wsp = seed.workbookPart!.worksheetParts[0]!;
+    const wsp = seed.workbookPart?.worksheetParts[0]!;
     const sd = wsp.worksheet.firstChild(SheetData)!;
     const sstPart = seed.sharedStringTablePart!;
 
@@ -109,8 +109,8 @@ describe("SpreadsheetDocument · SST resolver 自动注册", () => {
 
     // 重新打开：自动注册 SST resolver
     const reopened = await SpreadsheetDocument.openAsync(out);
-    const reWsp = reopened.workbookPart!.worksheetParts[0]!;
-    const reCell = reWsp.worksheet.firstChild(SheetData)!.firstChild(Row)!.firstChild(Cell)!;
+    const reWsp = reopened.workbookPart?.worksheetParts[0]!;
+    const reCell = reWsp.worksheet.firstChild(SheetData)?.firstChild(Row)?.firstChild(Cell)!;
     expect(reCell.extendedAttributes.get("t")).toBe("s");
     expect(reCell.resolvedText).toBe("Apple");
   });

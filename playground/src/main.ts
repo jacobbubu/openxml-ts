@@ -5,9 +5,9 @@
  * 树并显示统计 → 可选 mutate + saveAsBytesAsync → Blob URL 下载。
  */
 
-import { Paragraph, WordprocessingDocument } from "openxml-ts/word";
-import { Cell, Row, SpreadsheetDocument } from "openxml-ts/excel";
+import { Cell, SpreadsheetDocument } from "openxml-ts/excel";
 import { PresentationDocument } from "openxml-ts/ppt";
+import { Paragraph, WordprocessingDocument } from "openxml-ts/word";
 
 type StackKind = "word" | "excel" | "ppt";
 
@@ -56,10 +56,7 @@ async function openFile(file: File): Promise<void> {
     let paraCount = 0;
     for (const _ of main.document.descendants(Paragraph)) paraCount += 1;
     log(
-      `✓ ${file.name}\n` +
-        `  类型：Word（docx）\n` +
-        `  段落数：${paraCount}\n` +
-        `  package parts：${[...doc.package.parts()].length}`,
+      `✓ ${file.name}\n  类型：Word（docx）\n  段落数：${paraCount}\n  package parts：${[...doc.package.parts()].length}`,
     );
     opened = { kind, fileName: file.name, doc };
   } else if (kind === "excel") {
@@ -75,11 +72,7 @@ async function openFile(file: File): Promise<void> {
       for (const _ of wsp.worksheet.descendants(Cell)) totalCells += 1;
     }
     log(
-      `✓ ${file.name}\n` +
-        `  类型：Excel（xlsx）\n` +
-        `  Worksheet 数：${sheets}\n` +
-        `  Cell 总数：${totalCells}\n` +
-        `  package parts：${[...doc.package.parts()].length}`,
+      `✓ ${file.name}\n  类型：Excel（xlsx）\n  Worksheet 数：${sheets}\n  Cell 总数：${totalCells}\n  package parts：${[...doc.package.parts()].length}`,
     );
     opened = { kind, fileName: file.name, doc };
   } else {
@@ -93,11 +86,7 @@ async function openFile(file: File): Promise<void> {
     const sp0 = pp.slideParts[0];
     const colorScheme = sp0?.effectiveColorScheme?.localName ?? "（无）";
     log(
-      `✓ ${file.name}\n` +
-        `  类型：PowerPoint（pptx）\n` +
-        `  Slide 数：${slides}\n` +
-        `  effective color scheme：${colorScheme}\n` +
-        `  package parts：${[...doc.package.parts()].length}`,
+      `✓ ${file.name}\n  类型：PowerPoint（pptx）\n  Slide 数：${slides}\n  effective color scheme：${colorScheme}\n  package parts：${[...doc.package.parts()].length}`,
     );
     opened = { kind, fileName: file.name, doc };
   }

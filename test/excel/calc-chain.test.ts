@@ -40,7 +40,7 @@ function hasCalcChain(pkg: IPackage): boolean {
  */
 async function makeXlsxWithCalcChain(): Promise<Uint8Array> {
   const seed = SpreadsheetDocument.create();
-  const wsp = seed.workbookPart!.worksheetParts[0]!;
+  const wsp = seed.workbookPart?.worksheetParts[0]!;
   const sd = wsp.worksheet.firstChild(SheetData)!;
   const r = new Row();
   const c = new Cell();
@@ -55,7 +55,7 @@ async function makeXlsxWithCalcChain(): Promise<Uint8Array> {
   const calcChainUri = "/xl/calcChain.xml" as never;
   const ccPart = pkg.createPart(calcChainUri, CalculationChainPart.contentType);
   await ccPart.writeAsync(`<x:calcChain xmlns:x="${XNS}"><x:c r="A1" i="1"/></x:calcChain>`);
-  const wbPart = seed.workbookPart!.part;
+  const wbPart = seed.workbookPart?.part;
   wbPart.relationships.create({
     type: CalculationChainPart.relationshipType,
     target: "calcChain.xml",
@@ -112,10 +112,10 @@ describe("SpreadsheetDocument · CalcChain 自动失效", () => {
 
     // 真正流程：open → 改 cell → save → reopen → 不应再有 CalcChainPart
     const doc = await SpreadsheetDocument.openAsync(xlsxBytes);
-    const cell = doc
-      .workbookPart!.worksheetParts[0]!.worksheet.firstChild(SheetData)!
-      .firstChild(Row)!
-      .firstChild(Cell)!;
+    const cell = doc.workbookPart?.worksheetParts[0]?.worksheet
+      .firstChild(SheetData)
+      ?.firstChild(Row)
+      ?.firstChild(Cell)!;
     cell.appendChild(new CellValue()); // 触发 dirty
     const out = await doc.saveAsBytesAsync();
 
@@ -129,10 +129,10 @@ describe("SpreadsheetDocument · CalcChain 自动失效", () => {
     const doc = await SpreadsheetDocument.openAsync(xlsxBytes);
 
     // 仅读取，不修改任何 Cell
-    const cell = doc
-      .workbookPart!.worksheetParts[0]!.worksheet.firstChild(SheetData)!
-      .firstChild(Row)!
-      .firstChild(Cell)!;
+    const cell = doc.workbookPart?.worksheetParts[0]?.worksheet
+      .firstChild(SheetData)
+      ?.firstChild(Row)
+      ?.firstChild(Cell)!;
     void cell.firstChild(CellValue)?.text;
 
     const out = await doc.saveAsBytesAsync();
@@ -143,10 +143,10 @@ describe("SpreadsheetDocument · CalcChain 自动失效", () => {
   it("flush 后 dirty 标志被复位", async () => {
     const xlsxBytes = await makeXlsxWithCalcChain();
     const doc = await SpreadsheetDocument.openAsync(xlsxBytes);
-    const cell = doc
-      .workbookPart!.worksheetParts[0]!.worksheet.firstChild(SheetData)!
-      .firstChild(Row)!
-      .firstChild(Cell)!;
+    const cell = doc.workbookPart?.worksheetParts[0]?.worksheet
+      .firstChild(SheetData)
+      ?.firstChild(Row)
+      ?.firstChild(Cell)!;
     cell.appendChild(new CellValue());
     expect(cell.isDirty).toBe(true);
     await doc.saveAsBytesAsync();

@@ -25,7 +25,7 @@ async function main(): Promise<void> {
   let replacedCount = 0;
   for (const sp of pp.slideParts) {
     for (const t of sp.slide.descendants(Text)) {
-      if (t.text !== undefined && t.text.includes("{{date}}")) {
+      if (t.text?.includes("{{date}}")) {
         t.text = t.text.replaceAll("{{date}}", replacement);
         replacedCount += 1;
       }
