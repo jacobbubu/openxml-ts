@@ -44,6 +44,11 @@ export default defineConfig({
       "test/ppt/presentation-document.test.ts",
       "test/ppt/effective-resolver.test.ts",
     ],
+    exclude: [
+      // Phase C 增的 collectValidationIssues 验证用 upstream-smoke 真实 fixture
+      // 跑覆盖，依赖 node:fs/promises 读盘——只能 Node 跑。
+      "test/element/validate.test.ts",
+    ],
     browser: {
       enabled: true,
       provider: "playwright",
