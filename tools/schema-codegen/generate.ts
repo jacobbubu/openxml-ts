@@ -56,6 +56,9 @@ interface GeneratedClass {
   readonly className: string;
   readonly fileName: string;
   readonly isAbstract: boolean;
+  /** schema 标记为 LeafElement 或 LeafText（mixed-content 叶子）。用于 #78
+   *  registry 反序列化优先级——同 qname 时 composite 胜出。 */
+  readonly isLeaf: boolean;
   readonly localName: string;
   readonly namespaceUri: string;
 }
@@ -99,6 +102,7 @@ async function main(): Promise<void> {
       className: type.ClassName,
       fileName,
       isAbstract: parsed.isAbstract === true || type.IsAbstract === true,
+      isLeaf: type.IsLeafElement === true || type.IsLeafText === true,
       localName: parsed.elementName,
       namespaceUri: ns,
     });
@@ -172,10 +176,37 @@ function buildRegistry(
   subsystem: { pascal: string; label: string },
 ): string {
   const concrete = classes.filter((c) => !c.isAbstract && c.localName.length > 0);
-  const imports = concrete
+  // #78：同 (namespaceUri, localName) 多次出现时去重，规则如下：
+  //
+  //  1. 默认按 className 字典序「last wins」——等价于旧实现 (map.set 顺序覆盖)；
+  //     这套规则在多数 qname 上是正确的（Excel `x:t` → Text、`x:sheetData` →
+  //     SheetData、`x:b` → BooleanItem 等）。
+  //  2. 手工覆盖表 `EXPLICIT_PRIORITY` 列出 1) 不走的特殊 qname。当前只有
+  //     `w:style` 一条：composite Style 必须赢 leaf StyleId（详见 issue #78）。
+  //
+  // 为什么不用「composite > leaf」通杀：实测会把 Excel `x:t` 误解析到 MdxTuple
+  // (composite)，导致 SST 拿不到 Text 的 .text 字段而崩 resolver。schema 里
+  // leaf-vs-composite 同 qname 的常见情况大多需要保留 leaf 语义。
+  const EXPLICIT_PRIORITY: Readonly<Record<string, string>> = {
+    "http://schemas.openxmlformats.org/wordprocessingml/2006/main::style": "Style",
+  };
+  const byKey = new Map<string, GeneratedClass>();
+  for (const c of concrete) {
+    const key = `${c.namespaceUri}::${c.localName}`;
+    const forced = EXPLICIT_PRIORITY[key];
+    if (forced !== undefined) {
+      if (c.className === forced) byKey.set(key, c);
+      else if (!byKey.has(key)) byKey.set(key, c); // 兜底，等会儿被 forced 覆盖
+      continue;
+    }
+    const prior = byKey.get(key);
+    if (prior === undefined || c.className > prior.className) byKey.set(key, c);
+  }
+  const deduped = [...byKey.values()].sort((a, b) => a.className.localeCompare(b.className));
+  const imports = deduped
     .map((c) => `import { ${c.className} } from "./${c.fileName}.js";`)
     .join("\n");
-  const registrations = concrete
+  const registrations = deduped
     .map(
       (c) =>
         `  registry.register(${quote(c.namespaceUri)}, ${quote(c.localName)}, ${c.className});`,
