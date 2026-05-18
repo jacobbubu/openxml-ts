@@ -32,6 +32,7 @@ import {
   packageToZipBytes,
 } from "../packaging/index.js";
 import type { PartUri } from "../packaging/interfaces/types.js";
+import { type AddImagePartOptions, type ImagePart, addImagePartTo } from "../parts/image-part.js";
 import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { ThemePart } from "../parts/theme-part.js";
@@ -47,6 +48,7 @@ import { registerPresentationElements } from "./generated/_registry.js";
 import { Background } from "./generated/background.js";
 import { Slide } from "./generated/slide.js";
 import { PresentationPart } from "./parts/presentation-part.js";
+import type { SlidePart } from "./parts/slide-part.js";
 
 const DEFAULT_PRESENTATION_URI = "/ppt/presentation.xml" as PartUri;
 const DEFAULT_SLIDE_URI = "/ppt/slides/slide1.xml" as PartUri;
@@ -121,6 +123,45 @@ export class PresentationDocument {
    */
   get presentationPart(): PresentationPart | undefined {
     return this.getOrLoadPresentationPart();
+  }
+
+  /**
+   * 把字节添加到包里成为一个 ImagePart 并挂到指定 slide（Story-12.2，Epic-12）。
+   *
+   * 字节 → 写 `/ppt/media/imageN.<ext>`，从 slidePart 加 `relationships/image` 关系；
+   * 返新 `ImagePart` 包装 + 新分配的 `relId`，调用方拿 relId 用
+   * `createImagePictureForPpt(relId, ...)` 一行生成 `<p:pic>` 然后 append 到
+   * `slide.commonSlideData.shapeTree`。
+   *
+   * @param slide 目标 SlidePart——slide 对象本身，或者下标（0-based）。
+   * @throws OpenXmlPackageError 当 contentType 没传且字节首部嗅探不出已知 MIME、
+   *   slide 不存在、presentationPart 不存在时
+   */
+  addImagePart(
+    slide: SlidePart | number,
+    bytes: Uint8Array,
+    opts: AddImagePartOptions = {},
+  ): { part: ImagePart; relId: string } {
+    const pp = this.presentationPart;
+    if (pp === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "addImagePart: presentationPart is missing",
+      });
+    }
+    const slideParts = pp.slideParts;
+    const slidePart =
+      typeof slide === "number" ? slideParts[slide] : slideParts.find((sp) => sp === slide);
+    if (slidePart === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message:
+          typeof slide === "number"
+            ? `addImagePart: slide index ${slide} out of range (total ${slideParts.length})`
+            : "addImagePart: provided SlidePart is not in this presentation",
+      });
+    }
+    return addImagePartTo(this.pkg, slidePart.part, "/ppt/media", bytes, opts);
   }
 
   /**
