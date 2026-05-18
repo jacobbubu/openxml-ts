@@ -5,3 +5,4 @@ export { WorksheetPart } from "./worksheet-part.js";
 export { SharedStringTablePart } from "./shared-string-table-part.js";
 export { WorkbookStylesPart } from "./workbook-styles-part.js";
 export { CalculationChainPart } from "./calculation-chain-part.js";
+export { DrawingPart } from "./drawing-part.js";
