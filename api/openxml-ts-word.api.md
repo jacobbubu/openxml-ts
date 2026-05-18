@@ -119,6 +119,29 @@ export class Color extends OpenXmlLeafElement {
     validateRequired(): void;
 }
 
+// Warning: (ae-forgotten-export) The symbol "CreateHyperlinkInput" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "CreateRelationshipInput" needs to be exported by the entry point index.d.ts
+//
+// @public
+export function createHyperlinkInput(input: CreateHyperlinkInput): CreateRelationshipInput;
+
+// @public
+export function createHyperlinkRun(options: CreateHyperlinkRunOptions): Hyperlink;
+
+// @public
+export type CreateHyperlinkRunOptions = {
+    readonly text: string;
+    readonly tooltip?: string;
+    readonly history?: boolean;
+    readonly style?: string;
+} & ({
+    readonly relId: string;
+    readonly anchor?: never;
+} | {
+    readonly anchor: string;
+    readonly relId?: never;
+});
+
 // @public
 export function createImageRunForWord(relId: string, cxEmu: number, cyEmu: number, options?: CreateImageRunOptions): Run;
 
@@ -273,6 +296,9 @@ export class Hyperlink extends OpenXmlCompositeElement {
     targetFrame: StringValue | undefined;
     tooltip: StringValue | undefined;
 }
+
+// @public
+export const HYPERLINK_RELATIONSHIP_TYPE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink";
 
 // @public (undocumented)
 export class ImagePart extends BinaryPart {
@@ -852,6 +878,11 @@ export class WordprocessingDocument {
     [Symbol.asyncDispose](): Promise<void>;
     // Warning: (ae-forgotten-export) The symbol "MemoryOpenXmlPackage" needs to be exported by the entry point index.d.ts
     constructor(pkg: MemoryOpenXmlPackage);
+    addHyperlinkRelationship(url: string, opts?: {
+        id?: string;
+    }): {
+        relId: string;
+    };
     addImagePart(bytes: Uint8Array, opts?: AddImagePartOptions): {
         part: ImagePart;
         relId: string;

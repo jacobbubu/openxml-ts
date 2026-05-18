@@ -49,6 +49,17 @@ export {
   createImageRunForWord,
 } from "./image-markup.js";
 
+export {
+  type CreateHyperlinkRunOptions,
+  createHyperlinkRun,
+} from "./hyperlink-markup.js";
+
+// 复用 packaging 层 hyperlink 助手；高级用户想手工拼 input 时少钻一级路径。
+export {
+  HYPERLINK_RELATIONSHIP_TYPE,
+  createHyperlinkInput,
+} from "../packaging/relationships/hyperlink.js";
+
 // ─── 核心结构 ─────────────────────────────────────────────────────────────────
 
 export { Document } from "./generated/document.js";
