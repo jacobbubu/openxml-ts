@@ -52,6 +52,18 @@ export async function parseZipBytes(
   configureZipJs();
   const limits = resolveLimits(limitsInput);
 
+  // 加密 OOXML 文档外层是 CFB（Compound File Binary，OLE 复合文档），magic
+  // bytes 是 `D0 CF 11 E0 A1 B1 1A E1`。给出明确错误，不让用户看到迷惑的
+  // 「End of central directory not found」ZIP 错误。
+  // 与上游 dotnet/Open-XML-SDK 同策略：检测 + 拒绝；不实现解密。
+  if (isCompoundFileBinary(bytes)) {
+    throw new OpenXmlPackageError({
+      code: "ENCRYPTED_PACKAGE_NOT_SUPPORTED",
+      message:
+        "Encrypted OOXML package detected (CFB container). openxml-ts does not implement decryption; pass an already-decrypted ZIP stream instead. See https://github.com/jacobbubu/openxml-ts/issues for the planned officecrypto-tool integration.",
+    });
+  }
+
   let zipReader: ZipReader<Uint8Array> | undefined;
   let entries: Entry[];
   try {
@@ -246,4 +258,19 @@ function ownerOfPartRels(filename: string): PartUri {
   const parentDir = dir.replace(/\/?_rels$/, ""); // word
   const ownerPath = parentDir.length === 0 ? `/${partBasename}` : `/${parentDir}/${partBasename}`;
   return ownerPath as PartUri;
+}
+
+/**
+ * 检测 Compound File Binary (CFB / OLE) magic：`D0 CF 11 E0 A1 B1 1A E1`。
+ * 加密 OOXML 文档外层就是 CFB，里面装 `\EncryptionInfo` 与 `\EncryptedPackage`
+ * 两个 stream（ECMA-376-4 §5.2 / MS-OFFCRYPTO）。
+ */
+const CFB_MAGIC = [0xd0, 0xcf, 0x11, 0xe0, 0xa1, 0xb1, 0x1a, 0xe1] as const;
+
+function isCompoundFileBinary(bytes: Uint8Array): boolean {
+  if (bytes.byteLength < CFB_MAGIC.length) return false;
+  for (let i = 0; i < CFB_MAGIC.length; i += 1) {
+    if (bytes[i] !== CFB_MAGIC[i]) return false;
+  }
+  return true;
 }

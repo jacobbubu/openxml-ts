@@ -32,7 +32,9 @@ export type OpenXmlPackageErrorCode =
   | "REQUIRED_ATTR_MISSING"
   | "STRING_TOO_LONG"
   | "NUMBER_OUT_OF_RANGE"
-  | "ENUM_VALUE_INVALID";
+  | "ENUM_VALUE_INVALID"
+  // Phase D：加密包检测
+  | "ENCRYPTED_PACKAGE_NOT_SUPPORTED";
 
 /**
  * 构造 {@link OpenXmlPackageError} 的入参。
@@ -69,6 +71,8 @@ const DEFAULT_MESSAGES: Readonly<Record<OpenXmlPackageErrorCode, string>> = {
   STRING_TOO_LONG: "Attribute value exceeds the schema MaxLength bound",
   NUMBER_OUT_OF_RANGE: "Attribute numeric value is outside the schema-allowed range",
   ENUM_VALUE_INVALID: "Attribute value is not a member of the schema-defined enumeration",
+  ENCRYPTED_PACKAGE_NOT_SUPPORTED:
+    "Encrypted OOXML package detected (CFB container); decryption is not implemented",
 };
 
 /**
