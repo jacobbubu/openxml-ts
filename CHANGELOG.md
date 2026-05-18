@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.7.0](https://github.com/jacobbubu/openxml-ts/compare/v0.6.0...v0.7.0) (2026-05-18)
+
+
+### Features
+
+* **cli:** Epic-9 openxml-ts CLI（inspect / cat） ([#70](https://github.com/jacobbubu/openxml-ts/issues/70)) ([0e43ae3](https://github.com/jacobbubu/openxml-ts/commit/0e43ae35bef47e4622b6af439b1e3408849e3fab))
+* **element:** Epic-8 OOXML Strict ↔ Transitional URI 双向兼容 ([#69](https://github.com/jacobbubu/openxml-ts/issues/69)) ([c5cb026](https://github.com/jacobbubu/openxml-ts/commit/c5cb026e83f94a3ad35e3cc20a3f3f7c99b9fcaa))
+* **linq:** Epic-7 LINQ mutator API + XDocument.ToString/Save ([#67](https://github.com/jacobbubu/openxml-ts/issues/67)) ([204620b](https://github.com/jacobbubu/openxml-ts/commit/204620b79406021f7c0ad2d6b64708d84e90367c))
+
+
+### Documentation
+
+* Epic-10 CONTRIBUTING.md + 单页架构总览 ([#71](https://github.com/jacobbubu/openxml-ts/issues/71)) ([0e4321a](https://github.com/jacobbubu/openxml-ts/commit/0e4321aeda4cb915099853e352fcbb8a35a913a4))
+* **readme:** 从使用者视角全面重写 README ([639120e](https://github.com/jacobbubu/openxml-ts/commit/639120e6de9e825c956ec491648ce36aed4cdee6))
+
 ## [0.6.0](https://github.com/jacobbubu/openxml-ts/compare/v0.5.0...v0.6.0) (2026-05-17)
 
 
