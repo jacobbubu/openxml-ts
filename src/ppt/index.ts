@@ -24,3 +24,17 @@ export {
   SlidePart,
 } from "./parts/index.js";
 export { TypedXmlPart } from "../parts/typed-xml-part.js";
+
+export { BinaryPart } from "../parts/binary-part.js";
+export {
+  type AddImagePartOptions,
+  ImagePart,
+  extensionForMime,
+  mimeForExtension,
+  sniffImageMime,
+} from "../parts/image-part.js";
+
+export {
+  type CreateImagePictureOptions,
+  createImagePictureForPpt,
+} from "./image-markup.js";

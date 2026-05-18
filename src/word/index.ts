@@ -35,6 +35,20 @@ export {
   WebSettingsPart,
 } from "./parts/index.js";
 
+export { BinaryPart } from "../parts/binary-part.js";
+export {
+  type AddImagePartOptions,
+  ImagePart,
+  extensionForMime,
+  mimeForExtension,
+  sniffImageMime,
+} from "../parts/image-part.js";
+
+export {
+  type CreateImageRunOptions,
+  createImageRunForWord,
+} from "./image-markup.js";
+
 // ─── 核心结构 ─────────────────────────────────────────────────────────────────
 
 export { Document } from "./generated/document.js";

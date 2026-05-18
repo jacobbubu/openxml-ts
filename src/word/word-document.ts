@@ -34,6 +34,7 @@ import {
   packageToZipBytes,
 } from "../packaging/index.js";
 import type { PartUri } from "../packaging/interfaces/types.js";
+import { type AddImagePartOptions, type ImagePart, addImagePartTo } from "../parts/image-part.js";
 import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { registerWordprocessingElements } from "./generated/_registry.js";
@@ -118,6 +119,31 @@ export class WordprocessingDocument {
 
   get webSettingsPart(): WebSettingsPart | undefined {
     return this.getOrLoadTypedPartFromMain(WebSettingsPart);
+  }
+
+  /**
+   * 把字节添加到包里成为一个 ImagePart（Story-12.2，Epic-12）。
+   *
+   * 字节 → 写 `/word/media/imageN.<ext>` 二进制 Part，从 mainDocumentPart 加一条
+   * `relationships/image` 关系；返新 `ImagePart` 包装 + 新分配的 `relId`。
+   *
+   * 调用方拿到 relId 后，用 `createImageRunForWord(relId, cxEmu, cyEmu)` 一行得到
+   * 完整 `<w:drawing>` Run，append 到段落即可。
+   *
+   * @throws OpenXmlPackageError 当 contentType 没传且字节首部嗅探不出已知 MIME 时
+   */
+  addImagePart(
+    bytes: Uint8Array,
+    opts: AddImagePartOptions = {},
+  ): { part: ImagePart; relId: string } {
+    const main = this.mainDocumentPart;
+    if (main === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "addImagePart: mainDocumentPart is missing",
+      });
+    }
+    return addImagePartTo(this.pkg, main.part, "/word/media", bytes, opts);
   }
 
   /**
