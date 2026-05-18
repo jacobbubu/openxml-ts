@@ -377,6 +377,20 @@ Package（一个 ZIP / Flat XML 容器）
 - `package.diagnostics` 提供只读的 Part 计数、Relationship 计数、警告列表
 - 环境变量 `OPENXML_TS_DEBUG=1` 打开 verbose 日志（落到 `console.debug`）
 
+## CLI
+
+`pnpm add openxml-ts` 之后自带 `openxml-ts` 命令：
+
+```bash
+# 看 OPC 包结构（parts / content type / 包级 + part-level relationships）
+openxml-ts inspect ./template.docx
+
+# 把指定 part 的 XML 写到 stdout（管道喂给 xmllint / jq / less 都行）
+openxml-ts cat ./template.docx /word/document.xml | xmllint --format -
+```
+
+只两条 subcommand；不依赖外部 CLI parser。源在 [`src/bin/openxml-ts.ts`](./src/bin/openxml-ts.ts)。
+
 ## 浏览器 playground
 
 **Live demo**：<https://jacobbubu.github.io/openxml-ts/>（由 `.github/workflows/playground-deploy.yml` 在 main 分支变动时自动部署）。

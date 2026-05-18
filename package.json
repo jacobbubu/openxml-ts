@@ -54,6 +54,9 @@
     "README.md",
     "LICENSE"
   ],
+  "bin": {
+    "openxml-ts": "./dist/bin/openxml-ts.js"
+  },
   "sideEffects": false,
   "engines": {
     "node": ">=20",
