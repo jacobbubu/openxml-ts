@@ -34,6 +34,7 @@ import {
   packageToZipBytes,
 } from "../packaging/index.js";
 import type { PartUri } from "../packaging/interfaces/types.js";
+import { createHyperlinkInput } from "../packaging/relationships/hyperlink.js";
 import { type AddImagePartOptions, type ImagePart, addImagePartTo } from "../parts/image-part.js";
 import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
@@ -144,6 +145,32 @@ export class WordprocessingDocument {
       });
     }
     return addImagePartTo(this.pkg, main.part, "/word/media", bytes, opts);
+  }
+
+  /**
+   * 加一条超链接 relationship 到 mainDocumentPart（Story-15.2，Epic-15）。
+   *
+   * 给定外部 URL，写入 \`targetMode="external"\` 的 relationship，返新分配的 relId。
+   * 调用方拿 relId 后用 \`createHyperlinkRun({ relId, text })\` 一行生成可挂的
+   * `<w:hyperlink>` markup。
+   *
+   * @throws OpenXmlPackageError 当 \`url\` 为空 / 仅空白字符（code="RELATIONSHIP_TARGET_INVALID"）
+   *   或 mainDocumentPart 缺失（code="PART_NOT_FOUND"）
+   */
+  addHyperlinkRelationship(url: string, opts: { id?: string } = {}): { relId: string } {
+    const main = this.mainDocumentPart;
+    if (main === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "addHyperlinkRelationship: mainDocumentPart is missing",
+      });
+    }
+    const input = createHyperlinkInput({
+      target: url,
+      ...(opts.id !== undefined ? { id: opts.id } : {}),
+    });
+    const rel = main.part.relationships.create(input);
+    return { relId: rel.id };
   }
 
   /**
