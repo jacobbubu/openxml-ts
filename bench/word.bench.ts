@@ -14,7 +14,13 @@
  */
 
 import { beforeAll, bench, describe } from "vitest";
-import { Paragraph, Run, Text, WordprocessingDocument } from "../src/word/index.js";
+import {
+  Paragraph,
+  Run,
+  Text,
+  WordprocessingDocument,
+  resolveEffectiveRunProperties,
+} from "../src/word/index.js";
 
 const LINE_COUNT = 14000;
 
@@ -74,5 +80,31 @@ describe("element 树 → bytes — 1 MB docx", () => {
 describe("WordprocessingDocument.create — 端到端 14000 段构造", () => {
   bench("create + 填充 + saveAsBytes", async () => {
     await build1MbDocx();
+  });
+});
+
+// ─── Story-11 便捷层 ──────────────────────────────────────────────────────────
+
+describe("Story-11.1 Paragraph.text 展平 — 14000 段", () => {
+  bench("打开 1 MB docx 后遍历所有段落取 .text", async () => {
+    const doc = await WordprocessingDocument.openAsync(oneMegabyteDocx);
+    const document = doc.mainDocumentPart!.document;
+    let total = 0;
+    for (const p of document.descendants(Paragraph)) total += p.text.length;
+    void total;
+  });
+});
+
+describe("Story-11.2 resolveEffectiveRunProperties — 14000 段", () => {
+  bench("对每个 Run 解析有效 rPr", async () => {
+    const doc = await WordprocessingDocument.openAsync(oneMegabyteDocx);
+    const document = doc.mainDocumentPart!.document;
+    const styles = doc.stylesPart?.styles;
+    let touched = 0;
+    for (const r of document.descendants(Run)) {
+      const eff = resolveEffectiveRunProperties(r, styles);
+      touched += eff.depth;
+    }
+    void touched;
   });
 });
