@@ -84,7 +84,7 @@ export class OpenXmlElementList implements Iterable<OpenXmlElement> {
           "Cannot move an element that already has a parent; remove it from its current parent first",
       });
     }
-    if (child === (this.owner as unknown)) {
+    if (child === (this.owner as OpenXmlElement)) {
       throw new OpenXmlPackageError({
         code: "BACKEND_ERROR",
         message: "Cannot append an element to itself",
