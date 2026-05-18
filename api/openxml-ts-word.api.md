@@ -119,6 +119,12 @@ export class Color extends OpenXmlLeafElement {
     validateRequired(): void;
 }
 
+// @public
+export function createBookmarkPair(name: string, id?: number): {
+    start: BookmarkStart;
+    end: BookmarkEnd;
+};
+
 // Warning: (ae-forgotten-export) The symbol "CreateHyperlinkInput" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "CreateRelationshipInput" needs to be exported by the entry point index.d.ts
 //
@@ -878,6 +884,7 @@ export class WordprocessingDocument {
     [Symbol.asyncDispose](): Promise<void>;
     // Warning: (ae-forgotten-export) The symbol "MemoryOpenXmlPackage" needs to be exported by the entry point index.d.ts
     constructor(pkg: MemoryOpenXmlPackage);
+    // (undocumented)
     addHyperlinkRelationship(url: string, opts?: {
         id?: string;
     }): {
@@ -893,6 +900,7 @@ export class WordprocessingDocument {
     // (undocumented)
     get fontTablePart(): FontTablePart | undefined;
     get mainDocumentPart(): MainDocumentPart | undefined;
+    nextBookmarkId(): number;
     // Warning: (ae-forgotten-export) The symbol "ZipSource" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "OpenAsyncOptions" needs to be exported by the entry point index.d.ts
     static openAsync(source: ZipSource, options?: OpenAsyncOptions): Promise<WordprocessingDocument>;
