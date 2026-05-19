@@ -202,6 +202,9 @@ export function createBookmarkPair(name: string, id?: number): {
     end: BookmarkEnd;
 };
 
+// @public
+export function createDeletedRun(opts: RevisionOptions): DeletedRun;
+
 // Warning: (ae-forgotten-export) The symbol "CreateHyperlinkInput" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "CreateRelationshipInput" needs to be exported by the entry point index.d.ts
 //
@@ -233,6 +236,31 @@ export interface CreateImageRunOptions {
     readonly descr?: string;
     readonly id?: number;
     readonly name?: string;
+}
+
+// @public
+export function createInsertedRun(opts: RevisionOptions): InsertedRun;
+
+// @public
+export class DeletedRun extends OpenXmlCompositeElement {
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    readonly localName: "del";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+}
+
+// @public
+export class DeletedText extends OpenXmlLeafElement {
+    // (undocumented)
+    readonly localName: "delText";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
 }
 
 // @public
@@ -417,6 +445,18 @@ export class Indentation extends OpenXmlLeafElement {
 }
 
 // @public
+export class InsertedRun extends OpenXmlCompositeElement {
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    readonly localName: "ins";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+}
+
+// @public
 export class Italic extends OpenXmlLeafElement {
     // (undocumented)
     readonly localName: "i";
@@ -551,6 +591,14 @@ export function resolveEffectiveParagraphProperties(p: Paragraph, styles?: Style
 
 // @public
 export function resolveEffectiveRunProperties(r: Run, styles?: Styles): EffectiveProperties;
+
+// @public (undocumented)
+export interface RevisionOptions {
+    readonly author: string;
+    readonly date?: Date | string;
+    readonly id?: number;
+    readonly text: string;
+}
 
 // @public
 export class Run extends OpenXmlCompositeElement {
@@ -990,6 +1038,7 @@ export class WordprocessingDocument {
     get mainDocumentPart(): MainDocumentPart | undefined;
     nextBookmarkId(): number;
     nextCommentId(): number;
+    nextRevisionId(): number;
     // Warning: (ae-forgotten-export) The symbol "ZipSource" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "OpenAsyncOptions" needs to be exported by the entry point index.d.ts
     static openAsync(source: ZipSource, options?: OpenAsyncOptions): Promise<WordprocessingDocument>;
