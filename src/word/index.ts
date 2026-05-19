@@ -26,6 +26,7 @@ export {
 } from "./effective-resolver.js";
 
 export {
+  CommentsPart,
   FontTablePart,
   MainDocumentPart,
   SettingsPart,
@@ -61,6 +62,13 @@ export {
   HYPERLINK_RELATIONSHIP_TYPE,
   createHyperlinkInput,
 } from "../packaging/relationships/hyperlink.js";
+
+// ─── Word 注释（Epic-18） ─────────────────────────────────────────────────────
+export { Comment } from "./generated/comment.js";
+export { Comments } from "./generated/comments.js";
+export { CommentRangeStart } from "./generated/comment-range-start.js";
+export { CommentRangeEnd } from "./generated/comment-range-end.js";
+export { CommentReference } from "./generated/comment-reference.js";
 
 // ─── 核心结构 ─────────────────────────────────────────────────────────────────
 

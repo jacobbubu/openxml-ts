@@ -120,6 +120,83 @@ export class Color extends OpenXmlLeafElement {
 }
 
 // @public
+export class Comment extends OpenXmlCompositeElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    author: StringValue | undefined;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // Warning: (ae-forgotten-export) The symbol "DateTimeValue" needs to be exported by the entry point index.d.ts
+    date: DateTimeValue | undefined;
+    dateUtc: DateTimeValue | undefined;
+    id: StringValue | undefined;
+    initials: StringValue | undefined;
+    // (undocumented)
+    readonly localName: "comment";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+    validateRequired(): void;
+}
+
+// @public
+export class CommentRangeEnd extends OpenXmlLeafElement {
+    // (undocumented)
+    readonly localName: "commentRangeEnd";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+}
+
+// @public
+export class CommentRangeStart extends OpenXmlLeafElement {
+    // (undocumented)
+    readonly localName: "commentRangeStart";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+}
+
+// @public
+export class CommentReference extends OpenXmlLeafElement {
+    // (undocumented)
+    readonly localName: "commentReference";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+}
+
+// @public
+export class Comments extends OpenXmlCompositeElement {
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    readonly localName: "comments";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+}
+
+// @public (undocumented)
+export class CommentsPart extends TypedXmlPart<Comments> {
+    // Warning: (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    get comments(): Comments;
+    set comments(value: Comments);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
+}
+
+// @public
 export function createBookmarkPair(name: string, id?: number): {
     start: BookmarkStart;
     end: BookmarkEnd;
@@ -210,7 +287,6 @@ export class Fonts extends OpenXmlCompositeElement {
 
 // @public
 export class FontTablePart extends TypedXmlPart<Fonts> {
-    // Warning: (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
     constructor(part: IPackagePart, registry: ElementRegistry);
     // (undocumented)
     static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml";
@@ -884,6 +960,17 @@ export class WordprocessingDocument {
     [Symbol.asyncDispose](): Promise<void>;
     // Warning: (ae-forgotten-export) The symbol "MemoryOpenXmlPackage" needs to be exported by the entry point index.d.ts
     constructor(pkg: MemoryOpenXmlPackage);
+    addComment(opts: {
+        author: string;
+        initials?: string;
+        date?: Date | string;
+        text: string;
+    }): {
+        commentId: number;
+        rangeStart: CommentRangeStart;
+        rangeEnd: CommentRangeEnd;
+        reference: Run;
+    };
     // (undocumented)
     addHyperlinkRelationship(url: string, opts?: {
         id?: string;
@@ -894,6 +981,7 @@ export class WordprocessingDocument {
         part: ImagePart;
         relId: string;
     };
+    get commentsPart(): CommentsPart | undefined;
     static create(): WordprocessingDocument;
     // (undocumented)
     dispose(): Promise<void>;
@@ -901,6 +989,7 @@ export class WordprocessingDocument {
     get fontTablePart(): FontTablePart | undefined;
     get mainDocumentPart(): MainDocumentPart | undefined;
     nextBookmarkId(): number;
+    nextCommentId(): number;
     // Warning: (ae-forgotten-export) The symbol "ZipSource" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "OpenAsyncOptions" needs to be exported by the entry point index.d.ts
     static openAsync(source: ZipSource, options?: OpenAsyncOptions): Promise<WordprocessingDocument>;
