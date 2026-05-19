@@ -120,6 +120,9 @@ export interface CreateSlideTableOptions {
 export function extensionForMime(mime: string): string | undefined;
 
 // @public
+export function getPictureCrop(pic: OpenXmlUnknownElement): PictureCrop | undefined;
+
+// @public
 export function getSlideTableCellText(table: OpenXmlElement, row: number, col: number): string;
 
 // Warning: (ae-forgotten-export) The symbol "Slide" needs to be exported by the entry point index.d.ts
@@ -171,6 +174,14 @@ export class NotesSlidePart extends TypedXmlPart<NotesSlide> {
     get slidePart(): SlidePart | undefined;
 }
 
+// @public
+export interface PictureCrop {
+    bottomPct: number;
+    leftPct: number;
+    rightPct: number;
+    topPct: number;
+}
+
 // @public (undocumented)
 export class PresentationDocument {
     // (undocumented)
@@ -212,6 +223,9 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
     get slideParts(): readonly SlidePart[];
 }
+
+// @public
+export function setPictureCrop(pic: OpenXmlUnknownElement, crop: PictureCrop | undefined): void;
 
 // @public
 export function setSlideTableCellText(table: OpenXmlElement, row: number, col: number, text: string): void;

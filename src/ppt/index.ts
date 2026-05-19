@@ -61,3 +61,9 @@ export {
 } from "./table-markup.js";
 
 export { getSpeakerNotes, setSpeakerNotes } from "./notes-markup.js";
+
+export {
+  type PictureCrop,
+  getPictureCrop,
+  setPictureCrop,
+} from "./extensions/picture-crop.js";
