@@ -196,6 +196,60 @@ export class CommentsPart extends TypedXmlPart<Comments> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
 }
 
+// @public (undocumented)
+export class CoreProperties {
+    // Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
+    constructor(root: OpenXmlElement);
+    // (undocumented)
+    get category(): string | undefined;
+    set category(value: string | undefined);
+    // (undocumented)
+    get contentStatus(): string | undefined;
+    set contentStatus(value: string | undefined);
+    // (undocumented)
+    get created(): Date | undefined;
+    set created(value: Date | string | undefined);
+    // (undocumented)
+    get creator(): string | undefined;
+    set creator(value: string | undefined);
+    // (undocumented)
+    get description(): string | undefined;
+    set description(value: string | undefined);
+    // (undocumented)
+    get keywords(): string | undefined;
+    set keywords(value: string | undefined);
+    // (undocumented)
+    get language(): string | undefined;
+    set language(value: string | undefined);
+    // (undocumented)
+    get lastModifiedBy(): string | undefined;
+    set lastModifiedBy(value: string | undefined);
+    list(): Record<string, string>;
+    // (undocumented)
+    get modified(): Date | undefined;
+    set modified(value: Date | string | undefined);
+    // (undocumented)
+    get revision(): string | undefined;
+    set revision(value: string | undefined);
+    // (undocumented)
+    get subject(): string | undefined;
+    set subject(value: string | undefined);
+    // (undocumented)
+    get title(): string | undefined;
+    set title(value: string | undefined);
+}
+
+// @public (undocumented)
+export class CorePropertiesPart extends TypedXmlPart<OpenXmlElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-package.core-properties+xml";
+    get coreProperties(): OpenXmlElement;
+    set coreProperties(value: OpenXmlElement);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
+}
+
 // @public
 export function createBookmarkPair(name: string, id?: number): {
     start: BookmarkStart;
@@ -304,7 +358,6 @@ export class Drawing extends OpenXmlCompositeElement {
 export class EffectiveProperties {
     constructor(chain: readonly OpenXmlCompositeElement[]);
     get depth(): number;
-    // Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "ElementCtor" needs to be exported by the entry point index.d.ts
     get<T extends OpenXmlElement>(ctor: ElementCtor<T>): T | undefined;
     has(ctor: ElementCtor): boolean;
@@ -1110,6 +1163,7 @@ export class WordprocessingDocument {
         numId: number;
     };
     get commentsPart(): CommentsPart | undefined;
+    get coreProperties(): CoreProperties;
     static create(): WordprocessingDocument;
     // (undocumented)
     dispose(): Promise<void>;

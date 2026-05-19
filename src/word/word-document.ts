@@ -41,6 +41,8 @@ import {
 } from "../packaging/index.js";
 import type { PartUri } from "../packaging/interfaces/types.js";
 import { createHyperlinkInput } from "../packaging/relationships/hyperlink.js";
+import { CoreProperties } from "../parts/core-properties.js";
+import { getOrCreateCorePropertiesPart } from "../parts/get-or-create-core-properties.js";
 import { type AddImagePartOptions, type ImagePart, addImagePartTo } from "../parts/image-part.js";
 import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
@@ -96,6 +98,8 @@ const WPNS_URI = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
 export class WordprocessingDocument {
   /** 已加载的 typed Part 缓存——按 relationshipType 索引。 */
   private readonly typedParts = new Map<string, TypedXmlPart<OpenXmlElement>>();
+  /** Epic-29：CoreProperties 缓存——避免重复 bootstrap。 */
+  private _coreProperties: CoreProperties | undefined;
 
   constructor(private readonly pkg: MemoryOpenXmlPackage) {
     pkg.registerDiagnosticsElementCounter(() => this.countLoadedElements());
@@ -162,6 +166,19 @@ export class WordprocessingDocument {
   /** Word 编号定义 Part（mainDocumentPart 的 part-level 关系）；不存在时返 undefined。 */
   get numberingPart(): NumberingPart | undefined {
     return this.getOrLoadTypedPartFromMain(NumberingPart);
+  }
+
+  /**
+   * 包级 CoreProperties 元数据（Epic-29）。\`doc.coreProperties.title = "…"\` 一行设置。
+   * 懒 bootstrap：首次访问时找/创建 \`/docProps/core.xml\`。
+   */
+  get coreProperties(): CoreProperties {
+    if (this._coreProperties === undefined) {
+      const cpPart = getOrCreateCorePropertiesPart(this.pkg, wordRegistry);
+      this._coreProperties = new CoreProperties(cpPart.coreProperties);
+      this.typedParts.set("__corePropertiesPart__", cpPart);
+    }
+    return this._coreProperties;
   }
 
   /**

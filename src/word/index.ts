@@ -39,6 +39,8 @@ export {
 } from "./parts/index.js";
 
 export { BinaryPart } from "../parts/binary-part.js";
+export { CoreProperties } from "../parts/core-properties.js";
+export { CorePropertiesPart } from "../parts/core-properties-part.js";
 export {
   type AddImagePartOptions,
   ImagePart,
