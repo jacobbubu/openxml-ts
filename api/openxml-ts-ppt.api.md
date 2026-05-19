@@ -127,6 +127,7 @@ export class PresentationDocument {
     static create(): PresentationDocument;
     // (undocumented)
     dispose(): Promise<void>;
+    getSlideNotes(slide: SlidePart | number): string;
     // Warning: (ae-forgotten-export) The symbol "ZipSource" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "OpenAsyncOptions" needs to be exported by the entry point index.d.ts
     static openAsync(source: ZipSource, options?: OpenAsyncOptions): Promise<PresentationDocument>;
@@ -137,6 +138,7 @@ export class PresentationDocument {
     // (undocumented)
     saveAsBytesAsync(): Promise<Uint8Array>;
     saveAsync(): Promise<void>;
+    setSlideNotes(slide: SlidePart | number, text: string): void;
 }
 
 // Warning: (ae-forgotten-export) The symbol "Presentation" needs to be exported by the entry point index.d.ts
