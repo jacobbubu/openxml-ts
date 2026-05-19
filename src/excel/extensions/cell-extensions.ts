@@ -131,59 +131,12 @@ export function clearCellDirty(cell: Cell): void {
   (cell as unknown as CellWithDirty)[kDirty] = false;
 }
 
-// ─── Epic-25 · Cell.formula / Cell.cachedValue 访问器 ────────────────────────
-
-declare module "../generated/cell.js" {
-  interface Cell {
-    /** \`<f>\` 公式文本——不存在返 undefined。setter 传 undefined 删 \`<f>\`，传字符串新建或替换。 */
-    formula: string | undefined;
-    /** \`<v>\` 缓存值文本——同上。setter 传 undefined 删 \`<v>\`。 */
-    cachedValue: string | undefined;
+/** cell-formula-accessor.ts 用：在原地更新文本时手动标 dirty。 */
+export function markCellDirty(cell: Cell): void {
+  if (!isTypedPartLoading()) {
+    (cell as unknown as CellWithDirty)[kDirty] = true;
   }
 }
 
-Object.defineProperty(Cell.prototype, "formula", {
-  configurable: false,
-  enumerable: false,
-  get(this: Cell): string | undefined {
-    return this.firstChild(CellFormula)?.text;
-  },
-  set(this: Cell, value: string | undefined): void {
-    const existing = this.firstChild(CellFormula);
-    if (value === undefined) {
-      if (existing !== undefined) this.children.remove(existing);
-      return;
-    }
-    if (existing !== undefined) {
-      existing.text = value;
-      if (!isTypedPartLoading()) (this as unknown as CellWithDirty)[kDirty] = true;
-    } else {
-      const f = new CellFormula();
-      f.text = value;
-      this.appendChild(f); // appendChild override 会自动标 dirty
-    }
-  },
-});
-
-Object.defineProperty(Cell.prototype, "cachedValue", {
-  configurable: false,
-  enumerable: false,
-  get(this: Cell): string | undefined {
-    return this.firstChild(CellValue)?.text;
-  },
-  set(this: Cell, value: string | undefined): void {
-    const existing = this.firstChild(CellValue);
-    if (value === undefined) {
-      if (existing !== undefined) this.children.remove(existing);
-      return;
-    }
-    if (existing !== undefined) {
-      existing.text = value;
-      if (!isTypedPartLoading()) (this as unknown as CellWithDirty)[kDirty] = true;
-    } else {
-      const v = new CellValue();
-      v.text = value;
-      this.appendChild(v);
-    }
-  },
-});
+// ─── Epic-49 · Cell.formula / Cell.cachedValue 访问器已移至独立模块 ───────────
+// 访问器定义见 cell-formula-accessor.ts；本文件不再重复定义。
