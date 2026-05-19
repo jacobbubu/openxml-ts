@@ -14,6 +14,11 @@
  * 子 entry + size-limit 守护在 Story-4.8 落地；本文件 Story-4.3 起初建、4.5 接入门面。
  */
 
+// Epic-24：副作用导入 → Run / Paragraph / Slide / Shape 原型挂 \`text\` 访问器
+import "./extensions/run-extensions.js";
+import "./extensions/paragraph-extensions.js";
+import "./extensions/slide-extensions.js";
+
 export { PresentationDocument } from "./presentation-document.js";
 export {
   NotesMasterPart,
