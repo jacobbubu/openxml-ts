@@ -47,6 +47,7 @@ import {
 import { registerPresentationElements } from "./generated/_registry.js";
 import { Background } from "./generated/background.js";
 import { Slide } from "./generated/slide.js";
+import { NotesSlidePart } from "./parts/notes-slide-part.js";
 import { PresentationPart } from "./parts/presentation-part.js";
 import type { SlidePart } from "./parts/slide-part.js";
 
@@ -162,6 +163,81 @@ export class PresentationDocument {
       });
     }
     return addImagePartTo(this.pkg, slidePart.part, "/ppt/media", bytes, opts);
+  }
+
+  /**
+   * 设置 slide 的演讲者注释（Epic-27）。
+   *
+   * 自动 bootstrap NotesSlidePart（首次：分配 \`/ppt/notesSlides/notesSlideN.xml\`
+   * + createPart + 从 slidePart 接 notesSlide 关系 + 写最小 \`<p:notes>\` 树）；
+   * 然后把 body placeholder shape 的 \`<a:txBody>\` 替换成单段单 Run 单 \`<a:t>\`。
+   *
+   * @param slide SlidePart 或下标
+   * @param text  注释文本（单段纯文本）
+   */
+  setSlideNotes(slide: SlidePart | number, text: string): void {
+    const slidePart = this.resolveSlidePart(slide, "setSlideNotes");
+    const notesPart = this.getOrCreateNotesSlidePart(slidePart);
+    setNotesText(notesPart.notesSlide, text);
+  }
+
+  /**
+   * 读 slide 的演讲者注释——展平 body placeholder shape 内所有 \`<a:t>\`；
+   * 没 NotesSlidePart 或没注释时返空串。
+   */
+  getSlideNotes(slide: SlidePart | number): string {
+    const slidePart = this.resolveSlidePart(slide, "getSlideNotes");
+    const notesPart = slidePart.notesSlidePart;
+    if (notesPart === undefined) return "";
+    return getNotesText(notesPart.notesSlide);
+  }
+
+  /** 解析 slide 入参（SlidePart 或 0-based 下标）。 */
+  private resolveSlidePart(slide: SlidePart | number, method: string): SlidePart {
+    const pp = this.presentationPart;
+    if (pp === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: `${method}: presentationPart is missing`,
+      });
+    }
+    const sps = pp.slideParts;
+    const sp = typeof slide === "number" ? sps[slide] : sps.find((s) => s === slide);
+    if (sp === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message:
+          typeof slide === "number"
+            ? `${method}: slide index ${slide} out of range (total ${sps.length})`
+            : `${method}: provided SlidePart is not in this presentation`,
+      });
+    }
+    return sp;
+  }
+
+  /** 找/创 slide 的 NotesSlidePart。 */
+  private getOrCreateNotesSlidePart(slidePart: SlidePart): NotesSlidePart {
+    const existing = slidePart.notesSlidePart;
+    if (existing !== undefined) return existing;
+
+    // 分配 URI
+    let n = 1;
+    while (this.pkg.hasPart(`/ppt/notesSlides/notesSlide${n}.xml` as PartUri)) n += 1;
+    const uri = `/ppt/notesSlides/notesSlide${n}.xml` as PartUri;
+    const part = this.pkg.createPart(uri, NotesSlidePart.contentType);
+    // 关系挂 slidePart（target 是 ../notesSlides/notesSlideN.xml；slide 在 /ppt/slides/）
+    slidePart.part.relationships.create({
+      type: NotesSlidePart.relationshipType,
+      target: `../notesSlides/notesSlide${n}.xml`,
+      targetMode: "internal",
+    });
+    const np = new NotesSlidePart(part, pptRegistry, this.pkg);
+    // 写最小 <p:notes> 树
+    seedNotesSlide(np.notesSlide);
+    // SlidePart 内部缓存 notesSlidePart——访问 getter 会重读关系并返新实例；为
+    // 让本次返的 typedPart 复用，强行注入到 slidePart 私有缓存
+    (slidePart as unknown as { _notesSlidePart: NotesSlidePart | undefined })._notesSlidePart = np;
+    return np;
   }
 
   /**
@@ -364,4 +440,150 @@ function findRelationship(
     if (relationshipTypeMatches(rel.type, relationshipType)) return rel;
   }
   return undefined;
+}
+
+// ─── Epic-27 演讲者注释辅助 ─────────────────────────────────────────────────
+
+const NS_P = "http://schemas.openxmlformats.org/presentationml/2006/main";
+const NS_A = "http://schemas.openxmlformats.org/drawingml/2006/main";
+
+/** 给新建的 NotesSlide root 写一份最小可用骨架（cSld > spTree > 注释 body shape）。 */
+function seedNotesSlide(notes: OpenXmlElement): void {
+  if (!(notes instanceof OpenXmlCompositeElement)) return;
+  // 已经有 cSld 就跳过
+  for (const c of notes.children) if (c.localName === "cSld") return;
+
+  const cSld = u("p", "cSld", NS_P);
+  const spTree = u("p", "spTree", NS_P);
+  // 必需的 nvGrpSpPr / grpSpPr 骨架
+  const nvGsp = u("p", "nvGrpSpPr", NS_P);
+  const cNvPr = u("p", "cNvPr", NS_P);
+  cNvPr.extendedAttributes.set("id", "1");
+  cNvPr.extendedAttributes.set("name", "");
+  nvGsp.appendChild(cNvPr);
+  nvGsp.appendChild(u("p", "cNvGrpSpPr", NS_P));
+  nvGsp.appendChild(u("p", "nvPr", NS_P));
+  spTree.appendChild(nvGsp);
+  spTree.appendChild(u("p", "grpSpPr", NS_P));
+  // body placeholder shape
+  spTree.appendChild(buildNotesBodyShape(""));
+  cSld.appendChild(spTree);
+  notes.appendChild(cSld);
+}
+
+/** 在 NotesSlide 树里找 body placeholder shape；找不到就 append 一个新的并返回。 */
+function ensureNotesBodyShape(notes: OpenXmlElement): OpenXmlCompositeElement {
+  if (!(notes instanceof OpenXmlCompositeElement)) {
+    throw new Error("ensureNotesBodyShape: notes root not composite");
+  }
+  for (const sp of notes.descendants()) {
+    if (sp.localName !== "sp" || !(sp instanceof OpenXmlCompositeElement)) continue;
+    // sp > nvSpPr > nvPr > ph[type="body"]
+    for (const ph of sp.descendants()) {
+      if (ph.localName === "ph" && ph.extendedAttributes.get("type") === "body") return sp;
+    }
+  }
+  // 没找到——先确保 cSld/spTree，然后 append
+  seedNotesSlide(notes); // 若结构有但缺 body，下面 append；若全无则 seed 一份
+  // 找 spTree
+  for (const node of notes.descendants()) {
+    if (node.localName === "spTree" && node instanceof OpenXmlCompositeElement) {
+      const sp = buildNotesBodyShape("");
+      node.appendChild(sp);
+      return sp;
+    }
+  }
+  throw new Error("ensureNotesBodyShape: failed to find/create body shape");
+}
+
+function buildNotesBodyShape(initialText: string): OpenXmlCompositeElement {
+  const sp = u("p", "sp", NS_P);
+  const nvSpPr = u("p", "nvSpPr", NS_P);
+  const cNvPr = u("p", "cNvPr", NS_P);
+  cNvPr.extendedAttributes.set("id", "2");
+  cNvPr.extendedAttributes.set("name", "Notes Placeholder 1");
+  nvSpPr.appendChild(cNvPr);
+  const cNvSpPr = u("p", "cNvSpPr", NS_P);
+  const spLocks = u("a", "spLocks", NS_A);
+  spLocks.extendedAttributes.set("noGrp", "1");
+  cNvSpPr.appendChild(spLocks);
+  nvSpPr.appendChild(cNvSpPr);
+  const nvPr = u("p", "nvPr", NS_P);
+  const ph = u("p", "ph", NS_P);
+  ph.extendedAttributes.set("type", "body");
+  ph.extendedAttributes.set("idx", "1");
+  nvPr.appendChild(ph);
+  nvSpPr.appendChild(nvPr);
+  sp.appendChild(nvSpPr);
+
+  sp.appendChild(u("p", "spPr", NS_P));
+
+  const txBody = u("p", "txBody", NS_P);
+  txBody.appendChild(u("a", "bodyPr", NS_A));
+  txBody.appendChild(u("a", "lstStyle", NS_A));
+  txBody.appendChild(buildParagraphWithText(initialText));
+  sp.appendChild(txBody);
+  return sp;
+}
+
+function buildParagraphWithText(text: string): OpenXmlCompositeElement {
+  const p = u("a", "p", NS_A);
+  if (text.length > 0) {
+    const r = u("a", "r", NS_A);
+    r.appendChild(u("a", "rPr", NS_A));
+    const t = u("a", "t", NS_A);
+    t.text = text;
+    r.appendChild(t);
+    p.appendChild(r);
+  }
+  return p;
+}
+
+/** 替换 body placeholder shape 的 txBody 内 \`<a:p>\` 为单段单 Run 单 Text。 */
+function setNotesText(notes: OpenXmlElement, text: string): void {
+  const sp = ensureNotesBodyShape(notes);
+  // 找 txBody
+  let txBody: OpenXmlCompositeElement | undefined;
+  for (const c of sp.children) {
+    if (c.localName === "txBody" && c instanceof OpenXmlCompositeElement) txBody = c;
+  }
+  if (txBody === undefined) {
+    txBody = u("p", "txBody", NS_P);
+    txBody.appendChild(u("a", "bodyPr", NS_A));
+    txBody.appendChild(u("a", "lstStyle", NS_A));
+    sp.appendChild(txBody);
+  }
+  // 移除现有 \`<a:p>\`
+  for (const c of txBody.children.toArray()) {
+    if (c.localName === "p") txBody.children.remove(c);
+  }
+  txBody.appendChild(buildParagraphWithText(text));
+}
+
+/** 读 body placeholder shape 内的 \`<a:t>\` 拼成纯文本；找不到返空串。 */
+function getNotesText(notes: OpenXmlElement): string {
+  if (!(notes instanceof OpenXmlCompositeElement)) return "";
+  for (const sp of notes.descendants()) {
+    if (sp.localName !== "sp" || !(sp instanceof OpenXmlCompositeElement)) continue;
+    let isBody = false;
+    for (const ph of sp.descendants()) {
+      if (ph.localName === "ph" && ph.extendedAttributes.get("type") === "body") {
+        isBody = true;
+        break;
+      }
+    }
+    if (!isBody) continue;
+    let buf = "";
+    for (const n of sp.descendants()) {
+      if (n.localName === "t" && "text" in n && typeof (n as { text?: string }).text === "string") {
+        buf += (n as { text: string }).text;
+      }
+    }
+    return buf;
+  }
+  return "";
+}
+
+function u(prefix: string, localName: string, ns: string): OpenXmlUnknownElement {
+  return new OpenXmlUnknownElement(prefix, localName, ns);
 }
