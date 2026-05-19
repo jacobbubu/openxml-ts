@@ -18,7 +18,13 @@ import type { MemoryPackagePart } from "../backends/memory/memory-package-part.j
 import type { MemoryOpenXmlPackage } from "../backends/memory/memory-package.js";
 import { writeFilePath } from "../backends/zip/source-reader.js";
 import { registerDrawingElements } from "../drawing/generated/_registry.js";
-import { ElementRegistry, OpenXmlCompositeElement, type OpenXmlElement } from "../element/index.js";
+import {
+  ElementRegistry,
+  OpenXmlCompositeElement,
+  type OpenXmlElement,
+  StringValue,
+  UInt32Value,
+} from "../element/index.js";
 import { OpenXmlUnknownElement } from "../element/unknown-element.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import {
@@ -48,10 +54,13 @@ import {
 } from "./create-seed.js";
 import { registerPresentationElements } from "./generated/_registry.js";
 import { Background } from "./generated/background.js";
+import { SlideIdList } from "./generated/slide-id-list.js";
+import { SlideId } from "./generated/slide-id.js";
 import { Slide } from "./generated/slide.js";
 import { NotesSlidePart } from "./parts/notes-slide-part.js";
 import { PresentationPart } from "./parts/presentation-part.js";
-import type { SlidePart } from "./parts/slide-part.js";
+import { SlideLayoutPart } from "./parts/slide-layout-part.js";
+import { SlidePart } from "./parts/slide-part.js";
 
 const DEFAULT_PRESENTATION_URI = "/ppt/presentation.xml" as PartUri;
 const DEFAULT_SLIDE_URI = "/ppt/slides/slide1.xml" as PartUri;
@@ -206,6 +215,88 @@ export class PresentationDocument {
     const notesPart = slidePart.notesSlidePart;
     if (notesPart === undefined) return "";
     return getNotesText(notesPart.notesSlide);
+  }
+
+  /**
+   * 追加一张空白幻灯片（Epic-55）。
+   *
+   * 步骤：
+   * 1. 分配 `/ppt/slides/slideN.xml`（N 避开已有 Part）；
+   * 2. 写 seed slide XML；
+   * 3. PresentationPart → 新 SlidePart `relationships/slide` 关系；
+   * 4. 新 SlidePart → SlideLayoutPart `relationships/slideLayout` 关系
+   *    （默认复用 slide0 的 layout；可通过 `layoutPart` 参数指定）；
+   * 5. 在 `<p:sldIdLst>` 末尾追加 `<p:sldId id="…" r:id="…"/>`，id = 现有最大值 + 1（≥ 256）；
+   * 6. 更新 PresentationPart 内部 slideParts 缓存（若已初始化则 push）。
+   *
+   * @param options.layoutPart 指定版式 Part；省略时复用第一张幻灯片的 SlideLayoutPart。
+   * @returns 新建的 SlidePart
+   */
+  addSlide(options?: { layoutPart?: SlideLayoutPart }): SlidePart {
+    const pp = this.presentationPart;
+    if (pp === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "addSlide: presentationPart is missing",
+      });
+    }
+
+    // 1. 找到未被占用的 slideN.xml URI
+    let n = 1;
+    while (this.pkg.hasPart(`/ppt/slides/slide${n}.xml` as PartUri)) n += 1;
+    const slideUri = `/ppt/slides/slide${n}.xml` as PartUri;
+
+    // 2. 创建 Part + 写 seed XML
+    const newPart = this.pkg.createPart(slideUri, SlidePart.contentType);
+    (newPart as MemoryPackagePart).writeSync(seedSlideXml());
+
+    // 3. 确定版式 Part
+    const layoutPart = options?.layoutPart ?? pp.slideParts[0]?.slideLayoutPart;
+
+    // 4. PresentationPart → 新 SlidePart 关系
+    const slideRel = pp.part.relationships.create({
+      type: SlidePart.relationshipType,
+      target: `slides/slide${n}.xml`,
+      targetMode: "internal",
+    });
+
+    // 5. 新 SlidePart → SlideLayoutPart 关系（相对 /ppt/slides/ 出发）
+    if (layoutPart !== undefined) {
+      const layoutFileName = (layoutPart.part.uri as string).split("/").pop() as string;
+      newPart.relationships.create({
+        type: SlideLayoutPart.relationshipType,
+        target: `../slideLayouts/${layoutFileName}`,
+        targetMode: "internal",
+      });
+    }
+
+    // 6. 追加 <p:sldId> 到 <p:sldIdLst>
+    const presentation = pp.presentation;
+    let sldIdLst = presentation.firstChild(SlideIdList);
+    if (sldIdLst === undefined) {
+      sldIdLst = new SlideIdList();
+      presentation.appendChild(sldIdLst);
+    }
+
+    let maxId = 255;
+    for (const sldId of sldIdLst.elements(SlideId)) {
+      const val = sldId.id?.value;
+      if (val !== undefined && val > maxId) maxId = val;
+    }
+
+    const sldId = new SlideId();
+    sldId.id = new UInt32Value(maxId + 1);
+    sldId.relationshipId = new StringValue(slideRel.id);
+    sldIdLst.appendChild(sldId);
+
+    // 7. 构造 SlidePart wrapper + 若已缓存则 push 进去
+    const newSlidePart = new SlidePart(newPart, pptRegistry, this.pkg);
+    const ppPrivate = pp as unknown as { _slideParts: SlidePart[] | undefined };
+    if (ppPrivate._slideParts !== undefined) {
+      ppPrivate._slideParts.push(newSlidePart);
+    }
+
+    return newSlidePart;
   }
 
   /** 解析 slide 入参（SlidePart 或 0-based 下标）。 */

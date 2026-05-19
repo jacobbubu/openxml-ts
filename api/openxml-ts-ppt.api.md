@@ -10,6 +10,14 @@ export interface AddImagePartOptions {
     readonly contentType?: string;
 }
 
+// @public
+export function addSlide(doc: PresentationDocument, options?: AddSlideOptions): SlidePart;
+
+// @public (undocumented)
+export interface AddSlideOptions {
+    layoutPart?: SlideLayoutPart;
+}
+
 // @public (undocumented)
 export class BinaryPart {
     constructor(_part: IPackagePart);
@@ -181,6 +189,9 @@ export class PresentationDocument {
         part: ImagePart;
         relId: string;
     };
+    addSlide(options?: {
+        layoutPart?: SlideLayoutPart;
+    }): SlidePart;
     get coreProperties(): CoreProperties;
     static create(): PresentationDocument;
     // (undocumented)
