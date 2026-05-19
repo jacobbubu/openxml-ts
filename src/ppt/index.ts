@@ -23,6 +23,7 @@ import "./extensions/run-formatting.js";
 import "./extensions/paragraph-formatting.js";
 import "./extensions/slide-background.js";
 import "./extensions/shape-accessibility.js";
+import "./extensions/shape-xfrm.js";
 
 export { PresentationDocument } from "./presentation-document.js";
 export {
