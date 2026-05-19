@@ -6,3 +6,4 @@ export { ThemePart } from "../../parts/theme-part.js";
 export { FontTablePart } from "./font-table-part.js";
 export { WebSettingsPart } from "./web-settings-part.js";
 export { CommentsPart } from "./comments-part.js";
+export { NumberingPart } from "./numbering-part.js";

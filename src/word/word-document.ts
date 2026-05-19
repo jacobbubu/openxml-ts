@@ -21,6 +21,7 @@ import type { MemoryOpenXmlPackage } from "../backends/memory/memory-package.js"
 import { writeFilePath } from "../backends/zip/source-reader.js";
 import {
   ElementRegistry,
+  Int32Value,
   OpenXmlCompositeElement,
   type OpenXmlElement,
   StringValue,
@@ -44,6 +45,8 @@ import { type AddImagePartOptions, type ImagePart, addImagePartTo } from "../par
 import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { registerWordprocessingElements } from "./generated/_registry.js";
+import { AbstractNumId } from "./generated/abstract-num-id.js";
+import { AbstractNum } from "./generated/abstract-num.js";
 import { Body } from "./generated/body.js";
 import { BookmarkStart } from "./generated/bookmark-start.js";
 import { CommentRangeEnd } from "./generated/comment-range-end.js";
@@ -53,6 +56,11 @@ import { Comment } from "./generated/comment.js";
 import { DeletedRun } from "./generated/deleted-run.js";
 import { Document } from "./generated/document.js";
 import { InsertedRun } from "./generated/inserted-run.js";
+import { LevelJustification } from "./generated/level-justification.js";
+import { LevelText } from "./generated/level-text.js";
+import { Level } from "./generated/level.js";
+import { NumberingFormat } from "./generated/numbering-format.js";
+import { NumberingInstance } from "./generated/numbering-instance.js";
 import { Paragraph } from "./generated/paragraph.js";
 import { RunProperties } from "./generated/run-properties.js";
 import { RunStyle } from "./generated/run-style.js";
@@ -62,6 +70,7 @@ import {
   CommentsPart,
   FontTablePart,
   MainDocumentPart,
+  NumberingPart,
   SettingsPart,
   StylesPart,
   ThemePart,
@@ -143,6 +152,58 @@ export class WordprocessingDocument {
   /** Word 注释 Part（mainDocumentPart 的 part-level 关系）；不存在时返 undefined。 */
   get commentsPart(): CommentsPart | undefined {
     return this.getOrLoadTypedPartFromMain(CommentsPart);
+  }
+
+  /** Word 编号定义 Part（mainDocumentPart 的 part-level 关系）；不存在时返 undefined。 */
+  get numberingPart(): NumberingPart | undefined {
+    return this.getOrLoadTypedPartFromMain(NumberingPart);
+  }
+
+  /**
+   * 加一个标准列表定义（编号 / 项目符号），返新分配的 \`numId\`。
+   * （Story-22.2，Epic-22）
+   *
+   * 自动 bootstrap NumberingPart（首次：createPart + 接 main 关系）；
+   * 自动分配 \`abstractNumId\` + \`numId\`；写 9 级 \`<w:lvl>\` 定义。
+   *
+   * 拿到 \`numId\` 后用 \`createListParagraph(numId, level, text)\` 一行生成
+   * 带 \`<w:numPr>\` 的列表段落。
+   *
+   * @throws OpenXmlPackageError 当 mainDocumentPart 缺失
+   */
+  addNumberingDefinition(opts: { type: "decimal" | "bullet" }): { numId: number } {
+    const main = this.mainDocumentPart;
+    if (main === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "addNumberingDefinition: mainDocumentPart is missing",
+      });
+    }
+    const np = this.getOrCreateNumberingPart(main.part);
+    const abstractNumId = nextAbstractNumId(np);
+    const numId = nextNumberingId(np);
+
+    const abstractNum = buildAbstractNum(abstractNumId, opts.type);
+    np.numbering.appendChild(abstractNum);
+
+    const numInst = new NumberingInstance();
+    numInst.numberID = Int32Value.parse(String(numId));
+    const aRef = new AbstractNumId();
+    aRef.extendedAttributes.set("w:val", String(abstractNumId));
+    numInst.appendChild(aRef);
+    np.numbering.appendChild(numInst);
+
+    return { numId };
+  }
+
+  /**
+   * 返一个全文档唯一的 \`<w:num w:numId="N">\` 整数。空文档返 1。
+   * （Word 习惯 numId 从 1 开始；0 是「未编号」的语义占位。）
+   */
+  nextNumberingId(): number {
+    const np = this.numberingPart;
+    if (np === undefined) return 1;
+    return nextNumberingId(np);
   }
 
   /**
@@ -244,6 +305,26 @@ export class WordprocessingDocument {
     reference.appendChild(refMarker);
 
     return { commentId, rangeStart, rangeEnd, reference };
+  }
+
+  // ─── Epic-22 内部 ────────────────────────────────────────────────────────────
+
+  /** 找 / 创 NumberingPart——首次 addNumberingDefinition 调用走这里 bootstrap。 */
+  private getOrCreateNumberingPart(mainDocPart: IPackagePart): NumberingPart {
+    const cached = this.typedParts.get(NumberingPart.relationshipType) as NumberingPart | undefined;
+    if (cached !== undefined) return cached;
+    const existing = this.getOrLoadTypedPartFromMain(NumberingPart);
+    if (existing !== undefined) return existing;
+    const uri = "/word/numbering.xml" as PartUri;
+    const part = this.pkg.createPart(uri, NumberingPart.contentType);
+    mainDocPart.relationships.create({
+      type: NumberingPart.relationshipType,
+      target: "numbering.xml",
+      targetMode: "internal",
+    });
+    const np = new NumberingPart(part, wordRegistry);
+    this.typedParts.set(NumberingPart.relationshipType, np);
+    return np;
   }
 
   // ─── Epic-18 内部 ────────────────────────────────────────────────────────────
@@ -497,4 +578,63 @@ function findRelationship(
     if (relationshipTypeMatches(rel.type, relationshipType)) return rel;
   }
   return undefined;
+}
+
+// ─── Epic-22 列表定义辅助 ────────────────────────────────────────────────────
+
+function nextAbstractNumId(np: NumberingPart): number {
+  let max = -1;
+  for (const child of np.numbering.descendants(AbstractNum)) {
+    const v = child.abstractNumberId?.toString();
+    if (v === undefined) continue;
+    const n = Number.parseInt(v, 10);
+    if (Number.isFinite(n) && n > max) max = n;
+  }
+  return max + 1;
+}
+
+function nextNumberingId(np: NumberingPart): number {
+  let max = 0; // 起始从 1 开始（OOXML 习惯）
+  for (const child of np.numbering.descendants(NumberingInstance)) {
+    const v = child.numberID?.toString();
+    if (v === undefined) continue;
+    const n = Number.parseInt(v, 10);
+    if (Number.isFinite(n) && n > max) max = n;
+  }
+  return max + 1;
+}
+
+/** 9 级 decimal / bullet 默认符号。 */
+const BULLET_CHARS = ["●", "○", "▪", "●", "○", "▪", "●", "○", "▪"] as const;
+
+function buildAbstractNum(abstractNumId: number, type: "decimal" | "bullet"): AbstractNum {
+  const an = new AbstractNum();
+  an.abstractNumberId = Int32Value.parse(String(abstractNumId));
+  for (let i = 0; i < 9; i += 1) {
+    an.appendChild(buildLevel(i, type));
+  }
+  return an;
+}
+
+function buildLevel(ilvl: number, type: "decimal" | "bullet"): Level {
+  const lvl = new Level();
+  lvl.levelIndex = Int32Value.parse(String(ilvl));
+
+  const numFmt = new NumberingFormat();
+  numFmt.extendedAttributes.set("w:val", type === "decimal" ? "decimal" : "bullet");
+  lvl.appendChild(numFmt);
+
+  const lvlText = new LevelText();
+  if (type === "decimal") {
+    lvlText.extendedAttributes.set("w:val", `%${ilvl + 1}.`);
+  } else {
+    lvlText.extendedAttributes.set("w:val", BULLET_CHARS[ilvl] ?? "●");
+  }
+  lvl.appendChild(lvlText);
+
+  const lvlJc = new LevelJustification();
+  lvlJc.extendedAttributes.set("w:val", "left");
+  lvl.appendChild(lvlJc);
+
+  return lvl;
 }

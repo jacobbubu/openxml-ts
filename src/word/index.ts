@@ -88,6 +88,11 @@ export {
   setDocumentTableCellText,
 } from "./table-markup.js";
 
+// ─── Word 列表 / 编号（Epic-22） ─────────────────────────────────────────────
+export { Numbering } from "./generated/numbering.js";
+export { NumberingPart } from "./parts/numbering-part.js";
+export { createListParagraph } from "./list-markup.js";
+
 // ─── 核心结构 ─────────────────────────────────────────────────────────────────
 
 export { Document } from "./generated/document.js";
