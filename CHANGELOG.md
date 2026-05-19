@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.9.0](https://github.com/jacobbubu/openxml-ts/compare/v0.8.0...v0.9.0) (2026-05-19)
+
+
+### Features
+
+* **ppt:** Epic-17 PPT 表格便捷层 ([#94](https://github.com/jacobbubu/openxml-ts/issues/94)) ([831a44f](https://github.com/jacobbubu/openxml-ts/commit/831a44fea639a8ca6fd17d5631bc649bbd2d586f))
+* **ppt:** Epic-17 PPT 表格便捷层（createSlideTable + cell 文本访问器） ([#94](https://github.com/jacobbubu/openxml-ts/issues/94)) ([67253e0](https://github.com/jacobbubu/openxml-ts/commit/67253e0ab4f293b68f0484083dd43b696e4f640b))
+* **ppt:** Epic-20 PPT 表格合并单元格 ([#100](https://github.com/jacobbubu/openxml-ts/issues/100)) ([ddb0aef](https://github.com/jacobbubu/openxml-ts/commit/ddb0aefefb42c4ca6e78f1eda8140f2ed7e501ed))
+* **ppt:** Epic-20 PPT 表格合并单元格 mergeSlideTableCells ([#100](https://github.com/jacobbubu/openxml-ts/issues/100)) ([a4ff921](https://github.com/jacobbubu/openxml-ts/commit/a4ff9210e8e052c3a2c78b02cd73af138c1158d9))
+* **word:** Epic-15 Word 超链接助手 ([#89](https://github.com/jacobbubu/openxml-ts/issues/89)) ([9e34018](https://github.com/jacobbubu/openxml-ts/commit/9e34018b17db6ca7c02d7e142481d37f0c92eeb7))
+* **word:** Epic-15 Word 超链接助手（addHyperlinkRelationship + createHyperlinkRun） ([#89](https://github.com/jacobbubu/openxml-ts/issues/89)) ([5d2bf2f](https://github.com/jacobbubu/openxml-ts/commit/5d2bf2fad86acd80050575f9c6215563cafa8719))
+* **word:** Epic-16 Word 书签助手 ([#92](https://github.com/jacobbubu/openxml-ts/issues/92)) ([95ea031](https://github.com/jacobbubu/openxml-ts/commit/95ea03117edf09a89a59080049862e20ca55e23c))
+* **word:** Epic-16 Word 书签助手——闭环 Epic-15 内部超链接 ([#92](https://github.com/jacobbubu/openxml-ts/issues/92)) ([4bba4ed](https://github.com/jacobbubu/openxml-ts/commit/4bba4ed7925d7b6b7e7261c82d2b5330566518b6))
+* **word:** Epic-18 Word 注释便捷层 ([#96](https://github.com/jacobbubu/openxml-ts/issues/96)) ([0eee220](https://github.com/jacobbubu/openxml-ts/commit/0eee2201496e30ee47b860c4a1c63bfd643e374e))
+* **word:** Epic-18 Word 注释便捷层（CommentsPart + addComment 门面） ([#96](https://github.com/jacobbubu/openxml-ts/issues/96)) ([8ec5e43](https://github.com/jacobbubu/openxml-ts/commit/8ec5e435b770acbb30e8f95b3963ff944fc2f44d))
+* **word:** Epic-19 Word 修订追踪 ([#98](https://github.com/jacobbubu/openxml-ts/issues/98)) ([5ab235e](https://github.com/jacobbubu/openxml-ts/commit/5ab235e435644300d3028ce27eba58d0f01ede98))
+* **word:** Epic-19 Word 修订追踪（createInsertedRun / createDeletedRun + nextRevisionId） ([#98](https://github.com/jacobbubu/openxml-ts/issues/98)) ([5cd4a39](https://github.com/jacobbubu/openxml-ts/commit/5cd4a39241217dc98108eb97e56059ba23db6984))
+* **word:** Epic-21 Word 表格便捷层 ([#102](https://github.com/jacobbubu/openxml-ts/issues/102)) ([9c15145](https://github.com/jacobbubu/openxml-ts/commit/9c151451cab038159d0b12718c74d82f552b4999))
+* **word:** Epic-21 Word 表格便捷层（createDocumentTable + cell 文本访问器） ([#102](https://github.com/jacobbubu/openxml-ts/issues/102)) ([bd675e3](https://github.com/jacobbubu/openxml-ts/commit/bd675e38b24164da3e49d30105c0b7c1e7ff01e0))
+* **word:** Epic-22 Word 列表样式 ([#104](https://github.com/jacobbubu/openxml-ts/issues/104)) ([624fb3a](https://github.com/jacobbubu/openxml-ts/commit/624fb3a69ab224c358c47383a6dcad626ce26942))
+* **word:** Epic-22 Word 列表样式（NumberingPart + addNumberingDefinition + createListParagraph） ([#104](https://github.com/jacobbubu/openxml-ts/issues/104)) ([8c5481c](https://github.com/jacobbubu/openxml-ts/commit/8c5481c64af85e5495d23405b377b970fbf8d9e8))
+
 ## [0.8.0](https://github.com/jacobbubu/openxml-ts/compare/v0.7.0...v0.8.0) (2026-05-18)
 
 
