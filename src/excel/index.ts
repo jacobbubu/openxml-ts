@@ -95,3 +95,8 @@ export {
   setRowHeight,
   getRowHeight,
 } from "./worksheet-dimensions.js";
+
+// ─── Excel 数字格式（Epic-44） ────────────────────────────────────────────────
+export { CellFormat } from "./generated/cell-format.js";
+export { CellFormats } from "./generated/cell-formats.js";
+export { BuiltInNumberFormat, setBuiltInNumberFormat } from "./number-format.js";

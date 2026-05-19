@@ -24,6 +24,20 @@ export class BinaryPart {
     writeAsync(bytes: Uint8Array): Promise<void>;
 }
 
+// @public
+export const BuiltInNumberFormat: {
+    readonly GENERAL: 0;
+    readonly INTEGER: 1;
+    readonly DECIMAL_2: 2;
+    readonly THOUSANDS_INT: 3;
+    readonly THOUSANDS_DECIMAL_2: 4;
+    readonly PERCENT_INT: 9;
+    readonly PERCENT_DECIMAL_2: 10;
+    readonly DATE_SHORT: 14;
+    readonly DATETIME: 22;
+    readonly CURRENCY: 44;
+};
+
 // Warning: (ae-forgotten-export) The symbol "CalculationChain" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -75,6 +89,52 @@ export interface CellAnchorPoint {
     // (undocumented)
     readonly row: number;
     readonly rowOffEmu?: number;
+}
+
+// @public
+export class CellFormat extends OpenXmlCompositeElement {
+    applyAlignment: BooleanValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    applyBorder: BooleanValue | undefined;
+    applyFill: BooleanValue | undefined;
+    applyFont: BooleanValue | undefined;
+    applyNumberFormat: BooleanValue | undefined;
+    applyProtection: BooleanValue | undefined;
+    borderId: UInt32Value | undefined;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    fillId: UInt32Value | undefined;
+    fontId: UInt32Value | undefined;
+    formatId: UInt32Value | undefined;
+    // (undocumented)
+    readonly localName: "xf";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    numberFormatId: UInt32Value | undefined;
+    pivotButton: BooleanValue | undefined;
+    // (undocumented)
+    readonly prefix: "x";
+    quotePrefix: BooleanValue | undefined;
+}
+
+// @public
+export class CellFormats extends OpenXmlCompositeElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    count: UInt32Value | undefined;
+    // (undocumented)
+    readonly localName: "cellXfs";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
 }
 
 // Warning: (ae-forgotten-export) The symbol "OpenXmlLeafElement" needs to be exported by the entry point index.d.ts
@@ -356,6 +416,9 @@ export class Selection extends OpenXmlLeafElement {
     readonly prefix: "x";
     sequenceOfReferences: StringValue | undefined;
 }
+
+// @public
+export function setBuiltInNumberFormat(doc: SpreadsheetDocument, cell: Cell, builtInId: number): number;
 
 // @public
 export function setColumnWidth(worksheet: Worksheet, range: ColumnWidthRange): void;
