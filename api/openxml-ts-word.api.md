@@ -269,6 +269,14 @@ export interface CreateDocumentTableOptions {
     readonly totalWidthDxa?: number;
 }
 
+// @public
+export function createFieldRun(instruction: string, options?: CreateFieldRunOptions): SimpleField;
+
+// @public (undocumented)
+export interface CreateFieldRunOptions {
+    readonly cachedText?: string;
+}
+
 // Warning: (ae-forgotten-export) The symbol "CreateHyperlinkInput" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "CreateRelationshipInput" needs to be exported by the entry point index.d.ts
 //
@@ -307,6 +315,12 @@ export function createInsertedRun(opts: RevisionOptions): InsertedRun;
 
 // @public
 export function createListParagraph(numId: number, level: number, text: string): Paragraph;
+
+// @public
+export function createPageNumberRun(): SimpleField;
+
+// @public
+export function createTotalPagesRun(): SimpleField;
 
 // @public
 export class DeletedRun extends OpenXmlCompositeElement {
@@ -826,6 +840,26 @@ export class Shading extends OpenXmlLeafElement {
     themeShade: StringValue | undefined;
     themeTint: StringValue | undefined;
     val: StringValue | undefined;
+    validateRequired(): void;
+}
+
+// @public
+export class SimpleField extends OpenXmlCompositeElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    dirty: BooleanValue | undefined;
+    fieldLock: BooleanValue | undefined;
+    instruction: StringValue | undefined;
+    // (undocumented)
+    readonly localName: "fldSimple";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
     validateRequired(): void;
 }
 

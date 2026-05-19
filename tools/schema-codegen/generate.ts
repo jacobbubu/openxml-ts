@@ -196,6 +196,9 @@ function buildRegistry(
     // 但段落 / Run 直接子的最高频含义是 ParagraphProperties / RunProperties。
     "http://schemas.openxmlformats.org/wordprocessingml/2006/main::pPr": "ParagraphProperties",
     "http://schemas.openxmlformats.org/wordprocessingml/2006/main::rPr": "RunProperties",
+    // Word `<w:fldSimple>` 字典序 SimpleFieldRuby 胜出（拼音注音里的字段），
+    // 但顶层段落用户最高频是 SimpleField（PAGE / NUMPAGES 等字段）。
+    "http://schemas.openxmlformats.org/wordprocessingml/2006/main::fldSimple": "SimpleField",
     // Excel: 字典序「ExternalDefinedName(s)」压过 canonical「DefinedName(s)」，
     // 但 workbook.xml 顶层 \`<definedNames>\` 引用的是 canonical 那一对——强制覆盖回。
     "http://schemas.openxmlformats.org/spreadsheetml/2006/main::definedName": "DefinedName",

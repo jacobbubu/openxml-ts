@@ -96,6 +96,15 @@ export {
   setDocumentTableCellText,
 } from "./table-markup.js";
 
+// ─── Word 简单字段（Epic-34） ────────────────────────────────────────────────
+export { SimpleField } from "./generated/simple-field.js";
+export {
+  type CreateFieldRunOptions,
+  createFieldRun,
+  createPageNumberRun,
+  createTotalPagesRun,
+} from "./field-markup.js";
+
 // ─── Word 列表 / 编号（Epic-22） ─────────────────────────────────────────────
 export { Numbering } from "./generated/numbering.js";
 export { NumberingPart } from "./parts/numbering-part.js";
