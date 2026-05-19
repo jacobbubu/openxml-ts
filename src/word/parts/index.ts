@@ -7,3 +7,5 @@ export { FontTablePart } from "./font-table-part.js";
 export { WebSettingsPart } from "./web-settings-part.js";
 export { CommentsPart } from "./comments-part.js";
 export { NumberingPart } from "./numbering-part.js";
+export { HeaderPart } from "./header-part.js";
+export { FooterPart } from "./footer-part.js";
