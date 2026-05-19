@@ -244,6 +244,70 @@ export function getSlideTableCellText(table: OpenXmlElement, row: number, col: n
 }
 
 /**
+ * 合并表格里 `(fromRow, fromCol)` 到 `(toRow, toCol)` 范围的单元格——Story-20。
+ *
+ * DrawingML 合并语义（ECMA-376-1 §20.1.4.2 / §20.1.4.3）：
+ *
+ * - 主格 (fromRow, fromCol)：写 `a:gridSpan="N"` / `a:rowSpan="N"`（N > 1 时）；
+ * - 同行（row == fromRow）右侧被合并 cell：写 `a:hMerge="1"`；
+ * - 同列（col == fromCol）下方被合并 cell：写 `a:vMerge="1"`；
+ * - 两个方向都覆盖的 cell：两个 merge 标志叠加。
+ *
+ * 文本：建议合并前先设主格文本；其它 cell 的 \`<a:t>\` 会被 PowerPoint 忽略
+ * 渲染（合并视觉只显示主格）。
+ *
+ * @throws OpenXmlPackageError 当范围越界 / 反向（toRow < fromRow / toCol < fromCol）/
+ *   表中 row 数不足时（code="BACKEND_ERROR"）
+ */
+export function mergeSlideTableCells(
+  table: OpenXmlElement,
+  fromRow: number,
+  fromCol: number,
+  toRow: number,
+  toCol: number,
+): void {
+  if (toRow < fromRow || toCol < fromCol) {
+    throw new OpenXmlPackageError({
+      code: "BACKEND_ERROR",
+      message: `mergeSlideTableCells: range reversed (from=(${fromRow},${fromCol}) to=(${toRow},${toCol}))`,
+    });
+  }
+  if (fromRow < 0 || fromCol < 0) {
+    throw new OpenXmlPackageError({
+      code: "BACKEND_ERROR",
+      message: "mergeSlideTableCells: row/col must be ≥ 0",
+    });
+  }
+
+  // 预先 findCell 验证全部存在——单元格越界在这里抛
+  for (let r = fromRow; r <= toRow; r += 1) {
+    for (let c = fromCol; c <= toCol; c += 1) {
+      findCell(table, r, c);
+    }
+  }
+
+  const gridSpan = toCol - fromCol + 1;
+  const rowSpan = toRow - fromRow + 1;
+
+  for (let r = fromRow; r <= toRow; r += 1) {
+    for (let c = fromCol; c <= toCol; c += 1) {
+      const tc = findCell(table, r, c);
+      if (r === fromRow && c === fromCol) {
+        if (gridSpan > 1) tc.extendedAttributes.set("gridSpan", String(gridSpan));
+        if (rowSpan > 1) tc.extendedAttributes.set("rowSpan", String(rowSpan));
+      } else {
+        if (r === fromRow) tc.extendedAttributes.set("hMerge", "1");
+        else if (c === fromCol) tc.extendedAttributes.set("vMerge", "1");
+        else {
+          tc.extendedAttributes.set("hMerge", "1");
+          tc.extendedAttributes.set("vMerge", "1");
+        }
+      }
+    }
+  }
+}
+
+/**
  * 注意：本助手既兼容**新构造**（OpenXmlUnknownElement 一整套）也兼容**reopen 后**
  * （drawingml 的 \`a:tbl\` / \`a:tr\` / \`a:tc\` 等已经有 typed 类，会被 deserializer
  * 解析成 Table / TableRow / TableCell typed 实例）。所以这里按 \`localName\` 匹配，
