@@ -43,5 +43,6 @@ export {
   type CreateSlideTableOptions,
   createSlideTable,
   getSlideTableCellText,
+  mergeSlideTableCells,
   setSlideTableCellText,
 } from "./table-markup.js";

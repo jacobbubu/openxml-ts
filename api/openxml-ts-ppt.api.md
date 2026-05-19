@@ -78,6 +78,9 @@ export class ImagePart extends BinaryPart {
 }
 
 // @public
+export function mergeSlideTableCells(table: OpenXmlElement, fromRow: number, fromCol: number, toRow: number, toCol: number): void;
+
+// @public
 export function mimeForExtension(ext: string): string | undefined;
 
 // Warning: (ae-forgotten-export) The symbol "NotesMaster" needs to be exported by the entry point index.d.ts
