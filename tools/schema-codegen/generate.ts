@@ -207,6 +207,9 @@ function buildRegistry(
     // Word `<w:sz>`：字典序 FrameSize 胜出（用于 frame 框架的尺寸），但 Run 内
     // `<w:rPr><w:sz w:val="24"/>` 是字号的 canonical 类，最高频。
     "http://schemas.openxmlformats.org/wordprocessingml/2006/main::sz": "FontSize",
+    // Word `<w:pStyle>`：字典序 ParagraphStyleIdInLevel（numbering 内部用）胜出，
+    // 但段落级 pPr 直接子的最高频含义是 canonical ParagraphStyleId（引用 style 条目）。
+    "http://schemas.openxmlformats.org/wordprocessingml/2006/main::pStyle": "ParagraphStyleId",
     // Word `<w:tcPr>` / `<w:tblPr>` / `<w:trPr>`：字典序 TableStyleConditional* 胜出，
     // 但表格 / 行 / 单元格直接子的最高频含义是 canonical TableCellProperties / TableProperties /
     // TableRowProperties。
