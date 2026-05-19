@@ -28,6 +28,8 @@ export {
 export {
   CommentsPart,
   FontTablePart,
+  FooterPart,
+  HeaderPart,
   MainDocumentPart,
   SettingsPart,
   StylesPart,

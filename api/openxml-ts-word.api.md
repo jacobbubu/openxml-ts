@@ -350,6 +350,17 @@ export class Footer extends OpenXmlCompositeElement {
     readonly prefix: "w";
 }
 
+// @public (undocumented)
+export class FooterPart extends TypedXmlPart<Footer> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml";
+    get footer(): Footer;
+    set footer(value: Footer);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer";
+}
+
 // @public
 export class FooterReference extends OpenXmlLeafElement {
     // (undocumented)
@@ -388,6 +399,17 @@ export class Header extends OpenXmlCompositeElement {
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+}
+
+// @public (undocumented)
+export class HeaderPart extends TypedXmlPart<Header> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml";
+    get header(): Header;
+    set header(value: Header);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header";
 }
 
 // @public
@@ -1063,6 +1085,14 @@ export class WordprocessingDocument {
         rangeStart: CommentRangeStart;
         rangeEnd: CommentRangeEnd;
         reference: Run;
+    };
+    addFooter(text: string, type?: "default" | "first" | "even"): {
+        part: FooterPart;
+        relId: string;
+    };
+    addHeader(text: string, type?: "default" | "first" | "even"): {
+        part: HeaderPart;
+        relId: string;
     };
     // (undocumented)
     addHyperlinkRelationship(url: string, opts?: {

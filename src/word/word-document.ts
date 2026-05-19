@@ -55,6 +55,8 @@ import { CommentReference } from "./generated/comment-reference.js";
 import { Comment } from "./generated/comment.js";
 import { DeletedRun } from "./generated/deleted-run.js";
 import { Document } from "./generated/document.js";
+import { FooterReference } from "./generated/footer-reference.js";
+import { HeaderReference } from "./generated/header-reference.js";
 import { InsertedRun } from "./generated/inserted-run.js";
 import { LevelJustification } from "./generated/level-justification.js";
 import { LevelText } from "./generated/level-text.js";
@@ -65,10 +67,13 @@ import { Paragraph } from "./generated/paragraph.js";
 import { RunProperties } from "./generated/run-properties.js";
 import { RunStyle } from "./generated/run-style.js";
 import { Run } from "./generated/run.js";
+import { SectionProperties } from "./generated/section-properties.js";
 import { Text } from "./generated/text.js";
 import {
   CommentsPart,
   FontTablePart,
+  FooterPart,
+  HeaderPart,
   MainDocumentPart,
   NumberingPart,
   SettingsPart,
@@ -157,6 +162,119 @@ export class WordprocessingDocument {
   /** Word 编号定义 Part（mainDocumentPart 的 part-level 关系）；不存在时返 undefined。 */
   get numberingPart(): NumberingPart | undefined {
     return this.getOrLoadTypedPartFromMain(NumberingPart);
+  }
+
+  /**
+   * 加一个页眉（Story-26.2，Epic-26）。
+   *
+   * 自动：分配 \`/word/headerN.xml\` URI + createPart + 接 main 关系 + 写
+   * \`<w:hdr><w:p>…</w:p></w:hdr>\` + 在 body 末尾的 \`<w:sectPr>\` 挂
+   * \`<w:headerReference w:type="..." r:id="rIdN"/>\`。
+   *
+   * @param text 页眉文本（单段纯文本）
+   * @param type "default" / "first" / "even"，默认 "default"
+   */
+  addHeader(
+    text: string,
+    type: "default" | "first" | "even" = "default",
+  ): { part: HeaderPart; relId: string } {
+    const main = this.mainDocumentPart;
+    if (main === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "addHeader: mainDocumentPart is missing",
+      });
+    }
+    const uri = this.nextHeaderFooterUri("header") as PartUri;
+    const part = this.pkg.createPart(uri, HeaderPart.contentType);
+    const rel = main.part.relationships.create({
+      type: HeaderPart.relationshipType,
+      target: uri.slice("/word/".length),
+      targetMode: "internal",
+    });
+    const hp = new HeaderPart(part, wordRegistry);
+    fillHeaderFooterBody(hp.header, text);
+
+    // sectPr 挂 reference
+    const sectPr = this.ensureSectionProperties();
+    const ref = new HeaderReference();
+    ref.extendedAttributes.set("w:type", type);
+    ref.extendedAttributes.set("r:id", rel.id);
+    // SectionProperties 接受 \`<w:headerReference>\` 在最前面
+    const first = sectPr.children.at(0);
+    if (first === undefined) sectPr.appendChild(ref);
+    else sectPr.children.insertBefore(ref, first);
+
+    this.typedParts.set(uri, hp); // 按 URI 缓存（typedParts 一般按 relationshipType 但 header/footer 多实例）
+    return { part: hp, relId: rel.id };
+  }
+
+  /**
+   * 加一个页脚——同 addHeader 但走 footer 类型。
+   */
+  addFooter(
+    text: string,
+    type: "default" | "first" | "even" = "default",
+  ): { part: FooterPart; relId: string } {
+    const main = this.mainDocumentPart;
+    if (main === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "addFooter: mainDocumentPart is missing",
+      });
+    }
+    const uri = this.nextHeaderFooterUri("footer") as PartUri;
+    const part = this.pkg.createPart(uri, FooterPart.contentType);
+    const rel = main.part.relationships.create({
+      type: FooterPart.relationshipType,
+      target: uri.slice("/word/".length),
+      targetMode: "internal",
+    });
+    const fp = new FooterPart(part, wordRegistry);
+    fillHeaderFooterBody(fp.footer, text);
+
+    const sectPr = this.ensureSectionProperties();
+    const ref = new FooterReference();
+    ref.extendedAttributes.set("w:type", type);
+    ref.extendedAttributes.set("r:id", rel.id);
+    const first = sectPr.children.at(0);
+    if (first === undefined) sectPr.appendChild(ref);
+    else sectPr.children.insertBefore(ref, first);
+
+    this.typedParts.set(uri, fp);
+    return { part: fp, relId: rel.id };
+  }
+
+  /** 找下一个未用的 /word/headerN.xml 或 footerN.xml 序号。 */
+  private nextHeaderFooterUri(kind: "header" | "footer"): string {
+    let n = 1;
+    while (this.pkg.hasPart(`/word/${kind}${n}.xml` as PartUri)) n += 1;
+    return `/word/${kind}${n}.xml`;
+  }
+
+  /** 找 body 末尾的 \`<w:sectPr>\`，没有就 append 一个空 sectPr。 */
+  private ensureSectionProperties(): SectionProperties {
+    const main = this.mainDocumentPart;
+    if (main === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "ensureSectionProperties: mainDocumentPart missing",
+      });
+    }
+    const body = main.document.firstChild(Body);
+    if (body === undefined) {
+      throw new OpenXmlPackageError({
+        code: "BACKEND_ERROR",
+        message: "ensureSectionProperties: document missing body",
+      });
+    }
+    // SectionProperties 通常是 body 的最后一个 child
+    for (const child of body.children) {
+      if (child instanceof SectionProperties) return child;
+    }
+    const sectPr = new SectionProperties();
+    body.appendChild(sectPr);
+    return sectPr;
   }
 
   /**
@@ -578,6 +696,22 @@ function findRelationship(
     if (relationshipTypeMatches(rel.type, relationshipType)) return rel;
   }
   return undefined;
+}
+
+// ─── Epic-26 页眉页脚辅助 ────────────────────────────────────────────────────
+
+/** 给 hdr/ftr 根挂一段单 Run 单 Text 的初始段落。 */
+function fillHeaderFooterBody(root: OpenXmlCompositeElement, text: string): void {
+  const p = new Paragraph();
+  const r = new Run();
+  const t = new Text();
+  t.text = text;
+  if (text.startsWith(" ") || text.endsWith(" ") || /\s{2,}/.test(text)) {
+    t.extendedAttributes.set("xml:space", "preserve");
+  }
+  r.appendChild(t);
+  p.appendChild(r);
+  root.appendChild(p);
 }
 
 // ─── Epic-22 列表定义辅助 ────────────────────────────────────────────────────
