@@ -84,3 +84,14 @@ export {
   setFreezePanes,
   getFreezePanes,
 } from "./worksheet-freeze.js";
+
+// ─── Excel 列宽 / 行高（Epic-33） ────────────────────────────────────────────
+export { Column } from "./generated/column.js";
+export { Columns } from "./generated/columns.js";
+export {
+  type ColumnWidthRange,
+  setColumnWidth,
+  getColumnWidth,
+  setRowHeight,
+  getRowHeight,
+} from "./worksheet-dimensions.js";
