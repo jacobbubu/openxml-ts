@@ -17,12 +17,13 @@ function u(prefix: string, localName: string, ns: string): OpenXmlUnknownElement
 }
 
 function appendTitlePlaceholder(slide: Slide, initial: string): void {
-  const spTree = slide
-    .descendants()
-    .find(
-      (d): d is OpenXmlCompositeElement =>
-        d.localName === "spTree" && d instanceof OpenXmlCompositeElement,
-    );
+  let spTree: OpenXmlCompositeElement | undefined;
+  for (const d of slide.descendants()) {
+    if (d.localName === "spTree" && d instanceof OpenXmlCompositeElement) {
+      spTree = d;
+      break;
+    }
+  }
   if (spTree === undefined) throw new Error("slide missing spTree");
 
   const sp = u("p", "sp", NS_P);

@@ -108,20 +108,22 @@ describe("Slide.title", () => {
     const slidePart = doc.presentationPart!.slideParts[0]!;
     const slide = slidePart.slide;
     // seed slide 没 title placeholder——往现有 spTree 加一个 title sp
-    const spTree = slide
-      .descendants()
-      .find(
-        (d): d is OpenXmlCompositeElement =>
-          d.localName === "spTree" && d instanceof OpenXmlCompositeElement,
-      );
+    let spTree: OpenXmlCompositeElement | undefined;
+    for (const d of slide.descendants()) {
+      if (d.localName === "spTree" && d instanceof OpenXmlCompositeElement) {
+        spTree = d;
+        break;
+      }
+    }
     if (spTree === undefined) throw new Error("seed slide missing spTree");
     const temp = buildTitleSlide("Round Trip Title");
-    const titleSp = temp
-      .descendants()
-      .find(
-        (d): d is OpenXmlCompositeElement =>
-          d.localName === "sp" && d instanceof OpenXmlCompositeElement,
-      );
+    let titleSp: OpenXmlCompositeElement | undefined;
+    for (const d of temp.descendants()) {
+      if (d.localName === "sp" && d instanceof OpenXmlCompositeElement) {
+        titleSp = d;
+        break;
+      }
+    }
     if (titleSp === undefined) throw new Error("title sp not built");
     titleSp.parent?.children.remove(titleSp);
     spTree.appendChild(titleSp);
