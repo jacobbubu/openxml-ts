@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.10.0](https://github.com/jacobbubu/openxml-ts/compare/v0.9.0...v0.10.0) (2026-05-19)
+
+
+### Features
+
+* **excel:** Epic-25 Cell.formula / cachedValue 访问器 ([#111](https://github.com/jacobbubu/openxml-ts/issues/111)) ([329c4f4](https://github.com/jacobbubu/openxml-ts/commit/329c4f48d64e599debf1a18fdbf304b4ed2651b4))
+* **excel:** Epic-25 Cell.formula / Cell.cachedValue 访问器 ([#111](https://github.com/jacobbubu/openxml-ts/issues/111)) ([c640ccd](https://github.com/jacobbubu/openxml-ts/commit/c640ccd41c6e0a8889adf9baaadac4a4ff625aa6))
+* **ppt:** Epic-24 PPT 文本访问器 ([#109](https://github.com/jacobbubu/openxml-ts/issues/109)) ([d6fe526](https://github.com/jacobbubu/openxml-ts/commit/d6fe526e3f49fc0f611ab089ab8e244ec01de541))
+* **ppt:** Epic-24 PPT 文本访问器（Slide / Shape / Paragraph / Run.text） ([#109](https://github.com/jacobbubu/openxml-ts/issues/109)) ([acbf71e](https://github.com/jacobbubu/openxml-ts/commit/acbf71ec8969223a768257df7186513cf6d593d7))
+* **word:** Epic-23 Word 表格合并单元格 ([#106](https://github.com/jacobbubu/openxml-ts/issues/106)) ([a32ff38](https://github.com/jacobbubu/openxml-ts/commit/a32ff38a0ad9174001a81e5ce723999408f47682))
+* **word:** Epic-23 Word 表格合并单元格 mergeDocumentTableCells ([#106](https://github.com/jacobbubu/openxml-ts/issues/106)) ([2b61b91](https://github.com/jacobbubu/openxml-ts/commit/2b61b91d6349895803a26e82905e3368fdac5d54))
+
 ## [0.9.0](https://github.com/jacobbubu/openxml-ts/compare/v0.8.0...v0.9.0) (2026-05-19)
 
 
