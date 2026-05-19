@@ -80,6 +80,14 @@ export {
   createDeletedRun,
 } from "./revision-markup.js";
 
+// ─── Word 表格（Epic-21） ────────────────────────────────────────────────────
+export {
+  type CreateDocumentTableOptions,
+  createDocumentTable,
+  getDocumentTableCellText,
+  setDocumentTableCellText,
+} from "./table-markup.js";
+
 // ─── 核心结构 ─────────────────────────────────────────────────────────────────
 
 export { Document } from "./generated/document.js";

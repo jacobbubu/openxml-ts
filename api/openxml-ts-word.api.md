@@ -205,6 +205,16 @@ export function createBookmarkPair(name: string, id?: number): {
 // @public
 export function createDeletedRun(opts: RevisionOptions): DeletedRun;
 
+// @public
+export function createDocumentTable(rows: number, cols: number, options?: CreateDocumentTableOptions): Table;
+
+// @public (undocumented)
+export interface CreateDocumentTableOptions {
+    readonly borders?: boolean;
+    readonly columnWidthsDxa?: readonly number[];
+    readonly totalWidthDxa?: number;
+}
+
 // Warning: (ae-forgotten-export) The symbol "CreateHyperlinkInput" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "CreateRelationshipInput" needs to be exported by the entry point index.d.ts
 //
@@ -346,6 +356,9 @@ export class FooterReference extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "w";
 }
+
+// @public
+export function getDocumentTableCellText(table: Table, row: number, col: number): string;
 
 // @public
 export class GridColumn extends OpenXmlLeafElement {
@@ -660,6 +673,9 @@ export class SectionProperties extends OpenXmlCompositeElement {
     rsidRPr: HexBinaryValue | undefined;
     rsidSect: HexBinaryValue | undefined;
 }
+
+// @public
+export function setDocumentTableCellText(table: Table, row: number, col: number, text: string): void;
 
 // @public
 export class Settings extends OpenXmlCompositeElement {
