@@ -380,7 +380,7 @@ import { ParagraphBorders } from "./paragraph-borders.js";
 import { ParagraphProperties } from "./paragraph-properties.js";
 import { ParagraphPropertiesChange } from "./paragraph-properties-change.js";
 import { ParagraphPropertiesDefault } from "./paragraph-properties-default.js";
-import { ParagraphStyleIdInLevel } from "./paragraph-style-id-in-level.js";
+import { ParagraphStyleId } from "./paragraph-style-id.js";
 import { PermEnd } from "./perm-end.js";
 import { PermStart } from "./perm-start.js";
 import { Personal } from "./personal.js";
@@ -990,7 +990,7 @@ export function registerWordprocessingElements(registry: ElementRegistry): void 
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "pPr", ParagraphProperties);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "pPrChange", ParagraphPropertiesChange);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "pPrDefault", ParagraphPropertiesDefault);
-  registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "pStyle", ParagraphStyleIdInLevel);
+  registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "pStyle", ParagraphStyleId);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "permEnd", PermEnd);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "permStart", PermStart);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "personal", Personal);
