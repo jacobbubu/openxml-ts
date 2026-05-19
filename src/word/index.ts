@@ -23,6 +23,7 @@ import "./extensions/paragraph-style-id.js";
 import "./extensions/paragraph-tab-stops.js";
 import "./extensions/run-extensions.js";
 import "./extensions/run-formatting.js";
+import "./extensions/run-fonts.js";
 import "./extensions/run-style-id.js";
 import "./extensions/table-cell-shading.js";
 
