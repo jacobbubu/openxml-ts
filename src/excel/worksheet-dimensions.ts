@@ -35,11 +35,11 @@ export interface ColumnWidthRange {
  * 设置 worksheet 上一段连续列的宽度。
  *
  * 行为：
- * - widthChars = undefined：把 [from..to] 范围内的 `<x:col>` 删除 / 缩短 / 拆分，
+ * - widthChars = undefined：把 [from..to] 范围内的 col 元素 删除 / 缩短 / 拆分，
  *   恢复 Excel 默认列宽
- * - widthChars 有值：先做 undefined 路径的清理，再插入一条 `<x:col min=from max=to
- *   width=W customWidth="1"/>`
- * - 自动确保 `<x:cols>` 存在；空 cols 自动清掉
+ * - widthChars 有值：先做 undefined 路径的清理，再插入一条 col 元素
+ *   （min=from, max=to, width=W, customWidth="1"）
+ * - 自动确保 cols 存在；空 cols 自动清掉
  */
 export function setColumnWidth(worksheet: Worksheet, range: ColumnWidthRange): void {
   if (range.from < 1 || range.to < range.from) {
