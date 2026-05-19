@@ -27,9 +27,9 @@ export abstract class LineEndPropertiesType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":w": this.width = StringValue.parse(value); return;
-      case ":len": this.length = StringValue.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "w": this.width = StringValue.parse(value); return;
+      case "len": this.length = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -37,9 +37,9 @@ export abstract class LineEndPropertiesType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.width !== undefined) out.push([":w", this.width.toString()]);
-    if (this.length !== undefined) out.push([":len", this.length.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.width !== undefined) out.push(["w", this.width.toString()]);
+    if (this.length !== undefined) out.push(["len", this.length.toString()]);
     return out;
   }
 

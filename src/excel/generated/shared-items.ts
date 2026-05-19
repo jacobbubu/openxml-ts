@@ -64,20 +64,20 @@ export class SharedItems extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":containsSemiMixedTypes": this.containsSemiMixedTypes = BooleanValue.parse(value); return;
-      case ":containsNonDate": this.containsNonDate = BooleanValue.parse(value); return;
-      case ":containsDate": this.containsDate = BooleanValue.parse(value); return;
-      case ":containsString": this.containsString = BooleanValue.parse(value); return;
-      case ":containsBlank": this.containsBlank = BooleanValue.parse(value); return;
-      case ":containsMixedTypes": this.containsMixedTypes = BooleanValue.parse(value); return;
-      case ":containsNumber": this.containsNumber = BooleanValue.parse(value); return;
-      case ":containsInteger": this.containsInteger = BooleanValue.parse(value); return;
-      case ":minValue": this.minValue = StringValue.parse(value); return;
-      case ":maxValue": this.maxValue = StringValue.parse(value); return;
-      case ":minDate": this.minDate = DateTimeValue.parse(value); return;
-      case ":maxDate": this.maxDate = DateTimeValue.parse(value); return;
-      case ":count": this.count = UInt32Value.parse(value); return;
-      case ":longText": this.longText = BooleanValue.parse(value); return;
+      case "containsSemiMixedTypes": this.containsSemiMixedTypes = BooleanValue.parse(value); return;
+      case "containsNonDate": this.containsNonDate = BooleanValue.parse(value); return;
+      case "containsDate": this.containsDate = BooleanValue.parse(value); return;
+      case "containsString": this.containsString = BooleanValue.parse(value); return;
+      case "containsBlank": this.containsBlank = BooleanValue.parse(value); return;
+      case "containsMixedTypes": this.containsMixedTypes = BooleanValue.parse(value); return;
+      case "containsNumber": this.containsNumber = BooleanValue.parse(value); return;
+      case "containsInteger": this.containsInteger = BooleanValue.parse(value); return;
+      case "minValue": this.minValue = StringValue.parse(value); return;
+      case "maxValue": this.maxValue = StringValue.parse(value); return;
+      case "minDate": this.minDate = DateTimeValue.parse(value); return;
+      case "maxDate": this.maxDate = DateTimeValue.parse(value); return;
+      case "count": this.count = UInt32Value.parse(value); return;
+      case "longText": this.longText = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -85,20 +85,20 @@ export class SharedItems extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.containsSemiMixedTypes !== undefined) out.push([":containsSemiMixedTypes", this.containsSemiMixedTypes.toString()]);
-    if (this.containsNonDate !== undefined) out.push([":containsNonDate", this.containsNonDate.toString()]);
-    if (this.containsDate !== undefined) out.push([":containsDate", this.containsDate.toString()]);
-    if (this.containsString !== undefined) out.push([":containsString", this.containsString.toString()]);
-    if (this.containsBlank !== undefined) out.push([":containsBlank", this.containsBlank.toString()]);
-    if (this.containsMixedTypes !== undefined) out.push([":containsMixedTypes", this.containsMixedTypes.toString()]);
-    if (this.containsNumber !== undefined) out.push([":containsNumber", this.containsNumber.toString()]);
-    if (this.containsInteger !== undefined) out.push([":containsInteger", this.containsInteger.toString()]);
-    if (this.minValue !== undefined) out.push([":minValue", this.minValue.toString()]);
-    if (this.maxValue !== undefined) out.push([":maxValue", this.maxValue.toString()]);
-    if (this.minDate !== undefined) out.push([":minDate", this.minDate.toString()]);
-    if (this.maxDate !== undefined) out.push([":maxDate", this.maxDate.toString()]);
-    if (this.count !== undefined) out.push([":count", this.count.toString()]);
-    if (this.longText !== undefined) out.push([":longText", this.longText.toString()]);
+    if (this.containsSemiMixedTypes !== undefined) out.push(["containsSemiMixedTypes", this.containsSemiMixedTypes.toString()]);
+    if (this.containsNonDate !== undefined) out.push(["containsNonDate", this.containsNonDate.toString()]);
+    if (this.containsDate !== undefined) out.push(["containsDate", this.containsDate.toString()]);
+    if (this.containsString !== undefined) out.push(["containsString", this.containsString.toString()]);
+    if (this.containsBlank !== undefined) out.push(["containsBlank", this.containsBlank.toString()]);
+    if (this.containsMixedTypes !== undefined) out.push(["containsMixedTypes", this.containsMixedTypes.toString()]);
+    if (this.containsNumber !== undefined) out.push(["containsNumber", this.containsNumber.toString()]);
+    if (this.containsInteger !== undefined) out.push(["containsInteger", this.containsInteger.toString()]);
+    if (this.minValue !== undefined) out.push(["minValue", this.minValue.toString()]);
+    if (this.maxValue !== undefined) out.push(["maxValue", this.maxValue.toString()]);
+    if (this.minDate !== undefined) out.push(["minDate", this.minDate.toString()]);
+    if (this.maxDate !== undefined) out.push(["maxDate", this.maxDate.toString()]);
+    if (this.count !== undefined) out.push(["count", this.count.toString()]);
+    if (this.longText !== undefined) out.push(["longText", this.longText.toString()]);
     return out;
   }
 

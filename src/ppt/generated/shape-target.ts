@@ -23,7 +23,7 @@ export class ShapeTarget extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":spid": this.shapeId = StringValue.parse(value); return;
+      case "spid": this.shapeId = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class ShapeTarget extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.shapeId !== undefined) out.push([":spid", this.shapeId.toString()]);
+    if (this.shapeId !== undefined) out.push(["spid", this.shapeId.toString()]);
     return out;
   }
 

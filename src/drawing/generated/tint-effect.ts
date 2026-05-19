@@ -25,8 +25,8 @@ export class TintEffect extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":hue": this.hue = Int32Value.parse(value); assertNumber(this.hue, { min: 0 }, { attribute: ":hue", elementClass: "TintEffect" }); return;
-      case ":amt": this.amount = Int32Value.parse(value); assertNumber(this.amount, { min: -100000, max: 100000 }, { attribute: ":amt", elementClass: "TintEffect" }); return;
+      case "hue": this.hue = Int32Value.parse(value); assertNumber(this.hue, { min: 0 }, { attribute: ":hue", elementClass: "TintEffect" }); return;
+      case "amt": this.amount = Int32Value.parse(value); assertNumber(this.amount, { min: -100000, max: 100000 }, { attribute: ":amt", elementClass: "TintEffect" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class TintEffect extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.hue !== undefined) out.push([":hue", this.hue.toString()]);
-    if (this.amount !== undefined) out.push([":amt", this.amount.toString()]);
+    if (this.hue !== undefined) out.push(["hue", this.hue.toString()]);
+    if (this.amount !== undefined) out.push(["amt", this.amount.toString()]);
     return out;
   }
 

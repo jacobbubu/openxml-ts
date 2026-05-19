@@ -40,13 +40,13 @@ export class TableProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rtl": this.rightToLeft = BooleanValue.parse(value); return;
-      case ":firstRow": this.firstRow = BooleanValue.parse(value); return;
-      case ":firstCol": this.firstColumn = BooleanValue.parse(value); return;
-      case ":lastRow": this.lastRow = BooleanValue.parse(value); return;
-      case ":lastCol": this.lastColumn = BooleanValue.parse(value); return;
-      case ":bandRow": this.bandRow = BooleanValue.parse(value); return;
-      case ":bandCol": this.bandColumn = BooleanValue.parse(value); return;
+      case "rtl": this.rightToLeft = BooleanValue.parse(value); return;
+      case "firstRow": this.firstRow = BooleanValue.parse(value); return;
+      case "firstCol": this.firstColumn = BooleanValue.parse(value); return;
+      case "lastRow": this.lastRow = BooleanValue.parse(value); return;
+      case "lastCol": this.lastColumn = BooleanValue.parse(value); return;
+      case "bandRow": this.bandRow = BooleanValue.parse(value); return;
+      case "bandCol": this.bandColumn = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -54,13 +54,13 @@ export class TableProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.rightToLeft !== undefined) out.push([":rtl", this.rightToLeft.toString()]);
-    if (this.firstRow !== undefined) out.push([":firstRow", this.firstRow.toString()]);
-    if (this.firstColumn !== undefined) out.push([":firstCol", this.firstColumn.toString()]);
-    if (this.lastRow !== undefined) out.push([":lastRow", this.lastRow.toString()]);
-    if (this.lastColumn !== undefined) out.push([":lastCol", this.lastColumn.toString()]);
-    if (this.bandRow !== undefined) out.push([":bandRow", this.bandRow.toString()]);
-    if (this.bandColumn !== undefined) out.push([":bandCol", this.bandColumn.toString()]);
+    if (this.rightToLeft !== undefined) out.push(["rtl", this.rightToLeft.toString()]);
+    if (this.firstRow !== undefined) out.push(["firstRow", this.firstRow.toString()]);
+    if (this.firstColumn !== undefined) out.push(["firstCol", this.firstColumn.toString()]);
+    if (this.lastRow !== undefined) out.push(["lastRow", this.lastRow.toString()]);
+    if (this.lastColumn !== undefined) out.push(["lastCol", this.lastColumn.toString()]);
+    if (this.bandRow !== undefined) out.push(["bandRow", this.bandRow.toString()]);
+    if (this.bandColumn !== undefined) out.push(["bandCol", this.bandColumn.toString()]);
     return out;
   }
 

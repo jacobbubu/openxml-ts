@@ -29,9 +29,9 @@ export class PhoneticProperties extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":fontId": this.fontId = UInt32Value.parse(value); return;
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":alignment": this.alignment = StringValue.parse(value); return;
+      case "fontId": this.fontId = UInt32Value.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "alignment": this.alignment = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class PhoneticProperties extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.fontId !== undefined) out.push([":fontId", this.fontId.toString()]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.alignment !== undefined) out.push([":alignment", this.alignment.toString()]);
+    if (this.fontId !== undefined) out.push(["fontId", this.fontId.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.alignment !== undefined) out.push(["alignment", this.alignment.toString()]);
     return out;
   }
 

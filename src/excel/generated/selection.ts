@@ -31,10 +31,10 @@ export class Selection extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":pane": this.pane = StringValue.parse(value); return;
-      case ":activeCell": this.activeCell = StringValue.parse(value); return;
-      case ":activeCellId": this.activeCellId = UInt32Value.parse(value); return;
-      case ":sqref": this.sequenceOfReferences = StringValue.parse(value); return;
+      case "pane": this.pane = StringValue.parse(value); return;
+      case "activeCell": this.activeCell = StringValue.parse(value); return;
+      case "activeCellId": this.activeCellId = UInt32Value.parse(value); return;
+      case "sqref": this.sequenceOfReferences = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -42,10 +42,10 @@ export class Selection extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.pane !== undefined) out.push([":pane", this.pane.toString()]);
-    if (this.activeCell !== undefined) out.push([":activeCell", this.activeCell.toString()]);
-    if (this.activeCellId !== undefined) out.push([":activeCellId", this.activeCellId.toString()]);
-    if (this.sequenceOfReferences !== undefined) out.push([":sqref", this.sequenceOfReferences.toString()]);
+    if (this.pane !== undefined) out.push(["pane", this.pane.toString()]);
+    if (this.activeCell !== undefined) out.push(["activeCell", this.activeCell.toString()]);
+    if (this.activeCellId !== undefined) out.push(["activeCellId", this.activeCellId.toString()]);
+    if (this.sequenceOfReferences !== undefined) out.push(["sqref", this.sequenceOfReferences.toString()]);
     return out;
   }
 

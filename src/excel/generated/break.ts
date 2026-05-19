@@ -34,11 +34,11 @@ export class Break extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = UInt32Value.parse(value); return;
-      case ":min": this.min = UInt32Value.parse(value); return;
-      case ":max": this.max = UInt32Value.parse(value); return;
-      case ":man": this.manualPageBreak = BooleanValue.parse(value); return;
-      case ":pt": this.pivotTablePageBreak = BooleanValue.parse(value); return;
+      case "id": this.id = UInt32Value.parse(value); return;
+      case "min": this.min = UInt32Value.parse(value); return;
+      case "max": this.max = UInt32Value.parse(value); return;
+      case "man": this.manualPageBreak = BooleanValue.parse(value); return;
+      case "pt": this.pivotTablePageBreak = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -46,11 +46,11 @@ export class Break extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
-    if (this.min !== undefined) out.push([":min", this.min.toString()]);
-    if (this.max !== undefined) out.push([":max", this.max.toString()]);
-    if (this.manualPageBreak !== undefined) out.push([":man", this.manualPageBreak.toString()]);
-    if (this.pivotTablePageBreak !== undefined) out.push([":pt", this.pivotTablePageBreak.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    if (this.min !== undefined) out.push(["min", this.min.toString()]);
+    if (this.max !== undefined) out.push(["max", this.max.toString()]);
+    if (this.manualPageBreak !== undefined) out.push(["man", this.manualPageBreak.toString()]);
+    if (this.pivotTablePageBreak !== undefined) out.push(["pt", this.pivotTablePageBreak.toString()]);
     return out;
   }
 

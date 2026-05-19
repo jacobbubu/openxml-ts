@@ -26,8 +26,8 @@ export class DdeLink extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":ddeService": this.ddeService = StringValue.parse(value); return;
-      case ":ddeTopic": this.ddeTopic = StringValue.parse(value); return;
+      case "ddeService": this.ddeService = StringValue.parse(value); return;
+      case "ddeTopic": this.ddeTopic = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class DdeLink extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.ddeService !== undefined) out.push([":ddeService", this.ddeService.toString()]);
-    if (this.ddeTopic !== undefined) out.push([":ddeTopic", this.ddeTopic.toString()]);
+    if (this.ddeService !== undefined) out.push(["ddeService", this.ddeService.toString()]);
+    if (this.ddeTopic !== undefined) out.push(["ddeTopic", this.ddeTopic.toString()]);
     return out;
   }
 

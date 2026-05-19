@@ -43,13 +43,13 @@ export class Header extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":guid": this.guid = StringValue.parse(value); return;
-      case ":dateTime": this.dateTime = DateTimeValue.parse(value); return;
-      case ":maxSheetId": this.maxSheetId = UInt32Value.parse(value); return;
-      case ":userName": this.userName = StringValue.parse(value); return;
+      case "guid": this.guid = StringValue.parse(value); return;
+      case "dateTime": this.dateTime = DateTimeValue.parse(value); return;
+      case "maxSheetId": this.maxSheetId = UInt32Value.parse(value); return;
+      case "userName": this.userName = StringValue.parse(value); return;
       case "r:id": this.id = StringValue.parse(value); return;
-      case ":minRId": this.minRevisionId = UInt32Value.parse(value); return;
-      case ":maxRId": this.maxRevisionId = UInt32Value.parse(value); return;
+      case "minRId": this.minRevisionId = UInt32Value.parse(value); return;
+      case "maxRId": this.maxRevisionId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -57,13 +57,13 @@ export class Header extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.guid !== undefined) out.push([":guid", this.guid.toString()]);
-    if (this.dateTime !== undefined) out.push([":dateTime", this.dateTime.toString()]);
-    if (this.maxSheetId !== undefined) out.push([":maxSheetId", this.maxSheetId.toString()]);
-    if (this.userName !== undefined) out.push([":userName", this.userName.toString()]);
+    if (this.guid !== undefined) out.push(["guid", this.guid.toString()]);
+    if (this.dateTime !== undefined) out.push(["dateTime", this.dateTime.toString()]);
+    if (this.maxSheetId !== undefined) out.push(["maxSheetId", this.maxSheetId.toString()]);
+    if (this.userName !== undefined) out.push(["userName", this.userName.toString()]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
-    if (this.minRevisionId !== undefined) out.push([":minRId", this.minRevisionId.toString()]);
-    if (this.maxRevisionId !== undefined) out.push([":maxRId", this.maxRevisionId.toString()]);
+    if (this.minRevisionId !== undefined) out.push(["minRId", this.minRevisionId.toString()]);
+    if (this.maxRevisionId !== undefined) out.push(["maxRId", this.maxRevisionId.toString()]);
     return out;
   }
 

@@ -43,13 +43,13 @@ export class RangeSet extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":i1": this.fieldItemIndexPage1 = UInt32Value.parse(value); return;
-      case ":i2": this.fieldItemIndexPage2 = UInt32Value.parse(value); return;
-      case ":i3": this.fieldItemIndexPage3 = UInt32Value.parse(value); return;
-      case ":i4": this.fieldItemIndexPage4 = UInt32Value.parse(value); return;
-      case ":ref": this.reference = StringValue.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":sheet": this.sheet = StringValue.parse(value); return;
+      case "i1": this.fieldItemIndexPage1 = UInt32Value.parse(value); return;
+      case "i2": this.fieldItemIndexPage2 = UInt32Value.parse(value); return;
+      case "i3": this.fieldItemIndexPage3 = UInt32Value.parse(value); return;
+      case "i4": this.fieldItemIndexPage4 = UInt32Value.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "sheet": this.sheet = StringValue.parse(value); return;
       case "r:id": this.id = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -58,13 +58,13 @@ export class RangeSet extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.fieldItemIndexPage1 !== undefined) out.push([":i1", this.fieldItemIndexPage1.toString()]);
-    if (this.fieldItemIndexPage2 !== undefined) out.push([":i2", this.fieldItemIndexPage2.toString()]);
-    if (this.fieldItemIndexPage3 !== undefined) out.push([":i3", this.fieldItemIndexPage3.toString()]);
-    if (this.fieldItemIndexPage4 !== undefined) out.push([":i4", this.fieldItemIndexPage4.toString()]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.sheet !== undefined) out.push([":sheet", this.sheet.toString()]);
+    if (this.fieldItemIndexPage1 !== undefined) out.push(["i1", this.fieldItemIndexPage1.toString()]);
+    if (this.fieldItemIndexPage2 !== undefined) out.push(["i2", this.fieldItemIndexPage2.toString()]);
+    if (this.fieldItemIndexPage3 !== undefined) out.push(["i3", this.fieldItemIndexPage3.toString()]);
+    if (this.fieldItemIndexPage4 !== undefined) out.push(["i4", this.fieldItemIndexPage4.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.sheet !== undefined) out.push(["sheet", this.sheet.toString()]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
     return out;
   }

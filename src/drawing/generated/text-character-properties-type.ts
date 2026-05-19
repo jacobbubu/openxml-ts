@@ -79,25 +79,25 @@ export abstract class TextCharacterPropertiesType extends OpenXmlCompositeElemen
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":kumimoji": this.kumimoji = BooleanValue.parse(value); return;
-      case ":lang": this.language = StringValue.parse(value); return;
-      case ":altLang": this.alternativeLanguage = StringValue.parse(value); return;
-      case ":sz": this.fontSize = Int32Value.parse(value); assertNumber(this.fontSize, { min: 100, max: 400000 }, { attribute: ":sz", elementClass: "TextCharacterPropertiesType" }); return;
-      case ":b": this.bold = BooleanValue.parse(value); return;
-      case ":i": this.italic = BooleanValue.parse(value); return;
-      case ":u": this.underline = StringValue.parse(value); return;
-      case ":strike": this.strike = StringValue.parse(value); return;
-      case ":kern": this.kerning = Int32Value.parse(value); assertNumber(this.kerning, { min: 0, max: 400000 }, { attribute: ":kern", elementClass: "TextCharacterPropertiesType" }); return;
-      case ":cap": this.capital = StringValue.parse(value); return;
-      case ":spc": this.spacing = Int32Value.parse(value); assertNumber(this.spacing, { min: -400000, max: 400000 }, { attribute: ":spc", elementClass: "TextCharacterPropertiesType" }); return;
-      case ":normalizeH": this.normalizeHeight = BooleanValue.parse(value); return;
-      case ":baseline": this.baseline = Int32Value.parse(value); return;
-      case ":noProof": this.noProof = BooleanValue.parse(value); return;
-      case ":dirty": this.dirty = BooleanValue.parse(value); return;
-      case ":err": this.spellingError = BooleanValue.parse(value); return;
-      case ":smtClean": this.smartTagClean = BooleanValue.parse(value); return;
-      case ":smtId": this.smartTagId = UInt32Value.parse(value); return;
-      case ":bmk": this.bookmark = StringValue.parse(value); return;
+      case "kumimoji": this.kumimoji = BooleanValue.parse(value); return;
+      case "lang": this.language = StringValue.parse(value); return;
+      case "altLang": this.alternativeLanguage = StringValue.parse(value); return;
+      case "sz": this.fontSize = Int32Value.parse(value); assertNumber(this.fontSize, { min: 100, max: 400000 }, { attribute: ":sz", elementClass: "TextCharacterPropertiesType" }); return;
+      case "b": this.bold = BooleanValue.parse(value); return;
+      case "i": this.italic = BooleanValue.parse(value); return;
+      case "u": this.underline = StringValue.parse(value); return;
+      case "strike": this.strike = StringValue.parse(value); return;
+      case "kern": this.kerning = Int32Value.parse(value); assertNumber(this.kerning, { min: 0, max: 400000 }, { attribute: ":kern", elementClass: "TextCharacterPropertiesType" }); return;
+      case "cap": this.capital = StringValue.parse(value); return;
+      case "spc": this.spacing = Int32Value.parse(value); assertNumber(this.spacing, { min: -400000, max: 400000 }, { attribute: ":spc", elementClass: "TextCharacterPropertiesType" }); return;
+      case "normalizeH": this.normalizeHeight = BooleanValue.parse(value); return;
+      case "baseline": this.baseline = Int32Value.parse(value); return;
+      case "noProof": this.noProof = BooleanValue.parse(value); return;
+      case "dirty": this.dirty = BooleanValue.parse(value); return;
+      case "err": this.spellingError = BooleanValue.parse(value); return;
+      case "smtClean": this.smartTagClean = BooleanValue.parse(value); return;
+      case "smtId": this.smartTagId = UInt32Value.parse(value); return;
+      case "bmk": this.bookmark = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -105,25 +105,25 @@ export abstract class TextCharacterPropertiesType extends OpenXmlCompositeElemen
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.kumimoji !== undefined) out.push([":kumimoji", this.kumimoji.toString()]);
-    if (this.language !== undefined) out.push([":lang", this.language.toString()]);
-    if (this.alternativeLanguage !== undefined) out.push([":altLang", this.alternativeLanguage.toString()]);
-    if (this.fontSize !== undefined) out.push([":sz", this.fontSize.toString()]);
-    if (this.bold !== undefined) out.push([":b", this.bold.toString()]);
-    if (this.italic !== undefined) out.push([":i", this.italic.toString()]);
-    if (this.underline !== undefined) out.push([":u", this.underline.toString()]);
-    if (this.strike !== undefined) out.push([":strike", this.strike.toString()]);
-    if (this.kerning !== undefined) out.push([":kern", this.kerning.toString()]);
-    if (this.capital !== undefined) out.push([":cap", this.capital.toString()]);
-    if (this.spacing !== undefined) out.push([":spc", this.spacing.toString()]);
-    if (this.normalizeHeight !== undefined) out.push([":normalizeH", this.normalizeHeight.toString()]);
-    if (this.baseline !== undefined) out.push([":baseline", this.baseline.toString()]);
-    if (this.noProof !== undefined) out.push([":noProof", this.noProof.toString()]);
-    if (this.dirty !== undefined) out.push([":dirty", this.dirty.toString()]);
-    if (this.spellingError !== undefined) out.push([":err", this.spellingError.toString()]);
-    if (this.smartTagClean !== undefined) out.push([":smtClean", this.smartTagClean.toString()]);
-    if (this.smartTagId !== undefined) out.push([":smtId", this.smartTagId.toString()]);
-    if (this.bookmark !== undefined) out.push([":bmk", this.bookmark.toString()]);
+    if (this.kumimoji !== undefined) out.push(["kumimoji", this.kumimoji.toString()]);
+    if (this.language !== undefined) out.push(["lang", this.language.toString()]);
+    if (this.alternativeLanguage !== undefined) out.push(["altLang", this.alternativeLanguage.toString()]);
+    if (this.fontSize !== undefined) out.push(["sz", this.fontSize.toString()]);
+    if (this.bold !== undefined) out.push(["b", this.bold.toString()]);
+    if (this.italic !== undefined) out.push(["i", this.italic.toString()]);
+    if (this.underline !== undefined) out.push(["u", this.underline.toString()]);
+    if (this.strike !== undefined) out.push(["strike", this.strike.toString()]);
+    if (this.kerning !== undefined) out.push(["kern", this.kerning.toString()]);
+    if (this.capital !== undefined) out.push(["cap", this.capital.toString()]);
+    if (this.spacing !== undefined) out.push(["spc", this.spacing.toString()]);
+    if (this.normalizeHeight !== undefined) out.push(["normalizeH", this.normalizeHeight.toString()]);
+    if (this.baseline !== undefined) out.push(["baseline", this.baseline.toString()]);
+    if (this.noProof !== undefined) out.push(["noProof", this.noProof.toString()]);
+    if (this.dirty !== undefined) out.push(["dirty", this.dirty.toString()]);
+    if (this.spellingError !== undefined) out.push(["err", this.spellingError.toString()]);
+    if (this.smartTagClean !== undefined) out.push(["smtClean", this.smartTagClean.toString()]);
+    if (this.smartTagId !== undefined) out.push(["smtId", this.smartTagId.toString()]);
+    if (this.bookmark !== undefined) out.push(["bmk", this.bookmark.toString()]);
     return out;
   }
 

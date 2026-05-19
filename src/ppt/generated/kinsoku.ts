@@ -28,9 +28,9 @@ export class Kinsoku extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":lang": this.language = StringValue.parse(value); return;
-      case ":invalStChars": this.invalidStartChars = StringValue.parse(value); return;
-      case ":invalEndChars": this.invalidEndChars = StringValue.parse(value); return;
+      case "lang": this.language = StringValue.parse(value); return;
+      case "invalStChars": this.invalidStartChars = StringValue.parse(value); return;
+      case "invalEndChars": this.invalidEndChars = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -38,9 +38,9 @@ export class Kinsoku extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.language !== undefined) out.push([":lang", this.language.toString()]);
-    if (this.invalidStartChars !== undefined) out.push([":invalStChars", this.invalidStartChars.toString()]);
-    if (this.invalidEndChars !== undefined) out.push([":invalEndChars", this.invalidEndChars.toString()]);
+    if (this.language !== undefined) out.push(["lang", this.language.toString()]);
+    if (this.invalidStartChars !== undefined) out.push(["invalStChars", this.invalidStartChars.toString()]);
+    if (this.invalidEndChars !== undefined) out.push(["invalEndChars", this.invalidEndChars.toString()]);
     return out;
   }
 

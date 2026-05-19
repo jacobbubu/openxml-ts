@@ -49,16 +49,16 @@ export class Kpi extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":uniqueName": this.uniqueName = StringValue.parse(value); return;
-      case ":caption": this.caption = StringValue.parse(value); return;
-      case ":displayFolder": this.displayFolder = StringValue.parse(value); return;
-      case ":measureGroup": this.measureGroup = StringValue.parse(value); return;
-      case ":parent": this.parentKpi = StringValue.parse(value); return;
-      case ":value": this.value = StringValue.parse(value); return;
-      case ":goal": this.goal = StringValue.parse(value); return;
-      case ":status": this.status = StringValue.parse(value); return;
-      case ":trend": this.trend = StringValue.parse(value); return;
-      case ":weight": this.weight = StringValue.parse(value); return;
+      case "uniqueName": this.uniqueName = StringValue.parse(value); return;
+      case "caption": this.caption = StringValue.parse(value); return;
+      case "displayFolder": this.displayFolder = StringValue.parse(value); return;
+      case "measureGroup": this.measureGroup = StringValue.parse(value); return;
+      case "parent": this.parentKpi = StringValue.parse(value); return;
+      case "value": this.value = StringValue.parse(value); return;
+      case "goal": this.goal = StringValue.parse(value); return;
+      case "status": this.status = StringValue.parse(value); return;
+      case "trend": this.trend = StringValue.parse(value); return;
+      case "weight": this.weight = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -66,16 +66,16 @@ export class Kpi extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.uniqueName !== undefined) out.push([":uniqueName", this.uniqueName.toString()]);
-    if (this.caption !== undefined) out.push([":caption", this.caption.toString()]);
-    if (this.displayFolder !== undefined) out.push([":displayFolder", this.displayFolder.toString()]);
-    if (this.measureGroup !== undefined) out.push([":measureGroup", this.measureGroup.toString()]);
-    if (this.parentKpi !== undefined) out.push([":parent", this.parentKpi.toString()]);
-    if (this.value !== undefined) out.push([":value", this.value.toString()]);
-    if (this.goal !== undefined) out.push([":goal", this.goal.toString()]);
-    if (this.status !== undefined) out.push([":status", this.status.toString()]);
-    if (this.trend !== undefined) out.push([":trend", this.trend.toString()]);
-    if (this.weight !== undefined) out.push([":weight", this.weight.toString()]);
+    if (this.uniqueName !== undefined) out.push(["uniqueName", this.uniqueName.toString()]);
+    if (this.caption !== undefined) out.push(["caption", this.caption.toString()]);
+    if (this.displayFolder !== undefined) out.push(["displayFolder", this.displayFolder.toString()]);
+    if (this.measureGroup !== undefined) out.push(["measureGroup", this.measureGroup.toString()]);
+    if (this.parentKpi !== undefined) out.push(["parent", this.parentKpi.toString()]);
+    if (this.value !== undefined) out.push(["value", this.value.toString()]);
+    if (this.goal !== undefined) out.push(["goal", this.goal.toString()]);
+    if (this.status !== undefined) out.push(["status", this.status.toString()]);
+    if (this.trend !== undefined) out.push(["trend", this.trend.toString()]);
+    if (this.weight !== undefined) out.push(["weight", this.weight.toString()]);
     return out;
   }
 

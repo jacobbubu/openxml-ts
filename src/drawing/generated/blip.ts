@@ -30,7 +30,7 @@ export class Blip extends OpenXmlCompositeElement {
     switch (qname) {
       case "r:embed": this.embed = StringValue.parse(value); return;
       case "r:link": this.link = StringValue.parse(value); return;
-      case ":cstate": this.compressionState = StringValue.parse(value); return;
+      case "cstate": this.compressionState = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,7 +40,7 @@ export class Blip extends OpenXmlCompositeElement {
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.embed !== undefined) out.push(["r:embed", this.embed.toString()]);
     if (this.link !== undefined) out.push(["r:link", this.link.toString()]);
-    if (this.compressionState !== undefined) out.push([":cstate", this.compressionState.toString()]);
+    if (this.compressionState !== undefined) out.push(["cstate", this.compressionState.toString()]);
     return out;
   }
 

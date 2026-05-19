@@ -29,9 +29,9 @@ export class Anchor extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":x": this.x = Int64Value.parse(value); assertNumber(this.x, { min: -27273042329600, max: 27273042316900 }, { attribute: ":x", elementClass: "Anchor" }); return;
-      case ":y": this.y = Int64Value.parse(value); assertNumber(this.y, { min: -27273042329600, max: 27273042316900 }, { attribute: ":y", elementClass: "Anchor" }); return;
-      case ":z": this.z = Int64Value.parse(value); assertNumber(this.z, { min: -27273042329600, max: 27273042316900 }, { attribute: ":z", elementClass: "Anchor" }); return;
+      case "x": this.x = Int64Value.parse(value); assertNumber(this.x, { min: -27273042329600, max: 27273042316900 }, { attribute: ":x", elementClass: "Anchor" }); return;
+      case "y": this.y = Int64Value.parse(value); assertNumber(this.y, { min: -27273042329600, max: 27273042316900 }, { attribute: ":y", elementClass: "Anchor" }); return;
+      case "z": this.z = Int64Value.parse(value); assertNumber(this.z, { min: -27273042329600, max: 27273042316900 }, { attribute: ":z", elementClass: "Anchor" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class Anchor extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.x !== undefined) out.push([":x", this.x.toString()]);
-    if (this.y !== undefined) out.push([":y", this.y.toString()]);
-    if (this.z !== undefined) out.push([":z", this.z.toString()]);
+    if (this.x !== undefined) out.push(["x", this.x.toString()]);
+    if (this.y !== undefined) out.push(["y", this.y.toString()]);
+    if (this.z !== undefined) out.push(["z", this.z.toString()]);
     return out;
   }
 

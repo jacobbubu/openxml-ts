@@ -26,8 +26,8 @@ export class ChartSheetProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":published": this.published = BooleanValue.parse(value); return;
-      case ":codeName": this.codeName = StringValue.parse(value); return;
+      case "published": this.published = BooleanValue.parse(value); return;
+      case "codeName": this.codeName = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class ChartSheetProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.published !== undefined) out.push([":published", this.published.toString()]);
-    if (this.codeName !== undefined) out.push([":codeName", this.codeName.toString()]);
+    if (this.published !== undefined) out.push(["published", this.published.toString()]);
+    if (this.codeName !== undefined) out.push(["codeName", this.codeName.toString()]);
     return out;
   }
 

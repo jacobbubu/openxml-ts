@@ -26,8 +26,8 @@ export class LightRig extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rig": this.rig = StringValue.parse(value); return;
-      case ":dir": this.direction = StringValue.parse(value); return;
+      case "rig": this.rig = StringValue.parse(value); return;
+      case "dir": this.direction = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class LightRig extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.rig !== undefined) out.push([":rig", this.rig.toString()]);
-    if (this.direction !== undefined) out.push([":dir", this.direction.toString()]);
+    if (this.rig !== undefined) out.push(["rig", this.rig.toString()]);
+    if (this.direction !== undefined) out.push(["dir", this.direction.toString()]);
     return out;
   }
 

@@ -28,9 +28,9 @@ export class CommonSlideViewProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":snapToGrid": this.snapToGrid = BooleanValue.parse(value); return;
-      case ":snapToObjects": this.snapToObjects = BooleanValue.parse(value); return;
-      case ":showGuides": this.showGuides = BooleanValue.parse(value); return;
+      case "snapToGrid": this.snapToGrid = BooleanValue.parse(value); return;
+      case "snapToObjects": this.snapToObjects = BooleanValue.parse(value); return;
+      case "showGuides": this.showGuides = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -38,9 +38,9 @@ export class CommonSlideViewProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.snapToGrid !== undefined) out.push([":snapToGrid", this.snapToGrid.toString()]);
-    if (this.snapToObjects !== undefined) out.push([":snapToObjects", this.snapToObjects.toString()]);
-    if (this.showGuides !== undefined) out.push([":showGuides", this.showGuides.toString()]);
+    if (this.snapToGrid !== undefined) out.push(["snapToGrid", this.snapToGrid.toString()]);
+    if (this.snapToObjects !== undefined) out.push(["snapToObjects", this.snapToObjects.toString()]);
+    if (this.showGuides !== undefined) out.push(["showGuides", this.showGuides.toString()]);
     return out;
   }
 

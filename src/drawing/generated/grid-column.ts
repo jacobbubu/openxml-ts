@@ -24,7 +24,7 @@ export class GridColumn extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":w": this.width = Int64Value.parse(value); assertNumber(this.width, { min: -27273042329600, max: 27273042316900 }, { attribute: ":w", elementClass: "GridColumn" }); return;
+      case "w": this.width = Int64Value.parse(value); assertNumber(this.width, { min: -27273042329600, max: 27273042316900 }, { attribute: ":w", elementClass: "GridColumn" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -32,7 +32,7 @@ export class GridColumn extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.width !== undefined) out.push([":w", this.width.toString()]);
+    if (this.width !== undefined) out.push(["w", this.width.toString()]);
     return out;
   }
 

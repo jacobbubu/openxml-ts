@@ -25,8 +25,8 @@ export abstract class RatioType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":n": this.numerator = Int32Value.parse(value); return;
-      case ":d": this.denominator = Int32Value.parse(value); return;
+      case "n": this.numerator = Int32Value.parse(value); return;
+      case "d": this.denominator = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export abstract class RatioType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.numerator !== undefined) out.push([":n", this.numerator.toString()]);
-    if (this.denominator !== undefined) out.push([":d", this.denominator.toString()]);
+    if (this.numerator !== undefined) out.push(["n", this.numerator.toString()]);
+    if (this.denominator !== undefined) out.push(["d", this.denominator.toString()]);
     return out;
   }
 

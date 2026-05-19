@@ -33,10 +33,10 @@ export class GroupLevel extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":uniqueName": this.uniqueName = StringValue.parse(value); return;
-      case ":caption": this.caption = StringValue.parse(value); return;
-      case ":user": this.user = BooleanValue.parse(value); return;
-      case ":customRollUp": this.customRollUp = BooleanValue.parse(value); return;
+      case "uniqueName": this.uniqueName = StringValue.parse(value); return;
+      case "caption": this.caption = StringValue.parse(value); return;
+      case "user": this.user = BooleanValue.parse(value); return;
+      case "customRollUp": this.customRollUp = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -44,10 +44,10 @@ export class GroupLevel extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.uniqueName !== undefined) out.push([":uniqueName", this.uniqueName.toString()]);
-    if (this.caption !== undefined) out.push([":caption", this.caption.toString()]);
-    if (this.user !== undefined) out.push([":user", this.user.toString()]);
-    if (this.customRollUp !== undefined) out.push([":customRollUp", this.customRollUp.toString()]);
+    if (this.uniqueName !== undefined) out.push(["uniqueName", this.uniqueName.toString()]);
+    if (this.caption !== undefined) out.push(["caption", this.caption.toString()]);
+    if (this.user !== undefined) out.push(["user", this.user.toString()]);
+    if (this.customRollUp !== undefined) out.push(["customRollUp", this.customRollUp.toString()]);
     return out;
   }
 

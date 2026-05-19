@@ -27,8 +27,8 @@ export class CacheSource extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":connectionId": this.connectionId = UInt32Value.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "connectionId": this.connectionId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -36,8 +36,8 @@ export class CacheSource extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.connectionId !== undefined) out.push([":connectionId", this.connectionId.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.connectionId !== undefined) out.push(["connectionId", this.connectionId.toString()]);
     return out;
   }
 

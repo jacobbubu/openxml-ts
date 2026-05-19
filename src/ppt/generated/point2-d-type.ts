@@ -26,8 +26,8 @@ export abstract class Point2DType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":x": this.x = Int64Value.parse(value); assertNumber(this.x, { min: -27273042329600, max: 27273042316900 }, { attribute: ":x", elementClass: "Point2DType" }); return;
-      case ":y": this.y = Int64Value.parse(value); assertNumber(this.y, { min: -27273042329600, max: 27273042316900 }, { attribute: ":y", elementClass: "Point2DType" }); return;
+      case "x": this.x = Int64Value.parse(value); assertNumber(this.x, { min: -27273042329600, max: 27273042316900 }, { attribute: ":x", elementClass: "Point2DType" }); return;
+      case "y": this.y = Int64Value.parse(value); assertNumber(this.y, { min: -27273042329600, max: 27273042316900 }, { attribute: ":y", elementClass: "Point2DType" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export abstract class Point2DType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.x !== undefined) out.push([":x", this.x.toString()]);
-    if (this.y !== undefined) out.push([":y", this.y.toString()]);
+    if (this.x !== undefined) out.push(["x", this.x.toString()]);
+    if (this.y !== undefined) out.push(["y", this.y.toString()]);
     return out;
   }
 

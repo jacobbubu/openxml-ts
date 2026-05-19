@@ -25,8 +25,8 @@ export class SupplementalFont extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":script": this.script = StringValue.parse(value); return;
-      case ":typeface": this.typeface = StringValue.parse(value); return;
+      case "script": this.script = StringValue.parse(value); return;
+      case "typeface": this.typeface = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class SupplementalFont extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.script !== undefined) out.push([":script", this.script.toString()]);
-    if (this.typeface !== undefined) out.push([":typeface", this.typeface.toString()]);
+    if (this.script !== undefined) out.push(["script", this.script.toString()]);
+    if (this.typeface !== undefined) out.push(["typeface", this.typeface.toString()]);
     return out;
   }
 

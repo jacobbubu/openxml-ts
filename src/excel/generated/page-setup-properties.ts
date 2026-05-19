@@ -24,8 +24,8 @@ export class PageSetupProperties extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":autoPageBreaks": this.autoPageBreaks = BooleanValue.parse(value); return;
-      case ":fitToPage": this.fitToPage = BooleanValue.parse(value); return;
+      case "autoPageBreaks": this.autoPageBreaks = BooleanValue.parse(value); return;
+      case "fitToPage": this.fitToPage = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -33,8 +33,8 @@ export class PageSetupProperties extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.autoPageBreaks !== undefined) out.push([":autoPageBreaks", this.autoPageBreaks.toString()]);
-    if (this.fitToPage !== undefined) out.push([":fitToPage", this.fitToPage.toString()]);
+    if (this.autoPageBreaks !== undefined) out.push(["autoPageBreaks", this.autoPageBreaks.toString()]);
+    if (this.fitToPage !== undefined) out.push(["fitToPage", this.fitToPage.toString()]);
     return out;
   }
 

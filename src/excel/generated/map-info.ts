@@ -23,7 +23,7 @@ export class MapInfo extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":SelectionNamespaces": this.selectionNamespaces = StringValue.parse(value); return;
+      case "SelectionNamespaces": this.selectionNamespaces = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class MapInfo extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.selectionNamespaces !== undefined) out.push([":SelectionNamespaces", this.selectionNamespaces.toString()]);
+    if (this.selectionNamespaces !== undefined) out.push(["SelectionNamespaces", this.selectionNamespaces.toString()]);
     return out;
   }
 

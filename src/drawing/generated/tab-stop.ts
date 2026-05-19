@@ -25,8 +25,8 @@ export class TabStop extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":pos": this.position = Int32Value.parse(value); return;
-      case ":algn": this.alignment = StringValue.parse(value); return;
+      case "pos": this.position = Int32Value.parse(value); return;
+      case "algn": this.alignment = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class TabStop extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.position !== undefined) out.push([":pos", this.position.toString()]);
-    if (this.alignment !== undefined) out.push([":algn", this.alignment.toString()]);
+    if (this.position !== undefined) out.push(["pos", this.position.toString()]);
+    if (this.alignment !== undefined) out.push(["algn", this.alignment.toString()]);
     return out;
   }
 

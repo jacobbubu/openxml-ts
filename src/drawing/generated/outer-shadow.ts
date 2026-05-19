@@ -50,15 +50,15 @@ export class OuterShadow extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":blurRad": this.blurRadius = Int64Value.parse(value); assertNumber(this.blurRadius, { min: 0, max: 2147483647 }, { attribute: ":blurRad", elementClass: "OuterShadow" }); return;
-      case ":dist": this.distance = Int64Value.parse(value); assertNumber(this.distance, { min: 0, max: 2147483647 }, { attribute: ":dist", elementClass: "OuterShadow" }); return;
-      case ":dir": this.direction = Int32Value.parse(value); assertNumber(this.direction, { min: 0 }, { attribute: ":dir", elementClass: "OuterShadow" }); return;
-      case ":sx": this.horizontalRatio = Int32Value.parse(value); return;
-      case ":sy": this.verticalRatio = Int32Value.parse(value); return;
-      case ":kx": this.horizontalSkew = Int32Value.parse(value); return;
-      case ":ky": this.verticalSkew = Int32Value.parse(value); return;
-      case ":algn": this.alignment = StringValue.parse(value); return;
-      case ":rotWithShape": this.rotateWithShape = BooleanValue.parse(value); return;
+      case "blurRad": this.blurRadius = Int64Value.parse(value); assertNumber(this.blurRadius, { min: 0, max: 2147483647 }, { attribute: ":blurRad", elementClass: "OuterShadow" }); return;
+      case "dist": this.distance = Int64Value.parse(value); assertNumber(this.distance, { min: 0, max: 2147483647 }, { attribute: ":dist", elementClass: "OuterShadow" }); return;
+      case "dir": this.direction = Int32Value.parse(value); assertNumber(this.direction, { min: 0 }, { attribute: ":dir", elementClass: "OuterShadow" }); return;
+      case "sx": this.horizontalRatio = Int32Value.parse(value); return;
+      case "sy": this.verticalRatio = Int32Value.parse(value); return;
+      case "kx": this.horizontalSkew = Int32Value.parse(value); return;
+      case "ky": this.verticalSkew = Int32Value.parse(value); return;
+      case "algn": this.alignment = StringValue.parse(value); return;
+      case "rotWithShape": this.rotateWithShape = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -66,15 +66,15 @@ export class OuterShadow extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.blurRadius !== undefined) out.push([":blurRad", this.blurRadius.toString()]);
-    if (this.distance !== undefined) out.push([":dist", this.distance.toString()]);
-    if (this.direction !== undefined) out.push([":dir", this.direction.toString()]);
-    if (this.horizontalRatio !== undefined) out.push([":sx", this.horizontalRatio.toString()]);
-    if (this.verticalRatio !== undefined) out.push([":sy", this.verticalRatio.toString()]);
-    if (this.horizontalSkew !== undefined) out.push([":kx", this.horizontalSkew.toString()]);
-    if (this.verticalSkew !== undefined) out.push([":ky", this.verticalSkew.toString()]);
-    if (this.alignment !== undefined) out.push([":algn", this.alignment.toString()]);
-    if (this.rotateWithShape !== undefined) out.push([":rotWithShape", this.rotateWithShape.toString()]);
+    if (this.blurRadius !== undefined) out.push(["blurRad", this.blurRadius.toString()]);
+    if (this.distance !== undefined) out.push(["dist", this.distance.toString()]);
+    if (this.direction !== undefined) out.push(["dir", this.direction.toString()]);
+    if (this.horizontalRatio !== undefined) out.push(["sx", this.horizontalRatio.toString()]);
+    if (this.verticalRatio !== undefined) out.push(["sy", this.verticalRatio.toString()]);
+    if (this.horizontalSkew !== undefined) out.push(["kx", this.horizontalSkew.toString()]);
+    if (this.verticalSkew !== undefined) out.push(["ky", this.verticalSkew.toString()]);
+    if (this.alignment !== undefined) out.push(["algn", this.alignment.toString()]);
+    if (this.rotateWithShape !== undefined) out.push(["rotWithShape", this.rotateWithShape.toString()]);
     return out;
   }
 

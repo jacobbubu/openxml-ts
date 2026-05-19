@@ -23,7 +23,7 @@ export class ConnectionSite extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":ang": this.angle = StringValue.parse(value); return;
+      case "ang": this.angle = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class ConnectionSite extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.angle !== undefined) out.push([":ang", this.angle.toString()]);
+    if (this.angle !== undefined) out.push(["ang", this.angle.toString()]);
     return out;
   }
 

@@ -30,8 +30,8 @@ export abstract class EmbeddedWavAudioFileType extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "r:embed": this.embed = StringValue.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":builtIn": this.builtIn = BooleanValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "builtIn": this.builtIn = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,8 +40,8 @@ export abstract class EmbeddedWavAudioFileType extends OpenXmlLeafElement {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.embed !== undefined) out.push(["r:embed", this.embed.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.builtIn !== undefined) out.push([":builtIn", this.builtIn.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.builtIn !== undefined) out.push(["builtIn", this.builtIn.toString()]);
     return out;
   }
 

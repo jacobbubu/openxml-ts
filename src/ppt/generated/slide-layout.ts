@@ -38,12 +38,12 @@ export class SlideLayout extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":showMasterSp": this.showMasterShapes = BooleanValue.parse(value); return;
-      case ":showMasterPhAnim": this.showMasterPlaceholderAnimations = BooleanValue.parse(value); return;
-      case ":matchingName": this.matchingName = StringValue.parse(value); return;
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":preserve": this.preserve = BooleanValue.parse(value); return;
-      case ":userDrawn": this.userDrawn = BooleanValue.parse(value); return;
+      case "showMasterSp": this.showMasterShapes = BooleanValue.parse(value); return;
+      case "showMasterPhAnim": this.showMasterPlaceholderAnimations = BooleanValue.parse(value); return;
+      case "matchingName": this.matchingName = StringValue.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "preserve": this.preserve = BooleanValue.parse(value); return;
+      case "userDrawn": this.userDrawn = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -51,12 +51,12 @@ export class SlideLayout extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.showMasterShapes !== undefined) out.push([":showMasterSp", this.showMasterShapes.toString()]);
-    if (this.showMasterPlaceholderAnimations !== undefined) out.push([":showMasterPhAnim", this.showMasterPlaceholderAnimations.toString()]);
-    if (this.matchingName !== undefined) out.push([":matchingName", this.matchingName.toString()]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.preserve !== undefined) out.push([":preserve", this.preserve.toString()]);
-    if (this.userDrawn !== undefined) out.push([":userDrawn", this.userDrawn.toString()]);
+    if (this.showMasterShapes !== undefined) out.push(["showMasterSp", this.showMasterShapes.toString()]);
+    if (this.showMasterPlaceholderAnimations !== undefined) out.push(["showMasterPhAnim", this.showMasterPlaceholderAnimations.toString()]);
+    if (this.matchingName !== undefined) out.push(["matchingName", this.matchingName.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.preserve !== undefined) out.push(["preserve", this.preserve.toString()]);
+    if (this.userDrawn !== undefined) out.push(["userDrawn", this.userDrawn.toString()]);
     return out;
   }
 

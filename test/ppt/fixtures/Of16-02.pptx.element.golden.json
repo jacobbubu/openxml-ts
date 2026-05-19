@@ -5,8 +5,10 @@
     "qname": "p:presentation",
     "className": "Presentation",
     "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+    "typedAttributes": {
+      "saveSubsetFonts": "1"
+    },
     "extendedAttributes": {
-      "saveSubsetFonts": "1",
       "xmlns:a": "http://schemas.openxmlformats.org/drawingml/2006/main",
       "xmlns:p": "http://schemas.openxmlformats.org/presentationml/2006/main",
       "xmlns:r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
@@ -22,10 +24,8 @@
             "className": "SlideMasterId",
             "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
             "typedAttributes": {
+              "id": "2147483648",
               "relationshipId": "rId1"
-            },
-            "extendedAttributes": {
-              "id": "2147483648"
             }
           }
         ]
@@ -40,10 +40,8 @@
             "className": "SlideId",
             "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
             "typedAttributes": {
+              "id": "256",
               "relationshipId": "rId2"
-            },
-            "extendedAttributes": {
-              "id": "256"
             }
           }
         ]
@@ -52,7 +50,7 @@
         "qname": "p:sldSz",
         "className": "SlideSize",
         "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-        "extendedAttributes": {
+        "typedAttributes": {
           "cx": "12192000",
           "cy": "6858000"
         }
@@ -118,7 +116,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -184,7 +182,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -250,7 +248,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -316,7 +314,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -382,7 +380,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -448,7 +446,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -514,7 +512,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -580,7 +578,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -646,7 +644,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -714,7 +712,7 @@
                       "qname": "p:cNvPr",
                       "className": "NonVisualDrawingProperties",
                       "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                      "extendedAttributes": {
+                      "typedAttributes": {
                         "id": "1",
                         "name": ""
                       }
@@ -812,7 +810,7 @@
                                   "qname": "p:cNvPr",
                                   "className": "NonVisualDrawingProperties",
                                   "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                                  "extendedAttributes": {
+                                  "typedAttributes": {
                                     "id": "6",
                                     "name": "Chart 5"
                                   }
@@ -863,7 +861,7 @@
                                   "qname": "a:graphicData",
                                   "className": "GraphicData",
                                   "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                                  "extendedAttributes": {
+                                  "typedAttributes": {
                                     "uri": "http://schemas.microsoft.com/office/drawing/2014/chartex"
                                   },
                                   "children": [
@@ -904,7 +902,7 @@
                                   "qname": "p:cNvPr",
                                   "className": "NonVisualDrawingProperties",
                                   "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                                  "extendedAttributes": {
+                                  "typedAttributes": {
                                     "id": "6",
                                     "name": "Chart 5"
                                   }
@@ -918,16 +916,16 @@
                                       "qname": "a:picLocks",
                                       "className": "PictureLocks",
                                       "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                                      "extendedAttributes": {
+                                      "typedAttributes": {
                                         "noAdjustHandles": "1",
                                         "noChangeArrowheads": "1",
                                         "noChangeAspect": "1",
                                         "noChangeShapeType": "1",
                                         "noEditPoints": "1",
-                                        "noGrp": "1",
+                                        "noGrouping": "1",
                                         "noMove": "1",
                                         "noResize": "1",
-                                        "noRot": "1"
+                                        "noRotation": "1"
                                       }
                                     }
                                   ]
@@ -1000,8 +998,8 @@
                                   "qname": "a:prstGeom",
                                   "className": "PresetGeometry",
                                   "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                                  "extendedAttributes": {
-                                    "prst": "rect"
+                                  "typedAttributes": {
+                                    "preset": "rect"
                                   },
                                   "children": [
                                     {

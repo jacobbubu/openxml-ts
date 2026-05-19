@@ -43,14 +43,14 @@ export class CommonBehavior extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":additive": this.additive = StringValue.parse(value); return;
-      case ":accumulate": this.accumulate = StringValue.parse(value); return;
-      case ":xfrmType": this.transformType = StringValue.parse(value); return;
-      case ":from": this.from = StringValue.parse(value); return;
-      case ":to": this.to = StringValue.parse(value); return;
-      case ":by": this.by = StringValue.parse(value); return;
-      case ":rctx": this.runtimeContext = StringValue.parse(value); return;
-      case ":override": this.override = StringValue.parse(value); return;
+      case "additive": this.additive = StringValue.parse(value); return;
+      case "accumulate": this.accumulate = StringValue.parse(value); return;
+      case "xfrmType": this.transformType = StringValue.parse(value); return;
+      case "from": this.from = StringValue.parse(value); return;
+      case "to": this.to = StringValue.parse(value); return;
+      case "by": this.by = StringValue.parse(value); return;
+      case "rctx": this.runtimeContext = StringValue.parse(value); return;
+      case "override": this.override = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -58,14 +58,14 @@ export class CommonBehavior extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.additive !== undefined) out.push([":additive", this.additive.toString()]);
-    if (this.accumulate !== undefined) out.push([":accumulate", this.accumulate.toString()]);
-    if (this.transformType !== undefined) out.push([":xfrmType", this.transformType.toString()]);
-    if (this.from !== undefined) out.push([":from", this.from.toString()]);
-    if (this.to !== undefined) out.push([":to", this.to.toString()]);
-    if (this.by !== undefined) out.push([":by", this.by.toString()]);
-    if (this.runtimeContext !== undefined) out.push([":rctx", this.runtimeContext.toString()]);
-    if (this.override !== undefined) out.push([":override", this.override.toString()]);
+    if (this.additive !== undefined) out.push(["additive", this.additive.toString()]);
+    if (this.accumulate !== undefined) out.push(["accumulate", this.accumulate.toString()]);
+    if (this.transformType !== undefined) out.push(["xfrmType", this.transformType.toString()]);
+    if (this.from !== undefined) out.push(["from", this.from.toString()]);
+    if (this.to !== undefined) out.push(["to", this.to.toString()]);
+    if (this.by !== undefined) out.push(["by", this.by.toString()]);
+    if (this.runtimeContext !== undefined) out.push(["rctx", this.runtimeContext.toString()]);
+    if (this.override !== undefined) out.push(["override", this.override.toString()]);
     return out;
   }
 

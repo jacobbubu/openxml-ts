@@ -37,12 +37,12 @@ export class PivotTableStyle extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":showRowHeaders": this.showRowHeaders = BooleanValue.parse(value); return;
-      case ":showColHeaders": this.showColumnHeaders = BooleanValue.parse(value); return;
-      case ":showRowStripes": this.showRowStripes = BooleanValue.parse(value); return;
-      case ":showColStripes": this.showColumnStripes = BooleanValue.parse(value); return;
-      case ":showLastColumn": this.showLastColumn = BooleanValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "showRowHeaders": this.showRowHeaders = BooleanValue.parse(value); return;
+      case "showColHeaders": this.showColumnHeaders = BooleanValue.parse(value); return;
+      case "showRowStripes": this.showRowStripes = BooleanValue.parse(value); return;
+      case "showColStripes": this.showColumnStripes = BooleanValue.parse(value); return;
+      case "showLastColumn": this.showLastColumn = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -50,12 +50,12 @@ export class PivotTableStyle extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.showRowHeaders !== undefined) out.push([":showRowHeaders", this.showRowHeaders.toString()]);
-    if (this.showColumnHeaders !== undefined) out.push([":showColHeaders", this.showColumnHeaders.toString()]);
-    if (this.showRowStripes !== undefined) out.push([":showRowStripes", this.showRowStripes.toString()]);
-    if (this.showColumnStripes !== undefined) out.push([":showColStripes", this.showColumnStripes.toString()]);
-    if (this.showLastColumn !== undefined) out.push([":showLastColumn", this.showLastColumn.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.showRowHeaders !== undefined) out.push(["showRowHeaders", this.showRowHeaders.toString()]);
+    if (this.showColumnHeaders !== undefined) out.push(["showColHeaders", this.showColumnHeaders.toString()]);
+    if (this.showRowStripes !== undefined) out.push(["showRowStripes", this.showRowStripes.toString()]);
+    if (this.showColumnStripes !== undefined) out.push(["showColStripes", this.showColumnStripes.toString()]);
+    if (this.showLastColumn !== undefined) out.push(["showLastColumn", this.showLastColumn.toString()]);
     return out;
   }
 

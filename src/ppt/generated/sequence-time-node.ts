@@ -29,9 +29,9 @@ export class SequenceTimeNode extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":concurrent": this.concurrent = BooleanValue.parse(value); return;
-      case ":prevAc": this.previousAction = StringValue.parse(value); return;
-      case ":nextAc": this.nextAction = StringValue.parse(value); return;
+      case "concurrent": this.concurrent = BooleanValue.parse(value); return;
+      case "prevAc": this.previousAction = StringValue.parse(value); return;
+      case "nextAc": this.nextAction = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class SequenceTimeNode extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.concurrent !== undefined) out.push([":concurrent", this.concurrent.toString()]);
-    if (this.previousAction !== undefined) out.push([":prevAc", this.previousAction.toString()]);
-    if (this.nextAction !== undefined) out.push([":nextAc", this.nextAction.toString()]);
+    if (this.concurrent !== undefined) out.push(["concurrent", this.concurrent.toString()]);
+    if (this.previousAction !== undefined) out.push(["prevAc", this.previousAction.toString()]);
+    if (this.nextAction !== undefined) out.push(["nextAc", this.nextAction.toString()]);
     return out;
   }
 

@@ -23,7 +23,7 @@ export class BiLevel extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":thresh": this.threshold = Int32Value.parse(value); assertNumber(this.threshold, { min: 0, max: 100000 }, { attribute: ":thresh", elementClass: "BiLevel" }); return;
+      case "thresh": this.threshold = Int32Value.parse(value); assertNumber(this.threshold, { min: 0, max: 100000 }, { attribute: ":thresh", elementClass: "BiLevel" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class BiLevel extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.threshold !== undefined) out.push([":thresh", this.threshold.toString()]);
+    if (this.threshold !== undefined) out.push(["thresh", this.threshold.toString()]);
     return out;
   }
 

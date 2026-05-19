@@ -1,0 +1,1087 @@
+{
+  "source": "Algn_tab_TabAlignment.pptx",
+  "generatedBy": "openxml-ts tools/golden-generator",
+  "presentation": {
+    "qname": "p:presentation",
+    "className": "Presentation",
+    "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+    "typedAttributes": {
+      "saveSubsetFonts": "1"
+    },
+    "extendedAttributes": {
+      "xmlns:a": "http://purl.oclc.org/ooxml/drawingml/main",
+      "xmlns:p": "http://purl.oclc.org/ooxml/presentationml/main",
+      "xmlns:r": "http://purl.oclc.org/ooxml/officeDocument/relationships"
+    },
+    "children": [
+      {
+        "qname": "p:sldMasterIdLst",
+        "className": "SlideMasterIdList",
+        "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+        "children": [
+          {
+            "qname": "p:sldMasterId",
+            "className": "SlideMasterId",
+            "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+            "typedAttributes": {
+              "id": "2147483648",
+              "relationshipId": "rId1"
+            }
+          }
+        ]
+      },
+      {
+        "qname": "p:sldIdLst",
+        "className": "SlideIdList",
+        "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+        "children": [
+          {
+            "qname": "p:sldId",
+            "className": "SlideId",
+            "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+            "typedAttributes": {
+              "id": "256",
+              "relationshipId": "rId2"
+            }
+          }
+        ]
+      },
+      {
+        "qname": "p:sldSz",
+        "className": "SlideSize",
+        "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+        "typedAttributes": {
+          "cx": "9144000",
+          "cy": "6858000",
+          "type": "screen4x3"
+        }
+      },
+      {
+        "qname": "p:notesSz",
+        "className": "NotesSize",
+        "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+        "extendedAttributes": {
+          "cx": "6858000",
+          "cy": "9144000"
+        }
+      },
+      {
+        "qname": "p:defaultTextStyle",
+        "className": "DefaultTextStyle",
+        "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+        "children": [
+          {
+            "qname": "a:defPPr",
+            "className": "DefaultParagraphProperties",
+            "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "children": [
+              {
+                "qname": "a:defRPr",
+                "className": "DefaultRunProperties",
+                "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                "extendedAttributes": {
+                  "lang": "en-US"
+                }
+              }
+            ]
+          },
+          {
+            "qname": "a:lvl1pPr",
+            "className": "Level1ParagraphProperties",
+            "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "extendedAttributes": {
+              "algn": "l",
+              "defTabSz": "914400",
+              "eaLnBrk": "1",
+              "hangingPunct": "1",
+              "latinLnBrk": "0",
+              "marL": "0",
+              "rtl": "0"
+            },
+            "children": [
+              {
+                "qname": "a:defRPr",
+                "className": "DefaultRunProperties",
+                "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                "extendedAttributes": {
+                  "kern": "1200",
+                  "sz": "1800"
+                },
+                "children": [
+                  {
+                    "qname": "a:solidFill",
+                    "className": "SolidFill",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "children": [
+                      {
+                        "qname": "a:schemeClr",
+                        "className": "SchemeColor",
+                        "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                        "typedAttributes": {
+                          "val": "tx1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "qname": "a:latin",
+                    "className": "LatinFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-lt"
+                    }
+                  },
+                  {
+                    "qname": "a:ea",
+                    "className": "EastAsianFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-ea"
+                    }
+                  },
+                  {
+                    "qname": "a:cs",
+                    "className": "ComplexScriptFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-cs"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "qname": "a:lvl2pPr",
+            "className": "Level2ParagraphProperties",
+            "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "extendedAttributes": {
+              "algn": "l",
+              "defTabSz": "914400",
+              "eaLnBrk": "1",
+              "hangingPunct": "1",
+              "latinLnBrk": "0",
+              "marL": "457200",
+              "rtl": "0"
+            },
+            "children": [
+              {
+                "qname": "a:defRPr",
+                "className": "DefaultRunProperties",
+                "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                "extendedAttributes": {
+                  "kern": "1200",
+                  "sz": "1800"
+                },
+                "children": [
+                  {
+                    "qname": "a:solidFill",
+                    "className": "SolidFill",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "children": [
+                      {
+                        "qname": "a:schemeClr",
+                        "className": "SchemeColor",
+                        "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                        "typedAttributes": {
+                          "val": "tx1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "qname": "a:latin",
+                    "className": "LatinFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-lt"
+                    }
+                  },
+                  {
+                    "qname": "a:ea",
+                    "className": "EastAsianFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-ea"
+                    }
+                  },
+                  {
+                    "qname": "a:cs",
+                    "className": "ComplexScriptFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-cs"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "qname": "a:lvl3pPr",
+            "className": "Level3ParagraphProperties",
+            "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "extendedAttributes": {
+              "algn": "l",
+              "defTabSz": "914400",
+              "eaLnBrk": "1",
+              "hangingPunct": "1",
+              "latinLnBrk": "0",
+              "marL": "914400",
+              "rtl": "0"
+            },
+            "children": [
+              {
+                "qname": "a:defRPr",
+                "className": "DefaultRunProperties",
+                "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                "extendedAttributes": {
+                  "kern": "1200",
+                  "sz": "1800"
+                },
+                "children": [
+                  {
+                    "qname": "a:solidFill",
+                    "className": "SolidFill",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "children": [
+                      {
+                        "qname": "a:schemeClr",
+                        "className": "SchemeColor",
+                        "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                        "typedAttributes": {
+                          "val": "tx1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "qname": "a:latin",
+                    "className": "LatinFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-lt"
+                    }
+                  },
+                  {
+                    "qname": "a:ea",
+                    "className": "EastAsianFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-ea"
+                    }
+                  },
+                  {
+                    "qname": "a:cs",
+                    "className": "ComplexScriptFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-cs"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "qname": "a:lvl4pPr",
+            "className": "Level4ParagraphProperties",
+            "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "extendedAttributes": {
+              "algn": "l",
+              "defTabSz": "914400",
+              "eaLnBrk": "1",
+              "hangingPunct": "1",
+              "latinLnBrk": "0",
+              "marL": "1371600",
+              "rtl": "0"
+            },
+            "children": [
+              {
+                "qname": "a:defRPr",
+                "className": "DefaultRunProperties",
+                "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                "extendedAttributes": {
+                  "kern": "1200",
+                  "sz": "1800"
+                },
+                "children": [
+                  {
+                    "qname": "a:solidFill",
+                    "className": "SolidFill",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "children": [
+                      {
+                        "qname": "a:schemeClr",
+                        "className": "SchemeColor",
+                        "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                        "typedAttributes": {
+                          "val": "tx1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "qname": "a:latin",
+                    "className": "LatinFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-lt"
+                    }
+                  },
+                  {
+                    "qname": "a:ea",
+                    "className": "EastAsianFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-ea"
+                    }
+                  },
+                  {
+                    "qname": "a:cs",
+                    "className": "ComplexScriptFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-cs"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "qname": "a:lvl5pPr",
+            "className": "Level5ParagraphProperties",
+            "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "extendedAttributes": {
+              "algn": "l",
+              "defTabSz": "914400",
+              "eaLnBrk": "1",
+              "hangingPunct": "1",
+              "latinLnBrk": "0",
+              "marL": "1828800",
+              "rtl": "0"
+            },
+            "children": [
+              {
+                "qname": "a:defRPr",
+                "className": "DefaultRunProperties",
+                "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                "extendedAttributes": {
+                  "kern": "1200",
+                  "sz": "1800"
+                },
+                "children": [
+                  {
+                    "qname": "a:solidFill",
+                    "className": "SolidFill",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "children": [
+                      {
+                        "qname": "a:schemeClr",
+                        "className": "SchemeColor",
+                        "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                        "typedAttributes": {
+                          "val": "tx1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "qname": "a:latin",
+                    "className": "LatinFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-lt"
+                    }
+                  },
+                  {
+                    "qname": "a:ea",
+                    "className": "EastAsianFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-ea"
+                    }
+                  },
+                  {
+                    "qname": "a:cs",
+                    "className": "ComplexScriptFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-cs"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "qname": "a:lvl6pPr",
+            "className": "Level6ParagraphProperties",
+            "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "extendedAttributes": {
+              "algn": "l",
+              "defTabSz": "914400",
+              "eaLnBrk": "1",
+              "hangingPunct": "1",
+              "latinLnBrk": "0",
+              "marL": "2286000",
+              "rtl": "0"
+            },
+            "children": [
+              {
+                "qname": "a:defRPr",
+                "className": "DefaultRunProperties",
+                "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                "extendedAttributes": {
+                  "kern": "1200",
+                  "sz": "1800"
+                },
+                "children": [
+                  {
+                    "qname": "a:solidFill",
+                    "className": "SolidFill",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "children": [
+                      {
+                        "qname": "a:schemeClr",
+                        "className": "SchemeColor",
+                        "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                        "typedAttributes": {
+                          "val": "tx1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "qname": "a:latin",
+                    "className": "LatinFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-lt"
+                    }
+                  },
+                  {
+                    "qname": "a:ea",
+                    "className": "EastAsianFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-ea"
+                    }
+                  },
+                  {
+                    "qname": "a:cs",
+                    "className": "ComplexScriptFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-cs"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "qname": "a:lvl7pPr",
+            "className": "Level7ParagraphProperties",
+            "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "extendedAttributes": {
+              "algn": "l",
+              "defTabSz": "914400",
+              "eaLnBrk": "1",
+              "hangingPunct": "1",
+              "latinLnBrk": "0",
+              "marL": "2743200",
+              "rtl": "0"
+            },
+            "children": [
+              {
+                "qname": "a:defRPr",
+                "className": "DefaultRunProperties",
+                "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                "extendedAttributes": {
+                  "kern": "1200",
+                  "sz": "1800"
+                },
+                "children": [
+                  {
+                    "qname": "a:solidFill",
+                    "className": "SolidFill",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "children": [
+                      {
+                        "qname": "a:schemeClr",
+                        "className": "SchemeColor",
+                        "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                        "typedAttributes": {
+                          "val": "tx1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "qname": "a:latin",
+                    "className": "LatinFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-lt"
+                    }
+                  },
+                  {
+                    "qname": "a:ea",
+                    "className": "EastAsianFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-ea"
+                    }
+                  },
+                  {
+                    "qname": "a:cs",
+                    "className": "ComplexScriptFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-cs"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "qname": "a:lvl8pPr",
+            "className": "Level8ParagraphProperties",
+            "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "extendedAttributes": {
+              "algn": "l",
+              "defTabSz": "914400",
+              "eaLnBrk": "1",
+              "hangingPunct": "1",
+              "latinLnBrk": "0",
+              "marL": "3200400",
+              "rtl": "0"
+            },
+            "children": [
+              {
+                "qname": "a:defRPr",
+                "className": "DefaultRunProperties",
+                "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                "extendedAttributes": {
+                  "kern": "1200",
+                  "sz": "1800"
+                },
+                "children": [
+                  {
+                    "qname": "a:solidFill",
+                    "className": "SolidFill",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "children": [
+                      {
+                        "qname": "a:schemeClr",
+                        "className": "SchemeColor",
+                        "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                        "typedAttributes": {
+                          "val": "tx1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "qname": "a:latin",
+                    "className": "LatinFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-lt"
+                    }
+                  },
+                  {
+                    "qname": "a:ea",
+                    "className": "EastAsianFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-ea"
+                    }
+                  },
+                  {
+                    "qname": "a:cs",
+                    "className": "ComplexScriptFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-cs"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "qname": "a:lvl9pPr",
+            "className": "Level9ParagraphProperties",
+            "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+            "extendedAttributes": {
+              "algn": "l",
+              "defTabSz": "914400",
+              "eaLnBrk": "1",
+              "hangingPunct": "1",
+              "latinLnBrk": "0",
+              "marL": "3657600",
+              "rtl": "0"
+            },
+            "children": [
+              {
+                "qname": "a:defRPr",
+                "className": "DefaultRunProperties",
+                "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                "extendedAttributes": {
+                  "kern": "1200",
+                  "sz": "1800"
+                },
+                "children": [
+                  {
+                    "qname": "a:solidFill",
+                    "className": "SolidFill",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "children": [
+                      {
+                        "qname": "a:schemeClr",
+                        "className": "SchemeColor",
+                        "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                        "typedAttributes": {
+                          "val": "tx1"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "qname": "a:latin",
+                    "className": "LatinFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-lt"
+                    }
+                  },
+                  {
+                    "qname": "a:ea",
+                    "className": "EastAsianFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-ea"
+                    }
+                  },
+                  {
+                    "qname": "a:cs",
+                    "className": "ComplexScriptFont",
+                    "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                    "extendedAttributes": {
+                      "typeface": "+mn-cs"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "slides": [
+    {
+      "qname": "p:sld",
+      "className": "Slide",
+      "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+      "extendedAttributes": {
+        "xmlns:a": "http://purl.oclc.org/ooxml/drawingml/main",
+        "xmlns:p": "http://purl.oclc.org/ooxml/presentationml/main",
+        "xmlns:r": "http://purl.oclc.org/ooxml/officeDocument/relationships"
+      },
+      "children": [
+        {
+          "qname": "p:cSld",
+          "className": "CommonSlideData",
+          "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+          "children": [
+            {
+              "qname": "p:spTree",
+              "className": "ShapeTree",
+              "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+              "children": [
+                {
+                  "qname": "p:nvGrpSpPr",
+                  "className": "NonVisualGroupShapeProperties",
+                  "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+                  "children": [
+                    {
+                      "qname": "p:cNvPr",
+                      "className": "NonVisualDrawingProperties",
+                      "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+                      "typedAttributes": {
+                        "id": "1",
+                        "name": ""
+                      }
+                    },
+                    {
+                      "qname": "p:cNvGrpSpPr",
+                      "className": "NonVisualGroupShapeDrawingProperties",
+                      "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main"
+                    },
+                    {
+                      "qname": "p:nvPr",
+                      "className": "ApplicationNonVisualDrawingProperties",
+                      "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main"
+                    }
+                  ]
+                },
+                {
+                  "qname": "p:grpSpPr",
+                  "className": "GroupShapeProperties",
+                  "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+                  "children": [
+                    {
+                      "qname": "a:xfrm",
+                      "className": "TransformGroup",
+                      "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                      "children": [
+                        {
+                          "qname": "a:off",
+                          "className": "Offset",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                          "extendedAttributes": {
+                            "x": "0",
+                            "y": "0"
+                          }
+                        },
+                        {
+                          "qname": "a:ext",
+                          "className": "ShapePropertiesExtension",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                          "extendedAttributes": {
+                            "cx": "0",
+                            "cy": "0"
+                          }
+                        },
+                        {
+                          "qname": "a:chOff",
+                          "className": "ChildOffset",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                          "extendedAttributes": {
+                            "x": "0",
+                            "y": "0"
+                          }
+                        },
+                        {
+                          "qname": "a:chExt",
+                          "className": "ChildExtents",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                          "extendedAttributes": {
+                            "cx": "0",
+                            "cy": "0"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "qname": "p:sp",
+                  "className": "Shape",
+                  "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+                  "children": [
+                    {
+                      "qname": "p:nvSpPr",
+                      "className": "NonVisualShapeProperties",
+                      "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+                      "children": [
+                        {
+                          "qname": "p:cNvPr",
+                          "className": "NonVisualDrawingProperties",
+                          "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+                          "typedAttributes": {
+                            "id": "4",
+                            "name": "TextBox 3"
+                          }
+                        },
+                        {
+                          "qname": "p:cNvSpPr",
+                          "className": "NonVisualShapeDrawingProperties",
+                          "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+                          "typedAttributes": {
+                            "textBox": "1"
+                          }
+                        },
+                        {
+                          "qname": "p:nvPr",
+                          "className": "ApplicationNonVisualDrawingProperties",
+                          "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main"
+                        }
+                      ]
+                    },
+                    {
+                      "qname": "p:spPr",
+                      "className": "ShapeProperties",
+                      "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+                      "children": [
+                        {
+                          "qname": "a:xfrm",
+                          "className": "TransformGroup",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                          "children": [
+                            {
+                              "qname": "a:off",
+                              "className": "Offset",
+                              "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                              "extendedAttributes": {
+                                "x": "1600200",
+                                "y": "1295400"
+                              }
+                            },
+                            {
+                              "qname": "a:ext",
+                              "className": "ShapePropertiesExtension",
+                              "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                              "extendedAttributes": {
+                                "cx": "5791200",
+                                "cy": "646331"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "qname": "a:prstGeom",
+                          "className": "PresetGeometry",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                          "typedAttributes": {
+                            "preset": "rect"
+                          },
+                          "children": [
+                            {
+                              "qname": "a:avLst",
+                              "className": "AdjustValueList",
+                              "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main"
+                            }
+                          ]
+                        },
+                        {
+                          "qname": "a:noFill",
+                          "className": "NoFill",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main"
+                        }
+                      ]
+                    },
+                    {
+                      "qname": "p:txBody",
+                      "className": "TextBody",
+                      "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+                      "children": [
+                        {
+                          "qname": "a:bodyPr",
+                          "className": "BodyProperties",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                          "typedAttributes": {
+                            "rightToLeftColumns": "0",
+                            "wrap": "square"
+                          },
+                          "children": [
+                            {
+                              "qname": "a:spAutoFit",
+                              "className": "ShapeAutoFit",
+                              "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main"
+                            }
+                          ]
+                        },
+                        {
+                          "qname": "a:lstStyle",
+                          "className": "ListStyle",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main"
+                        },
+                        {
+                          "qname": "a:p",
+                          "className": "Paragraph",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                          "children": [
+                            {
+                              "qname": "a:pPr",
+                              "className": "ParagraphProperties",
+                              "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                              "children": [
+                                {
+                                  "qname": "a:tabLst",
+                                  "className": "TabStopList",
+                                  "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                  "children": [
+                                    {
+                                      "qname": "a:tab",
+                                      "className": "TabStop",
+                                      "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                      "typedAttributes": {
+                                        "alignment": "l",
+                                        "position": "2743200"
+                                      }
+                                    },
+                                    {
+                                      "qname": "a:tab",
+                                      "className": "TabStop",
+                                      "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                      "typedAttributes": {
+                                        "alignment": "dec",
+                                        "position": "3657600"
+                                      }
+                                    },
+                                    {
+                                      "qname": "a:tab",
+                                      "className": "TabStop",
+                                      "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                      "typedAttributes": {
+                                        "alignment": "ctr",
+                                        "position": "4572000"
+                                      }
+                                    },
+                                    {
+                                      "qname": "a:tab",
+                                      "className": "TabStop",
+                                      "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                      "typedAttributes": {
+                                        "alignment": "r",
+                                        "position": "5486400"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "qname": "a:r",
+                              "className": "Run",
+                              "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                              "children": [
+                                {
+                                  "qname": "a:rPr",
+                                  "className": "RunProperties",
+                                  "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                  "extendedAttributes": {
+                                    "dirty": "0",
+                                    "lang": "en-US",
+                                    "smtClean": "0"
+                                  }
+                                },
+                                {
+                                  "qname": "a:t",
+                                  "className": "Text",
+                                  "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                  "text": "Some text\tand some tabs\tmore text"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "qname": "a:p",
+                          "className": "Paragraph",
+                          "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                          "children": [
+                            {
+                              "qname": "a:pPr",
+                              "className": "ParagraphProperties",
+                              "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                              "children": [
+                                {
+                                  "qname": "a:tabLst",
+                                  "className": "TabStopList",
+                                  "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                  "children": [
+                                    {
+                                      "qname": "a:tab",
+                                      "className": "TabStop",
+                                      "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                      "typedAttributes": {
+                                        "alignment": "l",
+                                        "position": "2743200"
+                                      }
+                                    },
+                                    {
+                                      "qname": "a:tab",
+                                      "className": "TabStop",
+                                      "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                      "typedAttributes": {
+                                        "alignment": "dec",
+                                        "position": "3657600"
+                                      }
+                                    },
+                                    {
+                                      "qname": "a:tab",
+                                      "className": "TabStop",
+                                      "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                      "typedAttributes": {
+                                        "alignment": "ctr",
+                                        "position": "4572000"
+                                      }
+                                    },
+                                    {
+                                      "qname": "a:tab",
+                                      "className": "TabStop",
+                                      "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                      "typedAttributes": {
+                                        "alignment": "r",
+                                        "position": "5486400"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "qname": "a:r",
+                              "className": "Run",
+                              "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                              "children": [
+                                {
+                                  "qname": "a:rPr",
+                                  "className": "RunProperties",
+                                  "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                  "extendedAttributes": {
+                                    "dirty": "0",
+                                    "lang": "en-US",
+                                    "smtClean": "0"
+                                  }
+                                },
+                                {
+                                  "qname": "a:t",
+                                  "className": "Text",
+                                  "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                                  "text": "A new line and \ta tab\tthe\tend"
+                                }
+                              ]
+                            },
+                            {
+                              "qname": "a:endParaRPr",
+                              "className": "EndParagraphRunProperties",
+                              "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                              "extendedAttributes": {
+                                "dirty": "0",
+                                "lang": "en-US"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "qname": "p:clrMapOvr",
+          "className": "ColorMapOverride",
+          "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+          "children": [
+            {
+              "qname": "a:masterClrMapping",
+              "className": "MasterColorMapping",
+              "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

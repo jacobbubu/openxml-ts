@@ -21,7 +21,7 @@ export class BrowseSlideMode extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":showScrollbar": this.showScrollbar = BooleanValue.parse(value); return;
+      case "showScrollbar": this.showScrollbar = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -29,7 +29,7 @@ export class BrowseSlideMode extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.showScrollbar !== undefined) out.push([":showScrollbar", this.showScrollbar.toString()]);
+    if (this.showScrollbar !== undefined) out.push(["showScrollbar", this.showScrollbar.toString()]);
     return out;
   }
 

@@ -32,10 +32,10 @@ export abstract class LinePropertiesType extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":w": this.width = Int32Value.parse(value); assertNumber(this.width, { min: 0, max: 20116800 }, { attribute: ":w", elementClass: "LinePropertiesType" }); return;
-      case ":cap": this.capType = StringValue.parse(value); return;
-      case ":cmpd": this.compoundLineType = StringValue.parse(value); return;
-      case ":algn": this.alignment = StringValue.parse(value); return;
+      case "w": this.width = Int32Value.parse(value); assertNumber(this.width, { min: 0, max: 20116800 }, { attribute: ":w", elementClass: "LinePropertiesType" }); return;
+      case "cap": this.capType = StringValue.parse(value); return;
+      case "cmpd": this.compoundLineType = StringValue.parse(value); return;
+      case "algn": this.alignment = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -43,10 +43,10 @@ export abstract class LinePropertiesType extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.width !== undefined) out.push([":w", this.width.toString()]);
-    if (this.capType !== undefined) out.push([":cap", this.capType.toString()]);
-    if (this.compoundLineType !== undefined) out.push([":cmpd", this.compoundLineType.toString()]);
-    if (this.alignment !== undefined) out.push([":algn", this.alignment.toString()]);
+    if (this.width !== undefined) out.push(["w", this.width.toString()]);
+    if (this.capType !== undefined) out.push(["cap", this.capType.toString()]);
+    if (this.compoundLineType !== undefined) out.push(["cmpd", this.compoundLineType.toString()]);
+    if (this.alignment !== undefined) out.push(["algn", this.alignment.toString()]);
     return out;
   }
 

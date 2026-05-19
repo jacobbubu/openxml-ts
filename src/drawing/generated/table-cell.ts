@@ -32,10 +32,10 @@ export class TableCell extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rowSpan": this.rowSpan = Int32Value.parse(value); return;
-      case ":gridSpan": this.gridSpan = Int32Value.parse(value); return;
-      case ":hMerge": this.horizontalMerge = BooleanValue.parse(value); return;
-      case ":vMerge": this.verticalMerge = BooleanValue.parse(value); return;
+      case "rowSpan": this.rowSpan = Int32Value.parse(value); return;
+      case "gridSpan": this.gridSpan = Int32Value.parse(value); return;
+      case "hMerge": this.horizontalMerge = BooleanValue.parse(value); return;
+      case "vMerge": this.verticalMerge = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -43,10 +43,10 @@ export class TableCell extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.rowSpan !== undefined) out.push([":rowSpan", this.rowSpan.toString()]);
-    if (this.gridSpan !== undefined) out.push([":gridSpan", this.gridSpan.toString()]);
-    if (this.horizontalMerge !== undefined) out.push([":hMerge", this.horizontalMerge.toString()]);
-    if (this.verticalMerge !== undefined) out.push([":vMerge", this.verticalMerge.toString()]);
+    if (this.rowSpan !== undefined) out.push(["rowSpan", this.rowSpan.toString()]);
+    if (this.gridSpan !== undefined) out.push(["gridSpan", this.gridSpan.toString()]);
+    if (this.horizontalMerge !== undefined) out.push(["hMerge", this.horizontalMerge.toString()]);
+    if (this.verticalMerge !== undefined) out.push(["vMerge", this.verticalMerge.toString()]);
     return out;
   }
 

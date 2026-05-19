@@ -37,12 +37,12 @@ export class AdjustHandleXY extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":gdRefX": this.xAdjustmentGuide = StringValue.parse(value); return;
-      case ":minX": this.minX = StringValue.parse(value); return;
-      case ":maxX": this.maxX = StringValue.parse(value); return;
-      case ":gdRefY": this.yAdjustmentGuide = StringValue.parse(value); return;
-      case ":minY": this.minY = StringValue.parse(value); return;
-      case ":maxY": this.maxY = StringValue.parse(value); return;
+      case "gdRefX": this.xAdjustmentGuide = StringValue.parse(value); return;
+      case "minX": this.minX = StringValue.parse(value); return;
+      case "maxX": this.maxX = StringValue.parse(value); return;
+      case "gdRefY": this.yAdjustmentGuide = StringValue.parse(value); return;
+      case "minY": this.minY = StringValue.parse(value); return;
+      case "maxY": this.maxY = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -50,12 +50,12 @@ export class AdjustHandleXY extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.xAdjustmentGuide !== undefined) out.push([":gdRefX", this.xAdjustmentGuide.toString()]);
-    if (this.minX !== undefined) out.push([":minX", this.minX.toString()]);
-    if (this.maxX !== undefined) out.push([":maxX", this.maxX.toString()]);
-    if (this.yAdjustmentGuide !== undefined) out.push([":gdRefY", this.yAdjustmentGuide.toString()]);
-    if (this.minY !== undefined) out.push([":minY", this.minY.toString()]);
-    if (this.maxY !== undefined) out.push([":maxY", this.maxY.toString()]);
+    if (this.xAdjustmentGuide !== undefined) out.push(["gdRefX", this.xAdjustmentGuide.toString()]);
+    if (this.minX !== undefined) out.push(["minX", this.minX.toString()]);
+    if (this.maxX !== undefined) out.push(["maxX", this.maxX.toString()]);
+    if (this.yAdjustmentGuide !== undefined) out.push(["gdRefY", this.yAdjustmentGuide.toString()]);
+    if (this.minY !== undefined) out.push(["minY", this.minY.toString()]);
+    if (this.maxY !== undefined) out.push(["maxY", this.maxY.toString()]);
     return out;
   }
 

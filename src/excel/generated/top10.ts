@@ -32,10 +32,10 @@ export class Top10 extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":top": this.top = BooleanValue.parse(value); return;
-      case ":percent": this.percent = BooleanValue.parse(value); return;
-      case ":val": this.val = StringValue.parse(value); return;
-      case ":filterVal": this.filterValue = StringValue.parse(value); return;
+      case "top": this.top = BooleanValue.parse(value); return;
+      case "percent": this.percent = BooleanValue.parse(value); return;
+      case "val": this.val = StringValue.parse(value); return;
+      case "filterVal": this.filterValue = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -43,10 +43,10 @@ export class Top10 extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.top !== undefined) out.push([":top", this.top.toString()]);
-    if (this.percent !== undefined) out.push([":percent", this.percent.toString()]);
-    if (this.val !== undefined) out.push([":val", this.val.toString()]);
-    if (this.filterValue !== undefined) out.push([":filterVal", this.filterValue.toString()]);
+    if (this.top !== undefined) out.push(["top", this.top.toString()]);
+    if (this.percent !== undefined) out.push(["percent", this.percent.toString()]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
+    if (this.filterValue !== undefined) out.push(["filterVal", this.filterValue.toString()]);
     return out;
   }
 

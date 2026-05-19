@@ -28,9 +28,9 @@ export class Slide extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":showMasterSp": this.showMasterShapes = BooleanValue.parse(value); return;
-      case ":showMasterPhAnim": this.showMasterPlaceholderAnimations = BooleanValue.parse(value); return;
-      case ":show": this.show = BooleanValue.parse(value); return;
+      case "showMasterSp": this.showMasterShapes = BooleanValue.parse(value); return;
+      case "showMasterPhAnim": this.showMasterPlaceholderAnimations = BooleanValue.parse(value); return;
+      case "show": this.show = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -38,9 +38,9 @@ export class Slide extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.showMasterShapes !== undefined) out.push([":showMasterSp", this.showMasterShapes.toString()]);
-    if (this.showMasterPlaceholderAnimations !== undefined) out.push([":showMasterPhAnim", this.showMasterPlaceholderAnimations.toString()]);
-    if (this.show !== undefined) out.push([":show", this.show.toString()]);
+    if (this.showMasterShapes !== undefined) out.push(["showMasterSp", this.showMasterShapes.toString()]);
+    if (this.showMasterPlaceholderAnimations !== undefined) out.push(["showMasterPhAnim", this.showMasterPlaceholderAnimations.toString()]);
+    if (this.show !== undefined) out.push(["show", this.show.toString()]);
     return out;
   }
 

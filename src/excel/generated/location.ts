@@ -38,12 +38,12 @@ export class Location extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":ref": this.reference = StringValue.parse(value); return;
-      case ":firstHeaderRow": this.firstHeaderRow = UInt32Value.parse(value); return;
-      case ":firstDataRow": this.firstDataRow = UInt32Value.parse(value); return;
-      case ":firstDataCol": this.firstDataColumn = UInt32Value.parse(value); return;
-      case ":rowPageCount": this.rowPageCount = UInt32Value.parse(value); return;
-      case ":colPageCount": this.columnsPerPage = UInt32Value.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
+      case "firstHeaderRow": this.firstHeaderRow = UInt32Value.parse(value); return;
+      case "firstDataRow": this.firstDataRow = UInt32Value.parse(value); return;
+      case "firstDataCol": this.firstDataColumn = UInt32Value.parse(value); return;
+      case "rowPageCount": this.rowPageCount = UInt32Value.parse(value); return;
+      case "colPageCount": this.columnsPerPage = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -51,12 +51,12 @@ export class Location extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
-    if (this.firstHeaderRow !== undefined) out.push([":firstHeaderRow", this.firstHeaderRow.toString()]);
-    if (this.firstDataRow !== undefined) out.push([":firstDataRow", this.firstDataRow.toString()]);
-    if (this.firstDataColumn !== undefined) out.push([":firstDataCol", this.firstDataColumn.toString()]);
-    if (this.rowPageCount !== undefined) out.push([":rowPageCount", this.rowPageCount.toString()]);
-    if (this.columnsPerPage !== undefined) out.push([":colPageCount", this.columnsPerPage.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
+    if (this.firstHeaderRow !== undefined) out.push(["firstHeaderRow", this.firstHeaderRow.toString()]);
+    if (this.firstDataRow !== undefined) out.push(["firstDataRow", this.firstDataRow.toString()]);
+    if (this.firstDataColumn !== undefined) out.push(["firstDataCol", this.firstDataColumn.toString()]);
+    if (this.rowPageCount !== undefined) out.push(["rowPageCount", this.rowPageCount.toString()]);
+    if (this.columnsPerPage !== undefined) out.push(["colPageCount", this.columnsPerPage.toString()]);
     return out;
   }
 

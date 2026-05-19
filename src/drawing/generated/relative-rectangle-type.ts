@@ -30,10 +30,10 @@ export abstract class RelativeRectangleType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":l": this.left = Int32Value.parse(value); return;
-      case ":t": this.top = Int32Value.parse(value); return;
-      case ":r": this.right = Int32Value.parse(value); return;
-      case ":b": this.bottom = Int32Value.parse(value); return;
+      case "l": this.left = Int32Value.parse(value); return;
+      case "t": this.top = Int32Value.parse(value); return;
+      case "r": this.right = Int32Value.parse(value); return;
+      case "b": this.bottom = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -41,10 +41,10 @@ export abstract class RelativeRectangleType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.left !== undefined) out.push([":l", this.left.toString()]);
-    if (this.top !== undefined) out.push([":t", this.top.toString()]);
-    if (this.right !== undefined) out.push([":r", this.right.toString()]);
-    if (this.bottom !== undefined) out.push([":b", this.bottom.toString()]);
+    if (this.left !== undefined) out.push(["l", this.left.toString()]);
+    if (this.top !== undefined) out.push(["t", this.top.toString()]);
+    if (this.right !== undefined) out.push(["r", this.right.toString()]);
+    if (this.bottom !== undefined) out.push(["b", this.bottom.toString()]);
     return out;
   }
 

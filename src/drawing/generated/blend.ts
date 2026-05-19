@@ -23,7 +23,7 @@ export class Blend extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":blend": this.blendMode = StringValue.parse(value); return;
+      case "blend": this.blendMode = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class Blend extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.blendMode !== undefined) out.push([":blend", this.blendMode.toString()]);
+    if (this.blendMode !== undefined) out.push(["blend", this.blendMode.toString()]);
     return out;
   }
 

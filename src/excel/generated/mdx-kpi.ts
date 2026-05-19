@@ -29,9 +29,9 @@ export class MdxKpi extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":n": this.nameIndex = UInt32Value.parse(value); return;
-      case ":np": this.kpiIndex = UInt32Value.parse(value); return;
-      case ":p": this.kpiProperty = StringValue.parse(value); return;
+      case "n": this.nameIndex = UInt32Value.parse(value); return;
+      case "np": this.kpiIndex = UInt32Value.parse(value); return;
+      case "p": this.kpiProperty = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class MdxKpi extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.nameIndex !== undefined) out.push([":n", this.nameIndex.toString()]);
-    if (this.kpiIndex !== undefined) out.push([":np", this.kpiIndex.toString()]);
-    if (this.kpiProperty !== undefined) out.push([":p", this.kpiProperty.toString()]);
+    if (this.nameIndex !== undefined) out.push(["n", this.nameIndex.toString()]);
+    if (this.kpiIndex !== undefined) out.push(["np", this.kpiIndex.toString()]);
+    if (this.kpiProperty !== undefined) out.push(["p", this.kpiProperty.toString()]);
     return out;
   }
 

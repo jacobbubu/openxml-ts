@@ -25,8 +25,8 @@ export abstract class IndexRangeType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":st": this.start = UInt32Value.parse(value); return;
-      case ":end": this.end = UInt32Value.parse(value); return;
+      case "st": this.start = UInt32Value.parse(value); return;
+      case "end": this.end = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export abstract class IndexRangeType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.start !== undefined) out.push([":st", this.start.toString()]);
-    if (this.end !== undefined) out.push([":end", this.end.toString()]);
+    if (this.start !== undefined) out.push(["st", this.start.toString()]);
+    if (this.end !== undefined) out.push(["end", this.end.toString()]);
     return out;
   }
 

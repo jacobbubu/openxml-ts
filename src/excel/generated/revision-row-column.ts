@@ -46,14 +46,14 @@ export class RevisionRowColumn extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rId": this.revisionId = UInt32Value.parse(value); return;
-      case ":ua": this.ua = BooleanValue.parse(value); return;
-      case ":ra": this.ra = BooleanValue.parse(value); return;
-      case ":sId": this.sheetId = UInt32Value.parse(value); return;
-      case ":eol": this.endOfList = BooleanValue.parse(value); return;
-      case ":ref": this.reference = StringValue.parse(value); return;
-      case ":action": this.action = StringValue.parse(value); return;
-      case ":edge": this.edge = BooleanValue.parse(value); return;
+      case "rId": this.revisionId = UInt32Value.parse(value); return;
+      case "ua": this.ua = BooleanValue.parse(value); return;
+      case "ra": this.ra = BooleanValue.parse(value); return;
+      case "sId": this.sheetId = UInt32Value.parse(value); return;
+      case "eol": this.endOfList = BooleanValue.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
+      case "action": this.action = StringValue.parse(value); return;
+      case "edge": this.edge = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -61,14 +61,14 @@ export class RevisionRowColumn extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.revisionId !== undefined) out.push([":rId", this.revisionId.toString()]);
-    if (this.ua !== undefined) out.push([":ua", this.ua.toString()]);
-    if (this.ra !== undefined) out.push([":ra", this.ra.toString()]);
-    if (this.sheetId !== undefined) out.push([":sId", this.sheetId.toString()]);
-    if (this.endOfList !== undefined) out.push([":eol", this.endOfList.toString()]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
-    if (this.action !== undefined) out.push([":action", this.action.toString()]);
-    if (this.edge !== undefined) out.push([":edge", this.edge.toString()]);
+    if (this.revisionId !== undefined) out.push(["rId", this.revisionId.toString()]);
+    if (this.ua !== undefined) out.push(["ua", this.ua.toString()]);
+    if (this.ra !== undefined) out.push(["ra", this.ra.toString()]);
+    if (this.sheetId !== undefined) out.push(["sId", this.sheetId.toString()]);
+    if (this.endOfList !== undefined) out.push(["eol", this.endOfList.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
+    if (this.action !== undefined) out.push(["action", this.action.toString()]);
+    if (this.edge !== undefined) out.push(["edge", this.edge.toString()]);
     return out;
   }
 

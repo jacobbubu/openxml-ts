@@ -36,11 +36,11 @@ export class InputCells extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":r": this.cellReference = StringValue.parse(value); return;
-      case ":deleted": this.deleted = BooleanValue.parse(value); return;
-      case ":undone": this.undone = BooleanValue.parse(value); return;
-      case ":val": this.val = StringValue.parse(value); return;
-      case ":numFmtId": this.numberFormatId = UInt32Value.parse(value); return;
+      case "r": this.cellReference = StringValue.parse(value); return;
+      case "deleted": this.deleted = BooleanValue.parse(value); return;
+      case "undone": this.undone = BooleanValue.parse(value); return;
+      case "val": this.val = StringValue.parse(value); return;
+      case "numFmtId": this.numberFormatId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -48,11 +48,11 @@ export class InputCells extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.cellReference !== undefined) out.push([":r", this.cellReference.toString()]);
-    if (this.deleted !== undefined) out.push([":deleted", this.deleted.toString()]);
-    if (this.undone !== undefined) out.push([":undone", this.undone.toString()]);
-    if (this.val !== undefined) out.push([":val", this.val.toString()]);
-    if (this.numberFormatId !== undefined) out.push([":numFmtId", this.numberFormatId.toString()]);
+    if (this.cellReference !== undefined) out.push(["r", this.cellReference.toString()]);
+    if (this.deleted !== undefined) out.push(["deleted", this.deleted.toString()]);
+    if (this.undone !== undefined) out.push(["undone", this.undone.toString()]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
+    if (this.numberFormatId !== undefined) out.push(["numFmtId", this.numberFormatId.toString()]);
     return out;
   }
 

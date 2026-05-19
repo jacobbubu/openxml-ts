@@ -59,18 +59,18 @@ export class Headers extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":guid": this.guid = StringValue.parse(value); return;
-      case ":lastGuid": this.lastGuid = StringValue.parse(value); return;
-      case ":shared": this.shared = BooleanValue.parse(value); return;
-      case ":diskRevisions": this.diskRevisions = BooleanValue.parse(value); return;
-      case ":history": this.history = BooleanValue.parse(value); return;
-      case ":trackRevisions": this.trackRevisions = BooleanValue.parse(value); return;
-      case ":exclusive": this.exclusive = BooleanValue.parse(value); return;
-      case ":revisionId": this.revisionId = UInt32Value.parse(value); return;
-      case ":version": this.version = Int32Value.parse(value); return;
-      case ":keepChangeHistory": this.keepChangeHistory = BooleanValue.parse(value); return;
-      case ":protected": this.protected = BooleanValue.parse(value); return;
-      case ":preserveHistory": this.preserveHistory = UInt32Value.parse(value); return;
+      case "guid": this.guid = StringValue.parse(value); return;
+      case "lastGuid": this.lastGuid = StringValue.parse(value); return;
+      case "shared": this.shared = BooleanValue.parse(value); return;
+      case "diskRevisions": this.diskRevisions = BooleanValue.parse(value); return;
+      case "history": this.history = BooleanValue.parse(value); return;
+      case "trackRevisions": this.trackRevisions = BooleanValue.parse(value); return;
+      case "exclusive": this.exclusive = BooleanValue.parse(value); return;
+      case "revisionId": this.revisionId = UInt32Value.parse(value); return;
+      case "version": this.version = Int32Value.parse(value); return;
+      case "keepChangeHistory": this.keepChangeHistory = BooleanValue.parse(value); return;
+      case "protected": this.protected = BooleanValue.parse(value); return;
+      case "preserveHistory": this.preserveHistory = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -78,18 +78,18 @@ export class Headers extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.guid !== undefined) out.push([":guid", this.guid.toString()]);
-    if (this.lastGuid !== undefined) out.push([":lastGuid", this.lastGuid.toString()]);
-    if (this.shared !== undefined) out.push([":shared", this.shared.toString()]);
-    if (this.diskRevisions !== undefined) out.push([":diskRevisions", this.diskRevisions.toString()]);
-    if (this.history !== undefined) out.push([":history", this.history.toString()]);
-    if (this.trackRevisions !== undefined) out.push([":trackRevisions", this.trackRevisions.toString()]);
-    if (this.exclusive !== undefined) out.push([":exclusive", this.exclusive.toString()]);
-    if (this.revisionId !== undefined) out.push([":revisionId", this.revisionId.toString()]);
-    if (this.version !== undefined) out.push([":version", this.version.toString()]);
-    if (this.keepChangeHistory !== undefined) out.push([":keepChangeHistory", this.keepChangeHistory.toString()]);
-    if (this.protected !== undefined) out.push([":protected", this.protected.toString()]);
-    if (this.preserveHistory !== undefined) out.push([":preserveHistory", this.preserveHistory.toString()]);
+    if (this.guid !== undefined) out.push(["guid", this.guid.toString()]);
+    if (this.lastGuid !== undefined) out.push(["lastGuid", this.lastGuid.toString()]);
+    if (this.shared !== undefined) out.push(["shared", this.shared.toString()]);
+    if (this.diskRevisions !== undefined) out.push(["diskRevisions", this.diskRevisions.toString()]);
+    if (this.history !== undefined) out.push(["history", this.history.toString()]);
+    if (this.trackRevisions !== undefined) out.push(["trackRevisions", this.trackRevisions.toString()]);
+    if (this.exclusive !== undefined) out.push(["exclusive", this.exclusive.toString()]);
+    if (this.revisionId !== undefined) out.push(["revisionId", this.revisionId.toString()]);
+    if (this.version !== undefined) out.push(["version", this.version.toString()]);
+    if (this.keepChangeHistory !== undefined) out.push(["keepChangeHistory", this.keepChangeHistory.toString()]);
+    if (this.protected !== undefined) out.push(["protected", this.protected.toString()]);
+    if (this.preserveHistory !== undefined) out.push(["preserveHistory", this.preserveHistory.toString()]);
     return out;
   }
 

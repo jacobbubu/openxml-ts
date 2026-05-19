@@ -30,9 +30,9 @@ export class SlideSyncProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":serverSldId": this.serverSlideId = StringValue.parse(value); return;
-      case ":serverSldModifiedTime": this.serverSlideModifiedTime = DateTimeValue.parse(value); return;
-      case ":clientInsertedTime": this.clientInsertedTime = DateTimeValue.parse(value); return;
+      case "serverSldId": this.serverSlideId = StringValue.parse(value); return;
+      case "serverSldModifiedTime": this.serverSlideModifiedTime = DateTimeValue.parse(value); return;
+      case "clientInsertedTime": this.clientInsertedTime = DateTimeValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,9 +40,9 @@ export class SlideSyncProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.serverSlideId !== undefined) out.push([":serverSldId", this.serverSlideId.toString()]);
-    if (this.serverSlideModifiedTime !== undefined) out.push([":serverSldModifiedTime", this.serverSlideModifiedTime.toString()]);
-    if (this.clientInsertedTime !== undefined) out.push([":clientInsertedTime", this.clientInsertedTime.toString()]);
+    if (this.serverSlideId !== undefined) out.push(["serverSldId", this.serverSlideId.toString()]);
+    if (this.serverSlideModifiedTime !== undefined) out.push(["serverSldModifiedTime", this.serverSlideModifiedTime.toString()]);
+    if (this.clientInsertedTime !== undefined) out.push(["clientInsertedTime", this.clientInsertedTime.toString()]);
     return out;
   }
 

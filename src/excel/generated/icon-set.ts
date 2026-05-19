@@ -32,10 +32,10 @@ export class IconSet extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":iconSet": this.iconSetValue = StringValue.parse(value); return;
-      case ":showValue": this.showValue = BooleanValue.parse(value); return;
-      case ":percent": this.percent = BooleanValue.parse(value); return;
-      case ":reverse": this.reverse = BooleanValue.parse(value); return;
+      case "iconSet": this.iconSetValue = StringValue.parse(value); return;
+      case "showValue": this.showValue = BooleanValue.parse(value); return;
+      case "percent": this.percent = BooleanValue.parse(value); return;
+      case "reverse": this.reverse = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -43,10 +43,10 @@ export class IconSet extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.iconSetValue !== undefined) out.push([":iconSet", this.iconSetValue.toString()]);
-    if (this.showValue !== undefined) out.push([":showValue", this.showValue.toString()]);
-    if (this.percent !== undefined) out.push([":percent", this.percent.toString()]);
-    if (this.reverse !== undefined) out.push([":reverse", this.reverse.toString()]);
+    if (this.iconSetValue !== undefined) out.push(["iconSet", this.iconSetValue.toString()]);
+    if (this.showValue !== undefined) out.push(["showValue", this.showValue.toString()]);
+    if (this.percent !== undefined) out.push(["percent", this.percent.toString()]);
+    if (this.reverse !== undefined) out.push(["reverse", this.reverse.toString()]);
     return out;
   }
 

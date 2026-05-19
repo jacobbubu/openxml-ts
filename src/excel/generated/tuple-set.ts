@@ -38,11 +38,11 @@ export class TupleSet extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":count": this.count = UInt32Value.parse(value); return;
-      case ":maxRank": this.maxRank = Int32Value.parse(value); return;
-      case ":setDefinition": this.setDefinition = StringValue.parse(value); return;
-      case ":sortType": this.sortType = StringValue.parse(value); return;
-      case ":queryFailed": this.queryFailed = BooleanValue.parse(value); return;
+      case "count": this.count = UInt32Value.parse(value); return;
+      case "maxRank": this.maxRank = Int32Value.parse(value); return;
+      case "setDefinition": this.setDefinition = StringValue.parse(value); return;
+      case "sortType": this.sortType = StringValue.parse(value); return;
+      case "queryFailed": this.queryFailed = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -50,11 +50,11 @@ export class TupleSet extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.count !== undefined) out.push([":count", this.count.toString()]);
-    if (this.maxRank !== undefined) out.push([":maxRank", this.maxRank.toString()]);
-    if (this.setDefinition !== undefined) out.push([":setDefinition", this.setDefinition.toString()]);
-    if (this.sortType !== undefined) out.push([":sortType", this.sortType.toString()]);
-    if (this.queryFailed !== undefined) out.push([":queryFailed", this.queryFailed.toString()]);
+    if (this.count !== undefined) out.push(["count", this.count.toString()]);
+    if (this.maxRank !== undefined) out.push(["maxRank", this.maxRank.toString()]);
+    if (this.setDefinition !== undefined) out.push(["setDefinition", this.setDefinition.toString()]);
+    if (this.sortType !== undefined) out.push(["sortType", this.sortType.toString()]);
+    if (this.queryFailed !== undefined) out.push(["queryFailed", this.queryFailed.toString()]);
     return out;
   }
 

@@ -28,7 +28,7 @@ export class RgbColorModelHex extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":val": this.val = HexBinaryValue.parse(value); return;
+      case "val": this.val = HexBinaryValue.parse(value); return;
       case "a14:legacySpreadsheetColorIndex": this.legacySpreadsheetColorIndex = Int32Value.parse(value); assertNumber(this.legacySpreadsheetColorIndex, { min: 0, max: 80 }, { attribute: "a14:legacySpreadsheetColorIndex", elementClass: "RgbColorModelHex" }); return;
     }
     super.applyAttribute(qname, value);
@@ -37,7 +37,7 @@ export class RgbColorModelHex extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.val !== undefined) out.push([":val", this.val.toString()]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
     if (this.legacySpreadsheetColorIndex !== undefined) out.push(["a14:legacySpreadsheetColorIndex", this.legacySpreadsheetColorIndex.toString()]);
     return out;
   }

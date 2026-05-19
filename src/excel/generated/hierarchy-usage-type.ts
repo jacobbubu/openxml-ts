@@ -22,7 +22,7 @@ export abstract class HierarchyUsageType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":hierarchyUsage": this.value = Int32Value.parse(value); return;
+      case "hierarchyUsage": this.value = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export abstract class HierarchyUsageType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.value !== undefined) out.push([":hierarchyUsage", this.value.toString()]);
+    if (this.value !== undefined) out.push(["hierarchyUsage", this.value.toString()]);
     return out;
   }
 

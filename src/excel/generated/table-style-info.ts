@@ -34,11 +34,11 @@ export class TableStyleInfo extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":showFirstColumn": this.showFirstColumn = BooleanValue.parse(value); return;
-      case ":showLastColumn": this.showLastColumn = BooleanValue.parse(value); return;
-      case ":showRowStripes": this.showRowStripes = BooleanValue.parse(value); return;
-      case ":showColumnStripes": this.showColumnStripes = BooleanValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "showFirstColumn": this.showFirstColumn = BooleanValue.parse(value); return;
+      case "showLastColumn": this.showLastColumn = BooleanValue.parse(value); return;
+      case "showRowStripes": this.showRowStripes = BooleanValue.parse(value); return;
+      case "showColumnStripes": this.showColumnStripes = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -46,11 +46,11 @@ export class TableStyleInfo extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.showFirstColumn !== undefined) out.push([":showFirstColumn", this.showFirstColumn.toString()]);
-    if (this.showLastColumn !== undefined) out.push([":showLastColumn", this.showLastColumn.toString()]);
-    if (this.showRowStripes !== undefined) out.push([":showRowStripes", this.showRowStripes.toString()]);
-    if (this.showColumnStripes !== undefined) out.push([":showColumnStripes", this.showColumnStripes.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.showFirstColumn !== undefined) out.push(["showFirstColumn", this.showFirstColumn.toString()]);
+    if (this.showLastColumn !== undefined) out.push(["showLastColumn", this.showLastColumn.toString()]);
+    if (this.showRowStripes !== undefined) out.push(["showRowStripes", this.showRowStripes.toString()]);
+    if (this.showColumnStripes !== undefined) out.push(["showColumnStripes", this.showColumnStripes.toString()]);
     return out;
   }
 

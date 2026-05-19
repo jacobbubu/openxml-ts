@@ -22,7 +22,7 @@ export abstract class StyleMatrixReferenceType extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":idx": this.index = UInt32Value.parse(value); return;
+      case "idx": this.index = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export abstract class StyleMatrixReferenceType extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.index !== undefined) out.push([":idx", this.index.toString()]);
+    if (this.index !== undefined) out.push(["idx", this.index.toString()]);
     return out;
   }
 

@@ -23,7 +23,7 @@ export class ExternalRow extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":r": this.rowIndex = UInt32Value.parse(value); return;
+      case "r": this.rowIndex = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class ExternalRow extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.rowIndex !== undefined) out.push([":r", this.rowIndex.toString()]);
+    if (this.rowIndex !== undefined) out.push(["r", this.rowIndex.toString()]);
     return out;
   }
 

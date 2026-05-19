@@ -31,10 +31,10 @@ export class Rectangle extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":l": this.left = StringValue.parse(value); return;
-      case ":t": this.top = StringValue.parse(value); return;
-      case ":r": this.right = StringValue.parse(value); return;
-      case ":b": this.bottom = StringValue.parse(value); return;
+      case "l": this.left = StringValue.parse(value); return;
+      case "t": this.top = StringValue.parse(value); return;
+      case "r": this.right = StringValue.parse(value); return;
+      case "b": this.bottom = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -42,10 +42,10 @@ export class Rectangle extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.left !== undefined) out.push([":l", this.left.toString()]);
-    if (this.top !== undefined) out.push([":t", this.top.toString()]);
-    if (this.right !== undefined) out.push([":r", this.right.toString()]);
-    if (this.bottom !== undefined) out.push([":b", this.bottom.toString()]);
+    if (this.left !== undefined) out.push(["l", this.left.toString()]);
+    if (this.top !== undefined) out.push(["t", this.top.toString()]);
+    if (this.right !== undefined) out.push(["r", this.right.toString()]);
+    if (this.bottom !== undefined) out.push(["b", this.bottom.toString()]);
     return out;
   }
 

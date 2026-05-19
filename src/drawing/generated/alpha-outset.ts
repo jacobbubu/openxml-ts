@@ -22,7 +22,7 @@ export class AlphaOutset extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rad": this.radius = Int64Value.parse(value); assertNumber(this.radius, { min: -27273042329600, max: 27273042316900 }, { attribute: ":rad", elementClass: "AlphaOutset" }); return;
+      case "rad": this.radius = Int64Value.parse(value); assertNumber(this.radius, { min: -27273042329600, max: 27273042316900 }, { attribute: ":rad", elementClass: "AlphaOutset" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class AlphaOutset extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.radius !== undefined) out.push([":rad", this.radius.toString()]);
+    if (this.radius !== undefined) out.push(["rad", this.radius.toString()]);
     return out;
   }
 

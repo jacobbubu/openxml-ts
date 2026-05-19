@@ -79,25 +79,25 @@ export class SheetView extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":windowProtection": this.windowProtection = BooleanValue.parse(value); return;
-      case ":showFormulas": this.showFormulas = BooleanValue.parse(value); return;
-      case ":showGridLines": this.showGridLines = BooleanValue.parse(value); return;
-      case ":showRowColHeaders": this.showRowColHeaders = BooleanValue.parse(value); return;
-      case ":showZeros": this.showZeros = BooleanValue.parse(value); return;
-      case ":rightToLeft": this.rightToLeft = BooleanValue.parse(value); return;
-      case ":tabSelected": this.tabSelected = BooleanValue.parse(value); return;
-      case ":showRuler": this.showRuler = BooleanValue.parse(value); return;
-      case ":showOutlineSymbols": this.showOutlineSymbols = BooleanValue.parse(value); return;
-      case ":defaultGridColor": this.defaultGridColor = BooleanValue.parse(value); return;
-      case ":showWhiteSpace": this.showWhiteSpace = BooleanValue.parse(value); return;
-      case ":view": this.view = StringValue.parse(value); return;
-      case ":topLeftCell": this.topLeftCell = StringValue.parse(value); return;
-      case ":colorId": this.colorId = UInt32Value.parse(value); return;
-      case ":zoomScale": this.zoomScale = UInt32Value.parse(value); return;
-      case ":zoomScaleNormal": this.zoomScaleNormal = UInt32Value.parse(value); return;
-      case ":zoomScaleSheetLayoutView": this.zoomScaleSheetLayoutView = UInt32Value.parse(value); return;
-      case ":zoomScalePageLayoutView": this.zoomScalePageLayoutView = UInt32Value.parse(value); return;
-      case ":workbookViewId": this.workbookViewId = UInt32Value.parse(value); return;
+      case "windowProtection": this.windowProtection = BooleanValue.parse(value); return;
+      case "showFormulas": this.showFormulas = BooleanValue.parse(value); return;
+      case "showGridLines": this.showGridLines = BooleanValue.parse(value); return;
+      case "showRowColHeaders": this.showRowColHeaders = BooleanValue.parse(value); return;
+      case "showZeros": this.showZeros = BooleanValue.parse(value); return;
+      case "rightToLeft": this.rightToLeft = BooleanValue.parse(value); return;
+      case "tabSelected": this.tabSelected = BooleanValue.parse(value); return;
+      case "showRuler": this.showRuler = BooleanValue.parse(value); return;
+      case "showOutlineSymbols": this.showOutlineSymbols = BooleanValue.parse(value); return;
+      case "defaultGridColor": this.defaultGridColor = BooleanValue.parse(value); return;
+      case "showWhiteSpace": this.showWhiteSpace = BooleanValue.parse(value); return;
+      case "view": this.view = StringValue.parse(value); return;
+      case "topLeftCell": this.topLeftCell = StringValue.parse(value); return;
+      case "colorId": this.colorId = UInt32Value.parse(value); return;
+      case "zoomScale": this.zoomScale = UInt32Value.parse(value); return;
+      case "zoomScaleNormal": this.zoomScaleNormal = UInt32Value.parse(value); return;
+      case "zoomScaleSheetLayoutView": this.zoomScaleSheetLayoutView = UInt32Value.parse(value); return;
+      case "zoomScalePageLayoutView": this.zoomScalePageLayoutView = UInt32Value.parse(value); return;
+      case "workbookViewId": this.workbookViewId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -105,25 +105,25 @@ export class SheetView extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.windowProtection !== undefined) out.push([":windowProtection", this.windowProtection.toString()]);
-    if (this.showFormulas !== undefined) out.push([":showFormulas", this.showFormulas.toString()]);
-    if (this.showGridLines !== undefined) out.push([":showGridLines", this.showGridLines.toString()]);
-    if (this.showRowColHeaders !== undefined) out.push([":showRowColHeaders", this.showRowColHeaders.toString()]);
-    if (this.showZeros !== undefined) out.push([":showZeros", this.showZeros.toString()]);
-    if (this.rightToLeft !== undefined) out.push([":rightToLeft", this.rightToLeft.toString()]);
-    if (this.tabSelected !== undefined) out.push([":tabSelected", this.tabSelected.toString()]);
-    if (this.showRuler !== undefined) out.push([":showRuler", this.showRuler.toString()]);
-    if (this.showOutlineSymbols !== undefined) out.push([":showOutlineSymbols", this.showOutlineSymbols.toString()]);
-    if (this.defaultGridColor !== undefined) out.push([":defaultGridColor", this.defaultGridColor.toString()]);
-    if (this.showWhiteSpace !== undefined) out.push([":showWhiteSpace", this.showWhiteSpace.toString()]);
-    if (this.view !== undefined) out.push([":view", this.view.toString()]);
-    if (this.topLeftCell !== undefined) out.push([":topLeftCell", this.topLeftCell.toString()]);
-    if (this.colorId !== undefined) out.push([":colorId", this.colorId.toString()]);
-    if (this.zoomScale !== undefined) out.push([":zoomScale", this.zoomScale.toString()]);
-    if (this.zoomScaleNormal !== undefined) out.push([":zoomScaleNormal", this.zoomScaleNormal.toString()]);
-    if (this.zoomScaleSheetLayoutView !== undefined) out.push([":zoomScaleSheetLayoutView", this.zoomScaleSheetLayoutView.toString()]);
-    if (this.zoomScalePageLayoutView !== undefined) out.push([":zoomScalePageLayoutView", this.zoomScalePageLayoutView.toString()]);
-    if (this.workbookViewId !== undefined) out.push([":workbookViewId", this.workbookViewId.toString()]);
+    if (this.windowProtection !== undefined) out.push(["windowProtection", this.windowProtection.toString()]);
+    if (this.showFormulas !== undefined) out.push(["showFormulas", this.showFormulas.toString()]);
+    if (this.showGridLines !== undefined) out.push(["showGridLines", this.showGridLines.toString()]);
+    if (this.showRowColHeaders !== undefined) out.push(["showRowColHeaders", this.showRowColHeaders.toString()]);
+    if (this.showZeros !== undefined) out.push(["showZeros", this.showZeros.toString()]);
+    if (this.rightToLeft !== undefined) out.push(["rightToLeft", this.rightToLeft.toString()]);
+    if (this.tabSelected !== undefined) out.push(["tabSelected", this.tabSelected.toString()]);
+    if (this.showRuler !== undefined) out.push(["showRuler", this.showRuler.toString()]);
+    if (this.showOutlineSymbols !== undefined) out.push(["showOutlineSymbols", this.showOutlineSymbols.toString()]);
+    if (this.defaultGridColor !== undefined) out.push(["defaultGridColor", this.defaultGridColor.toString()]);
+    if (this.showWhiteSpace !== undefined) out.push(["showWhiteSpace", this.showWhiteSpace.toString()]);
+    if (this.view !== undefined) out.push(["view", this.view.toString()]);
+    if (this.topLeftCell !== undefined) out.push(["topLeftCell", this.topLeftCell.toString()]);
+    if (this.colorId !== undefined) out.push(["colorId", this.colorId.toString()]);
+    if (this.zoomScale !== undefined) out.push(["zoomScale", this.zoomScale.toString()]);
+    if (this.zoomScaleNormal !== undefined) out.push(["zoomScaleNormal", this.zoomScaleNormal.toString()]);
+    if (this.zoomScaleSheetLayoutView !== undefined) out.push(["zoomScaleSheetLayoutView", this.zoomScaleSheetLayoutView.toString()]);
+    if (this.zoomScalePageLayoutView !== undefined) out.push(["zoomScalePageLayoutView", this.zoomScalePageLayoutView.toString()]);
+    if (this.workbookViewId !== undefined) out.push(["workbookViewId", this.workbookViewId.toString()]);
     return out;
   }
 

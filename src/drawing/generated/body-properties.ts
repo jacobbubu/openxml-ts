@@ -79,25 +79,25 @@ export class BodyProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rot": this.rotation = Int32Value.parse(value); return;
-      case ":spcFirstLastPara": this.useParagraphSpacing = BooleanValue.parse(value); return;
-      case ":vertOverflow": this.verticalOverflow = StringValue.parse(value); return;
-      case ":horzOverflow": this.horizontalOverflow = StringValue.parse(value); return;
-      case ":vert": this.vertical = StringValue.parse(value); return;
-      case ":wrap": this.wrap = StringValue.parse(value); return;
-      case ":lIns": this.leftInset = Int32Value.parse(value); return;
-      case ":tIns": this.topInset = Int32Value.parse(value); return;
-      case ":rIns": this.rightInset = Int32Value.parse(value); return;
-      case ":bIns": this.bottomInset = Int32Value.parse(value); return;
-      case ":numCol": this.columnCount = Int32Value.parse(value); assertNumber(this.columnCount, { min: 1, max: 16 }, { attribute: ":numCol", elementClass: "BodyProperties" }); return;
-      case ":spcCol": this.columnSpacing = Int32Value.parse(value); assertNumber(this.columnSpacing, { min: 0 }, { attribute: ":spcCol", elementClass: "BodyProperties" }); return;
-      case ":rtlCol": this.rightToLeftColumns = BooleanValue.parse(value); return;
-      case ":fromWordArt": this.fromWordArt = BooleanValue.parse(value); return;
-      case ":anchor": this.anchor = StringValue.parse(value); return;
-      case ":anchorCtr": this.anchorCenter = BooleanValue.parse(value); return;
-      case ":forceAA": this.forceAntiAlias = BooleanValue.parse(value); return;
-      case ":upright": this.upRight = BooleanValue.parse(value); return;
-      case ":compatLnSpc": this.compatibleLineSpacing = BooleanValue.parse(value); return;
+      case "rot": this.rotation = Int32Value.parse(value); return;
+      case "spcFirstLastPara": this.useParagraphSpacing = BooleanValue.parse(value); return;
+      case "vertOverflow": this.verticalOverflow = StringValue.parse(value); return;
+      case "horzOverflow": this.horizontalOverflow = StringValue.parse(value); return;
+      case "vert": this.vertical = StringValue.parse(value); return;
+      case "wrap": this.wrap = StringValue.parse(value); return;
+      case "lIns": this.leftInset = Int32Value.parse(value); return;
+      case "tIns": this.topInset = Int32Value.parse(value); return;
+      case "rIns": this.rightInset = Int32Value.parse(value); return;
+      case "bIns": this.bottomInset = Int32Value.parse(value); return;
+      case "numCol": this.columnCount = Int32Value.parse(value); assertNumber(this.columnCount, { min: 1, max: 16 }, { attribute: ":numCol", elementClass: "BodyProperties" }); return;
+      case "spcCol": this.columnSpacing = Int32Value.parse(value); assertNumber(this.columnSpacing, { min: 0 }, { attribute: ":spcCol", elementClass: "BodyProperties" }); return;
+      case "rtlCol": this.rightToLeftColumns = BooleanValue.parse(value); return;
+      case "fromWordArt": this.fromWordArt = BooleanValue.parse(value); return;
+      case "anchor": this.anchor = StringValue.parse(value); return;
+      case "anchorCtr": this.anchorCenter = BooleanValue.parse(value); return;
+      case "forceAA": this.forceAntiAlias = BooleanValue.parse(value); return;
+      case "upright": this.upRight = BooleanValue.parse(value); return;
+      case "compatLnSpc": this.compatibleLineSpacing = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -105,25 +105,25 @@ export class BodyProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.rotation !== undefined) out.push([":rot", this.rotation.toString()]);
-    if (this.useParagraphSpacing !== undefined) out.push([":spcFirstLastPara", this.useParagraphSpacing.toString()]);
-    if (this.verticalOverflow !== undefined) out.push([":vertOverflow", this.verticalOverflow.toString()]);
-    if (this.horizontalOverflow !== undefined) out.push([":horzOverflow", this.horizontalOverflow.toString()]);
-    if (this.vertical !== undefined) out.push([":vert", this.vertical.toString()]);
-    if (this.wrap !== undefined) out.push([":wrap", this.wrap.toString()]);
-    if (this.leftInset !== undefined) out.push([":lIns", this.leftInset.toString()]);
-    if (this.topInset !== undefined) out.push([":tIns", this.topInset.toString()]);
-    if (this.rightInset !== undefined) out.push([":rIns", this.rightInset.toString()]);
-    if (this.bottomInset !== undefined) out.push([":bIns", this.bottomInset.toString()]);
-    if (this.columnCount !== undefined) out.push([":numCol", this.columnCount.toString()]);
-    if (this.columnSpacing !== undefined) out.push([":spcCol", this.columnSpacing.toString()]);
-    if (this.rightToLeftColumns !== undefined) out.push([":rtlCol", this.rightToLeftColumns.toString()]);
-    if (this.fromWordArt !== undefined) out.push([":fromWordArt", this.fromWordArt.toString()]);
-    if (this.anchor !== undefined) out.push([":anchor", this.anchor.toString()]);
-    if (this.anchorCenter !== undefined) out.push([":anchorCtr", this.anchorCenter.toString()]);
-    if (this.forceAntiAlias !== undefined) out.push([":forceAA", this.forceAntiAlias.toString()]);
-    if (this.upRight !== undefined) out.push([":upright", this.upRight.toString()]);
-    if (this.compatibleLineSpacing !== undefined) out.push([":compatLnSpc", this.compatibleLineSpacing.toString()]);
+    if (this.rotation !== undefined) out.push(["rot", this.rotation.toString()]);
+    if (this.useParagraphSpacing !== undefined) out.push(["spcFirstLastPara", this.useParagraphSpacing.toString()]);
+    if (this.verticalOverflow !== undefined) out.push(["vertOverflow", this.verticalOverflow.toString()]);
+    if (this.horizontalOverflow !== undefined) out.push(["horzOverflow", this.horizontalOverflow.toString()]);
+    if (this.vertical !== undefined) out.push(["vert", this.vertical.toString()]);
+    if (this.wrap !== undefined) out.push(["wrap", this.wrap.toString()]);
+    if (this.leftInset !== undefined) out.push(["lIns", this.leftInset.toString()]);
+    if (this.topInset !== undefined) out.push(["tIns", this.topInset.toString()]);
+    if (this.rightInset !== undefined) out.push(["rIns", this.rightInset.toString()]);
+    if (this.bottomInset !== undefined) out.push(["bIns", this.bottomInset.toString()]);
+    if (this.columnCount !== undefined) out.push(["numCol", this.columnCount.toString()]);
+    if (this.columnSpacing !== undefined) out.push(["spcCol", this.columnSpacing.toString()]);
+    if (this.rightToLeftColumns !== undefined) out.push(["rtlCol", this.rightToLeftColumns.toString()]);
+    if (this.fromWordArt !== undefined) out.push(["fromWordArt", this.fromWordArt.toString()]);
+    if (this.anchor !== undefined) out.push(["anchor", this.anchor.toString()]);
+    if (this.anchorCenter !== undefined) out.push(["anchorCtr", this.anchorCenter.toString()]);
+    if (this.forceAntiAlias !== undefined) out.push(["forceAA", this.forceAntiAlias.toString()]);
+    if (this.upRight !== undefined) out.push(["upright", this.upRight.toString()]);
+    if (this.compatibleLineSpacing !== undefined) out.push(["compatLnSpc", this.compatibleLineSpacing.toString()]);
     return out;
   }
 

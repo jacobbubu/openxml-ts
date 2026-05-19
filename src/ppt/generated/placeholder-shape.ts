@@ -36,11 +36,11 @@ export class PlaceholderShape extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":orient": this.orientation = StringValue.parse(value); return;
-      case ":sz": this.size = StringValue.parse(value); return;
-      case ":idx": this.index = UInt32Value.parse(value); return;
-      case ":hasCustomPrompt": this.hasCustomPrompt = BooleanValue.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "orient": this.orientation = StringValue.parse(value); return;
+      case "sz": this.size = StringValue.parse(value); return;
+      case "idx": this.index = UInt32Value.parse(value); return;
+      case "hasCustomPrompt": this.hasCustomPrompt = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -48,11 +48,11 @@ export class PlaceholderShape extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.orientation !== undefined) out.push([":orient", this.orientation.toString()]);
-    if (this.size !== undefined) out.push([":sz", this.size.toString()]);
-    if (this.index !== undefined) out.push([":idx", this.index.toString()]);
-    if (this.hasCustomPrompt !== undefined) out.push([":hasCustomPrompt", this.hasCustomPrompt.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.orientation !== undefined) out.push(["orient", this.orientation.toString()]);
+    if (this.size !== undefined) out.push(["sz", this.size.toString()]);
+    if (this.index !== undefined) out.push(["idx", this.index.toString()]);
+    if (this.hasCustomPrompt !== undefined) out.push(["hasCustomPrompt", this.hasCustomPrompt.toString()]);
     return out;
   }
 

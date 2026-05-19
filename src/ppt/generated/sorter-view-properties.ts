@@ -22,7 +22,7 @@ export class SorterViewProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":showFormatting": this.showFormatting = BooleanValue.parse(value); return;
+      case "showFormatting": this.showFormatting = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class SorterViewProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.showFormatting !== undefined) out.push([":showFormatting", this.showFormatting.toString()]);
+    if (this.showFormatting !== undefined) out.push(["showFormatting", this.showFormatting.toString()]);
     return out;
   }
 

@@ -33,10 +33,10 @@ export class BuildDiagram extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":spid": this.shapeId = StringValue.parse(value); return;
-      case ":grpId": this.groupId = UInt32Value.parse(value); return;
-      case ":uiExpand": this.uiExpand = BooleanValue.parse(value); return;
-      case ":bld": this.build = StringValue.parse(value); return;
+      case "spid": this.shapeId = StringValue.parse(value); return;
+      case "grpId": this.groupId = UInt32Value.parse(value); return;
+      case "uiExpand": this.uiExpand = BooleanValue.parse(value); return;
+      case "bld": this.build = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -44,10 +44,10 @@ export class BuildDiagram extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.shapeId !== undefined) out.push([":spid", this.shapeId.toString()]);
-    if (this.groupId !== undefined) out.push([":grpId", this.groupId.toString()]);
-    if (this.uiExpand !== undefined) out.push([":uiExpand", this.uiExpand.toString()]);
-    if (this.build !== undefined) out.push([":bld", this.build.toString()]);
+    if (this.shapeId !== undefined) out.push(["spid", this.shapeId.toString()]);
+    if (this.groupId !== undefined) out.push(["grpId", this.groupId.toString()]);
+    if (this.uiExpand !== undefined) out.push(["uiExpand", this.uiExpand.toString()]);
+    if (this.build !== undefined) out.push(["bld", this.build.toString()]);
     return out;
   }
 

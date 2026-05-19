@@ -47,15 +47,15 @@ export class SheetProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":syncHorizontal": this.syncHorizontal = BooleanValue.parse(value); return;
-      case ":syncVertical": this.syncVertical = BooleanValue.parse(value); return;
-      case ":syncRef": this.syncReference = StringValue.parse(value); return;
-      case ":transitionEvaluation": this.transitionEvaluation = BooleanValue.parse(value); return;
-      case ":transitionEntry": this.transitionEntry = BooleanValue.parse(value); return;
-      case ":published": this.published = BooleanValue.parse(value); return;
-      case ":codeName": this.codeName = StringValue.parse(value); return;
-      case ":filterMode": this.filterMode = BooleanValue.parse(value); return;
-      case ":enableFormatConditionsCalculation": this.enableFormatConditionsCalculation = BooleanValue.parse(value); return;
+      case "syncHorizontal": this.syncHorizontal = BooleanValue.parse(value); return;
+      case "syncVertical": this.syncVertical = BooleanValue.parse(value); return;
+      case "syncRef": this.syncReference = StringValue.parse(value); return;
+      case "transitionEvaluation": this.transitionEvaluation = BooleanValue.parse(value); return;
+      case "transitionEntry": this.transitionEntry = BooleanValue.parse(value); return;
+      case "published": this.published = BooleanValue.parse(value); return;
+      case "codeName": this.codeName = StringValue.parse(value); return;
+      case "filterMode": this.filterMode = BooleanValue.parse(value); return;
+      case "enableFormatConditionsCalculation": this.enableFormatConditionsCalculation = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -63,15 +63,15 @@ export class SheetProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.syncHorizontal !== undefined) out.push([":syncHorizontal", this.syncHorizontal.toString()]);
-    if (this.syncVertical !== undefined) out.push([":syncVertical", this.syncVertical.toString()]);
-    if (this.syncReference !== undefined) out.push([":syncRef", this.syncReference.toString()]);
-    if (this.transitionEvaluation !== undefined) out.push([":transitionEvaluation", this.transitionEvaluation.toString()]);
-    if (this.transitionEntry !== undefined) out.push([":transitionEntry", this.transitionEntry.toString()]);
-    if (this.published !== undefined) out.push([":published", this.published.toString()]);
-    if (this.codeName !== undefined) out.push([":codeName", this.codeName.toString()]);
-    if (this.filterMode !== undefined) out.push([":filterMode", this.filterMode.toString()]);
-    if (this.enableFormatConditionsCalculation !== undefined) out.push([":enableFormatConditionsCalculation", this.enableFormatConditionsCalculation.toString()]);
+    if (this.syncHorizontal !== undefined) out.push(["syncHorizontal", this.syncHorizontal.toString()]);
+    if (this.syncVertical !== undefined) out.push(["syncVertical", this.syncVertical.toString()]);
+    if (this.syncReference !== undefined) out.push(["syncRef", this.syncReference.toString()]);
+    if (this.transitionEvaluation !== undefined) out.push(["transitionEvaluation", this.transitionEvaluation.toString()]);
+    if (this.transitionEntry !== undefined) out.push(["transitionEntry", this.transitionEntry.toString()]);
+    if (this.published !== undefined) out.push(["published", this.published.toString()]);
+    if (this.codeName !== undefined) out.push(["codeName", this.codeName.toString()]);
+    if (this.filterMode !== undefined) out.push(["filterMode", this.filterMode.toString()]);
+    if (this.enableFormatConditionsCalculation !== undefined) out.push(["enableFormatConditionsCalculation", this.enableFormatConditionsCalculation.toString()]);
     return out;
   }
 

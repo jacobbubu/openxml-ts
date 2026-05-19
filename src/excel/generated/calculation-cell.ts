@@ -39,12 +39,12 @@ export class CalculationCell extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":r": this.cellReference = StringValue.parse(value); return;
-      case ":i": this.sheetId = Int32Value.parse(value); return;
-      case ":s": this.inChildChain = BooleanValue.parse(value); return;
-      case ":l": this.newLevel = BooleanValue.parse(value); return;
-      case ":t": this.newThread = BooleanValue.parse(value); return;
-      case ":a": this.array = BooleanValue.parse(value); return;
+      case "r": this.cellReference = StringValue.parse(value); return;
+      case "i": this.sheetId = Int32Value.parse(value); return;
+      case "s": this.inChildChain = BooleanValue.parse(value); return;
+      case "l": this.newLevel = BooleanValue.parse(value); return;
+      case "t": this.newThread = BooleanValue.parse(value); return;
+      case "a": this.array = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -52,12 +52,12 @@ export class CalculationCell extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.cellReference !== undefined) out.push([":r", this.cellReference.toString()]);
-    if (this.sheetId !== undefined) out.push([":i", this.sheetId.toString()]);
-    if (this.inChildChain !== undefined) out.push([":s", this.inChildChain.toString()]);
-    if (this.newLevel !== undefined) out.push([":l", this.newLevel.toString()]);
-    if (this.newThread !== undefined) out.push([":t", this.newThread.toString()]);
-    if (this.array !== undefined) out.push([":a", this.array.toString()]);
+    if (this.cellReference !== undefined) out.push(["r", this.cellReference.toString()]);
+    if (this.sheetId !== undefined) out.push(["i", this.sheetId.toString()]);
+    if (this.inChildChain !== undefined) out.push(["s", this.inChildChain.toString()]);
+    if (this.newLevel !== undefined) out.push(["l", this.newLevel.toString()]);
+    if (this.newThread !== undefined) out.push(["t", this.newThread.toString()]);
+    if (this.array !== undefined) out.push(["a", this.array.toString()]);
     return out;
   }
 

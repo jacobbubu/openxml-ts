@@ -23,7 +23,7 @@ export class TableStyleList extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":def": this.default = StringValue.parse(value); return;
+      case "def": this.default = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class TableStyleList extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.default !== undefined) out.push([":def", this.default.toString()]);
+    if (this.default !== undefined) out.push(["def", this.default.toString()]);
     return out;
   }
 

@@ -61,19 +61,19 @@ export class WorkbookView extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":visibility": this.visibility = StringValue.parse(value); return;
-      case ":minimized": this.minimized = BooleanValue.parse(value); return;
-      case ":showHorizontalScroll": this.showHorizontalScroll = BooleanValue.parse(value); return;
-      case ":showVerticalScroll": this.showVerticalScroll = BooleanValue.parse(value); return;
-      case ":showSheetTabs": this.showSheetTabs = BooleanValue.parse(value); return;
-      case ":xWindow": this.xWindow = Int32Value.parse(value); return;
-      case ":yWindow": this.yWindow = Int32Value.parse(value); return;
-      case ":windowWidth": this.windowWidth = UInt32Value.parse(value); return;
-      case ":windowHeight": this.windowHeight = UInt32Value.parse(value); return;
-      case ":tabRatio": this.tabRatio = UInt32Value.parse(value); return;
-      case ":firstSheet": this.firstSheet = UInt32Value.parse(value); return;
-      case ":activeTab": this.activeTab = UInt32Value.parse(value); return;
-      case ":autoFilterDateGrouping": this.autoFilterDateGrouping = BooleanValue.parse(value); return;
+      case "visibility": this.visibility = StringValue.parse(value); return;
+      case "minimized": this.minimized = BooleanValue.parse(value); return;
+      case "showHorizontalScroll": this.showHorizontalScroll = BooleanValue.parse(value); return;
+      case "showVerticalScroll": this.showVerticalScroll = BooleanValue.parse(value); return;
+      case "showSheetTabs": this.showSheetTabs = BooleanValue.parse(value); return;
+      case "xWindow": this.xWindow = Int32Value.parse(value); return;
+      case "yWindow": this.yWindow = Int32Value.parse(value); return;
+      case "windowWidth": this.windowWidth = UInt32Value.parse(value); return;
+      case "windowHeight": this.windowHeight = UInt32Value.parse(value); return;
+      case "tabRatio": this.tabRatio = UInt32Value.parse(value); return;
+      case "firstSheet": this.firstSheet = UInt32Value.parse(value); return;
+      case "activeTab": this.activeTab = UInt32Value.parse(value); return;
+      case "autoFilterDateGrouping": this.autoFilterDateGrouping = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -81,19 +81,19 @@ export class WorkbookView extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.visibility !== undefined) out.push([":visibility", this.visibility.toString()]);
-    if (this.minimized !== undefined) out.push([":minimized", this.minimized.toString()]);
-    if (this.showHorizontalScroll !== undefined) out.push([":showHorizontalScroll", this.showHorizontalScroll.toString()]);
-    if (this.showVerticalScroll !== undefined) out.push([":showVerticalScroll", this.showVerticalScroll.toString()]);
-    if (this.showSheetTabs !== undefined) out.push([":showSheetTabs", this.showSheetTabs.toString()]);
-    if (this.xWindow !== undefined) out.push([":xWindow", this.xWindow.toString()]);
-    if (this.yWindow !== undefined) out.push([":yWindow", this.yWindow.toString()]);
-    if (this.windowWidth !== undefined) out.push([":windowWidth", this.windowWidth.toString()]);
-    if (this.windowHeight !== undefined) out.push([":windowHeight", this.windowHeight.toString()]);
-    if (this.tabRatio !== undefined) out.push([":tabRatio", this.tabRatio.toString()]);
-    if (this.firstSheet !== undefined) out.push([":firstSheet", this.firstSheet.toString()]);
-    if (this.activeTab !== undefined) out.push([":activeTab", this.activeTab.toString()]);
-    if (this.autoFilterDateGrouping !== undefined) out.push([":autoFilterDateGrouping", this.autoFilterDateGrouping.toString()]);
+    if (this.visibility !== undefined) out.push(["visibility", this.visibility.toString()]);
+    if (this.minimized !== undefined) out.push(["minimized", this.minimized.toString()]);
+    if (this.showHorizontalScroll !== undefined) out.push(["showHorizontalScroll", this.showHorizontalScroll.toString()]);
+    if (this.showVerticalScroll !== undefined) out.push(["showVerticalScroll", this.showVerticalScroll.toString()]);
+    if (this.showSheetTabs !== undefined) out.push(["showSheetTabs", this.showSheetTabs.toString()]);
+    if (this.xWindow !== undefined) out.push(["xWindow", this.xWindow.toString()]);
+    if (this.yWindow !== undefined) out.push(["yWindow", this.yWindow.toString()]);
+    if (this.windowWidth !== undefined) out.push(["windowWidth", this.windowWidth.toString()]);
+    if (this.windowHeight !== undefined) out.push(["windowHeight", this.windowHeight.toString()]);
+    if (this.tabRatio !== undefined) out.push(["tabRatio", this.tabRatio.toString()]);
+    if (this.firstSheet !== undefined) out.push(["firstSheet", this.firstSheet.toString()]);
+    if (this.activeTab !== undefined) out.push(["activeTab", this.activeTab.toString()]);
+    if (this.autoFilterDateGrouping !== undefined) out.push(["autoFilterDateGrouping", this.autoFilterDateGrouping.toString()]);
     return out;
   }
 

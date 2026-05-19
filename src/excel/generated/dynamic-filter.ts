@@ -35,11 +35,11 @@ export class DynamicFilter extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":val": this.val = StringValue.parse(value); return;
-      case ":maxVal": this.maxVal = StringValue.parse(value); return;
-      case ":valIso": this.valIso = DateTimeValue.parse(value); return;
-      case ":maxValIso": this.maxValIso = DateTimeValue.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "val": this.val = StringValue.parse(value); return;
+      case "maxVal": this.maxVal = StringValue.parse(value); return;
+      case "valIso": this.valIso = DateTimeValue.parse(value); return;
+      case "maxValIso": this.maxValIso = DateTimeValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -47,11 +47,11 @@ export class DynamicFilter extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.val !== undefined) out.push([":val", this.val.toString()]);
-    if (this.maxVal !== undefined) out.push([":maxVal", this.maxVal.toString()]);
-    if (this.valIso !== undefined) out.push([":valIso", this.valIso.toString()]);
-    if (this.maxValIso !== undefined) out.push([":maxValIso", this.maxValIso.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
+    if (this.maxVal !== undefined) out.push(["maxVal", this.maxVal.toString()]);
+    if (this.valIso !== undefined) out.push(["valIso", this.valIso.toString()]);
+    if (this.maxValIso !== undefined) out.push(["maxValIso", this.maxValIso.toString()]);
     return out;
   }
 

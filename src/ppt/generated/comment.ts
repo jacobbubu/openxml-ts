@@ -30,9 +30,9 @@ export class Comment extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":authorId": this.authorId = UInt32Value.parse(value); return;
-      case ":dt": this.dateTime = DateTimeValue.parse(value); return;
-      case ":idx": this.index = UInt32Value.parse(value); return;
+      case "authorId": this.authorId = UInt32Value.parse(value); return;
+      case "dt": this.dateTime = DateTimeValue.parse(value); return;
+      case "idx": this.index = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,9 +40,9 @@ export class Comment extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.authorId !== undefined) out.push([":authorId", this.authorId.toString()]);
-    if (this.dateTime !== undefined) out.push([":dt", this.dateTime.toString()]);
-    if (this.index !== undefined) out.push([":idx", this.index.toString()]);
+    if (this.authorId !== undefined) out.push(["authorId", this.authorId.toString()]);
+    if (this.dateTime !== undefined) out.push(["dt", this.dateTime.toString()]);
+    if (this.index !== undefined) out.push(["idx", this.index.toString()]);
     return out;
   }
 

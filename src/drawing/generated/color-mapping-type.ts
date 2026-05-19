@@ -55,18 +55,18 @@ export abstract class ColorMappingType extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":bg1": this.background1 = StringValue.parse(value); return;
-      case ":tx1": this.text1 = StringValue.parse(value); return;
-      case ":bg2": this.background2 = StringValue.parse(value); return;
-      case ":tx2": this.text2 = StringValue.parse(value); return;
-      case ":accent1": this.accent1 = StringValue.parse(value); return;
-      case ":accent2": this.accent2 = StringValue.parse(value); return;
-      case ":accent3": this.accent3 = StringValue.parse(value); return;
-      case ":accent4": this.accent4 = StringValue.parse(value); return;
-      case ":accent5": this.accent5 = StringValue.parse(value); return;
-      case ":accent6": this.accent6 = StringValue.parse(value); return;
-      case ":hlink": this.hyperlink = StringValue.parse(value); return;
-      case ":folHlink": this.followedHyperlink = StringValue.parse(value); return;
+      case "bg1": this.background1 = StringValue.parse(value); return;
+      case "tx1": this.text1 = StringValue.parse(value); return;
+      case "bg2": this.background2 = StringValue.parse(value); return;
+      case "tx2": this.text2 = StringValue.parse(value); return;
+      case "accent1": this.accent1 = StringValue.parse(value); return;
+      case "accent2": this.accent2 = StringValue.parse(value); return;
+      case "accent3": this.accent3 = StringValue.parse(value); return;
+      case "accent4": this.accent4 = StringValue.parse(value); return;
+      case "accent5": this.accent5 = StringValue.parse(value); return;
+      case "accent6": this.accent6 = StringValue.parse(value); return;
+      case "hlink": this.hyperlink = StringValue.parse(value); return;
+      case "folHlink": this.followedHyperlink = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -74,18 +74,18 @@ export abstract class ColorMappingType extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.background1 !== undefined) out.push([":bg1", this.background1.toString()]);
-    if (this.text1 !== undefined) out.push([":tx1", this.text1.toString()]);
-    if (this.background2 !== undefined) out.push([":bg2", this.background2.toString()]);
-    if (this.text2 !== undefined) out.push([":tx2", this.text2.toString()]);
-    if (this.accent1 !== undefined) out.push([":accent1", this.accent1.toString()]);
-    if (this.accent2 !== undefined) out.push([":accent2", this.accent2.toString()]);
-    if (this.accent3 !== undefined) out.push([":accent3", this.accent3.toString()]);
-    if (this.accent4 !== undefined) out.push([":accent4", this.accent4.toString()]);
-    if (this.accent5 !== undefined) out.push([":accent5", this.accent5.toString()]);
-    if (this.accent6 !== undefined) out.push([":accent6", this.accent6.toString()]);
-    if (this.hyperlink !== undefined) out.push([":hlink", this.hyperlink.toString()]);
-    if (this.followedHyperlink !== undefined) out.push([":folHlink", this.followedHyperlink.toString()]);
+    if (this.background1 !== undefined) out.push(["bg1", this.background1.toString()]);
+    if (this.text1 !== undefined) out.push(["tx1", this.text1.toString()]);
+    if (this.background2 !== undefined) out.push(["bg2", this.background2.toString()]);
+    if (this.text2 !== undefined) out.push(["tx2", this.text2.toString()]);
+    if (this.accent1 !== undefined) out.push(["accent1", this.accent1.toString()]);
+    if (this.accent2 !== undefined) out.push(["accent2", this.accent2.toString()]);
+    if (this.accent3 !== undefined) out.push(["accent3", this.accent3.toString()]);
+    if (this.accent4 !== undefined) out.push(["accent4", this.accent4.toString()]);
+    if (this.accent5 !== undefined) out.push(["accent5", this.accent5.toString()]);
+    if (this.accent6 !== undefined) out.push(["accent6", this.accent6.toString()]);
+    if (this.hyperlink !== undefined) out.push(["hlink", this.hyperlink.toString()]);
+    if (this.followedHyperlink !== undefined) out.push(["folHlink", this.followedHyperlink.toString()]);
     return out;
   }
 

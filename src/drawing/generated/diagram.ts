@@ -24,8 +24,8 @@ export class Diagram extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = StringValue.parse(value); return;
-      case ":bldStep": this.buildStep = StringValue.parse(value); return;
+      case "id": this.id = StringValue.parse(value); return;
+      case "bldStep": this.buildStep = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -33,8 +33,8 @@ export class Diagram extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
-    if (this.buildStep !== undefined) out.push([":bldStep", this.buildStep.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    if (this.buildStep !== undefined) out.push(["bldStep", this.buildStep.toString()]);
     return out;
   }
 

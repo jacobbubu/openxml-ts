@@ -21,7 +21,7 @@ export class SheetCalculationProperties extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":fullCalcOnLoad": this.fullCalculationOnLoad = BooleanValue.parse(value); return;
+      case "fullCalcOnLoad": this.fullCalculationOnLoad = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -29,7 +29,7 @@ export class SheetCalculationProperties extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.fullCalculationOnLoad !== undefined) out.push([":fullCalcOnLoad", this.fullCalculationOnLoad.toString()]);
+    if (this.fullCalculationOnLoad !== undefined) out.push(["fullCalcOnLoad", this.fullCalculationOnLoad.toString()]);
     return out;
   }
 

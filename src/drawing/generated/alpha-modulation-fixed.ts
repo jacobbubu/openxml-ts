@@ -22,7 +22,7 @@ export class AlphaModulationFixed extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":amt": this.amount = Int32Value.parse(value); assertNumber(this.amount, { min: 0 }, { attribute: ":amt", elementClass: "AlphaModulationFixed" }); return;
+      case "amt": this.amount = Int32Value.parse(value); assertNumber(this.amount, { min: 0 }, { attribute: ":amt", elementClass: "AlphaModulationFixed" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class AlphaModulationFixed extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.amount !== undefined) out.push([":amt", this.amount.toString()]);
+    if (this.amount !== undefined) out.push(["amt", this.amount.toString()]);
     return out;
   }
 

@@ -37,12 +37,12 @@ export class GradientFill extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":degree": this.degree = StringValue.parse(value); return;
-      case ":left": this.left = StringValue.parse(value); return;
-      case ":right": this.right = StringValue.parse(value); return;
-      case ":top": this.top = StringValue.parse(value); return;
-      case ":bottom": this.bottom = StringValue.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "degree": this.degree = StringValue.parse(value); return;
+      case "left": this.left = StringValue.parse(value); return;
+      case "right": this.right = StringValue.parse(value); return;
+      case "top": this.top = StringValue.parse(value); return;
+      case "bottom": this.bottom = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -50,12 +50,12 @@ export class GradientFill extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.degree !== undefined) out.push([":degree", this.degree.toString()]);
-    if (this.left !== undefined) out.push([":left", this.left.toString()]);
-    if (this.right !== undefined) out.push([":right", this.right.toString()]);
-    if (this.top !== undefined) out.push([":top", this.top.toString()]);
-    if (this.bottom !== undefined) out.push([":bottom", this.bottom.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.degree !== undefined) out.push(["degree", this.degree.toString()]);
+    if (this.left !== undefined) out.push(["left", this.left.toString()]);
+    if (this.right !== undefined) out.push(["right", this.right.toString()]);
+    if (this.top !== undefined) out.push(["top", this.top.toString()]);
+    if (this.bottom !== undefined) out.push(["bottom", this.bottom.toString()]);
     return out;
   }
 

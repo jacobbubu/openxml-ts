@@ -25,8 +25,8 @@ export class ApplicationNonVisualDrawingProperties extends OpenXmlCompositeEleme
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":isPhoto": this.isPhoto = BooleanValue.parse(value); return;
-      case ":userDrawn": this.userDrawn = BooleanValue.parse(value); return;
+      case "isPhoto": this.isPhoto = BooleanValue.parse(value); return;
+      case "userDrawn": this.userDrawn = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class ApplicationNonVisualDrawingProperties extends OpenXmlCompositeEleme
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.isPhoto !== undefined) out.push([":isPhoto", this.isPhoto.toString()]);
-    if (this.userDrawn !== undefined) out.push([":userDrawn", this.userDrawn.toString()]);
+    if (this.isPhoto !== undefined) out.push(["isPhoto", this.isPhoto.toString()]);
+    if (this.userDrawn !== undefined) out.push(["userDrawn", this.userDrawn.toString()]);
     return out;
   }
 

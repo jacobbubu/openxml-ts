@@ -35,11 +35,11 @@ export class NormalViewProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":showOutlineIcons": this.showOutlineIcons = BooleanValue.parse(value); return;
-      case ":snapVertSplitter": this.snapVerticalSplitter = BooleanValue.parse(value); return;
-      case ":vertBarState": this.verticalBarState = StringValue.parse(value); return;
-      case ":horzBarState": this.horizontalBarState = StringValue.parse(value); return;
-      case ":preferSingleView": this.preferSingleView = BooleanValue.parse(value); return;
+      case "showOutlineIcons": this.showOutlineIcons = BooleanValue.parse(value); return;
+      case "snapVertSplitter": this.snapVerticalSplitter = BooleanValue.parse(value); return;
+      case "vertBarState": this.verticalBarState = StringValue.parse(value); return;
+      case "horzBarState": this.horizontalBarState = StringValue.parse(value); return;
+      case "preferSingleView": this.preferSingleView = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -47,11 +47,11 @@ export class NormalViewProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.showOutlineIcons !== undefined) out.push([":showOutlineIcons", this.showOutlineIcons.toString()]);
-    if (this.snapVerticalSplitter !== undefined) out.push([":snapVertSplitter", this.snapVerticalSplitter.toString()]);
-    if (this.verticalBarState !== undefined) out.push([":vertBarState", this.verticalBarState.toString()]);
-    if (this.horizontalBarState !== undefined) out.push([":horzBarState", this.horizontalBarState.toString()]);
-    if (this.preferSingleView !== undefined) out.push([":preferSingleView", this.preferSingleView.toString()]);
+    if (this.showOutlineIcons !== undefined) out.push(["showOutlineIcons", this.showOutlineIcons.toString()]);
+    if (this.snapVerticalSplitter !== undefined) out.push(["snapVertSplitter", this.snapVerticalSplitter.toString()]);
+    if (this.verticalBarState !== undefined) out.push(["vertBarState", this.verticalBarState.toString()]);
+    if (this.horizontalBarState !== undefined) out.push(["horzBarState", this.horizontalBarState.toString()]);
+    if (this.preferSingleView !== undefined) out.push(["preferSingleView", this.preferSingleView.toString()]);
     return out;
   }
 

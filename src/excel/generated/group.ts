@@ -36,11 +36,11 @@ export class Group extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":uniqueName": this.uniqueName = StringValue.parse(value); return;
-      case ":caption": this.caption = StringValue.parse(value); return;
-      case ":uniqueParent": this.uniqueParent = StringValue.parse(value); return;
-      case ":id": this.id = Int32Value.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "uniqueName": this.uniqueName = StringValue.parse(value); return;
+      case "caption": this.caption = StringValue.parse(value); return;
+      case "uniqueParent": this.uniqueParent = StringValue.parse(value); return;
+      case "id": this.id = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -48,11 +48,11 @@ export class Group extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.uniqueName !== undefined) out.push([":uniqueName", this.uniqueName.toString()]);
-    if (this.caption !== undefined) out.push([":caption", this.caption.toString()]);
-    if (this.uniqueParent !== undefined) out.push([":uniqueParent", this.uniqueParent.toString()]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.uniqueName !== undefined) out.push(["uniqueName", this.uniqueName.toString()]);
+    if (this.caption !== undefined) out.push(["caption", this.caption.toString()]);
+    if (this.uniqueParent !== undefined) out.push(["uniqueParent", this.uniqueParent.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
     return out;
   }
 

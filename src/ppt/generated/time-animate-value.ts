@@ -25,8 +25,8 @@ export class TimeAnimateValue extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":tm": this.time = StringValue.parse(value); return;
-      case ":fmla": this.fomula = StringValue.parse(value); return;
+      case "tm": this.time = StringValue.parse(value); return;
+      case "fmla": this.fomula = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class TimeAnimateValue extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.time !== undefined) out.push([":tm", this.time.toString()]);
-    if (this.fomula !== undefined) out.push([":fmla", this.fomula.toString()]);
+    if (this.time !== undefined) out.push(["tm", this.time.toString()]);
+    if (this.fomula !== undefined) out.push(["fmla", this.fomula.toString()]);
     return out;
   }
 

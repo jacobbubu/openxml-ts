@@ -77,25 +77,25 @@ export class WorkbookProperties extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":date1904": this.date1904 = BooleanValue.parse(value); return;
-      case ":dateCompatibility": this.dateCompatibility = BooleanValue.parse(value); return;
-      case ":showObjects": this.showObjects = StringValue.parse(value); return;
-      case ":showBorderUnselectedTables": this.showBorderUnselectedTables = BooleanValue.parse(value); return;
-      case ":filterPrivacy": this.filterPrivacy = BooleanValue.parse(value); return;
-      case ":promptedSolutions": this.promptedSolutions = BooleanValue.parse(value); return;
-      case ":showInkAnnotation": this.showInkAnnotation = BooleanValue.parse(value); return;
-      case ":backupFile": this.backupFile = BooleanValue.parse(value); return;
-      case ":saveExternalLinkValues": this.saveExternalLinkValues = BooleanValue.parse(value); return;
-      case ":updateLinks": this.updateLinks = StringValue.parse(value); return;
-      case ":codeName": this.codeName = StringValue.parse(value); return;
-      case ":hidePivotFieldList": this.hidePivotFieldList = BooleanValue.parse(value); return;
-      case ":showPivotChartFilter": this.showPivotChartFilter = BooleanValue.parse(value); return;
-      case ":allowRefreshQuery": this.allowRefreshQuery = BooleanValue.parse(value); return;
-      case ":publishItems": this.publishItems = BooleanValue.parse(value); return;
-      case ":checkCompatibility": this.checkCompatibility = BooleanValue.parse(value); return;
-      case ":autoCompressPictures": this.autoCompressPictures = BooleanValue.parse(value); return;
-      case ":refreshAllConnections": this.refreshAllConnections = BooleanValue.parse(value); return;
-      case ":defaultThemeVersion": this.defaultThemeVersion = UInt32Value.parse(value); return;
+      case "date1904": this.date1904 = BooleanValue.parse(value); return;
+      case "dateCompatibility": this.dateCompatibility = BooleanValue.parse(value); return;
+      case "showObjects": this.showObjects = StringValue.parse(value); return;
+      case "showBorderUnselectedTables": this.showBorderUnselectedTables = BooleanValue.parse(value); return;
+      case "filterPrivacy": this.filterPrivacy = BooleanValue.parse(value); return;
+      case "promptedSolutions": this.promptedSolutions = BooleanValue.parse(value); return;
+      case "showInkAnnotation": this.showInkAnnotation = BooleanValue.parse(value); return;
+      case "backupFile": this.backupFile = BooleanValue.parse(value); return;
+      case "saveExternalLinkValues": this.saveExternalLinkValues = BooleanValue.parse(value); return;
+      case "updateLinks": this.updateLinks = StringValue.parse(value); return;
+      case "codeName": this.codeName = StringValue.parse(value); return;
+      case "hidePivotFieldList": this.hidePivotFieldList = BooleanValue.parse(value); return;
+      case "showPivotChartFilter": this.showPivotChartFilter = BooleanValue.parse(value); return;
+      case "allowRefreshQuery": this.allowRefreshQuery = BooleanValue.parse(value); return;
+      case "publishItems": this.publishItems = BooleanValue.parse(value); return;
+      case "checkCompatibility": this.checkCompatibility = BooleanValue.parse(value); return;
+      case "autoCompressPictures": this.autoCompressPictures = BooleanValue.parse(value); return;
+      case "refreshAllConnections": this.refreshAllConnections = BooleanValue.parse(value); return;
+      case "defaultThemeVersion": this.defaultThemeVersion = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -103,25 +103,25 @@ export class WorkbookProperties extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.date1904 !== undefined) out.push([":date1904", this.date1904.toString()]);
-    if (this.dateCompatibility !== undefined) out.push([":dateCompatibility", this.dateCompatibility.toString()]);
-    if (this.showObjects !== undefined) out.push([":showObjects", this.showObjects.toString()]);
-    if (this.showBorderUnselectedTables !== undefined) out.push([":showBorderUnselectedTables", this.showBorderUnselectedTables.toString()]);
-    if (this.filterPrivacy !== undefined) out.push([":filterPrivacy", this.filterPrivacy.toString()]);
-    if (this.promptedSolutions !== undefined) out.push([":promptedSolutions", this.promptedSolutions.toString()]);
-    if (this.showInkAnnotation !== undefined) out.push([":showInkAnnotation", this.showInkAnnotation.toString()]);
-    if (this.backupFile !== undefined) out.push([":backupFile", this.backupFile.toString()]);
-    if (this.saveExternalLinkValues !== undefined) out.push([":saveExternalLinkValues", this.saveExternalLinkValues.toString()]);
-    if (this.updateLinks !== undefined) out.push([":updateLinks", this.updateLinks.toString()]);
-    if (this.codeName !== undefined) out.push([":codeName", this.codeName.toString()]);
-    if (this.hidePivotFieldList !== undefined) out.push([":hidePivotFieldList", this.hidePivotFieldList.toString()]);
-    if (this.showPivotChartFilter !== undefined) out.push([":showPivotChartFilter", this.showPivotChartFilter.toString()]);
-    if (this.allowRefreshQuery !== undefined) out.push([":allowRefreshQuery", this.allowRefreshQuery.toString()]);
-    if (this.publishItems !== undefined) out.push([":publishItems", this.publishItems.toString()]);
-    if (this.checkCompatibility !== undefined) out.push([":checkCompatibility", this.checkCompatibility.toString()]);
-    if (this.autoCompressPictures !== undefined) out.push([":autoCompressPictures", this.autoCompressPictures.toString()]);
-    if (this.refreshAllConnections !== undefined) out.push([":refreshAllConnections", this.refreshAllConnections.toString()]);
-    if (this.defaultThemeVersion !== undefined) out.push([":defaultThemeVersion", this.defaultThemeVersion.toString()]);
+    if (this.date1904 !== undefined) out.push(["date1904", this.date1904.toString()]);
+    if (this.dateCompatibility !== undefined) out.push(["dateCompatibility", this.dateCompatibility.toString()]);
+    if (this.showObjects !== undefined) out.push(["showObjects", this.showObjects.toString()]);
+    if (this.showBorderUnselectedTables !== undefined) out.push(["showBorderUnselectedTables", this.showBorderUnselectedTables.toString()]);
+    if (this.filterPrivacy !== undefined) out.push(["filterPrivacy", this.filterPrivacy.toString()]);
+    if (this.promptedSolutions !== undefined) out.push(["promptedSolutions", this.promptedSolutions.toString()]);
+    if (this.showInkAnnotation !== undefined) out.push(["showInkAnnotation", this.showInkAnnotation.toString()]);
+    if (this.backupFile !== undefined) out.push(["backupFile", this.backupFile.toString()]);
+    if (this.saveExternalLinkValues !== undefined) out.push(["saveExternalLinkValues", this.saveExternalLinkValues.toString()]);
+    if (this.updateLinks !== undefined) out.push(["updateLinks", this.updateLinks.toString()]);
+    if (this.codeName !== undefined) out.push(["codeName", this.codeName.toString()]);
+    if (this.hidePivotFieldList !== undefined) out.push(["hidePivotFieldList", this.hidePivotFieldList.toString()]);
+    if (this.showPivotChartFilter !== undefined) out.push(["showPivotChartFilter", this.showPivotChartFilter.toString()]);
+    if (this.allowRefreshQuery !== undefined) out.push(["allowRefreshQuery", this.allowRefreshQuery.toString()]);
+    if (this.publishItems !== undefined) out.push(["publishItems", this.publishItems.toString()]);
+    if (this.checkCompatibility !== undefined) out.push(["checkCompatibility", this.checkCompatibility.toString()]);
+    if (this.autoCompressPictures !== undefined) out.push(["autoCompressPictures", this.autoCompressPictures.toString()]);
+    if (this.refreshAllConnections !== undefined) out.push(["refreshAllConnections", this.refreshAllConnections.toString()]);
+    if (this.defaultThemeVersion !== undefined) out.push(["defaultThemeVersion", this.defaultThemeVersion.toString()]);
     return out;
   }
 

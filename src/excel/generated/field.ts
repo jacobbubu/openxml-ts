@@ -22,7 +22,7 @@ export class Field extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":x": this.index = Int32Value.parse(value); return;
+      case "x": this.index = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Field extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.index !== undefined) out.push([":x", this.index.toString()]);
+    if (this.index !== undefined) out.push(["x", this.index.toString()]);
     return out;
   }
 

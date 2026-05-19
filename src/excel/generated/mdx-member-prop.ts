@@ -25,8 +25,8 @@ export class MdxMemberProp extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":n": this.nameIndex = UInt32Value.parse(value); return;
-      case ":np": this.propertyNameIndex = UInt32Value.parse(value); return;
+      case "n": this.nameIndex = UInt32Value.parse(value); return;
+      case "np": this.propertyNameIndex = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class MdxMemberProp extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.nameIndex !== undefined) out.push([":n", this.nameIndex.toString()]);
-    if (this.propertyNameIndex !== undefined) out.push([":np", this.propertyNameIndex.toString()]);
+    if (this.nameIndex !== undefined) out.push(["n", this.nameIndex.toString()]);
+    if (this.propertyNameIndex !== undefined) out.push(["np", this.propertyNameIndex.toString()]);
     return out;
   }
 

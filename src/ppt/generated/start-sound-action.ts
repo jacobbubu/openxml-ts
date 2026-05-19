@@ -22,7 +22,7 @@ export class StartSoundAction extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":loop": this.loop = BooleanValue.parse(value); return;
+      case "loop": this.loop = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class StartSoundAction extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.loop !== undefined) out.push([":loop", this.loop.toString()]);
+    if (this.loop !== undefined) out.push(["loop", this.loop.toString()]);
     return out;
   }
 

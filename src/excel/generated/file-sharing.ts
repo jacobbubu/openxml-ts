@@ -42,13 +42,13 @@ export class FileSharing extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":readOnlyRecommended": this.readOnlyRecommended = BooleanValue.parse(value); return;
-      case ":userName": this.userName = StringValue.parse(value); return;
-      case ":reservationPassword": this.reservationPassword = HexBinaryValue.parse(value); return;
-      case ":algorithmName": this.algorithmName = StringValue.parse(value); return;
-      case ":hashValue": this.hashValue = StringValue.parse(value); return;
-      case ":saltValue": this.saltValue = StringValue.parse(value); return;
-      case ":spinCount": this.spinCount = UInt32Value.parse(value); return;
+      case "readOnlyRecommended": this.readOnlyRecommended = BooleanValue.parse(value); return;
+      case "userName": this.userName = StringValue.parse(value); return;
+      case "reservationPassword": this.reservationPassword = HexBinaryValue.parse(value); return;
+      case "algorithmName": this.algorithmName = StringValue.parse(value); return;
+      case "hashValue": this.hashValue = StringValue.parse(value); return;
+      case "saltValue": this.saltValue = StringValue.parse(value); return;
+      case "spinCount": this.spinCount = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -56,13 +56,13 @@ export class FileSharing extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.readOnlyRecommended !== undefined) out.push([":readOnlyRecommended", this.readOnlyRecommended.toString()]);
-    if (this.userName !== undefined) out.push([":userName", this.userName.toString()]);
-    if (this.reservationPassword !== undefined) out.push([":reservationPassword", this.reservationPassword.toString()]);
-    if (this.algorithmName !== undefined) out.push([":algorithmName", this.algorithmName.toString()]);
-    if (this.hashValue !== undefined) out.push([":hashValue", this.hashValue.toString()]);
-    if (this.saltValue !== undefined) out.push([":saltValue", this.saltValue.toString()]);
-    if (this.spinCount !== undefined) out.push([":spinCount", this.spinCount.toString()]);
+    if (this.readOnlyRecommended !== undefined) out.push(["readOnlyRecommended", this.readOnlyRecommended.toString()]);
+    if (this.userName !== undefined) out.push(["userName", this.userName.toString()]);
+    if (this.reservationPassword !== undefined) out.push(["reservationPassword", this.reservationPassword.toString()]);
+    if (this.algorithmName !== undefined) out.push(["algorithmName", this.algorithmName.toString()]);
+    if (this.hashValue !== undefined) out.push(["hashValue", this.hashValue.toString()]);
+    if (this.saltValue !== undefined) out.push(["saltValue", this.saltValue.toString()]);
+    if (this.spinCount !== undefined) out.push(["spinCount", this.spinCount.toString()]);
     return out;
   }
 

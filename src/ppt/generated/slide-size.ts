@@ -30,9 +30,9 @@ export class SlideSize extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":cx": this.cx = Int32Value.parse(value); assertNumber(this.cx, { min: 914400, max: 51206400 }, { attribute: ":cx", elementClass: "SlideSize" }); return;
-      case ":cy": this.cy = Int32Value.parse(value); assertNumber(this.cy, { min: 914400, max: 51206400 }, { attribute: ":cy", elementClass: "SlideSize" }); return;
-      case ":type": this.type = StringValue.parse(value); return;
+      case "cx": this.cx = Int32Value.parse(value); assertNumber(this.cx, { min: 914400, max: 51206400 }, { attribute: ":cx", elementClass: "SlideSize" }); return;
+      case "cy": this.cy = Int32Value.parse(value); assertNumber(this.cy, { min: 914400, max: 51206400 }, { attribute: ":cy", elementClass: "SlideSize" }); return;
+      case "type": this.type = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,9 +40,9 @@ export class SlideSize extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.cx !== undefined) out.push([":cx", this.cx.toString()]);
-    if (this.cy !== undefined) out.push([":cy", this.cy.toString()]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
+    if (this.cx !== undefined) out.push(["cx", this.cx.toString()]);
+    if (this.cy !== undefined) out.push(["cy", this.cy.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
     return out;
   }
 

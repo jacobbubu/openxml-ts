@@ -22,7 +22,7 @@ export class Reviewed extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rId": this.revisionId = UInt32Value.parse(value); return;
+      case "rId": this.revisionId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Reviewed extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.revisionId !== undefined) out.push([":rId", this.revisionId.toString()]);
+    if (this.revisionId !== undefined) out.push(["rId", this.revisionId.toString()]);
     return out;
   }
 

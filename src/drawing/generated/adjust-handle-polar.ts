@@ -37,12 +37,12 @@ export class AdjustHandlePolar extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":gdRefR": this.radialAdjustmentGuide = StringValue.parse(value); return;
-      case ":minR": this.minRadial = StringValue.parse(value); return;
-      case ":maxR": this.maxRadial = StringValue.parse(value); return;
-      case ":gdRefAng": this.angleAdjustmentGuide = StringValue.parse(value); return;
-      case ":minAng": this.minAngle = StringValue.parse(value); return;
-      case ":maxAng": this.maxAngle = StringValue.parse(value); return;
+      case "gdRefR": this.radialAdjustmentGuide = StringValue.parse(value); return;
+      case "minR": this.minRadial = StringValue.parse(value); return;
+      case "maxR": this.maxRadial = StringValue.parse(value); return;
+      case "gdRefAng": this.angleAdjustmentGuide = StringValue.parse(value); return;
+      case "minAng": this.minAngle = StringValue.parse(value); return;
+      case "maxAng": this.maxAngle = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -50,12 +50,12 @@ export class AdjustHandlePolar extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.radialAdjustmentGuide !== undefined) out.push([":gdRefR", this.radialAdjustmentGuide.toString()]);
-    if (this.minRadial !== undefined) out.push([":minR", this.minRadial.toString()]);
-    if (this.maxRadial !== undefined) out.push([":maxR", this.maxRadial.toString()]);
-    if (this.angleAdjustmentGuide !== undefined) out.push([":gdRefAng", this.angleAdjustmentGuide.toString()]);
-    if (this.minAngle !== undefined) out.push([":minAng", this.minAngle.toString()]);
-    if (this.maxAngle !== undefined) out.push([":maxAng", this.maxAngle.toString()]);
+    if (this.radialAdjustmentGuide !== undefined) out.push(["gdRefR", this.radialAdjustmentGuide.toString()]);
+    if (this.minRadial !== undefined) out.push(["minR", this.minRadial.toString()]);
+    if (this.maxRadial !== undefined) out.push(["maxR", this.maxRadial.toString()]);
+    if (this.angleAdjustmentGuide !== undefined) out.push(["gdRefAng", this.angleAdjustmentGuide.toString()]);
+    if (this.minAngle !== undefined) out.push(["minAng", this.minAngle.toString()]);
+    if (this.maxAngle !== undefined) out.push(["maxAng", this.maxAngle.toString()]);
     return out;
   }
 

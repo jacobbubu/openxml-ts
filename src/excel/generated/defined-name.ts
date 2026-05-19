@@ -67,21 +67,21 @@ export class DefinedName extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":comment": this.comment = StringValue.parse(value); return;
-      case ":customMenu": this.customMenu = StringValue.parse(value); return;
-      case ":description": this.description = StringValue.parse(value); return;
-      case ":help": this.help = StringValue.parse(value); return;
-      case ":statusBar": this.statusBar = StringValue.parse(value); return;
-      case ":localSheetId": this.localSheetId = UInt32Value.parse(value); return;
-      case ":hidden": this.hidden = BooleanValue.parse(value); return;
-      case ":function": this.function = BooleanValue.parse(value); return;
-      case ":vbProcedure": this.vbProcedure = BooleanValue.parse(value); return;
-      case ":xlm": this.xlm = BooleanValue.parse(value); return;
-      case ":functionGroupId": this.functionGroupId = UInt32Value.parse(value); return;
-      case ":shortcutKey": this.shortcutKey = StringValue.parse(value); return;
-      case ":publishToServer": this.publishToServer = BooleanValue.parse(value); return;
-      case ":workbookParameter": this.workbookParameter = BooleanValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "comment": this.comment = StringValue.parse(value); return;
+      case "customMenu": this.customMenu = StringValue.parse(value); return;
+      case "description": this.description = StringValue.parse(value); return;
+      case "help": this.help = StringValue.parse(value); return;
+      case "statusBar": this.statusBar = StringValue.parse(value); return;
+      case "localSheetId": this.localSheetId = UInt32Value.parse(value); return;
+      case "hidden": this.hidden = BooleanValue.parse(value); return;
+      case "function": this.function = BooleanValue.parse(value); return;
+      case "vbProcedure": this.vbProcedure = BooleanValue.parse(value); return;
+      case "xlm": this.xlm = BooleanValue.parse(value); return;
+      case "functionGroupId": this.functionGroupId = UInt32Value.parse(value); return;
+      case "shortcutKey": this.shortcutKey = StringValue.parse(value); return;
+      case "publishToServer": this.publishToServer = BooleanValue.parse(value); return;
+      case "workbookParameter": this.workbookParameter = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -89,21 +89,21 @@ export class DefinedName extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.comment !== undefined) out.push([":comment", this.comment.toString()]);
-    if (this.customMenu !== undefined) out.push([":customMenu", this.customMenu.toString()]);
-    if (this.description !== undefined) out.push([":description", this.description.toString()]);
-    if (this.help !== undefined) out.push([":help", this.help.toString()]);
-    if (this.statusBar !== undefined) out.push([":statusBar", this.statusBar.toString()]);
-    if (this.localSheetId !== undefined) out.push([":localSheetId", this.localSheetId.toString()]);
-    if (this.hidden !== undefined) out.push([":hidden", this.hidden.toString()]);
-    if (this.function !== undefined) out.push([":function", this.function.toString()]);
-    if (this.vbProcedure !== undefined) out.push([":vbProcedure", this.vbProcedure.toString()]);
-    if (this.xlm !== undefined) out.push([":xlm", this.xlm.toString()]);
-    if (this.functionGroupId !== undefined) out.push([":functionGroupId", this.functionGroupId.toString()]);
-    if (this.shortcutKey !== undefined) out.push([":shortcutKey", this.shortcutKey.toString()]);
-    if (this.publishToServer !== undefined) out.push([":publishToServer", this.publishToServer.toString()]);
-    if (this.workbookParameter !== undefined) out.push([":workbookParameter", this.workbookParameter.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.comment !== undefined) out.push(["comment", this.comment.toString()]);
+    if (this.customMenu !== undefined) out.push(["customMenu", this.customMenu.toString()]);
+    if (this.description !== undefined) out.push(["description", this.description.toString()]);
+    if (this.help !== undefined) out.push(["help", this.help.toString()]);
+    if (this.statusBar !== undefined) out.push(["statusBar", this.statusBar.toString()]);
+    if (this.localSheetId !== undefined) out.push(["localSheetId", this.localSheetId.toString()]);
+    if (this.hidden !== undefined) out.push(["hidden", this.hidden.toString()]);
+    if (this.function !== undefined) out.push(["function", this.function.toString()]);
+    if (this.vbProcedure !== undefined) out.push(["vbProcedure", this.vbProcedure.toString()]);
+    if (this.xlm !== undefined) out.push(["xlm", this.xlm.toString()]);
+    if (this.functionGroupId !== undefined) out.push(["functionGroupId", this.functionGroupId.toString()]);
+    if (this.shortcutKey !== undefined) out.push(["shortcutKey", this.shortcutKey.toString()]);
+    if (this.publishToServer !== undefined) out.push(["publishToServer", this.publishToServer.toString()]);
+    if (this.workbookParameter !== undefined) out.push(["workbookParameter", this.workbookParameter.toString()]);
     return out;
   }
 

@@ -23,7 +23,7 @@ export class Main extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":first": this.first = StringValue.parse(value); return;
+      case "first": this.first = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class Main extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.first !== undefined) out.push([":first", this.first.toString()]);
+    if (this.first !== undefined) out.push(["first", this.first.toString()]);
     return out;
   }
 

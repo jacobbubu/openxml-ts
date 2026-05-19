@@ -40,12 +40,12 @@ export class Scenario extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":locked": this.locked = BooleanValue.parse(value); return;
-      case ":hidden": this.hidden = BooleanValue.parse(value); return;
-      case ":count": this.count = UInt32Value.parse(value); return;
-      case ":user": this.user = StringValue.parse(value); return;
-      case ":comment": this.comment = StringValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "locked": this.locked = BooleanValue.parse(value); return;
+      case "hidden": this.hidden = BooleanValue.parse(value); return;
+      case "count": this.count = UInt32Value.parse(value); return;
+      case "user": this.user = StringValue.parse(value); return;
+      case "comment": this.comment = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -53,12 +53,12 @@ export class Scenario extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.locked !== undefined) out.push([":locked", this.locked.toString()]);
-    if (this.hidden !== undefined) out.push([":hidden", this.hidden.toString()]);
-    if (this.count !== undefined) out.push([":count", this.count.toString()]);
-    if (this.user !== undefined) out.push([":user", this.user.toString()]);
-    if (this.comment !== undefined) out.push([":comment", this.comment.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.locked !== undefined) out.push(["locked", this.locked.toString()]);
+    if (this.hidden !== undefined) out.push(["hidden", this.hidden.toString()]);
+    if (this.count !== undefined) out.push(["count", this.count.toString()]);
+    if (this.user !== undefined) out.push(["user", this.user.toString()]);
+    if (this.comment !== undefined) out.push(["comment", this.comment.toString()]);
     return out;
   }
 

@@ -26,8 +26,8 @@ export class NumberingFormat extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":numFmtId": this.numberFormatId = UInt32Value.parse(value); return;
-      case ":formatCode": this.formatCode = StringValue.parse(value); return;
+      case "numFmtId": this.numberFormatId = UInt32Value.parse(value); return;
+      case "formatCode": this.formatCode = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class NumberingFormat extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.numberFormatId !== undefined) out.push([":numFmtId", this.numberFormatId.toString()]);
-    if (this.formatCode !== undefined) out.push([":formatCode", this.formatCode.toString()]);
+    if (this.numberFormatId !== undefined) out.push(["numFmtId", this.numberFormatId.toString()]);
+    if (this.formatCode !== undefined) out.push(["formatCode", this.formatCode.toString()]);
     return out;
   }
 

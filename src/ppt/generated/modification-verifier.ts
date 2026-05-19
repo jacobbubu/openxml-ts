@@ -68,22 +68,22 @@ export class ModificationVerifier extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":cryptProviderType": this.cryptographicProviderType = StringValue.parse(value); return;
-      case ":cryptAlgorithmClass": this.cryptographicAlgorithmClass = StringValue.parse(value); return;
-      case ":cryptAlgorithmType": this.cryptographicAlgorithmType = StringValue.parse(value); return;
-      case ":cryptAlgorithmSid": this.cryptographicAlgorithmSid = UInt32Value.parse(value); return;
-      case ":spinCount": this.spinCount = UInt32Value.parse(value); return;
-      case ":saltData": this.saltData = StringValue.parse(value); return;
-      case ":hashData": this.hashData = StringValue.parse(value); return;
-      case ":cryptProvider": this.cryptographicProvider = StringValue.parse(value); return;
-      case ":algIdExt": this.extendedCryptographicAlgorithm = UInt32Value.parse(value); return;
-      case ":algIdExtSource": this.extendedCryptographicAlgorithmSource = StringValue.parse(value); return;
-      case ":cryptProviderTypeExt": this.cryptographicProviderTypeExtensibility = UInt32Value.parse(value); return;
-      case ":cryptProviderTypeExtSource": this.cryptographicProviderTypeExtensibilitySource = StringValue.parse(value); return;
-      case ":algorithmName": this.algorithmName = StringValue.parse(value); return;
-      case ":hashValue": this.hashValue = StringValue.parse(value); return;
-      case ":saltValue": this.saltValue = StringValue.parse(value); return;
-      case ":spinValue": this.spinValue = UInt32Value.parse(value); return;
+      case "cryptProviderType": this.cryptographicProviderType = StringValue.parse(value); return;
+      case "cryptAlgorithmClass": this.cryptographicAlgorithmClass = StringValue.parse(value); return;
+      case "cryptAlgorithmType": this.cryptographicAlgorithmType = StringValue.parse(value); return;
+      case "cryptAlgorithmSid": this.cryptographicAlgorithmSid = UInt32Value.parse(value); return;
+      case "spinCount": this.spinCount = UInt32Value.parse(value); return;
+      case "saltData": this.saltData = StringValue.parse(value); return;
+      case "hashData": this.hashData = StringValue.parse(value); return;
+      case "cryptProvider": this.cryptographicProvider = StringValue.parse(value); return;
+      case "algIdExt": this.extendedCryptographicAlgorithm = UInt32Value.parse(value); return;
+      case "algIdExtSource": this.extendedCryptographicAlgorithmSource = StringValue.parse(value); return;
+      case "cryptProviderTypeExt": this.cryptographicProviderTypeExtensibility = UInt32Value.parse(value); return;
+      case "cryptProviderTypeExtSource": this.cryptographicProviderTypeExtensibilitySource = StringValue.parse(value); return;
+      case "algorithmName": this.algorithmName = StringValue.parse(value); return;
+      case "hashValue": this.hashValue = StringValue.parse(value); return;
+      case "saltValue": this.saltValue = StringValue.parse(value); return;
+      case "spinValue": this.spinValue = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -91,22 +91,22 @@ export class ModificationVerifier extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.cryptographicProviderType !== undefined) out.push([":cryptProviderType", this.cryptographicProviderType.toString()]);
-    if (this.cryptographicAlgorithmClass !== undefined) out.push([":cryptAlgorithmClass", this.cryptographicAlgorithmClass.toString()]);
-    if (this.cryptographicAlgorithmType !== undefined) out.push([":cryptAlgorithmType", this.cryptographicAlgorithmType.toString()]);
-    if (this.cryptographicAlgorithmSid !== undefined) out.push([":cryptAlgorithmSid", this.cryptographicAlgorithmSid.toString()]);
-    if (this.spinCount !== undefined) out.push([":spinCount", this.spinCount.toString()]);
-    if (this.saltData !== undefined) out.push([":saltData", this.saltData.toString()]);
-    if (this.hashData !== undefined) out.push([":hashData", this.hashData.toString()]);
-    if (this.cryptographicProvider !== undefined) out.push([":cryptProvider", this.cryptographicProvider.toString()]);
-    if (this.extendedCryptographicAlgorithm !== undefined) out.push([":algIdExt", this.extendedCryptographicAlgorithm.toString()]);
-    if (this.extendedCryptographicAlgorithmSource !== undefined) out.push([":algIdExtSource", this.extendedCryptographicAlgorithmSource.toString()]);
-    if (this.cryptographicProviderTypeExtensibility !== undefined) out.push([":cryptProviderTypeExt", this.cryptographicProviderTypeExtensibility.toString()]);
-    if (this.cryptographicProviderTypeExtensibilitySource !== undefined) out.push([":cryptProviderTypeExtSource", this.cryptographicProviderTypeExtensibilitySource.toString()]);
-    if (this.algorithmName !== undefined) out.push([":algorithmName", this.algorithmName.toString()]);
-    if (this.hashValue !== undefined) out.push([":hashValue", this.hashValue.toString()]);
-    if (this.saltValue !== undefined) out.push([":saltValue", this.saltValue.toString()]);
-    if (this.spinValue !== undefined) out.push([":spinValue", this.spinValue.toString()]);
+    if (this.cryptographicProviderType !== undefined) out.push(["cryptProviderType", this.cryptographicProviderType.toString()]);
+    if (this.cryptographicAlgorithmClass !== undefined) out.push(["cryptAlgorithmClass", this.cryptographicAlgorithmClass.toString()]);
+    if (this.cryptographicAlgorithmType !== undefined) out.push(["cryptAlgorithmType", this.cryptographicAlgorithmType.toString()]);
+    if (this.cryptographicAlgorithmSid !== undefined) out.push(["cryptAlgorithmSid", this.cryptographicAlgorithmSid.toString()]);
+    if (this.spinCount !== undefined) out.push(["spinCount", this.spinCount.toString()]);
+    if (this.saltData !== undefined) out.push(["saltData", this.saltData.toString()]);
+    if (this.hashData !== undefined) out.push(["hashData", this.hashData.toString()]);
+    if (this.cryptographicProvider !== undefined) out.push(["cryptProvider", this.cryptographicProvider.toString()]);
+    if (this.extendedCryptographicAlgorithm !== undefined) out.push(["algIdExt", this.extendedCryptographicAlgorithm.toString()]);
+    if (this.extendedCryptographicAlgorithmSource !== undefined) out.push(["algIdExtSource", this.extendedCryptographicAlgorithmSource.toString()]);
+    if (this.cryptographicProviderTypeExtensibility !== undefined) out.push(["cryptProviderTypeExt", this.cryptographicProviderTypeExtensibility.toString()]);
+    if (this.cryptographicProviderTypeExtensibilitySource !== undefined) out.push(["cryptProviderTypeExtSource", this.cryptographicProviderTypeExtensibilitySource.toString()]);
+    if (this.algorithmName !== undefined) out.push(["algorithmName", this.algorithmName.toString()]);
+    if (this.hashValue !== undefined) out.push(["hashValue", this.hashValue.toString()]);
+    if (this.saltValue !== undefined) out.push(["saltValue", this.saltValue.toString()]);
+    if (this.spinValue !== undefined) out.push(["spinValue", this.spinValue.toString()]);
     return out;
   }
 

@@ -58,18 +58,18 @@ export class PivotArea extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":field": this.field = Int32Value.parse(value); return;
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":dataOnly": this.dataOnly = BooleanValue.parse(value); return;
-      case ":labelOnly": this.labelOnly = BooleanValue.parse(value); return;
-      case ":grandRow": this.grandRow = BooleanValue.parse(value); return;
-      case ":grandCol": this.grandColumn = BooleanValue.parse(value); return;
-      case ":cacheIndex": this.cacheIndex = BooleanValue.parse(value); return;
-      case ":outline": this.outline = BooleanValue.parse(value); return;
-      case ":offset": this.offset = StringValue.parse(value); return;
-      case ":collapsedLevelsAreSubtotals": this.collapsedLevelsAreSubtotals = BooleanValue.parse(value); return;
-      case ":axis": this.axis = StringValue.parse(value); return;
-      case ":fieldPosition": this.fieldPosition = UInt32Value.parse(value); return;
+      case "field": this.field = Int32Value.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "dataOnly": this.dataOnly = BooleanValue.parse(value); return;
+      case "labelOnly": this.labelOnly = BooleanValue.parse(value); return;
+      case "grandRow": this.grandRow = BooleanValue.parse(value); return;
+      case "grandCol": this.grandColumn = BooleanValue.parse(value); return;
+      case "cacheIndex": this.cacheIndex = BooleanValue.parse(value); return;
+      case "outline": this.outline = BooleanValue.parse(value); return;
+      case "offset": this.offset = StringValue.parse(value); return;
+      case "collapsedLevelsAreSubtotals": this.collapsedLevelsAreSubtotals = BooleanValue.parse(value); return;
+      case "axis": this.axis = StringValue.parse(value); return;
+      case "fieldPosition": this.fieldPosition = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -77,18 +77,18 @@ export class PivotArea extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.field !== undefined) out.push([":field", this.field.toString()]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.dataOnly !== undefined) out.push([":dataOnly", this.dataOnly.toString()]);
-    if (this.labelOnly !== undefined) out.push([":labelOnly", this.labelOnly.toString()]);
-    if (this.grandRow !== undefined) out.push([":grandRow", this.grandRow.toString()]);
-    if (this.grandColumn !== undefined) out.push([":grandCol", this.grandColumn.toString()]);
-    if (this.cacheIndex !== undefined) out.push([":cacheIndex", this.cacheIndex.toString()]);
-    if (this.outline !== undefined) out.push([":outline", this.outline.toString()]);
-    if (this.offset !== undefined) out.push([":offset", this.offset.toString()]);
-    if (this.collapsedLevelsAreSubtotals !== undefined) out.push([":collapsedLevelsAreSubtotals", this.collapsedLevelsAreSubtotals.toString()]);
-    if (this.axis !== undefined) out.push([":axis", this.axis.toString()]);
-    if (this.fieldPosition !== undefined) out.push([":fieldPosition", this.fieldPosition.toString()]);
+    if (this.field !== undefined) out.push(["field", this.field.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.dataOnly !== undefined) out.push(["dataOnly", this.dataOnly.toString()]);
+    if (this.labelOnly !== undefined) out.push(["labelOnly", this.labelOnly.toString()]);
+    if (this.grandRow !== undefined) out.push(["grandRow", this.grandRow.toString()]);
+    if (this.grandColumn !== undefined) out.push(["grandCol", this.grandColumn.toString()]);
+    if (this.cacheIndex !== undefined) out.push(["cacheIndex", this.cacheIndex.toString()]);
+    if (this.outline !== undefined) out.push(["outline", this.outline.toString()]);
+    if (this.offset !== undefined) out.push(["offset", this.offset.toString()]);
+    if (this.collapsedLevelsAreSubtotals !== undefined) out.push(["collapsedLevelsAreSubtotals", this.collapsedLevelsAreSubtotals.toString()]);
+    if (this.axis !== undefined) out.push(["axis", this.axis.toString()]);
+    if (this.fieldPosition !== undefined) out.push(["fieldPosition", this.fieldPosition.toString()]);
     return out;
   }
 

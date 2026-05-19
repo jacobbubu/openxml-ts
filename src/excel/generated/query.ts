@@ -23,7 +23,7 @@ export class Query extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":mdx": this.mdx = StringValue.parse(value); return;
+      case "mdx": this.mdx = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class Query extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.mdx !== undefined) out.push([":mdx", this.mdx.toString()]);
+    if (this.mdx !== undefined) out.push(["mdx", this.mdx.toString()]);
     return out;
   }
 

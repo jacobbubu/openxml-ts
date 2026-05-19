@@ -25,8 +25,8 @@ export abstract class TableStyleType extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":styleId": this.styleId = StringValue.parse(value); return;
-      case ":styleName": this.styleName = StringValue.parse(value); return;
+      case "styleId": this.styleId = StringValue.parse(value); return;
+      case "styleName": this.styleName = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export abstract class TableStyleType extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.styleId !== undefined) out.push([":styleId", this.styleId.toString()]);
-    if (this.styleName !== undefined) out.push([":styleName", this.styleName.toString()]);
+    if (this.styleId !== undefined) out.push(["styleId", this.styleId.toString()]);
+    if (this.styleName !== undefined) out.push(["styleName", this.styleName.toString()]);
     return out;
   }
 

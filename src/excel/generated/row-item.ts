@@ -29,9 +29,9 @@ export class RowItem extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":t": this.itemType = StringValue.parse(value); return;
-      case ":r": this.repeatedItemCount = UInt32Value.parse(value); return;
-      case ":i": this.index = UInt32Value.parse(value); return;
+      case "t": this.itemType = StringValue.parse(value); return;
+      case "r": this.repeatedItemCount = UInt32Value.parse(value); return;
+      case "i": this.index = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class RowItem extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.itemType !== undefined) out.push([":t", this.itemType.toString()]);
-    if (this.repeatedItemCount !== undefined) out.push([":r", this.repeatedItemCount.toString()]);
-    if (this.index !== undefined) out.push([":i", this.index.toString()]);
+    if (this.itemType !== undefined) out.push(["t", this.itemType.toString()]);
+    if (this.repeatedItemCount !== undefined) out.push(["r", this.repeatedItemCount.toString()]);
+    if (this.index !== undefined) out.push(["i", this.index.toString()]);
     return out;
   }
 

@@ -22,7 +22,7 @@ export class FunctionGroups extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":builtInGroupCount": this.builtInGroupCount = UInt32Value.parse(value); return;
+      case "builtInGroupCount": this.builtInGroupCount = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class FunctionGroups extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.builtInGroupCount !== undefined) out.push([":builtInGroupCount", this.builtInGroupCount.toString()]);
+    if (this.builtInGroupCount !== undefined) out.push(["builtInGroupCount", this.builtInGroupCount.toString()]);
     return out;
   }
 

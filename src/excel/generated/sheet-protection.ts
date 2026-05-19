@@ -84,27 +84,27 @@ export class SheetProtection extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":password": this.password = HexBinaryValue.parse(value); return;
-      case ":algorithmName": this.algorithmName = StringValue.parse(value); return;
-      case ":hashValue": this.hashValue = StringValue.parse(value); return;
-      case ":saltValue": this.saltValue = StringValue.parse(value); return;
-      case ":spinCount": this.spinCount = UInt32Value.parse(value); return;
-      case ":sheet": this.sheet = BooleanValue.parse(value); return;
-      case ":objects": this.objects = BooleanValue.parse(value); return;
-      case ":scenarios": this.scenarios = BooleanValue.parse(value); return;
-      case ":formatCells": this.formatCells = BooleanValue.parse(value); return;
-      case ":formatColumns": this.formatColumns = BooleanValue.parse(value); return;
-      case ":formatRows": this.formatRows = BooleanValue.parse(value); return;
-      case ":insertColumns": this.insertColumns = BooleanValue.parse(value); return;
-      case ":insertRows": this.insertRows = BooleanValue.parse(value); return;
-      case ":insertHyperlinks": this.insertHyperlinks = BooleanValue.parse(value); return;
-      case ":deleteColumns": this.deleteColumns = BooleanValue.parse(value); return;
-      case ":deleteRows": this.deleteRows = BooleanValue.parse(value); return;
-      case ":selectLockedCells": this.selectLockedCells = BooleanValue.parse(value); return;
-      case ":sort": this.sort = BooleanValue.parse(value); return;
-      case ":autoFilter": this.autoFilter = BooleanValue.parse(value); return;
-      case ":pivotTables": this.pivotTables = BooleanValue.parse(value); return;
-      case ":selectUnlockedCells": this.selectUnlockedCells = BooleanValue.parse(value); return;
+      case "password": this.password = HexBinaryValue.parse(value); return;
+      case "algorithmName": this.algorithmName = StringValue.parse(value); return;
+      case "hashValue": this.hashValue = StringValue.parse(value); return;
+      case "saltValue": this.saltValue = StringValue.parse(value); return;
+      case "spinCount": this.spinCount = UInt32Value.parse(value); return;
+      case "sheet": this.sheet = BooleanValue.parse(value); return;
+      case "objects": this.objects = BooleanValue.parse(value); return;
+      case "scenarios": this.scenarios = BooleanValue.parse(value); return;
+      case "formatCells": this.formatCells = BooleanValue.parse(value); return;
+      case "formatColumns": this.formatColumns = BooleanValue.parse(value); return;
+      case "formatRows": this.formatRows = BooleanValue.parse(value); return;
+      case "insertColumns": this.insertColumns = BooleanValue.parse(value); return;
+      case "insertRows": this.insertRows = BooleanValue.parse(value); return;
+      case "insertHyperlinks": this.insertHyperlinks = BooleanValue.parse(value); return;
+      case "deleteColumns": this.deleteColumns = BooleanValue.parse(value); return;
+      case "deleteRows": this.deleteRows = BooleanValue.parse(value); return;
+      case "selectLockedCells": this.selectLockedCells = BooleanValue.parse(value); return;
+      case "sort": this.sort = BooleanValue.parse(value); return;
+      case "autoFilter": this.autoFilter = BooleanValue.parse(value); return;
+      case "pivotTables": this.pivotTables = BooleanValue.parse(value); return;
+      case "selectUnlockedCells": this.selectUnlockedCells = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -112,27 +112,27 @@ export class SheetProtection extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.password !== undefined) out.push([":password", this.password.toString()]);
-    if (this.algorithmName !== undefined) out.push([":algorithmName", this.algorithmName.toString()]);
-    if (this.hashValue !== undefined) out.push([":hashValue", this.hashValue.toString()]);
-    if (this.saltValue !== undefined) out.push([":saltValue", this.saltValue.toString()]);
-    if (this.spinCount !== undefined) out.push([":spinCount", this.spinCount.toString()]);
-    if (this.sheet !== undefined) out.push([":sheet", this.sheet.toString()]);
-    if (this.objects !== undefined) out.push([":objects", this.objects.toString()]);
-    if (this.scenarios !== undefined) out.push([":scenarios", this.scenarios.toString()]);
-    if (this.formatCells !== undefined) out.push([":formatCells", this.formatCells.toString()]);
-    if (this.formatColumns !== undefined) out.push([":formatColumns", this.formatColumns.toString()]);
-    if (this.formatRows !== undefined) out.push([":formatRows", this.formatRows.toString()]);
-    if (this.insertColumns !== undefined) out.push([":insertColumns", this.insertColumns.toString()]);
-    if (this.insertRows !== undefined) out.push([":insertRows", this.insertRows.toString()]);
-    if (this.insertHyperlinks !== undefined) out.push([":insertHyperlinks", this.insertHyperlinks.toString()]);
-    if (this.deleteColumns !== undefined) out.push([":deleteColumns", this.deleteColumns.toString()]);
-    if (this.deleteRows !== undefined) out.push([":deleteRows", this.deleteRows.toString()]);
-    if (this.selectLockedCells !== undefined) out.push([":selectLockedCells", this.selectLockedCells.toString()]);
-    if (this.sort !== undefined) out.push([":sort", this.sort.toString()]);
-    if (this.autoFilter !== undefined) out.push([":autoFilter", this.autoFilter.toString()]);
-    if (this.pivotTables !== undefined) out.push([":pivotTables", this.pivotTables.toString()]);
-    if (this.selectUnlockedCells !== undefined) out.push([":selectUnlockedCells", this.selectUnlockedCells.toString()]);
+    if (this.password !== undefined) out.push(["password", this.password.toString()]);
+    if (this.algorithmName !== undefined) out.push(["algorithmName", this.algorithmName.toString()]);
+    if (this.hashValue !== undefined) out.push(["hashValue", this.hashValue.toString()]);
+    if (this.saltValue !== undefined) out.push(["saltValue", this.saltValue.toString()]);
+    if (this.spinCount !== undefined) out.push(["spinCount", this.spinCount.toString()]);
+    if (this.sheet !== undefined) out.push(["sheet", this.sheet.toString()]);
+    if (this.objects !== undefined) out.push(["objects", this.objects.toString()]);
+    if (this.scenarios !== undefined) out.push(["scenarios", this.scenarios.toString()]);
+    if (this.formatCells !== undefined) out.push(["formatCells", this.formatCells.toString()]);
+    if (this.formatColumns !== undefined) out.push(["formatColumns", this.formatColumns.toString()]);
+    if (this.formatRows !== undefined) out.push(["formatRows", this.formatRows.toString()]);
+    if (this.insertColumns !== undefined) out.push(["insertColumns", this.insertColumns.toString()]);
+    if (this.insertRows !== undefined) out.push(["insertRows", this.insertRows.toString()]);
+    if (this.insertHyperlinks !== undefined) out.push(["insertHyperlinks", this.insertHyperlinks.toString()]);
+    if (this.deleteColumns !== undefined) out.push(["deleteColumns", this.deleteColumns.toString()]);
+    if (this.deleteRows !== undefined) out.push(["deleteRows", this.deleteRows.toString()]);
+    if (this.selectLockedCells !== undefined) out.push(["selectLockedCells", this.selectLockedCells.toString()]);
+    if (this.sort !== undefined) out.push(["sort", this.sort.toString()]);
+    if (this.autoFilter !== undefined) out.push(["autoFilter", this.autoFilter.toString()]);
+    if (this.pivotTables !== undefined) out.push(["pivotTables", this.pivotTables.toString()]);
+    if (this.selectUnlockedCells !== undefined) out.push(["selectUnlockedCells", this.selectUnlockedCells.toString()]);
     return out;
   }
 

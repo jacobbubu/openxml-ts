@@ -24,8 +24,8 @@ export abstract class TimeListConditionalType extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":evt": this.event = StringValue.parse(value); return;
-      case ":delay": this.delay = StringValue.parse(value); return;
+      case "evt": this.event = StringValue.parse(value); return;
+      case "delay": this.delay = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -33,8 +33,8 @@ export abstract class TimeListConditionalType extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.event !== undefined) out.push([":evt", this.event.toString()]);
-    if (this.delay !== undefined) out.push([":delay", this.delay.toString()]);
+    if (this.event !== undefined) out.push(["evt", this.event.toString()]);
+    if (this.delay !== undefined) out.push(["delay", this.delay.toString()]);
     return out;
   }
 

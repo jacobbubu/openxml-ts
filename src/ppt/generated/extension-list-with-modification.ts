@@ -22,7 +22,7 @@ export class ExtensionListWithModification extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":mod": this.modify = BooleanValue.parse(value); return;
+      case "mod": this.modify = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class ExtensionListWithModification extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.modify !== undefined) out.push([":mod", this.modify.toString()]);
+    if (this.modify !== undefined) out.push(["mod", this.modify.toString()]);
     return out;
   }
 

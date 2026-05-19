@@ -23,7 +23,7 @@ export class FontReference extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":idx": this.index = StringValue.parse(value); return;
+      case "idx": this.index = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class FontReference extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.index !== undefined) out.push([":idx", this.index.toString()]);
+    if (this.index !== undefined) out.push(["idx", this.index.toString()]);
     return out;
   }
 

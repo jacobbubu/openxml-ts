@@ -59,19 +59,19 @@ export class CellFormat extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":numFmtId": this.numberFormatId = UInt32Value.parse(value); return;
-      case ":fontId": this.fontId = UInt32Value.parse(value); return;
-      case ":fillId": this.fillId = UInt32Value.parse(value); return;
-      case ":borderId": this.borderId = UInt32Value.parse(value); return;
-      case ":xfId": this.formatId = UInt32Value.parse(value); return;
-      case ":quotePrefix": this.quotePrefix = BooleanValue.parse(value); return;
-      case ":pivotButton": this.pivotButton = BooleanValue.parse(value); return;
-      case ":applyNumberFormat": this.applyNumberFormat = BooleanValue.parse(value); return;
-      case ":applyFont": this.applyFont = BooleanValue.parse(value); return;
-      case ":applyFill": this.applyFill = BooleanValue.parse(value); return;
-      case ":applyBorder": this.applyBorder = BooleanValue.parse(value); return;
-      case ":applyAlignment": this.applyAlignment = BooleanValue.parse(value); return;
-      case ":applyProtection": this.applyProtection = BooleanValue.parse(value); return;
+      case "numFmtId": this.numberFormatId = UInt32Value.parse(value); return;
+      case "fontId": this.fontId = UInt32Value.parse(value); return;
+      case "fillId": this.fillId = UInt32Value.parse(value); return;
+      case "borderId": this.borderId = UInt32Value.parse(value); return;
+      case "xfId": this.formatId = UInt32Value.parse(value); return;
+      case "quotePrefix": this.quotePrefix = BooleanValue.parse(value); return;
+      case "pivotButton": this.pivotButton = BooleanValue.parse(value); return;
+      case "applyNumberFormat": this.applyNumberFormat = BooleanValue.parse(value); return;
+      case "applyFont": this.applyFont = BooleanValue.parse(value); return;
+      case "applyFill": this.applyFill = BooleanValue.parse(value); return;
+      case "applyBorder": this.applyBorder = BooleanValue.parse(value); return;
+      case "applyAlignment": this.applyAlignment = BooleanValue.parse(value); return;
+      case "applyProtection": this.applyProtection = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -79,19 +79,19 @@ export class CellFormat extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.numberFormatId !== undefined) out.push([":numFmtId", this.numberFormatId.toString()]);
-    if (this.fontId !== undefined) out.push([":fontId", this.fontId.toString()]);
-    if (this.fillId !== undefined) out.push([":fillId", this.fillId.toString()]);
-    if (this.borderId !== undefined) out.push([":borderId", this.borderId.toString()]);
-    if (this.formatId !== undefined) out.push([":xfId", this.formatId.toString()]);
-    if (this.quotePrefix !== undefined) out.push([":quotePrefix", this.quotePrefix.toString()]);
-    if (this.pivotButton !== undefined) out.push([":pivotButton", this.pivotButton.toString()]);
-    if (this.applyNumberFormat !== undefined) out.push([":applyNumberFormat", this.applyNumberFormat.toString()]);
-    if (this.applyFont !== undefined) out.push([":applyFont", this.applyFont.toString()]);
-    if (this.applyFill !== undefined) out.push([":applyFill", this.applyFill.toString()]);
-    if (this.applyBorder !== undefined) out.push([":applyBorder", this.applyBorder.toString()]);
-    if (this.applyAlignment !== undefined) out.push([":applyAlignment", this.applyAlignment.toString()]);
-    if (this.applyProtection !== undefined) out.push([":applyProtection", this.applyProtection.toString()]);
+    if (this.numberFormatId !== undefined) out.push(["numFmtId", this.numberFormatId.toString()]);
+    if (this.fontId !== undefined) out.push(["fontId", this.fontId.toString()]);
+    if (this.fillId !== undefined) out.push(["fillId", this.fillId.toString()]);
+    if (this.borderId !== undefined) out.push(["borderId", this.borderId.toString()]);
+    if (this.formatId !== undefined) out.push(["xfId", this.formatId.toString()]);
+    if (this.quotePrefix !== undefined) out.push(["quotePrefix", this.quotePrefix.toString()]);
+    if (this.pivotButton !== undefined) out.push(["pivotButton", this.pivotButton.toString()]);
+    if (this.applyNumberFormat !== undefined) out.push(["applyNumberFormat", this.applyNumberFormat.toString()]);
+    if (this.applyFont !== undefined) out.push(["applyFont", this.applyFont.toString()]);
+    if (this.applyFill !== undefined) out.push(["applyFill", this.applyFill.toString()]);
+    if (this.applyBorder !== undefined) out.push(["applyBorder", this.applyBorder.toString()]);
+    if (this.applyAlignment !== undefined) out.push(["applyAlignment", this.applyAlignment.toString()]);
+    if (this.applyProtection !== undefined) out.push(["applyProtection", this.applyProtection.toString()]);
     return out;
   }
 

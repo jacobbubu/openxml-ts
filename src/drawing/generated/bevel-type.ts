@@ -29,9 +29,9 @@ export abstract class BevelType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":w": this.width = Int64Value.parse(value); assertNumber(this.width, { min: 0, max: 2147483647 }, { attribute: ":w", elementClass: "BevelType" }); return;
-      case ":h": this.height = Int64Value.parse(value); assertNumber(this.height, { min: 0, max: 2147483647 }, { attribute: ":h", elementClass: "BevelType" }); return;
-      case ":prst": this.preset = StringValue.parse(value); return;
+      case "w": this.width = Int64Value.parse(value); assertNumber(this.width, { min: 0, max: 2147483647 }, { attribute: ":w", elementClass: "BevelType" }); return;
+      case "h": this.height = Int64Value.parse(value); assertNumber(this.height, { min: 0, max: 2147483647 }, { attribute: ":h", elementClass: "BevelType" }); return;
+      case "prst": this.preset = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export abstract class BevelType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.width !== undefined) out.push([":w", this.width.toString()]);
-    if (this.height !== undefined) out.push([":h", this.height.toString()]);
-    if (this.preset !== undefined) out.push([":prst", this.preset.toString()]);
+    if (this.width !== undefined) out.push(["w", this.width.toString()]);
+    if (this.height !== undefined) out.push(["h", this.height.toString()]);
+    if (this.preset !== undefined) out.push(["prst", this.preset.toString()]);
     return out;
   }
 

@@ -33,11 +33,11 @@ export class Pane extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":xSplit": this.horizontalSplit = StringValue.parse(value); return;
-      case ":ySplit": this.verticalSplit = StringValue.parse(value); return;
-      case ":topLeftCell": this.topLeftCell = StringValue.parse(value); return;
-      case ":activePane": this.activePane = StringValue.parse(value); return;
-      case ":state": this.state = StringValue.parse(value); return;
+      case "xSplit": this.horizontalSplit = StringValue.parse(value); return;
+      case "ySplit": this.verticalSplit = StringValue.parse(value); return;
+      case "topLeftCell": this.topLeftCell = StringValue.parse(value); return;
+      case "activePane": this.activePane = StringValue.parse(value); return;
+      case "state": this.state = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -45,11 +45,11 @@ export class Pane extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.horizontalSplit !== undefined) out.push([":xSplit", this.horizontalSplit.toString()]);
-    if (this.verticalSplit !== undefined) out.push([":ySplit", this.verticalSplit.toString()]);
-    if (this.topLeftCell !== undefined) out.push([":topLeftCell", this.topLeftCell.toString()]);
-    if (this.activePane !== undefined) out.push([":activePane", this.activePane.toString()]);
-    if (this.state !== undefined) out.push([":state", this.state.toString()]);
+    if (this.horizontalSplit !== undefined) out.push(["xSplit", this.horizontalSplit.toString()]);
+    if (this.verticalSplit !== undefined) out.push(["ySplit", this.verticalSplit.toString()]);
+    if (this.topLeftCell !== undefined) out.push(["topLeftCell", this.topLeftCell.toString()]);
+    if (this.activePane !== undefined) out.push(["activePane", this.activePane.toString()]);
+    if (this.state !== undefined) out.push(["state", this.state.toString()]);
     return out;
   }
 

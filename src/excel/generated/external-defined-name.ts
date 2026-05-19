@@ -29,9 +29,9 @@ export class ExternalDefinedName extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":refersTo": this.refersTo = StringValue.parse(value); return;
-      case ":sheetId": this.sheetId = UInt32Value.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "refersTo": this.refersTo = StringValue.parse(value); return;
+      case "sheetId": this.sheetId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class ExternalDefinedName extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.refersTo !== undefined) out.push([":refersTo", this.refersTo.toString()]);
-    if (this.sheetId !== undefined) out.push([":sheetId", this.sheetId.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.refersTo !== undefined) out.push(["refersTo", this.refersTo.toString()]);
+    if (this.sheetId !== undefined) out.push(["sheetId", this.sheetId.toString()]);
     return out;
   }
 

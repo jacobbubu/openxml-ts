@@ -88,28 +88,28 @@ export class Table extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = UInt32Value.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":displayName": this.displayName = StringValue.parse(value); return;
-      case ":comment": this.comment = StringValue.parse(value); return;
-      case ":ref": this.reference = StringValue.parse(value); return;
-      case ":tableType": this.tableType = StringValue.parse(value); return;
-      case ":headerRowCount": this.headerRowCount = UInt32Value.parse(value); return;
-      case ":insertRow": this.insertRow = BooleanValue.parse(value); return;
-      case ":insertRowShift": this.insertRowShift = BooleanValue.parse(value); return;
-      case ":totalsRowCount": this.totalsRowCount = UInt32Value.parse(value); return;
-      case ":totalsRowShown": this.totalsRowShown = BooleanValue.parse(value); return;
-      case ":published": this.published = BooleanValue.parse(value); return;
-      case ":headerRowDxfId": this.headerRowFormatId = UInt32Value.parse(value); return;
-      case ":dataDxfId": this.dataFormatId = UInt32Value.parse(value); return;
-      case ":totalsRowDxfId": this.totalsRowFormatId = UInt32Value.parse(value); return;
-      case ":headerRowBorderDxfId": this.headerRowBorderFormatId = UInt32Value.parse(value); return;
-      case ":tableBorderDxfId": this.borderFormatId = UInt32Value.parse(value); return;
-      case ":totalsRowBorderDxfId": this.totalsRowBorderFormatId = UInt32Value.parse(value); return;
-      case ":headerRowCellStyle": this.headerRowCellStyle = StringValue.parse(value); return;
-      case ":dataCellStyle": this.dataCellStyle = StringValue.parse(value); return;
-      case ":totalsRowCellStyle": this.totalsRowCellStyle = StringValue.parse(value); return;
-      case ":connectionId": this.connectionId = UInt32Value.parse(value); return;
+      case "id": this.id = UInt32Value.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "displayName": this.displayName = StringValue.parse(value); return;
+      case "comment": this.comment = StringValue.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
+      case "tableType": this.tableType = StringValue.parse(value); return;
+      case "headerRowCount": this.headerRowCount = UInt32Value.parse(value); return;
+      case "insertRow": this.insertRow = BooleanValue.parse(value); return;
+      case "insertRowShift": this.insertRowShift = BooleanValue.parse(value); return;
+      case "totalsRowCount": this.totalsRowCount = UInt32Value.parse(value); return;
+      case "totalsRowShown": this.totalsRowShown = BooleanValue.parse(value); return;
+      case "published": this.published = BooleanValue.parse(value); return;
+      case "headerRowDxfId": this.headerRowFormatId = UInt32Value.parse(value); return;
+      case "dataDxfId": this.dataFormatId = UInt32Value.parse(value); return;
+      case "totalsRowDxfId": this.totalsRowFormatId = UInt32Value.parse(value); return;
+      case "headerRowBorderDxfId": this.headerRowBorderFormatId = UInt32Value.parse(value); return;
+      case "tableBorderDxfId": this.borderFormatId = UInt32Value.parse(value); return;
+      case "totalsRowBorderDxfId": this.totalsRowBorderFormatId = UInt32Value.parse(value); return;
+      case "headerRowCellStyle": this.headerRowCellStyle = StringValue.parse(value); return;
+      case "dataCellStyle": this.dataCellStyle = StringValue.parse(value); return;
+      case "totalsRowCellStyle": this.totalsRowCellStyle = StringValue.parse(value); return;
+      case "connectionId": this.connectionId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -117,28 +117,28 @@ export class Table extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.displayName !== undefined) out.push([":displayName", this.displayName.toString()]);
-    if (this.comment !== undefined) out.push([":comment", this.comment.toString()]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
-    if (this.tableType !== undefined) out.push([":tableType", this.tableType.toString()]);
-    if (this.headerRowCount !== undefined) out.push([":headerRowCount", this.headerRowCount.toString()]);
-    if (this.insertRow !== undefined) out.push([":insertRow", this.insertRow.toString()]);
-    if (this.insertRowShift !== undefined) out.push([":insertRowShift", this.insertRowShift.toString()]);
-    if (this.totalsRowCount !== undefined) out.push([":totalsRowCount", this.totalsRowCount.toString()]);
-    if (this.totalsRowShown !== undefined) out.push([":totalsRowShown", this.totalsRowShown.toString()]);
-    if (this.published !== undefined) out.push([":published", this.published.toString()]);
-    if (this.headerRowFormatId !== undefined) out.push([":headerRowDxfId", this.headerRowFormatId.toString()]);
-    if (this.dataFormatId !== undefined) out.push([":dataDxfId", this.dataFormatId.toString()]);
-    if (this.totalsRowFormatId !== undefined) out.push([":totalsRowDxfId", this.totalsRowFormatId.toString()]);
-    if (this.headerRowBorderFormatId !== undefined) out.push([":headerRowBorderDxfId", this.headerRowBorderFormatId.toString()]);
-    if (this.borderFormatId !== undefined) out.push([":tableBorderDxfId", this.borderFormatId.toString()]);
-    if (this.totalsRowBorderFormatId !== undefined) out.push([":totalsRowBorderDxfId", this.totalsRowBorderFormatId.toString()]);
-    if (this.headerRowCellStyle !== undefined) out.push([":headerRowCellStyle", this.headerRowCellStyle.toString()]);
-    if (this.dataCellStyle !== undefined) out.push([":dataCellStyle", this.dataCellStyle.toString()]);
-    if (this.totalsRowCellStyle !== undefined) out.push([":totalsRowCellStyle", this.totalsRowCellStyle.toString()]);
-    if (this.connectionId !== undefined) out.push([":connectionId", this.connectionId.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.displayName !== undefined) out.push(["displayName", this.displayName.toString()]);
+    if (this.comment !== undefined) out.push(["comment", this.comment.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
+    if (this.tableType !== undefined) out.push(["tableType", this.tableType.toString()]);
+    if (this.headerRowCount !== undefined) out.push(["headerRowCount", this.headerRowCount.toString()]);
+    if (this.insertRow !== undefined) out.push(["insertRow", this.insertRow.toString()]);
+    if (this.insertRowShift !== undefined) out.push(["insertRowShift", this.insertRowShift.toString()]);
+    if (this.totalsRowCount !== undefined) out.push(["totalsRowCount", this.totalsRowCount.toString()]);
+    if (this.totalsRowShown !== undefined) out.push(["totalsRowShown", this.totalsRowShown.toString()]);
+    if (this.published !== undefined) out.push(["published", this.published.toString()]);
+    if (this.headerRowFormatId !== undefined) out.push(["headerRowDxfId", this.headerRowFormatId.toString()]);
+    if (this.dataFormatId !== undefined) out.push(["dataDxfId", this.dataFormatId.toString()]);
+    if (this.totalsRowFormatId !== undefined) out.push(["totalsRowDxfId", this.totalsRowFormatId.toString()]);
+    if (this.headerRowBorderFormatId !== undefined) out.push(["headerRowBorderDxfId", this.headerRowBorderFormatId.toString()]);
+    if (this.borderFormatId !== undefined) out.push(["tableBorderDxfId", this.borderFormatId.toString()]);
+    if (this.totalsRowBorderFormatId !== undefined) out.push(["totalsRowBorderDxfId", this.totalsRowBorderFormatId.toString()]);
+    if (this.headerRowCellStyle !== undefined) out.push(["headerRowCellStyle", this.headerRowCellStyle.toString()]);
+    if (this.dataCellStyle !== undefined) out.push(["dataCellStyle", this.dataCellStyle.toString()]);
+    if (this.totalsRowCellStyle !== undefined) out.push(["totalsRowCellStyle", this.totalsRowCellStyle.toString()]);
+    if (this.connectionId !== undefined) out.push(["connectionId", this.connectionId.toString()]);
     return out;
   }
 

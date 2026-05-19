@@ -22,7 +22,7 @@ export class Workbook extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":conformance": this.conformance = StringValue.parse(value); return;
+      case "conformance": this.conformance = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Workbook extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.conformance !== undefined) out.push([":conformance", this.conformance.toString()]);
+    if (this.conformance !== undefined) out.push(["conformance", this.conformance.toString()]);
     return out;
   }
 

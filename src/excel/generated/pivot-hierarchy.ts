@@ -53,17 +53,17 @@ export class PivotHierarchy extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":outline": this.outline = BooleanValue.parse(value); return;
-      case ":multipleItemSelectionAllowed": this.multipleItemSelectionAllowed = BooleanValue.parse(value); return;
-      case ":subtotalTop": this.subtotalTop = BooleanValue.parse(value); return;
-      case ":showInFieldList": this.showInFieldList = BooleanValue.parse(value); return;
-      case ":dragToRow": this.dragToRow = BooleanValue.parse(value); return;
-      case ":dragToCol": this.dragToColumn = BooleanValue.parse(value); return;
-      case ":dragToPage": this.dragToPage = BooleanValue.parse(value); return;
-      case ":dragToData": this.dragToData = BooleanValue.parse(value); return;
-      case ":dragOff": this.dragOff = BooleanValue.parse(value); return;
-      case ":includeNewItemsInFilter": this.includeNewItemsInFilter = BooleanValue.parse(value); return;
-      case ":caption": this.caption = StringValue.parse(value); return;
+      case "outline": this.outline = BooleanValue.parse(value); return;
+      case "multipleItemSelectionAllowed": this.multipleItemSelectionAllowed = BooleanValue.parse(value); return;
+      case "subtotalTop": this.subtotalTop = BooleanValue.parse(value); return;
+      case "showInFieldList": this.showInFieldList = BooleanValue.parse(value); return;
+      case "dragToRow": this.dragToRow = BooleanValue.parse(value); return;
+      case "dragToCol": this.dragToColumn = BooleanValue.parse(value); return;
+      case "dragToPage": this.dragToPage = BooleanValue.parse(value); return;
+      case "dragToData": this.dragToData = BooleanValue.parse(value); return;
+      case "dragOff": this.dragOff = BooleanValue.parse(value); return;
+      case "includeNewItemsInFilter": this.includeNewItemsInFilter = BooleanValue.parse(value); return;
+      case "caption": this.caption = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -71,17 +71,17 @@ export class PivotHierarchy extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.outline !== undefined) out.push([":outline", this.outline.toString()]);
-    if (this.multipleItemSelectionAllowed !== undefined) out.push([":multipleItemSelectionAllowed", this.multipleItemSelectionAllowed.toString()]);
-    if (this.subtotalTop !== undefined) out.push([":subtotalTop", this.subtotalTop.toString()]);
-    if (this.showInFieldList !== undefined) out.push([":showInFieldList", this.showInFieldList.toString()]);
-    if (this.dragToRow !== undefined) out.push([":dragToRow", this.dragToRow.toString()]);
-    if (this.dragToColumn !== undefined) out.push([":dragToCol", this.dragToColumn.toString()]);
-    if (this.dragToPage !== undefined) out.push([":dragToPage", this.dragToPage.toString()]);
-    if (this.dragToData !== undefined) out.push([":dragToData", this.dragToData.toString()]);
-    if (this.dragOff !== undefined) out.push([":dragOff", this.dragOff.toString()]);
-    if (this.includeNewItemsInFilter !== undefined) out.push([":includeNewItemsInFilter", this.includeNewItemsInFilter.toString()]);
-    if (this.caption !== undefined) out.push([":caption", this.caption.toString()]);
+    if (this.outline !== undefined) out.push(["outline", this.outline.toString()]);
+    if (this.multipleItemSelectionAllowed !== undefined) out.push(["multipleItemSelectionAllowed", this.multipleItemSelectionAllowed.toString()]);
+    if (this.subtotalTop !== undefined) out.push(["subtotalTop", this.subtotalTop.toString()]);
+    if (this.showInFieldList !== undefined) out.push(["showInFieldList", this.showInFieldList.toString()]);
+    if (this.dragToRow !== undefined) out.push(["dragToRow", this.dragToRow.toString()]);
+    if (this.dragToColumn !== undefined) out.push(["dragToCol", this.dragToColumn.toString()]);
+    if (this.dragToPage !== undefined) out.push(["dragToPage", this.dragToPage.toString()]);
+    if (this.dragToData !== undefined) out.push(["dragToData", this.dragToData.toString()]);
+    if (this.dragOff !== undefined) out.push(["dragOff", this.dragOff.toString()]);
+    if (this.includeNewItemsInFilter !== undefined) out.push(["includeNewItemsInFilter", this.includeNewItemsInFilter.toString()]);
+    if (this.caption !== undefined) out.push(["caption", this.caption.toString()]);
     return out;
   }
 

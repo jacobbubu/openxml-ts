@@ -184,6 +184,19 @@ function quote(s: string): string {
   return `"${s.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
 }
 
+/**
+ * 把 schema 里的 \`":name"\` 形态（empty prefix + colon + localname）规范成
+ * tokenizer 实际发出的 \`"name"\`（无前缀属性的 XML attribute key 没有前导冒号）。
+ * 带 \`w:val\` / \`r:id\` 等真前缀的 QName 不动。
+ *
+ * 修 Excel SpreadsheetML 主流 schema 大量无 prefix 属性（如 \`<x:sheet name="...">\`、
+ * \`<x:definedName name="...">\`）的反序列化——之前 case 标签是 \`:name\` 永不命中，
+ * typed 字段全留 undefined，attribute 只落到 extendedAttributes。
+ */
+function normalizeAttrQName(qname: string): string {
+  return qname.startsWith(":") ? qname.slice(1) : qname;
+}
+
 function renderAttrField(attr: SchemaAttribute, imports: Set<string>): string {
   const t = mapSchemaType(attr.Type);
   for (const i of t.imports) imports.add(i);
@@ -234,12 +247,12 @@ function renderApplyAttrCase(
     // Story-2.7 暂不注入——Required 走 validateRequired() 单独处理。
   }
 
-  return `case ${quote(attr.QName)}: ${calls.join(" ")} return;`;
+  return `case ${quote(normalizeAttrQName(attr.QName))}: ${calls.join(" ")} return;`;
 }
 
 function renderCollectLine(attr: SchemaAttribute): string {
   const prop = camelCase(attr.PropertyName);
-  return `if (this.${prop} !== undefined) out.push([${quote(attr.QName)}, this.${prop}.toString()]);`;
+  return `if (this.${prop} !== undefined) out.push([${quote(normalizeAttrQName(attr.QName))}, this.${prop}.toString()]);`;
 }
 
 function renderRequiredCheck(attr: SchemaAttribute, className: string): string {

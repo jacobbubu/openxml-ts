@@ -50,16 +50,16 @@ export class Parameter extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":sqlType": this.sqlType = Int32Value.parse(value); return;
-      case ":parameterType": this.parameterType = StringValue.parse(value); return;
-      case ":refreshOnChange": this.refreshOnChange = BooleanValue.parse(value); return;
-      case ":prompt": this.prompt = StringValue.parse(value); return;
-      case ":boolean": this.boolean = BooleanValue.parse(value); return;
-      case ":double": this.double = StringValue.parse(value); return;
-      case ":integer": this.integer = Int32Value.parse(value); return;
-      case ":string": this.string = StringValue.parse(value); return;
-      case ":cell": this.cell = StringValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "sqlType": this.sqlType = Int32Value.parse(value); return;
+      case "parameterType": this.parameterType = StringValue.parse(value); return;
+      case "refreshOnChange": this.refreshOnChange = BooleanValue.parse(value); return;
+      case "prompt": this.prompt = StringValue.parse(value); return;
+      case "boolean": this.boolean = BooleanValue.parse(value); return;
+      case "double": this.double = StringValue.parse(value); return;
+      case "integer": this.integer = Int32Value.parse(value); return;
+      case "string": this.string = StringValue.parse(value); return;
+      case "cell": this.cell = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -67,16 +67,16 @@ export class Parameter extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.sqlType !== undefined) out.push([":sqlType", this.sqlType.toString()]);
-    if (this.parameterType !== undefined) out.push([":parameterType", this.parameterType.toString()]);
-    if (this.refreshOnChange !== undefined) out.push([":refreshOnChange", this.refreshOnChange.toString()]);
-    if (this.prompt !== undefined) out.push([":prompt", this.prompt.toString()]);
-    if (this.boolean !== undefined) out.push([":boolean", this.boolean.toString()]);
-    if (this.double !== undefined) out.push([":double", this.double.toString()]);
-    if (this.integer !== undefined) out.push([":integer", this.integer.toString()]);
-    if (this.string !== undefined) out.push([":string", this.string.toString()]);
-    if (this.cell !== undefined) out.push([":cell", this.cell.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.sqlType !== undefined) out.push(["sqlType", this.sqlType.toString()]);
+    if (this.parameterType !== undefined) out.push(["parameterType", this.parameterType.toString()]);
+    if (this.refreshOnChange !== undefined) out.push(["refreshOnChange", this.refreshOnChange.toString()]);
+    if (this.prompt !== undefined) out.push(["prompt", this.prompt.toString()]);
+    if (this.boolean !== undefined) out.push(["boolean", this.boolean.toString()]);
+    if (this.double !== undefined) out.push(["double", this.double.toString()]);
+    if (this.integer !== undefined) out.push(["integer", this.integer.toString()]);
+    if (this.string !== undefined) out.push(["string", this.string.toString()]);
+    if (this.cell !== undefined) out.push(["cell", this.cell.toString()]);
     return out;
   }
 

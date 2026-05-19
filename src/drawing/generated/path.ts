@@ -37,11 +37,11 @@ export class Path extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":w": this.width = Int64Value.parse(value); assertNumber(this.width, { min: 0, max: 2147483647 }, { attribute: ":w", elementClass: "Path" }); return;
-      case ":h": this.height = Int64Value.parse(value); assertNumber(this.height, { min: 0, max: 2147483647 }, { attribute: ":h", elementClass: "Path" }); return;
-      case ":fill": this.fill = StringValue.parse(value); return;
-      case ":stroke": this.stroke = BooleanValue.parse(value); return;
-      case ":extrusionOk": this.extrusionOk = BooleanValue.parse(value); return;
+      case "w": this.width = Int64Value.parse(value); assertNumber(this.width, { min: 0, max: 2147483647 }, { attribute: ":w", elementClass: "Path" }); return;
+      case "h": this.height = Int64Value.parse(value); assertNumber(this.height, { min: 0, max: 2147483647 }, { attribute: ":h", elementClass: "Path" }); return;
+      case "fill": this.fill = StringValue.parse(value); return;
+      case "stroke": this.stroke = BooleanValue.parse(value); return;
+      case "extrusionOk": this.extrusionOk = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -49,11 +49,11 @@ export class Path extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.width !== undefined) out.push([":w", this.width.toString()]);
-    if (this.height !== undefined) out.push([":h", this.height.toString()]);
-    if (this.fill !== undefined) out.push([":fill", this.fill.toString()]);
-    if (this.stroke !== undefined) out.push([":stroke", this.stroke.toString()]);
-    if (this.extrusionOk !== undefined) out.push([":extrusionOk", this.extrusionOk.toString()]);
+    if (this.width !== undefined) out.push(["w", this.width.toString()]);
+    if (this.height !== undefined) out.push(["h", this.height.toString()]);
+    if (this.fill !== undefined) out.push(["fill", this.fill.toString()]);
+    if (this.stroke !== undefined) out.push(["stroke", this.stroke.toString()]);
+    if (this.extrusionOk !== undefined) out.push(["extrusionOk", this.extrusionOk.toString()]);
     return out;
   }
 

@@ -47,15 +47,15 @@ export class WebProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":showAnimation": this.showAnimation = BooleanValue.parse(value); return;
-      case ":resizeGraphics": this.resizeGraphics = BooleanValue.parse(value); return;
-      case ":allowPng": this.allowPng = BooleanValue.parse(value); return;
-      case ":relyOnVml": this.relyOnVml = BooleanValue.parse(value); return;
-      case ":organizeInFolders": this.organizeInFolders = BooleanValue.parse(value); return;
-      case ":useLongFilenames": this.useLongFilenames = BooleanValue.parse(value); return;
-      case ":imgSz": this.imageSize = StringValue.parse(value); return;
-      case ":encoding": this.encoding = StringValue.parse(value); return;
-      case ":clr": this.color = StringValue.parse(value); return;
+      case "showAnimation": this.showAnimation = BooleanValue.parse(value); return;
+      case "resizeGraphics": this.resizeGraphics = BooleanValue.parse(value); return;
+      case "allowPng": this.allowPng = BooleanValue.parse(value); return;
+      case "relyOnVml": this.relyOnVml = BooleanValue.parse(value); return;
+      case "organizeInFolders": this.organizeInFolders = BooleanValue.parse(value); return;
+      case "useLongFilenames": this.useLongFilenames = BooleanValue.parse(value); return;
+      case "imgSz": this.imageSize = StringValue.parse(value); return;
+      case "encoding": this.encoding = StringValue.parse(value); return;
+      case "clr": this.color = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -63,15 +63,15 @@ export class WebProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.showAnimation !== undefined) out.push([":showAnimation", this.showAnimation.toString()]);
-    if (this.resizeGraphics !== undefined) out.push([":resizeGraphics", this.resizeGraphics.toString()]);
-    if (this.allowPng !== undefined) out.push([":allowPng", this.allowPng.toString()]);
-    if (this.relyOnVml !== undefined) out.push([":relyOnVml", this.relyOnVml.toString()]);
-    if (this.organizeInFolders !== undefined) out.push([":organizeInFolders", this.organizeInFolders.toString()]);
-    if (this.useLongFilenames !== undefined) out.push([":useLongFilenames", this.useLongFilenames.toString()]);
-    if (this.imageSize !== undefined) out.push([":imgSz", this.imageSize.toString()]);
-    if (this.encoding !== undefined) out.push([":encoding", this.encoding.toString()]);
-    if (this.color !== undefined) out.push([":clr", this.color.toString()]);
+    if (this.showAnimation !== undefined) out.push(["showAnimation", this.showAnimation.toString()]);
+    if (this.resizeGraphics !== undefined) out.push(["resizeGraphics", this.resizeGraphics.toString()]);
+    if (this.allowPng !== undefined) out.push(["allowPng", this.allowPng.toString()]);
+    if (this.relyOnVml !== undefined) out.push(["relyOnVml", this.relyOnVml.toString()]);
+    if (this.organizeInFolders !== undefined) out.push(["organizeInFolders", this.organizeInFolders.toString()]);
+    if (this.useLongFilenames !== undefined) out.push(["useLongFilenames", this.useLongFilenames.toString()]);
+    if (this.imageSize !== undefined) out.push(["imgSz", this.imageSize.toString()]);
+    if (this.encoding !== undefined) out.push(["encoding", this.encoding.toString()]);
+    if (this.color !== undefined) out.push(["clr", this.color.toString()]);
     return out;
   }
 

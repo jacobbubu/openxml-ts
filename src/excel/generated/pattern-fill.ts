@@ -22,7 +22,7 @@ export class PatternFill extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":patternType": this.patternType = StringValue.parse(value); return;
+      case "patternType": this.patternType = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class PatternFill extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.patternType !== undefined) out.push([":patternType", this.patternType.toString()]);
+    if (this.patternType !== undefined) out.push(["patternType", this.patternType.toString()]);
     return out;
   }
 

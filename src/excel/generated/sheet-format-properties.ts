@@ -51,15 +51,15 @@ export class SheetFormatProperties extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":baseColWidth": this.baseColumnWidth = UInt32Value.parse(value); return;
-      case ":defaultColWidth": this.defaultColumnWidth = StringValue.parse(value); return;
-      case ":defaultRowHeight": this.defaultRowHeight = StringValue.parse(value); return;
-      case ":customHeight": this.customHeight = BooleanValue.parse(value); return;
-      case ":zeroHeight": this.zeroHeight = BooleanValue.parse(value); return;
-      case ":thickTop": this.thickTop = BooleanValue.parse(value); return;
-      case ":thickBottom": this.thickBottom = BooleanValue.parse(value); return;
-      case ":outlineLevelRow": this.outlineLevelRow = StringValue.parse(value); return;
-      case ":outlineLevelCol": this.outlineLevelColumn = StringValue.parse(value); return;
+      case "baseColWidth": this.baseColumnWidth = UInt32Value.parse(value); return;
+      case "defaultColWidth": this.defaultColumnWidth = StringValue.parse(value); return;
+      case "defaultRowHeight": this.defaultRowHeight = StringValue.parse(value); return;
+      case "customHeight": this.customHeight = BooleanValue.parse(value); return;
+      case "zeroHeight": this.zeroHeight = BooleanValue.parse(value); return;
+      case "thickTop": this.thickTop = BooleanValue.parse(value); return;
+      case "thickBottom": this.thickBottom = BooleanValue.parse(value); return;
+      case "outlineLevelRow": this.outlineLevelRow = StringValue.parse(value); return;
+      case "outlineLevelCol": this.outlineLevelColumn = StringValue.parse(value); return;
       case "x14ac:dyDescent": this.dyDescent = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -68,15 +68,15 @@ export class SheetFormatProperties extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.baseColumnWidth !== undefined) out.push([":baseColWidth", this.baseColumnWidth.toString()]);
-    if (this.defaultColumnWidth !== undefined) out.push([":defaultColWidth", this.defaultColumnWidth.toString()]);
-    if (this.defaultRowHeight !== undefined) out.push([":defaultRowHeight", this.defaultRowHeight.toString()]);
-    if (this.customHeight !== undefined) out.push([":customHeight", this.customHeight.toString()]);
-    if (this.zeroHeight !== undefined) out.push([":zeroHeight", this.zeroHeight.toString()]);
-    if (this.thickTop !== undefined) out.push([":thickTop", this.thickTop.toString()]);
-    if (this.thickBottom !== undefined) out.push([":thickBottom", this.thickBottom.toString()]);
-    if (this.outlineLevelRow !== undefined) out.push([":outlineLevelRow", this.outlineLevelRow.toString()]);
-    if (this.outlineLevelColumn !== undefined) out.push([":outlineLevelCol", this.outlineLevelColumn.toString()]);
+    if (this.baseColumnWidth !== undefined) out.push(["baseColWidth", this.baseColumnWidth.toString()]);
+    if (this.defaultColumnWidth !== undefined) out.push(["defaultColWidth", this.defaultColumnWidth.toString()]);
+    if (this.defaultRowHeight !== undefined) out.push(["defaultRowHeight", this.defaultRowHeight.toString()]);
+    if (this.customHeight !== undefined) out.push(["customHeight", this.customHeight.toString()]);
+    if (this.zeroHeight !== undefined) out.push(["zeroHeight", this.zeroHeight.toString()]);
+    if (this.thickTop !== undefined) out.push(["thickTop", this.thickTop.toString()]);
+    if (this.thickBottom !== undefined) out.push(["thickBottom", this.thickBottom.toString()]);
+    if (this.outlineLevelRow !== undefined) out.push(["outlineLevelRow", this.outlineLevelRow.toString()]);
+    if (this.outlineLevelColumn !== undefined) out.push(["outlineLevelCol", this.outlineLevelColumn.toString()]);
     if (this.dyDescent !== undefined) out.push(["x14ac:dyDescent", this.dyDescent.toString()]);
     return out;
   }

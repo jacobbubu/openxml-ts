@@ -26,8 +26,8 @@ export class TopicReferences extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":r": this.cellReference = StringValue.parse(value); return;
-      case ":s": this.sheetId = UInt32Value.parse(value); return;
+      case "r": this.cellReference = StringValue.parse(value); return;
+      case "s": this.sheetId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class TopicReferences extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.cellReference !== undefined) out.push([":r", this.cellReference.toString()]);
-    if (this.sheetId !== undefined) out.push([":s", this.sheetId.toString()]);
+    if (this.cellReference !== undefined) out.push(["r", this.cellReference.toString()]);
+    if (this.sheetId !== undefined) out.push(["s", this.sheetId.toString()]);
     return out;
   }
 

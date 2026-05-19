@@ -64,20 +64,20 @@ export class Reflection extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":blurRad": this.blurRadius = Int64Value.parse(value); assertNumber(this.blurRadius, { min: 0, max: 2147483647 }, { attribute: ":blurRad", elementClass: "Reflection" }); return;
-      case ":stA": this.startOpacity = Int32Value.parse(value); assertNumber(this.startOpacity, { min: 0, max: 100000 }, { attribute: ":stA", elementClass: "Reflection" }); return;
-      case ":stPos": this.startPosition = Int32Value.parse(value); assertNumber(this.startPosition, { min: 0, max: 100000 }, { attribute: ":stPos", elementClass: "Reflection" }); return;
-      case ":endA": this.endAlpha = Int32Value.parse(value); assertNumber(this.endAlpha, { min: 0, max: 100000 }, { attribute: ":endA", elementClass: "Reflection" }); return;
-      case ":endPos": this.endPosition = Int32Value.parse(value); assertNumber(this.endPosition, { min: 0, max: 100000 }, { attribute: ":endPos", elementClass: "Reflection" }); return;
-      case ":dist": this.distance = Int64Value.parse(value); assertNumber(this.distance, { min: 0, max: 2147483647 }, { attribute: ":dist", elementClass: "Reflection" }); return;
-      case ":dir": this.direction = Int32Value.parse(value); assertNumber(this.direction, { min: 0 }, { attribute: ":dir", elementClass: "Reflection" }); return;
-      case ":fadeDir": this.fadeDirection = Int32Value.parse(value); assertNumber(this.fadeDirection, { min: 0 }, { attribute: ":fadeDir", elementClass: "Reflection" }); return;
-      case ":sx": this.horizontalRatio = Int32Value.parse(value); return;
-      case ":sy": this.verticalRatio = Int32Value.parse(value); return;
-      case ":kx": this.horizontalSkew = Int32Value.parse(value); return;
-      case ":ky": this.verticalSkew = Int32Value.parse(value); return;
-      case ":algn": this.alignment = StringValue.parse(value); return;
-      case ":rotWithShape": this.rotateWithShape = BooleanValue.parse(value); return;
+      case "blurRad": this.blurRadius = Int64Value.parse(value); assertNumber(this.blurRadius, { min: 0, max: 2147483647 }, { attribute: ":blurRad", elementClass: "Reflection" }); return;
+      case "stA": this.startOpacity = Int32Value.parse(value); assertNumber(this.startOpacity, { min: 0, max: 100000 }, { attribute: ":stA", elementClass: "Reflection" }); return;
+      case "stPos": this.startPosition = Int32Value.parse(value); assertNumber(this.startPosition, { min: 0, max: 100000 }, { attribute: ":stPos", elementClass: "Reflection" }); return;
+      case "endA": this.endAlpha = Int32Value.parse(value); assertNumber(this.endAlpha, { min: 0, max: 100000 }, { attribute: ":endA", elementClass: "Reflection" }); return;
+      case "endPos": this.endPosition = Int32Value.parse(value); assertNumber(this.endPosition, { min: 0, max: 100000 }, { attribute: ":endPos", elementClass: "Reflection" }); return;
+      case "dist": this.distance = Int64Value.parse(value); assertNumber(this.distance, { min: 0, max: 2147483647 }, { attribute: ":dist", elementClass: "Reflection" }); return;
+      case "dir": this.direction = Int32Value.parse(value); assertNumber(this.direction, { min: 0 }, { attribute: ":dir", elementClass: "Reflection" }); return;
+      case "fadeDir": this.fadeDirection = Int32Value.parse(value); assertNumber(this.fadeDirection, { min: 0 }, { attribute: ":fadeDir", elementClass: "Reflection" }); return;
+      case "sx": this.horizontalRatio = Int32Value.parse(value); return;
+      case "sy": this.verticalRatio = Int32Value.parse(value); return;
+      case "kx": this.horizontalSkew = Int32Value.parse(value); return;
+      case "ky": this.verticalSkew = Int32Value.parse(value); return;
+      case "algn": this.alignment = StringValue.parse(value); return;
+      case "rotWithShape": this.rotateWithShape = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -85,20 +85,20 @@ export class Reflection extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.blurRadius !== undefined) out.push([":blurRad", this.blurRadius.toString()]);
-    if (this.startOpacity !== undefined) out.push([":stA", this.startOpacity.toString()]);
-    if (this.startPosition !== undefined) out.push([":stPos", this.startPosition.toString()]);
-    if (this.endAlpha !== undefined) out.push([":endA", this.endAlpha.toString()]);
-    if (this.endPosition !== undefined) out.push([":endPos", this.endPosition.toString()]);
-    if (this.distance !== undefined) out.push([":dist", this.distance.toString()]);
-    if (this.direction !== undefined) out.push([":dir", this.direction.toString()]);
-    if (this.fadeDirection !== undefined) out.push([":fadeDir", this.fadeDirection.toString()]);
-    if (this.horizontalRatio !== undefined) out.push([":sx", this.horizontalRatio.toString()]);
-    if (this.verticalRatio !== undefined) out.push([":sy", this.verticalRatio.toString()]);
-    if (this.horizontalSkew !== undefined) out.push([":kx", this.horizontalSkew.toString()]);
-    if (this.verticalSkew !== undefined) out.push([":ky", this.verticalSkew.toString()]);
-    if (this.alignment !== undefined) out.push([":algn", this.alignment.toString()]);
-    if (this.rotateWithShape !== undefined) out.push([":rotWithShape", this.rotateWithShape.toString()]);
+    if (this.blurRadius !== undefined) out.push(["blurRad", this.blurRadius.toString()]);
+    if (this.startOpacity !== undefined) out.push(["stA", this.startOpacity.toString()]);
+    if (this.startPosition !== undefined) out.push(["stPos", this.startPosition.toString()]);
+    if (this.endAlpha !== undefined) out.push(["endA", this.endAlpha.toString()]);
+    if (this.endPosition !== undefined) out.push(["endPos", this.endPosition.toString()]);
+    if (this.distance !== undefined) out.push(["dist", this.distance.toString()]);
+    if (this.direction !== undefined) out.push(["dir", this.direction.toString()]);
+    if (this.fadeDirection !== undefined) out.push(["fadeDir", this.fadeDirection.toString()]);
+    if (this.horizontalRatio !== undefined) out.push(["sx", this.horizontalRatio.toString()]);
+    if (this.verticalRatio !== undefined) out.push(["sy", this.verticalRatio.toString()]);
+    if (this.horizontalSkew !== undefined) out.push(["kx", this.horizontalSkew.toString()]);
+    if (this.verticalSkew !== undefined) out.push(["ky", this.verticalSkew.toString()]);
+    if (this.alignment !== undefined) out.push(["algn", this.alignment.toString()]);
+    if (this.rotateWithShape !== undefined) out.push(["rotWithShape", this.rotateWithShape.toString()]);
     return out;
   }
 

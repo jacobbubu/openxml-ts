@@ -26,8 +26,8 @@ export class Iterate extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":backwards": this.backwards = BooleanValue.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "backwards": this.backwards = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class Iterate extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.backwards !== undefined) out.push([":backwards", this.backwards.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.backwards !== undefined) out.push(["backwards", this.backwards.toString()]);
     return out;
   }
 

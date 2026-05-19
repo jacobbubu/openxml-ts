@@ -22,7 +22,7 @@ export class ColorChange extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":useA": this.useAlpha = BooleanValue.parse(value); return;
+      case "useA": this.useAlpha = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class ColorChange extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.useAlpha !== undefined) out.push([":useA", this.useAlpha.toString()]);
+    if (this.useAlpha !== undefined) out.push(["useA", this.useAlpha.toString()]);
     return out;
   }
 

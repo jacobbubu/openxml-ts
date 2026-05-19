@@ -22,7 +22,7 @@ export class Cell3DProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":prstMaterial": this.presetMaterial = StringValue.parse(value); return;
+      case "prstMaterial": this.presetMaterial = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Cell3DProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.presetMaterial !== undefined) out.push([":prstMaterial", this.presetMaterial.toString()]);
+    if (this.presetMaterial !== undefined) out.push(["prstMaterial", this.presetMaterial.toString()]);
     return out;
   }
 

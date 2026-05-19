@@ -24,7 +24,7 @@ export class GradientStop extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":pos": this.position = Int32Value.parse(value); assertNumber(this.position, { min: 0, max: 100000 }, { attribute: ":pos", elementClass: "GradientStop" }); return;
+      case "pos": this.position = Int32Value.parse(value); assertNumber(this.position, { min: 0, max: 100000 }, { attribute: ":pos", elementClass: "GradientStop" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -32,7 +32,7 @@ export class GradientStop extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.position !== undefined) out.push([":pos", this.position.toString()]);
+    if (this.position !== undefined) out.push(["pos", this.position.toString()]);
     return out;
   }
 

@@ -49,15 +49,15 @@ export class BuildParagraph extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":spid": this.shapeId = StringValue.parse(value); return;
-      case ":grpId": this.groupId = UInt32Value.parse(value); return;
-      case ":uiExpand": this.uiExpand = BooleanValue.parse(value); return;
-      case ":build": this.build = StringValue.parse(value); return;
-      case ":bldLvl": this.buildLevel = UInt32Value.parse(value); return;
-      case ":animBg": this.animateBackground = BooleanValue.parse(value); return;
-      case ":autoUpdateAnimBg": this.autoAnimateBackground = BooleanValue.parse(value); return;
-      case ":rev": this.reverse = BooleanValue.parse(value); return;
-      case ":advAuto": this.autoAdvance = StringValue.parse(value); return;
+      case "spid": this.shapeId = StringValue.parse(value); return;
+      case "grpId": this.groupId = UInt32Value.parse(value); return;
+      case "uiExpand": this.uiExpand = BooleanValue.parse(value); return;
+      case "build": this.build = StringValue.parse(value); return;
+      case "bldLvl": this.buildLevel = UInt32Value.parse(value); return;
+      case "animBg": this.animateBackground = BooleanValue.parse(value); return;
+      case "autoUpdateAnimBg": this.autoAnimateBackground = BooleanValue.parse(value); return;
+      case "rev": this.reverse = BooleanValue.parse(value); return;
+      case "advAuto": this.autoAdvance = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -65,15 +65,15 @@ export class BuildParagraph extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.shapeId !== undefined) out.push([":spid", this.shapeId.toString()]);
-    if (this.groupId !== undefined) out.push([":grpId", this.groupId.toString()]);
-    if (this.uiExpand !== undefined) out.push([":uiExpand", this.uiExpand.toString()]);
-    if (this.build !== undefined) out.push([":build", this.build.toString()]);
-    if (this.buildLevel !== undefined) out.push([":bldLvl", this.buildLevel.toString()]);
-    if (this.animateBackground !== undefined) out.push([":animBg", this.animateBackground.toString()]);
-    if (this.autoAnimateBackground !== undefined) out.push([":autoUpdateAnimBg", this.autoAnimateBackground.toString()]);
-    if (this.reverse !== undefined) out.push([":rev", this.reverse.toString()]);
-    if (this.autoAdvance !== undefined) out.push([":advAuto", this.autoAdvance.toString()]);
+    if (this.shapeId !== undefined) out.push(["spid", this.shapeId.toString()]);
+    if (this.groupId !== undefined) out.push(["grpId", this.groupId.toString()]);
+    if (this.uiExpand !== undefined) out.push(["uiExpand", this.uiExpand.toString()]);
+    if (this.build !== undefined) out.push(["build", this.build.toString()]);
+    if (this.buildLevel !== undefined) out.push(["bldLvl", this.buildLevel.toString()]);
+    if (this.animateBackground !== undefined) out.push(["animBg", this.animateBackground.toString()]);
+    if (this.autoAnimateBackground !== undefined) out.push(["autoUpdateAnimBg", this.autoAnimateBackground.toString()]);
+    if (this.reverse !== undefined) out.push(["rev", this.reverse.toString()]);
+    if (this.autoAdvance !== undefined) out.push(["advAuto", this.autoAdvance.toString()]);
     return out;
   }
 

@@ -31,10 +31,10 @@ export class HeaderFooter extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":differentOddEven": this.differentOddEven = BooleanValue.parse(value); return;
-      case ":differentFirst": this.differentFirst = BooleanValue.parse(value); return;
-      case ":scaleWithDoc": this.scaleWithDoc = BooleanValue.parse(value); return;
-      case ":alignWithMargins": this.alignWithMargins = BooleanValue.parse(value); return;
+      case "differentOddEven": this.differentOddEven = BooleanValue.parse(value); return;
+      case "differentFirst": this.differentFirst = BooleanValue.parse(value); return;
+      case "scaleWithDoc": this.scaleWithDoc = BooleanValue.parse(value); return;
+      case "alignWithMargins": this.alignWithMargins = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -42,10 +42,10 @@ export class HeaderFooter extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.differentOddEven !== undefined) out.push([":differentOddEven", this.differentOddEven.toString()]);
-    if (this.differentFirst !== undefined) out.push([":differentFirst", this.differentFirst.toString()]);
-    if (this.scaleWithDoc !== undefined) out.push([":scaleWithDoc", this.scaleWithDoc.toString()]);
-    if (this.alignWithMargins !== undefined) out.push([":alignWithMargins", this.alignWithMargins.toString()]);
+    if (this.differentOddEven !== undefined) out.push(["differentOddEven", this.differentOddEven.toString()]);
+    if (this.differentFirst !== undefined) out.push(["differentFirst", this.differentFirst.toString()]);
+    if (this.scaleWithDoc !== undefined) out.push(["scaleWithDoc", this.scaleWithDoc.toString()]);
+    if (this.alignWithMargins !== undefined) out.push(["alignWithMargins", this.alignWithMargins.toString()]);
     return out;
   }
 

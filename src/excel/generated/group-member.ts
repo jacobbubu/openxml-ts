@@ -26,8 +26,8 @@ export class GroupMember extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":uniqueName": this.uniqueName = StringValue.parse(value); return;
-      case ":group": this.group = BooleanValue.parse(value); return;
+      case "uniqueName": this.uniqueName = StringValue.parse(value); return;
+      case "group": this.group = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class GroupMember extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.uniqueName !== undefined) out.push([":uniqueName", this.uniqueName.toString()]);
-    if (this.group !== undefined) out.push([":group", this.group.toString()]);
+    if (this.uniqueName !== undefined) out.push(["uniqueName", this.uniqueName.toString()]);
+    if (this.group !== undefined) out.push(["group", this.group.toString()]);
     return out;
   }
 

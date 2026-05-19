@@ -34,10 +34,10 @@ export class UserInfo extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":guid": this.guid = StringValue.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":id": this.id = Int32Value.parse(value); return;
-      case ":dateTime": this.dateTime = DateTimeValue.parse(value); return;
+      case "guid": this.guid = StringValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "id": this.id = Int32Value.parse(value); return;
+      case "dateTime": this.dateTime = DateTimeValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -45,10 +45,10 @@ export class UserInfo extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.guid !== undefined) out.push([":guid", this.guid.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
-    if (this.dateTime !== undefined) out.push([":dateTime", this.dateTime.toString()]);
+    if (this.guid !== undefined) out.push(["guid", this.guid.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    if (this.dateTime !== undefined) out.push(["dateTime", this.dateTime.toString()]);
     return out;
   }
 

@@ -36,11 +36,11 @@ export class CommentAuthor extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = UInt32Value.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":initials": this.initials = StringValue.parse(value); return;
-      case ":lastIdx": this.lastIndex = UInt32Value.parse(value); return;
-      case ":clrIdx": this.colorIndex = UInt32Value.parse(value); return;
+      case "id": this.id = UInt32Value.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "initials": this.initials = StringValue.parse(value); return;
+      case "lastIdx": this.lastIndex = UInt32Value.parse(value); return;
+      case "clrIdx": this.colorIndex = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -48,11 +48,11 @@ export class CommentAuthor extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.initials !== undefined) out.push([":initials", this.initials.toString()]);
-    if (this.lastIndex !== undefined) out.push([":lastIdx", this.lastIndex.toString()]);
-    if (this.colorIndex !== undefined) out.push([":clrIdx", this.colorIndex.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.initials !== undefined) out.push(["initials", this.initials.toString()]);
+    if (this.lastIndex !== undefined) out.push(["lastIdx", this.lastIndex.toString()]);
+    if (this.colorIndex !== undefined) out.push(["clrIdx", this.colorIndex.toString()]);
     return out;
   }
 

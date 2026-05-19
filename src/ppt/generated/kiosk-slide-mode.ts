@@ -21,7 +21,7 @@ export class KioskSlideMode extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":restart": this.restart = UInt32Value.parse(value); return;
+      case "restart": this.restart = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -29,7 +29,7 @@ export class KioskSlideMode extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.restart !== undefined) out.push([":restart", this.restart.toString()]);
+    if (this.restart !== undefined) out.push(["restart", this.restart.toString()]);
     return out;
   }
 

@@ -33,11 +33,11 @@ export class PrintOptions extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":horizontalCentered": this.horizontalCentered = BooleanValue.parse(value); return;
-      case ":verticalCentered": this.verticalCentered = BooleanValue.parse(value); return;
-      case ":headings": this.headings = BooleanValue.parse(value); return;
-      case ":gridLines": this.gridLines = BooleanValue.parse(value); return;
-      case ":gridLinesSet": this.gridLinesSet = BooleanValue.parse(value); return;
+      case "horizontalCentered": this.horizontalCentered = BooleanValue.parse(value); return;
+      case "verticalCentered": this.verticalCentered = BooleanValue.parse(value); return;
+      case "headings": this.headings = BooleanValue.parse(value); return;
+      case "gridLines": this.gridLines = BooleanValue.parse(value); return;
+      case "gridLinesSet": this.gridLinesSet = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -45,11 +45,11 @@ export class PrintOptions extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.horizontalCentered !== undefined) out.push([":horizontalCentered", this.horizontalCentered.toString()]);
-    if (this.verticalCentered !== undefined) out.push([":verticalCentered", this.verticalCentered.toString()]);
-    if (this.headings !== undefined) out.push([":headings", this.headings.toString()]);
-    if (this.gridLines !== undefined) out.push([":gridLines", this.gridLines.toString()]);
-    if (this.gridLinesSet !== undefined) out.push([":gridLinesSet", this.gridLinesSet.toString()]);
+    if (this.horizontalCentered !== undefined) out.push(["horizontalCentered", this.horizontalCentered.toString()]);
+    if (this.verticalCentered !== undefined) out.push(["verticalCentered", this.verticalCentered.toString()]);
+    if (this.headings !== undefined) out.push(["headings", this.headings.toString()]);
+    if (this.gridLines !== undefined) out.push(["gridLines", this.gridLines.toString()]);
+    if (this.gridLinesSet !== undefined) out.push(["gridLinesSet", this.gridLinesSet.toString()]);
     return out;
   }
 

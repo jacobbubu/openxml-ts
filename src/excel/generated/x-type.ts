@@ -21,7 +21,7 @@ export abstract class XType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":v": this.val = Int32Value.parse(value); return;
+      case "v": this.val = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -29,7 +29,7 @@ export abstract class XType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.val !== undefined) out.push([":v", this.val.toString()]);
+    if (this.val !== undefined) out.push(["v", this.val.toString()]);
     return out;
   }
 

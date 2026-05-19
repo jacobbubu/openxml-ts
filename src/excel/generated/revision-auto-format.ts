@@ -48,15 +48,15 @@ export class RevisionAutoFormat extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":sheetId": this.sheetId = UInt32Value.parse(value); return;
-      case ":autoFormatId": this.autoFormatId = UInt32Value.parse(value); return;
-      case ":applyNumberFormats": this.applyNumberFormats = BooleanValue.parse(value); return;
-      case ":applyBorderFormats": this.applyBorderFormats = BooleanValue.parse(value); return;
-      case ":applyFontFormats": this.applyFontFormats = BooleanValue.parse(value); return;
-      case ":applyPatternFormats": this.applyPatternFormats = BooleanValue.parse(value); return;
-      case ":applyAlignmentFormats": this.applyAlignmentFormats = BooleanValue.parse(value); return;
-      case ":applyWidthHeightFormats": this.applyWidthHeightFormats = BooleanValue.parse(value); return;
-      case ":ref": this.reference = StringValue.parse(value); return;
+      case "sheetId": this.sheetId = UInt32Value.parse(value); return;
+      case "autoFormatId": this.autoFormatId = UInt32Value.parse(value); return;
+      case "applyNumberFormats": this.applyNumberFormats = BooleanValue.parse(value); return;
+      case "applyBorderFormats": this.applyBorderFormats = BooleanValue.parse(value); return;
+      case "applyFontFormats": this.applyFontFormats = BooleanValue.parse(value); return;
+      case "applyPatternFormats": this.applyPatternFormats = BooleanValue.parse(value); return;
+      case "applyAlignmentFormats": this.applyAlignmentFormats = BooleanValue.parse(value); return;
+      case "applyWidthHeightFormats": this.applyWidthHeightFormats = BooleanValue.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -64,15 +64,15 @@ export class RevisionAutoFormat extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.sheetId !== undefined) out.push([":sheetId", this.sheetId.toString()]);
-    if (this.autoFormatId !== undefined) out.push([":autoFormatId", this.autoFormatId.toString()]);
-    if (this.applyNumberFormats !== undefined) out.push([":applyNumberFormats", this.applyNumberFormats.toString()]);
-    if (this.applyBorderFormats !== undefined) out.push([":applyBorderFormats", this.applyBorderFormats.toString()]);
-    if (this.applyFontFormats !== undefined) out.push([":applyFontFormats", this.applyFontFormats.toString()]);
-    if (this.applyPatternFormats !== undefined) out.push([":applyPatternFormats", this.applyPatternFormats.toString()]);
-    if (this.applyAlignmentFormats !== undefined) out.push([":applyAlignmentFormats", this.applyAlignmentFormats.toString()]);
-    if (this.applyWidthHeightFormats !== undefined) out.push([":applyWidthHeightFormats", this.applyWidthHeightFormats.toString()]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
+    if (this.sheetId !== undefined) out.push(["sheetId", this.sheetId.toString()]);
+    if (this.autoFormatId !== undefined) out.push(["autoFormatId", this.autoFormatId.toString()]);
+    if (this.applyNumberFormats !== undefined) out.push(["applyNumberFormats", this.applyNumberFormats.toString()]);
+    if (this.applyBorderFormats !== undefined) out.push(["applyBorderFormats", this.applyBorderFormats.toString()]);
+    if (this.applyFontFormats !== undefined) out.push(["applyFontFormats", this.applyFontFormats.toString()]);
+    if (this.applyPatternFormats !== undefined) out.push(["applyPatternFormats", this.applyPatternFormats.toString()]);
+    if (this.applyAlignmentFormats !== undefined) out.push(["applyAlignmentFormats", this.applyAlignmentFormats.toString()]);
+    if (this.applyWidthHeightFormats !== undefined) out.push(["applyWidthHeightFormats", this.applyWidthHeightFormats.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
     return out;
   }
 

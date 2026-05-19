@@ -22,7 +22,7 @@ export class PathGradientFill extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":path": this.path = StringValue.parse(value); return;
+      case "path": this.path = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class PathGradientFill extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.path !== undefined) out.push([":path", this.path.toString()]);
+    if (this.path !== undefined) out.push(["path", this.path.toString()]);
     return out;
   }
 

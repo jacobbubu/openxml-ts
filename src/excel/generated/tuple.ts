@@ -28,9 +28,9 @@ export class Tuple extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":fld": this.field = UInt32Value.parse(value); return;
-      case ":hier": this.hierarchy = UInt32Value.parse(value); return;
-      case ":item": this.item = UInt32Value.parse(value); return;
+      case "fld": this.field = UInt32Value.parse(value); return;
+      case "hier": this.hierarchy = UInt32Value.parse(value); return;
+      case "item": this.item = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -38,9 +38,9 @@ export class Tuple extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.field !== undefined) out.push([":fld", this.field.toString()]);
-    if (this.hierarchy !== undefined) out.push([":hier", this.hierarchy.toString()]);
-    if (this.item !== undefined) out.push([":item", this.item.toString()]);
+    if (this.field !== undefined) out.push(["fld", this.field.toString()]);
+    if (this.hierarchy !== undefined) out.push(["hier", this.hierarchy.toString()]);
+    if (this.item !== undefined) out.push(["item", this.item.toString()]);
     return out;
   }
 

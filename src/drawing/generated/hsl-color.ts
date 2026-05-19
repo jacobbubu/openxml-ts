@@ -30,9 +30,9 @@ export class HslColor extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":hue": this.hueValue = Int32Value.parse(value); assertNumber(this.hueValue, { min: 0 }, { attribute: ":hue", elementClass: "HslColor" }); return;
-      case ":sat": this.satValue = Int32Value.parse(value); return;
-      case ":lum": this.lumValue = Int32Value.parse(value); return;
+      case "hue": this.hueValue = Int32Value.parse(value); assertNumber(this.hueValue, { min: 0 }, { attribute: ":hue", elementClass: "HslColor" }); return;
+      case "sat": this.satValue = Int32Value.parse(value); return;
+      case "lum": this.lumValue = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,9 +40,9 @@ export class HslColor extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.hueValue !== undefined) out.push([":hue", this.hueValue.toString()]);
-    if (this.satValue !== undefined) out.push([":sat", this.satValue.toString()]);
-    if (this.lumValue !== undefined) out.push([":lum", this.lumValue.toString()]);
+    if (this.hueValue !== undefined) out.push(["hue", this.hueValue.toString()]);
+    if (this.satValue !== undefined) out.push(["sat", this.satValue.toString()]);
+    if (this.lumValue !== undefined) out.push(["lum", this.lumValue.toString()]);
     return out;
   }
 

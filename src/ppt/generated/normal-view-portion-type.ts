@@ -27,8 +27,8 @@ export abstract class NormalViewPortionType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":sz": this.size = Int32Value.parse(value); assertNumber(this.size, { min: 0, max: 100000 }, { attribute: ":sz", elementClass: "NormalViewPortionType" }); return;
-      case ":autoAdjust": this.autoAdjust = BooleanValue.parse(value); return;
+      case "sz": this.size = Int32Value.parse(value); assertNumber(this.size, { min: 0, max: 100000 }, { attribute: ":sz", elementClass: "NormalViewPortionType" }); return;
+      case "autoAdjust": this.autoAdjust = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -36,8 +36,8 @@ export abstract class NormalViewPortionType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.size !== undefined) out.push([":sz", this.size.toString()]);
-    if (this.autoAdjust !== undefined) out.push([":autoAdjust", this.autoAdjust.toString()]);
+    if (this.size !== undefined) out.push(["sz", this.size.toString()]);
+    if (this.autoAdjust !== undefined) out.push(["autoAdjust", this.autoAdjust.toString()]);
     return out;
   }
 

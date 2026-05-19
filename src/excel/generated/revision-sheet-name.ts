@@ -40,12 +40,12 @@ export class RevisionSheetName extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rId": this.revisionId = UInt32Value.parse(value); return;
-      case ":ua": this.ua = BooleanValue.parse(value); return;
-      case ":ra": this.ra = BooleanValue.parse(value); return;
-      case ":sheetId": this.sheetId = UInt32Value.parse(value); return;
-      case ":oldName": this.oldName = StringValue.parse(value); return;
-      case ":newName": this.newName = StringValue.parse(value); return;
+      case "rId": this.revisionId = UInt32Value.parse(value); return;
+      case "ua": this.ua = BooleanValue.parse(value); return;
+      case "ra": this.ra = BooleanValue.parse(value); return;
+      case "sheetId": this.sheetId = UInt32Value.parse(value); return;
+      case "oldName": this.oldName = StringValue.parse(value); return;
+      case "newName": this.newName = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -53,12 +53,12 @@ export class RevisionSheetName extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.revisionId !== undefined) out.push([":rId", this.revisionId.toString()]);
-    if (this.ua !== undefined) out.push([":ua", this.ua.toString()]);
-    if (this.ra !== undefined) out.push([":ra", this.ra.toString()]);
-    if (this.sheetId !== undefined) out.push([":sheetId", this.sheetId.toString()]);
-    if (this.oldName !== undefined) out.push([":oldName", this.oldName.toString()]);
-    if (this.newName !== undefined) out.push([":newName", this.newName.toString()]);
+    if (this.revisionId !== undefined) out.push(["rId", this.revisionId.toString()]);
+    if (this.ua !== undefined) out.push(["ua", this.ua.toString()]);
+    if (this.ra !== undefined) out.push(["ra", this.ra.toString()]);
+    if (this.sheetId !== undefined) out.push(["sheetId", this.sheetId.toString()]);
+    if (this.oldName !== undefined) out.push(["oldName", this.oldName.toString()]);
+    if (this.newName !== undefined) out.push(["newName", this.newName.toString()]);
     return out;
   }
 

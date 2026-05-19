@@ -40,12 +40,12 @@ export class RevisionFormat extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":sheetId": this.sheetId = UInt32Value.parse(value); return;
-      case ":xfDxf": this.rowOrColumnAffected = BooleanValue.parse(value); return;
-      case ":s": this.styleAffected = BooleanValue.parse(value); return;
-      case ":sqref": this.sequenceOfReferences = StringValue.parse(value); return;
-      case ":start": this.start = UInt32Value.parse(value); return;
-      case ":length": this.length = UInt32Value.parse(value); return;
+      case "sheetId": this.sheetId = UInt32Value.parse(value); return;
+      case "xfDxf": this.rowOrColumnAffected = BooleanValue.parse(value); return;
+      case "s": this.styleAffected = BooleanValue.parse(value); return;
+      case "sqref": this.sequenceOfReferences = StringValue.parse(value); return;
+      case "start": this.start = UInt32Value.parse(value); return;
+      case "length": this.length = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -53,12 +53,12 @@ export class RevisionFormat extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.sheetId !== undefined) out.push([":sheetId", this.sheetId.toString()]);
-    if (this.rowOrColumnAffected !== undefined) out.push([":xfDxf", this.rowOrColumnAffected.toString()]);
-    if (this.styleAffected !== undefined) out.push([":s", this.styleAffected.toString()]);
-    if (this.sequenceOfReferences !== undefined) out.push([":sqref", this.sequenceOfReferences.toString()]);
-    if (this.start !== undefined) out.push([":start", this.start.toString()]);
-    if (this.length !== undefined) out.push([":length", this.length.toString()]);
+    if (this.sheetId !== undefined) out.push(["sheetId", this.sheetId.toString()]);
+    if (this.rowOrColumnAffected !== undefined) out.push(["xfDxf", this.rowOrColumnAffected.toString()]);
+    if (this.styleAffected !== undefined) out.push(["s", this.styleAffected.toString()]);
+    if (this.sequenceOfReferences !== undefined) out.push(["sqref", this.sequenceOfReferences.toString()]);
+    if (this.start !== undefined) out.push(["start", this.start.toString()]);
+    if (this.length !== undefined) out.push(["length", this.length.toString()]);
     return out;
   }
 

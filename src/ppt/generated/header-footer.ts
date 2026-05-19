@@ -31,10 +31,10 @@ export class HeaderFooter extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":sldNum": this.slideNumber = BooleanValue.parse(value); return;
-      case ":hdr": this.header = BooleanValue.parse(value); return;
-      case ":ftr": this.footer = BooleanValue.parse(value); return;
-      case ":dt": this.dateTime = BooleanValue.parse(value); return;
+      case "sldNum": this.slideNumber = BooleanValue.parse(value); return;
+      case "hdr": this.header = BooleanValue.parse(value); return;
+      case "ftr": this.footer = BooleanValue.parse(value); return;
+      case "dt": this.dateTime = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -42,10 +42,10 @@ export class HeaderFooter extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.slideNumber !== undefined) out.push([":sldNum", this.slideNumber.toString()]);
-    if (this.header !== undefined) out.push([":hdr", this.header.toString()]);
-    if (this.footer !== undefined) out.push([":ftr", this.footer.toString()]);
-    if (this.dateTime !== undefined) out.push([":dt", this.dateTime.toString()]);
+    if (this.slideNumber !== undefined) out.push(["sldNum", this.slideNumber.toString()]);
+    if (this.header !== undefined) out.push(["hdr", this.header.toString()]);
+    if (this.footer !== undefined) out.push(["ftr", this.footer.toString()]);
+    if (this.dateTime !== undefined) out.push(["dt", this.dateTime.toString()]);
     return out;
   }
 

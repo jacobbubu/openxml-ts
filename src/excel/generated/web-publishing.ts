@@ -47,15 +47,15 @@ export class WebPublishing extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":css": this.useCss = BooleanValue.parse(value); return;
-      case ":thicket": this.thicket = BooleanValue.parse(value); return;
-      case ":longFileNames": this.longFileNames = BooleanValue.parse(value); return;
-      case ":vml": this.useVml = BooleanValue.parse(value); return;
-      case ":allowPng": this.allowPng = BooleanValue.parse(value); return;
-      case ":targetScreenSize": this.targetScreenSize = StringValue.parse(value); return;
-      case ":dpi": this.dpi = UInt32Value.parse(value); return;
-      case ":codePage": this.codePage = UInt32Value.parse(value); return;
-      case ":characterSet": this.characterSet = StringValue.parse(value); return;
+      case "css": this.useCss = BooleanValue.parse(value); return;
+      case "thicket": this.thicket = BooleanValue.parse(value); return;
+      case "longFileNames": this.longFileNames = BooleanValue.parse(value); return;
+      case "vml": this.useVml = BooleanValue.parse(value); return;
+      case "allowPng": this.allowPng = BooleanValue.parse(value); return;
+      case "targetScreenSize": this.targetScreenSize = StringValue.parse(value); return;
+      case "dpi": this.dpi = UInt32Value.parse(value); return;
+      case "codePage": this.codePage = UInt32Value.parse(value); return;
+      case "characterSet": this.characterSet = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -63,15 +63,15 @@ export class WebPublishing extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.useCss !== undefined) out.push([":css", this.useCss.toString()]);
-    if (this.thicket !== undefined) out.push([":thicket", this.thicket.toString()]);
-    if (this.longFileNames !== undefined) out.push([":longFileNames", this.longFileNames.toString()]);
-    if (this.useVml !== undefined) out.push([":vml", this.useVml.toString()]);
-    if (this.allowPng !== undefined) out.push([":allowPng", this.allowPng.toString()]);
-    if (this.targetScreenSize !== undefined) out.push([":targetScreenSize", this.targetScreenSize.toString()]);
-    if (this.dpi !== undefined) out.push([":dpi", this.dpi.toString()]);
-    if (this.codePage !== undefined) out.push([":codePage", this.codePage.toString()]);
-    if (this.characterSet !== undefined) out.push([":characterSet", this.characterSet.toString()]);
+    if (this.useCss !== undefined) out.push(["css", this.useCss.toString()]);
+    if (this.thicket !== undefined) out.push(["thicket", this.thicket.toString()]);
+    if (this.longFileNames !== undefined) out.push(["longFileNames", this.longFileNames.toString()]);
+    if (this.useVml !== undefined) out.push(["vml", this.useVml.toString()]);
+    if (this.allowPng !== undefined) out.push(["allowPng", this.allowPng.toString()]);
+    if (this.targetScreenSize !== undefined) out.push(["targetScreenSize", this.targetScreenSize.toString()]);
+    if (this.dpi !== undefined) out.push(["dpi", this.dpi.toString()]);
+    if (this.codePage !== undefined) out.push(["codePage", this.codePage.toString()]);
+    if (this.characterSet !== undefined) out.push(["characterSet", this.characterSet.toString()]);
     return out;
   }
 

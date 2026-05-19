@@ -30,10 +30,10 @@ export class OutlineProperties extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":applyStyles": this.applyStyles = BooleanValue.parse(value); return;
-      case ":summaryBelow": this.summaryBelow = BooleanValue.parse(value); return;
-      case ":summaryRight": this.summaryRight = BooleanValue.parse(value); return;
-      case ":showOutlineSymbols": this.showOutlineSymbols = BooleanValue.parse(value); return;
+      case "applyStyles": this.applyStyles = BooleanValue.parse(value); return;
+      case "summaryBelow": this.summaryBelow = BooleanValue.parse(value); return;
+      case "summaryRight": this.summaryRight = BooleanValue.parse(value); return;
+      case "showOutlineSymbols": this.showOutlineSymbols = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -41,10 +41,10 @@ export class OutlineProperties extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.applyStyles !== undefined) out.push([":applyStyles", this.applyStyles.toString()]);
-    if (this.summaryBelow !== undefined) out.push([":summaryBelow", this.summaryBelow.toString()]);
-    if (this.summaryRight !== undefined) out.push([":summaryRight", this.summaryRight.toString()]);
-    if (this.showOutlineSymbols !== undefined) out.push([":showOutlineSymbols", this.showOutlineSymbols.toString()]);
+    if (this.applyStyles !== undefined) out.push(["applyStyles", this.applyStyles.toString()]);
+    if (this.summaryBelow !== undefined) out.push(["summaryBelow", this.summaryBelow.toString()]);
+    if (this.summaryRight !== undefined) out.push(["summaryRight", this.summaryRight.toString()]);
+    if (this.showOutlineSymbols !== undefined) out.push(["showOutlineSymbols", this.showOutlineSymbols.toString()]);
     return out;
   }
 

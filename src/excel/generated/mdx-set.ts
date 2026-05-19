@@ -30,9 +30,9 @@ export class MdxSet extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":ns": this.setDefinitionIndex = UInt32Value.parse(value); return;
-      case ":c": this.memberIndexCount = UInt32Value.parse(value); return;
-      case ":o": this.sortingOrder = StringValue.parse(value); return;
+      case "ns": this.setDefinitionIndex = UInt32Value.parse(value); return;
+      case "c": this.memberIndexCount = UInt32Value.parse(value); return;
+      case "o": this.sortingOrder = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,9 +40,9 @@ export class MdxSet extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.setDefinitionIndex !== undefined) out.push([":ns", this.setDefinitionIndex.toString()]);
-    if (this.memberIndexCount !== undefined) out.push([":c", this.memberIndexCount.toString()]);
-    if (this.sortingOrder !== undefined) out.push([":o", this.sortingOrder.toString()]);
+    if (this.setDefinitionIndex !== undefined) out.push(["ns", this.setDefinitionIndex.toString()]);
+    if (this.memberIndexCount !== undefined) out.push(["c", this.memberIndexCount.toString()]);
+    if (this.sortingOrder !== undefined) out.push(["o", this.sortingOrder.toString()]);
     return out;
   }
 

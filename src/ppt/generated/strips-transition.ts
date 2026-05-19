@@ -21,7 +21,7 @@ export class StripsTransition extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":dir": this.direction = StringValue.parse(value); return;
+      case "dir": this.direction = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -29,7 +29,7 @@ export class StripsTransition extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.direction !== undefined) out.push([":dir", this.direction.toString()]);
+    if (this.direction !== undefined) out.push(["dir", this.direction.toString()]);
     return out;
   }
 

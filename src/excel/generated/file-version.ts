@@ -33,11 +33,11 @@ export class FileVersion extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":appName": this.applicationName = StringValue.parse(value); return;
-      case ":lastEdited": this.lastEdited = StringValue.parse(value); return;
-      case ":lowestEdited": this.lowestEdited = StringValue.parse(value); return;
-      case ":rupBuild": this.buildVersion = StringValue.parse(value); return;
-      case ":codeName": this.codeName = StringValue.parse(value); return;
+      case "appName": this.applicationName = StringValue.parse(value); return;
+      case "lastEdited": this.lastEdited = StringValue.parse(value); return;
+      case "lowestEdited": this.lowestEdited = StringValue.parse(value); return;
+      case "rupBuild": this.buildVersion = StringValue.parse(value); return;
+      case "codeName": this.codeName = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -45,11 +45,11 @@ export class FileVersion extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.applicationName !== undefined) out.push([":appName", this.applicationName.toString()]);
-    if (this.lastEdited !== undefined) out.push([":lastEdited", this.lastEdited.toString()]);
-    if (this.lowestEdited !== undefined) out.push([":lowestEdited", this.lowestEdited.toString()]);
-    if (this.buildVersion !== undefined) out.push([":rupBuild", this.buildVersion.toString()]);
-    if (this.codeName !== undefined) out.push([":codeName", this.codeName.toString()]);
+    if (this.applicationName !== undefined) out.push(["appName", this.applicationName.toString()]);
+    if (this.lastEdited !== undefined) out.push(["lastEdited", this.lastEdited.toString()]);
+    if (this.lowestEdited !== undefined) out.push(["lowestEdited", this.lowestEdited.toString()]);
+    if (this.buildVersion !== undefined) out.push(["rupBuild", this.buildVersion.toString()]);
+    if (this.codeName !== undefined) out.push(["codeName", this.codeName.toString()]);
     return out;
   }
 

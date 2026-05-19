@@ -29,9 +29,9 @@ export class TransformGroup extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rot": this.rotation = Int32Value.parse(value); return;
-      case ":flipH": this.horizontalFlip = BooleanValue.parse(value); return;
-      case ":flipV": this.verticalFlip = BooleanValue.parse(value); return;
+      case "rot": this.rotation = Int32Value.parse(value); return;
+      case "flipH": this.horizontalFlip = BooleanValue.parse(value); return;
+      case "flipV": this.verticalFlip = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class TransformGroup extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.rotation !== undefined) out.push([":rot", this.rotation.toString()]);
-    if (this.horizontalFlip !== undefined) out.push([":flipH", this.horizontalFlip.toString()]);
-    if (this.verticalFlip !== undefined) out.push([":flipV", this.verticalFlip.toString()]);
+    if (this.rotation !== undefined) out.push(["rot", this.rotation.toString()]);
+    if (this.horizontalFlip !== undefined) out.push(["flipH", this.horizontalFlip.toString()]);
+    if (this.verticalFlip !== undefined) out.push(["flipV", this.verticalFlip.toString()]);
     return out;
   }
 

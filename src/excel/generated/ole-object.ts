@@ -43,12 +43,12 @@ export class OleObject extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":progId": this.progId = StringValue.parse(value); return;
-      case ":dvAspect": this.dataOrViewAspect = StringValue.parse(value); return;
-      case ":link": this.link = StringValue.parse(value); return;
-      case ":oleUpdate": this.oleUpdate = StringValue.parse(value); return;
-      case ":autoLoad": this.autoLoad = BooleanValue.parse(value); return;
-      case ":shapeId": this.shapeId = UInt32Value.parse(value); return;
+      case "progId": this.progId = StringValue.parse(value); return;
+      case "dvAspect": this.dataOrViewAspect = StringValue.parse(value); return;
+      case "link": this.link = StringValue.parse(value); return;
+      case "oleUpdate": this.oleUpdate = StringValue.parse(value); return;
+      case "autoLoad": this.autoLoad = BooleanValue.parse(value); return;
+      case "shapeId": this.shapeId = UInt32Value.parse(value); return;
       case "r:id": this.id = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -57,12 +57,12 @@ export class OleObject extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.progId !== undefined) out.push([":progId", this.progId.toString()]);
-    if (this.dataOrViewAspect !== undefined) out.push([":dvAspect", this.dataOrViewAspect.toString()]);
-    if (this.link !== undefined) out.push([":link", this.link.toString()]);
-    if (this.oleUpdate !== undefined) out.push([":oleUpdate", this.oleUpdate.toString()]);
-    if (this.autoLoad !== undefined) out.push([":autoLoad", this.autoLoad.toString()]);
-    if (this.shapeId !== undefined) out.push([":shapeId", this.shapeId.toString()]);
+    if (this.progId !== undefined) out.push(["progId", this.progId.toString()]);
+    if (this.dataOrViewAspect !== undefined) out.push(["dvAspect", this.dataOrViewAspect.toString()]);
+    if (this.link !== undefined) out.push(["link", this.link.toString()]);
+    if (this.oleUpdate !== undefined) out.push(["oleUpdate", this.oleUpdate.toString()]);
+    if (this.autoLoad !== undefined) out.push(["autoLoad", this.autoLoad.toString()]);
+    if (this.shapeId !== undefined) out.push(["shapeId", this.shapeId.toString()]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
     return out;
   }

@@ -30,9 +30,9 @@ export class SingleXmlCell extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = UInt32Value.parse(value); return;
-      case ":r": this.cellReference = StringValue.parse(value); return;
-      case ":connectionId": this.connectionId = UInt32Value.parse(value); return;
+      case "id": this.id = UInt32Value.parse(value); return;
+      case "r": this.cellReference = StringValue.parse(value); return;
+      case "connectionId": this.connectionId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,9 +40,9 @@ export class SingleXmlCell extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
-    if (this.cellReference !== undefined) out.push([":r", this.cellReference.toString()]);
-    if (this.connectionId !== undefined) out.push([":connectionId", this.connectionId.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    if (this.cellReference !== undefined) out.push(["r", this.cellReference.toString()]);
+    if (this.connectionId !== undefined) out.push(["connectionId", this.connectionId.toString()]);
     return out;
   }
 
