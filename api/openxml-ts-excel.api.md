@@ -182,6 +182,9 @@ export class CellValue extends OpenXmlLeafElement {
 }
 
 // @public
+export function clearAllMergedCells(worksheet: Worksheet): void;
+
+// @public
 export class Column extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -320,6 +323,9 @@ export function getColumnWidth(worksheet: Worksheet, columnIndex: number): numbe
 export function getFreezePanes(worksheet: Worksheet): FreezePanesOptions | undefined;
 
 // @public
+export function getMergedRanges(worksheet: Worksheet): string[];
+
+// @public
 export function getResolverForWorksheet(worksheet: Worksheet): SharedStringResolver | undefined;
 
 // @public
@@ -344,6 +350,42 @@ export class InlineString extends OpenXmlCompositeElement {
     // (undocumented)
     readonly prefix: "x";
 }
+
+// @public
+export class MergeCell extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
+    readonly localName: "mergeCell";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+    reference: StringValue | undefined;
+    validateRequired(): void;
+}
+
+// @public
+export class MergeCells extends OpenXmlCompositeElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    count: UInt32Value | undefined;
+    // (undocumented)
+    readonly localName: "mergeCells";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+}
+
+// @public
+export function mergeCells(worksheet: Worksheet, range: string | string[]): void;
 
 // @public
 export function mimeForExtension(ext: string): string | undefined;
@@ -675,6 +717,9 @@ export abstract class TypedXmlPart<T extends OpenXmlElement> {
     // (undocumented)
     protected readonly RootCtor: new () => T;
 }
+
+// @public
+export function unmergeCells(worksheet: Worksheet, range: string): void;
 
 // @public
 export class Workbook extends OpenXmlCompositeElement {

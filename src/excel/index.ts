@@ -104,3 +104,13 @@ export {
 export { CellFormat } from "./generated/cell-format.js";
 export { CellFormats } from "./generated/cell-formats.js";
 export { BuiltInNumberFormat, setBuiltInNumberFormat } from "./number-format.js";
+
+// ─── Excel 合并单元格（Epic-53） ──────────────────────────────────────────────
+export { MergeCell } from "./generated/merge-cell.js";
+export { MergeCells } from "./generated/merge-cells.js";
+export {
+  mergeCells,
+  unmergeCells,
+  clearAllMergedCells,
+  getMergedRanges,
+} from "./merge-cells.js";
