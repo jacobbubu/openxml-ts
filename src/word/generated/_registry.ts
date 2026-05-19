@@ -469,7 +469,7 @@ import { ShowBreaksInFrames } from "./show-breaks-in-frames.js";
 import { ShowEnvelope } from "./show-envelope.js";
 import { ShowingPlaceholder } from "./showing-placeholder.js";
 import { ShowXmlTags } from "./show-xml-tags.js";
-import { SimpleFieldRuby } from "./simple-field-ruby.js";
+import { SimpleField } from "./simple-field.js";
 import { SmallCaps } from "./small-caps.js";
 import { SnapToGrid } from "./snap-to-grid.js";
 import { SoftHyphen } from "./soft-hyphen.js";
@@ -1079,7 +1079,7 @@ export function registerWordprocessingElements(registry: ElementRegistry): void 
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "showEnvelope", ShowEnvelope);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "showingPlcHdr", ShowingPlaceholder);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "showXMLTags", ShowXmlTags);
-  registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "fldSimple", SimpleFieldRuby);
+  registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "fldSimple", SimpleField);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "smallCaps", SmallCaps);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "snapToGrid", SnapToGrid);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "softHyphen", SoftHyphen);
