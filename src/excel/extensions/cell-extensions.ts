@@ -50,7 +50,9 @@ Object.defineProperty(Cell.prototype, "resolvedText", {
   configurable: false,
   enumerable: false,
   get(this: Cell): string | undefined {
-    const dataType = this.extendedAttributes.get("t");
+    // #139 后 Cell 继承 CellType 的 `t` 字段（typed），不再走 extendedAttributes；
+    // 兜底兼容 typed 之外的写入路径。
+    const dataType = this.dataType?.toString() ?? this.extendedAttributes.get("t");
     if (dataType === "inlineStr") return collectInlineString(this);
     const cellValue = this.firstChild(CellValue);
     if (cellValue?.text === undefined) return undefined;

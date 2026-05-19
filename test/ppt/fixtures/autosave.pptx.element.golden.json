@@ -69,7 +69,7 @@
         "qname": "p:notesSz",
         "className": "NotesSize",
         "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-        "extendedAttributes": {
+        "typedAttributes": {
           "cx": "6858000",
           "cy": "9144000"
         }
@@ -88,8 +88,8 @@
                 "qname": "a:defRPr",
                 "className": "DefaultRunProperties",
                 "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                "extendedAttributes": {
-                  "lang": "en-US"
+                "typedAttributes": {
+                  "language": "en-US"
                 }
               }
             ]
@@ -98,23 +98,23 @@
             "qname": "a:lvl1pPr",
             "className": "Level1ParagraphProperties",
             "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-            "extendedAttributes": {
-              "algn": "l",
-              "defTabSz": "914400",
-              "eaLnBrk": "1",
-              "hangingPunct": "1",
-              "latinLnBrk": "0",
-              "marL": "0",
-              "rtl": "0"
+            "typedAttributes": {
+              "alignment": "l",
+              "defaultTabSize": "914400",
+              "eastAsianLineBreak": "1",
+              "height": "1",
+              "latinLineBreak": "0",
+              "leftMargin": "0",
+              "rightToLeft": "0"
             },
             "children": [
               {
                 "qname": "a:defRPr",
                 "className": "DefaultRunProperties",
                 "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                "extendedAttributes": {
-                  "kern": "1200",
-                  "sz": "1800"
+                "typedAttributes": {
+                  "fontSize": "1800",
+                  "kerning": "1200"
                 },
                 "children": [
                   {
@@ -136,7 +136,7 @@
                     "qname": "a:latin",
                     "className": "LatinFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-lt"
                     }
                   },
@@ -144,7 +144,7 @@
                     "qname": "a:ea",
                     "className": "EastAsianFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-ea"
                     }
                   },
@@ -152,7 +152,7 @@
                     "qname": "a:cs",
                     "className": "ComplexScriptFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-cs"
                     }
                   }
@@ -164,23 +164,23 @@
             "qname": "a:lvl2pPr",
             "className": "Level2ParagraphProperties",
             "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-            "extendedAttributes": {
-              "algn": "l",
-              "defTabSz": "914400",
-              "eaLnBrk": "1",
-              "hangingPunct": "1",
-              "latinLnBrk": "0",
-              "marL": "457200",
-              "rtl": "0"
+            "typedAttributes": {
+              "alignment": "l",
+              "defaultTabSize": "914400",
+              "eastAsianLineBreak": "1",
+              "height": "1",
+              "latinLineBreak": "0",
+              "leftMargin": "457200",
+              "rightToLeft": "0"
             },
             "children": [
               {
                 "qname": "a:defRPr",
                 "className": "DefaultRunProperties",
                 "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                "extendedAttributes": {
-                  "kern": "1200",
-                  "sz": "1800"
+                "typedAttributes": {
+                  "fontSize": "1800",
+                  "kerning": "1200"
                 },
                 "children": [
                   {
@@ -202,7 +202,7 @@
                     "qname": "a:latin",
                     "className": "LatinFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-lt"
                     }
                   },
@@ -210,7 +210,7 @@
                     "qname": "a:ea",
                     "className": "EastAsianFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-ea"
                     }
                   },
@@ -218,7 +218,7 @@
                     "qname": "a:cs",
                     "className": "ComplexScriptFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-cs"
                     }
                   }
@@ -230,23 +230,23 @@
             "qname": "a:lvl3pPr",
             "className": "Level3ParagraphProperties",
             "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-            "extendedAttributes": {
-              "algn": "l",
-              "defTabSz": "914400",
-              "eaLnBrk": "1",
-              "hangingPunct": "1",
-              "latinLnBrk": "0",
-              "marL": "914400",
-              "rtl": "0"
+            "typedAttributes": {
+              "alignment": "l",
+              "defaultTabSize": "914400",
+              "eastAsianLineBreak": "1",
+              "height": "1",
+              "latinLineBreak": "0",
+              "leftMargin": "914400",
+              "rightToLeft": "0"
             },
             "children": [
               {
                 "qname": "a:defRPr",
                 "className": "DefaultRunProperties",
                 "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                "extendedAttributes": {
-                  "kern": "1200",
-                  "sz": "1800"
+                "typedAttributes": {
+                  "fontSize": "1800",
+                  "kerning": "1200"
                 },
                 "children": [
                   {
@@ -268,7 +268,7 @@
                     "qname": "a:latin",
                     "className": "LatinFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-lt"
                     }
                   },
@@ -276,7 +276,7 @@
                     "qname": "a:ea",
                     "className": "EastAsianFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-ea"
                     }
                   },
@@ -284,7 +284,7 @@
                     "qname": "a:cs",
                     "className": "ComplexScriptFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-cs"
                     }
                   }
@@ -296,23 +296,23 @@
             "qname": "a:lvl4pPr",
             "className": "Level4ParagraphProperties",
             "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-            "extendedAttributes": {
-              "algn": "l",
-              "defTabSz": "914400",
-              "eaLnBrk": "1",
-              "hangingPunct": "1",
-              "latinLnBrk": "0",
-              "marL": "1371600",
-              "rtl": "0"
+            "typedAttributes": {
+              "alignment": "l",
+              "defaultTabSize": "914400",
+              "eastAsianLineBreak": "1",
+              "height": "1",
+              "latinLineBreak": "0",
+              "leftMargin": "1371600",
+              "rightToLeft": "0"
             },
             "children": [
               {
                 "qname": "a:defRPr",
                 "className": "DefaultRunProperties",
                 "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                "extendedAttributes": {
-                  "kern": "1200",
-                  "sz": "1800"
+                "typedAttributes": {
+                  "fontSize": "1800",
+                  "kerning": "1200"
                 },
                 "children": [
                   {
@@ -334,7 +334,7 @@
                     "qname": "a:latin",
                     "className": "LatinFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-lt"
                     }
                   },
@@ -342,7 +342,7 @@
                     "qname": "a:ea",
                     "className": "EastAsianFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-ea"
                     }
                   },
@@ -350,7 +350,7 @@
                     "qname": "a:cs",
                     "className": "ComplexScriptFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-cs"
                     }
                   }
@@ -362,23 +362,23 @@
             "qname": "a:lvl5pPr",
             "className": "Level5ParagraphProperties",
             "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-            "extendedAttributes": {
-              "algn": "l",
-              "defTabSz": "914400",
-              "eaLnBrk": "1",
-              "hangingPunct": "1",
-              "latinLnBrk": "0",
-              "marL": "1828800",
-              "rtl": "0"
+            "typedAttributes": {
+              "alignment": "l",
+              "defaultTabSize": "914400",
+              "eastAsianLineBreak": "1",
+              "height": "1",
+              "latinLineBreak": "0",
+              "leftMargin": "1828800",
+              "rightToLeft": "0"
             },
             "children": [
               {
                 "qname": "a:defRPr",
                 "className": "DefaultRunProperties",
                 "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                "extendedAttributes": {
-                  "kern": "1200",
-                  "sz": "1800"
+                "typedAttributes": {
+                  "fontSize": "1800",
+                  "kerning": "1200"
                 },
                 "children": [
                   {
@@ -400,7 +400,7 @@
                     "qname": "a:latin",
                     "className": "LatinFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-lt"
                     }
                   },
@@ -408,7 +408,7 @@
                     "qname": "a:ea",
                     "className": "EastAsianFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-ea"
                     }
                   },
@@ -416,7 +416,7 @@
                     "qname": "a:cs",
                     "className": "ComplexScriptFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-cs"
                     }
                   }
@@ -428,23 +428,23 @@
             "qname": "a:lvl6pPr",
             "className": "Level6ParagraphProperties",
             "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-            "extendedAttributes": {
-              "algn": "l",
-              "defTabSz": "914400",
-              "eaLnBrk": "1",
-              "hangingPunct": "1",
-              "latinLnBrk": "0",
-              "marL": "2286000",
-              "rtl": "0"
+            "typedAttributes": {
+              "alignment": "l",
+              "defaultTabSize": "914400",
+              "eastAsianLineBreak": "1",
+              "height": "1",
+              "latinLineBreak": "0",
+              "leftMargin": "2286000",
+              "rightToLeft": "0"
             },
             "children": [
               {
                 "qname": "a:defRPr",
                 "className": "DefaultRunProperties",
                 "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                "extendedAttributes": {
-                  "kern": "1200",
-                  "sz": "1800"
+                "typedAttributes": {
+                  "fontSize": "1800",
+                  "kerning": "1200"
                 },
                 "children": [
                   {
@@ -466,7 +466,7 @@
                     "qname": "a:latin",
                     "className": "LatinFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-lt"
                     }
                   },
@@ -474,7 +474,7 @@
                     "qname": "a:ea",
                     "className": "EastAsianFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-ea"
                     }
                   },
@@ -482,7 +482,7 @@
                     "qname": "a:cs",
                     "className": "ComplexScriptFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-cs"
                     }
                   }
@@ -494,23 +494,23 @@
             "qname": "a:lvl7pPr",
             "className": "Level7ParagraphProperties",
             "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-            "extendedAttributes": {
-              "algn": "l",
-              "defTabSz": "914400",
-              "eaLnBrk": "1",
-              "hangingPunct": "1",
-              "latinLnBrk": "0",
-              "marL": "2743200",
-              "rtl": "0"
+            "typedAttributes": {
+              "alignment": "l",
+              "defaultTabSize": "914400",
+              "eastAsianLineBreak": "1",
+              "height": "1",
+              "latinLineBreak": "0",
+              "leftMargin": "2743200",
+              "rightToLeft": "0"
             },
             "children": [
               {
                 "qname": "a:defRPr",
                 "className": "DefaultRunProperties",
                 "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                "extendedAttributes": {
-                  "kern": "1200",
-                  "sz": "1800"
+                "typedAttributes": {
+                  "fontSize": "1800",
+                  "kerning": "1200"
                 },
                 "children": [
                   {
@@ -532,7 +532,7 @@
                     "qname": "a:latin",
                     "className": "LatinFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-lt"
                     }
                   },
@@ -540,7 +540,7 @@
                     "qname": "a:ea",
                     "className": "EastAsianFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-ea"
                     }
                   },
@@ -548,7 +548,7 @@
                     "qname": "a:cs",
                     "className": "ComplexScriptFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-cs"
                     }
                   }
@@ -560,23 +560,23 @@
             "qname": "a:lvl8pPr",
             "className": "Level8ParagraphProperties",
             "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-            "extendedAttributes": {
-              "algn": "l",
-              "defTabSz": "914400",
-              "eaLnBrk": "1",
-              "hangingPunct": "1",
-              "latinLnBrk": "0",
-              "marL": "3200400",
-              "rtl": "0"
+            "typedAttributes": {
+              "alignment": "l",
+              "defaultTabSize": "914400",
+              "eastAsianLineBreak": "1",
+              "height": "1",
+              "latinLineBreak": "0",
+              "leftMargin": "3200400",
+              "rightToLeft": "0"
             },
             "children": [
               {
                 "qname": "a:defRPr",
                 "className": "DefaultRunProperties",
                 "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                "extendedAttributes": {
-                  "kern": "1200",
-                  "sz": "1800"
+                "typedAttributes": {
+                  "fontSize": "1800",
+                  "kerning": "1200"
                 },
                 "children": [
                   {
@@ -598,7 +598,7 @@
                     "qname": "a:latin",
                     "className": "LatinFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-lt"
                     }
                   },
@@ -606,7 +606,7 @@
                     "qname": "a:ea",
                     "className": "EastAsianFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-ea"
                     }
                   },
@@ -614,7 +614,7 @@
                     "qname": "a:cs",
                     "className": "ComplexScriptFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-cs"
                     }
                   }
@@ -626,23 +626,23 @@
             "qname": "a:lvl9pPr",
             "className": "Level9ParagraphProperties",
             "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-            "extendedAttributes": {
-              "algn": "l",
-              "defTabSz": "914400",
-              "eaLnBrk": "1",
-              "hangingPunct": "1",
-              "latinLnBrk": "0",
-              "marL": "3657600",
-              "rtl": "0"
+            "typedAttributes": {
+              "alignment": "l",
+              "defaultTabSize": "914400",
+              "eastAsianLineBreak": "1",
+              "height": "1",
+              "latinLineBreak": "0",
+              "leftMargin": "3657600",
+              "rightToLeft": "0"
             },
             "children": [
               {
                 "qname": "a:defRPr",
                 "className": "DefaultRunProperties",
                 "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                "extendedAttributes": {
-                  "kern": "1200",
-                  "sz": "1800"
+                "typedAttributes": {
+                  "fontSize": "1800",
+                  "kerning": "1200"
                 },
                 "children": [
                   {
@@ -664,7 +664,7 @@
                     "qname": "a:latin",
                     "className": "LatinFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-lt"
                     }
                   },
@@ -672,7 +672,7 @@
                     "qname": "a:ea",
                     "className": "EastAsianFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-ea"
                     }
                   },
@@ -680,7 +680,7 @@
                     "qname": "a:cs",
                     "className": "ComplexScriptFont",
                     "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                    "extendedAttributes": {
+                    "typedAttributes": {
                       "typeface": "+mn-cs"
                     }
                   }
@@ -753,7 +753,7 @@
                           "qname": "a:off",
                           "className": "Offset",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "x": "0",
                             "y": "0"
                           }
@@ -771,7 +771,7 @@
                           "qname": "a:chOff",
                           "className": "ChildOffset",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "x": "0",
                             "y": "0"
                           }
@@ -780,7 +780,7 @@
                           "qname": "a:chExt",
                           "className": "ChildExtents",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "cx": "0",
                             "cy": "0"
                           }
@@ -874,11 +874,11 @@
                                   "qname": "a:rPr",
                                   "className": "RunProperties",
                                   "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                                  "extendedAttributes": {
-                                    "altLang": "zh-CN",
+                                  "typedAttributes": {
+                                    "alternativeLanguage": "zh-CN",
                                     "dirty": "0",
-                                    "lang": "en-US",
-                                    "smtClean": "0"
+                                    "language": "en-US",
+                                    "smartTagClean": "0"
                                   }
                                 },
                                 {
@@ -893,10 +893,10 @@
                               "qname": "a:endParaRPr",
                               "className": "EndParagraphRunProperties",
                               "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                              "extendedAttributes": {
-                                "altLang": "en-US",
+                              "typedAttributes": {
+                                "alternativeLanguage": "en-US",
                                 "dirty": "0",
-                                "lang": "zh-CN"
+                                "language": "zh-CN"
                               }
                             }
                           ]
@@ -986,9 +986,9 @@
                               "qname": "a:endParaRPr",
                               "className": "EndParagraphRunProperties",
                               "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                              "extendedAttributes": {
-                                "altLang": "en-US",
-                                "lang": "zh-CN"
+                              "typedAttributes": {
+                                "alternativeLanguage": "en-US",
+                                "language": "zh-CN"
                               }
                             }
                           ]
@@ -1075,7 +1075,7 @@
                           "qname": "a:off",
                           "className": "Offset",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "x": "0",
                             "y": "0"
                           }
@@ -1093,7 +1093,7 @@
                           "qname": "a:chOff",
                           "className": "ChildOffset",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "x": "0",
                             "y": "0"
                           }
@@ -1102,7 +1102,7 @@
                           "qname": "a:chExt",
                           "className": "ChildExtents",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "cx": "0",
                             "cy": "0"
                           }
@@ -1196,11 +1196,11 @@
                                   "qname": "a:rPr",
                                   "className": "RunProperties",
                                   "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                                  "extendedAttributes": {
-                                    "altLang": "zh-CN",
+                                  "typedAttributes": {
+                                    "alternativeLanguage": "zh-CN",
                                     "dirty": "0",
-                                    "lang": "en-US",
-                                    "smtClean": "0"
+                                    "language": "en-US",
+                                    "smartTagClean": "0"
                                   }
                                 },
                                 {
@@ -1215,10 +1215,10 @@
                               "qname": "a:endParaRPr",
                               "className": "EndParagraphRunProperties",
                               "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                              "extendedAttributes": {
-                                "altLang": "en-US",
+                              "typedAttributes": {
+                                "alternativeLanguage": "en-US",
                                 "dirty": "0",
-                                "lang": "zh-CN"
+                                "language": "zh-CN"
                               }
                             }
                           ]
@@ -1307,9 +1307,9 @@
                               "qname": "a:endParaRPr",
                               "className": "EndParagraphRunProperties",
                               "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                              "extendedAttributes": {
-                                "altLang": "en-US",
-                                "lang": "zh-CN"
+                              "typedAttributes": {
+                                "alternativeLanguage": "en-US",
+                                "language": "zh-CN"
                               }
                             }
                           ]

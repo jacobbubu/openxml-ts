@@ -122,7 +122,8 @@ describe("WordprocessingDocument.nextRevisionId（Story-19.2）", () => {
     expect(reopened.nextRevisionId()).toBe(1);
     const inserts = [...reopened.mainDocumentPart!.document.descendants(InsertedRun)];
     expect(inserts).toHaveLength(1);
-    expect(inserts[0].extendedAttributes.get("w:author")).toBe("Alice");
+    // #139 后 InsertedRun.author 是 typed StringValue（reopen 路径不走 extendedAttributes）
+    expect(inserts[0].author?.toString()).toBe("Alice");
   });
 });
 

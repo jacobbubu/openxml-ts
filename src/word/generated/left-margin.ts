@@ -4,6 +4,7 @@
 
 import {
   OpenXmlLeafElement,
+  StringValue,
 } from "../../element/index.js";
 
 /** Table Cell Left Margin Exception.
@@ -15,6 +16,26 @@ export class LeftMargin extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/wordprocessingml/2006/main" as const;
 
 
+  /** Table Width Value (w:w) */
+  width: StringValue | undefined;
 
+  /** Table Width Type (w:type) */
+  type: StringValue | undefined;
+
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "w:w": this.width = StringValue.parse(value); return;
+      case "w:type": this.type = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.width !== undefined) out.push(["w:w", this.width.toString()]);
+    if (this.type !== undefined) out.push(["w:type", this.type.toString()]);
+    return out;
+  }
 
 }

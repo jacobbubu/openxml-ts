@@ -62,6 +62,15 @@ export interface GenerateElementOptions {
    * 例：`Wordprocessing` / `Spreadsheet` / `Presentation` / `Drawing`。
    */
   readonly dotnetNamespace: string;
+  /**
+   * 类型索引：ClassName → SchemaType。用来在生成 derived 类时沿 BaseClass 链
+   * 向上收集继承的 Attributes。schema 里 \`IsDerived: true\` 的 leaf 类（Bold /
+   * Italic / FontSize 等）自身 Attributes 为空，但父类（OnOffType / HpsMeasureType
+   * 等）声明了 \`w:val\`——必须从父类那里继承下来才能让 typed 字段非空。
+   *
+   * 可选：调用方未提供时退化为「只看自身 Attributes」（保留向后兼容）。
+   */
+  readonly typeIndex?: ReadonlyMap<string, SchemaType>;
 }
 
 const ELEMENT_PKG = "../../element/index.js";
@@ -77,8 +86,11 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
       ? "OpenXmlLeafElement"
       : "OpenXmlCompositeElement";
   const valueImports = new Set<string>();
+  // 合并继承自 BaseClass 链的 Attributes（祖先在前，本类在后；保留 schema 声明顺序）。
+  // 同 QName 去重，子类覆盖父类（理论上 schema 不该出现，但兜底）。
+  const collectedAttrs = collectAttributesWithInherited(type, options.typeIndex);
   // 过滤掉 schema 中偶尔出现的「无 PropertyName / 无 QName」记录，避免下游崩
-  const attrs = (type.Attributes ?? []).filter(
+  const attrs = collectedAttrs.filter(
     (a) =>
       typeof a.PropertyName === "string" &&
       a.PropertyName.length > 0 &&
@@ -169,6 +181,38 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
   ]
     .filter((l) => l !== undefined)
     .join("\n");
+}
+
+/**
+ * 沿 BaseClass 链向上收集 Attributes，**只在本类自身 Attributes 为空时启用**。
+ *
+ * 目的：补全 `IsDerived: true` 的瘦派生类（Bold / Italic / FontSize / Caps / Vanish 等）
+ * 的 typed val 字段；这些类自身 Attributes 全为空，靠 BaseClass (OnOffType /
+ * HpsMeasureType) 提供 \`w:val\`。
+ *
+ * 不动**自身 Attributes 非空**的类（Cell / Run / Paragraph 等）：它们已经把
+ * 应有 typed 字段都写出来了，再继承父类只会冲掉现有调用方对 extendedAttributes
+ * 的依赖（test smell 暴露但不属本次范围）。
+ */
+function collectAttributesWithInherited(
+  type: SchemaType,
+  typeIndex: ReadonlyMap<string, SchemaType> | undefined,
+): readonly SchemaAttribute[] {
+  const own = type.Attributes ?? [];
+  if (own.length > 0 || typeIndex === undefined) return own;
+  // 自身没声明 attr 才向上看
+  const seen = new Set<string>([type.ClassName]);
+  let cursor: SchemaType | undefined =
+    type.BaseClass !== undefined ? typeIndex.get(type.BaseClass) : undefined;
+  while (cursor !== undefined) {
+    if (seen.has(cursor.ClassName)) break;
+    seen.add(cursor.ClassName);
+    if (cursor.Attributes !== undefined && cursor.Attributes.length > 0) {
+      return cursor.Attributes;
+    }
+    cursor = cursor.BaseClass !== undefined ? typeIndex.get(cursor.BaseClass) : undefined;
+  }
+  return own;
 }
 
 function resolveNs(prefix: string, options: GenerateElementOptions): string {

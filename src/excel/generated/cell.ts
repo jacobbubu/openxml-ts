@@ -3,8 +3,11 @@
 // @see DocumentFormat.OpenXml.Spreadsheet.Cell
 
 import {
+  BooleanValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  StringValue,
+  UInt32Value,
 } from "../../element/index.js";
 
 /** Cell.
@@ -16,6 +19,46 @@ export class Cell extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/spreadsheetml/2006/main" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** Reference (:r) */
+  cellReference: StringValue | undefined;
 
+  /** Style Index (:s) */
+  styleIndex: UInt32Value | undefined;
+
+  /** Cell Data Type (:t) */
+  dataType: StringValue | undefined;
+
+  /** Cell Metadata Index (:cm) */
+  cellMetaIndex: UInt32Value | undefined;
+
+  /** Value Metadata Index (:vm) */
+  valueMetaIndex: UInt32Value | undefined;
+
+  /** Show Phonetic (:ph) */
+  showPhonetic: BooleanValue | undefined;
+
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "r": this.cellReference = StringValue.parse(value); return;
+      case "s": this.styleIndex = UInt32Value.parse(value); return;
+      case "t": this.dataType = StringValue.parse(value); return;
+      case "cm": this.cellMetaIndex = UInt32Value.parse(value); return;
+      case "vm": this.valueMetaIndex = UInt32Value.parse(value); return;
+      case "ph": this.showPhonetic = BooleanValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.cellReference !== undefined) out.push(["r", this.cellReference.toString()]);
+    if (this.styleIndex !== undefined) out.push(["s", this.styleIndex.toString()]);
+    if (this.dataType !== undefined) out.push(["t", this.dataType.toString()]);
+    if (this.cellMetaIndex !== undefined) out.push(["cm", this.cellMetaIndex.toString()]);
+    if (this.valueMetaIndex !== undefined) out.push(["vm", this.valueMetaIndex.toString()]);
+    if (this.showPhonetic !== undefined) out.push(["ph", this.showPhonetic.toString()]);
+    return out;
+  }
 
 }

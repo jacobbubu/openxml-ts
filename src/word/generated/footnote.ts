@@ -5,6 +5,8 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Footnote Content.
@@ -16,6 +18,30 @@ export class Footnote extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/wordprocessingml/2006/main" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** Footnote/Endnote Type (w:type) */
+  type: StringValue | undefined;
 
+  /** Footnote/Endnote ID (w:id) */
+  id: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "w:type": this.type = StringValue.parse(value); return;
+      case "w:id": this.id = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.type !== undefined) out.push(["w:type", this.type.toString()]);
+    if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.id, { attribute: "w:id", elementClass: "Footnote" });
+  }
 }

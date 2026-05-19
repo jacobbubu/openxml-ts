@@ -4,6 +4,8 @@
 
 import {
   OpenXmlLeafElement,
+  StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the CommentRangeEnd Class.
@@ -15,6 +17,30 @@ export class CommentRangeEnd extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/wordprocessingml/2006/main" as const;
 
 
+  /** displacedByCustomXml (w:displacedByCustomXml) */
+  displacedByCustomXml: StringValue | undefined;
 
+  /** Annotation Identifier (w:id) */
+  id: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "w:displacedByCustomXml": this.displacedByCustomXml = StringValue.parse(value); return;
+      case "w:id": this.id = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.displacedByCustomXml !== undefined) out.push(["w:displacedByCustomXml", this.displacedByCustomXml.toString()]);
+    if (this.id !== undefined) out.push(["w:id", this.id.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.id, { attribute: "w:id", elementClass: "CommentRangeEnd" });
+  }
 }

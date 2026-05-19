@@ -3,7 +3,10 @@
 // @see DocumentFormat.OpenXml.Presentation.SoundTarget
 
 import {
+  BooleanValue,
   OpenXmlLeafElement,
+  StringValue,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Sound Target.
@@ -15,6 +18,35 @@ export class SoundTarget extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/presentationml/2006/main" as const;
 
 
+  /** Embedded Audio File Relationship ID (r:embed) */
+  embed: StringValue | undefined;
 
+  /** Sound Name (:name) */
+  name: StringValue | undefined;
 
+  /** Recognized Built-In Sound (:builtIn) */
+  builtIn: BooleanValue | undefined;
+
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "r:embed": this.embed = StringValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "builtIn": this.builtIn = BooleanValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.embed !== undefined) out.push(["r:embed", this.embed.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.builtIn !== undefined) out.push(["builtIn", this.builtIn.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.embed, { attribute: "r:embed", elementClass: "SoundTarget" });
+  }
 }

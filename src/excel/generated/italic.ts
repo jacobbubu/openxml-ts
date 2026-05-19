@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Spreadsheet.Italic
 
 import {
+  BooleanValue,
   OpenXmlLeafElement,
 } from "../../element/index.js";
 
@@ -15,6 +16,21 @@ export class Italic extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/spreadsheetml/2006/main" as const;
 
 
+  /** Value (:val) */
+  val: BooleanValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "val": this.val = BooleanValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
+    return out;
+  }
 
 }

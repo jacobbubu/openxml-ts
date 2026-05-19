@@ -5,6 +5,8 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  UInt32Value,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Effect Reference.
@@ -16,6 +18,25 @@ export class EffectReference extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/drawingml/2006/main" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** Style Matrix Index (:idx) */
+  index: UInt32Value | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "idx": this.index = UInt32Value.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
 
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.index !== undefined) out.push(["idx", this.index.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.index, { attribute: ":idx", elementClass: "EffectReference" });
+  }
 }

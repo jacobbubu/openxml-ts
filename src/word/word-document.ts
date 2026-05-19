@@ -530,7 +530,8 @@ export class WordprocessingDocument {
     let maxId = -1;
     for (const node of main.document.descendants()) {
       if (!(node instanceof InsertedRun) && !(node instanceof DeletedRun)) continue;
-      const v = node.extendedAttributes.get("w:id");
+      // #139 后 InsertedRun / DeletedRun.id 是 typed StringValue；兜底兼容 extendedAttributes。
+      const v = node.id?.toString() ?? node.extendedAttributes.get("w:id");
       if (v === undefined) continue;
       const n = Number.parseInt(v, 10);
       if (Number.isFinite(n) && n > maxId) maxId = n;
