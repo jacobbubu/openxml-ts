@@ -16,6 +16,7 @@
 
 import "./extensions/paragraph-extensions.js";
 import "./extensions/paragraph-alignment.js";
+import "./extensions/paragraph-flow.js";
 import "./extensions/paragraph-indent.js";
 import "./extensions/paragraph-spacing.js";
 import "./extensions/paragraph-style-id.js";
@@ -137,6 +138,9 @@ export { Tabs } from "./generated/tabs.js";
 // ─── 文本格式 ────────────────────────────────────────────────────────────────
 
 export { Bold } from "./generated/bold.js";
+export { KeepNext } from "./generated/keep-next.js";
+export { KeepLines } from "./generated/keep-lines.js";
+export { PageBreakBefore } from "./generated/page-break-before.js";
 export { Italic } from "./generated/italic.js";
 export { Color } from "./generated/color.js";
 export { Shading } from "./generated/shading.js";

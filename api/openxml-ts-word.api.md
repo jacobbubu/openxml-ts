@@ -662,6 +662,36 @@ export class Justification extends OpenXmlLeafElement {
 }
 
 // @public
+export class KeepLines extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
+    readonly localName: "keepLines";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+    val: BooleanValue | undefined;
+}
+
+// @public
+export class KeepNext extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
+    readonly localName: "keepNext";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+    val: BooleanValue | undefined;
+}
+
+// @public
 export class MainDocumentPart extends TypedXmlPart<Document> {
     constructor(part: IPackagePart, registry: ElementRegistry);
     // (undocumented)
@@ -699,6 +729,21 @@ export class NumberingPart extends TypedXmlPart<Numbering> {
     set numbering(value: Numbering);
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering";
+}
+
+// @public
+export class PageBreakBefore extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
+    readonly localName: "pageBreakBefore";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+    val: BooleanValue | undefined;
 }
 
 // @public
