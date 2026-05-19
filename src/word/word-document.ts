@@ -50,7 +50,9 @@ import { CommentRangeEnd } from "./generated/comment-range-end.js";
 import { CommentRangeStart } from "./generated/comment-range-start.js";
 import { CommentReference } from "./generated/comment-reference.js";
 import { Comment } from "./generated/comment.js";
+import { DeletedRun } from "./generated/deleted-run.js";
 import { Document } from "./generated/document.js";
+import { InsertedRun } from "./generated/inserted-run.js";
 import { Paragraph } from "./generated/paragraph.js";
 import { RunProperties } from "./generated/run-properties.js";
 import { RunStyle } from "./generated/run-style.js";
@@ -300,6 +302,26 @@ export class WordprocessingDocument {
    * @throws OpenXmlPackageError 当 \`url\` 为空 / 仅空白字符（code="RELATIONSHIP_TARGET_INVALID"）
    *   或 mainDocumentPart 缺失（code="PART_NOT_FOUND"）
    */
+  /**
+   * 返回一个全文档唯一的修订 \`w:id\` 整数——给 \`createInsertedRun({ id })\` /
+   * \`createDeletedRun({ id })\` 用（Story-19.2，Epic-19）。
+   *
+   * 扫主文档元素树里所有 \`<w:ins>\` / \`<w:del>\` 的 \`w:id\`，取最大值 + 1。空返 0。
+   */
+  nextRevisionId(): number {
+    const main = this.mainDocumentPart;
+    if (main === undefined) return 0;
+    let maxId = -1;
+    for (const node of main.document.descendants()) {
+      if (!(node instanceof InsertedRun) && !(node instanceof DeletedRun)) continue;
+      const v = node.extendedAttributes.get("w:id");
+      if (v === undefined) continue;
+      const n = Number.parseInt(v, 10);
+      if (Number.isFinite(n) && n > maxId) maxId = n;
+    }
+    return maxId + 1;
+  }
+
   /**
    * 返回一个全文档唯一的 \`w:id\` 整数——给 \`createBookmarkPair(name, id)\` 用
    * （Story-16.2，Epic-16）。

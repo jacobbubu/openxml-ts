@@ -70,6 +70,16 @@ export { CommentRangeStart } from "./generated/comment-range-start.js";
 export { CommentRangeEnd } from "./generated/comment-range-end.js";
 export { CommentReference } from "./generated/comment-reference.js";
 
+// ─── Word 修订追踪（Epic-19） ─────────────────────────────────────────────────
+export { InsertedRun } from "./generated/inserted-run.js";
+export { DeletedRun } from "./generated/deleted-run.js";
+export { DeletedText } from "./generated/deleted-text.js";
+export {
+  type RevisionOptions,
+  createInsertedRun,
+  createDeletedRun,
+} from "./revision-markup.js";
+
 // ─── 核心结构 ─────────────────────────────────────────────────────────────────
 
 export { Document } from "./generated/document.js";
