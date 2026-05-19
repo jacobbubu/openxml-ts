@@ -142,6 +142,38 @@ export class WordprocessingDocument {
     return this.getOrLoadTypedPartFromMain(StylesPart);
   }
 
+  /**
+   * 找到或自动创建 StylesPart。
+   *
+   * 首次调用时：分配 `/word/styles.xml` Part + 从 mainDocumentPart 注册 styles 关系，
+   * 并为 `<w:styles>` 根元素注入 `xmlns:w` 声明（保证序列化后可被反序列化识别）。
+   *
+   * @throws {OpenXmlPackageError} 当 mainDocumentPart 不存在时（code="PART_NOT_FOUND"）
+   */
+  getOrCreateStylesPart(): StylesPart {
+    const existing = this.stylesPart;
+    if (existing !== undefined) return existing;
+    const main = this.mainDocumentPart;
+    if (main === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "getOrCreateStylesPart: mainDocumentPart is missing",
+      });
+    }
+    const uri = "/word/styles.xml" as PartUri;
+    const part = this.pkg.createPart(uri, StylesPart.contentType);
+    main.part.relationships.create({
+      type: StylesPart.relationshipType,
+      target: "styles.xml",
+      targetMode: "internal",
+    });
+    const sp = new StylesPart(part, wordRegistry);
+    // 与 Document 元素一致：注入 xmlns:w 声明，保证序列化后可被反序列化正确识别
+    sp.styles.extendedAttributes.set("xmlns:w", WPNS_URI);
+    this.typedParts.set(StylesPart.relationshipType, sp);
+    return sp;
+  }
+
   get settingsPart(): SettingsPart | undefined {
     return this.getOrLoadTypedPartFromMain(SettingsPart);
   }

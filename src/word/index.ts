@@ -111,6 +111,15 @@ export {
   createTotalPagesRun,
 } from "./field-markup.js";
 
+// ─── Word Style 创建（Epic-46） ───────────────────────────────────────────────
+export {
+  type CharacterStyleOptions,
+  type ParagraphStyleOptions,
+  type StyleFormattingOptions,
+  createCharacterStyle,
+  createParagraphStyle,
+} from "./style-markup.js";
+
 // ─── Word 列表 / 编号（Epic-22） ─────────────────────────────────────────────
 export { Numbering } from "./generated/numbering.js";
 export { NumberingPart } from "./parts/numbering-part.js";
@@ -138,6 +147,7 @@ export { Tabs } from "./generated/tabs.js";
 // ─── 文本格式 ────────────────────────────────────────────────────────────────
 
 export { Bold } from "./generated/bold.js";
+export { FontSize } from "./generated/font-size.js";
 export { KeepNext } from "./generated/keep-next.js";
 export { KeepLines } from "./generated/keep-lines.js";
 export { PageBreakBefore } from "./generated/page-break-before.js";
@@ -181,6 +191,7 @@ export { FooterReference } from "./generated/footer-reference.js";
 
 export { Style } from "./generated/style.js";
 export { Styles } from "./generated/styles.js";
+export { BasedOn } from "./generated/based-on.js";
 export { Settings } from "./generated/settings.js";
 export { Fonts } from "./generated/fonts.js";
 export { WebSettings } from "./generated/web-settings.js";
