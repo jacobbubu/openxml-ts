@@ -18,6 +18,7 @@ import "./extensions/paragraph-extensions.js";
 import "./extensions/paragraph-alignment.js";
 import "./extensions/paragraph-indent.js";
 import "./extensions/paragraph-spacing.js";
+import "./extensions/paragraph-tab-stops.js";
 import "./extensions/run-extensions.js";
 
 export { WordprocessingDocument } from "./word-document.js";
