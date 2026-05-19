@@ -10,6 +10,25 @@ export interface AddImagePartOptions {
     readonly contentType?: string;
 }
 
+// Warning: (ae-forgotten-export) The symbol "OpenXmlLeafElement" needs to be exported by the entry point index.d.ts
+//
+// @public
+export class BasedOn extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
+    readonly localName: "basedOn";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+    // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
+    val: StringValue | undefined;
+    validateRequired(): void;
+}
+
 // @public (undocumented)
 export class BinaryPart {
     constructor(_part: IPackagePart);
@@ -40,8 +59,6 @@ export class Body extends OpenXmlCompositeElement {
     readonly prefix: "w";
 }
 
-// Warning: (ae-forgotten-export) The symbol "OpenXmlLeafElement" needs to be exported by the entry point index.d.ts
-//
 // @public
 export class Bold extends OpenXmlLeafElement {
     // (undocumented)
@@ -64,7 +81,6 @@ export class BookmarkEnd extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
     displacedByCustomXml: StringValue | undefined;
     id: StringValue | undefined;
     // (undocumented)
@@ -111,6 +127,14 @@ export class Break extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "w";
     type: StringValue | undefined;
+}
+
+// @public
+export interface CharacterStyleOptions {
+    readonly basedOn?: string;
+    readonly formatting?: StyleFormattingOptions;
+    readonly name: string;
+    readonly styleId: string;
 }
 
 // @public
@@ -290,6 +314,9 @@ export function createBookmarkPair(name: string, id?: number): {
 };
 
 // @public
+export function createCharacterStyle(stylesPart: StylesPart, opts: CharacterStyleOptions): Style;
+
+// @public
 export function createDeletedRun(opts: RevisionOptions): DeletedRun;
 
 // @public
@@ -351,6 +378,9 @@ export function createListParagraph(numId: number, level: number, text: string):
 
 // @public
 export function createPageNumberRun(): SimpleField;
+
+// @public
+export function createParagraphStyle(stylesPart: StylesPart, opts: ParagraphStyleOptions): Style;
 
 // @public
 export function createTotalPagesRun(): SimpleField;
@@ -438,6 +468,22 @@ export class Fonts extends OpenXmlCompositeElement {
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+}
+
+// @public
+export class FontSize extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
+    readonly localName: "sz";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+    val: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -840,6 +886,17 @@ export class ParagraphStyleId extends OpenXmlLeafElement {
 }
 
 // @public
+export interface ParagraphStyleOptions {
+    readonly basedOn?: string;
+    readonly formatting?: StyleFormattingOptions & {
+        readonly alignment?: "left" | "center" | "right" | "both" | "distribute";
+    };
+    readonly name: string;
+    readonly next?: string;
+    readonly styleId: string;
+}
+
+// @public
 export function registerWordprocessingElements(registry: ElementRegistry): void;
 
 // @public
@@ -1037,6 +1094,14 @@ export class Style extends OpenXmlCompositeElement {
     readonly prefix: "w";
     styleId: StringValue | undefined;
     type: StringValue | undefined;
+}
+
+// @public
+export interface StyleFormattingOptions {
+    readonly bold?: boolean;
+    readonly colorHex?: string;
+    readonly fontSizeHalfPoints?: number;
+    readonly italic?: boolean;
 }
 
 // @public
@@ -1339,6 +1404,7 @@ export class WordprocessingDocument {
     dispose(): Promise<void>;
     // (undocumented)
     get fontTablePart(): FontTablePart | undefined;
+    getOrCreateStylesPart(): StylesPart;
     get mainDocumentPart(): MainDocumentPart | undefined;
     nextBookmarkId(): number;
     nextCommentId(): number;
