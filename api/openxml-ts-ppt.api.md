@@ -122,6 +122,11 @@ export function extensionForMime(mime: string): string | undefined;
 // @public
 export function getSlideTableCellText(table: OpenXmlElement, row: number, col: number): string;
 
+// Warning: (ae-forgotten-export) The symbol "Slide" needs to be exported by the entry point index.d.ts
+//
+// @public
+export function getSpeakerNotes(slide: Slide, doc: PresentationDocument): string | undefined;
+
 // @public (undocumented)
 export class ImagePart extends BinaryPart {
     constructor(part: IPackagePart);
@@ -211,6 +216,9 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
 // @public
 export function setSlideTableCellText(table: OpenXmlElement, row: number, col: number, text: string): void;
 
+// @public
+export function setSpeakerNotes(slide: Slide, doc: PresentationDocument, text: string | undefined): void;
+
 // Warning: (ae-forgotten-export) The symbol "SlideLayout" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
@@ -243,8 +251,6 @@ export class SlideMasterPart extends TypedXmlPart<SlideMaster> {
     get themePart(): ThemePart | undefined;
 }
 
-// Warning: (ae-forgotten-export) The symbol "Slide" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export class SlidePart extends TypedXmlPart<Slide> {
     constructor(part: IPackagePart, registry: ElementRegistry,

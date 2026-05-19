@@ -58,3 +58,5 @@ export {
   mergeSlideTableCells,
   setSlideTableCellText,
 } from "./table-markup.js";
+
+export { getSpeakerNotes, setSpeakerNotes } from "./notes-markup.js";
