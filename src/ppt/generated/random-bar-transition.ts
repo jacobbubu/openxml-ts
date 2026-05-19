@@ -4,6 +4,7 @@
 
 import {
   OpenXmlLeafElement,
+  StringValue,
 } from "../../element/index.js";
 
 /** Defines the RandomBarTransition Class.
@@ -15,6 +16,21 @@ export class RandomBarTransition extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/presentationml/2006/main" as const;
 
 
+  /** Transition Direction (:dir) */
+  direction: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "dir": this.direction = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.direction !== undefined) out.push(["dir", this.direction.toString()]);
+    return out;
+  }
 
 }

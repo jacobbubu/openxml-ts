@@ -167,9 +167,9 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "A1",
-                    "t": "s"
+                  "typedAttributes": {
+                    "cellReference": "A1",
+                    "dataType": "s"
                   },
                   "children": [
                     {
@@ -206,9 +206,9 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "B10",
-                    "s": "4"
+                  "typedAttributes": {
+                    "cellReference": "B10",
+                    "styleIndex": "4"
                   },
                   "children": [
                     {
@@ -244,9 +244,9 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "N11",
-                    "s": "6"
+                  "typedAttributes": {
+                    "cellReference": "N11",
+                    "styleIndex": "6"
                   }
                 }
               ]
@@ -280,9 +280,9 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "L16",
-                    "s": "5"
+                  "typedAttributes": {
+                    "cellReference": "L16",
+                    "styleIndex": "5"
                   }
                 }
               ]
@@ -325,8 +325,8 @@
           "qname": "x:legacyDrawing",
           "className": "LegacyDrawing",
           "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-          "extendedAttributes": {
-            "r:id": "rId2"
+          "typedAttributes": {
+            "id": "rId2"
           }
         }
       ]
@@ -405,9 +405,9 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "A1",
-                    "t": "s"
+                  "typedAttributes": {
+                    "cellReference": "A1",
+                    "dataType": "s"
                   },
                   "children": [
                     {
@@ -422,9 +422,9 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "B1",
-                    "t": "s"
+                  "typedAttributes": {
+                    "cellReference": "B1",
+                    "dataType": "s"
                   },
                   "children": [
                     {
@@ -439,9 +439,9 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "C1",
-                    "t": "s"
+                  "typedAttributes": {
+                    "cellReference": "C1",
+                    "dataType": "s"
                   },
                   "children": [
                     {
@@ -468,8 +468,8 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "A2"
+                  "typedAttributes": {
+                    "cellReference": "A2"
                   },
                   "children": [
                     {
@@ -484,8 +484,8 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "B2"
+                  "typedAttributes": {
+                    "cellReference": "B2"
                   },
                   "children": [
                     {
@@ -500,8 +500,8 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "C2"
+                  "typedAttributes": {
+                    "cellReference": "C2"
                   },
                   "children": [
                     {
@@ -528,8 +528,8 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "A3"
+                  "typedAttributes": {
+                    "cellReference": "A3"
                   },
                   "children": [
                     {
@@ -544,8 +544,8 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "B3"
+                  "typedAttributes": {
+                    "cellReference": "B3"
                   },
                   "children": [
                     {
@@ -560,8 +560,8 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "C3"
+                  "typedAttributes": {
+                    "cellReference": "C3"
                   },
                   "children": [
                     {
@@ -589,9 +589,9 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "A9",
-                    "s": "1"
+                  "typedAttributes": {
+                    "cellReference": "A9",
+                    "styleIndex": "1"
                   },
                   "children": [
                     {
@@ -606,9 +606,9 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "B9",
-                    "s": "2"
+                  "typedAttributes": {
+                    "cellReference": "B9",
+                    "styleIndex": "2"
                   },
                   "children": [
                     {
@@ -623,9 +623,9 @@
                   "qname": "x:c",
                   "className": "Cell",
                   "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
-                  "extendedAttributes": {
-                    "r": "C9",
-                    "s": "3"
+                  "typedAttributes": {
+                    "cellReference": "C9",
+                    "styleIndex": "3"
                   },
                   "children": [
                     {

@@ -45,21 +45,35 @@ export class Body extends OpenXmlCompositeElement {
 // @public
 export class Bold extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "b";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    // Warning: (ae-forgotten-export) The symbol "BooleanValue" needs to be exported by the entry point index.d.ts
+    val: BooleanValue | undefined;
 }
 
 // @public
 export class BookmarkEnd extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
+    displacedByCustomXml: StringValue | undefined;
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "bookmarkEnd";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    validateRequired(): void;
 }
 
 // @public
@@ -75,7 +89,6 @@ export class BookmarkStart extends OpenXmlLeafElement {
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "bookmarkStart";
-    // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
     name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -145,31 +158,51 @@ export class Comment extends OpenXmlCompositeElement {
 // @public
 export class CommentRangeEnd extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    displacedByCustomXml: StringValue | undefined;
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "commentRangeEnd";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    validateRequired(): void;
 }
 
 // @public
 export class CommentRangeStart extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    displacedByCustomXml: StringValue | undefined;
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "commentRangeStart";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    validateRequired(): void;
 }
 
 // @public
 export class CommentReference extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "commentReference";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    validateRequired(): void;
 }
 
 // @public
@@ -325,23 +358,37 @@ export function createTotalPagesRun(): SimpleField;
 // @public
 export class DeletedRun extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    author: StringValue | undefined;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    date: DateTimeValue | undefined;
+    dateUtc: DateTimeValue | undefined;
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "del";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    validateRequired(): void;
 }
 
 // @public
 export class DeletedText extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "delText";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    space: StringValue | undefined;
 }
 
 // @public
@@ -431,11 +478,18 @@ export class FooterPart extends TypedXmlPart<Footer> {
 // @public
 export class FooterReference extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "footerReference";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    type: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -482,11 +536,18 @@ export class HeaderPart extends TypedXmlPart<Header> {
 // @public
 export class HeaderReference extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "headerReference";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    type: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -499,7 +560,6 @@ export class Hyperlink extends OpenXmlCompositeElement {
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     docLocation: StringValue | undefined;
-    // Warning: (ae-forgotten-export) The symbol "BooleanValue" needs to be exported by the entry point index.d.ts
     history: BooleanValue | undefined;
     id: StringValue | undefined;
     // (undocumented)
@@ -552,23 +612,37 @@ export class Indentation extends OpenXmlLeafElement {
 // @public
 export class InsertedRun extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    author: StringValue | undefined;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    date: DateTimeValue | undefined;
+    dateUtc: DateTimeValue | undefined;
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "ins";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    validateRequired(): void;
 }
 
 // @public
 export class Italic extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "i";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    val: BooleanValue | undefined;
 }
 
 // @public
@@ -707,11 +781,17 @@ export class ParagraphProperties extends OpenXmlCompositeElement {
 // @public
 export class ParagraphStyleId extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "pStyle";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    val: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -765,11 +845,17 @@ export class RunProperties extends OpenXmlCompositeElement {
 // @public
 export class RunStyle extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "rStyle";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    val: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -1093,11 +1179,16 @@ export class TabStop extends OpenXmlLeafElement {
 // @public
 export class Text extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "t";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
     // (undocumented)
     readonly prefix: "w";
+    space: StringValue | undefined;
 }
 
 // @public

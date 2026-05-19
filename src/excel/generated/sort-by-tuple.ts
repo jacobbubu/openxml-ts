@@ -5,6 +5,7 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  UInt32Value,
 } from "../../element/index.js";
 
 /** Sort By Tuple.
@@ -16,6 +17,21 @@ export class SortByTuple extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/spreadsheetml/2006/main" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** Member Name Count (:c) */
+  memberNameCount: UInt32Value | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "c": this.memberNameCount = UInt32Value.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.memberNameCount !== undefined) out.push(["c", this.memberNameCount.toString()]);
+    return out;
+  }
 
 }

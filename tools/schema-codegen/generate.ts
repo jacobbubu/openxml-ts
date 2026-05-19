@@ -75,6 +75,13 @@ async function main(): Promise<void> {
   const seenFiles = new Set<string>();
   const skippedDuplicates: string[] = [];
 
+  // 建索引：ClassName → SchemaType。给 generateElement 沿 BaseClass 链向上
+  // 收集继承的 Attributes（修 #139：Bold / Italic / FontSize 等 IsDerived leaf 缺 val）。
+  const typeIndex = new Map<string, SchemaType>();
+  for (const t of json.Types) {
+    if (t.ClassName.length > 0) typeIndex.set(t.ClassName, t);
+  }
+
   for (const type of json.Types) {
     if (type.ClassName.length === 0) continue;
     const fileName = classNameToFileName(type.ClassName);
@@ -88,6 +95,7 @@ async function main(): Promise<void> {
       targetNamespace: json.TargetNamespace,
       sourcePath,
       dotnetNamespace: subsystem.pascal,
+      typeIndex,
     });
     await writeFile(join(output, `${fileName}.ts`), content);
 

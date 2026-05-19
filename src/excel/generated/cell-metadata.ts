@@ -5,6 +5,7 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  UInt32Value,
 } from "../../element/index.js";
 
 /** Cell Metadata.
@@ -16,6 +17,21 @@ export class CellMetadata extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/spreadsheetml/2006/main" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** Metadata Block Count (:count) */
+  count: UInt32Value | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "count": this.count = UInt32Value.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.count !== undefined) out.push(["count", this.count.toString()]);
+    return out;
+  }
 
 }

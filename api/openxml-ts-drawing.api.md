@@ -171,11 +171,18 @@ export class AdjustValueList extends OpenXmlCompositeElement {
 // @public
 export class Alpha extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "alpha";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    // Warning: (ae-forgotten-export) The symbol "Int32Value" needs to be exported by the entry point index.d.ts
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -190,7 +197,6 @@ export class AlphaBiLevel extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
-    // Warning: (ae-forgotten-export) The symbol "Int32Value" needs to be exported by the entry point index.d.ts
     threshold: Int32Value | undefined;
     validateRequired(): void;
 }
@@ -230,11 +236,17 @@ export class AlphaInverse extends OpenXmlCompositeElement {
 // @public
 export class AlphaModulation extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "alphaMod";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -501,31 +513,52 @@ export class Band2Vertical extends OpenXmlCompositeElement {
 // @public
 export class Bevel extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    height: Int64Value | undefined;
+    // (undocumented)
     readonly localName: "bevel";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    preset: StringValue | undefined;
+    width: Int64Value | undefined;
 }
 
 // @public
 export class BevelBottom extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    height: Int64Value | undefined;
     // (undocumented)
     readonly localName: "bevelB";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    preset: StringValue | undefined;
+    width: Int64Value | undefined;
 }
 
 // @public
 export class BevelTop extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    height: Int64Value | undefined;
     // (undocumented)
     readonly localName: "bevelT";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    preset: StringValue | undefined;
+    width: Int64Value | undefined;
 }
 
 // @public
@@ -644,31 +677,49 @@ export class BlipFill extends OpenXmlCompositeElement {
 // @public
 export class Blue extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "blue";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class BlueModulation extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "blueMod";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class BlueOffset extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "blueOff";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -736,26 +787,42 @@ export class BottomBorder extends OpenXmlCompositeElement {
 
 // @public
 export class BottomBorderLineProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    capType: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    compoundLineType: StringValue | undefined;
     // (undocumented)
     readonly localName: "lnB";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    width: Int32Value | undefined;
 }
 
 // @public
 export class BottomLeftToTopRightBorderLineProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    capType: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    compoundLineType: StringValue | undefined;
     // (undocumented)
     readonly localName: "lnBlToTr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    width: Int32Value | undefined;
 }
 
 // @public
@@ -827,11 +894,20 @@ export class BulletColorText extends OpenXmlLeafElement {
 // @public
 export class BulletFont extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    characterSet: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "buFont";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
+    // Warning: (ae-forgotten-export) The symbol "HexBinaryValue" needs to be exported by the entry point index.d.ts
+    panose: HexBinaryValue | undefined;
+    pitchFamily: StringValue | undefined;
     // (undocumented)
     readonly prefix: "a";
+    typeface: StringValue | undefined;
 }
 
 // @public
@@ -960,21 +1036,35 @@ export class Chart extends OpenXmlLeafElement {
 // @public
 export class ChildExtents extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    cx: Int64Value | undefined;
+    cy: Int64Value | undefined;
+    // (undocumented)
     readonly localName: "chExt";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
 export class ChildOffset extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "chOff";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
+    x: Int64Value | undefined;
+    y: Int64Value | undefined;
 }
 
 // @public
@@ -1028,14 +1118,31 @@ export class ColorFrom extends OpenXmlCompositeElement {
 
 // @public
 export class ColorMap extends OpenXmlCompositeElement {
+    accent1: StringValue | undefined;
+    accent2: StringValue | undefined;
+    accent3: StringValue | undefined;
+    accent4: StringValue | undefined;
+    accent5: StringValue | undefined;
+    accent6: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    background1: StringValue | undefined;
+    background2: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    followedHyperlink: StringValue | undefined;
+    hyperlink: StringValue | undefined;
     // (undocumented)
     readonly localName: "clrMap";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    text1: StringValue | undefined;
+    text2: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -1130,11 +1237,19 @@ export class Complement extends OpenXmlLeafElement {
 // @public
 export class ComplexScriptFont extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    characterSet: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "cs";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
+    panose: HexBinaryValue | undefined;
+    pitchFamily: StringValue | undefined;
     // (undocumented)
     readonly prefix: "a";
+    typeface: StringValue | undefined;
 }
 
 // @public
@@ -1378,26 +1493,64 @@ export class DataModelExtension extends OpenXmlCompositeElement {
 
 // @public
 export class DefaultParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "defPPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
 export class DefaultRunProperties extends OpenXmlCompositeElement {
+    alternativeLanguage: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    baseline: Int32Value | undefined;
+    bold: BooleanValue | undefined;
+    bookmark: StringValue | undefined;
+    capital: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    dirty: BooleanValue | undefined;
+    fontSize: Int32Value | undefined;
+    italic: BooleanValue | undefined;
+    kerning: Int32Value | undefined;
+    kumimoji: BooleanValue | undefined;
+    language: StringValue | undefined;
     // (undocumented)
     readonly localName: "defRPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
+    noProof: BooleanValue | undefined;
+    normalizeHeight: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "a";
+    smartTagClean: BooleanValue | undefined;
+    smartTagId: UInt32Value | undefined;
+    spacing: Int32Value | undefined;
+    spellingError: BooleanValue | undefined;
+    strike: StringValue | undefined;
+    underline: StringValue | undefined;
 }
 
 // @public
@@ -1441,11 +1594,19 @@ export class Duotone extends OpenXmlCompositeElement {
 // @public
 export class EastAsianFont extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    characterSet: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "ea";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
+    panose: HexBinaryValue | undefined;
+    pitchFamily: StringValue | undefined;
     // (undocumented)
     readonly prefix: "a";
+    typeface: StringValue | undefined;
 }
 
 // @public
@@ -1466,13 +1627,19 @@ export class Effect extends OpenXmlLeafElement {
 // @public
 export class EffectContainer extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "cont";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    type: StringValue | undefined;
 }
 
 // @public
@@ -1494,13 +1661,19 @@ export abstract class EffectContainerType extends OpenXmlCompositeElement {
 // @public
 export class EffectDag extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "effectDag";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    type: StringValue | undefined;
 }
 
 // @public
@@ -1530,13 +1703,19 @@ export class EffectPropertiesType extends OpenXmlCompositeElement {
 // @public
 export class EffectReference extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "effectRef";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
@@ -1594,33 +1773,70 @@ export abstract class EmptyType extends OpenXmlLeafElement {
 // @public
 export class EndConnection extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    id: UInt32Value | undefined;
+    index: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "endCxn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
 export class EndParagraphRunProperties extends OpenXmlCompositeElement {
+    alternativeLanguage: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    baseline: Int32Value | undefined;
+    bold: BooleanValue | undefined;
+    bookmark: StringValue | undefined;
+    capital: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    dirty: BooleanValue | undefined;
+    fontSize: Int32Value | undefined;
+    italic: BooleanValue | undefined;
+    kerning: Int32Value | undefined;
+    kumimoji: BooleanValue | undefined;
+    language: StringValue | undefined;
     // (undocumented)
     readonly localName: "endParaRPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
+    noProof: BooleanValue | undefined;
+    normalizeHeight: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "a";
+    smartTagClean: BooleanValue | undefined;
+    smartTagId: UInt32Value | undefined;
+    spacing: Int32Value | undefined;
+    spellingError: BooleanValue | undefined;
+    strike: StringValue | undefined;
+    underline: StringValue | undefined;
 }
 
 // @public
 export class EndTime extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "end";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    time: UInt32Value | undefined;
+    track: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -1655,11 +1871,18 @@ export class ExtensionList extends OpenXmlCompositeElement {
 // @public
 export class Extents extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    cx: Int64Value | undefined;
+    cy: Int64Value | undefined;
+    // (undocumented)
     readonly localName: "ext";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
@@ -1762,23 +1985,37 @@ export class FillProperties extends OpenXmlCompositeElement {
 // @public
 export class FillRectangle extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    bottom: Int32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    left: Int32Value | undefined;
+    // (undocumented)
     readonly localName: "fillRect";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    right: Int32Value | undefined;
+    top: Int32Value | undefined;
 }
 
 // @public
 export class FillReference extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "fillRef";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
@@ -1796,11 +2033,19 @@ export class FillStyleList extends OpenXmlCompositeElement {
 // @public
 export class FillToRectangle extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    bottom: Int32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    left: Int32Value | undefined;
+    // (undocumented)
     readonly localName: "fillToRect";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    right: Int32Value | undefined;
+    top: Int32Value | undefined;
 }
 
 // @public
@@ -2113,31 +2358,49 @@ export class Grayscale extends OpenXmlLeafElement {
 // @public
 export class Green extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "green";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class GreenModulation extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "greenMod";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class GreenOffset extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "greenOff";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -2230,11 +2493,18 @@ export class GvmlGroupShapeExtensionList extends OpenXmlCompositeElement {
 // @public
 export class HeadEnd extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    length: StringValue | undefined;
+    // (undocumented)
     readonly localName: "headEnd";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    type: StringValue | undefined;
+    width: StringValue | undefined;
 }
 
 // @public
@@ -2305,11 +2575,17 @@ export class Hue extends OpenXmlLeafElement {
 // @public
 export class HueModulation extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "hueMod";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -2366,48 +2642,92 @@ export class HyperlinkExtensionList extends OpenXmlCompositeElement {
 
 // @public
 export class HyperlinkOnClick extends OpenXmlCompositeElement {
+    action: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    endSound: BooleanValue | undefined;
+    highlightClick: BooleanValue | undefined;
+    history: BooleanValue | undefined;
+    id: StringValue | undefined;
+    invalidUrl: StringValue | undefined;
     // (undocumented)
     readonly localName: "hlinkClick";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    targetFrame: StringValue | undefined;
+    tooltip: StringValue | undefined;
 }
 
 // @public
 export class HyperlinkOnHover extends OpenXmlCompositeElement {
+    action: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    endSound: BooleanValue | undefined;
+    highlightClick: BooleanValue | undefined;
+    history: BooleanValue | undefined;
+    id: StringValue | undefined;
+    invalidUrl: StringValue | undefined;
     // (undocumented)
     readonly localName: "hlinkHover";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    targetFrame: StringValue | undefined;
+    tooltip: StringValue | undefined;
 }
 
 // @public
 export class HyperlinkOnMouseOver extends OpenXmlCompositeElement {
+    action: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    endSound: BooleanValue | undefined;
+    highlightClick: BooleanValue | undefined;
+    history: BooleanValue | undefined;
+    id: StringValue | undefined;
+    invalidUrl: StringValue | undefined;
     // (undocumented)
     readonly localName: "hlinkMouseOver";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    targetFrame: StringValue | undefined;
+    tooltip: StringValue | undefined;
 }
 
 // @public
 export class HyperlinkSound extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    builtIn: BooleanValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    embed: StringValue | undefined;
+    // (undocumented)
     readonly localName: "snd";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
@@ -2522,11 +2842,19 @@ export class LastRow extends OpenXmlCompositeElement {
 // @public
 export class LatinFont extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    characterSet: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "latin";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
+    panose: HexBinaryValue | undefined;
+    pitchFamily: StringValue | undefined;
     // (undocumented)
     readonly prefix: "a";
+    typeface: StringValue | undefined;
 }
 
 // @public
@@ -2543,122 +2871,265 @@ export class LeftBorder extends OpenXmlCompositeElement {
 
 // @public
 export class LeftBorderLineProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    capType: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    compoundLineType: StringValue | undefined;
     // (undocumented)
     readonly localName: "lnL";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    width: Int32Value | undefined;
 }
 
 // @public
 export class Level1ParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "lvl1pPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
 export class Level2ParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "lvl2pPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
 export class Level3ParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "lvl3pPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
 export class Level4ParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "lvl4pPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
 export class Level5ParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "lvl5pPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
 export class Level6ParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "lvl6pPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
 export class Level7ParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "lvl7pPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
 export class Level8ParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "lvl8pPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
 export class Level9ParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "lvl9pPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
@@ -2804,13 +3275,19 @@ export abstract class LinePropertiesType extends OpenXmlCompositeElement {
 // @public
 export class LineReference extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "lnRef";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
@@ -2864,11 +3341,17 @@ export class ListStyle extends OpenXmlCompositeElement {
 // @public
 export class Luminance extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "lum";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -2890,21 +3373,33 @@ export class LuminanceEffect extends OpenXmlLeafElement {
 // @public
 export class LuminanceModulation extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "lumMod";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class LuminanceOffset extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "lumOff";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -3225,11 +3720,19 @@ export class NonVisualShapeProperties extends OpenXmlCompositeElement {
 // @public
 export class Normal extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    dx: Int64Value | undefined;
+    dy: Int64Value | undefined;
+    dz: Int64Value | undefined;
+    // (undocumented)
     readonly localName: "norm";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
@@ -3311,11 +3814,18 @@ export class OfficeStyleSheetExtensionList extends OpenXmlCompositeElement {
 // @public
 export class Offset extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "off";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
+    x: Int64Value | undefined;
+    y: Int64Value | undefined;
 }
 
 // @public
@@ -3345,26 +3855,51 @@ export class OuterShadow extends OpenXmlCompositeElement {
 
 // @public
 export class Outline extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    capType: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    compoundLineType: StringValue | undefined;
     // (undocumented)
     readonly localName: "ln";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    width: Int32Value | undefined;
 }
 
 // @public
 export class OverrideColorMapping extends OpenXmlCompositeElement {
+    accent1: StringValue | undefined;
+    accent2: StringValue | undefined;
+    accent3: StringValue | undefined;
+    accent4: StringValue | undefined;
+    accent5: StringValue | undefined;
+    accent6: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    background1: StringValue | undefined;
+    background2: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    followedHyperlink: StringValue | undefined;
+    hyperlink: StringValue | undefined;
     // (undocumented)
     readonly localName: "overrideClrMapping";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    text1: StringValue | undefined;
+    text2: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -3381,14 +3916,29 @@ export class Paragraph extends OpenXmlCompositeElement {
 
 // @public
 export class ParagraphProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    defaultTabSize: Int32Value | undefined;
+    eastAsianLineBreak: BooleanValue | undefined;
+    fontAlignment: StringValue | undefined;
+    height: BooleanValue | undefined;
+    indent: Int32Value | undefined;
+    latinLineBreak: BooleanValue | undefined;
+    leftMargin: Int32Value | undefined;
+    level: Int32Value | undefined;
     // (undocumented)
     readonly localName: "pPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    rightMargin: Int32Value | undefined;
+    rightToLeft: BooleanValue | undefined;
 }
 
 // @public
@@ -3528,11 +4078,18 @@ export class PictureLocks extends OpenXmlCompositeElement {
 // @public
 export class Point extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "pt";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
+    x: StringValue | undefined;
+    y: StringValue | undefined;
 }
 
 // @public
@@ -3555,11 +4112,18 @@ export abstract class Point2DType extends OpenXmlLeafElement {
 // @public
 export class Position extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "pos";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
+    x: StringValue | undefined;
+    y: StringValue | undefined;
 }
 
 // @public
@@ -3781,31 +4345,49 @@ export class Rectangle extends OpenXmlLeafElement {
 // @public
 export class Red extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "red";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class RedModulation extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "redMod";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class RedOffset extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "redOff";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -3890,7 +4472,6 @@ export class RgbColorModelHex extends OpenXmlCompositeElement {
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
-    // Warning: (ae-forgotten-export) The symbol "HexBinaryValue" needs to be exported by the entry point index.d.ts
     val: HexBinaryValue | undefined;
     validateRequired(): void;
 }
@@ -3929,14 +4510,22 @@ export class RightBorder extends OpenXmlCompositeElement {
 
 // @public
 export class RightBorderLineProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    capType: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    compoundLineType: StringValue | undefined;
     // (undocumented)
     readonly localName: "lnR";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    width: Int32Value | undefined;
 }
 
 // @public
@@ -3991,64 +4580,119 @@ export class Run extends OpenXmlCompositeElement {
 
 // @public
 export class RunProperties extends OpenXmlCompositeElement {
+    alternativeLanguage: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    baseline: Int32Value | undefined;
+    bold: BooleanValue | undefined;
+    bookmark: StringValue | undefined;
+    capital: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    dirty: BooleanValue | undefined;
+    fontSize: Int32Value | undefined;
+    italic: BooleanValue | undefined;
+    kerning: Int32Value | undefined;
+    kumimoji: BooleanValue | undefined;
+    language: StringValue | undefined;
     // (undocumented)
     readonly localName: "rPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
+    noProof: BooleanValue | undefined;
+    normalizeHeight: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "a";
+    smartTagClean: BooleanValue | undefined;
+    smartTagId: UInt32Value | undefined;
+    spacing: Int32Value | undefined;
+    spellingError: BooleanValue | undefined;
+    strike: StringValue | undefined;
+    underline: StringValue | undefined;
 }
 
 // @public
 export class Saturation extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "sat";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class SaturationModulation extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "satMod";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class SaturationOffset extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "satOff";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class ScaleX extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    denominator: Int32Value | undefined;
+    // (undocumented)
     readonly localName: "sx";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
+    numerator: Int32Value | undefined;
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
 export class ScaleY extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    denominator: Int32Value | undefined;
+    // (undocumented)
     readonly localName: "sy";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
+    numerator: Int32Value | undefined;
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
@@ -4084,11 +4728,17 @@ export class SchemeColor extends OpenXmlCompositeElement {
 // @public
 export class Shade extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "shade";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -4285,11 +4935,19 @@ export class SolidFill extends OpenXmlCompositeElement {
 // @public
 export class SourceRectangle extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    bottom: Int32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    left: Int32Value | undefined;
+    // (undocumented)
     readonly localName: "srcRect";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    right: Int32Value | undefined;
+    top: Int32Value | undefined;
 }
 
 // @public
@@ -4375,21 +5033,35 @@ export class SpacingPoints extends OpenXmlLeafElement {
 // @public
 export class StartConnection extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    id: UInt32Value | undefined;
+    index: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "stCxn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
 export class StartTime extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "st";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    time: UInt32Value | undefined;
+    track: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -4440,11 +5112,19 @@ export class SupplementalFont extends OpenXmlLeafElement {
 // @public
 export class SymbolFont extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    characterSet: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "sym";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
+    panose: HexBinaryValue | undefined;
+    pitchFamily: StringValue | undefined;
     // (undocumented)
     readonly prefix: "a";
+    typeface: StringValue | undefined;
 }
 
 // @public
@@ -4642,25 +5322,39 @@ export class TableRow extends OpenXmlCompositeElement {
 // @public
 export class TableStyle extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "tableStyle";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    styleId: StringValue | undefined;
+    styleName: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 export class TableStyleEntry extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "tblStyle";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    styleId: StringValue | undefined;
+    styleName: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -4739,11 +5433,18 @@ export class TabStopList extends OpenXmlCompositeElement {
 // @public
 export class TailEnd extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    length: StringValue | undefined;
+    // (undocumented)
     readonly localName: "tailEnd";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    type: StringValue | undefined;
+    width: StringValue | undefined;
 }
 
 // @public
@@ -4963,21 +5664,35 @@ export class Tile extends OpenXmlLeafElement {
 // @public
 export class TileRectangle extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    bottom: Int32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    left: Int32Value | undefined;
+    // (undocumented)
     readonly localName: "tileRect";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    right: Int32Value | undefined;
+    top: Int32Value | undefined;
 }
 
 // @public
 export class Tint extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "tint";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -5010,14 +5725,22 @@ export class TopBorder extends OpenXmlCompositeElement {
 
 // @public
 export class TopBorderLineProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    capType: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    compoundLineType: StringValue | undefined;
     // (undocumented)
     readonly localName: "lnT";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    width: Int32Value | undefined;
 }
 
 // @public
@@ -5034,14 +5757,22 @@ export class TopLeftToBottomRightBorder extends OpenXmlCompositeElement {
 
 // @public
 export class TopLeftToBottomRightBorderLineProperties extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    capType: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    compoundLineType: StringValue | undefined;
     // (undocumented)
     readonly localName: "lnTlToBr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    width: Int32Value | undefined;
 }
 
 // @public
@@ -5116,14 +5847,22 @@ export class TransformGroup extends OpenXmlCompositeElement {
 
 // @public
 export class Underline extends OpenXmlCompositeElement {
+    alignment: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    capType: StringValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    compoundLineType: StringValue | undefined;
     // (undocumented)
     readonly localName: "uLn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    width: Int32Value | undefined;
 }
 
 // @public
@@ -5161,11 +5900,19 @@ export class UnderlineFollowsText extends OpenXmlLeafElement {
 // @public
 export class UpVector extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    dx: Int64Value | undefined;
+    dy: Int64Value | undefined;
+    dz: Int64Value | undefined;
+    // (undocumented)
     readonly localName: "up";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public
@@ -5234,11 +5981,19 @@ export class VisualGroupShapeProperties extends OpenXmlCompositeElement {
 // @public
 export class WaveAudioFile extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    builtIn: BooleanValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    embed: StringValue | undefined;
+    // (undocumented)
     readonly localName: "wavAudioFile";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main";
     // (undocumented)
     readonly prefix: "a";
+    validateRequired(): void;
 }
 
 // @public

@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Presentation.FadeTransition
 
 import {
+  BooleanValue,
   OpenXmlLeafElement,
 } from "../../element/index.js";
 
@@ -15,6 +16,21 @@ export class FadeTransition extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/presentationml/2006/main" as const;
 
 
+  /** Transition Through Black (:thruBlk) */
+  throughBlack: BooleanValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "thruBlk": this.throughBlack = BooleanValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.throughBlack !== undefined) out.push(["thruBlk", this.throughBlack.toString()]);
+    return out;
+  }
 
 }

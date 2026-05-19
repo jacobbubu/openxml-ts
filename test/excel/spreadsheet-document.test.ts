@@ -111,7 +111,9 @@ describe("SpreadsheetDocument · SST resolver 自动注册", () => {
     const reopened = await SpreadsheetDocument.openAsync(out);
     const reWsp = reopened.workbookPart?.worksheetParts[0]!;
     const reCell = reWsp.worksheet.firstChild(SheetData)?.firstChild(Row)?.firstChild(Cell)!;
-    expect(reCell.extendedAttributes.get("t")).toBe("s");
+    // 修 codegen 漏取 BaseClass 继承属性后（#139），Cell.dataType 现在是 typed 字段，
+    // `t` 不再走 extendedAttributes。
+    expect(reCell.dataType?.toString()).toBe("s");
     expect(reCell.resolvedText).toBe("Apple");
   });
 });

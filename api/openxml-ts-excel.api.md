@@ -42,16 +42,29 @@ export class CalculationChainPart extends TypedXmlPart<CalculationChain> {
 //
 // @public
 export class Cell extends OpenXmlCompositeElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    cellMetaIndex: UInt32Value | undefined;
+    // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
+    cellReference: StringValue | undefined;
     // Warning: (ae-forgotten-export) The symbol "OpenXmlElementList" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    dataType: StringValue | undefined;
     // (undocumented)
     readonly localName: "c";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
     // (undocumented)
     readonly prefix: "x";
+    // Warning: (ae-forgotten-export) The symbol "BooleanValue" needs to be exported by the entry point index.d.ts
+    showPhonetic: BooleanValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "UInt32Value" needs to be exported by the entry point index.d.ts
+    styleIndex: UInt32Value | undefined;
+    valueMetaIndex: UInt32Value | undefined;
 }
 
 // @public
@@ -68,7 +81,6 @@ export interface CellAnchorPoint {
 //
 // @public
 export class CellFormula extends OpenXmlLeafElement {
-    // Warning: (ae-forgotten-export) The symbol "BooleanValue" needs to be exported by the entry point index.d.ts
     alwaysCalculateArray: BooleanValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -78,7 +90,6 @@ export class CellFormula extends OpenXmlLeafElement {
     protected collectAttributes(): Array<[string, string]>;
     dataTable2D: BooleanValue | undefined;
     dataTableRow: BooleanValue | undefined;
-    // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
     formulaType: StringValue | undefined;
     input1Deleted: BooleanValue | undefined;
     input2Deleted: BooleanValue | undefined;
@@ -91,7 +102,6 @@ export class CellFormula extends OpenXmlLeafElement {
     r1: StringValue | undefined;
     r2: StringValue | undefined;
     reference: StringValue | undefined;
-    // Warning: (ae-forgotten-export) The symbol "UInt32Value" needs to be exported by the entry point index.d.ts
     sharedIndex: UInt32Value | undefined;
     space: StringValue | undefined;
 }
@@ -99,11 +109,16 @@ export class CellFormula extends OpenXmlLeafElement {
 // @public
 export class CellValue extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "v";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
     // (undocumented)
     readonly prefix: "x";
+    space: StringValue | undefined;
 }
 
 // @public
@@ -554,11 +569,16 @@ export class Stylesheet extends OpenXmlCompositeElement {
 // @public
 export class Text extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
     readonly localName: "t";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
     // (undocumented)
     readonly prefix: "x";
+    space: StringValue | undefined;
 }
 
 // @public

@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Spreadsheet.MemberPropertiesMap
 
 import {
+  Int32Value,
   OpenXmlLeafElement,
 } from "../../element/index.js";
 
@@ -15,6 +16,21 @@ export class MemberPropertiesMap extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/spreadsheetml/2006/main" as const;
 
 
+  /** Shared Items Index (:v) */
+  val: Int32Value | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "v": this.val = Int32Value.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.val !== undefined) out.push(["v", this.val.toString()]);
+    return out;
+  }
 
 }

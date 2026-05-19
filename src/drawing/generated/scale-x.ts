@@ -3,7 +3,9 @@
 // @see DocumentFormat.OpenXml.Drawing.ScaleX
 
 import {
+  Int32Value,
   OpenXmlLeafElement,
+  assertRequired,
 } from "../../element/index.js";
 
 /** Horizontal Ratio.
@@ -15,6 +17,31 @@ export class ScaleX extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/drawingml/2006/main" as const;
 
 
+  /** Numerator (:n) */
+  numerator: Int32Value | undefined;
 
+  /** Denominator (:d) */
+  denominator: Int32Value | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "n": this.numerator = Int32Value.parse(value); return;
+      case "d": this.denominator = Int32Value.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.numerator !== undefined) out.push(["n", this.numerator.toString()]);
+    if (this.denominator !== undefined) out.push(["d", this.denominator.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.numerator, { attribute: ":n", elementClass: "ScaleX" });
+    assertRequired(this.denominator, { attribute: ":d", elementClass: "ScaleX" });
+  }
 }
