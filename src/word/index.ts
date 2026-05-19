@@ -20,6 +20,7 @@ import "./extensions/paragraph-indent.js";
 import "./extensions/paragraph-spacing.js";
 import "./extensions/paragraph-tab-stops.js";
 import "./extensions/run-extensions.js";
+import "./extensions/table-cell-shading.js";
 
 export { WordprocessingDocument } from "./word-document.js";
 

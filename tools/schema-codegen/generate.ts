@@ -196,6 +196,12 @@ function buildRegistry(
     // 但段落 / Run 直接子的最高频含义是 ParagraphProperties / RunProperties。
     "http://schemas.openxmlformats.org/wordprocessingml/2006/main::pPr": "ParagraphProperties",
     "http://schemas.openxmlformats.org/wordprocessingml/2006/main::rPr": "RunProperties",
+    // Word `<w:tcPr>` / `<w:tblPr>` / `<w:trPr>`：字典序 TableStyleConditional* 胜出，
+    // 但表格 / 行 / 单元格直接子的最高频含义是 canonical TableCellProperties / TableProperties /
+    // TableRowProperties。
+    "http://schemas.openxmlformats.org/wordprocessingml/2006/main::tcPr": "TableCellProperties",
+    "http://schemas.openxmlformats.org/wordprocessingml/2006/main::tblPr": "TableProperties",
+    "http://schemas.openxmlformats.org/wordprocessingml/2006/main::trPr": "TableRowProperties",
     // Word `<w:fldSimple>` 字典序 SimpleFieldRuby 胜出（拼音注音里的字段），
     // 但顶层段落用户最高频是 SimpleField（PAGE / NUMPAGES 等字段）。
     "http://schemas.openxmlformats.org/wordprocessingml/2006/main::fldSimple": "SimpleField",
