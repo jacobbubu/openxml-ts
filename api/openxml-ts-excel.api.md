@@ -106,6 +106,50 @@ export class CellValue extends OpenXmlLeafElement {
     readonly prefix: "x";
 }
 
+// @public
+export class Column extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    bestFit: BooleanValue | undefined;
+    collapsed: BooleanValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    customWidth: BooleanValue | undefined;
+    hidden: BooleanValue | undefined;
+    // (undocumented)
+    readonly localName: "col";
+    max: UInt32Value | undefined;
+    min: UInt32Value | undefined;
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    outlineLevel: StringValue | undefined;
+    phonetic: BooleanValue | undefined;
+    // (undocumented)
+    readonly prefix: "x";
+    style: UInt32Value | undefined;
+    validateRequired(): void;
+    width: StringValue | undefined;
+}
+
+// @public
+export class Columns extends OpenXmlCompositeElement {
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    readonly localName: "cols";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+}
+
+// @public (undocumented)
+export interface ColumnWidthRange {
+    readonly from: number;
+    readonly to: number;
+    readonly widthChars: number | undefined;
+}
+
 // @public (undocumented)
 export class CoreProperties {
     // Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
@@ -195,10 +239,16 @@ export interface FreezePanesOptions {
 }
 
 // @public
+export function getColumnWidth(worksheet: Worksheet, columnIndex: number): number | undefined;
+
+// @public
 export function getFreezePanes(worksheet: Worksheet): FreezePanesOptions | undefined;
 
 // @public
 export function getResolverForWorksheet(worksheet: Worksheet): SharedStringResolver | undefined;
+
+// @public
+export function getRowHeight(row: Row): number | undefined;
 
 // @public (undocumented)
 export class ImagePart extends BinaryPart {
@@ -293,7 +343,13 @@ export class Selection extends OpenXmlLeafElement {
 }
 
 // @public
+export function setColumnWidth(worksheet: Worksheet, range: ColumnWidthRange): void;
+
+// @public
 export function setFreezePanes(worksheet: Worksheet, options: FreezePanesOptions | undefined): void;
+
+// @public
+export function setRowHeight(row: Row, heightPoints: number | undefined): void;
 
 // @public
 export class SharedStringItem extends OpenXmlCompositeElement {
