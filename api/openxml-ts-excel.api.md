@@ -187,6 +187,16 @@ export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
 // @public
 export function extensionForMime(mime: string): string | undefined;
 
+// @public (undocumented)
+export interface FreezePanesOptions {
+    readonly columns?: number;
+    readonly rows?: number;
+    readonly topLeftCell?: string;
+}
+
+// @public
+export function getFreezePanes(worksheet: Worksheet): FreezePanesOptions | undefined;
+
 // @public
 export function getResolverForWorksheet(worksheet: Worksheet): SharedStringResolver | undefined;
 
@@ -212,6 +222,25 @@ export class InlineString extends OpenXmlCompositeElement {
 
 // @public
 export function mimeForExtension(ext: string): string | undefined;
+
+// @public
+export class Pane extends OpenXmlLeafElement {
+    activePane: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    horizontalSplit: StringValue | undefined;
+    // (undocumented)
+    readonly localName: "pane";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+    state: StringValue | undefined;
+    topLeftCell: StringValue | undefined;
+    verticalSplit: StringValue | undefined;
+}
 
 // @public
 export function registerSharedStringResolver(worksheet: Worksheet, resolver: SharedStringResolver): void;
@@ -244,6 +273,27 @@ export class Row extends OpenXmlCompositeElement {
     thickBot: BooleanValue | undefined;
     thickTop: BooleanValue | undefined;
 }
+
+// @public
+export class Selection extends OpenXmlLeafElement {
+    activeCell: StringValue | undefined;
+    activeCellId: UInt32Value | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
+    readonly localName: "selection";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    pane: StringValue | undefined;
+    // (undocumented)
+    readonly prefix: "x";
+    sequenceOfReferences: StringValue | undefined;
+}
+
+// @public
+export function setFreezePanes(worksheet: Worksheet, options: FreezePanesOptions | undefined): void;
 
 // @public
 export class SharedStringItem extends OpenXmlCompositeElement {
@@ -331,6 +381,54 @@ export class Sheets extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     readonly localName: "sheets";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+}
+
+// @public
+export class SheetView extends OpenXmlCompositeElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    colorId: UInt32Value | undefined;
+    defaultGridColor: BooleanValue | undefined;
+    // (undocumented)
+    readonly localName: "sheetView";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+    rightToLeft: BooleanValue | undefined;
+    showFormulas: BooleanValue | undefined;
+    showGridLines: BooleanValue | undefined;
+    showOutlineSymbols: BooleanValue | undefined;
+    showRowColHeaders: BooleanValue | undefined;
+    showRuler: BooleanValue | undefined;
+    showWhiteSpace: BooleanValue | undefined;
+    showZeros: BooleanValue | undefined;
+    tabSelected: BooleanValue | undefined;
+    topLeftCell: StringValue | undefined;
+    validateRequired(): void;
+    view: StringValue | undefined;
+    windowProtection: BooleanValue | undefined;
+    workbookViewId: UInt32Value | undefined;
+    zoomScale: UInt32Value | undefined;
+    zoomScaleNormal: UInt32Value | undefined;
+    zoomScalePageLayoutView: UInt32Value | undefined;
+    zoomScaleSheetLayoutView: UInt32Value | undefined;
+}
+
+// @public
+export class SheetViews extends OpenXmlCompositeElement {
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    readonly localName: "sheetViews";
     // (undocumented)
     readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
     // (undocumented)

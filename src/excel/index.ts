@@ -73,3 +73,14 @@ export { Stylesheet } from "./generated/stylesheet.js";
 export { Text } from "./generated/text.js";
 export { Workbook } from "./generated/workbook.js";
 export { Worksheet } from "./generated/worksheet.js";
+
+// ─── Excel 冻结窗格（Epic-32） ───────────────────────────────────────────────
+export { Pane } from "./generated/pane.js";
+export { Selection } from "./generated/selection.js";
+export { SheetView } from "./generated/sheet-view.js";
+export { SheetViews } from "./generated/sheet-views.js";
+export {
+  type FreezePanesOptions,
+  setFreezePanes,
+  getFreezePanes,
+} from "./worksheet-freeze.js";
