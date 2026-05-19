@@ -19,6 +19,7 @@ import "./extensions/run-extensions.js";
 import "./extensions/paragraph-extensions.js";
 import "./extensions/slide-extensions.js";
 import "./extensions/slide-title.js";
+import "./extensions/run-formatting.js";
 
 export { PresentationDocument } from "./presentation-document.js";
 export {
