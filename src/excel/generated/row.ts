@@ -60,18 +60,18 @@ export class Row extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":r": this.rowIndex = UInt32Value.parse(value); return;
-      case ":spans": this.spans = StringValue.parse(value); return;
-      case ":s": this.styleIndex = UInt32Value.parse(value); return;
-      case ":customFormat": this.customFormat = BooleanValue.parse(value); return;
-      case ":ht": this.height = StringValue.parse(value); return;
-      case ":hidden": this.hidden = BooleanValue.parse(value); return;
-      case ":customHeight": this.customHeight = BooleanValue.parse(value); return;
-      case ":outlineLevel": this.outlineLevel = StringValue.parse(value); return;
-      case ":collapsed": this.collapsed = BooleanValue.parse(value); return;
-      case ":thickTop": this.thickTop = BooleanValue.parse(value); return;
-      case ":thickBot": this.thickBot = BooleanValue.parse(value); return;
-      case ":ph": this.showPhonetic = BooleanValue.parse(value); return;
+      case "r": this.rowIndex = UInt32Value.parse(value); return;
+      case "spans": this.spans = StringValue.parse(value); return;
+      case "s": this.styleIndex = UInt32Value.parse(value); return;
+      case "customFormat": this.customFormat = BooleanValue.parse(value); return;
+      case "ht": this.height = StringValue.parse(value); return;
+      case "hidden": this.hidden = BooleanValue.parse(value); return;
+      case "customHeight": this.customHeight = BooleanValue.parse(value); return;
+      case "outlineLevel": this.outlineLevel = StringValue.parse(value); return;
+      case "collapsed": this.collapsed = BooleanValue.parse(value); return;
+      case "thickTop": this.thickTop = BooleanValue.parse(value); return;
+      case "thickBot": this.thickBot = BooleanValue.parse(value); return;
+      case "ph": this.showPhonetic = BooleanValue.parse(value); return;
       case "x14ac:dyDescent": this.dyDescent = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -80,18 +80,18 @@ export class Row extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.rowIndex !== undefined) out.push([":r", this.rowIndex.toString()]);
-    if (this.spans !== undefined) out.push([":spans", this.spans.toString()]);
-    if (this.styleIndex !== undefined) out.push([":s", this.styleIndex.toString()]);
-    if (this.customFormat !== undefined) out.push([":customFormat", this.customFormat.toString()]);
-    if (this.height !== undefined) out.push([":ht", this.height.toString()]);
-    if (this.hidden !== undefined) out.push([":hidden", this.hidden.toString()]);
-    if (this.customHeight !== undefined) out.push([":customHeight", this.customHeight.toString()]);
-    if (this.outlineLevel !== undefined) out.push([":outlineLevel", this.outlineLevel.toString()]);
-    if (this.collapsed !== undefined) out.push([":collapsed", this.collapsed.toString()]);
-    if (this.thickTop !== undefined) out.push([":thickTop", this.thickTop.toString()]);
-    if (this.thickBot !== undefined) out.push([":thickBot", this.thickBot.toString()]);
-    if (this.showPhonetic !== undefined) out.push([":ph", this.showPhonetic.toString()]);
+    if (this.rowIndex !== undefined) out.push(["r", this.rowIndex.toString()]);
+    if (this.spans !== undefined) out.push(["spans", this.spans.toString()]);
+    if (this.styleIndex !== undefined) out.push(["s", this.styleIndex.toString()]);
+    if (this.customFormat !== undefined) out.push(["customFormat", this.customFormat.toString()]);
+    if (this.height !== undefined) out.push(["ht", this.height.toString()]);
+    if (this.hidden !== undefined) out.push(["hidden", this.hidden.toString()]);
+    if (this.customHeight !== undefined) out.push(["customHeight", this.customHeight.toString()]);
+    if (this.outlineLevel !== undefined) out.push(["outlineLevel", this.outlineLevel.toString()]);
+    if (this.collapsed !== undefined) out.push(["collapsed", this.collapsed.toString()]);
+    if (this.thickTop !== undefined) out.push(["thickTop", this.thickTop.toString()]);
+    if (this.thickBot !== undefined) out.push(["thickBot", this.thickBot.toString()]);
+    if (this.showPhonetic !== undefined) out.push(["ph", this.showPhonetic.toString()]);
     if (this.dyDescent !== undefined) out.push(["x14ac:dyDescent", this.dyDescent.toString()]);
     return out;
   }

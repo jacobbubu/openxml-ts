@@ -24,8 +24,8 @@ export class CustomFilter extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":operator": this.operator = StringValue.parse(value); return;
-      case ":val": this.val = StringValue.parse(value); return;
+      case "operator": this.operator = StringValue.parse(value); return;
+      case "val": this.val = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -33,8 +33,8 @@ export class CustomFilter extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.operator !== undefined) out.push([":operator", this.operator.toString()]);
-    if (this.val !== undefined) out.push([":val", this.val.toString()]);
+    if (this.operator !== undefined) out.push(["operator", this.operator.toString()]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
     return out;
   }
 

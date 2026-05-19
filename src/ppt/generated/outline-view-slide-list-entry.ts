@@ -27,7 +27,7 @@ export class OutlineViewSlideListEntry extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "r:id": this.id = StringValue.parse(value); return;
-      case ":collapse": this.collapse = BooleanValue.parse(value); return;
+      case "collapse": this.collapse = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -36,7 +36,7 @@ export class OutlineViewSlideListEntry extends OpenXmlLeafElement {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
-    if (this.collapse !== undefined) out.push([":collapse", this.collapse.toString()]);
+    if (this.collapse !== undefined) out.push(["collapse", this.collapse.toString()]);
     return out;
   }
 

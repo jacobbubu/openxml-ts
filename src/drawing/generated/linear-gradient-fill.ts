@@ -26,8 +26,8 @@ export class LinearGradientFill extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":ang": this.angle = Int32Value.parse(value); assertNumber(this.angle, { min: 0 }, { attribute: ":ang", elementClass: "LinearGradientFill" }); return;
-      case ":scaled": this.scaled = BooleanValue.parse(value); return;
+      case "ang": this.angle = Int32Value.parse(value); assertNumber(this.angle, { min: 0 }, { attribute: ":ang", elementClass: "LinearGradientFill" }); return;
+      case "scaled": this.scaled = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class LinearGradientFill extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.angle !== undefined) out.push([":ang", this.angle.toString()]);
-    if (this.scaled !== undefined) out.push([":scaled", this.scaled.toString()]);
+    if (this.angle !== undefined) out.push(["ang", this.angle.toString()]);
+    if (this.scaled !== undefined) out.push(["scaled", this.scaled.toString()]);
     return out;
   }
 

@@ -28,9 +28,9 @@ export class AnimateEffect extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":transition": this.transition = StringValue.parse(value); return;
-      case ":filter": this.filter = StringValue.parse(value); return;
-      case ":prLst": this.propertyList = StringValue.parse(value); return;
+      case "transition": this.transition = StringValue.parse(value); return;
+      case "filter": this.filter = StringValue.parse(value); return;
+      case "prLst": this.propertyList = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -38,9 +38,9 @@ export class AnimateEffect extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.transition !== undefined) out.push([":transition", this.transition.toString()]);
-    if (this.filter !== undefined) out.push([":filter", this.filter.toString()]);
-    if (this.propertyList !== undefined) out.push([":prLst", this.propertyList.toString()]);
+    if (this.transition !== undefined) out.push(["transition", this.transition.toString()]);
+    if (this.filter !== undefined) out.push(["filter", this.filter.toString()]);
+    if (this.propertyList !== undefined) out.push(["prLst", this.propertyList.toString()]);
     return out;
   }
 

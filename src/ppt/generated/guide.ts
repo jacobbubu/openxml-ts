@@ -25,8 +25,8 @@ export class Guide extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":orient": this.orientation = StringValue.parse(value); return;
-      case ":pos": this.position = Int32Value.parse(value); return;
+      case "orient": this.orientation = StringValue.parse(value); return;
+      case "pos": this.position = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class Guide extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.orientation !== undefined) out.push([":orient", this.orientation.toString()]);
-    if (this.position !== undefined) out.push([":pos", this.position.toString()]);
+    if (this.orientation !== undefined) out.push(["orient", this.orientation.toString()]);
+    if (this.position !== undefined) out.push(["pos", this.position.toString()]);
     return out;
   }
 

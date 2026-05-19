@@ -26,8 +26,8 @@ export class NameIndex extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":x": this.index = UInt32Value.parse(value); return;
-      case ":s": this.isASet = BooleanValue.parse(value); return;
+      case "x": this.index = UInt32Value.parse(value); return;
+      case "s": this.isASet = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class NameIndex extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.index !== undefined) out.push([":x", this.index.toString()]);
-    if (this.isASet !== undefined) out.push([":s", this.isASet.toString()]);
+    if (this.index !== undefined) out.push(["x", this.index.toString()]);
+    if (this.isASet !== undefined) out.push(["s", this.isASet.toString()]);
     return out;
   }
 

@@ -48,15 +48,15 @@ export class MemberProperty extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":showCell": this.showCell = BooleanValue.parse(value); return;
-      case ":showTip": this.showTip = BooleanValue.parse(value); return;
-      case ":showAsCaption": this.showAsCaption = BooleanValue.parse(value); return;
-      case ":nameLen": this.nameLength = UInt32Value.parse(value); return;
-      case ":pPos": this.propertyNamePosition = UInt32Value.parse(value); return;
-      case ":pLen": this.propertyNameLength = UInt32Value.parse(value); return;
-      case ":level": this.level = UInt32Value.parse(value); return;
-      case ":field": this.field = UInt32Value.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "showCell": this.showCell = BooleanValue.parse(value); return;
+      case "showTip": this.showTip = BooleanValue.parse(value); return;
+      case "showAsCaption": this.showAsCaption = BooleanValue.parse(value); return;
+      case "nameLen": this.nameLength = UInt32Value.parse(value); return;
+      case "pPos": this.propertyNamePosition = UInt32Value.parse(value); return;
+      case "pLen": this.propertyNameLength = UInt32Value.parse(value); return;
+      case "level": this.level = UInt32Value.parse(value); return;
+      case "field": this.field = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -64,15 +64,15 @@ export class MemberProperty extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.showCell !== undefined) out.push([":showCell", this.showCell.toString()]);
-    if (this.showTip !== undefined) out.push([":showTip", this.showTip.toString()]);
-    if (this.showAsCaption !== undefined) out.push([":showAsCaption", this.showAsCaption.toString()]);
-    if (this.nameLength !== undefined) out.push([":nameLen", this.nameLength.toString()]);
-    if (this.propertyNamePosition !== undefined) out.push([":pPos", this.propertyNamePosition.toString()]);
-    if (this.propertyNameLength !== undefined) out.push([":pLen", this.propertyNameLength.toString()]);
-    if (this.level !== undefined) out.push([":level", this.level.toString()]);
-    if (this.field !== undefined) out.push([":field", this.field.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.showCell !== undefined) out.push(["showCell", this.showCell.toString()]);
+    if (this.showTip !== undefined) out.push(["showTip", this.showTip.toString()]);
+    if (this.showAsCaption !== undefined) out.push(["showAsCaption", this.showAsCaption.toString()]);
+    if (this.nameLength !== undefined) out.push(["nameLen", this.nameLength.toString()]);
+    if (this.propertyNamePosition !== undefined) out.push(["pPos", this.propertyNamePosition.toString()]);
+    if (this.propertyNameLength !== undefined) out.push(["pLen", this.propertyNameLength.toString()]);
+    if (this.level !== undefined) out.push(["level", this.level.toString()]);
+    if (this.field !== undefined) out.push(["field", this.field.toString()]);
     return out;
   }
 

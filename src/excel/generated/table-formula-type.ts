@@ -25,7 +25,7 @@ export abstract class TableFormulaType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":array": this.array = BooleanValue.parse(value); return;
+      case "array": this.array = BooleanValue.parse(value); return;
       case "xml:space": this.space = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -34,7 +34,7 @@ export abstract class TableFormulaType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.array !== undefined) out.push([":array", this.array.toString()]);
+    if (this.array !== undefined) out.push(["array", this.array.toString()]);
     if (this.space !== undefined) out.push(["xml:space", this.space.toString()]);
     return out;
   }

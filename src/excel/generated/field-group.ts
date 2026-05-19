@@ -25,8 +25,8 @@ export class FieldGroup extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":par": this.parentId = UInt32Value.parse(value); return;
-      case ":base": this.base = UInt32Value.parse(value); return;
+      case "par": this.parentId = UInt32Value.parse(value); return;
+      case "base": this.base = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class FieldGroup extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.parentId !== undefined) out.push([":par", this.parentId.toString()]);
-    if (this.base !== undefined) out.push([":base", this.base.toString()]);
+    if (this.parentId !== undefined) out.push(["par", this.parentId.toString()]);
+    if (this.base !== undefined) out.push(["base", this.base.toString()]);
     return out;
   }
 

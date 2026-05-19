@@ -88,28 +88,28 @@ export class QueryTable extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":headers": this.headers = BooleanValue.parse(value); return;
-      case ":rowNumbers": this.rowNumbers = BooleanValue.parse(value); return;
-      case ":disableRefresh": this.disableRefresh = BooleanValue.parse(value); return;
-      case ":backgroundRefresh": this.backgroundRefresh = BooleanValue.parse(value); return;
-      case ":firstBackgroundRefresh": this.firstBackgroundRefresh = BooleanValue.parse(value); return;
-      case ":refreshOnLoad": this.refreshOnLoad = BooleanValue.parse(value); return;
-      case ":growShrinkType": this.growShrinkType = StringValue.parse(value); return;
-      case ":fillFormulas": this.fillFormulas = BooleanValue.parse(value); return;
-      case ":removeDataOnSave": this.removeDataOnSave = BooleanValue.parse(value); return;
-      case ":disableEdit": this.disableEdit = BooleanValue.parse(value); return;
-      case ":preserveFormatting": this.preserveFormatting = BooleanValue.parse(value); return;
-      case ":adjustColumnWidth": this.adjustColumnWidth = BooleanValue.parse(value); return;
-      case ":intermediate": this.intermediate = BooleanValue.parse(value); return;
-      case ":connectionId": this.connectionId = UInt32Value.parse(value); return;
-      case ":autoFormatId": this.autoFormatId = UInt32Value.parse(value); return;
-      case ":applyNumberFormats": this.applyNumberFormats = BooleanValue.parse(value); return;
-      case ":applyBorderFormats": this.applyBorderFormats = BooleanValue.parse(value); return;
-      case ":applyFontFormats": this.applyFontFormats = BooleanValue.parse(value); return;
-      case ":applyPatternFormats": this.applyPatternFormats = BooleanValue.parse(value); return;
-      case ":applyAlignmentFormats": this.applyAlignmentFormats = BooleanValue.parse(value); return;
-      case ":applyWidthHeightFormats": this.applyWidthHeightFormats = BooleanValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "headers": this.headers = BooleanValue.parse(value); return;
+      case "rowNumbers": this.rowNumbers = BooleanValue.parse(value); return;
+      case "disableRefresh": this.disableRefresh = BooleanValue.parse(value); return;
+      case "backgroundRefresh": this.backgroundRefresh = BooleanValue.parse(value); return;
+      case "firstBackgroundRefresh": this.firstBackgroundRefresh = BooleanValue.parse(value); return;
+      case "refreshOnLoad": this.refreshOnLoad = BooleanValue.parse(value); return;
+      case "growShrinkType": this.growShrinkType = StringValue.parse(value); return;
+      case "fillFormulas": this.fillFormulas = BooleanValue.parse(value); return;
+      case "removeDataOnSave": this.removeDataOnSave = BooleanValue.parse(value); return;
+      case "disableEdit": this.disableEdit = BooleanValue.parse(value); return;
+      case "preserveFormatting": this.preserveFormatting = BooleanValue.parse(value); return;
+      case "adjustColumnWidth": this.adjustColumnWidth = BooleanValue.parse(value); return;
+      case "intermediate": this.intermediate = BooleanValue.parse(value); return;
+      case "connectionId": this.connectionId = UInt32Value.parse(value); return;
+      case "autoFormatId": this.autoFormatId = UInt32Value.parse(value); return;
+      case "applyNumberFormats": this.applyNumberFormats = BooleanValue.parse(value); return;
+      case "applyBorderFormats": this.applyBorderFormats = BooleanValue.parse(value); return;
+      case "applyFontFormats": this.applyFontFormats = BooleanValue.parse(value); return;
+      case "applyPatternFormats": this.applyPatternFormats = BooleanValue.parse(value); return;
+      case "applyAlignmentFormats": this.applyAlignmentFormats = BooleanValue.parse(value); return;
+      case "applyWidthHeightFormats": this.applyWidthHeightFormats = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -117,28 +117,28 @@ export class QueryTable extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.headers !== undefined) out.push([":headers", this.headers.toString()]);
-    if (this.rowNumbers !== undefined) out.push([":rowNumbers", this.rowNumbers.toString()]);
-    if (this.disableRefresh !== undefined) out.push([":disableRefresh", this.disableRefresh.toString()]);
-    if (this.backgroundRefresh !== undefined) out.push([":backgroundRefresh", this.backgroundRefresh.toString()]);
-    if (this.firstBackgroundRefresh !== undefined) out.push([":firstBackgroundRefresh", this.firstBackgroundRefresh.toString()]);
-    if (this.refreshOnLoad !== undefined) out.push([":refreshOnLoad", this.refreshOnLoad.toString()]);
-    if (this.growShrinkType !== undefined) out.push([":growShrinkType", this.growShrinkType.toString()]);
-    if (this.fillFormulas !== undefined) out.push([":fillFormulas", this.fillFormulas.toString()]);
-    if (this.removeDataOnSave !== undefined) out.push([":removeDataOnSave", this.removeDataOnSave.toString()]);
-    if (this.disableEdit !== undefined) out.push([":disableEdit", this.disableEdit.toString()]);
-    if (this.preserveFormatting !== undefined) out.push([":preserveFormatting", this.preserveFormatting.toString()]);
-    if (this.adjustColumnWidth !== undefined) out.push([":adjustColumnWidth", this.adjustColumnWidth.toString()]);
-    if (this.intermediate !== undefined) out.push([":intermediate", this.intermediate.toString()]);
-    if (this.connectionId !== undefined) out.push([":connectionId", this.connectionId.toString()]);
-    if (this.autoFormatId !== undefined) out.push([":autoFormatId", this.autoFormatId.toString()]);
-    if (this.applyNumberFormats !== undefined) out.push([":applyNumberFormats", this.applyNumberFormats.toString()]);
-    if (this.applyBorderFormats !== undefined) out.push([":applyBorderFormats", this.applyBorderFormats.toString()]);
-    if (this.applyFontFormats !== undefined) out.push([":applyFontFormats", this.applyFontFormats.toString()]);
-    if (this.applyPatternFormats !== undefined) out.push([":applyPatternFormats", this.applyPatternFormats.toString()]);
-    if (this.applyAlignmentFormats !== undefined) out.push([":applyAlignmentFormats", this.applyAlignmentFormats.toString()]);
-    if (this.applyWidthHeightFormats !== undefined) out.push([":applyWidthHeightFormats", this.applyWidthHeightFormats.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.headers !== undefined) out.push(["headers", this.headers.toString()]);
+    if (this.rowNumbers !== undefined) out.push(["rowNumbers", this.rowNumbers.toString()]);
+    if (this.disableRefresh !== undefined) out.push(["disableRefresh", this.disableRefresh.toString()]);
+    if (this.backgroundRefresh !== undefined) out.push(["backgroundRefresh", this.backgroundRefresh.toString()]);
+    if (this.firstBackgroundRefresh !== undefined) out.push(["firstBackgroundRefresh", this.firstBackgroundRefresh.toString()]);
+    if (this.refreshOnLoad !== undefined) out.push(["refreshOnLoad", this.refreshOnLoad.toString()]);
+    if (this.growShrinkType !== undefined) out.push(["growShrinkType", this.growShrinkType.toString()]);
+    if (this.fillFormulas !== undefined) out.push(["fillFormulas", this.fillFormulas.toString()]);
+    if (this.removeDataOnSave !== undefined) out.push(["removeDataOnSave", this.removeDataOnSave.toString()]);
+    if (this.disableEdit !== undefined) out.push(["disableEdit", this.disableEdit.toString()]);
+    if (this.preserveFormatting !== undefined) out.push(["preserveFormatting", this.preserveFormatting.toString()]);
+    if (this.adjustColumnWidth !== undefined) out.push(["adjustColumnWidth", this.adjustColumnWidth.toString()]);
+    if (this.intermediate !== undefined) out.push(["intermediate", this.intermediate.toString()]);
+    if (this.connectionId !== undefined) out.push(["connectionId", this.connectionId.toString()]);
+    if (this.autoFormatId !== undefined) out.push(["autoFormatId", this.autoFormatId.toString()]);
+    if (this.applyNumberFormats !== undefined) out.push(["applyNumberFormats", this.applyNumberFormats.toString()]);
+    if (this.applyBorderFormats !== undefined) out.push(["applyBorderFormats", this.applyBorderFormats.toString()]);
+    if (this.applyFontFormats !== undefined) out.push(["applyFontFormats", this.applyFontFormats.toString()]);
+    if (this.applyPatternFormats !== undefined) out.push(["applyPatternFormats", this.applyPatternFormats.toString()]);
+    if (this.applyAlignmentFormats !== undefined) out.push(["applyAlignmentFormats", this.applyAlignmentFormats.toString()]);
+    if (this.applyWidthHeightFormats !== undefined) out.push(["applyWidthHeightFormats", this.applyWidthHeightFormats.toString()]);
     return out;
   }
 

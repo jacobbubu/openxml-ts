@@ -26,8 +26,8 @@ export class GradientFill extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":flip": this.flip = StringValue.parse(value); return;
-      case ":rotWithShape": this.rotateWithShape = BooleanValue.parse(value); return;
+      case "flip": this.flip = StringValue.parse(value); return;
+      case "rotWithShape": this.rotateWithShape = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class GradientFill extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.flip !== undefined) out.push([":flip", this.flip.toString()]);
-    if (this.rotateWithShape !== undefined) out.push([":rotWithShape", this.rotateWithShape.toString()]);
+    if (this.flip !== undefined) out.push(["flip", this.flip.toString()]);
+    if (this.rotateWithShape !== undefined) out.push(["rotWithShape", this.rotateWithShape.toString()]);
     return out;
   }
 

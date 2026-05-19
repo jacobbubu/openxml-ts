@@ -26,7 +26,7 @@ export class Fonts extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":count": this.count = UInt32Value.parse(value); return;
+      case "count": this.count = UInt32Value.parse(value); return;
       case "x14ac:knownFonts": this.knownFonts = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -35,7 +35,7 @@ export class Fonts extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.count !== undefined) out.push([":count", this.count.toString()]);
+    if (this.count !== undefined) out.push(["count", this.count.toString()]);
     if (this.knownFonts !== undefined) out.push(["x14ac:knownFonts", this.knownFonts.toString()]);
     return out;
   }

@@ -33,10 +33,10 @@ export class Comment extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":ref": this.reference = StringValue.parse(value); return;
-      case ":authorId": this.authorId = UInt32Value.parse(value); return;
-      case ":guid": this.guid = StringValue.parse(value); return;
-      case ":shapeId": this.shapeId = UInt32Value.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
+      case "authorId": this.authorId = UInt32Value.parse(value); return;
+      case "guid": this.guid = StringValue.parse(value); return;
+      case "shapeId": this.shapeId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -44,10 +44,10 @@ export class Comment extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
-    if (this.authorId !== undefined) out.push([":authorId", this.authorId.toString()]);
-    if (this.guid !== undefined) out.push([":guid", this.guid.toString()]);
-    if (this.shapeId !== undefined) out.push([":shapeId", this.shapeId.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
+    if (this.authorId !== undefined) out.push(["authorId", this.authorId.toString()]);
+    if (this.guid !== undefined) out.push(["guid", this.guid.toString()]);
+    if (this.shapeId !== undefined) out.push(["shapeId", this.shapeId.toString()]);
     return out;
   }
 

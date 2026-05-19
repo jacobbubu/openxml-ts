@@ -25,8 +25,8 @@ export class Tag extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":val": this.val = StringValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "val": this.val = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class Tag extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.val !== undefined) out.push([":val", this.val.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
     return out;
   }
 

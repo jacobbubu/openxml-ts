@@ -26,8 +26,8 @@ export class Filters extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":blank": this.blank = BooleanValue.parse(value); return;
-      case ":calendarType": this.calendarType = StringValue.parse(value); return;
+      case "blank": this.blank = BooleanValue.parse(value); return;
+      case "calendarType": this.calendarType = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class Filters extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.blank !== undefined) out.push([":blank", this.blank.toString()]);
-    if (this.calendarType !== undefined) out.push([":calendarType", this.calendarType.toString()]);
+    if (this.blank !== undefined) out.push(["blank", this.blank.toString()]);
+    if (this.calendarType !== undefined) out.push(["calendarType", this.calendarType.toString()]);
     return out;
   }
 

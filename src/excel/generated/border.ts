@@ -28,9 +28,9 @@ export class Border extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":diagonalUp": this.diagonalUp = BooleanValue.parse(value); return;
-      case ":diagonalDown": this.diagonalDown = BooleanValue.parse(value); return;
-      case ":outline": this.outline = BooleanValue.parse(value); return;
+      case "diagonalUp": this.diagonalUp = BooleanValue.parse(value); return;
+      case "diagonalDown": this.diagonalDown = BooleanValue.parse(value); return;
+      case "outline": this.outline = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -38,9 +38,9 @@ export class Border extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.diagonalUp !== undefined) out.push([":diagonalUp", this.diagonalUp.toString()]);
-    if (this.diagonalDown !== undefined) out.push([":diagonalDown", this.diagonalDown.toString()]);
-    if (this.outline !== undefined) out.push([":outline", this.outline.toString()]);
+    if (this.diagonalUp !== undefined) out.push(["diagonalUp", this.diagonalUp.toString()]);
+    if (this.diagonalDown !== undefined) out.push(["diagonalDown", this.diagonalDown.toString()]);
+    if (this.outline !== undefined) out.push(["outline", this.outline.toString()]);
     return out;
   }
 

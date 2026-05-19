@@ -32,9 +32,9 @@ export class PresetShadow extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":prst": this.preset = StringValue.parse(value); return;
-      case ":dist": this.distance = Int64Value.parse(value); assertNumber(this.distance, { min: 0, max: 2147483647 }, { attribute: ":dist", elementClass: "PresetShadow" }); return;
-      case ":dir": this.direction = Int32Value.parse(value); assertNumber(this.direction, { min: 0 }, { attribute: ":dir", elementClass: "PresetShadow" }); return;
+      case "prst": this.preset = StringValue.parse(value); return;
+      case "dist": this.distance = Int64Value.parse(value); assertNumber(this.distance, { min: 0, max: 2147483647 }, { attribute: ":dist", elementClass: "PresetShadow" }); return;
+      case "dir": this.direction = Int32Value.parse(value); assertNumber(this.direction, { min: 0 }, { attribute: ":dir", elementClass: "PresetShadow" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -42,9 +42,9 @@ export class PresetShadow extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.preset !== undefined) out.push([":prst", this.preset.toString()]);
-    if (this.distance !== undefined) out.push([":dist", this.distance.toString()]);
-    if (this.direction !== undefined) out.push([":dir", this.direction.toString()]);
+    if (this.preset !== undefined) out.push(["prst", this.preset.toString()]);
+    if (this.distance !== undefined) out.push(["dist", this.distance.toString()]);
+    if (this.direction !== undefined) out.push(["dir", this.direction.toString()]);
     return out;
   }
 

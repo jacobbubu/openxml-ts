@@ -40,12 +40,12 @@ export class NewCell extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":r": this.cellReference = StringValue.parse(value); return;
-      case ":s": this.styleIndex = UInt32Value.parse(value); return;
-      case ":t": this.dataType = StringValue.parse(value); return;
-      case ":cm": this.cellMetaIndex = UInt32Value.parse(value); return;
-      case ":vm": this.valueMetaIndex = UInt32Value.parse(value); return;
-      case ":ph": this.showPhonetic = BooleanValue.parse(value); return;
+      case "r": this.cellReference = StringValue.parse(value); return;
+      case "s": this.styleIndex = UInt32Value.parse(value); return;
+      case "t": this.dataType = StringValue.parse(value); return;
+      case "cm": this.cellMetaIndex = UInt32Value.parse(value); return;
+      case "vm": this.valueMetaIndex = UInt32Value.parse(value); return;
+      case "ph": this.showPhonetic = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -53,12 +53,12 @@ export class NewCell extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.cellReference !== undefined) out.push([":r", this.cellReference.toString()]);
-    if (this.styleIndex !== undefined) out.push([":s", this.styleIndex.toString()]);
-    if (this.dataType !== undefined) out.push([":t", this.dataType.toString()]);
-    if (this.cellMetaIndex !== undefined) out.push([":cm", this.cellMetaIndex.toString()]);
-    if (this.valueMetaIndex !== undefined) out.push([":vm", this.valueMetaIndex.toString()]);
-    if (this.showPhonetic !== undefined) out.push([":ph", this.showPhonetic.toString()]);
+    if (this.cellReference !== undefined) out.push(["r", this.cellReference.toString()]);
+    if (this.styleIndex !== undefined) out.push(["s", this.styleIndex.toString()]);
+    if (this.dataType !== undefined) out.push(["t", this.dataType.toString()]);
+    if (this.cellMetaIndex !== undefined) out.push(["cm", this.cellMetaIndex.toString()]);
+    if (this.valueMetaIndex !== undefined) out.push(["vm", this.valueMetaIndex.toString()]);
+    if (this.showPhonetic !== undefined) out.push(["ph", this.showPhonetic.toString()]);
     return out;
   }
 

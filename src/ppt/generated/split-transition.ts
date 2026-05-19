@@ -24,8 +24,8 @@ export class SplitTransition extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":orient": this.orientation = StringValue.parse(value); return;
-      case ":dir": this.direction = StringValue.parse(value); return;
+      case "orient": this.orientation = StringValue.parse(value); return;
+      case "dir": this.direction = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -33,8 +33,8 @@ export class SplitTransition extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.orientation !== undefined) out.push([":orient", this.orientation.toString()]);
-    if (this.direction !== undefined) out.push([":dir", this.direction.toString()]);
+    if (this.orientation !== undefined) out.push(["orient", this.orientation.toString()]);
+    if (this.direction !== undefined) out.push(["dir", this.direction.toString()]);
     return out;
   }
 

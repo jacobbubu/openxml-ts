@@ -25,8 +25,8 @@ export class NormalAutoFit extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":fontScale": this.fontScale = Int32Value.parse(value); assertNumber(this.fontScale, { min: 1000, max: 100000 }, { attribute: ":fontScale", elementClass: "NormalAutoFit" }); return;
-      case ":lnSpcReduction": this.lineSpaceReduction = Int32Value.parse(value); assertNumber(this.lineSpaceReduction, { min: 0, max: 13200000 }, { attribute: ":lnSpcReduction", elementClass: "NormalAutoFit" }); return;
+      case "fontScale": this.fontScale = Int32Value.parse(value); assertNumber(this.fontScale, { min: 1000, max: 100000 }, { attribute: ":fontScale", elementClass: "NormalAutoFit" }); return;
+      case "lnSpcReduction": this.lineSpaceReduction = Int32Value.parse(value); assertNumber(this.lineSpaceReduction, { min: 0, max: 13200000 }, { attribute: ":lnSpcReduction", elementClass: "NormalAutoFit" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class NormalAutoFit extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.fontScale !== undefined) out.push([":fontScale", this.fontScale.toString()]);
-    if (this.lineSpaceReduction !== undefined) out.push([":lnSpcReduction", this.lineSpaceReduction.toString()]);
+    if (this.fontScale !== undefined) out.push(["fontScale", this.fontScale.toString()]);
+    if (this.lineSpaceReduction !== undefined) out.push(["lnSpcReduction", this.lineSpaceReduction.toString()]);
     return out;
   }
 

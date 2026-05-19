@@ -25,8 +25,8 @@ export class AnimateColor extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":clrSpc": this.colorSpace = StringValue.parse(value); return;
-      case ":dir": this.direction = StringValue.parse(value); return;
+      case "clrSpc": this.colorSpace = StringValue.parse(value); return;
+      case "dir": this.direction = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class AnimateColor extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.colorSpace !== undefined) out.push([":clrSpc", this.colorSpace.toString()]);
-    if (this.direction !== undefined) out.push([":dir", this.direction.toString()]);
+    if (this.colorSpace !== undefined) out.push(["clrSpc", this.colorSpace.toString()]);
+    if (this.direction !== undefined) out.push(["dir", this.direction.toString()]);
     return out;
   }
 

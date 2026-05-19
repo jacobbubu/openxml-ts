@@ -25,8 +25,8 @@ export class RevisionCustomView extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":guid": this.guid = StringValue.parse(value); return;
-      case ":action": this.action = StringValue.parse(value); return;
+      case "guid": this.guid = StringValue.parse(value); return;
+      case "action": this.action = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class RevisionCustomView extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.guid !== undefined) out.push([":guid", this.guid.toString()]);
-    if (this.action !== undefined) out.push([":action", this.action.toString()]);
+    if (this.guid !== undefined) out.push(["guid", this.guid.toString()]);
+    if (this.action !== undefined) out.push(["action", this.action.toString()]);
     return out;
   }
 

@@ -25,8 +25,8 @@ export class LuminanceEffect extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":bright": this.brightness = Int32Value.parse(value); assertNumber(this.brightness, { min: -100000, max: 100000 }, { attribute: ":bright", elementClass: "LuminanceEffect" }); return;
-      case ":contrast": this.contrast = Int32Value.parse(value); assertNumber(this.contrast, { min: -100000, max: 100000 }, { attribute: ":contrast", elementClass: "LuminanceEffect" }); return;
+      case "bright": this.brightness = Int32Value.parse(value); assertNumber(this.brightness, { min: -100000, max: 100000 }, { attribute: ":bright", elementClass: "LuminanceEffect" }); return;
+      case "contrast": this.contrast = Int32Value.parse(value); assertNumber(this.contrast, { min: -100000, max: 100000 }, { attribute: ":contrast", elementClass: "LuminanceEffect" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class LuminanceEffect extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.brightness !== undefined) out.push([":bright", this.brightness.toString()]);
-    if (this.contrast !== undefined) out.push([":contrast", this.contrast.toString()]);
+    if (this.brightness !== undefined) out.push(["bright", this.brightness.toString()]);
+    if (this.contrast !== undefined) out.push(["contrast", this.contrast.toString()]);
     return out;
   }
 

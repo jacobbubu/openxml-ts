@@ -49,15 +49,15 @@ export class Map extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":ID": this.iD = UInt32Value.parse(value); return;
-      case ":Name": this.name = StringValue.parse(value); return;
-      case ":RootElement": this.rootElement = StringValue.parse(value); return;
-      case ":SchemaID": this.schemaId = StringValue.parse(value); return;
-      case ":ShowImportExportValidationErrors": this.showImportExportErrors = BooleanValue.parse(value); return;
-      case ":AutoFit": this.autoFit = BooleanValue.parse(value); return;
-      case ":Append": this.appendData = BooleanValue.parse(value); return;
-      case ":PreserveSortAFLayout": this.preserveAutoFilterState = BooleanValue.parse(value); return;
-      case ":PreserveFormat": this.preserveFormat = BooleanValue.parse(value); return;
+      case "ID": this.iD = UInt32Value.parse(value); return;
+      case "Name": this.name = StringValue.parse(value); return;
+      case "RootElement": this.rootElement = StringValue.parse(value); return;
+      case "SchemaID": this.schemaId = StringValue.parse(value); return;
+      case "ShowImportExportValidationErrors": this.showImportExportErrors = BooleanValue.parse(value); return;
+      case "AutoFit": this.autoFit = BooleanValue.parse(value); return;
+      case "Append": this.appendData = BooleanValue.parse(value); return;
+      case "PreserveSortAFLayout": this.preserveAutoFilterState = BooleanValue.parse(value); return;
+      case "PreserveFormat": this.preserveFormat = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -65,15 +65,15 @@ export class Map extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.iD !== undefined) out.push([":ID", this.iD.toString()]);
-    if (this.name !== undefined) out.push([":Name", this.name.toString()]);
-    if (this.rootElement !== undefined) out.push([":RootElement", this.rootElement.toString()]);
-    if (this.schemaId !== undefined) out.push([":SchemaID", this.schemaId.toString()]);
-    if (this.showImportExportErrors !== undefined) out.push([":ShowImportExportValidationErrors", this.showImportExportErrors.toString()]);
-    if (this.autoFit !== undefined) out.push([":AutoFit", this.autoFit.toString()]);
-    if (this.appendData !== undefined) out.push([":Append", this.appendData.toString()]);
-    if (this.preserveAutoFilterState !== undefined) out.push([":PreserveSortAFLayout", this.preserveAutoFilterState.toString()]);
-    if (this.preserveFormat !== undefined) out.push([":PreserveFormat", this.preserveFormat.toString()]);
+    if (this.iD !== undefined) out.push(["ID", this.iD.toString()]);
+    if (this.name !== undefined) out.push(["Name", this.name.toString()]);
+    if (this.rootElement !== undefined) out.push(["RootElement", this.rootElement.toString()]);
+    if (this.schemaId !== undefined) out.push(["SchemaID", this.schemaId.toString()]);
+    if (this.showImportExportErrors !== undefined) out.push(["ShowImportExportValidationErrors", this.showImportExportErrors.toString()]);
+    if (this.autoFit !== undefined) out.push(["AutoFit", this.autoFit.toString()]);
+    if (this.appendData !== undefined) out.push(["Append", this.appendData.toString()]);
+    if (this.preserveAutoFilterState !== undefined) out.push(["PreserveSortAFLayout", this.preserveAutoFilterState.toString()]);
+    if (this.preserveFormat !== undefined) out.push(["PreserveFormat", this.preserveFormat.toString()]);
     return out;
   }
 

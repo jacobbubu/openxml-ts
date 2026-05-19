@@ -25,8 +25,8 @@ export class MeasureDimensionMap extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":measureGroup": this.measureGroup = UInt32Value.parse(value); return;
-      case ":dimension": this.dimension = UInt32Value.parse(value); return;
+      case "measureGroup": this.measureGroup = UInt32Value.parse(value); return;
+      case "dimension": this.dimension = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class MeasureDimensionMap extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.measureGroup !== undefined) out.push([":measureGroup", this.measureGroup.toString()]);
-    if (this.dimension !== undefined) out.push([":dimension", this.dimension.toString()]);
+    if (this.measureGroup !== undefined) out.push(["measureGroup", this.measureGroup.toString()]);
+    if (this.dimension !== undefined) out.push(["dimension", this.dimension.toString()]);
     return out;
   }
 

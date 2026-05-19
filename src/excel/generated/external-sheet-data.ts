@@ -27,8 +27,8 @@ export class ExternalSheetData extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":sheetId": this.sheetId = UInt32Value.parse(value); return;
-      case ":refreshError": this.refreshError = BooleanValue.parse(value); return;
+      case "sheetId": this.sheetId = UInt32Value.parse(value); return;
+      case "refreshError": this.refreshError = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -36,8 +36,8 @@ export class ExternalSheetData extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.sheetId !== undefined) out.push([":sheetId", this.sheetId.toString()]);
-    if (this.refreshError !== undefined) out.push([":refreshError", this.refreshError.toString()]);
+    if (this.sheetId !== undefined) out.push(["sheetId", this.sheetId.toString()]);
+    if (this.refreshError !== undefined) out.push(["refreshError", this.refreshError.toString()]);
     return out;
   }
 

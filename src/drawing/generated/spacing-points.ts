@@ -23,7 +23,7 @@ export class SpacingPoints extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":val": this.val = Int32Value.parse(value); assertNumber(this.val, { min: 0, max: 158400 }, { attribute: ":val", elementClass: "SpacingPoints" }); return;
+      case "val": this.val = Int32Value.parse(value); assertNumber(this.val, { min: 0, max: 158400 }, { attribute: ":val", elementClass: "SpacingPoints" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class SpacingPoints extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.val !== undefined) out.push([":val", this.val.toString()]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
     return out;
   }
 

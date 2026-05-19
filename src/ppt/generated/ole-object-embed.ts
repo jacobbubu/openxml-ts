@@ -22,7 +22,7 @@ export class OleObjectEmbed extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":followColorScheme": this.followColorScheme = StringValue.parse(value); return;
+      case "followColorScheme": this.followColorScheme = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class OleObjectEmbed extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.followColorScheme !== undefined) out.push([":followColorScheme", this.followColorScheme.toString()]);
+    if (this.followColorScheme !== undefined) out.push(["followColorScheme", this.followColorScheme.toString()]);
     return out;
   }
 

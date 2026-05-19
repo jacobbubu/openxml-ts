@@ -26,8 +26,8 @@ export class Blur extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rad": this.radius = Int64Value.parse(value); assertNumber(this.radius, { min: 0, max: 2147483647 }, { attribute: ":rad", elementClass: "Blur" }); return;
-      case ":grow": this.grow = BooleanValue.parse(value); return;
+      case "rad": this.radius = Int64Value.parse(value); assertNumber(this.radius, { min: 0, max: 2147483647 }, { attribute: ":rad", elementClass: "Blur" }); return;
+      case "grow": this.grow = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class Blur extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.radius !== undefined) out.push([":rad", this.radius.toString()]);
-    if (this.grow !== undefined) out.push([":grow", this.grow.toString()]);
+    if (this.radius !== undefined) out.push(["rad", this.radius.toString()]);
+    if (this.grow !== undefined) out.push(["grow", this.grow.toString()]);
     return out;
   }
 

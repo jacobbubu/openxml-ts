@@ -29,9 +29,9 @@ export class Chart extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":seriesIdx": this.seriesIndex = Int32Value.parse(value); return;
-      case ":categoryIdx": this.categoryIndex = Int32Value.parse(value); return;
-      case ":bldStep": this.buildStep = StringValue.parse(value); return;
+      case "seriesIdx": this.seriesIndex = Int32Value.parse(value); return;
+      case "categoryIdx": this.categoryIndex = Int32Value.parse(value); return;
+      case "bldStep": this.buildStep = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class Chart extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.seriesIndex !== undefined) out.push([":seriesIdx", this.seriesIndex.toString()]);
-    if (this.categoryIndex !== undefined) out.push([":categoryIdx", this.categoryIndex.toString()]);
-    if (this.buildStep !== undefined) out.push([":bldStep", this.buildStep.toString()]);
+    if (this.seriesIndex !== undefined) out.push(["seriesIdx", this.seriesIndex.toString()]);
+    if (this.categoryIndex !== undefined) out.push(["categoryIdx", this.categoryIndex.toString()]);
+    if (this.buildStep !== undefined) out.push(["bldStep", this.buildStep.toString()]);
     return out;
   }
 

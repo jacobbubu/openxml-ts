@@ -79,7 +79,8 @@ describe("EffectiveResolver · Slide-level theme override", () => {
     const cs = reSp.effectiveColorScheme;
     expect(cs).toBeInstanceOf(ColorScheme);
     const dk1 = cs?.firstChild()!;
-    expect(dk1.firstChild()?.extendedAttributes.get("val")).toBe("AAAAAA");
+    // 经过 codegen 修后，无 prefix 属性 \`val\` 走 typed 字段而非 extendedAttributes
+    expect((dk1.firstChild() as { val?: { toString(): string } }).val?.toString()).toBe("AAAAAA");
   });
 });
 

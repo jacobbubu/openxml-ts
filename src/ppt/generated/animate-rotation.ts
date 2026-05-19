@@ -32,9 +32,9 @@ export class AnimateRotation extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":by": this.by = Int32Value.parse(value); return;
-      case ":from": this.from = Int32Value.parse(value); return;
-      case ":to": this.to = Int32Value.parse(value); return;
+      case "by": this.by = Int32Value.parse(value); return;
+      case "from": this.from = Int32Value.parse(value); return;
+      case "to": this.to = Int32Value.parse(value); return;
       case "p14:bounceEnd": this.bounceEnd = Int32Value.parse(value); assertNumber(this.bounceEnd, { min: 0, max: 100000 }, { attribute: "p14:bounceEnd", elementClass: "AnimateRotation" }); return;
     }
     super.applyAttribute(qname, value);
@@ -43,9 +43,9 @@ export class AnimateRotation extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.by !== undefined) out.push([":by", this.by.toString()]);
-    if (this.from !== undefined) out.push([":from", this.from.toString()]);
-    if (this.to !== undefined) out.push([":to", this.to.toString()]);
+    if (this.by !== undefined) out.push(["by", this.by.toString()]);
+    if (this.from !== undefined) out.push(["from", this.from.toString()]);
+    if (this.to !== undefined) out.push(["to", this.to.toString()]);
     if (this.bounceEnd !== undefined) out.push(["p14:bounceEnd", this.bounceEnd.toString()]);
     return out;
   }

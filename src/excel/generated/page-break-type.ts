@@ -24,8 +24,8 @@ export abstract class PageBreakType extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":count": this.count = UInt32Value.parse(value); return;
-      case ":manualBreakCount": this.manualBreakCount = UInt32Value.parse(value); return;
+      case "count": this.count = UInt32Value.parse(value); return;
+      case "manualBreakCount": this.manualBreakCount = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -33,8 +33,8 @@ export abstract class PageBreakType extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.count !== undefined) out.push([":count", this.count.toString()]);
-    if (this.manualBreakCount !== undefined) out.push([":manualBreakCount", this.manualBreakCount.toString()]);
+    if (this.count !== undefined) out.push(["count", this.count.toString()]);
+    if (this.manualBreakCount !== undefined) out.push(["manualBreakCount", this.manualBreakCount.toString()]);
     return out;
   }
 

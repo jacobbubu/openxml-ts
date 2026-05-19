@@ -26,8 +26,8 @@ export class ViewProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":lastView": this.lastView = StringValue.parse(value); return;
-      case ":showComments": this.showComments = BooleanValue.parse(value); return;
+      case "lastView": this.lastView = StringValue.parse(value); return;
+      case "showComments": this.showComments = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class ViewProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.lastView !== undefined) out.push([":lastView", this.lastView.toString()]);
-    if (this.showComments !== undefined) out.push([":showComments", this.showComments.toString()]);
+    if (this.lastView !== undefined) out.push(["lastView", this.lastView.toString()]);
+    if (this.showComments !== undefined) out.push(["showComments", this.showComments.toString()]);
     return out;
   }
 

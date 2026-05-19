@@ -59,19 +59,19 @@ export class CalculationProperties extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":calcId": this.calculationId = UInt32Value.parse(value); return;
-      case ":calcMode": this.calculationMode = StringValue.parse(value); return;
-      case ":fullCalcOnLoad": this.fullCalculationOnLoad = BooleanValue.parse(value); return;
-      case ":refMode": this.referenceMode = StringValue.parse(value); return;
-      case ":iterate": this.iterate = BooleanValue.parse(value); return;
-      case ":iterateCount": this.iterateCount = UInt32Value.parse(value); return;
-      case ":iterateDelta": this.iterateDelta = StringValue.parse(value); return;
-      case ":fullPrecision": this.fullPrecision = BooleanValue.parse(value); return;
-      case ":calcCompleted": this.calculationCompleted = BooleanValue.parse(value); return;
-      case ":calcOnSave": this.calculationOnSave = BooleanValue.parse(value); return;
-      case ":concurrentCalc": this.concurrentCalculation = BooleanValue.parse(value); return;
-      case ":concurrentManualCount": this.concurrentManualCount = UInt32Value.parse(value); return;
-      case ":forceFullCalc": this.forceFullCalculation = BooleanValue.parse(value); return;
+      case "calcId": this.calculationId = UInt32Value.parse(value); return;
+      case "calcMode": this.calculationMode = StringValue.parse(value); return;
+      case "fullCalcOnLoad": this.fullCalculationOnLoad = BooleanValue.parse(value); return;
+      case "refMode": this.referenceMode = StringValue.parse(value); return;
+      case "iterate": this.iterate = BooleanValue.parse(value); return;
+      case "iterateCount": this.iterateCount = UInt32Value.parse(value); return;
+      case "iterateDelta": this.iterateDelta = StringValue.parse(value); return;
+      case "fullPrecision": this.fullPrecision = BooleanValue.parse(value); return;
+      case "calcCompleted": this.calculationCompleted = BooleanValue.parse(value); return;
+      case "calcOnSave": this.calculationOnSave = BooleanValue.parse(value); return;
+      case "concurrentCalc": this.concurrentCalculation = BooleanValue.parse(value); return;
+      case "concurrentManualCount": this.concurrentManualCount = UInt32Value.parse(value); return;
+      case "forceFullCalc": this.forceFullCalculation = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -79,19 +79,19 @@ export class CalculationProperties extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.calculationId !== undefined) out.push([":calcId", this.calculationId.toString()]);
-    if (this.calculationMode !== undefined) out.push([":calcMode", this.calculationMode.toString()]);
-    if (this.fullCalculationOnLoad !== undefined) out.push([":fullCalcOnLoad", this.fullCalculationOnLoad.toString()]);
-    if (this.referenceMode !== undefined) out.push([":refMode", this.referenceMode.toString()]);
-    if (this.iterate !== undefined) out.push([":iterate", this.iterate.toString()]);
-    if (this.iterateCount !== undefined) out.push([":iterateCount", this.iterateCount.toString()]);
-    if (this.iterateDelta !== undefined) out.push([":iterateDelta", this.iterateDelta.toString()]);
-    if (this.fullPrecision !== undefined) out.push([":fullPrecision", this.fullPrecision.toString()]);
-    if (this.calculationCompleted !== undefined) out.push([":calcCompleted", this.calculationCompleted.toString()]);
-    if (this.calculationOnSave !== undefined) out.push([":calcOnSave", this.calculationOnSave.toString()]);
-    if (this.concurrentCalculation !== undefined) out.push([":concurrentCalc", this.concurrentCalculation.toString()]);
-    if (this.concurrentManualCount !== undefined) out.push([":concurrentManualCount", this.concurrentManualCount.toString()]);
-    if (this.forceFullCalculation !== undefined) out.push([":forceFullCalc", this.forceFullCalculation.toString()]);
+    if (this.calculationId !== undefined) out.push(["calcId", this.calculationId.toString()]);
+    if (this.calculationMode !== undefined) out.push(["calcMode", this.calculationMode.toString()]);
+    if (this.fullCalculationOnLoad !== undefined) out.push(["fullCalcOnLoad", this.fullCalculationOnLoad.toString()]);
+    if (this.referenceMode !== undefined) out.push(["refMode", this.referenceMode.toString()]);
+    if (this.iterate !== undefined) out.push(["iterate", this.iterate.toString()]);
+    if (this.iterateCount !== undefined) out.push(["iterateCount", this.iterateCount.toString()]);
+    if (this.iterateDelta !== undefined) out.push(["iterateDelta", this.iterateDelta.toString()]);
+    if (this.fullPrecision !== undefined) out.push(["fullPrecision", this.fullPrecision.toString()]);
+    if (this.calculationCompleted !== undefined) out.push(["calcCompleted", this.calculationCompleted.toString()]);
+    if (this.calculationOnSave !== undefined) out.push(["calcOnSave", this.calculationOnSave.toString()]);
+    if (this.concurrentCalculation !== undefined) out.push(["concurrentCalc", this.concurrentCalculation.toString()]);
+    if (this.concurrentManualCount !== undefined) out.push(["concurrentManualCount", this.concurrentManualCount.toString()]);
+    if (this.forceFullCalculation !== undefined) out.push(["forceFullCalc", this.forceFullCalculation.toString()]);
     return out;
   }
 

@@ -29,9 +29,9 @@ export class RgbColorModelPercentage extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":r": this.redPortion = Int32Value.parse(value); return;
-      case ":g": this.greenPortion = Int32Value.parse(value); return;
-      case ":b": this.bluePortion = Int32Value.parse(value); return;
+      case "r": this.redPortion = Int32Value.parse(value); return;
+      case "g": this.greenPortion = Int32Value.parse(value); return;
+      case "b": this.bluePortion = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class RgbColorModelPercentage extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.redPortion !== undefined) out.push([":r", this.redPortion.toString()]);
-    if (this.greenPortion !== undefined) out.push([":g", this.greenPortion.toString()]);
-    if (this.bluePortion !== undefined) out.push([":b", this.bluePortion.toString()]);
+    if (this.redPortion !== undefined) out.push(["r", this.redPortion.toString()]);
+    if (this.greenPortion !== undefined) out.push(["g", this.greenPortion.toString()]);
+    if (this.bluePortion !== undefined) out.push(["b", this.bluePortion.toString()]);
     return out;
   }
 

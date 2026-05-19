@@ -22,7 +22,7 @@ export class SlideMaster extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":preserve": this.preserve = BooleanValue.parse(value); return;
+      case "preserve": this.preserve = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class SlideMaster extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.preserve !== undefined) out.push([":preserve", this.preserve.toString()]);
+    if (this.preserve !== undefined) out.push(["preserve", this.preserve.toString()]);
     return out;
   }
 

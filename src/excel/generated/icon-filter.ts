@@ -26,8 +26,8 @@ export class IconFilter extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":iconSet": this.iconSet = StringValue.parse(value); return;
-      case ":iconId": this.iconId = UInt32Value.parse(value); return;
+      case "iconSet": this.iconSet = StringValue.parse(value); return;
+      case "iconId": this.iconId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class IconFilter extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.iconSet !== undefined) out.push([":iconSet", this.iconSet.toString()]);
-    if (this.iconId !== undefined) out.push([":iconId", this.iconId.toString()]);
+    if (this.iconSet !== undefined) out.push(["iconSet", this.iconSet.toString()]);
+    if (this.iconId !== undefined) out.push(["iconId", this.iconId.toString()]);
     return out;
   }
 

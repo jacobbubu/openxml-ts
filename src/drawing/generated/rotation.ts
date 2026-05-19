@@ -29,9 +29,9 @@ export class Rotation extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":lat": this.latitude = Int32Value.parse(value); assertNumber(this.latitude, { min: 0 }, { attribute: ":lat", elementClass: "Rotation" }); return;
-      case ":lon": this.longitude = Int32Value.parse(value); assertNumber(this.longitude, { min: 0 }, { attribute: ":lon", elementClass: "Rotation" }); return;
-      case ":rev": this.revolution = Int32Value.parse(value); assertNumber(this.revolution, { min: 0 }, { attribute: ":rev", elementClass: "Rotation" }); return;
+      case "lat": this.latitude = Int32Value.parse(value); assertNumber(this.latitude, { min: 0 }, { attribute: ":lat", elementClass: "Rotation" }); return;
+      case "lon": this.longitude = Int32Value.parse(value); assertNumber(this.longitude, { min: 0 }, { attribute: ":lon", elementClass: "Rotation" }); return;
+      case "rev": this.revolution = Int32Value.parse(value); assertNumber(this.revolution, { min: 0 }, { attribute: ":rev", elementClass: "Rotation" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class Rotation extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.latitude !== undefined) out.push([":lat", this.latitude.toString()]);
-    if (this.longitude !== undefined) out.push([":lon", this.longitude.toString()]);
-    if (this.revolution !== undefined) out.push([":rev", this.revolution.toString()]);
+    if (this.latitude !== undefined) out.push(["lat", this.latitude.toString()]);
+    if (this.longitude !== undefined) out.push(["lon", this.longitude.toString()]);
+    if (this.revolution !== undefined) out.push(["rev", this.revolution.toString()]);
     return out;
   }
 

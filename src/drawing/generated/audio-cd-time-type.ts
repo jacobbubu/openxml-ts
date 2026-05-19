@@ -26,8 +26,8 @@ export abstract class AudioCDTimeType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":track": this.track = StringValue.parse(value); return;
-      case ":time": this.time = UInt32Value.parse(value); return;
+      case "track": this.track = StringValue.parse(value); return;
+      case "time": this.time = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export abstract class AudioCDTimeType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.track !== undefined) out.push([":track", this.track.toString()]);
-    if (this.time !== undefined) out.push([":time", this.time.toString()]);
+    if (this.track !== undefined) out.push(["track", this.track.toString()]);
+    if (this.time !== undefined) out.push(["time", this.time.toString()]);
     return out;
   }
 

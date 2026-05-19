@@ -25,8 +25,8 @@ export class NotesSlide extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":showMasterSp": this.showMasterShapes = BooleanValue.parse(value); return;
-      case ":showMasterPhAnim": this.showMasterPlaceholderAnimations = BooleanValue.parse(value); return;
+      case "showMasterSp": this.showMasterShapes = BooleanValue.parse(value); return;
+      case "showMasterPhAnim": this.showMasterPlaceholderAnimations = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class NotesSlide extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.showMasterShapes !== undefined) out.push([":showMasterSp", this.showMasterShapes.toString()]);
-    if (this.showMasterPlaceholderAnimations !== undefined) out.push([":showMasterPhAnim", this.showMasterPlaceholderAnimations.toString()]);
+    if (this.showMasterShapes !== undefined) out.push(["showMasterSp", this.showMasterShapes.toString()]);
+    if (this.showMasterPlaceholderAnimations !== undefined) out.push(["showMasterPhAnim", this.showMasterPlaceholderAnimations.toString()]);
     return out;
   }
 

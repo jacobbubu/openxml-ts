@@ -22,7 +22,7 @@ export class MergeCell extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":ref": this.reference = StringValue.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class MergeCell extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
     return out;
   }
 

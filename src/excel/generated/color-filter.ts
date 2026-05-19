@@ -26,8 +26,8 @@ export class ColorFilter extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":dxfId": this.formatId = UInt32Value.parse(value); return;
-      case ":cellColor": this.cellColor = BooleanValue.parse(value); return;
+      case "dxfId": this.formatId = UInt32Value.parse(value); return;
+      case "cellColor": this.cellColor = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class ColorFilter extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.formatId !== undefined) out.push([":dxfId", this.formatId.toString()]);
-    if (this.cellColor !== undefined) out.push([":cellColor", this.cellColor.toString()]);
+    if (this.formatId !== undefined) out.push(["dxfId", this.formatId.toString()]);
+    if (this.cellColor !== undefined) out.push(["cellColor", this.cellColor.toString()]);
     return out;
   }
 

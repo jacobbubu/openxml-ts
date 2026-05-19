@@ -26,8 +26,8 @@ export class CalculatedItem extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":field": this.field = UInt32Value.parse(value); return;
-      case ":formula": this.formula = StringValue.parse(value); return;
+      case "field": this.field = UInt32Value.parse(value); return;
+      case "formula": this.formula = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class CalculatedItem extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.field !== undefined) out.push([":field", this.field.toString()]);
-    if (this.formula !== undefined) out.push([":formula", this.formula.toString()]);
+    if (this.field !== undefined) out.push(["field", this.field.toString()]);
+    if (this.formula !== undefined) out.push(["formula", this.formula.toString()]);
     return out;
   }
 

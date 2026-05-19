@@ -38,12 +38,12 @@ export class TransformEffect extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":sx": this.horizontalRatio = Int32Value.parse(value); return;
-      case ":sy": this.verticalRatio = Int32Value.parse(value); return;
-      case ":kx": this.horizontalSkew = Int32Value.parse(value); return;
-      case ":ky": this.verticalSkew = Int32Value.parse(value); return;
-      case ":tx": this.horizontalShift = Int64Value.parse(value); assertNumber(this.horizontalShift, { min: -27273042329600, max: 27273042316900 }, { attribute: ":tx", elementClass: "TransformEffect" }); return;
-      case ":ty": this.verticalShift = Int64Value.parse(value); assertNumber(this.verticalShift, { min: -27273042329600, max: 27273042316900 }, { attribute: ":ty", elementClass: "TransformEffect" }); return;
+      case "sx": this.horizontalRatio = Int32Value.parse(value); return;
+      case "sy": this.verticalRatio = Int32Value.parse(value); return;
+      case "kx": this.horizontalSkew = Int32Value.parse(value); return;
+      case "ky": this.verticalSkew = Int32Value.parse(value); return;
+      case "tx": this.horizontalShift = Int64Value.parse(value); assertNumber(this.horizontalShift, { min: -27273042329600, max: 27273042316900 }, { attribute: ":tx", elementClass: "TransformEffect" }); return;
+      case "ty": this.verticalShift = Int64Value.parse(value); assertNumber(this.verticalShift, { min: -27273042329600, max: 27273042316900 }, { attribute: ":ty", elementClass: "TransformEffect" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -51,12 +51,12 @@ export class TransformEffect extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.horizontalRatio !== undefined) out.push([":sx", this.horizontalRatio.toString()]);
-    if (this.verticalRatio !== undefined) out.push([":sy", this.verticalRatio.toString()]);
-    if (this.horizontalSkew !== undefined) out.push([":kx", this.horizontalSkew.toString()]);
-    if (this.verticalSkew !== undefined) out.push([":ky", this.verticalSkew.toString()]);
-    if (this.horizontalShift !== undefined) out.push([":tx", this.horizontalShift.toString()]);
-    if (this.verticalShift !== undefined) out.push([":ty", this.verticalShift.toString()]);
+    if (this.horizontalRatio !== undefined) out.push(["sx", this.horizontalRatio.toString()]);
+    if (this.verticalRatio !== undefined) out.push(["sy", this.verticalRatio.toString()]);
+    if (this.horizontalSkew !== undefined) out.push(["kx", this.horizontalSkew.toString()]);
+    if (this.verticalSkew !== undefined) out.push(["ky", this.verticalSkew.toString()]);
+    if (this.horizontalShift !== undefined) out.push(["tx", this.horizontalShift.toString()]);
+    if (this.verticalShift !== undefined) out.push(["ty", this.verticalShift.toString()]);
     return out;
   }
 

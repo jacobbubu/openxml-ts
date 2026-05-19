@@ -29,9 +29,9 @@ export class Scenarios extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":current": this.current = UInt32Value.parse(value); return;
-      case ":show": this.show = UInt32Value.parse(value); return;
-      case ":sqref": this.sequenceOfReferences = StringValue.parse(value); return;
+      case "current": this.current = UInt32Value.parse(value); return;
+      case "show": this.show = UInt32Value.parse(value); return;
+      case "sqref": this.sequenceOfReferences = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class Scenarios extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.current !== undefined) out.push([":current", this.current.toString()]);
-    if (this.show !== undefined) out.push([":show", this.show.toString()]);
-    if (this.sequenceOfReferences !== undefined) out.push([":sqref", this.sequenceOfReferences.toString()]);
+    if (this.current !== undefined) out.push(["current", this.current.toString()]);
+    if (this.show !== undefined) out.push(["show", this.show.toString()]);
+    if (this.sequenceOfReferences !== undefined) out.push(["sqref", this.sequenceOfReferences.toString()]);
     return out;
   }
 

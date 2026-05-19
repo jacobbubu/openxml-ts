@@ -30,9 +30,9 @@ export class ChartFormat extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":chart": this.chart = UInt32Value.parse(value); return;
-      case ":format": this.format = UInt32Value.parse(value); return;
-      case ":series": this.series = BooleanValue.parse(value); return;
+      case "chart": this.chart = UInt32Value.parse(value); return;
+      case "format": this.format = UInt32Value.parse(value); return;
+      case "series": this.series = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,9 +40,9 @@ export class ChartFormat extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.chart !== undefined) out.push([":chart", this.chart.toString()]);
-    if (this.format !== undefined) out.push([":format", this.format.toString()]);
-    if (this.series !== undefined) out.push([":series", this.series.toString()]);
+    if (this.chart !== undefined) out.push(["chart", this.chart.toString()]);
+    if (this.format !== undefined) out.push(["format", this.format.toString()]);
+    if (this.series !== undefined) out.push(["series", this.series.toString()]);
     return out;
   }
 

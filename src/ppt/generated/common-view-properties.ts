@@ -22,7 +22,7 @@ export class CommonViewProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":varScale": this.variableScale = BooleanValue.parse(value); return;
+      case "varScale": this.variableScale = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class CommonViewProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.variableScale !== undefined) out.push([":varScale", this.variableScale.toString()]);
+    if (this.variableScale !== undefined) out.push(["varScale", this.variableScale.toString()]);
     return out;
   }
 

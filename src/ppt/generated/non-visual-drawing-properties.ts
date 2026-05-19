@@ -37,11 +37,11 @@ export class NonVisualDrawingProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = UInt32Value.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":descr": this.description = StringValue.parse(value); return;
-      case ":hidden": this.hidden = BooleanValue.parse(value); return;
-      case ":title": this.title = StringValue.parse(value); return;
+      case "id": this.id = UInt32Value.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "descr": this.description = StringValue.parse(value); return;
+      case "hidden": this.hidden = BooleanValue.parse(value); return;
+      case "title": this.title = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -49,11 +49,11 @@ export class NonVisualDrawingProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.description !== undefined) out.push([":descr", this.description.toString()]);
-    if (this.hidden !== undefined) out.push([":hidden", this.hidden.toString()]);
-    if (this.title !== undefined) out.push([":title", this.title.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.description !== undefined) out.push(["descr", this.description.toString()]);
+    if (this.hidden !== undefined) out.push(["hidden", this.hidden.toString()]);
+    if (this.title !== undefined) out.push(["title", this.title.toString()]);
     return out;
   }
 

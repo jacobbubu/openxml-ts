@@ -34,11 +34,11 @@ export class Hyperlink extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":ref": this.reference = StringValue.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
       case "r:id": this.id = StringValue.parse(value); return;
-      case ":location": this.location = StringValue.parse(value); return;
-      case ":tooltip": this.tooltip = StringValue.parse(value); return;
-      case ":display": this.display = StringValue.parse(value); return;
+      case "location": this.location = StringValue.parse(value); return;
+      case "tooltip": this.tooltip = StringValue.parse(value); return;
+      case "display": this.display = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -46,11 +46,11 @@ export class Hyperlink extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
-    if (this.location !== undefined) out.push([":location", this.location.toString()]);
-    if (this.tooltip !== undefined) out.push([":tooltip", this.tooltip.toString()]);
-    if (this.display !== undefined) out.push([":display", this.display.toString()]);
+    if (this.location !== undefined) out.push(["location", this.location.toString()]);
+    if (this.tooltip !== undefined) out.push(["tooltip", this.tooltip.toString()]);
+    if (this.display !== undefined) out.push(["display", this.display.toString()]);
     return out;
   }
 

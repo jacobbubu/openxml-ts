@@ -43,13 +43,13 @@ export class QueryTableField extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = UInt32Value.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":dataBound": this.dataBound = BooleanValue.parse(value); return;
-      case ":rowNumbers": this.rowNumbers = BooleanValue.parse(value); return;
-      case ":fillFormulas": this.fillFormulas = BooleanValue.parse(value); return;
-      case ":clipped": this.clipped = BooleanValue.parse(value); return;
-      case ":tableColumnId": this.tableColumnId = UInt32Value.parse(value); return;
+      case "id": this.id = UInt32Value.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "dataBound": this.dataBound = BooleanValue.parse(value); return;
+      case "rowNumbers": this.rowNumbers = BooleanValue.parse(value); return;
+      case "fillFormulas": this.fillFormulas = BooleanValue.parse(value); return;
+      case "clipped": this.clipped = BooleanValue.parse(value); return;
+      case "tableColumnId": this.tableColumnId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -57,13 +57,13 @@ export class QueryTableField extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.dataBound !== undefined) out.push([":dataBound", this.dataBound.toString()]);
-    if (this.rowNumbers !== undefined) out.push([":rowNumbers", this.rowNumbers.toString()]);
-    if (this.fillFormulas !== undefined) out.push([":fillFormulas", this.fillFormulas.toString()]);
-    if (this.clipped !== undefined) out.push([":clipped", this.clipped.toString()]);
-    if (this.tableColumnId !== undefined) out.push([":tableColumnId", this.tableColumnId.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.dataBound !== undefined) out.push(["dataBound", this.dataBound.toString()]);
+    if (this.rowNumbers !== undefined) out.push(["rowNumbers", this.rowNumbers.toString()]);
+    if (this.fillFormulas !== undefined) out.push(["fillFormulas", this.fillFormulas.toString()]);
+    if (this.clipped !== undefined) out.push(["clipped", this.clipped.toString()]);
+    if (this.tableColumnId !== undefined) out.push(["tableColumnId", this.tableColumnId.toString()]);
     return out;
   }
 

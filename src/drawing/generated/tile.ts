@@ -39,12 +39,12 @@ export class Tile extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":tx": this.horizontalOffset = Int64Value.parse(value); assertNumber(this.horizontalOffset, { min: -27273042329600, max: 27273042316900 }, { attribute: ":tx", elementClass: "Tile" }); return;
-      case ":ty": this.verticalOffset = Int64Value.parse(value); assertNumber(this.verticalOffset, { min: -27273042329600, max: 27273042316900 }, { attribute: ":ty", elementClass: "Tile" }); return;
-      case ":sx": this.horizontalRatio = Int32Value.parse(value); return;
-      case ":sy": this.verticalRatio = Int32Value.parse(value); return;
-      case ":flip": this.flip = StringValue.parse(value); return;
-      case ":algn": this.alignment = StringValue.parse(value); return;
+      case "tx": this.horizontalOffset = Int64Value.parse(value); assertNumber(this.horizontalOffset, { min: -27273042329600, max: 27273042316900 }, { attribute: ":tx", elementClass: "Tile" }); return;
+      case "ty": this.verticalOffset = Int64Value.parse(value); assertNumber(this.verticalOffset, { min: -27273042329600, max: 27273042316900 }, { attribute: ":ty", elementClass: "Tile" }); return;
+      case "sx": this.horizontalRatio = Int32Value.parse(value); return;
+      case "sy": this.verticalRatio = Int32Value.parse(value); return;
+      case "flip": this.flip = StringValue.parse(value); return;
+      case "algn": this.alignment = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -52,12 +52,12 @@ export class Tile extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.horizontalOffset !== undefined) out.push([":tx", this.horizontalOffset.toString()]);
-    if (this.verticalOffset !== undefined) out.push([":ty", this.verticalOffset.toString()]);
-    if (this.horizontalRatio !== undefined) out.push([":sx", this.horizontalRatio.toString()]);
-    if (this.verticalRatio !== undefined) out.push([":sy", this.verticalRatio.toString()]);
-    if (this.flip !== undefined) out.push([":flip", this.flip.toString()]);
-    if (this.alignment !== undefined) out.push([":algn", this.alignment.toString()]);
+    if (this.horizontalOffset !== undefined) out.push(["tx", this.horizontalOffset.toString()]);
+    if (this.verticalOffset !== undefined) out.push(["ty", this.verticalOffset.toString()]);
+    if (this.horizontalRatio !== undefined) out.push(["sx", this.horizontalRatio.toString()]);
+    if (this.verticalRatio !== undefined) out.push(["sy", this.verticalRatio.toString()]);
+    if (this.flip !== undefined) out.push(["flip", this.flip.toString()]);
+    if (this.alignment !== undefined) out.push(["algn", this.alignment.toString()]);
     return out;
   }
 

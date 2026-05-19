@@ -29,9 +29,9 @@ export class Schema extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":ID": this.id = StringValue.parse(value); return;
-      case ":SchemaRef": this.schemaReference = StringValue.parse(value); return;
-      case ":Namespace": this.namespace = StringValue.parse(value); return;
+      case "ID": this.id = StringValue.parse(value); return;
+      case "SchemaRef": this.schemaReference = StringValue.parse(value); return;
+      case "Namespace": this.namespace = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class Schema extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":ID", this.id.toString()]);
-    if (this.schemaReference !== undefined) out.push([":SchemaRef", this.schemaReference.toString()]);
-    if (this.namespace !== undefined) out.push([":Namespace", this.namespace.toString()]);
+    if (this.id !== undefined) out.push(["ID", this.id.toString()]);
+    if (this.schemaReference !== undefined) out.push(["SchemaRef", this.schemaReference.toString()]);
+    if (this.namespace !== undefined) out.push(["Namespace", this.namespace.toString()]);
     return out;
   }
 

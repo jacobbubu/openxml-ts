@@ -34,10 +34,10 @@ export class TableStyle extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":pivot": this.pivot = BooleanValue.parse(value); return;
-      case ":table": this.table = BooleanValue.parse(value); return;
-      case ":count": this.count = UInt32Value.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "pivot": this.pivot = BooleanValue.parse(value); return;
+      case "table": this.table = BooleanValue.parse(value); return;
+      case "count": this.count = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -45,10 +45,10 @@ export class TableStyle extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.pivot !== undefined) out.push([":pivot", this.pivot.toString()]);
-    if (this.table !== undefined) out.push([":table", this.table.toString()]);
-    if (this.count !== undefined) out.push([":count", this.count.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.pivot !== undefined) out.push(["pivot", this.pivot.toString()]);
+    if (this.table !== undefined) out.push(["table", this.table.toString()]);
+    if (this.count !== undefined) out.push(["count", this.count.toString()]);
     return out;
   }
 

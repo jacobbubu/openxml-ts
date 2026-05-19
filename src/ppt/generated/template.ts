@@ -22,7 +22,7 @@ export class Template extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":lvl": this.level = UInt32Value.parse(value); return;
+      case "lvl": this.level = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Template extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.level !== undefined) out.push([":lvl", this.level.toString()]);
+    if (this.level !== undefined) out.push(["lvl", this.level.toString()]);
     return out;
   }
 

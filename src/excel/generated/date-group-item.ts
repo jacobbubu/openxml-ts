@@ -40,13 +40,13 @@ export class DateGroupItem extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":year": this.year = StringValue.parse(value); return;
-      case ":month": this.month = StringValue.parse(value); return;
-      case ":day": this.day = StringValue.parse(value); return;
-      case ":hour": this.hour = StringValue.parse(value); return;
-      case ":minute": this.minute = StringValue.parse(value); return;
-      case ":second": this.second = StringValue.parse(value); return;
-      case ":dateTimeGrouping": this.dateTimeGrouping = StringValue.parse(value); return;
+      case "year": this.year = StringValue.parse(value); return;
+      case "month": this.month = StringValue.parse(value); return;
+      case "day": this.day = StringValue.parse(value); return;
+      case "hour": this.hour = StringValue.parse(value); return;
+      case "minute": this.minute = StringValue.parse(value); return;
+      case "second": this.second = StringValue.parse(value); return;
+      case "dateTimeGrouping": this.dateTimeGrouping = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -54,13 +54,13 @@ export class DateGroupItem extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.year !== undefined) out.push([":year", this.year.toString()]);
-    if (this.month !== undefined) out.push([":month", this.month.toString()]);
-    if (this.day !== undefined) out.push([":day", this.day.toString()]);
-    if (this.hour !== undefined) out.push([":hour", this.hour.toString()]);
-    if (this.minute !== undefined) out.push([":minute", this.minute.toString()]);
-    if (this.second !== undefined) out.push([":second", this.second.toString()]);
-    if (this.dateTimeGrouping !== undefined) out.push([":dateTimeGrouping", this.dateTimeGrouping.toString()]);
+    if (this.year !== undefined) out.push(["year", this.year.toString()]);
+    if (this.month !== undefined) out.push(["month", this.month.toString()]);
+    if (this.day !== undefined) out.push(["day", this.day.toString()]);
+    if (this.hour !== undefined) out.push(["hour", this.hour.toString()]);
+    if (this.minute !== undefined) out.push(["minute", this.minute.toString()]);
+    if (this.second !== undefined) out.push(["second", this.second.toString()]);
+    if (this.dateTimeGrouping !== undefined) out.push(["dateTimeGrouping", this.dateTimeGrouping.toString()]);
     return out;
   }
 

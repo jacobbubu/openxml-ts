@@ -55,6 +55,8 @@ import { CellStyle } from "./generated/cell-style.js";
 import { CellStyles } from "./generated/cell-styles.js";
 import { CellValue } from "./generated/cell-value.js";
 import { Cell } from "./generated/cell.js";
+import { DefinedName } from "./generated/defined-name.js";
+import { DefinedNames } from "./generated/defined-names.js";
 import { Drawing } from "./generated/drawing.js";
 import { Fill } from "./generated/fill.js";
 import { Fills } from "./generated/fills.js";
@@ -174,6 +176,142 @@ export class SpreadsheetDocument {
   /** Theme Part（workbook 的 part-level 关系）。 */
   get themePart(): ThemePart | undefined {
     return this.getOrLoadTypedPartFromWorkbook(ThemePart);
+  }
+
+  /**
+   * 加一个命名范围到 workbook（Epic-28）。
+   *
+   * 等价 \`<workbook><definedNames><definedName name="…" [localSheetId="…"] [hidden="1"]>formula</definedName>\`。
+   *
+   * @param name 命名范围标识；非空，长度 1..255 chars
+   * @param formula 引用串（如 \`'Sheet1'!\$A\$1:\$B\$5\` 或常量公式）
+   * @param opts.localSheetId 工作表级 scope（0-based sheet index）；省略 = 工作簿级
+   * @param opts.hidden 是否对用户隐藏；默认 false
+   *
+   * @throws OpenXmlPackageError 当 name 非法 / 同 scope 已有同名 / workbookPart 缺失
+   */
+  addDefinedName(
+    name: string,
+    formula: string,
+    opts: { localSheetId?: number; hidden?: boolean } = {},
+  ): void {
+    if (name.length === 0 || name.length > 255) {
+      throw new OpenXmlPackageError({
+        code: "BACKEND_ERROR",
+        message: `addDefinedName: name must be 1..255 chars, got length ${name.length}`,
+      });
+    }
+    const wp = this.workbookPart;
+    if (wp === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "addDefinedName: workbookPart is missing",
+      });
+    }
+    // 检测重名（同 scope）
+    for (const existing of this.listDefinedNames()) {
+      if (existing.name === name && existing.localSheetId === opts.localSheetId) {
+        throw new OpenXmlPackageError({
+          code: "BACKEND_ERROR",
+          message:
+            opts.localSheetId !== undefined
+              ? `addDefinedName: name "${name}" already exists for sheet ${opts.localSheetId}`
+              : `addDefinedName: workbook-level name "${name}" already exists`,
+        });
+      }
+    }
+    const container = this.ensureDefinedNamesContainer(wp);
+    const dn = new DefinedName();
+    dn.name = StringValue.parse(name);
+    if (opts.localSheetId !== undefined) {
+      dn.localSheetId = UInt32Value.parse(String(opts.localSheetId));
+    }
+    if (opts.hidden === true) {
+      dn.extendedAttributes.set("hidden", "1");
+    }
+    dn.text = formula;
+    container.appendChild(dn);
+  }
+
+  /**
+   * 删除命名范围。返是否找到并删除。
+   */
+  removeDefinedName(name: string, opts: { localSheetId?: number } = {}): boolean {
+    const wp = this.workbookPart;
+    if (wp === undefined) return false;
+    const container = this.findDefinedNamesContainer(wp);
+    if (container === undefined) return false;
+    for (const child of container.children.toArray()) {
+      if (!(child instanceof DefinedName)) continue;
+      const cn = child.name?.toString();
+      const lid =
+        child.localSheetId === undefined
+          ? undefined
+          : Number.parseInt(child.localSheetId.toString(), 10);
+      if (cn === name && lid === opts.localSheetId) {
+        container.children.remove(child);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /** 列出当前所有命名范围（快照副本）。 */
+  listDefinedNames(): Array<{
+    name: string;
+    formula: string;
+    localSheetId?: number;
+    hidden?: boolean;
+  }> {
+    const wp = this.workbookPart;
+    if (wp === undefined) return [];
+    const container = this.findDefinedNamesContainer(wp);
+    if (container === undefined) return [];
+    const out: Array<{
+      name: string;
+      formula: string;
+      localSheetId?: number;
+      hidden?: boolean;
+    }> = [];
+    for (const child of container.children) {
+      if (!(child instanceof DefinedName)) continue;
+      const entry: {
+        name: string;
+        formula: string;
+        localSheetId?: number;
+        hidden?: boolean;
+      } = {
+        name: child.name?.toString() ?? "",
+        formula: child.text ?? "",
+      };
+      if (child.localSheetId !== undefined) {
+        entry.localSheetId = Number.parseInt(child.localSheetId.toString(), 10);
+      }
+      if (child.hidden !== undefined && child.hidden.toString() === "true") {
+        entry.hidden = true;
+      } else if (child.extendedAttributes.get("hidden") === "1") {
+        entry.hidden = true;
+      }
+      out.push(entry);
+    }
+    return out;
+  }
+
+  /** 找/创 \`<definedNames>\` 容器；插入到 \`<workbook>\` 子的标准位置（sheets 之后）。 */
+  private ensureDefinedNamesContainer(wp: WorkbookPart): DefinedNames {
+    const existing = this.findDefinedNamesContainer(wp);
+    if (existing !== undefined) return existing;
+    const dns = new DefinedNames();
+    wp.workbook.appendChild(dns);
+    return dns;
+  }
+
+  /** 在 workbook 里找 \`<definedNames>\` 容器；不存在返 undefined。 */
+  private findDefinedNamesContainer(wp: WorkbookPart): DefinedNames | undefined {
+    for (const child of wp.workbook.children) {
+      if (child instanceof DefinedNames) return child;
+    }
+    return undefined;
   }
 
   /**

@@ -294,6 +294,10 @@ export class SpreadsheetDocument {
     [Symbol.asyncDispose](): Promise<void>;
     // Warning: (ae-forgotten-export) The symbol "MemoryOpenXmlPackage" needs to be exported by the entry point index.d.ts
     constructor(pkg: MemoryOpenXmlPackage);
+    addDefinedName(name: string, formula: string, opts?: {
+        localSheetId?: number;
+        hidden?: boolean;
+    }): void;
     addImagePart(worksheet: WorksheetPart | number, bytes: Uint8Array, opts?: AddImagePartOptions): {
         part: ImagePart;
         drawingPart: DrawingPart;
@@ -303,11 +307,20 @@ export class SpreadsheetDocument {
     static create(): SpreadsheetDocument;
     // (undocumented)
     dispose(): Promise<void>;
+    listDefinedNames(): Array<{
+        name: string;
+        formula: string;
+        localSheetId?: number;
+        hidden?: boolean;
+    }>;
     // Warning: (ae-forgotten-export) The symbol "ZipSource" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "OpenAsyncOptions" needs to be exported by the entry point index.d.ts
     static openAsync(source: ZipSource, options?: OpenAsyncOptions): Promise<SpreadsheetDocument>;
     // Warning: (ae-forgotten-export) The symbol "IPackage" needs to be exported by the entry point index.d.ts
     get package(): IPackage;
+    removeDefinedName(name: string, opts?: {
+        localSheetId?: number;
+    }): boolean;
     // (undocumented)
     saveAsAsync(targetPath: string): Promise<void>;
     // (undocumented)

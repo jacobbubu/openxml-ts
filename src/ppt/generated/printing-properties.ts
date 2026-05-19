@@ -35,11 +35,11 @@ export class PrintingProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":prnWhat": this.printWhat = StringValue.parse(value); return;
-      case ":clrMode": this.colorMode = StringValue.parse(value); return;
-      case ":hiddenSlides": this.hiddenSlides = BooleanValue.parse(value); return;
-      case ":scaleToFitPaper": this.scaleToFitPaper = BooleanValue.parse(value); return;
-      case ":frameSlides": this.frameSlides = BooleanValue.parse(value); return;
+      case "prnWhat": this.printWhat = StringValue.parse(value); return;
+      case "clrMode": this.colorMode = StringValue.parse(value); return;
+      case "hiddenSlides": this.hiddenSlides = BooleanValue.parse(value); return;
+      case "scaleToFitPaper": this.scaleToFitPaper = BooleanValue.parse(value); return;
+      case "frameSlides": this.frameSlides = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -47,11 +47,11 @@ export class PrintingProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.printWhat !== undefined) out.push([":prnWhat", this.printWhat.toString()]);
-    if (this.colorMode !== undefined) out.push([":clrMode", this.colorMode.toString()]);
-    if (this.hiddenSlides !== undefined) out.push([":hiddenSlides", this.hiddenSlides.toString()]);
-    if (this.scaleToFitPaper !== undefined) out.push([":scaleToFitPaper", this.scaleToFitPaper.toString()]);
-    if (this.frameSlides !== undefined) out.push([":frameSlides", this.frameSlides.toString()]);
+    if (this.printWhat !== undefined) out.push(["prnWhat", this.printWhat.toString()]);
+    if (this.colorMode !== undefined) out.push(["clrMode", this.colorMode.toString()]);
+    if (this.hiddenSlides !== undefined) out.push(["hiddenSlides", this.hiddenSlides.toString()]);
+    if (this.scaleToFitPaper !== undefined) out.push(["scaleToFitPaper", this.scaleToFitPaper.toString()]);
+    if (this.frameSlides !== undefined) out.push(["frameSlides", this.frameSlides.toString()]);
     return out;
   }
 

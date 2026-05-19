@@ -32,10 +32,10 @@ export class PhotoAlbum extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":bw": this.blackWhite = BooleanValue.parse(value); return;
-      case ":showCaptions": this.showCaptions = BooleanValue.parse(value); return;
-      case ":layout": this.layout = StringValue.parse(value); return;
-      case ":frame": this.frame = StringValue.parse(value); return;
+      case "bw": this.blackWhite = BooleanValue.parse(value); return;
+      case "showCaptions": this.showCaptions = BooleanValue.parse(value); return;
+      case "layout": this.layout = StringValue.parse(value); return;
+      case "frame": this.frame = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -43,10 +43,10 @@ export class PhotoAlbum extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.blackWhite !== undefined) out.push([":bw", this.blackWhite.toString()]);
-    if (this.showCaptions !== undefined) out.push([":showCaptions", this.showCaptions.toString()]);
-    if (this.layout !== undefined) out.push([":layout", this.layout.toString()]);
-    if (this.frame !== undefined) out.push([":frame", this.frame.toString()]);
+    if (this.blackWhite !== undefined) out.push(["bw", this.blackWhite.toString()]);
+    if (this.showCaptions !== undefined) out.push(["showCaptions", this.showCaptions.toString()]);
+    if (this.layout !== undefined) out.push(["layout", this.layout.toString()]);
+    if (this.frame !== undefined) out.push(["frame", this.frame.toString()]);
     return out;
   }
 

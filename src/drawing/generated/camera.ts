@@ -31,9 +31,9 @@ export class Camera extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":prst": this.preset = StringValue.parse(value); return;
-      case ":fov": this.fieldOfView = Int32Value.parse(value); assertNumber(this.fieldOfView, { min: 0, max: 10800000 }, { attribute: ":fov", elementClass: "Camera" }); return;
-      case ":zoom": this.zoom = Int32Value.parse(value); assertNumber(this.zoom, { min: 0 }, { attribute: ":zoom", elementClass: "Camera" }); return;
+      case "prst": this.preset = StringValue.parse(value); return;
+      case "fov": this.fieldOfView = Int32Value.parse(value); assertNumber(this.fieldOfView, { min: 0, max: 10800000 }, { attribute: ":fov", elementClass: "Camera" }); return;
+      case "zoom": this.zoom = Int32Value.parse(value); assertNumber(this.zoom, { min: 0 }, { attribute: ":zoom", elementClass: "Camera" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -41,9 +41,9 @@ export class Camera extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.preset !== undefined) out.push([":prst", this.preset.toString()]);
-    if (this.fieldOfView !== undefined) out.push([":fov", this.fieldOfView.toString()]);
-    if (this.zoom !== undefined) out.push([":zoom", this.zoom.toString()]);
+    if (this.preset !== undefined) out.push(["prst", this.preset.toString()]);
+    if (this.fieldOfView !== undefined) out.push(["fov", this.fieldOfView.toString()]);
+    if (this.zoom !== undefined) out.push(["zoom", this.zoom.toString()]);
     return out;
   }
 

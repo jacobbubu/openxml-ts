@@ -44,13 +44,13 @@ export abstract class HyperlinkType extends OpenXmlCompositeElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "r:id": this.id = StringValue.parse(value); return;
-      case ":invalidUrl": this.invalidUrl = StringValue.parse(value); return;
-      case ":action": this.action = StringValue.parse(value); return;
-      case ":tgtFrame": this.targetFrame = StringValue.parse(value); return;
-      case ":tooltip": this.tooltip = StringValue.parse(value); return;
-      case ":history": this.history = BooleanValue.parse(value); return;
-      case ":highlightClick": this.highlightClick = BooleanValue.parse(value); return;
-      case ":endSnd": this.endSound = BooleanValue.parse(value); return;
+      case "invalidUrl": this.invalidUrl = StringValue.parse(value); return;
+      case "action": this.action = StringValue.parse(value); return;
+      case "tgtFrame": this.targetFrame = StringValue.parse(value); return;
+      case "tooltip": this.tooltip = StringValue.parse(value); return;
+      case "history": this.history = BooleanValue.parse(value); return;
+      case "highlightClick": this.highlightClick = BooleanValue.parse(value); return;
+      case "endSnd": this.endSound = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -59,13 +59,13 @@ export abstract class HyperlinkType extends OpenXmlCompositeElement {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
-    if (this.invalidUrl !== undefined) out.push([":invalidUrl", this.invalidUrl.toString()]);
-    if (this.action !== undefined) out.push([":action", this.action.toString()]);
-    if (this.targetFrame !== undefined) out.push([":tgtFrame", this.targetFrame.toString()]);
-    if (this.tooltip !== undefined) out.push([":tooltip", this.tooltip.toString()]);
-    if (this.history !== undefined) out.push([":history", this.history.toString()]);
-    if (this.highlightClick !== undefined) out.push([":highlightClick", this.highlightClick.toString()]);
-    if (this.endSound !== undefined) out.push([":endSnd", this.endSound.toString()]);
+    if (this.invalidUrl !== undefined) out.push(["invalidUrl", this.invalidUrl.toString()]);
+    if (this.action !== undefined) out.push(["action", this.action.toString()]);
+    if (this.targetFrame !== undefined) out.push(["tgtFrame", this.targetFrame.toString()]);
+    if (this.tooltip !== undefined) out.push(["tooltip", this.tooltip.toString()]);
+    if (this.history !== undefined) out.push(["history", this.history.toString()]);
+    if (this.highlightClick !== undefined) out.push(["highlightClick", this.highlightClick.toString()]);
+    if (this.endSound !== undefined) out.push(["endSnd", this.endSound.toString()]);
     return out;
   }
 

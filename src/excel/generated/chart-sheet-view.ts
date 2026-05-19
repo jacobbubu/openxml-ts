@@ -33,10 +33,10 @@ export class ChartSheetView extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":tabSelected": this.tabSelected = BooleanValue.parse(value); return;
-      case ":zoomScale": this.zoomScale = UInt32Value.parse(value); return;
-      case ":workbookViewId": this.workbookViewId = UInt32Value.parse(value); return;
-      case ":zoomToFit": this.zoomToFit = BooleanValue.parse(value); return;
+      case "tabSelected": this.tabSelected = BooleanValue.parse(value); return;
+      case "zoomScale": this.zoomScale = UInt32Value.parse(value); return;
+      case "workbookViewId": this.workbookViewId = UInt32Value.parse(value); return;
+      case "zoomToFit": this.zoomToFit = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -44,10 +44,10 @@ export class ChartSheetView extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.tabSelected !== undefined) out.push([":tabSelected", this.tabSelected.toString()]);
-    if (this.zoomScale !== undefined) out.push([":zoomScale", this.zoomScale.toString()]);
-    if (this.workbookViewId !== undefined) out.push([":workbookViewId", this.workbookViewId.toString()]);
-    if (this.zoomToFit !== undefined) out.push([":zoomToFit", this.zoomToFit.toString()]);
+    if (this.tabSelected !== undefined) out.push(["tabSelected", this.tabSelected.toString()]);
+    if (this.zoomScale !== undefined) out.push(["zoomScale", this.zoomScale.toString()]);
+    if (this.workbookViewId !== undefined) out.push(["workbookViewId", this.workbookViewId.toString()]);
+    if (this.zoomToFit !== undefined) out.push(["zoomToFit", this.zoomToFit.toString()]);
     return out;
   }
 

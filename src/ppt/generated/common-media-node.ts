@@ -34,10 +34,10 @@ export class CommonMediaNode extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":vol": this.volume = Int32Value.parse(value); assertNumber(this.volume, { min: 0, max: 100000 }, { attribute: ":vol", elementClass: "CommonMediaNode" }); return;
-      case ":mute": this.mute = BooleanValue.parse(value); return;
-      case ":numSld": this.slideCount = UInt32Value.parse(value); return;
-      case ":showWhenStopped": this.showWhenStopped = BooleanValue.parse(value); return;
+      case "vol": this.volume = Int32Value.parse(value); assertNumber(this.volume, { min: 0, max: 100000 }, { attribute: ":vol", elementClass: "CommonMediaNode" }); return;
+      case "mute": this.mute = BooleanValue.parse(value); return;
+      case "numSld": this.slideCount = UInt32Value.parse(value); return;
+      case "showWhenStopped": this.showWhenStopped = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -45,10 +45,10 @@ export class CommonMediaNode extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.volume !== undefined) out.push([":vol", this.volume.toString()]);
-    if (this.mute !== undefined) out.push([":mute", this.mute.toString()]);
-    if (this.slideCount !== undefined) out.push([":numSld", this.slideCount.toString()]);
-    if (this.showWhenStopped !== undefined) out.push([":showWhenStopped", this.showWhenStopped.toString()]);
+    if (this.volume !== undefined) out.push(["vol", this.volume.toString()]);
+    if (this.mute !== undefined) out.push(["mute", this.mute.toString()]);
+    if (this.slideCount !== undefined) out.push(["numSld", this.slideCount.toString()]);
+    if (this.showWhenStopped !== undefined) out.push(["showWhenStopped", this.showWhenStopped.toString()]);
     return out;
   }
 

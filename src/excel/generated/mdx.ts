@@ -27,8 +27,8 @@ export class Mdx extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":n": this.nameIndex = UInt32Value.parse(value); return;
-      case ":f": this.cubeFunction = StringValue.parse(value); return;
+      case "n": this.nameIndex = UInt32Value.parse(value); return;
+      case "f": this.cubeFunction = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -36,8 +36,8 @@ export class Mdx extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.nameIndex !== undefined) out.push([":n", this.nameIndex.toString()]);
-    if (this.cubeFunction !== undefined) out.push([":f", this.cubeFunction.toString()]);
+    if (this.nameIndex !== undefined) out.push(["n", this.nameIndex.toString()]);
+    if (this.cubeFunction !== undefined) out.push(["f", this.cubeFunction.toString()]);
     return out;
   }
 

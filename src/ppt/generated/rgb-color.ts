@@ -29,9 +29,9 @@ export class RgbColor extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":r": this.red = Int32Value.parse(value); assertNumber(this.red, { min: -100000, max: 100000 }, { attribute: ":r", elementClass: "RgbColor" }); return;
-      case ":g": this.green = Int32Value.parse(value); assertNumber(this.green, { min: -100000, max: 100000 }, { attribute: ":g", elementClass: "RgbColor" }); return;
-      case ":b": this.blue = Int32Value.parse(value); assertNumber(this.blue, { min: -100000, max: 100000 }, { attribute: ":b", elementClass: "RgbColor" }); return;
+      case "r": this.red = Int32Value.parse(value); assertNumber(this.red, { min: -100000, max: 100000 }, { attribute: ":r", elementClass: "RgbColor" }); return;
+      case "g": this.green = Int32Value.parse(value); assertNumber(this.green, { min: -100000, max: 100000 }, { attribute: ":g", elementClass: "RgbColor" }); return;
+      case "b": this.blue = Int32Value.parse(value); assertNumber(this.blue, { min: -100000, max: 100000 }, { attribute: ":b", elementClass: "RgbColor" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class RgbColor extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.red !== undefined) out.push([":r", this.red.toString()]);
-    if (this.green !== undefined) out.push([":g", this.green.toString()]);
-    if (this.blue !== undefined) out.push([":b", this.blue.toString()]);
+    if (this.red !== undefined) out.push(["r", this.red.toString()]);
+    if (this.green !== undefined) out.push(["g", this.green.toString()]);
+    if (this.blue !== undefined) out.push(["b", this.blue.toString()]);
     return out;
   }
 

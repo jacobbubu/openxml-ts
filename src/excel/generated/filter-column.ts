@@ -30,9 +30,9 @@ export class FilterColumn extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":colId": this.columnId = UInt32Value.parse(value); return;
-      case ":hiddenButton": this.hiddenButton = BooleanValue.parse(value); return;
-      case ":showButton": this.showButton = BooleanValue.parse(value); return;
+      case "colId": this.columnId = UInt32Value.parse(value); return;
+      case "hiddenButton": this.hiddenButton = BooleanValue.parse(value); return;
+      case "showButton": this.showButton = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,9 +40,9 @@ export class FilterColumn extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.columnId !== undefined) out.push([":colId", this.columnId.toString()]);
-    if (this.hiddenButton !== undefined) out.push([":hiddenButton", this.hiddenButton.toString()]);
-    if (this.showButton !== undefined) out.push([":showButton", this.showButton.toString()]);
+    if (this.columnId !== undefined) out.push(["colId", this.columnId.toString()]);
+    if (this.hiddenButton !== undefined) out.push(["hiddenButton", this.hiddenButton.toString()]);
+    if (this.showButton !== undefined) out.push(["showButton", this.showButton.toString()]);
     return out;
   }
 

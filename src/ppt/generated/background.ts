@@ -22,7 +22,7 @@ export class Background extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":bwMode": this.blackWhiteMode = StringValue.parse(value); return;
+      case "bwMode": this.blackWhiteMode = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Background extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.blackWhiteMode !== undefined) out.push([":bwMode", this.blackWhiteMode.toString()]);
+    if (this.blackWhiteMode !== undefined) out.push(["bwMode", this.blackWhiteMode.toString()]);
     return out;
   }
 

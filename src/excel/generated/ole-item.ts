@@ -32,10 +32,10 @@ export class OleItem extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":icon": this.icon = BooleanValue.parse(value); return;
-      case ":advise": this.advise = BooleanValue.parse(value); return;
-      case ":preferPic": this.preferPicture = BooleanValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "icon": this.icon = BooleanValue.parse(value); return;
+      case "advise": this.advise = BooleanValue.parse(value); return;
+      case "preferPic": this.preferPicture = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -43,10 +43,10 @@ export class OleItem extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.icon !== undefined) out.push([":icon", this.icon.toString()]);
-    if (this.advise !== undefined) out.push([":advise", this.advise.toString()]);
-    if (this.preferPicture !== undefined) out.push([":preferPic", this.preferPicture.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.icon !== undefined) out.push(["icon", this.icon.toString()]);
+    if (this.advise !== undefined) out.push(["advise", this.advise.toString()]);
+    if (this.preferPicture !== undefined) out.push(["preferPic", this.preferPicture.toString()]);
     return out;
   }
 

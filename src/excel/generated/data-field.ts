@@ -43,13 +43,13 @@ export class DataField extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":fld": this.field = UInt32Value.parse(value); return;
-      case ":subtotal": this.subtotal = StringValue.parse(value); return;
-      case ":showDataAs": this.showDataAs = StringValue.parse(value); return;
-      case ":baseField": this.baseField = Int32Value.parse(value); return;
-      case ":baseItem": this.baseItem = UInt32Value.parse(value); return;
-      case ":numFmtId": this.numberFormatId = UInt32Value.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "fld": this.field = UInt32Value.parse(value); return;
+      case "subtotal": this.subtotal = StringValue.parse(value); return;
+      case "showDataAs": this.showDataAs = StringValue.parse(value); return;
+      case "baseField": this.baseField = Int32Value.parse(value); return;
+      case "baseItem": this.baseItem = UInt32Value.parse(value); return;
+      case "numFmtId": this.numberFormatId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -57,13 +57,13 @@ export class DataField extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.field !== undefined) out.push([":fld", this.field.toString()]);
-    if (this.subtotal !== undefined) out.push([":subtotal", this.subtotal.toString()]);
-    if (this.showDataAs !== undefined) out.push([":showDataAs", this.showDataAs.toString()]);
-    if (this.baseField !== undefined) out.push([":baseField", this.baseField.toString()]);
-    if (this.baseItem !== undefined) out.push([":baseItem", this.baseItem.toString()]);
-    if (this.numberFormatId !== undefined) out.push([":numFmtId", this.numberFormatId.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.field !== undefined) out.push(["fld", this.field.toString()]);
+    if (this.subtotal !== undefined) out.push(["subtotal", this.subtotal.toString()]);
+    if (this.showDataAs !== undefined) out.push(["showDataAs", this.showDataAs.toString()]);
+    if (this.baseField !== undefined) out.push(["baseField", this.baseField.toString()]);
+    if (this.baseItem !== undefined) out.push(["baseItem", this.baseItem.toString()]);
+    if (this.numberFormatId !== undefined) out.push(["numFmtId", this.numberFormatId.toString()]);
     return out;
   }
 

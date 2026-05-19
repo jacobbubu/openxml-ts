@@ -22,7 +22,7 @@ export class Video extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":fullScrn": this.fullScreen = BooleanValue.parse(value); return;
+      case "fullScrn": this.fullScreen = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Video extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.fullScreen !== undefined) out.push([":fullScrn", this.fullScreen.toString()]);
+    if (this.fullScreen !== undefined) out.push(["fullScrn", this.fullScreen.toString()]);
     return out;
   }
 

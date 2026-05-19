@@ -45,3 +45,4 @@ _bmad/custom/config.user.toml
 
 # oh-my-claudecode plugin runtime state
 .omc/state/
+scratch/

@@ -25,8 +25,8 @@ export class TableCellTextStyle extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":b": this.bold = StringValue.parse(value); return;
-      case ":i": this.italic = StringValue.parse(value); return;
+      case "b": this.bold = StringValue.parse(value); return;
+      case "i": this.italic = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class TableCellTextStyle extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.bold !== undefined) out.push([":b", this.bold.toString()]);
-    if (this.italic !== undefined) out.push([":i", this.italic.toString()]);
+    if (this.bold !== undefined) out.push(["b", this.bold.toString()]);
+    if (this.italic !== undefined) out.push(["i", this.italic.toString()]);
     return out;
   }
 

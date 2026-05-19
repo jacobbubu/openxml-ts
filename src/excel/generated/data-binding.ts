@@ -37,11 +37,11 @@ export class DataBinding extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":DataBindingName": this.dataBindingName = StringValue.parse(value); return;
-      case ":FileBinding": this.fileBinding = BooleanValue.parse(value); return;
-      case ":ConnectionID": this.connectionId = UInt32Value.parse(value); return;
-      case ":FileBindingName": this.fileBindingName = StringValue.parse(value); return;
-      case ":DataBindingLoadMode": this.dataBindingLoadMode = UInt32Value.parse(value); return;
+      case "DataBindingName": this.dataBindingName = StringValue.parse(value); return;
+      case "FileBinding": this.fileBinding = BooleanValue.parse(value); return;
+      case "ConnectionID": this.connectionId = UInt32Value.parse(value); return;
+      case "FileBindingName": this.fileBindingName = StringValue.parse(value); return;
+      case "DataBindingLoadMode": this.dataBindingLoadMode = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -49,11 +49,11 @@ export class DataBinding extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.dataBindingName !== undefined) out.push([":DataBindingName", this.dataBindingName.toString()]);
-    if (this.fileBinding !== undefined) out.push([":FileBinding", this.fileBinding.toString()]);
-    if (this.connectionId !== undefined) out.push([":ConnectionID", this.connectionId.toString()]);
-    if (this.fileBindingName !== undefined) out.push([":FileBindingName", this.fileBindingName.toString()]);
-    if (this.dataBindingLoadMode !== undefined) out.push([":DataBindingLoadMode", this.dataBindingLoadMode.toString()]);
+    if (this.dataBindingName !== undefined) out.push(["DataBindingName", this.dataBindingName.toString()]);
+    if (this.fileBinding !== undefined) out.push(["FileBinding", this.fileBinding.toString()]);
+    if (this.connectionId !== undefined) out.push(["ConnectionID", this.connectionId.toString()]);
+    if (this.fileBindingName !== undefined) out.push(["FileBindingName", this.fileBindingName.toString()]);
+    if (this.dataBindingLoadMode !== undefined) out.push(["DataBindingLoadMode", this.dataBindingLoadMode.toString()]);
     return out;
   }
 

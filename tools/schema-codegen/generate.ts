@@ -189,6 +189,10 @@ function buildRegistry(
   // leaf-vs-composite 同 qname 的常见情况大多需要保留 leaf 语义。
   const EXPLICIT_PRIORITY: Readonly<Record<string, string>> = {
     "http://schemas.openxmlformats.org/wordprocessingml/2006/main::style": "Style",
+    // Excel: 字典序「ExternalDefinedName(s)」压过 canonical「DefinedName(s)」，
+    // 但 workbook.xml 顶层 \`<definedNames>\` 引用的是 canonical 那一对——强制覆盖回。
+    "http://schemas.openxmlformats.org/spreadsheetml/2006/main::definedName": "DefinedName",
+    "http://schemas.openxmlformats.org/spreadsheetml/2006/main::definedNames": "DefinedNames",
   };
   const byKey = new Map<string, GeneratedClass>();
   for (const c of concrete) {

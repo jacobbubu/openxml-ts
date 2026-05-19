@@ -37,12 +37,12 @@ export class GraphicFrameLocks extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":noGrp": this.noGrouping = BooleanValue.parse(value); return;
-      case ":noDrilldown": this.noDrilldown = BooleanValue.parse(value); return;
-      case ":noSelect": this.noSelection = BooleanValue.parse(value); return;
-      case ":noChangeAspect": this.noChangeAspect = BooleanValue.parse(value); return;
-      case ":noMove": this.noMove = BooleanValue.parse(value); return;
-      case ":noResize": this.noResize = BooleanValue.parse(value); return;
+      case "noGrp": this.noGrouping = BooleanValue.parse(value); return;
+      case "noDrilldown": this.noDrilldown = BooleanValue.parse(value); return;
+      case "noSelect": this.noSelection = BooleanValue.parse(value); return;
+      case "noChangeAspect": this.noChangeAspect = BooleanValue.parse(value); return;
+      case "noMove": this.noMove = BooleanValue.parse(value); return;
+      case "noResize": this.noResize = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -50,12 +50,12 @@ export class GraphicFrameLocks extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.noGrouping !== undefined) out.push([":noGrp", this.noGrouping.toString()]);
-    if (this.noDrilldown !== undefined) out.push([":noDrilldown", this.noDrilldown.toString()]);
-    if (this.noSelection !== undefined) out.push([":noSelect", this.noSelection.toString()]);
-    if (this.noChangeAspect !== undefined) out.push([":noChangeAspect", this.noChangeAspect.toString()]);
-    if (this.noMove !== undefined) out.push([":noMove", this.noMove.toString()]);
-    if (this.noResize !== undefined) out.push([":noResize", this.noResize.toString()]);
+    if (this.noGrouping !== undefined) out.push(["noGrp", this.noGrouping.toString()]);
+    if (this.noDrilldown !== undefined) out.push(["noDrilldown", this.noDrilldown.toString()]);
+    if (this.noSelection !== undefined) out.push(["noSelect", this.noSelection.toString()]);
+    if (this.noChangeAspect !== undefined) out.push(["noChangeAspect", this.noChangeAspect.toString()]);
+    if (this.noMove !== undefined) out.push(["noMove", this.noMove.toString()]);
+    if (this.noResize !== undefined) out.push(["noResize", this.noResize.toString()]);
     return out;
   }
 

@@ -24,8 +24,8 @@ export class Protection extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":locked": this.locked = BooleanValue.parse(value); return;
-      case ":hidden": this.hidden = BooleanValue.parse(value); return;
+      case "locked": this.locked = BooleanValue.parse(value); return;
+      case "hidden": this.hidden = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -33,8 +33,8 @@ export class Protection extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.locked !== undefined) out.push([":locked", this.locked.toString()]);
-    if (this.hidden !== undefined) out.push([":hidden", this.hidden.toString()]);
+    if (this.locked !== undefined) out.push(["locked", this.locked.toString()]);
+    if (this.hidden !== undefined) out.push(["hidden", this.hidden.toString()]);
     return out;
   }
 

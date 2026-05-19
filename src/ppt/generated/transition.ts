@@ -32,10 +32,10 @@ export class Transition extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":spd": this.speed = StringValue.parse(value); return;
+      case "spd": this.speed = StringValue.parse(value); return;
       case "p14:dur": this.duration = StringValue.parse(value); return;
-      case ":advClick": this.advanceOnClick = BooleanValue.parse(value); return;
-      case ":advTm": this.advanceAfterTime = StringValue.parse(value); return;
+      case "advClick": this.advanceOnClick = BooleanValue.parse(value); return;
+      case "advTm": this.advanceAfterTime = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -43,10 +43,10 @@ export class Transition extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.speed !== undefined) out.push([":spd", this.speed.toString()]);
+    if (this.speed !== undefined) out.push(["spd", this.speed.toString()]);
     if (this.duration !== undefined) out.push(["p14:dur", this.duration.toString()]);
-    if (this.advanceOnClick !== undefined) out.push([":advClick", this.advanceOnClick.toString()]);
-    if (this.advanceAfterTime !== undefined) out.push([":advTm", this.advanceAfterTime.toString()]);
+    if (this.advanceOnClick !== undefined) out.push(["advClick", this.advanceOnClick.toString()]);
+    if (this.advanceAfterTime !== undefined) out.push(["advTm", this.advanceAfterTime.toString()]);
     return out;
   }
 

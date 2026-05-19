@@ -26,8 +26,8 @@ export class DashStop extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":d": this.dashLength = Int32Value.parse(value); assertNumber(this.dashLength, { min: 0 }, { attribute: ":d", elementClass: "DashStop" }); return;
-      case ":sp": this.spaceLength = Int32Value.parse(value); assertNumber(this.spaceLength, { min: 0 }, { attribute: ":sp", elementClass: "DashStop" }); return;
+      case "d": this.dashLength = Int32Value.parse(value); assertNumber(this.dashLength, { min: 0 }, { attribute: ":d", elementClass: "DashStop" }); return;
+      case "sp": this.spaceLength = Int32Value.parse(value); assertNumber(this.spaceLength, { min: 0 }, { attribute: ":sp", elementClass: "DashStop" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class DashStop extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.dashLength !== undefined) out.push([":d", this.dashLength.toString()]);
-    if (this.spaceLength !== undefined) out.push([":sp", this.spaceLength.toString()]);
+    if (this.dashLength !== undefined) out.push(["d", this.dashLength.toString()]);
+    if (this.spaceLength !== undefined) out.push(["sp", this.spaceLength.toString()]);
     return out;
   }
 

@@ -25,8 +25,8 @@ export class TextField extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":position": this.position = UInt32Value.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "position": this.position = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class TextField extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.position !== undefined) out.push([":position", this.position.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.position !== undefined) out.push(["position", this.position.toString()]);
     return out;
   }
 

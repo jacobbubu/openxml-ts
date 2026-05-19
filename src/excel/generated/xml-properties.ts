@@ -30,9 +30,9 @@ export class XmlProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":mapId": this.mapId = UInt32Value.parse(value); return;
-      case ":xpath": this.xPath = StringValue.parse(value); return;
-      case ":xmlDataType": this.xmlDataType = StringValue.parse(value); return;
+      case "mapId": this.mapId = UInt32Value.parse(value); return;
+      case "xpath": this.xPath = StringValue.parse(value); return;
+      case "xmlDataType": this.xmlDataType = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,9 +40,9 @@ export class XmlProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.mapId !== undefined) out.push([":mapId", this.mapId.toString()]);
-    if (this.xPath !== undefined) out.push([":xpath", this.xPath.toString()]);
-    if (this.xmlDataType !== undefined) out.push([":xmlDataType", this.xmlDataType.toString()]);
+    if (this.mapId !== undefined) out.push(["mapId", this.mapId.toString()]);
+    if (this.xPath !== undefined) out.push(["xpath", this.xPath.toString()]);
+    if (this.xmlDataType !== undefined) out.push(["xmlDataType", this.xmlDataType.toString()]);
     return out;
   }
 

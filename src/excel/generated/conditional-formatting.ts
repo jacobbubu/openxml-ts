@@ -26,8 +26,8 @@ export class ConditionalFormatting extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":pivot": this.pivot = BooleanValue.parse(value); return;
-      case ":sqref": this.sequenceOfReferences = StringValue.parse(value); return;
+      case "pivot": this.pivot = BooleanValue.parse(value); return;
+      case "sqref": this.sequenceOfReferences = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class ConditionalFormatting extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.pivot !== undefined) out.push([":pivot", this.pivot.toString()]);
-    if (this.sequenceOfReferences !== undefined) out.push([":sqref", this.sequenceOfReferences.toString()]);
+    if (this.pivot !== undefined) out.push(["pivot", this.pivot.toString()]);
+    if (this.sequenceOfReferences !== undefined) out.push(["sqref", this.sequenceOfReferences.toString()]);
     return out;
   }
 

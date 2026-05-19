@@ -27,8 +27,8 @@ export class AutoNumberedBullet extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":startAt": this.startAt = Int32Value.parse(value); assertNumber(this.startAt, { min: 1, max: 32767 }, { attribute: ":startAt", elementClass: "AutoNumberedBullet" }); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "startAt": this.startAt = Int32Value.parse(value); assertNumber(this.startAt, { min: 1, max: 32767 }, { attribute: ":startAt", elementClass: "AutoNumberedBullet" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -36,8 +36,8 @@ export class AutoNumberedBullet extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.startAt !== undefined) out.push([":startAt", this.startAt.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.startAt !== undefined) out.push(["startAt", this.startAt.toString()]);
     return out;
   }
 

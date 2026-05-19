@@ -37,11 +37,11 @@ export class BooleanItem extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":v": this.val = BooleanValue.parse(value); return;
-      case ":u": this.unused = BooleanValue.parse(value); return;
-      case ":f": this.calculated = BooleanValue.parse(value); return;
-      case ":c": this.caption = StringValue.parse(value); return;
-      case ":cp": this.propertyCount = UInt32Value.parse(value); return;
+      case "v": this.val = BooleanValue.parse(value); return;
+      case "u": this.unused = BooleanValue.parse(value); return;
+      case "f": this.calculated = BooleanValue.parse(value); return;
+      case "c": this.caption = StringValue.parse(value); return;
+      case "cp": this.propertyCount = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -49,11 +49,11 @@ export class BooleanItem extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.val !== undefined) out.push([":v", this.val.toString()]);
-    if (this.unused !== undefined) out.push([":u", this.unused.toString()]);
-    if (this.calculated !== undefined) out.push([":f", this.calculated.toString()]);
-    if (this.caption !== undefined) out.push([":c", this.caption.toString()]);
-    if (this.propertyCount !== undefined) out.push([":cp", this.propertyCount.toString()]);
+    if (this.val !== undefined) out.push(["v", this.val.toString()]);
+    if (this.unused !== undefined) out.push(["u", this.unused.toString()]);
+    if (this.calculated !== undefined) out.push(["f", this.calculated.toString()]);
+    if (this.caption !== undefined) out.push(["c", this.caption.toString()]);
+    if (this.propertyCount !== undefined) out.push(["cp", this.propertyCount.toString()]);
     return out;
   }
 

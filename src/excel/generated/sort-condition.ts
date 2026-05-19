@@ -42,13 +42,13 @@ export class SortCondition extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":descending": this.descending = BooleanValue.parse(value); return;
-      case ":sortBy": this.sortBy = StringValue.parse(value); return;
-      case ":ref": this.reference = StringValue.parse(value); return;
-      case ":customList": this.customList = StringValue.parse(value); return;
-      case ":dxfId": this.formatId = UInt32Value.parse(value); return;
-      case ":iconSet": this.iconSet = StringValue.parse(value); return;
-      case ":iconId": this.iconId = UInt32Value.parse(value); return;
+      case "descending": this.descending = BooleanValue.parse(value); return;
+      case "sortBy": this.sortBy = StringValue.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
+      case "customList": this.customList = StringValue.parse(value); return;
+      case "dxfId": this.formatId = UInt32Value.parse(value); return;
+      case "iconSet": this.iconSet = StringValue.parse(value); return;
+      case "iconId": this.iconId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -56,13 +56,13 @@ export class SortCondition extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.descending !== undefined) out.push([":descending", this.descending.toString()]);
-    if (this.sortBy !== undefined) out.push([":sortBy", this.sortBy.toString()]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
-    if (this.customList !== undefined) out.push([":customList", this.customList.toString()]);
-    if (this.formatId !== undefined) out.push([":dxfId", this.formatId.toString()]);
-    if (this.iconSet !== undefined) out.push([":iconSet", this.iconSet.toString()]);
-    if (this.iconId !== undefined) out.push([":iconId", this.iconId.toString()]);
+    if (this.descending !== undefined) out.push(["descending", this.descending.toString()]);
+    if (this.sortBy !== undefined) out.push(["sortBy", this.sortBy.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
+    if (this.customList !== undefined) out.push(["customList", this.customList.toString()]);
+    if (this.formatId !== undefined) out.push(["dxfId", this.formatId.toString()]);
+    if (this.iconSet !== undefined) out.push(["iconSet", this.iconSet.toString()]);
+    if (this.iconId !== undefined) out.push(["iconId", this.iconId.toString()]);
     return out;
   }
 

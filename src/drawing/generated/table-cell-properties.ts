@@ -45,14 +45,14 @@ export class TableCellProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":marL": this.leftMargin = Int32Value.parse(value); return;
-      case ":marR": this.rightMargin = Int32Value.parse(value); return;
-      case ":marT": this.topMargin = Int32Value.parse(value); return;
-      case ":marB": this.bottomMargin = Int32Value.parse(value); return;
-      case ":vert": this.vertical = StringValue.parse(value); return;
-      case ":anchor": this.anchor = StringValue.parse(value); return;
-      case ":anchorCtr": this.anchorCenter = BooleanValue.parse(value); return;
-      case ":horzOverflow": this.horizontalOverflow = StringValue.parse(value); return;
+      case "marL": this.leftMargin = Int32Value.parse(value); return;
+      case "marR": this.rightMargin = Int32Value.parse(value); return;
+      case "marT": this.topMargin = Int32Value.parse(value); return;
+      case "marB": this.bottomMargin = Int32Value.parse(value); return;
+      case "vert": this.vertical = StringValue.parse(value); return;
+      case "anchor": this.anchor = StringValue.parse(value); return;
+      case "anchorCtr": this.anchorCenter = BooleanValue.parse(value); return;
+      case "horzOverflow": this.horizontalOverflow = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -60,14 +60,14 @@ export class TableCellProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.leftMargin !== undefined) out.push([":marL", this.leftMargin.toString()]);
-    if (this.rightMargin !== undefined) out.push([":marR", this.rightMargin.toString()]);
-    if (this.topMargin !== undefined) out.push([":marT", this.topMargin.toString()]);
-    if (this.bottomMargin !== undefined) out.push([":marB", this.bottomMargin.toString()]);
-    if (this.vertical !== undefined) out.push([":vert", this.vertical.toString()]);
-    if (this.anchor !== undefined) out.push([":anchor", this.anchor.toString()]);
-    if (this.anchorCenter !== undefined) out.push([":anchorCtr", this.anchorCenter.toString()]);
-    if (this.horizontalOverflow !== undefined) out.push([":horzOverflow", this.horizontalOverflow.toString()]);
+    if (this.leftMargin !== undefined) out.push(["marL", this.leftMargin.toString()]);
+    if (this.rightMargin !== undefined) out.push(["marR", this.rightMargin.toString()]);
+    if (this.topMargin !== undefined) out.push(["marT", this.topMargin.toString()]);
+    if (this.bottomMargin !== undefined) out.push(["marB", this.bottomMargin.toString()]);
+    if (this.vertical !== undefined) out.push(["vert", this.vertical.toString()]);
+    if (this.anchor !== undefined) out.push(["anchor", this.anchor.toString()]);
+    if (this.anchorCenter !== undefined) out.push(["anchorCtr", this.anchorCenter.toString()]);
+    if (this.horizontalOverflow !== undefined) out.push(["horzOverflow", this.horizontalOverflow.toString()]);
     return out;
   }
 

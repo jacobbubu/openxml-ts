@@ -22,7 +22,7 @@ export class CustomFilters extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":and": this.and = BooleanValue.parse(value); return;
+      case "and": this.and = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class CustomFilters extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.and !== undefined) out.push([":and", this.and.toString()]);
+    if (this.and !== undefined) out.push(["and", this.and.toString()]);
     return out;
   }
 

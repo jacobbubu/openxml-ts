@@ -22,7 +22,7 @@ export class NonVisualPictureDrawingProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":preferRelativeResize": this.preferRelativeResize = BooleanValue.parse(value); return;
+      case "preferRelativeResize": this.preferRelativeResize = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class NonVisualPictureDrawingProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.preferRelativeResize !== undefined) out.push([":preferRelativeResize", this.preferRelativeResize.toString()]);
+    if (this.preferRelativeResize !== undefined) out.push(["preferRelativeResize", this.preferRelativeResize.toString()]);
     return out;
   }
 

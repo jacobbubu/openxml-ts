@@ -22,7 +22,7 @@ export class Miter extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":lim": this.limit = Int32Value.parse(value); assertNumber(this.limit, { min: 0 }, { attribute: ":lim", elementClass: "Miter" }); return;
+      case "lim": this.limit = Int32Value.parse(value); assertNumber(this.limit, { min: 0 }, { attribute: ":lim", elementClass: "Miter" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Miter extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.limit !== undefined) out.push([":lim", this.limit.toString()]);
+    if (this.limit !== undefined) out.push(["lim", this.limit.toString()]);
     return out;
   }
 

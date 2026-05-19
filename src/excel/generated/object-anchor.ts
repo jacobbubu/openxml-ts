@@ -22,7 +22,7 @@ export class ObjectAnchor extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":z-order": this.zOrder = UInt32Value.parse(value); return;
+      case "z-order": this.zOrder = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class ObjectAnchor extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.zOrder !== undefined) out.push([":z-order", this.zOrder.toString()]);
+    if (this.zOrder !== undefined) out.push(["z-order", this.zOrder.toString()]);
     return out;
   }
 

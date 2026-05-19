@@ -51,16 +51,16 @@ export class Column extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":min": this.min = UInt32Value.parse(value); return;
-      case ":max": this.max = UInt32Value.parse(value); return;
-      case ":width": this.width = StringValue.parse(value); return;
-      case ":style": this.style = UInt32Value.parse(value); return;
-      case ":hidden": this.hidden = BooleanValue.parse(value); return;
-      case ":bestFit": this.bestFit = BooleanValue.parse(value); return;
-      case ":customWidth": this.customWidth = BooleanValue.parse(value); return;
-      case ":phonetic": this.phonetic = BooleanValue.parse(value); return;
-      case ":outlineLevel": this.outlineLevel = StringValue.parse(value); return;
-      case ":collapsed": this.collapsed = BooleanValue.parse(value); return;
+      case "min": this.min = UInt32Value.parse(value); return;
+      case "max": this.max = UInt32Value.parse(value); return;
+      case "width": this.width = StringValue.parse(value); return;
+      case "style": this.style = UInt32Value.parse(value); return;
+      case "hidden": this.hidden = BooleanValue.parse(value); return;
+      case "bestFit": this.bestFit = BooleanValue.parse(value); return;
+      case "customWidth": this.customWidth = BooleanValue.parse(value); return;
+      case "phonetic": this.phonetic = BooleanValue.parse(value); return;
+      case "outlineLevel": this.outlineLevel = StringValue.parse(value); return;
+      case "collapsed": this.collapsed = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -68,16 +68,16 @@ export class Column extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.min !== undefined) out.push([":min", this.min.toString()]);
-    if (this.max !== undefined) out.push([":max", this.max.toString()]);
-    if (this.width !== undefined) out.push([":width", this.width.toString()]);
-    if (this.style !== undefined) out.push([":style", this.style.toString()]);
-    if (this.hidden !== undefined) out.push([":hidden", this.hidden.toString()]);
-    if (this.bestFit !== undefined) out.push([":bestFit", this.bestFit.toString()]);
-    if (this.customWidth !== undefined) out.push([":customWidth", this.customWidth.toString()]);
-    if (this.phonetic !== undefined) out.push([":phonetic", this.phonetic.toString()]);
-    if (this.outlineLevel !== undefined) out.push([":outlineLevel", this.outlineLevel.toString()]);
-    if (this.collapsed !== undefined) out.push([":collapsed", this.collapsed.toString()]);
+    if (this.min !== undefined) out.push(["min", this.min.toString()]);
+    if (this.max !== undefined) out.push(["max", this.max.toString()]);
+    if (this.width !== undefined) out.push(["width", this.width.toString()]);
+    if (this.style !== undefined) out.push(["style", this.style.toString()]);
+    if (this.hidden !== undefined) out.push(["hidden", this.hidden.toString()]);
+    if (this.bestFit !== undefined) out.push(["bestFit", this.bestFit.toString()]);
+    if (this.customWidth !== undefined) out.push(["customWidth", this.customWidth.toString()]);
+    if (this.phonetic !== undefined) out.push(["phonetic", this.phonetic.toString()]);
+    if (this.outlineLevel !== undefined) out.push(["outlineLevel", this.outlineLevel.toString()]);
+    if (this.collapsed !== undefined) out.push(["collapsed", this.collapsed.toString()]);
     return out;
   }
 

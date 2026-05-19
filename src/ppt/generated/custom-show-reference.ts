@@ -22,7 +22,7 @@ export class CustomShowReference extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = UInt32Value.parse(value); return;
+      case "id": this.id = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class CustomShowReference extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
     return out;
   }
 

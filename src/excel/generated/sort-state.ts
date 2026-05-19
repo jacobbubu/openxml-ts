@@ -33,10 +33,10 @@ export class SortState extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":columnSort": this.columnSort = BooleanValue.parse(value); return;
-      case ":caseSensitive": this.caseSensitive = BooleanValue.parse(value); return;
-      case ":sortMethod": this.sortMethod = StringValue.parse(value); return;
-      case ":ref": this.reference = StringValue.parse(value); return;
+      case "columnSort": this.columnSort = BooleanValue.parse(value); return;
+      case "caseSensitive": this.caseSensitive = BooleanValue.parse(value); return;
+      case "sortMethod": this.sortMethod = StringValue.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -44,10 +44,10 @@ export class SortState extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.columnSort !== undefined) out.push([":columnSort", this.columnSort.toString()]);
-    if (this.caseSensitive !== undefined) out.push([":caseSensitive", this.caseSensitive.toString()]);
-    if (this.sortMethod !== undefined) out.push([":sortMethod", this.sortMethod.toString()]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
+    if (this.columnSort !== undefined) out.push(["columnSort", this.columnSort.toString()]);
+    if (this.caseSensitive !== undefined) out.push(["caseSensitive", this.caseSensitive.toString()]);
+    if (this.sortMethod !== undefined) out.push(["sortMethod", this.sortMethod.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
     return out;
   }
 

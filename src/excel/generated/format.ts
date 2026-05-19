@@ -26,8 +26,8 @@ export class Format extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":action": this.action = StringValue.parse(value); return;
-      case ":dxfId": this.formatId = UInt32Value.parse(value); return;
+      case "action": this.action = StringValue.parse(value); return;
+      case "dxfId": this.formatId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export class Format extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.action !== undefined) out.push([":action", this.action.toString()]);
-    if (this.formatId !== undefined) out.push([":dxfId", this.formatId.toString()]);
+    if (this.action !== undefined) out.push(["action", this.action.toString()]);
+    if (this.formatId !== undefined) out.push(["dxfId", this.formatId.toString()]);
     return out;
   }
 

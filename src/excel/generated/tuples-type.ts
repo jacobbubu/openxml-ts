@@ -21,7 +21,7 @@ export abstract class TuplesType extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":c": this.memberNameCount = UInt32Value.parse(value); return;
+      case "c": this.memberNameCount = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -29,7 +29,7 @@ export abstract class TuplesType extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.memberNameCount !== undefined) out.push([":c", this.memberNameCount.toString()]);
+    if (this.memberNameCount !== undefined) out.push(["c", this.memberNameCount.toString()]);
     return out;
   }
 

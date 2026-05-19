@@ -23,7 +23,7 @@ export class AlphaReplace extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":a": this.alpha = Int32Value.parse(value); assertNumber(this.alpha, { min: 0, max: 100000 }, { attribute: ":a", elementClass: "AlphaReplace" }); return;
+      case "a": this.alpha = Int32Value.parse(value); assertNumber(this.alpha, { min: 0, max: 100000 }, { attribute: ":a", elementClass: "AlphaReplace" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class AlphaReplace extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.alpha !== undefined) out.push([":a", this.alpha.toString()]);
+    if (this.alpha !== undefined) out.push(["a", this.alpha.toString()]);
     return out;
   }
 

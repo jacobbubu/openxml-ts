@@ -32,10 +32,10 @@ export class Dimension extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":measure": this.measure = BooleanValue.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":uniqueName": this.uniqueName = StringValue.parse(value); return;
-      case ":caption": this.caption = StringValue.parse(value); return;
+      case "measure": this.measure = BooleanValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "uniqueName": this.uniqueName = StringValue.parse(value); return;
+      case "caption": this.caption = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -43,10 +43,10 @@ export class Dimension extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.measure !== undefined) out.push([":measure", this.measure.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.uniqueName !== undefined) out.push([":uniqueName", this.uniqueName.toString()]);
-    if (this.caption !== undefined) out.push([":caption", this.caption.toString()]);
+    if (this.measure !== undefined) out.push(["measure", this.measure.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.uniqueName !== undefined) out.push(["uniqueName", this.uniqueName.toString()]);
+    if (this.caption !== undefined) out.push(["caption", this.caption.toString()]);
     return out;
   }
 

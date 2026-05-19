@@ -32,10 +32,10 @@ export class DatabaseProperties extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":connection": this.connection = StringValue.parse(value); return;
-      case ":command": this.command = StringValue.parse(value); return;
-      case ":serverCommand": this.serverCommand = StringValue.parse(value); return;
-      case ":commandType": this.commandType = UInt32Value.parse(value); return;
+      case "connection": this.connection = StringValue.parse(value); return;
+      case "command": this.command = StringValue.parse(value); return;
+      case "serverCommand": this.serverCommand = StringValue.parse(value); return;
+      case "commandType": this.commandType = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -43,10 +43,10 @@ export class DatabaseProperties extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.connection !== undefined) out.push([":connection", this.connection.toString()]);
-    if (this.command !== undefined) out.push([":command", this.command.toString()]);
-    if (this.serverCommand !== undefined) out.push([":serverCommand", this.serverCommand.toString()]);
-    if (this.commandType !== undefined) out.push([":commandType", this.commandType.toString()]);
+    if (this.connection !== undefined) out.push(["connection", this.connection.toString()]);
+    if (this.command !== undefined) out.push(["command", this.command.toString()]);
+    if (this.serverCommand !== undefined) out.push(["serverCommand", this.serverCommand.toString()]);
+    if (this.commandType !== undefined) out.push(["commandType", this.commandType.toString()]);
     return out;
   }
 

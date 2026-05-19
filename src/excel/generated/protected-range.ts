@@ -45,14 +45,14 @@ export class ProtectedRange extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":password": this.password = HexBinaryValue.parse(value); return;
-      case ":algorithmName": this.algorithmName = StringValue.parse(value); return;
-      case ":hashValue": this.hashValue = StringValue.parse(value); return;
-      case ":saltValue": this.saltValue = StringValue.parse(value); return;
-      case ":spinCount": this.spinCount = UInt32Value.parse(value); return;
-      case ":sqref": this.sequenceOfReferences = StringValue.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":securityDescriptor": this.securityDescriptor = StringValue.parse(value); return;
+      case "password": this.password = HexBinaryValue.parse(value); return;
+      case "algorithmName": this.algorithmName = StringValue.parse(value); return;
+      case "hashValue": this.hashValue = StringValue.parse(value); return;
+      case "saltValue": this.saltValue = StringValue.parse(value); return;
+      case "spinCount": this.spinCount = UInt32Value.parse(value); return;
+      case "sqref": this.sequenceOfReferences = StringValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "securityDescriptor": this.securityDescriptor = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -60,14 +60,14 @@ export class ProtectedRange extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.password !== undefined) out.push([":password", this.password.toString()]);
-    if (this.algorithmName !== undefined) out.push([":algorithmName", this.algorithmName.toString()]);
-    if (this.hashValue !== undefined) out.push([":hashValue", this.hashValue.toString()]);
-    if (this.saltValue !== undefined) out.push([":saltValue", this.saltValue.toString()]);
-    if (this.spinCount !== undefined) out.push([":spinCount", this.spinCount.toString()]);
-    if (this.sequenceOfReferences !== undefined) out.push([":sqref", this.sequenceOfReferences.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.securityDescriptor !== undefined) out.push([":securityDescriptor", this.securityDescriptor.toString()]);
+    if (this.password !== undefined) out.push(["password", this.password.toString()]);
+    if (this.algorithmName !== undefined) out.push(["algorithmName", this.algorithmName.toString()]);
+    if (this.hashValue !== undefined) out.push(["hashValue", this.hashValue.toString()]);
+    if (this.saltValue !== undefined) out.push(["saltValue", this.saltValue.toString()]);
+    if (this.spinCount !== undefined) out.push(["spinCount", this.spinCount.toString()]);
+    if (this.sequenceOfReferences !== undefined) out.push(["sqref", this.sequenceOfReferences.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.securityDescriptor !== undefined) out.push(["securityDescriptor", this.securityDescriptor.toString()]);
     return out;
   }
 

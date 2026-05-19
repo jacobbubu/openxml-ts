@@ -23,7 +23,7 @@ export class GraphicData extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":uri": this.uri = StringValue.parse(value); return;
+      case "uri": this.uri = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class GraphicData extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.uri !== undefined) out.push([":uri", this.uri.toString()]);
+    if (this.uri !== undefined) out.push(["uri", this.uri.toString()]);
     return out;
   }
 

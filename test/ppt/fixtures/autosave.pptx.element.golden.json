@@ -5,8 +5,10 @@
     "qname": "p:presentation",
     "className": "Presentation",
     "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
+    "typedAttributes": {
+      "saveSubsetFonts": "1"
+    },
     "extendedAttributes": {
-      "saveSubsetFonts": "1",
       "xmlns:a": "http://schemas.openxmlformats.org/drawingml/2006/main",
       "xmlns:p": "http://schemas.openxmlformats.org/presentationml/2006/main",
       "xmlns:r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
@@ -22,10 +24,8 @@
             "className": "SlideMasterId",
             "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
             "typedAttributes": {
+              "id": "2147483648",
               "relationshipId": "rId1"
-            },
-            "extendedAttributes": {
-              "id": "2147483648"
             }
           }
         ]
@@ -40,10 +40,8 @@
             "className": "SlideId",
             "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
             "typedAttributes": {
+              "id": "256",
               "relationshipId": "rId2"
-            },
-            "extendedAttributes": {
-              "id": "256"
             }
           },
           {
@@ -51,10 +49,8 @@
             "className": "SlideId",
             "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
             "typedAttributes": {
+              "id": "257",
               "relationshipId": "rId3"
-            },
-            "extendedAttributes": {
-              "id": "257"
             }
           }
         ]
@@ -63,7 +59,7 @@
         "qname": "p:sldSz",
         "className": "SlideSize",
         "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-        "extendedAttributes": {
+        "typedAttributes": {
           "cx": "9144000",
           "cy": "6858000",
           "type": "screen4x3"
@@ -130,7 +126,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -196,7 +192,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -262,7 +258,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -328,7 +324,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -394,7 +390,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -460,7 +456,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -526,7 +522,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -592,7 +588,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -658,7 +654,7 @@
                         "qname": "a:schemeClr",
                         "className": "SchemeColor",
                         "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                        "extendedAttributes": {
+                        "typedAttributes": {
                           "val": "tx1"
                         }
                       }
@@ -726,7 +722,7 @@
                       "qname": "p:cNvPr",
                       "className": "NonVisualDrawingProperties",
                       "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                      "extendedAttributes": {
+                      "typedAttributes": {
                         "id": "1",
                         "name": ""
                       }
@@ -807,7 +803,7 @@
                           "qname": "p:cNvPr",
                           "className": "NonVisualDrawingProperties",
                           "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "id": "2",
                             "name": "Title 1"
                           }
@@ -821,8 +817,8 @@
                               "qname": "a:spLocks",
                               "className": "ShapeLocks",
                               "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                              "extendedAttributes": {
-                                "noGrp": "1"
+                              "typedAttributes": {
+                                "noGrouping": "1"
                               }
                             }
                           ]
@@ -836,7 +832,7 @@
                               "qname": "p:ph",
                               "className": "PlaceholderShape",
                               "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                              "extendedAttributes": {
+                              "typedAttributes": {
                                 "type": "ctrTitle"
                               }
                             }
@@ -923,7 +919,7 @@
                           "qname": "p:cNvPr",
                           "className": "NonVisualDrawingProperties",
                           "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "id": "3",
                             "name": "Subtitle 2"
                           }
@@ -937,8 +933,8 @@
                               "qname": "a:spLocks",
                               "className": "ShapeLocks",
                               "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                              "extendedAttributes": {
-                                "noGrp": "1"
+                              "typedAttributes": {
+                                "noGrouping": "1"
                               }
                             }
                           ]
@@ -952,8 +948,8 @@
                               "qname": "p:ph",
                               "className": "PlaceholderShape",
                               "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                              "extendedAttributes": {
-                                "idx": "1",
+                              "typedAttributes": {
+                                "index": "1",
                                 "type": "subTitle"
                               }
                             }
@@ -1048,7 +1044,7 @@
                       "qname": "p:cNvPr",
                       "className": "NonVisualDrawingProperties",
                       "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                      "extendedAttributes": {
+                      "typedAttributes": {
                         "id": "1",
                         "name": ""
                       }
@@ -1129,7 +1125,7 @@
                           "qname": "p:cNvPr",
                           "className": "NonVisualDrawingProperties",
                           "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "id": "2",
                             "name": "Title 1"
                           }
@@ -1143,8 +1139,8 @@
                               "qname": "a:spLocks",
                               "className": "ShapeLocks",
                               "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                              "extendedAttributes": {
-                                "noGrp": "1"
+                              "typedAttributes": {
+                                "noGrouping": "1"
                               }
                             }
                           ]
@@ -1158,7 +1154,7 @@
                               "qname": "p:ph",
                               "className": "PlaceholderShape",
                               "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                              "extendedAttributes": {
+                              "typedAttributes": {
                                 "type": "title"
                               }
                             }
@@ -1245,7 +1241,7 @@
                           "qname": "p:cNvPr",
                           "className": "NonVisualDrawingProperties",
                           "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "id": "3",
                             "name": "Content Placeholder 2"
                           }
@@ -1259,8 +1255,8 @@
                               "qname": "a:spLocks",
                               "className": "ShapeLocks",
                               "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                              "extendedAttributes": {
-                                "noGrp": "1"
+                              "typedAttributes": {
+                                "noGrouping": "1"
                               }
                             }
                           ]
@@ -1274,8 +1270,8 @@
                               "qname": "p:ph",
                               "className": "PlaceholderShape",
                               "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
-                              "extendedAttributes": {
-                                "idx": "1"
+                              "typedAttributes": {
+                                "index": "1"
                               }
                             }
                           ]

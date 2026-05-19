@@ -24,8 +24,8 @@ export class ServerFormat extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":culture": this.culture = StringValue.parse(value); return;
-      case ":format": this.format = StringValue.parse(value); return;
+      case "culture": this.culture = StringValue.parse(value); return;
+      case "format": this.format = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -33,8 +33,8 @@ export class ServerFormat extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.culture !== undefined) out.push([":culture", this.culture.toString()]);
-    if (this.format !== undefined) out.push([":format", this.format.toString()]);
+    if (this.culture !== undefined) out.push(["culture", this.culture.toString()]);
+    if (this.format !== undefined) out.push(["format", this.format.toString()]);
     return out;
   }
 

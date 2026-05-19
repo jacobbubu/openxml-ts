@@ -22,7 +22,7 @@ export class Consolidation extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":autoPage": this.autoPage = BooleanValue.parse(value); return;
+      case "autoPage": this.autoPage = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Consolidation extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.autoPage !== undefined) out.push([":autoPage", this.autoPage.toString()]);
+    if (this.autoPage !== undefined) out.push(["autoPage", this.autoPage.toString()]);
     return out;
   }
 

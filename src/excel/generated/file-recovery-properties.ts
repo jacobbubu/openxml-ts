@@ -30,10 +30,10 @@ export class FileRecoveryProperties extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":autoRecover": this.autoRecover = BooleanValue.parse(value); return;
-      case ":crashSave": this.crashSave = BooleanValue.parse(value); return;
-      case ":dataExtractLoad": this.dataExtractLoad = BooleanValue.parse(value); return;
-      case ":repairLoad": this.repairLoad = BooleanValue.parse(value); return;
+      case "autoRecover": this.autoRecover = BooleanValue.parse(value); return;
+      case "crashSave": this.crashSave = BooleanValue.parse(value); return;
+      case "dataExtractLoad": this.dataExtractLoad = BooleanValue.parse(value); return;
+      case "repairLoad": this.repairLoad = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -41,10 +41,10 @@ export class FileRecoveryProperties extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.autoRecover !== undefined) out.push([":autoRecover", this.autoRecover.toString()]);
-    if (this.crashSave !== undefined) out.push([":crashSave", this.crashSave.toString()]);
-    if (this.dataExtractLoad !== undefined) out.push([":dataExtractLoad", this.dataExtractLoad.toString()]);
-    if (this.repairLoad !== undefined) out.push([":repairLoad", this.repairLoad.toString()]);
+    if (this.autoRecover !== undefined) out.push(["autoRecover", this.autoRecover.toString()]);
+    if (this.crashSave !== undefined) out.push(["crashSave", this.crashSave.toString()]);
+    if (this.dataExtractLoad !== undefined) out.push(["dataExtractLoad", this.dataExtractLoad.toString()]);
+    if (this.repairLoad !== undefined) out.push(["repairLoad", this.repairLoad.toString()]);
     return out;
   }
 

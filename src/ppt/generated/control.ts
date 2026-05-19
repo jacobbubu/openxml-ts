@@ -40,12 +40,12 @@ export class Control extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":spid": this.shapeId = StringValue.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":showAsIcon": this.showAsIcon = BooleanValue.parse(value); return;
+      case "spid": this.shapeId = StringValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "showAsIcon": this.showAsIcon = BooleanValue.parse(value); return;
       case "r:id": this.id = StringValue.parse(value); return;
-      case ":imgW": this.imageWidth = Int32Value.parse(value); assertNumber(this.imageWidth, { min: 0 }, { attribute: ":imgW", elementClass: "Control" }); return;
-      case ":imgH": this.imageHeight = Int32Value.parse(value); assertNumber(this.imageHeight, { min: 0 }, { attribute: ":imgH", elementClass: "Control" }); return;
+      case "imgW": this.imageWidth = Int32Value.parse(value); assertNumber(this.imageWidth, { min: 0 }, { attribute: ":imgW", elementClass: "Control" }); return;
+      case "imgH": this.imageHeight = Int32Value.parse(value); assertNumber(this.imageHeight, { min: 0 }, { attribute: ":imgH", elementClass: "Control" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -53,12 +53,12 @@ export class Control extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.shapeId !== undefined) out.push([":spid", this.shapeId.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.showAsIcon !== undefined) out.push([":showAsIcon", this.showAsIcon.toString()]);
+    if (this.shapeId !== undefined) out.push(["spid", this.shapeId.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.showAsIcon !== undefined) out.push(["showAsIcon", this.showAsIcon.toString()]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
-    if (this.imageWidth !== undefined) out.push([":imgW", this.imageWidth.toString()]);
-    if (this.imageHeight !== undefined) out.push([":imgH", this.imageHeight.toString()]);
+    if (this.imageWidth !== undefined) out.push(["imgW", this.imageWidth.toString()]);
+    if (this.imageHeight !== undefined) out.push(["imgH", this.imageHeight.toString()]);
     return out;
   }
 

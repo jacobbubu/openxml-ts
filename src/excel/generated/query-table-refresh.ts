@@ -42,13 +42,13 @@ export class QueryTableRefresh extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":preserveSortFilterLayout": this.preserveSortFilterLayout = BooleanValue.parse(value); return;
-      case ":fieldIdWrapped": this.fieldIdWrapped = BooleanValue.parse(value); return;
-      case ":headersInLastRefresh": this.headersInLastRefresh = BooleanValue.parse(value); return;
-      case ":minimumVersion": this.minimumVersion = StringValue.parse(value); return;
-      case ":nextId": this.nextId = UInt32Value.parse(value); return;
-      case ":unboundColumnsLeft": this.unboundColumnsLeft = UInt32Value.parse(value); return;
-      case ":unboundColumnsRight": this.unboundColumnsRight = UInt32Value.parse(value); return;
+      case "preserveSortFilterLayout": this.preserveSortFilterLayout = BooleanValue.parse(value); return;
+      case "fieldIdWrapped": this.fieldIdWrapped = BooleanValue.parse(value); return;
+      case "headersInLastRefresh": this.headersInLastRefresh = BooleanValue.parse(value); return;
+      case "minimumVersion": this.minimumVersion = StringValue.parse(value); return;
+      case "nextId": this.nextId = UInt32Value.parse(value); return;
+      case "unboundColumnsLeft": this.unboundColumnsLeft = UInt32Value.parse(value); return;
+      case "unboundColumnsRight": this.unboundColumnsRight = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -56,13 +56,13 @@ export class QueryTableRefresh extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.preserveSortFilterLayout !== undefined) out.push([":preserveSortFilterLayout", this.preserveSortFilterLayout.toString()]);
-    if (this.fieldIdWrapped !== undefined) out.push([":fieldIdWrapped", this.fieldIdWrapped.toString()]);
-    if (this.headersInLastRefresh !== undefined) out.push([":headersInLastRefresh", this.headersInLastRefresh.toString()]);
-    if (this.minimumVersion !== undefined) out.push([":minimumVersion", this.minimumVersion.toString()]);
-    if (this.nextId !== undefined) out.push([":nextId", this.nextId.toString()]);
-    if (this.unboundColumnsLeft !== undefined) out.push([":unboundColumnsLeft", this.unboundColumnsLeft.toString()]);
-    if (this.unboundColumnsRight !== undefined) out.push([":unboundColumnsRight", this.unboundColumnsRight.toString()]);
+    if (this.preserveSortFilterLayout !== undefined) out.push(["preserveSortFilterLayout", this.preserveSortFilterLayout.toString()]);
+    if (this.fieldIdWrapped !== undefined) out.push(["fieldIdWrapped", this.fieldIdWrapped.toString()]);
+    if (this.headersInLastRefresh !== undefined) out.push(["headersInLastRefresh", this.headersInLastRefresh.toString()]);
+    if (this.minimumVersion !== undefined) out.push(["minimumVersion", this.minimumVersion.toString()]);
+    if (this.nextId !== undefined) out.push(["nextId", this.nextId.toString()]);
+    if (this.unboundColumnsLeft !== undefined) out.push(["unboundColumnsLeft", this.unboundColumnsLeft.toString()]);
+    if (this.unboundColumnsRight !== undefined) out.push(["unboundColumnsRight", this.unboundColumnsRight.toString()]);
     return out;
   }
 

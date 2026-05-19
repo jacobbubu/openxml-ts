@@ -27,7 +27,7 @@ export class AnimateScale extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":zoomContents": this.zoomContents = BooleanValue.parse(value); return;
+      case "zoomContents": this.zoomContents = BooleanValue.parse(value); return;
       case "p14:bounceEnd": this.bounceEnd = Int32Value.parse(value); assertNumber(this.bounceEnd, { min: 0, max: 100000 }, { attribute: "p14:bounceEnd", elementClass: "AnimateScale" }); return;
     }
     super.applyAttribute(qname, value);
@@ -36,7 +36,7 @@ export class AnimateScale extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.zoomContents !== undefined) out.push([":zoomContents", this.zoomContents.toString()]);
+    if (this.zoomContents !== undefined) out.push(["zoomContents", this.zoomContents.toString()]);
     if (this.bounceEnd !== undefined) out.push(["p14:bounceEnd", this.bounceEnd.toString()]);
     return out;
   }

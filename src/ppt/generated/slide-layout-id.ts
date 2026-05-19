@@ -28,7 +28,7 @@ export class SlideLayoutId extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = UInt32Value.parse(value); assertNumber(this.id, { min: 2147483648 }, { attribute: ":id", elementClass: "SlideLayoutId" }); return;
+      case "id": this.id = UInt32Value.parse(value); assertNumber(this.id, { min: 2147483648 }, { attribute: ":id", elementClass: "SlideLayoutId" }); return;
       case "r:id": this.relationshipId = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -37,7 +37,7 @@ export class SlideLayoutId extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
     if (this.relationshipId !== undefined) out.push(["r:id", this.relationshipId.toString()]);
     return out;
   }

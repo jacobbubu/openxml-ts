@@ -33,10 +33,10 @@ export class Shape3DType extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":z": this.z = Int64Value.parse(value); assertNumber(this.z, { min: -27273042329600, max: 27273042316900 }, { attribute: ":z", elementClass: "Shape3DType" }); return;
-      case ":extrusionH": this.extrusionHeight = Int64Value.parse(value); assertNumber(this.extrusionHeight, { min: 0, max: 2147483647 }, { attribute: ":extrusionH", elementClass: "Shape3DType" }); return;
-      case ":contourW": this.contourWidth = Int64Value.parse(value); assertNumber(this.contourWidth, { min: 0, max: 2147483647 }, { attribute: ":contourW", elementClass: "Shape3DType" }); return;
-      case ":prstMaterial": this.presetMaterial = StringValue.parse(value); return;
+      case "z": this.z = Int64Value.parse(value); assertNumber(this.z, { min: -27273042329600, max: 27273042316900 }, { attribute: ":z", elementClass: "Shape3DType" }); return;
+      case "extrusionH": this.extrusionHeight = Int64Value.parse(value); assertNumber(this.extrusionHeight, { min: 0, max: 2147483647 }, { attribute: ":extrusionH", elementClass: "Shape3DType" }); return;
+      case "contourW": this.contourWidth = Int64Value.parse(value); assertNumber(this.contourWidth, { min: 0, max: 2147483647 }, { attribute: ":contourW", elementClass: "Shape3DType" }); return;
+      case "prstMaterial": this.presetMaterial = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -44,10 +44,10 @@ export class Shape3DType extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.z !== undefined) out.push([":z", this.z.toString()]);
-    if (this.extrusionHeight !== undefined) out.push([":extrusionH", this.extrusionHeight.toString()]);
-    if (this.contourWidth !== undefined) out.push([":contourW", this.contourWidth.toString()]);
-    if (this.presetMaterial !== undefined) out.push([":prstMaterial", this.presetMaterial.toString()]);
+    if (this.z !== undefined) out.push(["z", this.z.toString()]);
+    if (this.extrusionHeight !== undefined) out.push(["extrusionH", this.extrusionHeight.toString()]);
+    if (this.contourWidth !== undefined) out.push(["contourW", this.contourWidth.toString()]);
+    if (this.presetMaterial !== undefined) out.push(["prstMaterial", this.presetMaterial.toString()]);
     return out;
   }
 

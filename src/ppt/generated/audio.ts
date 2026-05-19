@@ -22,7 +22,7 @@ export class Audio extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":isNarration": this.isNarration = BooleanValue.parse(value); return;
+      case "isNarration": this.isNarration = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Audio extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.isNarration !== undefined) out.push([":isNarration", this.isNarration.toString()]);
+    if (this.isNarration !== undefined) out.push(["isNarration", this.isNarration.toString()]);
     return out;
   }
 

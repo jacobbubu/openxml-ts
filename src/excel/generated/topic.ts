@@ -22,7 +22,7 @@ export class Topic extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":t": this.valueType = StringValue.parse(value); return;
+      case "t": this.valueType = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class Topic extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.valueType !== undefined) out.push([":t", this.valueType.toString()]);
+    if (this.valueType !== undefined) out.push(["t", this.valueType.toString()]);
     return out;
   }
 

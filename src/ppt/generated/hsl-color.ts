@@ -29,9 +29,9 @@ export class HslColor extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":h": this.hue = Int32Value.parse(value); return;
-      case ":s": this.saturation = Int32Value.parse(value); assertNumber(this.saturation, { min: -100000, max: 100000 }, { attribute: ":s", elementClass: "HslColor" }); return;
-      case ":l": this.lightness = Int32Value.parse(value); assertNumber(this.lightness, { min: -100000, max: 100000 }, { attribute: ":l", elementClass: "HslColor" }); return;
+      case "h": this.hue = Int32Value.parse(value); return;
+      case "s": this.saturation = Int32Value.parse(value); assertNumber(this.saturation, { min: -100000, max: 100000 }, { attribute: ":s", elementClass: "HslColor" }); return;
+      case "l": this.lightness = Int32Value.parse(value); assertNumber(this.lightness, { min: -100000, max: 100000 }, { attribute: ":l", elementClass: "HslColor" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class HslColor extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.hue !== undefined) out.push([":h", this.hue.toString()]);
-    if (this.saturation !== undefined) out.push([":s", this.saturation.toString()]);
-    if (this.lightness !== undefined) out.push([":l", this.lightness.toString()]);
+    if (this.hue !== undefined) out.push(["h", this.hue.toString()]);
+    if (this.saturation !== undefined) out.push(["s", this.saturation.toString()]);
+    if (this.lightness !== undefined) out.push(["l", this.lightness.toString()]);
     return out;
   }
 

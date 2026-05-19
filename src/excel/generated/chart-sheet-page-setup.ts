@@ -53,16 +53,16 @@ export class ChartSheetPageSetup extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":paperSize": this.paperSize = UInt32Value.parse(value); return;
-      case ":firstPageNumber": this.firstPageNumber = UInt32Value.parse(value); return;
-      case ":orientation": this.orientation = StringValue.parse(value); return;
-      case ":usePrinterDefaults": this.usePrinterDefaults = BooleanValue.parse(value); return;
-      case ":blackAndWhite": this.blackAndWhite = BooleanValue.parse(value); return;
-      case ":draft": this.draft = BooleanValue.parse(value); return;
-      case ":useFirstPageNumber": this.useFirstPageNumber = BooleanValue.parse(value); return;
-      case ":horizontalDpi": this.horizontalDpi = UInt32Value.parse(value); return;
-      case ":verticalDpi": this.verticalDpi = UInt32Value.parse(value); return;
-      case ":copies": this.copies = UInt32Value.parse(value); return;
+      case "paperSize": this.paperSize = UInt32Value.parse(value); return;
+      case "firstPageNumber": this.firstPageNumber = UInt32Value.parse(value); return;
+      case "orientation": this.orientation = StringValue.parse(value); return;
+      case "usePrinterDefaults": this.usePrinterDefaults = BooleanValue.parse(value); return;
+      case "blackAndWhite": this.blackAndWhite = BooleanValue.parse(value); return;
+      case "draft": this.draft = BooleanValue.parse(value); return;
+      case "useFirstPageNumber": this.useFirstPageNumber = BooleanValue.parse(value); return;
+      case "horizontalDpi": this.horizontalDpi = UInt32Value.parse(value); return;
+      case "verticalDpi": this.verticalDpi = UInt32Value.parse(value); return;
+      case "copies": this.copies = UInt32Value.parse(value); return;
       case "r:id": this.id = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -71,16 +71,16 @@ export class ChartSheetPageSetup extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.paperSize !== undefined) out.push([":paperSize", this.paperSize.toString()]);
-    if (this.firstPageNumber !== undefined) out.push([":firstPageNumber", this.firstPageNumber.toString()]);
-    if (this.orientation !== undefined) out.push([":orientation", this.orientation.toString()]);
-    if (this.usePrinterDefaults !== undefined) out.push([":usePrinterDefaults", this.usePrinterDefaults.toString()]);
-    if (this.blackAndWhite !== undefined) out.push([":blackAndWhite", this.blackAndWhite.toString()]);
-    if (this.draft !== undefined) out.push([":draft", this.draft.toString()]);
-    if (this.useFirstPageNumber !== undefined) out.push([":useFirstPageNumber", this.useFirstPageNumber.toString()]);
-    if (this.horizontalDpi !== undefined) out.push([":horizontalDpi", this.horizontalDpi.toString()]);
-    if (this.verticalDpi !== undefined) out.push([":verticalDpi", this.verticalDpi.toString()]);
-    if (this.copies !== undefined) out.push([":copies", this.copies.toString()]);
+    if (this.paperSize !== undefined) out.push(["paperSize", this.paperSize.toString()]);
+    if (this.firstPageNumber !== undefined) out.push(["firstPageNumber", this.firstPageNumber.toString()]);
+    if (this.orientation !== undefined) out.push(["orientation", this.orientation.toString()]);
+    if (this.usePrinterDefaults !== undefined) out.push(["usePrinterDefaults", this.usePrinterDefaults.toString()]);
+    if (this.blackAndWhite !== undefined) out.push(["blackAndWhite", this.blackAndWhite.toString()]);
+    if (this.draft !== undefined) out.push(["draft", this.draft.toString()]);
+    if (this.useFirstPageNumber !== undefined) out.push(["useFirstPageNumber", this.useFirstPageNumber.toString()]);
+    if (this.horizontalDpi !== undefined) out.push(["horizontalDpi", this.horizontalDpi.toString()]);
+    if (this.verticalDpi !== undefined) out.push(["verticalDpi", this.verticalDpi.toString()]);
+    if (this.copies !== undefined) out.push(["copies", this.copies.toString()]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
     return out;
   }

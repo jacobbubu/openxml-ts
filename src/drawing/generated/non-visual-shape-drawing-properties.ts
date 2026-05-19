@@ -22,7 +22,7 @@ export class NonVisualShapeDrawingProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":txBox": this.textBox = BooleanValue.parse(value); return;
+      case "txBox": this.textBox = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class NonVisualShapeDrawingProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.textBox !== undefined) out.push([":txBox", this.textBox.toString()]);
+    if (this.textBox !== undefined) out.push(["txBox", this.textBox.toString()]);
     return out;
   }
 

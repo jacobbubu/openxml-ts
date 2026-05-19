@@ -22,7 +22,7 @@ export class FlatText extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":z": this.z = Int64Value.parse(value); assertNumber(this.z, { min: -27273042329600, max: 27273042316900 }, { attribute: ":z", elementClass: "FlatText" }); return;
+      case "z": this.z = Int64Value.parse(value); assertNumber(this.z, { min: -27273042329600, max: 27273042316900 }, { attribute: ":z", elementClass: "FlatText" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class FlatText extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.z !== undefined) out.push([":z", this.z.toString()]);
+    if (this.z !== undefined) out.push(["z", this.z.toString()]);
     return out;
   }
 

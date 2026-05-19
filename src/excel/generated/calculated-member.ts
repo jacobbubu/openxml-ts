@@ -43,13 +43,13 @@ export class CalculatedMember extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":mdx": this.mdx = StringValue.parse(value); return;
-      case ":memberName": this.memberName = StringValue.parse(value); return;
-      case ":hierarchy": this.hierarchy = StringValue.parse(value); return;
-      case ":parent": this.parentName = StringValue.parse(value); return;
-      case ":solveOrder": this.solveOrder = Int32Value.parse(value); return;
-      case ":set": this.set = BooleanValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "mdx": this.mdx = StringValue.parse(value); return;
+      case "memberName": this.memberName = StringValue.parse(value); return;
+      case "hierarchy": this.hierarchy = StringValue.parse(value); return;
+      case "parent": this.parentName = StringValue.parse(value); return;
+      case "solveOrder": this.solveOrder = Int32Value.parse(value); return;
+      case "set": this.set = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -57,13 +57,13 @@ export class CalculatedMember extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.mdx !== undefined) out.push([":mdx", this.mdx.toString()]);
-    if (this.memberName !== undefined) out.push([":memberName", this.memberName.toString()]);
-    if (this.hierarchy !== undefined) out.push([":hierarchy", this.hierarchy.toString()]);
-    if (this.parentName !== undefined) out.push([":parent", this.parentName.toString()]);
-    if (this.solveOrder !== undefined) out.push([":solveOrder", this.solveOrder.toString()]);
-    if (this.set !== undefined) out.push([":set", this.set.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.mdx !== undefined) out.push(["mdx", this.mdx.toString()]);
+    if (this.memberName !== undefined) out.push(["memberName", this.memberName.toString()]);
+    if (this.hierarchy !== undefined) out.push(["hierarchy", this.hierarchy.toString()]);
+    if (this.parentName !== undefined) out.push(["parent", this.parentName.toString()]);
+    if (this.solveOrder !== undefined) out.push(["solveOrder", this.solveOrder.toString()]);
+    if (this.set !== undefined) out.push(["set", this.set.toString()]);
     return out;
   }
 

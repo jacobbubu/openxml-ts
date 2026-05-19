@@ -24,7 +24,7 @@ export class TableRow extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":h": this.height = Int64Value.parse(value); assertNumber(this.height, { min: -27273042329600, max: 27273042316900 }, { attribute: ":h", elementClass: "TableRow" }); return;
+      case "h": this.height = Int64Value.parse(value); assertNumber(this.height, { min: -27273042329600, max: 27273042316900 }, { attribute: ":h", elementClass: "TableRow" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -32,7 +32,7 @@ export class TableRow extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.height !== undefined) out.push([":h", this.height.toString()]);
+    if (this.height !== undefined) out.push(["h", this.height.toString()]);
     return out;
   }
 

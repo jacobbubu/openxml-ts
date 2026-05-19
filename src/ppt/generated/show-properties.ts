@@ -31,10 +31,10 @@ export class ShowProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":loop": this.loop = BooleanValue.parse(value); return;
-      case ":showNarration": this.showNarration = BooleanValue.parse(value); return;
-      case ":showAnimation": this.showAnimation = BooleanValue.parse(value); return;
-      case ":useTimings": this.useTimings = BooleanValue.parse(value); return;
+      case "loop": this.loop = BooleanValue.parse(value); return;
+      case "showNarration": this.showNarration = BooleanValue.parse(value); return;
+      case "showAnimation": this.showAnimation = BooleanValue.parse(value); return;
+      case "useTimings": this.useTimings = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -42,10 +42,10 @@ export class ShowProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.loop !== undefined) out.push([":loop", this.loop.toString()]);
-    if (this.showNarration !== undefined) out.push([":showNarration", this.showNarration.toString()]);
-    if (this.showAnimation !== undefined) out.push([":showAnimation", this.showAnimation.toString()]);
-    if (this.useTimings !== undefined) out.push([":useTimings", this.useTimings.toString()]);
+    if (this.loop !== undefined) out.push(["loop", this.loop.toString()]);
+    if (this.showNarration !== undefined) out.push(["showNarration", this.showNarration.toString()]);
+    if (this.showAnimation !== undefined) out.push(["showAnimation", this.showAnimation.toString()]);
+    if (this.useTimings !== undefined) out.push(["useTimings", this.useTimings.toString()]);
     return out;
   }
 

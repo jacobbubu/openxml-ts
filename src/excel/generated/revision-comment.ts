@@ -54,17 +54,17 @@ export class RevisionComment extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":sheetId": this.sheetId = UInt32Value.parse(value); return;
-      case ":cell": this.cell = StringValue.parse(value); return;
-      case ":guid": this.guid = StringValue.parse(value); return;
-      case ":action": this.action = StringValue.parse(value); return;
-      case ":alwaysShow": this.alwaysShow = BooleanValue.parse(value); return;
-      case ":old": this.old = BooleanValue.parse(value); return;
-      case ":hiddenRow": this.hiddenRow = BooleanValue.parse(value); return;
-      case ":hiddenColumn": this.hiddenColumn = BooleanValue.parse(value); return;
-      case ":author": this.author = StringValue.parse(value); return;
-      case ":oldLength": this.oldLength = UInt32Value.parse(value); return;
-      case ":newLength": this.newLength = UInt32Value.parse(value); return;
+      case "sheetId": this.sheetId = UInt32Value.parse(value); return;
+      case "cell": this.cell = StringValue.parse(value); return;
+      case "guid": this.guid = StringValue.parse(value); return;
+      case "action": this.action = StringValue.parse(value); return;
+      case "alwaysShow": this.alwaysShow = BooleanValue.parse(value); return;
+      case "old": this.old = BooleanValue.parse(value); return;
+      case "hiddenRow": this.hiddenRow = BooleanValue.parse(value); return;
+      case "hiddenColumn": this.hiddenColumn = BooleanValue.parse(value); return;
+      case "author": this.author = StringValue.parse(value); return;
+      case "oldLength": this.oldLength = UInt32Value.parse(value); return;
+      case "newLength": this.newLength = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -72,17 +72,17 @@ export class RevisionComment extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.sheetId !== undefined) out.push([":sheetId", this.sheetId.toString()]);
-    if (this.cell !== undefined) out.push([":cell", this.cell.toString()]);
-    if (this.guid !== undefined) out.push([":guid", this.guid.toString()]);
-    if (this.action !== undefined) out.push([":action", this.action.toString()]);
-    if (this.alwaysShow !== undefined) out.push([":alwaysShow", this.alwaysShow.toString()]);
-    if (this.old !== undefined) out.push([":old", this.old.toString()]);
-    if (this.hiddenRow !== undefined) out.push([":hiddenRow", this.hiddenRow.toString()]);
-    if (this.hiddenColumn !== undefined) out.push([":hiddenColumn", this.hiddenColumn.toString()]);
-    if (this.author !== undefined) out.push([":author", this.author.toString()]);
-    if (this.oldLength !== undefined) out.push([":oldLength", this.oldLength.toString()]);
-    if (this.newLength !== undefined) out.push([":newLength", this.newLength.toString()]);
+    if (this.sheetId !== undefined) out.push(["sheetId", this.sheetId.toString()]);
+    if (this.cell !== undefined) out.push(["cell", this.cell.toString()]);
+    if (this.guid !== undefined) out.push(["guid", this.guid.toString()]);
+    if (this.action !== undefined) out.push(["action", this.action.toString()]);
+    if (this.alwaysShow !== undefined) out.push(["alwaysShow", this.alwaysShow.toString()]);
+    if (this.old !== undefined) out.push(["old", this.old.toString()]);
+    if (this.hiddenRow !== undefined) out.push(["hiddenRow", this.hiddenRow.toString()]);
+    if (this.hiddenColumn !== undefined) out.push(["hiddenColumn", this.hiddenColumn.toString()]);
+    if (this.author !== undefined) out.push(["author", this.author.toString()]);
+    if (this.oldLength !== undefined) out.push(["oldLength", this.oldLength.toString()]);
+    if (this.newLength !== undefined) out.push(["newLength", this.newLength.toString()]);
     return out;
   }
 

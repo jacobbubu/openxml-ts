@@ -32,9 +32,9 @@ export class Sheet extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":sheetId": this.sheetId = UInt32Value.parse(value); return;
-      case ":state": this.state = StringValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "sheetId": this.sheetId = UInt32Value.parse(value); return;
+      case "state": this.state = StringValue.parse(value); return;
       case "r:id": this.id = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
@@ -43,9 +43,9 @@ export class Sheet extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.sheetId !== undefined) out.push([":sheetId", this.sheetId.toString()]);
-    if (this.state !== undefined) out.push([":state", this.state.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.sheetId !== undefined) out.push(["sheetId", this.sheetId.toString()]);
+    if (this.state !== undefined) out.push(["state", this.state.toString()]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
     return out;
   }

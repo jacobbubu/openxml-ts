@@ -29,9 +29,9 @@ export class TableStyles extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":count": this.count = UInt32Value.parse(value); return;
-      case ":defaultTableStyle": this.defaultTableStyle = StringValue.parse(value); return;
-      case ":defaultPivotStyle": this.defaultPivotStyle = StringValue.parse(value); return;
+      case "count": this.count = UInt32Value.parse(value); return;
+      case "defaultTableStyle": this.defaultTableStyle = StringValue.parse(value); return;
+      case "defaultPivotStyle": this.defaultPivotStyle = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class TableStyles extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.count !== undefined) out.push([":count", this.count.toString()]);
-    if (this.defaultTableStyle !== undefined) out.push([":defaultTableStyle", this.defaultTableStyle.toString()]);
-    if (this.defaultPivotStyle !== undefined) out.push([":defaultPivotStyle", this.defaultPivotStyle.toString()]);
+    if (this.count !== undefined) out.push(["count", this.count.toString()]);
+    if (this.defaultTableStyle !== undefined) out.push(["defaultTableStyle", this.defaultTableStyle.toString()]);
+    if (this.defaultPivotStyle !== undefined) out.push(["defaultPivotStyle", this.defaultPivotStyle.toString()]);
     return out;
   }
 

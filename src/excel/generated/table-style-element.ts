@@ -29,9 +29,9 @@ export class TableStyleElement extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":size": this.size = UInt32Value.parse(value); return;
-      case ":dxfId": this.formatId = UInt32Value.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "size": this.size = UInt32Value.parse(value); return;
+      case "dxfId": this.formatId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class TableStyleElement extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.size !== undefined) out.push([":size", this.size.toString()]);
-    if (this.formatId !== undefined) out.push([":dxfId", this.formatId.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.size !== undefined) out.push(["size", this.size.toString()]);
+    if (this.formatId !== undefined) out.push(["dxfId", this.formatId.toString()]);
     return out;
   }
 

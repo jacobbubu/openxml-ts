@@ -23,7 +23,7 @@ export class Glow extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rad": this.radius = Int64Value.parse(value); assertNumber(this.radius, { min: 0, max: 2147483647 }, { attribute: ":rad", elementClass: "Glow" }); return;
+      case "rad": this.radius = Int64Value.parse(value); assertNumber(this.radius, { min: 0, max: 2147483647 }, { attribute: ":rad", elementClass: "Glow" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -31,7 +31,7 @@ export class Glow extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.radius !== undefined) out.push([":rad", this.radius.toString()]);
+    if (this.radius !== undefined) out.push(["rad", this.radius.toString()]);
     return out;
   }
 

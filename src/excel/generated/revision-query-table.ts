@@ -29,9 +29,9 @@ export class RevisionQueryTable extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":sheetId": this.sheetId = UInt32Value.parse(value); return;
-      case ":ref": this.reference = StringValue.parse(value); return;
-      case ":fieldId": this.fieldId = UInt32Value.parse(value); return;
+      case "sheetId": this.sheetId = UInt32Value.parse(value); return;
+      case "ref": this.reference = StringValue.parse(value); return;
+      case "fieldId": this.fieldId = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -39,9 +39,9 @@ export class RevisionQueryTable extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.sheetId !== undefined) out.push([":sheetId", this.sheetId.toString()]);
-    if (this.reference !== undefined) out.push([":ref", this.reference.toString()]);
-    if (this.fieldId !== undefined) out.push([":fieldId", this.fieldId.toString()]);
+    if (this.sheetId !== undefined) out.push(["sheetId", this.sheetId.toString()]);
+    if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);
+    if (this.fieldId !== undefined) out.push(["fieldId", this.fieldId.toString()]);
     return out;
   }
 

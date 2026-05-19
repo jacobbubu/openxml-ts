@@ -34,10 +34,10 @@ export class CustomChartsheetView extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":guid": this.guid = StringValue.parse(value); return;
-      case ":scale": this.scale = UInt32Value.parse(value); return;
-      case ":state": this.state = StringValue.parse(value); return;
-      case ":zoomToFit": this.zoomToFit = BooleanValue.parse(value); return;
+      case "guid": this.guid = StringValue.parse(value); return;
+      case "scale": this.scale = UInt32Value.parse(value); return;
+      case "state": this.state = StringValue.parse(value); return;
+      case "zoomToFit": this.zoomToFit = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -45,10 +45,10 @@ export class CustomChartsheetView extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.guid !== undefined) out.push([":guid", this.guid.toString()]);
-    if (this.scale !== undefined) out.push([":scale", this.scale.toString()]);
-    if (this.state !== undefined) out.push([":state", this.state.toString()]);
-    if (this.zoomToFit !== undefined) out.push([":zoomToFit", this.zoomToFit.toString()]);
+    if (this.guid !== undefined) out.push(["guid", this.guid.toString()]);
+    if (this.scale !== undefined) out.push(["scale", this.scale.toString()]);
+    if (this.state !== undefined) out.push(["state", this.state.toString()]);
+    if (this.zoomToFit !== undefined) out.push(["zoomToFit", this.zoomToFit.toString()]);
     return out;
   }
 

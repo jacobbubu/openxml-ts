@@ -35,11 +35,11 @@ export class DataConsolidate extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":function": this.function = StringValue.parse(value); return;
-      case ":leftLabels": this.leftLabels = BooleanValue.parse(value); return;
-      case ":startLabels": this.startLabels = BooleanValue.parse(value); return;
-      case ":topLabels": this.topLabels = BooleanValue.parse(value); return;
-      case ":link": this.link = BooleanValue.parse(value); return;
+      case "function": this.function = StringValue.parse(value); return;
+      case "leftLabels": this.leftLabels = BooleanValue.parse(value); return;
+      case "startLabels": this.startLabels = BooleanValue.parse(value); return;
+      case "topLabels": this.topLabels = BooleanValue.parse(value); return;
+      case "link": this.link = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -47,11 +47,11 @@ export class DataConsolidate extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.function !== undefined) out.push([":function", this.function.toString()]);
-    if (this.leftLabels !== undefined) out.push([":leftLabels", this.leftLabels.toString()]);
-    if (this.startLabels !== undefined) out.push([":startLabels", this.startLabels.toString()]);
-    if (this.topLabels !== undefined) out.push([":topLabels", this.topLabels.toString()]);
-    if (this.link !== undefined) out.push([":link", this.link.toString()]);
+    if (this.function !== undefined) out.push(["function", this.function.toString()]);
+    if (this.leftLabels !== undefined) out.push(["leftLabels", this.leftLabels.toString()]);
+    if (this.startLabels !== undefined) out.push(["startLabels", this.startLabels.toString()]);
+    if (this.topLabels !== undefined) out.push(["topLabels", this.topLabels.toString()]);
+    if (this.link !== undefined) out.push(["link", this.link.toString()]);
     return out;
   }
 

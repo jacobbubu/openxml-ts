@@ -30,9 +30,9 @@ export class ConditionalFormat extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":scope": this.scope = StringValue.parse(value); return;
-      case ":type": this.type = StringValue.parse(value); return;
-      case ":priority": this.priority = UInt32Value.parse(value); return;
+      case "scope": this.scope = StringValue.parse(value); return;
+      case "type": this.type = StringValue.parse(value); return;
+      case "priority": this.priority = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -40,9 +40,9 @@ export class ConditionalFormat extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.scope !== undefined) out.push([":scope", this.scope.toString()]);
-    if (this.type !== undefined) out.push([":type", this.type.toString()]);
-    if (this.priority !== undefined) out.push([":priority", this.priority.toString()]);
+    if (this.scope !== undefined) out.push(["scope", this.scope.toString()]);
+    if (this.type !== undefined) out.push(["type", this.type.toString()]);
+    if (this.priority !== undefined) out.push(["priority", this.priority.toString()]);
     return out;
   }
 

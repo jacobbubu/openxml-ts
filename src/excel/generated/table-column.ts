@@ -57,18 +57,18 @@ export class TableColumn extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = UInt32Value.parse(value); return;
-      case ":uniqueName": this.uniqueName = StringValue.parse(value); return;
-      case ":name": this.name = StringValue.parse(value); return;
-      case ":totalsRowFunction": this.totalsRowFunction = StringValue.parse(value); return;
-      case ":totalsRowLabel": this.totalsRowLabel = StringValue.parse(value); return;
-      case ":queryTableFieldId": this.queryTableFieldId = UInt32Value.parse(value); return;
-      case ":headerRowDxfId": this.headerRowDifferentialFormattingId = UInt32Value.parse(value); return;
-      case ":dataDxfId": this.dataFormatId = UInt32Value.parse(value); return;
-      case ":totalsRowDxfId": this.totalsRowDifferentialFormattingId = UInt32Value.parse(value); return;
-      case ":headerRowCellStyle": this.headerRowCellStyle = StringValue.parse(value); return;
-      case ":dataCellStyle": this.dataCellStyle = StringValue.parse(value); return;
-      case ":totalsRowCellStyle": this.totalsRowCellStyle = StringValue.parse(value); return;
+      case "id": this.id = UInt32Value.parse(value); return;
+      case "uniqueName": this.uniqueName = StringValue.parse(value); return;
+      case "name": this.name = StringValue.parse(value); return;
+      case "totalsRowFunction": this.totalsRowFunction = StringValue.parse(value); return;
+      case "totalsRowLabel": this.totalsRowLabel = StringValue.parse(value); return;
+      case "queryTableFieldId": this.queryTableFieldId = UInt32Value.parse(value); return;
+      case "headerRowDxfId": this.headerRowDifferentialFormattingId = UInt32Value.parse(value); return;
+      case "dataDxfId": this.dataFormatId = UInt32Value.parse(value); return;
+      case "totalsRowDxfId": this.totalsRowDifferentialFormattingId = UInt32Value.parse(value); return;
+      case "headerRowCellStyle": this.headerRowCellStyle = StringValue.parse(value); return;
+      case "dataCellStyle": this.dataCellStyle = StringValue.parse(value); return;
+      case "totalsRowCellStyle": this.totalsRowCellStyle = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -76,18 +76,18 @@ export class TableColumn extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
-    if (this.uniqueName !== undefined) out.push([":uniqueName", this.uniqueName.toString()]);
-    if (this.name !== undefined) out.push([":name", this.name.toString()]);
-    if (this.totalsRowFunction !== undefined) out.push([":totalsRowFunction", this.totalsRowFunction.toString()]);
-    if (this.totalsRowLabel !== undefined) out.push([":totalsRowLabel", this.totalsRowLabel.toString()]);
-    if (this.queryTableFieldId !== undefined) out.push([":queryTableFieldId", this.queryTableFieldId.toString()]);
-    if (this.headerRowDifferentialFormattingId !== undefined) out.push([":headerRowDxfId", this.headerRowDifferentialFormattingId.toString()]);
-    if (this.dataFormatId !== undefined) out.push([":dataDxfId", this.dataFormatId.toString()]);
-    if (this.totalsRowDifferentialFormattingId !== undefined) out.push([":totalsRowDxfId", this.totalsRowDifferentialFormattingId.toString()]);
-    if (this.headerRowCellStyle !== undefined) out.push([":headerRowCellStyle", this.headerRowCellStyle.toString()]);
-    if (this.dataCellStyle !== undefined) out.push([":dataCellStyle", this.dataCellStyle.toString()]);
-    if (this.totalsRowCellStyle !== undefined) out.push([":totalsRowCellStyle", this.totalsRowCellStyle.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    if (this.uniqueName !== undefined) out.push(["uniqueName", this.uniqueName.toString()]);
+    if (this.name !== undefined) out.push(["name", this.name.toString()]);
+    if (this.totalsRowFunction !== undefined) out.push(["totalsRowFunction", this.totalsRowFunction.toString()]);
+    if (this.totalsRowLabel !== undefined) out.push(["totalsRowLabel", this.totalsRowLabel.toString()]);
+    if (this.queryTableFieldId !== undefined) out.push(["queryTableFieldId", this.queryTableFieldId.toString()]);
+    if (this.headerRowDifferentialFormattingId !== undefined) out.push(["headerRowDxfId", this.headerRowDifferentialFormattingId.toString()]);
+    if (this.dataFormatId !== undefined) out.push(["dataDxfId", this.dataFormatId.toString()]);
+    if (this.totalsRowDifferentialFormattingId !== undefined) out.push(["totalsRowDxfId", this.totalsRowDifferentialFormattingId.toString()]);
+    if (this.headerRowCellStyle !== undefined) out.push(["headerRowCellStyle", this.headerRowCellStyle.toString()]);
+    if (this.dataCellStyle !== undefined) out.push(["dataCellStyle", this.dataCellStyle.toString()]);
+    if (this.totalsRowCellStyle !== undefined) out.push(["totalsRowCellStyle", this.totalsRowCellStyle.toString()]);
     return out;
   }
 

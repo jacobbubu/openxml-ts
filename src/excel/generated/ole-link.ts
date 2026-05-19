@@ -27,7 +27,7 @@ export class OleLink extends OpenXmlCompositeElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "r:id": this.id = StringValue.parse(value); return;
-      case ":progId": this.progId = StringValue.parse(value); return;
+      case "progId": this.progId = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -36,7 +36,7 @@ export class OleLink extends OpenXmlCompositeElement {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.id !== undefined) out.push(["r:id", this.id.toString()]);
-    if (this.progId !== undefined) out.push([":progId", this.progId.toString()]);
+    if (this.progId !== undefined) out.push(["progId", this.progId.toString()]);
     return out;
   }
 

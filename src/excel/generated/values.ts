@@ -25,8 +25,8 @@ export class Values extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":rows": this.rows = UInt32Value.parse(value); return;
-      case ":cols": this.columns = UInt32Value.parse(value); return;
+      case "rows": this.rows = UInt32Value.parse(value); return;
+      case "cols": this.columns = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class Values extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.rows !== undefined) out.push([":rows", this.rows.toString()]);
-    if (this.columns !== undefined) out.push([":cols", this.columns.toString()]);
+    if (this.rows !== undefined) out.push(["rows", this.rows.toString()]);
+    if (this.columns !== undefined) out.push(["cols", this.columns.toString()]);
     return out;
   }
 

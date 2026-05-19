@@ -45,14 +45,14 @@ export class WebPublishItem extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":id": this.id = UInt32Value.parse(value); return;
-      case ":divId": this.divId = StringValue.parse(value); return;
-      case ":sourceType": this.sourceType = StringValue.parse(value); return;
-      case ":sourceRef": this.sourceRef = StringValue.parse(value); return;
-      case ":sourceObject": this.sourceObject = StringValue.parse(value); return;
-      case ":destinationFile": this.destinationFile = StringValue.parse(value); return;
-      case ":title": this.title = StringValue.parse(value); return;
-      case ":autoRepublish": this.autoRepublish = BooleanValue.parse(value); return;
+      case "id": this.id = UInt32Value.parse(value); return;
+      case "divId": this.divId = StringValue.parse(value); return;
+      case "sourceType": this.sourceType = StringValue.parse(value); return;
+      case "sourceRef": this.sourceRef = StringValue.parse(value); return;
+      case "sourceObject": this.sourceObject = StringValue.parse(value); return;
+      case "destinationFile": this.destinationFile = StringValue.parse(value); return;
+      case "title": this.title = StringValue.parse(value); return;
+      case "autoRepublish": this.autoRepublish = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -60,14 +60,14 @@ export class WebPublishItem extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.id !== undefined) out.push([":id", this.id.toString()]);
-    if (this.divId !== undefined) out.push([":divId", this.divId.toString()]);
-    if (this.sourceType !== undefined) out.push([":sourceType", this.sourceType.toString()]);
-    if (this.sourceRef !== undefined) out.push([":sourceRef", this.sourceRef.toString()]);
-    if (this.sourceObject !== undefined) out.push([":sourceObject", this.sourceObject.toString()]);
-    if (this.destinationFile !== undefined) out.push([":destinationFile", this.destinationFile.toString()]);
-    if (this.title !== undefined) out.push([":title", this.title.toString()]);
-    if (this.autoRepublish !== undefined) out.push([":autoRepublish", this.autoRepublish.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    if (this.divId !== undefined) out.push(["divId", this.divId.toString()]);
+    if (this.sourceType !== undefined) out.push(["sourceType", this.sourceType.toString()]);
+    if (this.sourceRef !== undefined) out.push(["sourceRef", this.sourceRef.toString()]);
+    if (this.sourceObject !== undefined) out.push(["sourceObject", this.sourceObject.toString()]);
+    if (this.destinationFile !== undefined) out.push(["destinationFile", this.destinationFile.toString()]);
+    if (this.title !== undefined) out.push(["title", this.title.toString()]);
+    if (this.autoRepublish !== undefined) out.push(["autoRepublish", this.autoRepublish.toString()]);
     return out;
   }
 

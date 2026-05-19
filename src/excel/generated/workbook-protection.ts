@@ -60,19 +60,19 @@ export class WorkbookProtection extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":workbookPassword": this.workbookPassword = HexBinaryValue.parse(value); return;
-      case ":revisionsPassword": this.revisionsPassword = HexBinaryValue.parse(value); return;
-      case ":lockStructure": this.lockStructure = BooleanValue.parse(value); return;
-      case ":lockWindows": this.lockWindows = BooleanValue.parse(value); return;
-      case ":lockRevision": this.lockRevision = BooleanValue.parse(value); return;
-      case ":revisionsAlgorithmName": this.revisionsAlgorithmName = StringValue.parse(value); return;
-      case ":revisionsHashValue": this.revisionsHashValue = StringValue.parse(value); return;
-      case ":revisionsSaltValue": this.revisionsSaltValue = StringValue.parse(value); return;
-      case ":revisionsSpinCount": this.revisionsSpinCount = UInt32Value.parse(value); return;
-      case ":workbookAlgorithmName": this.workbookAlgorithmName = StringValue.parse(value); return;
-      case ":workbookHashValue": this.workbookHashValue = StringValue.parse(value); return;
-      case ":workbookSaltValue": this.workbookSaltValue = StringValue.parse(value); return;
-      case ":workbookSpinCount": this.workbookSpinCount = UInt32Value.parse(value); return;
+      case "workbookPassword": this.workbookPassword = HexBinaryValue.parse(value); return;
+      case "revisionsPassword": this.revisionsPassword = HexBinaryValue.parse(value); return;
+      case "lockStructure": this.lockStructure = BooleanValue.parse(value); return;
+      case "lockWindows": this.lockWindows = BooleanValue.parse(value); return;
+      case "lockRevision": this.lockRevision = BooleanValue.parse(value); return;
+      case "revisionsAlgorithmName": this.revisionsAlgorithmName = StringValue.parse(value); return;
+      case "revisionsHashValue": this.revisionsHashValue = StringValue.parse(value); return;
+      case "revisionsSaltValue": this.revisionsSaltValue = StringValue.parse(value); return;
+      case "revisionsSpinCount": this.revisionsSpinCount = UInt32Value.parse(value); return;
+      case "workbookAlgorithmName": this.workbookAlgorithmName = StringValue.parse(value); return;
+      case "workbookHashValue": this.workbookHashValue = StringValue.parse(value); return;
+      case "workbookSaltValue": this.workbookSaltValue = StringValue.parse(value); return;
+      case "workbookSpinCount": this.workbookSpinCount = UInt32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -80,19 +80,19 @@ export class WorkbookProtection extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.workbookPassword !== undefined) out.push([":workbookPassword", this.workbookPassword.toString()]);
-    if (this.revisionsPassword !== undefined) out.push([":revisionsPassword", this.revisionsPassword.toString()]);
-    if (this.lockStructure !== undefined) out.push([":lockStructure", this.lockStructure.toString()]);
-    if (this.lockWindows !== undefined) out.push([":lockWindows", this.lockWindows.toString()]);
-    if (this.lockRevision !== undefined) out.push([":lockRevision", this.lockRevision.toString()]);
-    if (this.revisionsAlgorithmName !== undefined) out.push([":revisionsAlgorithmName", this.revisionsAlgorithmName.toString()]);
-    if (this.revisionsHashValue !== undefined) out.push([":revisionsHashValue", this.revisionsHashValue.toString()]);
-    if (this.revisionsSaltValue !== undefined) out.push([":revisionsSaltValue", this.revisionsSaltValue.toString()]);
-    if (this.revisionsSpinCount !== undefined) out.push([":revisionsSpinCount", this.revisionsSpinCount.toString()]);
-    if (this.workbookAlgorithmName !== undefined) out.push([":workbookAlgorithmName", this.workbookAlgorithmName.toString()]);
-    if (this.workbookHashValue !== undefined) out.push([":workbookHashValue", this.workbookHashValue.toString()]);
-    if (this.workbookSaltValue !== undefined) out.push([":workbookSaltValue", this.workbookSaltValue.toString()]);
-    if (this.workbookSpinCount !== undefined) out.push([":workbookSpinCount", this.workbookSpinCount.toString()]);
+    if (this.workbookPassword !== undefined) out.push(["workbookPassword", this.workbookPassword.toString()]);
+    if (this.revisionsPassword !== undefined) out.push(["revisionsPassword", this.revisionsPassword.toString()]);
+    if (this.lockStructure !== undefined) out.push(["lockStructure", this.lockStructure.toString()]);
+    if (this.lockWindows !== undefined) out.push(["lockWindows", this.lockWindows.toString()]);
+    if (this.lockRevision !== undefined) out.push(["lockRevision", this.lockRevision.toString()]);
+    if (this.revisionsAlgorithmName !== undefined) out.push(["revisionsAlgorithmName", this.revisionsAlgorithmName.toString()]);
+    if (this.revisionsHashValue !== undefined) out.push(["revisionsHashValue", this.revisionsHashValue.toString()]);
+    if (this.revisionsSaltValue !== undefined) out.push(["revisionsSaltValue", this.revisionsSaltValue.toString()]);
+    if (this.revisionsSpinCount !== undefined) out.push(["revisionsSpinCount", this.revisionsSpinCount.toString()]);
+    if (this.workbookAlgorithmName !== undefined) out.push(["workbookAlgorithmName", this.workbookAlgorithmName.toString()]);
+    if (this.workbookHashValue !== undefined) out.push(["workbookHashValue", this.workbookHashValue.toString()]);
+    if (this.workbookSaltValue !== undefined) out.push(["workbookSaltValue", this.workbookSaltValue.toString()]);
+    if (this.workbookSpinCount !== undefined) out.push(["workbookSpinCount", this.workbookSpinCount.toString()]);
     return out;
   }
 

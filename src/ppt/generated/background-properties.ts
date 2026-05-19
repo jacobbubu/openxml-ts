@@ -22,7 +22,7 @@ export class BackgroundProperties extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":shadeToTitle": this.shadeToTitle = BooleanValue.parse(value); return;
+      case "shadeToTitle": this.shadeToTitle = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -30,7 +30,7 @@ export class BackgroundProperties extends OpenXmlCompositeElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.shadeToTitle !== undefined) out.push([":shadeToTitle", this.shadeToTitle.toString()]);
+    if (this.shadeToTitle !== undefined) out.push(["shadeToTitle", this.shadeToTitle.toString()]);
     return out;
   }
 

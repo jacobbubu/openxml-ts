@@ -26,8 +26,8 @@ export abstract class PositiveSize2DType extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":cx": this.cx = Int64Value.parse(value); assertNumber(this.cx, { min: 0, max: 2147483647 }, { attribute: ":cx", elementClass: "PositiveSize2DType" }); return;
-      case ":cy": this.cy = Int64Value.parse(value); assertNumber(this.cy, { min: 0, max: 2147483647 }, { attribute: ":cy", elementClass: "PositiveSize2DType" }); return;
+      case "cx": this.cx = Int64Value.parse(value); assertNumber(this.cx, { min: 0, max: 2147483647 }, { attribute: ":cx", elementClass: "PositiveSize2DType" }); return;
+      case "cy": this.cy = Int64Value.parse(value); assertNumber(this.cy, { min: 0, max: 2147483647 }, { attribute: ":cy", elementClass: "PositiveSize2DType" }); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -35,8 +35,8 @@ export abstract class PositiveSize2DType extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.cx !== undefined) out.push([":cx", this.cx.toString()]);
-    if (this.cy !== undefined) out.push([":cy", this.cy.toString()]);
+    if (this.cx !== undefined) out.push(["cx", this.cx.toString()]);
+    if (this.cy !== undefined) out.push(["cy", this.cy.toString()]);
     return out;
   }
 

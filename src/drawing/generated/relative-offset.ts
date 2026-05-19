@@ -24,8 +24,8 @@ export class RelativeOffset extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":tx": this.offsetX = Int32Value.parse(value); return;
-      case ":ty": this.offsetY = Int32Value.parse(value); return;
+      case "tx": this.offsetX = Int32Value.parse(value); return;
+      case "ty": this.offsetY = Int32Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -33,8 +33,8 @@ export class RelativeOffset extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.offsetX !== undefined) out.push([":tx", this.offsetX.toString()]);
-    if (this.offsetY !== undefined) out.push([":ty", this.offsetY.toString()]);
+    if (this.offsetX !== undefined) out.push(["tx", this.offsetX.toString()]);
+    if (this.offsetY !== undefined) out.push(["ty", this.offsetY.toString()]);
     return out;
   }
 

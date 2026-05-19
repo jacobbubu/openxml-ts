@@ -25,8 +25,8 @@ export class BuildDiagram extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":bld": this.build = StringValue.parse(value); return;
-      case ":rev": this.reverseAnimation = BooleanValue.parse(value); return;
+      case "bld": this.build = StringValue.parse(value); return;
+      case "rev": this.reverseAnimation = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -34,8 +34,8 @@ export class BuildDiagram extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.build !== undefined) out.push([":bld", this.build.toString()]);
-    if (this.reverseAnimation !== undefined) out.push([":rev", this.reverseAnimation.toString()]);
+    if (this.build !== undefined) out.push(["bld", this.build.toString()]);
+    if (this.reverseAnimation !== undefined) out.push(["rev", this.reverseAnimation.toString()]);
     return out;
   }
 

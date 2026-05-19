@@ -31,10 +31,10 @@ export class ArcTo extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":wR": this.widthRadius = StringValue.parse(value); return;
-      case ":hR": this.heightRadius = StringValue.parse(value); return;
-      case ":stAng": this.startAngle = StringValue.parse(value); return;
-      case ":swAng": this.swingAngle = StringValue.parse(value); return;
+      case "wR": this.widthRadius = StringValue.parse(value); return;
+      case "hR": this.heightRadius = StringValue.parse(value); return;
+      case "stAng": this.startAngle = StringValue.parse(value); return;
+      case "swAng": this.swingAngle = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -42,10 +42,10 @@ export class ArcTo extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.widthRadius !== undefined) out.push([":wR", this.widthRadius.toString()]);
-    if (this.heightRadius !== undefined) out.push([":hR", this.heightRadius.toString()]);
-    if (this.startAngle !== undefined) out.push([":stAng", this.startAngle.toString()]);
-    if (this.swingAngle !== undefined) out.push([":swAng", this.swingAngle.toString()]);
+    if (this.widthRadius !== undefined) out.push(["wR", this.widthRadius.toString()]);
+    if (this.heightRadius !== undefined) out.push(["hR", this.heightRadius.toString()]);
+    if (this.startAngle !== undefined) out.push(["stAng", this.startAngle.toString()]);
+    if (this.swingAngle !== undefined) out.push(["swAng", this.swingAngle.toString()]);
     return out;
   }
 

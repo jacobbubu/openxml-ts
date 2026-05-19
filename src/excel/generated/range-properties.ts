@@ -44,14 +44,14 @@ export class RangeProperties extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case ":autoStart": this.autoStart = BooleanValue.parse(value); return;
-      case ":autoEnd": this.autoEnd = BooleanValue.parse(value); return;
-      case ":groupBy": this.groupBy = StringValue.parse(value); return;
-      case ":startNum": this.startNumber = StringValue.parse(value); return;
-      case ":endNum": this.endNum = StringValue.parse(value); return;
-      case ":startDate": this.startDate = DateTimeValue.parse(value); return;
-      case ":endDate": this.endDate = DateTimeValue.parse(value); return;
-      case ":groupInterval": this.groupInterval = StringValue.parse(value); return;
+      case "autoStart": this.autoStart = BooleanValue.parse(value); return;
+      case "autoEnd": this.autoEnd = BooleanValue.parse(value); return;
+      case "groupBy": this.groupBy = StringValue.parse(value); return;
+      case "startNum": this.startNumber = StringValue.parse(value); return;
+      case "endNum": this.endNum = StringValue.parse(value); return;
+      case "startDate": this.startDate = DateTimeValue.parse(value); return;
+      case "endDate": this.endDate = DateTimeValue.parse(value); return;
+      case "groupInterval": this.groupInterval = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
@@ -59,14 +59,14 @@ export class RangeProperties extends OpenXmlLeafElement {
   protected override collectAttributes(): Array<[string, string]> {
     const out: Array<[string, string]> = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
-    if (this.autoStart !== undefined) out.push([":autoStart", this.autoStart.toString()]);
-    if (this.autoEnd !== undefined) out.push([":autoEnd", this.autoEnd.toString()]);
-    if (this.groupBy !== undefined) out.push([":groupBy", this.groupBy.toString()]);
-    if (this.startNumber !== undefined) out.push([":startNum", this.startNumber.toString()]);
-    if (this.endNum !== undefined) out.push([":endNum", this.endNum.toString()]);
-    if (this.startDate !== undefined) out.push([":startDate", this.startDate.toString()]);
-    if (this.endDate !== undefined) out.push([":endDate", this.endDate.toString()]);
-    if (this.groupInterval !== undefined) out.push([":groupInterval", this.groupInterval.toString()]);
+    if (this.autoStart !== undefined) out.push(["autoStart", this.autoStart.toString()]);
+    if (this.autoEnd !== undefined) out.push(["autoEnd", this.autoEnd.toString()]);
+    if (this.groupBy !== undefined) out.push(["groupBy", this.groupBy.toString()]);
+    if (this.startNumber !== undefined) out.push(["startNum", this.startNumber.toString()]);
+    if (this.endNum !== undefined) out.push(["endNum", this.endNum.toString()]);
+    if (this.startDate !== undefined) out.push(["startDate", this.startDate.toString()]);
+    if (this.endDate !== undefined) out.push(["endDate", this.endDate.toString()]);
+    if (this.groupInterval !== undefined) out.push(["groupInterval", this.groupInterval.toString()]);
     return out;
   }
 
