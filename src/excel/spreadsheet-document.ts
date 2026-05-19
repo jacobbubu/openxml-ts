@@ -39,6 +39,8 @@ import {
   packageToZipBytes,
 } from "../packaging/index.js";
 import type { PartUri } from "../packaging/interfaces/types.js";
+import { CoreProperties } from "../parts/core-properties.js";
+import { getOrCreateCorePropertiesPart } from "../parts/get-or-create-core-properties.js";
 import { type AddImagePartOptions, type ImagePart, addImagePartTo } from "../parts/image-part.js";
 import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
@@ -113,6 +115,8 @@ export class SpreadsheetDocument {
   private _sstWired = false;
   /** SST resolver 缓存（一份对应 sharedStringTablePart 的 typed root）。 */
   private _sharedStringResolver: SharedStringResolver | undefined;
+  /** Epic-29：CoreProperties 缓存。 */
+  private _coreProperties: CoreProperties | undefined;
 
   constructor(private readonly pkg: MemoryOpenXmlPackage) {
     pkg.registerDiagnosticsElementCounter(() => this.countLoadedElements());
@@ -176,6 +180,18 @@ export class SpreadsheetDocument {
   /** Theme Part（workbook 的 part-level 关系）。 */
   get themePart(): ThemePart | undefined {
     return this.getOrLoadTypedPartFromWorkbook(ThemePart);
+  }
+
+  /**
+   * 包级 CoreProperties 元数据（Epic-29）。\`doc.coreProperties.title = "…"\` 一行设置。
+   */
+  get coreProperties(): CoreProperties {
+    if (this._coreProperties === undefined) {
+      const cpPart = getOrCreateCorePropertiesPart(this.pkg, excelRegistry);
+      this._coreProperties = new CoreProperties(cpPart.coreProperties);
+      this.typedParts.set("__corePropertiesPart__", cpPart);
+    }
+    return this._coreProperties;
   }
 
   /**

@@ -32,6 +32,8 @@ import {
   packageToZipBytes,
 } from "../packaging/index.js";
 import type { PartUri } from "../packaging/interfaces/types.js";
+import { CoreProperties } from "../parts/core-properties.js";
+import { getOrCreateCorePropertiesPart } from "../parts/get-or-create-core-properties.js";
 import { type AddImagePartOptions, type ImagePart, addImagePartTo } from "../parts/image-part.js";
 import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
@@ -77,6 +79,8 @@ const pptRegistry: ElementRegistry = (() => {
 export class PresentationDocument {
   /** 已加载的 typed Part 缓存——按 relationshipType 索引。 */
   private readonly typedParts = new Map<string, TypedXmlPart<OpenXmlElement>>();
+  /** Epic-29：CoreProperties 缓存。 */
+  private _coreProperties: CoreProperties | undefined;
 
   constructor(private readonly pkg: MemoryOpenXmlPackage) {
     pkg.registerDiagnosticsElementCounter(() => this.countLoadedElements());
@@ -124,6 +128,18 @@ export class PresentationDocument {
    */
   get presentationPart(): PresentationPart | undefined {
     return this.getOrLoadPresentationPart();
+  }
+
+  /**
+   * 包级 CoreProperties 元数据（Epic-29）。\`doc.coreProperties.title = "…"\` 一行设置。
+   */
+  get coreProperties(): CoreProperties {
+    if (this._coreProperties === undefined) {
+      const cpPart = getOrCreateCorePropertiesPart(this.pkg, pptRegistry);
+      this._coreProperties = new CoreProperties(cpPart.coreProperties);
+      this.typedParts.set("__corePropertiesPart__", cpPart);
+    }
+    return this._coreProperties;
   }
 
   /**
