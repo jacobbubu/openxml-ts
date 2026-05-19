@@ -16,6 +16,7 @@ import { StringValue } from "../element/index.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import { BottomBorder } from "./generated/bottom-border.js";
 import { GridColumn } from "./generated/grid-column.js";
+import { GridSpan } from "./generated/grid-span.js";
 import { InsideHorizontalBorder } from "./generated/inside-horizontal-border.js";
 import { InsideVerticalBorder } from "./generated/inside-vertical-border.js";
 import { LeftBorder } from "./generated/left-border.js";
@@ -33,6 +34,7 @@ import { TableWidth } from "./generated/table-width.js";
 import { Table } from "./generated/table.js";
 import { Text } from "./generated/text.js";
 import { TopBorder } from "./generated/top-border.js";
+import { VerticalMerge } from "./generated/vertical-merge.js";
 
 const DEFAULT_TABLE_WIDTH_DXA = 9000;
 
@@ -174,6 +176,111 @@ export function getDocumentTableCellText(table: Table, row: number, col: number)
     if (t.text !== undefined) buf += t.text;
   }
   return buf;
+}
+
+/**
+ * 合并表格里 `(fromRow, fromCol)` 到 `(toRow, toCol)` 范围的单元格——Epic-23。
+ *
+ * Word 合并语义（**与 PPT 不同**）：
+ *
+ * - **水平合并**：主格在 \`<w:tcPr>\` 写 \`<w:gridSpan w:val="N"/>\`；同行右侧被合并
+ *   的 cell **从行里删除**（不是隐藏，是真删）。
+ * - **垂直合并**：第一行主格写 \`<w:vMerge w:val="restart"/>\`；后续 row 同列写
+ *   \`<w:vMerge/>\`（无 val，continue）。
+ * - **2D 合并**：组合上面两条。后续行的「主列」 cell 也写 gridSpan + vMerge=continue。
+ *
+ * @throws OpenXmlPackageError 当范围越界 / 反向 / 负数下标时（code="BACKEND_ERROR"）
+ */
+export function mergeDocumentTableCells(
+  table: Table,
+  fromRow: number,
+  fromCol: number,
+  toRow: number,
+  toCol: number,
+): void {
+  if (toRow < fromRow || toCol < fromCol) {
+    throw new OpenXmlPackageError({
+      code: "BACKEND_ERROR",
+      message: `mergeDocumentTableCells: range reversed (from=(${fromRow},${fromCol}) to=(${toRow},${toCol}))`,
+    });
+  }
+  if (fromRow < 0 || fromCol < 0) {
+    throw new OpenXmlPackageError({
+      code: "BACKEND_ERROR",
+      message: "mergeDocumentTableCells: row/col must be ≥ 0",
+    });
+  }
+  // 预先 findCell 验证范围内所有 cell 都存在
+  for (let r = fromRow; r <= toRow; r += 1) {
+    for (let c = fromCol; c <= toCol; c += 1) {
+      findCell(table, r, c);
+    }
+  }
+  const gridSpan = toCol - fromCol + 1;
+  const rowSpan = toRow - fromRow + 1;
+  if (gridSpan === 1 && rowSpan === 1) return; // no-op
+
+  for (let r = fromRow; r <= toRow; r += 1) {
+    const trRow = findRow(table, r);
+    const cellsToDelete: TableCell[] = [];
+    for (let c = fromCol; c <= toCol; c += 1) {
+      const tc = findCell(table, r, c);
+      if (c === fromCol) {
+        // 主列：写 gridSpan + vMerge
+        const tcPr = ensureTcPr(tc);
+        if (gridSpan > 1) {
+          removeOfClass(tcPr, GridSpan);
+          const gs = new GridSpan();
+          gs.extendedAttributes.set("w:val", String(gridSpan));
+          tcPr.appendChild(gs);
+        }
+        if (rowSpan > 1) {
+          removeOfClass(tcPr, VerticalMerge);
+          const vm = new VerticalMerge();
+          if (r === fromRow) vm.extendedAttributes.set("w:val", "restart");
+          // r > fromRow 时无 val（continue）
+          tcPr.appendChild(vm);
+        }
+      } else {
+        // 同行非主列：水平合并语义 = 真删
+        cellsToDelete.push(tc);
+      }
+    }
+    for (const tc of cellsToDelete) {
+      trRow.children.remove(tc);
+    }
+  }
+}
+
+function findRow(table: Table, row: number): TableRow {
+  let i = 0;
+  for (const child of table.children) {
+    if (!(child instanceof TableRow)) continue;
+    if (i === row) return child;
+    i += 1;
+  }
+  throw new OpenXmlPackageError({
+    code: "BACKEND_ERROR",
+    message: `Word table: row ${row} out of range (table has ${i} rows)`,
+  });
+}
+
+function ensureTcPr(tc: TableCell): TableCellProperties {
+  for (const child of tc.children) {
+    if (child instanceof TableCellProperties) return child;
+  }
+  const tcPr = new TableCellProperties();
+  // tcPr 必须在 cell 内容之前
+  const first = tc.children.at(0);
+  if (first === undefined) tc.appendChild(tcPr);
+  else tc.children.insertBefore(tcPr, first);
+  return tcPr;
+}
+
+function removeOfClass(parent: TableCellProperties, Ctor: { new (): unknown }): void {
+  for (const child of parent.children.toArray()) {
+    if (child instanceof (Ctor as { new (): object })) parent.children.remove(child);
+  }
 }
 
 function findCell(table: Table, row: number, col: number): TableCell {

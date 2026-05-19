@@ -510,6 +510,9 @@ export class MainDocumentPart extends TypedXmlPart<Document> {
 }
 
 // @public
+export function mergeDocumentTableCells(table: Table, fromRow: number, fromCol: number, toRow: number, toCol: number): void;
+
+// @public
 export function mimeForExtension(ext: string): string | undefined;
 
 // @public

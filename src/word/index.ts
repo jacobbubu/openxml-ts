@@ -85,6 +85,7 @@ export {
   type CreateDocumentTableOptions,
   createDocumentTable,
   getDocumentTableCellText,
+  mergeDocumentTableCells,
   setDocumentTableCellText,
 } from "./table-markup.js";
 
