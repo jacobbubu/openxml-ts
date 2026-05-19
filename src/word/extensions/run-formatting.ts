@@ -17,7 +17,7 @@
  * - 其它字段都是 typed val 直接读写
  */
 
-import { BooleanValue, StringValue } from "../../element/index.js";
+import { BooleanValue, type OpenXmlElement, StringValue } from "../../element/index.js";
 import { Bold } from "../generated/bold.js";
 import { Color } from "../generated/color.js";
 import { FontSize } from "../generated/font-size.js";
@@ -54,7 +54,9 @@ function ensureRPr(run: Run, readOnly: boolean): RunProperties | undefined {
   return rPr;
 }
 
-function readOnOff<T extends { val?: BooleanValue | undefined }>(
+type OnOffElement = OpenXmlElement & { val: BooleanValue | undefined };
+
+function readOnOff<T extends OnOffElement>(
   rPr: RunProperties | undefined,
   Cls: new () => T,
 ): boolean | undefined {
@@ -65,7 +67,7 @@ function readOnOff<T extends { val?: BooleanValue | undefined }>(
   return v.value;
 }
 
-function writeOnOff<T extends { val?: BooleanValue | undefined }>(
+function writeOnOff<T extends OnOffElement>(
   run: Run,
   Cls: new () => T,
   value: boolean | undefined,
