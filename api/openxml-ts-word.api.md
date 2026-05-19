@@ -252,6 +252,9 @@ export interface CreateImageRunOptions {
 export function createInsertedRun(opts: RevisionOptions): InsertedRun;
 
 // @public
+export function createListParagraph(numId: number, level: number, text: string): Paragraph;
+
+// @public
 export class DeletedRun extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
@@ -508,6 +511,29 @@ export class MainDocumentPart extends TypedXmlPart<Document> {
 
 // @public
 export function mimeForExtension(ext: string): string | undefined;
+
+// @public
+export class Numbering extends OpenXmlCompositeElement {
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    readonly localName: "numbering";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+}
+
+// @public (undocumented)
+export class NumberingPart extends TypedXmlPart<Numbering> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml";
+    get numbering(): Numbering;
+    set numbering(value: Numbering);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/numbering";
+}
 
 // @public
 export class PageMargin extends OpenXmlLeafElement {
@@ -1045,6 +1071,11 @@ export class WordprocessingDocument {
         part: ImagePart;
         relId: string;
     };
+    addNumberingDefinition(opts: {
+        type: "decimal" | "bullet";
+    }): {
+        numId: number;
+    };
     get commentsPart(): CommentsPart | undefined;
     static create(): WordprocessingDocument;
     // (undocumented)
@@ -1054,7 +1085,9 @@ export class WordprocessingDocument {
     get mainDocumentPart(): MainDocumentPart | undefined;
     nextBookmarkId(): number;
     nextCommentId(): number;
+    nextNumberingId(): number;
     nextRevisionId(): number;
+    get numberingPart(): NumberingPart | undefined;
     // Warning: (ae-forgotten-export) The symbol "ZipSource" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "OpenAsyncOptions" needs to be exported by the entry point index.d.ts
     static openAsync(source: ZipSource, options?: OpenAsyncOptions): Promise<WordprocessingDocument>;
