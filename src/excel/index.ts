@@ -20,6 +20,8 @@
 
 // 必要副作用：挂上 Cell.resolvedText getter
 import "./extensions/cell-extensions.js";
+// 必要副作用：挂上 Cell.value typed 访问器（Epic-45）
+import "./extensions/cell-value-accessor.js";
 
 // 门面 + typed Parts
 export { SpreadsheetDocument } from "./spreadsheet-document.js";
