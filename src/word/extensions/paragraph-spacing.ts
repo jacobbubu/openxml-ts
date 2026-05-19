@@ -48,7 +48,7 @@ Object.defineProperty(Paragraph.prototype, "spacing", {
     if (b !== undefined) out.beforeDxa = Number.parseInt(b, 10);
     if (a !== undefined) out.afterDxa = Number.parseInt(a, 10);
     if (l !== undefined) out.lineDxa = Number.parseInt(l, 10);
-    if (lr !== undefined) out.lineRule = lr as ParagraphSpacing["lineRule"];
+    if (lr !== undefined) out.lineRule = lr as "auto" | "atLeast" | "exact";
     return Object.keys(out).length === 0 ? undefined : out;
   },
   set(this: Paragraph, value: ParagraphSpacing | undefined): void {
