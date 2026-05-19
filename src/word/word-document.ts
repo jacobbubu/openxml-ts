@@ -19,7 +19,12 @@
 
 import type { MemoryOpenXmlPackage } from "../backends/memory/memory-package.js";
 import { writeFilePath } from "../backends/zip/source-reader.js";
-import { ElementRegistry, OpenXmlCompositeElement, type OpenXmlElement } from "../element/index.js";
+import {
+  ElementRegistry,
+  OpenXmlCompositeElement,
+  type OpenXmlElement,
+  StringValue,
+} from "../element/index.js";
 import { OpenXmlUnknownElement } from "../element/unknown-element.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import {
@@ -41,8 +46,18 @@ import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { registerWordprocessingElements } from "./generated/_registry.js";
 import { Body } from "./generated/body.js";
 import { BookmarkStart } from "./generated/bookmark-start.js";
+import { CommentRangeEnd } from "./generated/comment-range-end.js";
+import { CommentRangeStart } from "./generated/comment-range-start.js";
+import { CommentReference } from "./generated/comment-reference.js";
+import { Comment } from "./generated/comment.js";
 import { Document } from "./generated/document.js";
+import { Paragraph } from "./generated/paragraph.js";
+import { RunProperties } from "./generated/run-properties.js";
+import { RunStyle } from "./generated/run-style.js";
+import { Run } from "./generated/run.js";
+import { Text } from "./generated/text.js";
 import {
+  CommentsPart,
   FontTablePart,
   MainDocumentPart,
   SettingsPart,
@@ -121,6 +136,133 @@ export class WordprocessingDocument {
 
   get webSettingsPart(): WebSettingsPart | undefined {
     return this.getOrLoadTypedPartFromMain(WebSettingsPart);
+  }
+
+  /** Word 注释 Part（mainDocumentPart 的 part-level 关系）；不存在时返 undefined。 */
+  get commentsPart(): CommentsPart | undefined {
+    return this.getOrLoadTypedPartFromMain(CommentsPart);
+  }
+
+  /**
+   * 返一个全文档唯一的注释 \`w:id\` 整数（Story-18.2，Epic-18）。
+   * 扫 commentsPart 已有 \`<w:comment>\` 的最大 \`w:id\` + 1；commentsPart 不存在返 0。
+   */
+  nextCommentId(): number {
+    const cp = this.commentsPart;
+    if (cp === undefined) return 0;
+    let maxId = -1;
+    for (const c of cp.comments.descendants(Comment)) {
+      const v = c.id?.toString();
+      if (v === undefined) continue;
+      const n = Number.parseInt(v, 10);
+      if (Number.isFinite(n) && n > maxId) maxId = n;
+    }
+    return maxId + 1;
+  }
+
+  /**
+   * 加一条注释到文档（Story-18.2，Epic-18）。
+   *
+   * 自动：
+   *   1. 找 / 创建 CommentsPart（包级 \`/word/comments.xml\` + 主文档关系）；
+   *   2. 把 \`<w:comment w:id="N" w:author=...>\` append 进 commentsPart 树；
+   *   3. 返三个 markup 元素让调用方决定挂哪段——\`rangeStart\` / \`rangeEnd\`
+   *      包围目标文字两侧，\`reference\` 是个独立 Run（自带 CommentReference
+   *      字符样式 + \`<w:commentReference>\`），通常 append 到 rangeEnd 之后。
+   *
+   * @throws OpenXmlPackageError 当 author 为空 / 主文档 Part 缺失时
+   */
+  addComment(opts: {
+    author: string;
+    initials?: string;
+    date?: Date | string;
+    text: string;
+  }): {
+    commentId: number;
+    rangeStart: CommentRangeStart;
+    rangeEnd: CommentRangeEnd;
+    reference: Run;
+  } {
+    if (opts.author.trim().length === 0) {
+      throw new OpenXmlPackageError({
+        code: "BACKEND_ERROR",
+        message: "addComment: author must not be empty or whitespace",
+      });
+    }
+    const main = this.mainDocumentPart;
+    if (main === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "addComment: mainDocumentPart is missing",
+      });
+    }
+
+    // 1) 找 / 创 CommentsPart
+    const cp = this.getOrCreateCommentsPart(main.part);
+
+    // 2) 分配 id + 写 <w:comment>
+    const commentId = this.nextCommentId();
+    const commentEl = new Comment();
+    commentEl.id = StringValue.parse(String(commentId));
+    commentEl.author = StringValue.parse(opts.author);
+    if (opts.initials !== undefined) commentEl.initials = StringValue.parse(opts.initials);
+    const dateStr =
+      opts.date instanceof Date
+        ? opts.date.toISOString()
+        : opts.date !== undefined
+          ? opts.date
+          : new Date().toISOString();
+    commentEl.extendedAttributes.set("w:date", dateStr);
+    // 评论体：单段单 Run 单 Text
+    const cp_para = new Paragraph();
+    const cp_run = new Run();
+    const cp_text = new Text();
+    cp_text.text = opts.text;
+    if (opts.text.startsWith(" ") || opts.text.endsWith(" ") || /\s{2,}/.test(opts.text)) {
+      cp_text.extendedAttributes.set("xml:space", "preserve");
+    }
+    cp_run.appendChild(cp_text);
+    cp_para.appendChild(cp_run);
+    commentEl.appendChild(cp_para);
+    cp.comments.appendChild(commentEl);
+
+    // 3) 主文档侧的 3 个 markup
+    const rangeStart = new CommentRangeStart();
+    rangeStart.extendedAttributes.set("w:id", String(commentId));
+    const rangeEnd = new CommentRangeEnd();
+    rangeEnd.extendedAttributes.set("w:id", String(commentId));
+    const reference = new Run();
+    const refRpr = new RunProperties();
+    const refStyle = new RunStyle();
+    refStyle.extendedAttributes.set("w:val", "CommentReference");
+    refRpr.appendChild(refStyle);
+    reference.appendChild(refRpr);
+    const refMarker = new CommentReference();
+    refMarker.extendedAttributes.set("w:id", String(commentId));
+    reference.appendChild(refMarker);
+
+    return { commentId, rangeStart, rangeEnd, reference };
+  }
+
+  // ─── Epic-18 内部 ────────────────────────────────────────────────────────────
+
+  /** 找 / 创 CommentsPart——首次 addComment 调用走这里 bootstrap。 */
+  private getOrCreateCommentsPart(mainDocPart: IPackagePart): CommentsPart {
+    const cached = this.typedParts.get(CommentsPart.relationshipType) as CommentsPart | undefined;
+    if (cached !== undefined) return cached;
+    const existing = this.getOrLoadTypedPartFromMain(CommentsPart);
+    if (existing !== undefined) return existing;
+    // 不存在：分配 \`/word/comments.xml\` Part + 主文档关系
+    const uri = "/word/comments.xml" as PartUri;
+    const part = this.pkg.createPart(uri, CommentsPart.contentType);
+    mainDocPart.relationships.create({
+      type: CommentsPart.relationshipType,
+      target: "comments.xml",
+      targetMode: "internal",
+    });
+    const cp = new CommentsPart(part, wordRegistry);
+    this.typedParts.set(CommentsPart.relationshipType, cp);
+    return cp;
   }
 
   /**
