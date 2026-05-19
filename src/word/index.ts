@@ -20,6 +20,7 @@ import "./extensions/paragraph-flow.js";
 import "./extensions/paragraph-indent.js";
 import "./extensions/paragraph-spacing.js";
 import "./extensions/paragraph-style-id.js";
+import "./extensions/paragraph-numbering.js";
 import "./extensions/paragraph-tab-stops.js";
 import "./extensions/run-extensions.js";
 import "./extensions/run-formatting.js";
