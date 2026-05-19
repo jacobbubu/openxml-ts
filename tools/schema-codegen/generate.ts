@@ -189,6 +189,13 @@ function buildRegistry(
   // leaf-vs-composite 同 qname 的常见情况大多需要保留 leaf 语义。
   const EXPLICIT_PRIORITY: Readonly<Record<string, string>> = {
     "http://schemas.openxmlformats.org/wordprocessingml/2006/main::style": "Style",
+    // Word \`<w:jc>\` 既有段落级 Justification（pPr 子），也有表级 TableJustification（tblPr 子）。
+    // 字典序 TableJustification 胜出，但段落级访问最高频——优先 canonical Justification。
+    "http://schemas.openxmlformats.org/wordprocessingml/2006/main::jc": "Justification",
+    // Word \`<w:pPr>\` / \`<w:rPr>\`：字典序 StyleParagraphProperties / StyleRunProperties 胜出，
+    // 但段落 / Run 直接子的最高频含义是 ParagraphProperties / RunProperties。
+    "http://schemas.openxmlformats.org/wordprocessingml/2006/main::pPr": "ParagraphProperties",
+    "http://schemas.openxmlformats.org/wordprocessingml/2006/main::rPr": "RunProperties",
     // Excel: 字典序「ExternalDefinedName(s)」压过 canonical「DefinedName(s)」，
     // 但 workbook.xml 顶层 \`<definedNames>\` 引用的是 canonical 那一对——强制覆盖回。
     "http://schemas.openxmlformats.org/spreadsheetml/2006/main::definedName": "DefinedName",
