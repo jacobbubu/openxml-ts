@@ -22,6 +22,7 @@ import "./extensions/slide-title.js";
 import "./extensions/run-formatting.js";
 import "./extensions/paragraph-formatting.js";
 import "./extensions/slide-background.js";
+import "./extensions/shape-accessibility.js";
 
 export { PresentationDocument } from "./presentation-document.js";
 export {
