@@ -213,6 +213,51 @@ await part.writeAsync('<w:document xmlns:w="...">...</w:document>');
 const flatXml = pkg.toFlatOpc({ progId: "Word.Document" });
 ```
 
+## 便捷 API 速查
+
+每个子系统在 typed element 树之上提供了一层高频场景的便捷 helper / 访问器（mixin 或自由函数）。下表列常用项；完整签名见各 `examples/*`。
+
+### Word（`openxml-ts/word`）
+
+| 场景 | API |
+| --- | --- |
+| 段落对齐 / 缩进 / 间距 / 制表位 | `Paragraph.alignment` · `.indent` · `.spacing` · `.tabStops` |
+| 段落样式 / 编号 / 分页控制 | `Paragraph.styleId` · `.numbering` · `.keepNext` / `.keepLines` / `.pageBreakBefore` |
+| Run 文本格式 | `Run.bold` / `.italic` / `.underline` / `.fontSizeHalfPoints` / `.colorHex` / `.fontFamily` / `.styleId` |
+| 表格单元格底纹 | `TableCell.shading` |
+| 样式表条目 | `createParagraphStyle()` · `createCharacterStyle()` |
+| 页眉 / 页脚 | `setDocumentHeader()` / `setDocumentFooter()` / `getDocumentHeader()` / `getDocumentFooter()` |
+| 页面设置 | `setPageSize()` / `setPageMargin()`（A4 / 横向 / 边距） |
+| 页码字段 | `createPageNumberRun()` · `createTotalPagesRun()` · `createFieldRun()` |
+| 脚注 | `addFootnote()` / `getFootnoteText()` |
+
+### Excel（`openxml-ts/excel`）
+
+| 场景 | API |
+| --- | --- |
+| 单元格值 / 公式 | `Cell.value`（number/string/boolean/Date）· `Cell.formula` |
+| 冻结窗格 | `setFreezePanes()` / `getFreezePanes()` |
+| 列宽 / 行高 | `setColumnWidth()` / `setRowHeight()` |
+| 数字格式 | `setBuiltInNumberFormat()` + `BuiltInNumberFormat` 常量 |
+| 合并单元格 | `mergeCells()` / `unmergeCells()` / `getMergedRanges()` |
+| 数据验证 | `addCellListValidation()` / `addCellRangeValidation()` |
+| 工作表元数据 | `setSheetState()`（隐藏）· `setWorksheetTabColor()` · `setActiveSheet()` |
+
+### PowerPoint（`openxml-ts/ppt`）
+
+| 场景 | API |
+| --- | --- |
+| 幻灯片标题 / 背景 / 隐藏 | `Slide.title` · `.backgroundColorHex` · `.hidden` |
+| 切换效果 | `Slide.transition`（fade/push/cut/wipe/split/dissolve） |
+| 演讲者注释 | `getSpeakerNotes()` / `setSpeakerNotes()` |
+| 新增幻灯片 | `addSlide()` |
+| 段落 / Run 格式 | `Paragraph.alignment` / `.leftMarginEmu` / `.indentEmu` · `Run.bold` / `.italic` / `.fontSizeHundredths` / `.colorHex` |
+| 形状定位 / 尺寸 / 旋转 | `Shape.position` · `.size` · `.rotationDegrees` · `.flipHorizontal` / `.flipVertical` |
+| 形状无障碍 | `Shape.name` · `.altTitle` · `.altDescription` |
+| 图片裁剪 | `getPictureCrop()` / `setPictureCrop()` |
+
+> 这些 helper 都是 typed element 树之上的薄封装——任何时候都能直接操作底层 element 获得完全控制。
+
 ## CLI
 
 ```bash
@@ -242,6 +287,7 @@ cd playground && pnpm install && pnpm dev
 
 - 读 / 写 `.docx` / `.xlsx` / `.pptx`（任意 Office 2007+ 文件）；
 - 字段级强类型 element 树（~1830 个 schema 类，覆盖 wordprocessingml / spreadsheetml / presentationml / drawingml 主命名空间）；
+- 高频场景便捷 helper 层（见上「便捷 API 速查」）：Word 段落 / Run 格式、样式、页眉页脚、页面设置、脚注；Excel 冻结 / 列宽行高 / 数字格式 / 合并 / 数据验证 / Cell.value / 公式；PPT 标题 / 背景 / 转场 / 形状定位旋转 / 演讲者注释；
 - 跨子系统 typed Parts（Word 6 / Excel 6 / PPT 7）+ 共享 ThemePart；
 - PowerPoint 三级版式继承（slide → layout → master → theme）的有效配色/字体/格式解析；
 - LINQ to XML 风格查询 / 写入（Parse → Where/Select → Save 闭环）；
