@@ -49,6 +49,13 @@ const WELL_KNOWN: readonly NamespaceEntry[] = [
     prefix: "comp",
   },
   { uri: "http://schemas.openxmlformats.org/drawingml/2006/diagram", prefix: "dgm" },
+  // Epic-75: Office extension namespaces
+  { uri: "http://schemas.microsoft.com/office/drawing/2014/chartex", prefix: "cx" },
+  { uri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", prefix: "x14" },
+  { uri: "http://schemas.microsoft.com/office/word/2010/wordml", prefix: "w14" },
+  { uri: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", prefix: "x15" },
+  { uri: "http://schemas.microsoft.com/office/powerpoint/2010/main", prefix: "p14" },
+  { uri: "http://schemas.microsoft.com/office/drawing/2010/main", prefix: "a14" },
 ];
 
 export function prefixForUri(uri: string): string | undefined {

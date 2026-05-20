@@ -97,12 +97,15 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
       typeof a.QName === "string" &&
       a.QName.length > 0,
   );
-  const attrLines = attrs.map((a) => renderAttrField(a, valueImports));
-  const applyAttrCases = attrs.map((a) => renderApplyAttrCase(a, type.ClassName, valueImports));
-  const collectLines = attrs.map((a) => renderCollectLine(a));
+  const isLeaf = type.IsLeafElement === true || type.IsLeafText === true;
+  const attrLines = attrs.map((a) => renderAttrField(a, valueImports, isLeaf));
+  const applyAttrCases = attrs.map((a) =>
+    renderApplyAttrCase(a, type.ClassName, valueImports, isLeaf),
+  );
+  const collectLines = attrs.map((a) => renderCollectLine(a, isLeaf));
   const requiredLines = attrs
     .filter((a) => hasValidator(a, "RequiredValidator"))
-    .map((a) => renderRequiredCheck(a, type.ClassName));
+    .map((a) => renderRequiredCheck(a, type.ClassName, isLeaf));
   if (requiredLines.length > 0) valueImports.add("assertRequired");
 
   const imports: string[] = [baseImport];
@@ -241,11 +244,12 @@ function normalizeAttrQName(qname: string): string {
   return qname.startsWith(":") ? qname.slice(1) : qname;
 }
 
-function renderAttrField(attr: SchemaAttribute, imports: Set<string>): string {
+function renderAttrField(attr: SchemaAttribute, imports: Set<string>, isLeaf: boolean): string {
   const t = mapSchemaType(attr.Type);
   for (const i of t.imports) imports.add(i);
   const comment = attr.PropertyComments?.trim() ?? attr.QName;
-  return `  /** ${comment} (${attr.QName}) */\n  ${camelCase(attr.PropertyName)}: ${t.expr} | undefined;`;
+  const prop = resolveAttrPropName(attr.PropertyName, isLeaf);
+  return `  /** ${comment} (${attr.QName}) */\n  ${prop}: ${t.expr} | undefined;`;
 }
 
 const NUMERIC_VALUE_TYPES = new Set(["Int32Value", "Int64Value", "UInt32Value", "DecimalValue"]);
@@ -258,9 +262,10 @@ function renderApplyAttrCase(
   attr: SchemaAttribute,
   className: string,
   imports: Set<string>,
+  isLeaf: boolean,
 ): string {
   const t = mapSchemaType(attr.Type);
-  const prop = camelCase(attr.PropertyName);
+  const prop = resolveAttrPropName(attr.PropertyName, isLeaf);
   const ctx = `{ attribute: ${quote(attr.QName)}, elementClass: ${quote(className)} }`;
   const calls: string[] = [`this.${prop} = ${t.expr}.parse(value);`];
 
@@ -294,13 +299,13 @@ function renderApplyAttrCase(
   return `case ${quote(normalizeAttrQName(attr.QName))}: ${calls.join(" ")} return;`;
 }
 
-function renderCollectLine(attr: SchemaAttribute): string {
-  const prop = camelCase(attr.PropertyName);
+function renderCollectLine(attr: SchemaAttribute, isLeaf: boolean): string {
+  const prop = resolveAttrPropName(attr.PropertyName, isLeaf);
   return `if (this.${prop} !== undefined) out.push([${quote(normalizeAttrQName(attr.QName))}, this.${prop}.toString()]);`;
 }
 
-function renderRequiredCheck(attr: SchemaAttribute, className: string): string {
-  const prop = camelCase(attr.PropertyName);
+function renderRequiredCheck(attr: SchemaAttribute, className: string, isLeaf: boolean): string {
+  const prop = resolveAttrPropName(attr.PropertyName, isLeaf);
   const ctx = `{ attribute: ${quote(attr.QName)}, elementClass: ${quote(className)} }`;
   return `assertRequired(this.${prop}, ${ctx});`;
 }
@@ -322,4 +327,16 @@ function argsToMap(args: readonly SchemaValidatorArg[] | undefined): Record<stri
 function camelCase(pascal: string): string {
   if (pascal.length === 0) return pascal;
   return pascal[0]?.toLowerCase() + pascal.slice(1);
+}
+
+/**
+ * `OpenXmlLeafElement` 基类已声明 `text: string | undefined`；
+ * 若 leaf 元素有同名 attribute（如 x15:DbCommand/@text），生成 `textAttr` 避免类型冲突。
+ */
+const LEAF_BASE_RESERVED = new Set(["text"]);
+
+function resolveAttrPropName(propName: string, isLeaf: boolean): string {
+  const cc = camelCase(propName);
+  if (isLeaf && LEAF_BASE_RESERVED.has(cc)) return `${cc}Attr`;
+  return cc;
 }
