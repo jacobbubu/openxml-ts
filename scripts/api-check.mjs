@@ -42,6 +42,7 @@ const ENTRIES = [
     report: "openxml-ts-chart-drawing.api.md",
   },
   { name: "linq", config: "extractor-linq.json", report: "openxml-ts-linq.api.md" },
+  { name: "math", config: "extractor-math.json", report: "openxml-ts-math.api.md" },
 ];
 
 const isUpdate = process.argv.includes("--update");

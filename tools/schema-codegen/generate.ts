@@ -188,6 +188,10 @@ function subsystemNameForNamespace(uri: string): { pascal: string; label: string
       pascal: "ChartDrawing",
       label: "chartDrawing",
     },
+    "http://schemas.openxmlformats.org/officeDocument/2006/math": {
+      pascal: "Math",
+      label: "math",
+    },
   };
   const hit = known[uri];
   if (hit !== undefined) return hit;
