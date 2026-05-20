@@ -124,6 +124,20 @@ export {
   clearDocumentFooter,
 } from "./header-footer-markup.js";
 
+// ─── Word Section 页面设置访问器（Epic-61） ───────────────────────────────────
+export {
+  type PageSizeOptions,
+  type PageMarginOptions,
+  type PageSizeResult,
+  type PageMarginResult,
+  setPageSize,
+  setPageMargin,
+  getPageSize,
+  getPageMargin,
+  getDefaultSection,
+  ensureDefaultSection,
+} from "./page-setup-markup.js";
+
 // ─── Word Style 创建（Epic-46） ───────────────────────────────────────────────
 export {
   type CharacterStyleOptions,

@@ -462,6 +462,9 @@ export class EffectiveProperties {
 }
 
 // @public
+export function ensureDefaultSection(doc: WordprocessingDocument): SectionProperties;
+
+// @public
 export function extensionForMime(mime: string): string | undefined;
 
 // @public
@@ -545,6 +548,9 @@ export class FooterReference extends OpenXmlLeafElement {
 }
 
 // @public
+export function getDefaultSection(doc: WordprocessingDocument): SectionProperties | undefined;
+
+// @public
 export function getDocumentFooter(doc: WordprocessingDocument, type?: HeaderFooterType): string | undefined;
 
 // @public
@@ -552,6 +558,12 @@ export function getDocumentHeader(doc: WordprocessingDocument, type?: HeaderFoot
 
 // @public
 export function getDocumentTableCellText(table: Table, row: number, col: number): string;
+
+// @public
+export function getPageMargin(section: SectionProperties): PageMarginResult | undefined;
+
+// @public
+export function getPageSize(section: SectionProperties): PageSizeResult | undefined;
 
 // @public
 export class GridColumn extends OpenXmlLeafElement {
@@ -830,6 +842,35 @@ export class PageMargin extends OpenXmlLeafElement {
 }
 
 // @public
+export interface PageMarginOptions {
+    bottomDxa?: number;
+    footerDxa?: number;
+    gutterDxa?: number;
+    headerDxa?: number;
+    leftDxa?: number;
+    rightDxa?: number;
+    topDxa?: number;
+}
+
+// @public
+export interface PageMarginResult {
+    // (undocumented)
+    bottomDxa?: number;
+    // (undocumented)
+    footerDxa?: number;
+    // (undocumented)
+    gutterDxa?: number;
+    // (undocumented)
+    headerDxa?: number;
+    // (undocumented)
+    leftDxa?: number;
+    // (undocumented)
+    rightDxa?: number;
+    // (undocumented)
+    topDxa?: number;
+}
+
+// @public
 export class PageSize extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -845,6 +886,23 @@ export class PageSize extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "w";
     width: UInt32Value | undefined;
+}
+
+// @public
+export interface PageSizeOptions {
+    heightDxa: number;
+    orientation?: "portrait" | "landscape";
+    widthDxa: number;
+}
+
+// @public
+export interface PageSizeResult {
+    // (undocumented)
+    heightDxa: number;
+    // (undocumented)
+    orientation?: "portrait" | "landscape";
+    // (undocumented)
+    widthDxa: number;
 }
 
 // @public
@@ -1003,6 +1061,12 @@ export function setDocumentHeader(doc: WordprocessingDocument, text: string, typ
 
 // @public
 export function setDocumentTableCellText(table: Table, row: number, col: number, text: string): void;
+
+// @public
+export function setPageMargin(section: SectionProperties, opts: PageMarginOptions): void;
+
+// @public
+export function setPageSize(section: SectionProperties, opts: PageSizeOptions): void;
 
 // @public
 export class Settings extends OpenXmlCompositeElement {
