@@ -30,6 +30,22 @@ export class BinaryPart {
     writeAsync(bytes: Uint8Array): Promise<void>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "OpenXmlCompositeElement" needs to be exported by the entry point index.d.ts
+//
+// @public
+export class BookViews extends OpenXmlCompositeElement {
+    // Warning: (ae-forgotten-export) The symbol "OpenXmlElementList" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    readonly localName: "bookViews";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+}
+
 // @public
 export const BuiltInNumberFormat: {
     readonly GENERAL: 0;
@@ -58,8 +74,6 @@ export class CalculationChainPart extends TypedXmlPart<CalculationChain> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/calcChain";
 }
 
-// Warning: (ae-forgotten-export) The symbol "OpenXmlCompositeElement" needs to be exported by the entry point index.d.ts
-//
 // @public
 export class Cell extends OpenXmlCompositeElement {
     // (undocumented)
@@ -67,8 +81,6 @@ export class Cell extends OpenXmlCompositeElement {
     cellMetaIndex: UInt32Value | undefined;
     // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
     cellReference: StringValue | undefined;
-    // Warning: (ae-forgotten-export) The symbol "OpenXmlElementList" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
@@ -206,6 +218,9 @@ export function clearAllMergedCells(worksheet: Worksheet): void;
 
 // @public
 export function clearCellValidations(worksheet: Worksheet, sqref: string): void;
+
+// @public
+export function clearWorksheetTabColor(worksheet: Worksheet): void;
 
 // @public
 export class Column extends OpenXmlLeafElement {
@@ -420,6 +435,9 @@ export interface FreezePanesOptions {
 }
 
 // @public
+export function getActiveSheet(workbook: Workbook): number;
+
+// @public
 export function getCellValidations(worksheet: Worksheet): CellValidationInfo[];
 
 // @public
@@ -436,6 +454,12 @@ export function getResolverForWorksheet(worksheet: Worksheet): SharedStringResol
 
 // @public
 export function getRowHeight(row: Row): number | undefined;
+
+// @public
+export function getSheetState(sheet: Sheet): SheetState;
+
+// @public
+export function getWorksheetTabColor(worksheet: Worksheet): string | undefined;
 
 // @public (undocumented)
 export class ImagePart extends BinaryPart {
@@ -595,6 +619,9 @@ export class Selection extends OpenXmlLeafElement {
 }
 
 // @public
+export function setActiveSheet(workbook: Workbook, sheetIndex: number): void;
+
+// @public
 export function setBuiltInNumberFormat(doc: SpreadsheetDocument, cell: Cell, builtInId: number): number;
 
 // @public
@@ -605,6 +632,12 @@ export function setFreezePanes(worksheet: Worksheet, options: FreezePanesOptions
 
 // @public
 export function setRowHeight(row: Row, heightPoints: number | undefined): void;
+
+// @public
+export function setSheetState(sheet: Sheet, state: SheetState): void;
+
+// @public
+export function setWorksheetTabColor(worksheet: Worksheet, hex: string): void;
 
 // @public
 export class SharedStringItem extends OpenXmlCompositeElement {
@@ -687,6 +720,31 @@ export class SheetData extends OpenXmlCompositeElement {
 }
 
 // @public
+export class SheetProperties extends OpenXmlCompositeElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    codeName: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    enableFormatConditionsCalculation: BooleanValue | undefined;
+    filterMode: BooleanValue | undefined;
+    // (undocumented)
+    readonly localName: "sheetPr";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+    published: BooleanValue | undefined;
+    syncHorizontal: BooleanValue | undefined;
+    syncReference: StringValue | undefined;
+    syncVertical: BooleanValue | undefined;
+    transitionEntry: BooleanValue | undefined;
+    transitionEvaluation: BooleanValue | undefined;
+}
+
+// @public
 export class Sheets extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
@@ -697,6 +755,9 @@ export class Sheets extends OpenXmlCompositeElement {
     // (undocumented)
     readonly prefix: "x";
 }
+
+// @public
+export type SheetState = "visible" | "hidden" | "veryHidden";
 
 // @public
 export class SheetView extends OpenXmlCompositeElement {
@@ -807,6 +868,26 @@ export class Stylesheet extends OpenXmlCompositeElement {
 }
 
 // @public
+export class TabColor extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    auto: BooleanValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    indexed: UInt32Value | undefined;
+    // (undocumented)
+    readonly localName: "tabColor";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+    // Warning: (ae-forgotten-export) The symbol "HexBinaryValue" needs to be exported by the entry point index.d.ts
+    rgb: HexBinaryValue | undefined;
+    theme: UInt32Value | undefined;
+    tint: StringValue | undefined;
+}
+
+// @public
 export class Text extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -894,6 +975,36 @@ export class WorkbookStylesPart extends TypedXmlPart<Stylesheet> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles";
     get stylesheet(): Stylesheet;
     set stylesheet(value: Stylesheet);
+}
+
+// @public
+export class WorkbookView extends OpenXmlCompositeElement {
+    activeTab: UInt32Value | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    autoFilterDateGrouping: BooleanValue | undefined;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    firstSheet: UInt32Value | undefined;
+    // (undocumented)
+    readonly localName: "workbookView";
+    minimized: BooleanValue | undefined;
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+    showHorizontalScroll: BooleanValue | undefined;
+    showSheetTabs: BooleanValue | undefined;
+    showVerticalScroll: BooleanValue | undefined;
+    tabRatio: UInt32Value | undefined;
+    visibility: StringValue | undefined;
+    windowHeight: UInt32Value | undefined;
+    windowWidth: UInt32Value | undefined;
+    // Warning: (ae-forgotten-export) The symbol "Int32Value" needs to be exported by the entry point index.d.ts
+    xWindow: Int32Value | undefined;
+    yWindow: Int32Value | undefined;
 }
 
 // @public

@@ -131,3 +131,19 @@ export {
   clearCellValidations,
   getCellValidations,
 } from "./data-validations.js";
+
+// ─── Excel Sheet 视觉元数据（Epic-62） ───────────────────────────────────────
+export { BookViews } from "./generated/book-views.js";
+export { SheetProperties } from "./generated/sheet-properties.js";
+export { TabColor } from "./generated/tab-color.js";
+export { WorkbookView } from "./generated/workbook-view.js";
+export {
+  type SheetState,
+  setSheetState,
+  getSheetState,
+  setActiveSheet,
+  getActiveSheet,
+  setWorksheetTabColor,
+  getWorksheetTabColor,
+  clearWorksheetTabColor,
+} from "./sheet-metadata.js";
