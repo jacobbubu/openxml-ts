@@ -412,6 +412,19 @@ export function createParagraphStyle(stylesPart: StylesPart, opts: ParagraphStyl
 // @public
 export function createTotalPagesRun(): SimpleField;
 
+// Warning: (ae-forgotten-export) The symbol "Properties_2" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class CustomFilePropertiesPart extends TypedXmlPart<Properties_2> {
+    constructor(part: IPackagePart, _registry?: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.custom-properties+xml";
+    get properties(): Properties_2;
+    set properties(value: Properties_2);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties";
+}
+
 // @public
 export class DeletedRun extends OpenXmlCompositeElement {
     // (undocumented)
@@ -484,6 +497,19 @@ export class EffectiveProperties {
 
 // @public
 export function ensureDefaultSection(doc: WordprocessingDocument): SectionProperties;
+
+// Warning: (ae-forgotten-export) The symbol "Properties" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class ExtendedFilePropertiesPart extends TypedXmlPart<Properties> {
+    constructor(part: IPackagePart, _registry?: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.extended-properties+xml";
+    get properties(): Properties;
+    set properties(value: Properties);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
+}
 
 // @public
 export function extensionForMime(mime: string): string | undefined;
@@ -1584,8 +1610,10 @@ export class WordprocessingDocument {
     get commentsPart(): CommentsPart | undefined;
     get coreProperties(): CoreProperties;
     static create(): WordprocessingDocument;
+    get customFileProperties(): CustomFilePropertiesPart;
     // (undocumented)
     dispose(): Promise<void>;
+    get extendedFileProperties(): ExtendedFilePropertiesPart;
     // (undocumented)
     get fontTablePart(): FontTablePart | undefined;
     get footnotesPart(): FootnotesPart | undefined;

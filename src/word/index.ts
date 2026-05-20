@@ -54,6 +54,8 @@ export {
 export { BinaryPart } from "../parts/binary-part.js";
 export { CoreProperties } from "../parts/core-properties.js";
 export { CorePropertiesPart } from "../parts/core-properties-part.js";
+export { ExtendedFilePropertiesPart } from "../parts/extended-file-properties-part.js";
+export { CustomFilePropertiesPart } from "../parts/custom-file-properties-part.js";
 export {
   type AddImagePartOptions,
   ImagePart,
