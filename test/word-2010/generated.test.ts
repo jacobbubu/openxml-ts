@@ -6,13 +6,10 @@
  */
 
 import { describe, expect, it } from "vitest";
-import { registerWord2010Elements } from "../../src/word-2010/generated/_registry.js";
-import {
-  Alpha,
-  ContentPart,
-} from "../../src/word-2010/generated/index.js";
 import { OpenXmlLeafElement } from "../../src/element/index.js";
 import { ElementRegistry, OpenXmlCompositeElement } from "../../src/index.js";
+import { registerWord2010Elements } from "../../src/word-2010/generated/_registry.js";
+import { Alpha, ContentPart } from "../../src/word-2010/generated/index.js";
 
 const CNS = "http://schemas.microsoft.com/office/word/2010/wordml";
 

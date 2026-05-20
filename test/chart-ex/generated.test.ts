@@ -7,12 +7,7 @@
 
 import { describe, expect, it } from "vitest";
 import { registerChartExElements } from "../../src/chart-ex/generated/_registry.js";
-import {
-  Axis,
-  ChartSpace,
-  Formula,
-  PlotArea,
-} from "../../src/chart-ex/generated/index.js";
+import { Axis, ChartSpace, Formula, PlotArea } from "../../src/chart-ex/generated/index.js";
 import { OpenXmlLeafElement } from "../../src/element/index.js";
 import { ElementRegistry, OpenXmlCompositeElement } from "../../src/index.js";
 
