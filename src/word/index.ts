@@ -40,6 +40,7 @@ export {
   CommentsPart,
   FontTablePart,
   FooterPart,
+  FootnotesPart,
   HeaderPart,
   MainDocumentPart,
   SettingsPart,
@@ -137,6 +138,18 @@ export {
   getDefaultSection,
   ensureDefaultSection,
 } from "./page-setup-markup.js";
+
+// ─── Word 脚注（Epic-64） ─────────────────────────────────────────────────────
+export { Footnote } from "./generated/footnote.js";
+export { Footnotes } from "./generated/footnotes.js";
+export { FootnoteReference } from "./generated/footnote-reference.js";
+export { FootnoteReferenceMark } from "./generated/footnote-reference-mark.js";
+export {
+  type FootnoteOptions,
+  type AddFootnoteResult,
+  addFootnote,
+  getFootnoteText,
+} from "./footnote-markup.js";
 
 // ─── Word Style 创建（Epic-46） ───────────────────────────────────────────────
 export {
