@@ -62,6 +62,8 @@ export {
 
 export { getSpeakerNotes, setSpeakerNotes } from "./notes-markup.js";
 
+export { type AddSlideOptions, addSlide } from "./add-slide.js";
+
 export {
   type PictureCrop,
   getPictureCrop,
