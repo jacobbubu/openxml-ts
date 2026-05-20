@@ -58,6 +58,8 @@ declare module "../generated/run.js" {
 
 // ─── 内部 helpers ────────────────────────────────────────────────────────────
 
+function ensureRPr(run: Run, readOnly: true): RunProperties | undefined;
+function ensureRPr(run: Run, readOnly: false): RunProperties;
 function ensureRPr(run: Run, readOnly: boolean): RunProperties | undefined {
   const existing = run.firstChild(RunProperties);
   if (existing !== undefined) return existing;
@@ -74,7 +76,7 @@ function getRFonts(run: Run): RunFonts | undefined {
 }
 
 function ensureRFonts(run: Run): RunFonts {
-  const rPr = ensureRPr(run, false)!;
+  const rPr = ensureRPr(run, false);
   let rf = rPr.firstChild(RunFonts);
   if (rf === undefined) {
     rf = new RunFonts();
