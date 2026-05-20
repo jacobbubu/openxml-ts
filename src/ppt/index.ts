@@ -26,6 +26,7 @@ import "./extensions/shape-accessibility.js";
 import "./extensions/shape-xfrm.js";
 import "./extensions/slide-transition.js";
 import "./extensions/shape-rotation.js";
+import "./extensions/slide-hidden.js";
 
 export { PresentationDocument } from "./presentation-document.js";
 export {
