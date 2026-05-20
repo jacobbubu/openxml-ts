@@ -39,7 +39,11 @@ import {
 } from "../packaging/index.js";
 import type { PartUri } from "../packaging/interfaces/types.js";
 import { CoreProperties } from "../parts/core-properties.js";
+import type { CustomFilePropertiesPart } from "../parts/custom-file-properties-part.js";
+import type { ExtendedFilePropertiesPart } from "../parts/extended-file-properties-part.js";
 import { getOrCreateCorePropertiesPart } from "../parts/get-or-create-core-properties.js";
+import { getOrCreateCustomFilePropertiesPart } from "../parts/get-or-create-custom-file-properties.js";
+import { getOrCreateExtendedFilePropertiesPart } from "../parts/get-or-create-extended-file-properties.js";
 import { type AddImagePartOptions, type ImagePart, addImagePartTo } from "../parts/image-part.js";
 import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
@@ -90,6 +94,10 @@ export class PresentationDocument {
   private readonly typedParts = new Map<string, TypedXmlPart<OpenXmlElement>>();
   /** Epic-29：CoreProperties 缓存。 */
   private _coreProperties: CoreProperties | undefined;
+  /** Epic-72：ExtendedFilePropertiesPart 缓存。 */
+  private _extendedFilePropertiesPart: ExtendedFilePropertiesPart | undefined;
+  /** Epic-72：CustomFilePropertiesPart 缓存。 */
+  private _customFilePropertiesPart: CustomFilePropertiesPart | undefined;
 
   constructor(private readonly pkg: MemoryOpenXmlPackage) {
     pkg.registerDiagnosticsElementCounter(() => this.countLoadedElements());
@@ -149,6 +157,30 @@ export class PresentationDocument {
       this.typedParts.set("__corePropertiesPart__", cpPart);
     }
     return this._coreProperties;
+  }
+
+  /**
+   * 包级 ExtendedFileProperties 元数据（Epic-72）。
+   * 懒 bootstrap：首次访问时找/创建 `/docProps/app.xml`。
+   */
+  get extendedFileProperties(): ExtendedFilePropertiesPart {
+    if (this._extendedFilePropertiesPart === undefined) {
+      this._extendedFilePropertiesPart = getOrCreateExtendedFilePropertiesPart(this.pkg);
+      this.typedParts.set("__extendedFilePropertiesPart__", this._extendedFilePropertiesPart);
+    }
+    return this._extendedFilePropertiesPart;
+  }
+
+  /**
+   * 包级 CustomFileProperties 元数据（Epic-72）。
+   * 懒 bootstrap：首次访问时找/创建 `/docProps/custom.xml`。
+   */
+  get customFileProperties(): CustomFilePropertiesPart {
+    if (this._customFilePropertiesPart === undefined) {
+      this._customFilePropertiesPart = getOrCreateCustomFilePropertiesPart(this.pkg);
+      this.typedParts.set("__customFilePropertiesPart__", this._customFilePropertiesPart);
+    }
+    return this._customFilePropertiesPart;
   }
 
   /**

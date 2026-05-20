@@ -124,6 +124,32 @@ export interface CreateSlideTableOptions {
     readonly rowHeightsEmu?: readonly number[];
 }
 
+// Warning: (ae-forgotten-export) The symbol "Properties_2" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class CustomFilePropertiesPart extends TypedXmlPart<Properties_2> {
+    constructor(part: IPackagePart, _registry?: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.custom-properties+xml";
+    get properties(): Properties_2;
+    set properties(value: Properties_2);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties";
+}
+
+// Warning: (ae-forgotten-export) The symbol "Properties" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class ExtendedFilePropertiesPart extends TypedXmlPart<Properties> {
+    constructor(part: IPackagePart, _registry?: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.extended-properties+xml";
+    get properties(): Properties;
+    set properties(value: Properties);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
+}
+
 // @public
 export function extensionForMime(mime: string): string | undefined;
 
@@ -205,8 +231,10 @@ export class PresentationDocument {
     }): SlidePart;
     get coreProperties(): CoreProperties;
     static create(): PresentationDocument;
+    get customFileProperties(): CustomFilePropertiesPart;
     // (undocumented)
     dispose(): Promise<void>;
+    get extendedFileProperties(): ExtendedFilePropertiesPart;
     getSlideNotes(slide: SlidePart | number): string;
     // Warning: (ae-forgotten-export) The symbol "ZipSource" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "OpenAsyncOptions" needs to be exported by the entry point index.d.ts

@@ -345,6 +345,19 @@ export interface CreateTwoCellAnchorOptions {
     readonly name?: string;
 }
 
+// Warning: (ae-forgotten-export) The symbol "Properties_2" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class CustomFilePropertiesPart extends TypedXmlPart<Properties_2> {
+    constructor(part: IPackagePart, _registry?: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.custom-properties+xml";
+    get properties(): Properties_2;
+    set properties(value: Properties_2);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties";
+}
+
 // @public
 export class DataValidation extends OpenXmlCompositeElement {
     allowBlank: BooleanValue | undefined;
@@ -406,6 +419,19 @@ export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing";
     get wsDr(): OpenXmlElement;
     set wsDr(value: OpenXmlElement);
+}
+
+// Warning: (ae-forgotten-export) The symbol "Properties" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class ExtendedFilePropertiesPart extends TypedXmlPart<Properties> {
+    constructor(part: IPackagePart, _registry?: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.extended-properties+xml";
+    get properties(): Properties;
+    set properties(value: Properties);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties";
 }
 
 // @public
@@ -842,8 +868,10 @@ export class SpreadsheetDocument {
     get calculationChainPart(): CalculationChainPart | undefined;
     get coreProperties(): CoreProperties;
     static create(): SpreadsheetDocument;
+    get customFileProperties(): CustomFilePropertiesPart;
     // (undocumented)
     dispose(): Promise<void>;
+    get extendedFileProperties(): ExtendedFilePropertiesPart;
     listDefinedNames(): Array<{
         name: string;
         formula: string;
