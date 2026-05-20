@@ -224,6 +224,10 @@ function subsystemNameForNamespace(uri: string): { pascal: string; label: string
       pascal: "DrawingCompatibility",
       label: "drawingCompatibility",
     },
+    "http://schemas.openxmlformats.org/drawingml/2006/diagram": {
+      pascal: "Diagram",
+      label: "diagram",
+    },
     "urn:schemas-microsoft-com:vml": {
       pascal: "Vml",
       label: "vml",

@@ -48,6 +48,7 @@ const WELL_KNOWN: readonly NamespaceEntry[] = [
     uri: "http://schemas.openxmlformats.org/drawingml/2006/compatibility",
     prefix: "comp",
   },
+  { uri: "http://schemas.openxmlformats.org/drawingml/2006/diagram", prefix: "dgm" },
 ];
 
 export function prefixForUri(uri: string): string | undefined {
