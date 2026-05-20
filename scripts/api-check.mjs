@@ -43,6 +43,7 @@ const ENTRIES = [
   },
   { name: "linq", config: "extractor-linq.json", report: "openxml-ts-linq.api.md" },
   { name: "math", config: "extractor-math.json", report: "openxml-ts-math.api.md" },
+  { name: "diagram", config: "extractor-diagram.json", report: "openxml-ts-diagram.api.md" },
   {
     name: "extended-properties",
     config: "extractor-extended-properties.json",
