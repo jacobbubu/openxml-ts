@@ -82,9 +82,17 @@ async function main(): Promise<void> {
     if (t.ClassName.length > 0) typeIndex.set(t.ClassName, t);
   }
 
+  // 保留文件名（由 codegen 自身写出，不能被 element 类文件占用）。
+  const RESERVED_FILENAMES = new Set(["index", "_registry"]);
+
   for (const type of json.Types) {
     if (type.ClassName.length === 0) continue;
-    const fileName = classNameToFileName(type.ClassName);
+    let fileName = classNameToFileName(type.ClassName);
+    // 若 ClassName 生成的文件名与保留名冲突（如 class Index → "index"），
+    // 追加 "-element" 后缀以避免桶文件自引用或 registry 文件被覆盖。
+    if (RESERVED_FILENAMES.has(fileName)) {
+      fileName = `${fileName}-element`;
+    }
     if (seenFiles.has(fileName)) {
       skippedDuplicates.push(type.ClassName);
       continue;
@@ -159,6 +167,10 @@ function subsystemNameForNamespace(uri: string): { pascal: string; label: string
     "http://schemas.openxmlformats.org/drawingml/2006/main": {
       pascal: "Drawing",
       label: "drawingml",
+    },
+    "http://schemas.openxmlformats.org/drawingml/2006/chart": {
+      pascal: "Chart",
+      label: "chart",
     },
   };
   const hit = known[uri];

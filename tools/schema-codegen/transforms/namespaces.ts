@@ -25,6 +25,7 @@ const WELL_KNOWN: readonly NamespaceEntry[] = [
   { uri: "http://schemas.openxmlformats.org/officeDocument/2006/math", prefix: "m" },
   { uri: "http://schemas.openxmlformats.org/word/2010/wordml", prefix: "w14" },
   { uri: "http://schemas.microsoft.com/office/word/2012/wordml", prefix: "w15" },
+  { uri: "http://schemas.openxmlformats.org/drawingml/2006/chart", prefix: "c" },
 ];
 
 export function prefixForUri(uri: string): string | undefined {

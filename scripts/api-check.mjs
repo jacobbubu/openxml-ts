@@ -24,6 +24,7 @@ const ENTRIES = [
   { name: "excel", config: "extractor-excel.json", report: "openxml-ts-excel.api.md" },
   { name: "ppt", config: "extractor-ppt.json", report: "openxml-ts-ppt.api.md" },
   { name: "drawing", config: "extractor-drawing.json", report: "openxml-ts-drawing.api.md" },
+  { name: "chart", config: "extractor-chart.json", report: "openxml-ts-chart.api.md" },
   { name: "linq", config: "extractor-linq.json", report: "openxml-ts-linq.api.md" },
 ];
 
