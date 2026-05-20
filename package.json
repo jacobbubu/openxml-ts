@@ -159,6 +159,46 @@
       "types": "./dist/drawing-compatibility/generated/*.d.ts",
       "import": "./dist/drawing-compatibility/generated/*.js"
     },
+    "./vml": {
+      "types": "./dist/vml/index.d.ts",
+      "import": "./dist/vml/index.js"
+    },
+    "./vml/generated/*": {
+      "types": "./dist/vml/generated/*.d.ts",
+      "import": "./dist/vml/generated/*.js"
+    },
+    "./vml-office": {
+      "types": "./dist/vml-office/index.d.ts",
+      "import": "./dist/vml-office/index.js"
+    },
+    "./vml-office/generated/*": {
+      "types": "./dist/vml-office/generated/*.d.ts",
+      "import": "./dist/vml-office/generated/*.js"
+    },
+    "./vml-excel": {
+      "types": "./dist/vml-excel/index.d.ts",
+      "import": "./dist/vml-excel/index.js"
+    },
+    "./vml-excel/generated/*": {
+      "types": "./dist/vml-excel/generated/*.d.ts",
+      "import": "./dist/vml-excel/generated/*.js"
+    },
+    "./vml-word": {
+      "types": "./dist/vml-word/index.d.ts",
+      "import": "./dist/vml-word/index.js"
+    },
+    "./vml-word/generated/*": {
+      "types": "./dist/vml-word/generated/*.d.ts",
+      "import": "./dist/vml-word/generated/*.js"
+    },
+    "./vml-powerpoint": {
+      "types": "./dist/vml-powerpoint/index.d.ts",
+      "import": "./dist/vml-powerpoint/index.js"
+    },
+    "./vml-powerpoint/generated/*": {
+      "types": "./dist/vml-powerpoint/generated/*.d.ts",
+      "import": "./dist/vml-powerpoint/generated/*.js"
+    },
     "./package.json": "./package.json"
   },
   "files": ["dist", "README.md", "LICENSE"],
@@ -200,6 +240,11 @@
     "gen:schema-library": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_schemaLibrary_2006_main.json --output src/schema-library/generated",
     "gen:locked-canvas": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_lockedCanvas.json --output src/locked-canvas/generated",
     "gen:drawing-compatibility": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_compatibility.json --output src/drawing-compatibility/generated",
+    "gen:vml": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas-microsoft-com_vml.json --output src/vml/generated",
+    "gen:vml-office": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas-microsoft-com_office_office.json --output src/vml-office/generated",
+    "gen:vml-excel": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas-microsoft-com_office_excel.json --output src/vml-excel/generated",
+    "gen:vml-word": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas-microsoft-com_office_word.json --output src/vml-word/generated",
+    "gen:vml-powerpoint": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas-microsoft-com_office_powerpoint.json --output src/vml-powerpoint/generated",
     "format": "biome format --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -383,6 +428,36 @@
     {
       "name": "openxml-ts/drawing-compatibility (full bundle including registry)",
       "path": "dist/drawing-compatibility/index.js",
+      "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/vml (full bundle including registry)",
+      "path": "dist/vml/index.js",
+      "limit": "100 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/vml-office (full bundle including registry)",
+      "path": "dist/vml-office/index.js",
+      "limit": "100 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/vml-excel (full bundle including registry)",
+      "path": "dist/vml-excel/index.js",
+      "limit": "200 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/vml-word (full bundle including registry)",
+      "path": "dist/vml-word/index.js",
+      "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/vml-powerpoint (full bundle including registry)",
+      "path": "dist/vml-powerpoint/index.js",
       "limit": "50 KB",
       "gzip": true
     }

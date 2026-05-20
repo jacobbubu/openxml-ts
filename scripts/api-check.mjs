@@ -83,6 +83,27 @@ const ENTRIES = [
     config: "extractor-drawing-compatibility.json",
     report: "openxml-ts-drawing-compatibility.api.md",
   },
+  { name: "vml", config: "extractor-vml.json", report: "openxml-ts-vml.api.md" },
+  {
+    name: "vml-office",
+    config: "extractor-vml-office.json",
+    report: "openxml-ts-vml-office.api.md",
+  },
+  {
+    name: "vml-excel",
+    config: "extractor-vml-excel.json",
+    report: "openxml-ts-vml-excel.api.md",
+  },
+  {
+    name: "vml-word",
+    config: "extractor-vml-word.json",
+    report: "openxml-ts-vml-word.api.md",
+  },
+  {
+    name: "vml-powerpoint",
+    config: "extractor-vml-powerpoint.json",
+    report: "openxml-ts-vml-powerpoint.api.md",
+  },
 ];
 
 const isUpdate = process.argv.includes("--update");

@@ -224,6 +224,26 @@ function subsystemNameForNamespace(uri: string): { pascal: string; label: string
       pascal: "DrawingCompatibility",
       label: "drawingCompatibility",
     },
+    "urn:schemas-microsoft-com:vml": {
+      pascal: "Vml",
+      label: "vml",
+    },
+    "urn:schemas-microsoft-com:office:office": {
+      pascal: "VmlOffice",
+      label: "vml-office",
+    },
+    "urn:schemas-microsoft-com:office:excel": {
+      pascal: "VmlExcel",
+      label: "vml-excel",
+    },
+    "urn:schemas-microsoft-com:office:word": {
+      pascal: "VmlWord",
+      label: "vml-word",
+    },
+    "urn:schemas-microsoft-com:office:powerpoint": {
+      pascal: "VmlPowerpoint",
+      label: "vml-powerpoint",
+    },
   };
   const hit = known[uri];
   if (hit !== undefined) return hit;
