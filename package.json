@@ -207,6 +207,54 @@
       "types": "./dist/vml-powerpoint/generated/*.d.ts",
       "import": "./dist/vml-powerpoint/generated/*.js"
     },
+    "./chart-ex": {
+      "types": "./dist/chart-ex/index.d.ts",
+      "import": "./dist/chart-ex/index.js"
+    },
+    "./chart-ex/generated/*": {
+      "types": "./dist/chart-ex/generated/*.d.ts",
+      "import": "./dist/chart-ex/generated/*.js"
+    },
+    "./excel-2009": {
+      "types": "./dist/excel-2009/index.d.ts",
+      "import": "./dist/excel-2009/index.js"
+    },
+    "./excel-2009/generated/*": {
+      "types": "./dist/excel-2009/generated/*.d.ts",
+      "import": "./dist/excel-2009/generated/*.js"
+    },
+    "./word-2010": {
+      "types": "./dist/word-2010/index.d.ts",
+      "import": "./dist/word-2010/index.js"
+    },
+    "./word-2010/generated/*": {
+      "types": "./dist/word-2010/generated/*.d.ts",
+      "import": "./dist/word-2010/generated/*.js"
+    },
+    "./excel-2010": {
+      "types": "./dist/excel-2010/index.d.ts",
+      "import": "./dist/excel-2010/index.js"
+    },
+    "./excel-2010/generated/*": {
+      "types": "./dist/excel-2010/generated/*.d.ts",
+      "import": "./dist/excel-2010/generated/*.js"
+    },
+    "./ppt-2010": {
+      "types": "./dist/ppt-2010/index.d.ts",
+      "import": "./dist/ppt-2010/index.js"
+    },
+    "./ppt-2010/generated/*": {
+      "types": "./dist/ppt-2010/generated/*.d.ts",
+      "import": "./dist/ppt-2010/generated/*.js"
+    },
+    "./drawing-2010": {
+      "types": "./dist/drawing-2010/index.d.ts",
+      "import": "./dist/drawing-2010/index.js"
+    },
+    "./drawing-2010/generated/*": {
+      "types": "./dist/drawing-2010/generated/*.d.ts",
+      "import": "./dist/drawing-2010/generated/*.js"
+    },
     "./package.json": "./package.json"
   },
   "files": ["dist", "README.md", "LICENSE"],
@@ -254,6 +302,12 @@
     "gen:vml-excel": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas-microsoft-com_office_excel.json --output src/vml-excel/generated",
     "gen:vml-word": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas-microsoft-com_office_word.json --output src/vml-word/generated",
     "gen:vml-powerpoint": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas-microsoft-com_office_powerpoint.json --output src/vml-powerpoint/generated",
+    "gen:chart-ex": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_drawing_2014_chartex.json --output src/chart-ex/generated",
+    "gen:excel-2009": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_spreadsheetml_2009_9_main.json --output src/excel-2009/generated",
+    "gen:word-2010": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_word_2010_wordml.json --output src/word-2010/generated",
+    "gen:excel-2010": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_spreadsheetml_2010_11_main.json --output src/excel-2010/generated",
+    "gen:ppt-2010": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_powerpoint_2010_main.json --output src/ppt-2010/generated",
+    "gen:drawing-2010": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_drawing_2010_main.json --output src/drawing-2010/generated",
     "format": "biome format --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -474,6 +528,42 @@
       "name": "openxml-ts/vml-powerpoint (full bundle including registry)",
       "path": "dist/vml-powerpoint/index.js",
       "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/chart-ex (full bundle including registry)",
+      "path": "dist/chart-ex/index.js",
+      "limit": "400 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/excel-2009 (full bundle including registry)",
+      "path": "dist/excel-2009/index.js",
+      "limit": "400 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/word-2010 (full bundle including registry)",
+      "path": "dist/word-2010/index.js",
+      "limit": "400 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/excel-2010 (full bundle including registry)",
+      "path": "dist/excel-2010/index.js",
+      "limit": "400 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/ppt-2010 (full bundle including registry)",
+      "path": "dist/ppt-2010/index.js",
+      "limit": "400 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/drawing-2010 (full bundle including registry)",
+      "path": "dist/drawing-2010/index.js",
+      "limit": "400 KB",
       "gzip": true
     }
   ]

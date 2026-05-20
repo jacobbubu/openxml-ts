@@ -105,6 +105,24 @@ const ENTRIES = [
     config: "extractor-vml-powerpoint.json",
     report: "openxml-ts-vml-powerpoint.api.md",
   },
+  { name: "chart-ex", config: "extractor-chart-ex.json", report: "openxml-ts-chart-ex.api.md" },
+  {
+    name: "excel-2009",
+    config: "extractor-excel-2009.json",
+    report: "openxml-ts-excel-2009.api.md",
+  },
+  { name: "word-2010", config: "extractor-word-2010.json", report: "openxml-ts-word-2010.api.md" },
+  {
+    name: "excel-2010",
+    config: "extractor-excel-2010.json",
+    report: "openxml-ts-excel-2010.api.md",
+  },
+  { name: "ppt-2010", config: "extractor-ppt-2010.json", report: "openxml-ts-ppt-2010.api.md" },
+  {
+    name: "drawing-2010",
+    config: "extractor-drawing-2010.json",
+    report: "openxml-ts-drawing-2010.api.md",
+  },
 ];
 
 const isUpdate = process.argv.includes("--update");

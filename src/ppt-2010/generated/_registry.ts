@@ -1,0 +1,120 @@
+// THIS FILE IS GENERATED. DO NOT EDIT.
+// Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_powerpoint_2010_main.json
+
+import type { ElementRegistry } from "../../element/index.js";
+import { ApplicationNonVisualDrawingProperties } from "./application-non-visual-drawing-properties.js";
+import { BookmarkTarget } from "./bookmark-target.js";
+import { BrowseMode } from "./browse-mode.js";
+import { ConveyorTransition } from "./conveyor-transition.js";
+import { CreationId } from "./creation-id.js";
+import { DefaultImageDpi } from "./default-image-dpi.js";
+import { DiscardImageEditData } from "./discard-image-edit-data.js";
+import { DoorsTransition } from "./doors-transition.js";
+import { ExtensionListModify } from "./extension-list-modify.js";
+import { FerrisTransition } from "./ferris-transition.js";
+import { FlashTransition } from "./flash-transition.js";
+import { FlipTransition } from "./flip-transition.js";
+import { FlythroughTransition } from "./flythrough-transition.js";
+import { GalleryTransition } from "./gallery-transition.js";
+import { GlitterTransition } from "./glitter-transition.js";
+import { HoneycombTransition } from "./honeycomb-transition.js";
+import { LaserColor } from "./laser-color.js";
+import { LaserTraceList } from "./laser-trace-list.js";
+import { Media } from "./media.js";
+import { MediaBookmark } from "./media-bookmark.js";
+import { MediaBookmarkList } from "./media-bookmark-list.js";
+import { MediaFade } from "./media-fade.js";
+import { MediaTrim } from "./media-trim.js";
+import { ModificationId } from "./modification-id.js";
+import { NonVisualContentPartProperties } from "./non-visual-content-part-properties.js";
+import { NonVisualDrawingProperties } from "./non-visual-drawing-properties.js";
+import { NonVisualInkContentPartProperties } from "./non-visual-ink-content-part-properties.js";
+import { NullEventRecord } from "./null-event-record.js";
+import { PanTransition } from "./pan-transition.js";
+import { PauseEventRecord } from "./pause-event-record.js";
+import { PlayEventRecord } from "./play-event-record.js";
+import { PrismTransition } from "./prism-transition.js";
+import { ResumeEventRecord } from "./resume-event-record.js";
+import { RevealTransition } from "./reveal-transition.js";
+import { RippleTransition } from "./ripple-transition.js";
+import { SectionList } from "./section-list.js";
+import { SectionOld } from "./section-old.js";
+import { SectionProperties } from "./section-properties.js";
+import { SectionSlideIdList } from "./section-slide-id-list.js";
+import { SectionSlideIdListEntry } from "./section-slide-id-list-entry.js";
+import { SeekEventRecord } from "./seek-event-record.js";
+import { ShowEventRecordList } from "./show-event-record-list.js";
+import { ShowMediaControls } from "./show-media-controls.js";
+import { ShredTransition } from "./shred-transition.js";
+import { StopEventRecord } from "./stop-event-record.js";
+import { SwitchTransition } from "./switch-transition.js";
+import { TracePoint } from "./trace-point.js";
+import { TracePointList } from "./trace-point-list.js";
+import { Transform2D } from "./transform2-d.js";
+import { TriggerEventRecord } from "./trigger-event-record.js";
+import { VortexTransition } from "./vortex-transition.js";
+import { WarpTransition } from "./warp-transition.js";
+import { WheelReverseTransition } from "./wheel-reverse-transition.js";
+import { WindowTransition } from "./window-transition.js";
+
+/**
+ * 把 ppt-2010 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
+ * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
+ * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ */
+export function registerPpt2010Elements(registry: ElementRegistry): void {
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "nvPr", ApplicationNonVisualDrawingProperties);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "bmkTgt", BookmarkTarget);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "browseMode", BrowseMode);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "conveyor", ConveyorTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "creationId", CreationId);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "defaultImageDpi", DefaultImageDpi);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "discardImageEditData", DiscardImageEditData);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "doors", DoorsTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "extLst", ExtensionListModify);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "ferris", FerrisTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "flash", FlashTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "flip", FlipTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "flythrough", FlythroughTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "gallery", GalleryTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "glitter", GlitterTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "honeycomb", HoneycombTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "laserClr", LaserColor);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "laserTraceLst", LaserTraceList);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "media", Media);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "bmk", MediaBookmark);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "bmkLst", MediaBookmarkList);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "fade", MediaFade);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "trim", MediaTrim);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "modId", ModificationId);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "nvContentPartPr", NonVisualContentPartProperties);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "cNvPr", NonVisualDrawingProperties);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "cNvContentPartPr", NonVisualInkContentPartProperties);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "nullEvt", NullEventRecord);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "pan", PanTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "pauseEvt", PauseEventRecord);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "playEvt", PlayEventRecord);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "prism", PrismTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "resumeEvt", ResumeEventRecord);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "reveal", RevealTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "ripple", RippleTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "sectionLst", SectionList);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "section", SectionOld);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "sectionPr", SectionProperties);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "sldIdLst", SectionSlideIdList);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "sldId", SectionSlideIdListEntry);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "seekEvt", SeekEventRecord);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "showEvtLst", ShowEventRecordList);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "showMediaCtrls", ShowMediaControls);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "shred", ShredTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "stopEvt", StopEventRecord);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "switch", SwitchTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "tracePt", TracePoint);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "tracePtLst", TracePointList);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "xfrm", Transform2D);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "triggerEvt", TriggerEventRecord);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "vortex", VortexTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "warp", WarpTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "wheelReverse", WheelReverseTransition);
+  registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "window", WindowTransition);
+}

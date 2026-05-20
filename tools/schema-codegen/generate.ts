@@ -248,6 +248,31 @@ function subsystemNameForNamespace(uri: string): { pascal: string; label: string
       pascal: "VmlPowerpoint",
       label: "vml-powerpoint",
     },
+    // Epic-75: Office extension namespaces
+    "http://schemas.microsoft.com/office/drawing/2014/chartex": {
+      pascal: "ChartEx",
+      label: "chart-ex",
+    },
+    "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main": {
+      pascal: "Excel2009",
+      label: "excel-2009",
+    },
+    "http://schemas.microsoft.com/office/word/2010/wordml": {
+      pascal: "Word2010",
+      label: "word-2010",
+    },
+    "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main": {
+      pascal: "Excel2010",
+      label: "excel-2010",
+    },
+    "http://schemas.microsoft.com/office/powerpoint/2010/main": {
+      pascal: "Ppt2010",
+      label: "ppt-2010",
+    },
+    "http://schemas.microsoft.com/office/drawing/2010/main": {
+      pascal: "Drawing2010",
+      label: "drawing-2010",
+    },
   };
   const hit = known[uri];
   if (hit !== undefined) return hit;
