@@ -213,6 +213,19 @@ export class CellValue extends OpenXmlLeafElement {
     space: StringValue | undefined;
 }
 
+// Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class ChartPart extends TypedXmlPart<OpenXmlElement> {
+    constructor(part: IPackagePart, _registry?: ElementRegistry);
+    get chartSpace(): OpenXmlElement;
+    set chartSpace(value: OpenXmlElement);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart";
+}
+
 // @public
 export function clearAllMergedCells(worksheet: Worksheet): void;
 
@@ -268,7 +281,6 @@ export interface ColumnWidthRange {
 
 // @public (undocumented)
 export class CoreProperties {
-    // Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
     constructor(root: OpenXmlElement);
     // (undocumented)
     get category(): string | undefined;
@@ -385,7 +397,9 @@ export class DataValidations extends OpenXmlCompositeElement {
 
 // @public (undocumented)
 export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
-    constructor(part: IPackagePart, registry: ElementRegistry);
+    // Warning: (ae-forgotten-export) The symbol "IPackage" needs to be exported by the entry point index.d.ts
+    constructor(part: IPackagePart, registry: ElementRegistry, pkg?: IPackage | undefined);
+    get chartParts(): readonly ChartPart[];
     // (undocumented)
     static readonly contentType = "application/vnd.openxmlformats-officedocument.drawing+xml";
     // (undocumented)
@@ -839,7 +853,6 @@ export class SpreadsheetDocument {
     // Warning: (ae-forgotten-export) The symbol "ZipSource" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "OpenAsyncOptions" needs to be exported by the entry point index.d.ts
     static openAsync(source: ZipSource, options?: OpenAsyncOptions): Promise<SpreadsheetDocument>;
-    // Warning: (ae-forgotten-export) The symbol "IPackage" needs to be exported by the entry point index.d.ts
     get package(): IPackage;
     removeDefinedName(name: string, opts?: {
         localSheetId?: number;

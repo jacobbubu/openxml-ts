@@ -10,12 +10,20 @@
  * 那一档），所以 root 用 OpenXmlUnknownElement 透传——读出来什么样、写回去就什么样，
  * 保 xlsx roundtrip 不破。Epic-13 的便捷 markup 助手负责构造锚节点。
  *
+ * Epic-66：通过 part-level `relationships/chart` 关系暴露 `chartParts`，可选传入
+ * `IPackage` 包句柄以解析 Part URI。
+ *
  * @see DocumentFormat.OpenXml.Packaging.DrawingsPart
  */
 
 import type { ElementRegistry, OpenXmlElement } from "../../element/index.js";
 import { OpenXmlUnknownElement } from "../../element/index.js";
+import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import type { PartUri } from "../../packaging/interfaces/types.js";
+import { ChartPart } from "../../parts/chart-part.js";
+import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
+import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 
 const XDR_NS = "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing";
@@ -25,7 +33,14 @@ export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
     "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing";
   static readonly contentType = "application/vnd.openxmlformats-officedocument.drawing+xml";
 
-  constructor(part: IPackagePart, registry: ElementRegistry) {
+  /** 已解析的 ChartPart 缓存——首次访问后冻结。 */
+  private _chartParts: ChartPart[] | undefined;
+
+  constructor(
+    part: IPackagePart,
+    registry: ElementRegistry,
+    private readonly pkg?: IPackage,
+  ) {
     super(part, registry, WsDrPlaceholder);
   }
 
@@ -36,6 +51,26 @@ export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
 
   set wsDr(value: OpenXmlElement) {
     this.root = value;
+  }
+
+  /**
+   * 本 DrawingPart 通过 part-level 关系引用的所有 ChartPart（Epic-66）。
+   * 需要传入 `pkg` 构造参数才能解析 Part URI；未传时返回空数组。
+   */
+  get chartParts(): readonly ChartPart[] {
+    if (this._chartParts !== undefined) return this._chartParts;
+    const out: ChartPart[] = [];
+    if (this.pkg !== undefined) {
+      for (const rel of this.part.relationships) {
+        if (rel.targetMode !== "internal") continue;
+        if (!relationshipTypeMatches(rel.type, ChartPart.relationshipType)) continue;
+        const targetUri = resolveRelativePartUri(this.part.uri, rel.target) as PartUri | undefined;
+        if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
+        out.push(new ChartPart(this.pkg.getPart(targetUri)));
+      }
+    }
+    this._chartParts = out;
+    return out;
   }
 }
 

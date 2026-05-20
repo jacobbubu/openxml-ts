@@ -29,6 +29,7 @@ import "./extensions/cell-formula-accessor.js";
 export { SpreadsheetDocument } from "./spreadsheet-document.js";
 export {
   CalculationChainPart,
+  ChartPart,
   DrawingPart,
   SharedStringTablePart,
   ThemePart,
