@@ -25,6 +25,22 @@ const ENTRIES = [
   { name: "ppt", config: "extractor-ppt.json", report: "openxml-ts-ppt.api.md" },
   { name: "drawing", config: "extractor-drawing.json", report: "openxml-ts-drawing.api.md" },
   { name: "chart", config: "extractor-chart.json", report: "openxml-ts-chart.api.md" },
+  { name: "picture", config: "extractor-picture.json", report: "openxml-ts-picture.api.md" },
+  {
+    name: "spreadsheet-drawing",
+    config: "extractor-spreadsheet-drawing.json",
+    report: "openxml-ts-spreadsheet-drawing.api.md",
+  },
+  {
+    name: "wordprocessing-drawing",
+    config: "extractor-wordprocessing-drawing.json",
+    report: "openxml-ts-wordprocessing-drawing.api.md",
+  },
+  {
+    name: "chart-drawing",
+    config: "extractor-chart-drawing.json",
+    report: "openxml-ts-chart-drawing.api.md",
+  },
   { name: "linq", config: "extractor-linq.json", report: "openxml-ts-linq.api.md" },
 ];
 
