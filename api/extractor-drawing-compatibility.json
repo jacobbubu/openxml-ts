@@ -1,0 +1,9 @@
+{
+  "extends": "./base.json",
+  "mainEntryPointFilePath": "<projectFolder>/dist/drawing-compatibility/index.d.ts",
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "<projectFolder>/api/",
+    "reportFileName": "openxml-ts-drawing-compatibility.api.md"
+  }
+}
