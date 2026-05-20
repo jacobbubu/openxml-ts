@@ -138,6 +138,12 @@ export interface CharacterStyleOptions {
 }
 
 // @public
+export function clearDocumentFooter(doc: WordprocessingDocument, type?: HeaderFooterType): void;
+
+// @public
+export function clearDocumentHeader(doc: WordprocessingDocument, type?: HeaderFooterType): void;
+
+// @public
 export class Color extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -539,6 +545,12 @@ export class FooterReference extends OpenXmlLeafElement {
 }
 
 // @public
+export function getDocumentFooter(doc: WordprocessingDocument, type?: HeaderFooterType): string | undefined;
+
+// @public
+export function getDocumentHeader(doc: WordprocessingDocument, type?: HeaderFooterType): string | undefined;
+
+// @public
 export function getDocumentTableCellText(table: Table, row: number, col: number): string;
 
 // @public
@@ -567,6 +579,9 @@ export class Header extends OpenXmlCompositeElement {
     // (undocumented)
     readonly prefix: "w";
 }
+
+// @public
+export type HeaderFooterType = "default" | "first" | "even";
 
 // @public (undocumented)
 export class HeaderPart extends TypedXmlPart<Header> {
@@ -979,6 +994,12 @@ export class SectionProperties extends OpenXmlCompositeElement {
     rsidRPr: HexBinaryValue | undefined;
     rsidSect: HexBinaryValue | undefined;
 }
+
+// @public
+export function setDocumentFooter(doc: WordprocessingDocument, text: string, type?: HeaderFooterType): FooterPart;
+
+// @public
+export function setDocumentHeader(doc: WordprocessingDocument, text: string, type?: HeaderFooterType): HeaderPart;
 
 // @public
 export function setDocumentTableCellText(table: Table, row: number, col: number, text: string): void;
