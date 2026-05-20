@@ -358,6 +358,29 @@ export class CustomFilePropertiesPart extends TypedXmlPart<Properties_2> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/custom-properties";
 }
 
+// @public (undocumented)
+export class CustomXmlPart extends TypedXmlPart<OpenXmlElement> {
+    // Warning: (ae-forgotten-export) The symbol "IPackage" needs to be exported by the entry point index.d.ts
+    constructor(part: IPackagePart, registry: ElementRegistry, pkg: IPackage);
+    static readonly contentType = "application/xml";
+    get customXml(): OpenXmlElement;
+    set customXml(value: OpenXmlElement);
+    get customXmlPropertiesPart(): CustomXmlPropertiesPart | undefined;
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXml";
+}
+
+// @public (undocumented)
+export class CustomXmlPropertiesPart extends TypedXmlPart<OpenXmlElement> {
+    constructor(part: IPackagePart, _registry?: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.customXmlProperties+xml";
+    get datastoreItem(): OpenXmlElement;
+    set datastoreItem(value: OpenXmlElement);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/customXmlProps";
+}
+
 // @public
 export class DataValidation extends OpenXmlCompositeElement {
     allowBlank: BooleanValue | undefined;
@@ -410,7 +433,6 @@ export class DataValidations extends OpenXmlCompositeElement {
 
 // @public (undocumented)
 export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
-    // Warning: (ae-forgotten-export) The symbol "IPackage" needs to be exported by the entry point index.d.ts
     constructor(part: IPackagePart, registry: ElementRegistry, pkg?: IPackage | undefined);
     get chartParts(): readonly ChartPart[];
     // (undocumented)

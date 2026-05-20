@@ -43,6 +43,7 @@ import type { PartUri } from "../packaging/interfaces/types.js";
 import { createHyperlinkInput } from "../packaging/relationships/hyperlink.js";
 import { CoreProperties } from "../parts/core-properties.js";
 import type { CustomFilePropertiesPart } from "../parts/custom-file-properties-part.js";
+import { CustomXmlPart } from "../parts/custom-xml-part.js";
 import type { ExtendedFilePropertiesPart } from "../parts/extended-file-properties-part.js";
 import { getOrCreateCorePropertiesPart } from "../parts/get-or-create-core-properties.js";
 import { getOrCreateCustomFilePropertiesPart } from "../parts/get-or-create-custom-file-properties.js";
@@ -114,6 +115,8 @@ export class WordprocessingDocument {
   private _extendedFilePropertiesPart: ExtendedFilePropertiesPart | undefined;
   /** Epic-72：CustomFilePropertiesPart 缓存。 */
   private _customFilePropertiesPart: CustomFilePropertiesPart | undefined;
+  /** Epic-73：CustomXmlPart 多实例缓存（按 main Part URI 索引）。 */
+  private _customXmlParts: CustomXmlPart[] | undefined;
 
   constructor(private readonly pkg: MemoryOpenXmlPackage) {
     pkg.registerDiagnosticsElementCounter(() => this.countLoadedElements());
@@ -283,6 +286,34 @@ export class WordprocessingDocument {
       this.typedParts.set("__customFilePropertiesPart__", this._customFilePropertiesPart);
     }
     return this._customFilePropertiesPart;
+  }
+
+  /**
+   * 主文档 Part 下属的所有 `CustomXmlPart`（Epic-73）。
+   *
+   * 按 mainDocumentPart part-level 关系遍历顺序返有序只读数组。
+   * 首次访问构造实例并缓存；无主文档 Part 时返空数组。
+   * 每个 CustomXmlPart 可通过 `.customXmlPropertiesPart` 访问伴生属性 Part。
+   *
+   * 添加新实例为后续 Epic 保留；当前仅支持从已有文档加载。
+   */
+  get customXmlParts(): readonly CustomXmlPart[] {
+    if (this._customXmlParts !== undefined) return this._customXmlParts;
+    const main = this.mainDocumentPart;
+    if (main === undefined) {
+      this._customXmlParts = [];
+      return this._customXmlParts;
+    }
+    const out: CustomXmlPart[] = [];
+    for (const rel of main.part.relationships) {
+      if (rel.targetMode !== "internal") continue;
+      if (rel.type !== CustomXmlPart.relationshipType) continue;
+      const targetUri = resolveRelativePartUri(main.part.uri, rel.target);
+      if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
+      out.push(new CustomXmlPart(this.pkg.getPart(targetUri), wordRegistry, this.pkg));
+    }
+    this._customXmlParts = out;
+    return out;
   }
 
   /**
