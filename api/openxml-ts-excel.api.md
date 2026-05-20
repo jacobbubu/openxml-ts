@@ -5,6 +5,12 @@
 ```ts
 
 // @public
+export function addCellListValidation(worksheet: Worksheet, sqref: string, options: ListValidationOptions): void;
+
+// @public
+export function addCellRangeValidation(worksheet: Worksheet, sqref: string, options: RangeValidationOptions): void;
+
+// @public
 export interface AddImagePartOptions {
     readonly baseName?: string;
     readonly contentType?: string;
@@ -167,6 +173,20 @@ export class CellFormula extends OpenXmlLeafElement {
 }
 
 // @public
+export interface CellValidationInfo {
+    readonly allowBlank: boolean | undefined;
+    readonly error: string | undefined;
+    readonly errorTitle: string | undefined;
+    readonly formula1: string | undefined;
+    readonly formula2: string | undefined;
+    readonly operator: string | undefined;
+    readonly prompt: string | undefined;
+    readonly promptTitle: string | undefined;
+    readonly sqref: string;
+    readonly type: string | undefined;
+}
+
+// @public
 export class CellValue extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -183,6 +203,9 @@ export class CellValue extends OpenXmlLeafElement {
 
 // @public
 export function clearAllMergedCells(worksheet: Worksheet): void;
+
+// @public
+export function clearCellValidations(worksheet: Worksheet, sqref: string): void;
 
 // @public
 export class Column extends OpenXmlLeafElement {
@@ -295,6 +318,56 @@ export interface CreateTwoCellAnchorOptions {
     readonly name?: string;
 }
 
+// @public
+export class DataValidation extends OpenXmlCompositeElement {
+    allowBlank: BooleanValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    error: StringValue | undefined;
+    errorStyle: StringValue | undefined;
+    errorTitle: StringValue | undefined;
+    imeMode: StringValue | undefined;
+    // (undocumented)
+    readonly localName: "dataValidation";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    operator: StringValue | undefined;
+    // (undocumented)
+    readonly prefix: "x";
+    prompt: StringValue | undefined;
+    promptTitle: StringValue | undefined;
+    sequenceOfReferences: StringValue | undefined;
+    showDropDown: BooleanValue | undefined;
+    showErrorMessage: BooleanValue | undefined;
+    showInputMessage: BooleanValue | undefined;
+    type: StringValue | undefined;
+    validateRequired(): void;
+}
+
+// @public
+export class DataValidations extends OpenXmlCompositeElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    count: UInt32Value | undefined;
+    disablePrompts: BooleanValue | undefined;
+    // (undocumented)
+    readonly localName: "dataValidations";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+    xWindow: UInt32Value | undefined;
+    yWindow: UInt32Value | undefined;
+}
+
 // @public (undocumented)
 export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
     constructor(part: IPackagePart, registry: ElementRegistry);
@@ -309,12 +382,45 @@ export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
 // @public
 export function extensionForMime(mime: string): string | undefined;
 
+// @public
+export class Formula1 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
+    readonly localName: "formula1";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+    space: StringValue | undefined;
+}
+
+// @public
+export class Formula2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    // (undocumented)
+    readonly localName: "formula2";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+    // (undocumented)
+    readonly prefix: "x";
+    space: StringValue | undefined;
+}
+
 // @public (undocumented)
 export interface FreezePanesOptions {
     readonly columns?: number;
     readonly rows?: number;
     readonly topLeftCell?: string;
 }
+
+// @public
+export function getCellValidations(worksheet: Worksheet): CellValidationInfo[];
 
 // @public
 export function getColumnWidth(worksheet: Worksheet, columnIndex: number): number | undefined;
@@ -349,6 +455,16 @@ export class InlineString extends OpenXmlCompositeElement {
     readonly namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
     // (undocumented)
     readonly prefix: "x";
+}
+
+// @public
+export interface ListValidationOptions {
+    readonly allowBlank?: boolean;
+    readonly error?: string;
+    readonly errorTitle?: string;
+    readonly prompt?: string;
+    readonly promptTitle?: string;
+    readonly values: string[];
 }
 
 // @public
@@ -408,6 +524,25 @@ export class Pane extends OpenXmlLeafElement {
     topLeftCell: StringValue | undefined;
     verticalSplit: StringValue | undefined;
 }
+
+// @public
+export type RangeValidationOperator = "between" | "notBetween" | "equal" | "notEqual" | "greaterThan" | "lessThan" | "greaterThanOrEqual" | "lessThanOrEqual";
+
+// @public
+export interface RangeValidationOptions {
+    readonly allowBlank?: boolean;
+    readonly error?: string;
+    readonly errorTitle?: string;
+    readonly max?: number | string;
+    readonly min?: number | string;
+    readonly operator?: RangeValidationOperator;
+    readonly prompt?: string;
+    readonly promptTitle?: string;
+    readonly type: RangeValidationType;
+}
+
+// @public
+export type RangeValidationType = "whole" | "decimal" | "date" | "time" | "textLength";
 
 // @public
 export function registerSharedStringResolver(worksheet: Worksheet, resolver: SharedStringResolver): void;

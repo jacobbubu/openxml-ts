@@ -114,3 +114,20 @@ export {
   clearAllMergedCells,
   getMergedRanges,
 } from "./merge-cells.js";
+
+// ─── Excel 数据验证（Epic-58） ────────────────────────────────────────────────
+export { DataValidation } from "./generated/data-validation.js";
+export { DataValidations } from "./generated/data-validations.js";
+export { Formula1 } from "./generated/formula1.js";
+export { Formula2 } from "./generated/formula2.js";
+export {
+  type ListValidationOptions,
+  type RangeValidationOptions,
+  type RangeValidationType,
+  type RangeValidationOperator,
+  type CellValidationInfo,
+  addCellListValidation,
+  addCellRangeValidation,
+  clearCellValidations,
+  getCellValidations,
+} from "./data-validations.js";
