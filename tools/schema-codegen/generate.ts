@@ -172,6 +172,22 @@ function subsystemNameForNamespace(uri: string): { pascal: string; label: string
       pascal: "Chart",
       label: "chart",
     },
+    "http://schemas.openxmlformats.org/drawingml/2006/picture": {
+      pascal: "Picture",
+      label: "picture",
+    },
+    "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing": {
+      pascal: "SpreadsheetDrawing",
+      label: "spreadsheetDrawing",
+    },
+    "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing": {
+      pascal: "WordprocessingDrawing",
+      label: "wordprocessingDrawing",
+    },
+    "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing": {
+      pascal: "ChartDrawing",
+      label: "chartDrawing",
+    },
   };
   const hit = known[uri];
   if (hit !== undefined) return hit;

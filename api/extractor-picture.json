@@ -1,0 +1,9 @@
+{
+  "extends": "./base.json",
+  "mainEntryPointFilePath": "<projectFolder>/dist/picture/index.d.ts",
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "<projectFolder>/api/",
+    "reportFileName": "openxml-ts-picture.api.md"
+  }
+}

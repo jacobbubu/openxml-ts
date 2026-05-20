@@ -1,0 +1,9 @@
+{
+  "extends": "./base.json",
+  "mainEntryPointFilePath": "<projectFolder>/dist/wordprocessing-drawing/index.d.ts",
+  "apiReport": {
+    "enabled": true,
+    "reportFolder": "<projectFolder>/api/",
+    "reportFileName": "openxml-ts-wordprocessing-drawing.api.md"
+  }
+}

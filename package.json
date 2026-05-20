@@ -51,6 +51,38 @@
       "types": "./dist/chart/generated/*.d.ts",
       "import": "./dist/chart/generated/*.js"
     },
+    "./picture": {
+      "types": "./dist/picture/index.d.ts",
+      "import": "./dist/picture/index.js"
+    },
+    "./picture/generated/*": {
+      "types": "./dist/picture/generated/*.d.ts",
+      "import": "./dist/picture/generated/*.js"
+    },
+    "./spreadsheet-drawing": {
+      "types": "./dist/spreadsheet-drawing/index.d.ts",
+      "import": "./dist/spreadsheet-drawing/index.js"
+    },
+    "./spreadsheet-drawing/generated/*": {
+      "types": "./dist/spreadsheet-drawing/generated/*.d.ts",
+      "import": "./dist/spreadsheet-drawing/generated/*.js"
+    },
+    "./wordprocessing-drawing": {
+      "types": "./dist/wordprocessing-drawing/index.d.ts",
+      "import": "./dist/wordprocessing-drawing/index.js"
+    },
+    "./wordprocessing-drawing/generated/*": {
+      "types": "./dist/wordprocessing-drawing/generated/*.d.ts",
+      "import": "./dist/wordprocessing-drawing/generated/*.js"
+    },
+    "./chart-drawing": {
+      "types": "./dist/chart-drawing/index.d.ts",
+      "import": "./dist/chart-drawing/index.js"
+    },
+    "./chart-drawing/generated/*": {
+      "types": "./dist/chart-drawing/generated/*.d.ts",
+      "import": "./dist/chart-drawing/generated/*.js"
+    },
     "./linq": {
       "types": "./dist/linq/index.d.ts",
       "import": "./dist/linq/index.js"
@@ -83,6 +115,10 @@
     "gen:drawing": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_main.json --output src/drawing/generated",
     "gen:ppt": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_presentationml_2006_main.json --output src/ppt/generated",
     "gen:chart": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_chart.json --output src/chart/generated",
+    "gen:picture": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_picture.json --output src/picture/generated",
+    "gen:spreadsheet-drawing": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_spreadsheetDrawing.json --output src/spreadsheet-drawing/generated",
+    "gen:wordprocessing-drawing": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_wordprocessingDrawing.json --output src/wordprocessing-drawing/generated",
+    "gen:chart-drawing": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_chartDrawing.json --output src/chart-drawing/generated",
     "format": "biome format --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -189,6 +225,30 @@
       "name": "openxml-ts/chart (full bundle including registry)",
       "path": "dist/chart/index.js",
       "limit": "400 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/picture (full bundle including registry)",
+      "path": "dist/picture/index.js",
+      "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/spreadsheet-drawing (full bundle including registry)",
+      "path": "dist/spreadsheet-drawing/index.js",
+      "limit": "200 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/wordprocessing-drawing (full bundle including registry)",
+      "path": "dist/wordprocessing-drawing/index.js",
+      "limit": "200 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/chart-drawing (full bundle including registry)",
+      "path": "dist/chart-drawing/index.js",
+      "limit": "200 KB",
       "gzip": true
     }
   ]
