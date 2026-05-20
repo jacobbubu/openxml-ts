@@ -58,6 +58,7 @@ import { Comment } from "./generated/comment.js";
 import { DeletedRun } from "./generated/deleted-run.js";
 import { Document } from "./generated/document.js";
 import { FooterReference } from "./generated/footer-reference.js";
+import { Footnote } from "./generated/footnote.js";
 import { HeaderReference } from "./generated/header-reference.js";
 import { InsertedRun } from "./generated/inserted-run.js";
 import { LevelJustification } from "./generated/level-justification.js";
@@ -75,6 +76,7 @@ import {
   CommentsPart,
   FontTablePart,
   FooterPart,
+  FootnotesPart,
   HeaderPart,
   MainDocumentPart,
   NumberingPart,
@@ -89,6 +91,10 @@ import {
 const wordRegistry: ElementRegistry = (() => {
   const r = new ElementRegistry();
   registerWordprocessingElements(r);
+  // 覆盖：codegen 把 w:footnote 注册为叶子 FootnoteSpecialReference，但
+  // <w:footnotes> 内的 <w:footnote> 是复合元素（Footnote）；用 Footnote 替换，
+  // 使反序列化时能正确挂子树（Epic-64）。
+  r.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "footnote", Footnote);
   return r;
 })();
 
@@ -198,6 +204,40 @@ export class WordprocessingDocument {
   /** Word 编号定义 Part（mainDocumentPart 的 part-level 关系）；不存在时返 undefined。 */
   get numberingPart(): NumberingPart | undefined {
     return this.getOrLoadTypedPartFromMain(NumberingPart);
+  }
+
+  /** Word 脚注 Part（mainDocumentPart 的 part-level 关系）；不存在时返 undefined。 */
+  get footnotesPart(): FootnotesPart | undefined {
+    return this.getOrLoadTypedPartFromMain(FootnotesPart);
+  }
+
+  /**
+   * 找 / 创 FootnotesPart（Epic-64）。
+   *
+   * 首次创建时：分配 `/word/footnotes.xml` + 主文档关系，由调用方负责填充初始内容。
+   *
+   * @throws {OpenXmlPackageError} 当 mainDocumentPart 缺失（code="PART_NOT_FOUND"）
+   */
+  getOrCreateFootnotesPart(): FootnotesPart {
+    const existing = this.footnotesPart;
+    if (existing !== undefined) return existing;
+    const main = this.mainDocumentPart;
+    if (main === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "getOrCreateFootnotesPart: mainDocumentPart is missing",
+      });
+    }
+    const uri = "/word/footnotes.xml" as PartUri;
+    const part = this.pkg.createPart(uri, FootnotesPart.contentType);
+    main.part.relationships.create({
+      type: FootnotesPart.relationshipType,
+      target: "footnotes.xml",
+      targetMode: "internal",
+    });
+    const fp = new FootnotesPart(part, wordRegistry);
+    this.typedParts.set(FootnotesPart.relationshipType, fp);
+    return fp;
   }
 
   /**

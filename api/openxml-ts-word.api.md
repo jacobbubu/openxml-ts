@@ -5,6 +5,15 @@
 ```ts
 
 // @public
+export function addFootnote(doc: WordprocessingDocument, opts: FootnoteOptions): AddFootnoteResult;
+
+// @public
+export interface AddFootnoteResult {
+    readonly footnoteId: number;
+    readonly reference: Run;
+}
+
+// @public
 export interface AddImagePartOptions {
     readonly baseName?: string;
     readonly contentType?: string;
@@ -548,6 +557,81 @@ export class FooterReference extends OpenXmlLeafElement {
 }
 
 // @public
+export class Footnote extends OpenXmlCompositeElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    id: StringValue | undefined;
+    // (undocumented)
+    readonly localName: "footnote";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+    type: StringValue | undefined;
+    validateRequired(): void;
+}
+
+// @public
+export interface FootnoteOptions {
+    readonly id?: number;
+    readonly text: string;
+}
+
+// @public
+export class FootnoteReference extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): Array<[string, string]>;
+    customMarkFollows: BooleanValue | undefined;
+    id: StringValue | undefined;
+    // (undocumented)
+    readonly localName: "footnoteReference";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+    validateRequired(): void;
+}
+
+// @public
+export class FootnoteReferenceMark extends OpenXmlLeafElement {
+    // (undocumented)
+    readonly localName: "footnoteRef";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+}
+
+// @public
+export class Footnotes extends OpenXmlCompositeElement {
+    // (undocumented)
+    readonly children: OpenXmlElementList;
+    // (undocumented)
+    readonly localName: "footnotes";
+    // (undocumented)
+    readonly namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+    // (undocumented)
+    readonly prefix: "w";
+}
+
+// @public (undocumented)
+export class FootnotesPart extends TypedXmlPart<Footnotes> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml";
+    get footnotes(): Footnotes;
+    set footnotes(value: Footnotes);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footnotes";
+}
+
+// @public
 export function getDefaultSection(doc: WordprocessingDocument): SectionProperties | undefined;
 
 // @public
@@ -558,6 +642,9 @@ export function getDocumentHeader(doc: WordprocessingDocument, type?: HeaderFoot
 
 // @public
 export function getDocumentTableCellText(table: Table, row: number, col: number): string;
+
+// @public
+export function getFootnoteText(doc: WordprocessingDocument, id: number): string | undefined;
 
 // @public
 export function getPageMargin(section: SectionProperties): PageMarginResult | undefined;
@@ -1489,6 +1576,8 @@ export class WordprocessingDocument {
     dispose(): Promise<void>;
     // (undocumented)
     get fontTablePart(): FontTablePart | undefined;
+    get footnotesPart(): FootnotesPart | undefined;
+    getOrCreateFootnotesPart(): FootnotesPart;
     getOrCreateStylesPart(): StylesPart;
     get mainDocumentPart(): MainDocumentPart | undefined;
     nextBookmarkId(): number;

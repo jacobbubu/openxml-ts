@@ -9,3 +9,4 @@ export { CommentsPart } from "./comments-part.js";
 export { NumberingPart } from "./numbering-part.js";
 export { HeaderPart } from "./header-part.js";
 export { FooterPart } from "./footer-part.js";
+export { FootnotesPart } from "./footnotes-part.js";
