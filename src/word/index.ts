@@ -113,6 +113,17 @@ export {
   createTotalPagesRun,
 } from "./field-markup.js";
 
+// ─── Word 页眉 / 页脚简化访问器（Epic-57） ────────────────────────────────────
+export {
+  type HeaderFooterType,
+  setDocumentHeader,
+  setDocumentFooter,
+  getDocumentHeader,
+  getDocumentFooter,
+  clearDocumentHeader,
+  clearDocumentFooter,
+} from "./header-footer-markup.js";
+
 // ─── Word Style 创建（Epic-46） ───────────────────────────────────────────────
 export {
   type CharacterStyleOptions,
