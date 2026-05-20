@@ -43,6 +43,14 @@
       "types": "./dist/drawing/generated/*.d.ts",
       "import": "./dist/drawing/generated/*.js"
     },
+    "./chart": {
+      "types": "./dist/chart/index.d.ts",
+      "import": "./dist/chart/index.js"
+    },
+    "./chart/generated/*": {
+      "types": "./dist/chart/generated/*.d.ts",
+      "import": "./dist/chart/generated/*.js"
+    },
     "./linq": {
       "types": "./dist/linq/index.d.ts",
       "import": "./dist/linq/index.js"
@@ -78,6 +86,7 @@
     "gen:excel": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_spreadsheetml_2006_main.json --output src/excel/generated",
     "gen:drawing": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_main.json --output src/drawing/generated",
     "gen:ppt": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_presentationml_2006_main.json --output src/ppt/generated",
+    "gen:chart": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_chart.json --output src/chart/generated",
     "format": "biome format --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -177,6 +186,12 @@
     {
       "name": "openxml-ts/drawing (full bundle including registry)",
       "path": "dist/drawing/index.js",
+      "limit": "400 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/chart (full bundle including registry)",
+      "path": "dist/chart/index.js",
       "limit": "400 KB",
       "gzip": true
     }
