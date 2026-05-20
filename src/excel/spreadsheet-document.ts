@@ -391,7 +391,7 @@ export class SpreadsheetDocument {
       if (partUri === undefined || !this.pkg.hasPart(partUri)) continue;
       const cached = this.drawingParts.get(partUri);
       if (cached !== undefined) return cached;
-      const dp = new DrawingPart(this.pkg.getPart(partUri), excelRegistry);
+      const dp = new DrawingPart(this.pkg.getPart(partUri), excelRegistry, this.pkg);
       this.drawingParts.set(partUri, dp);
       return dp;
     }
@@ -412,7 +412,7 @@ export class SpreadsheetDocument {
     drawingEl.id = StringValue.parse(rel.id);
     wsp.worksheet.appendChild(drawingEl);
 
-    const dp = new DrawingPart(part, excelRegistry);
+    const dp = new DrawingPart(part, excelRegistry, this.pkg);
     this.drawingParts.set(uri, dp);
     return dp;
   }

@@ -146,6 +146,20 @@ export interface CharacterStyleOptions {
     readonly styleId: string;
 }
 
+// Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class ChartPart extends TypedXmlPart<OpenXmlElement> {
+    // Warning: (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
+    constructor(part: IPackagePart, _registry?: ElementRegistry);
+    get chartSpace(): OpenXmlElement;
+    set chartSpace(value: OpenXmlElement);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.drawingml.chart+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart";
+}
+
 // @public
 export function clearDocumentFooter(doc: WordprocessingDocument, type?: HeaderFooterType): void;
 
@@ -258,7 +272,6 @@ export class Comments extends OpenXmlCompositeElement {
 
 // @public (undocumented)
 export class CommentsPart extends TypedXmlPart<Comments> {
-    // Warning: (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
     constructor(part: IPackagePart, registry: ElementRegistry);
     get comments(): Comments;
     set comments(value: Comments);
@@ -270,7 +283,6 @@ export class CommentsPart extends TypedXmlPart<Comments> {
 
 // @public (undocumented)
 export class CoreProperties {
-    // Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
     constructor(root: OpenXmlElement);
     // (undocumented)
     get category(): string | undefined;

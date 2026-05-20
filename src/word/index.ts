@@ -37,6 +37,7 @@ export {
 } from "./effective-resolver.js";
 
 export {
+  ChartPart,
   CommentsPart,
   FontTablePart,
   FooterPart,
