@@ -192,6 +192,38 @@ function subsystemNameForNamespace(uri: string): { pascal: string; label: string
       pascal: "Math",
       label: "math",
     },
+    "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties": {
+      pascal: "ExtendedProperties",
+      label: "extended-properties",
+    },
+    "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties": {
+      pascal: "CustomProperties",
+      label: "custom-properties",
+    },
+    "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes": {
+      pascal: "DocPropsVTypes",
+      label: "docPropsVTypes",
+    },
+    "http://schemas.openxmlformats.org/officeDocument/2006/bibliography": {
+      pascal: "Bibliography",
+      label: "bibliography",
+    },
+    "http://schemas.openxmlformats.org/officeDocument/2006/customXml": {
+      pascal: "CustomXml",
+      label: "customXml",
+    },
+    "http://schemas.openxmlformats.org/schemaLibrary/2006/main": {
+      pascal: "SchemaLibrary",
+      label: "schemaLibrary",
+    },
+    "http://schemas.openxmlformats.org/drawingml/2006/lockedCanvas": {
+      pascal: "LockedCanvas",
+      label: "lockedCanvas",
+    },
+    "http://schemas.openxmlformats.org/drawingml/2006/compatibility": {
+      pascal: "DrawingCompatibility",
+      label: "drawingCompatibility",
+    },
   };
   const hit = known[uri];
   if (hit !== undefined) return hit;

@@ -95,6 +95,70 @@
       "types": "./dist/linq/index.d.ts",
       "import": "./dist/linq/index.js"
     },
+    "./extended-properties": {
+      "types": "./dist/extended-properties/index.d.ts",
+      "import": "./dist/extended-properties/index.js"
+    },
+    "./extended-properties/generated/*": {
+      "types": "./dist/extended-properties/generated/*.d.ts",
+      "import": "./dist/extended-properties/generated/*.js"
+    },
+    "./custom-properties": {
+      "types": "./dist/custom-properties/index.d.ts",
+      "import": "./dist/custom-properties/index.js"
+    },
+    "./custom-properties/generated/*": {
+      "types": "./dist/custom-properties/generated/*.d.ts",
+      "import": "./dist/custom-properties/generated/*.js"
+    },
+    "./doc-props-vtypes": {
+      "types": "./dist/doc-props-vtypes/index.d.ts",
+      "import": "./dist/doc-props-vtypes/index.js"
+    },
+    "./doc-props-vtypes/generated/*": {
+      "types": "./dist/doc-props-vtypes/generated/*.d.ts",
+      "import": "./dist/doc-props-vtypes/generated/*.js"
+    },
+    "./bibliography": {
+      "types": "./dist/bibliography/index.d.ts",
+      "import": "./dist/bibliography/index.js"
+    },
+    "./bibliography/generated/*": {
+      "types": "./dist/bibliography/generated/*.d.ts",
+      "import": "./dist/bibliography/generated/*.js"
+    },
+    "./custom-xml": {
+      "types": "./dist/custom-xml/index.d.ts",
+      "import": "./dist/custom-xml/index.js"
+    },
+    "./custom-xml/generated/*": {
+      "types": "./dist/custom-xml/generated/*.d.ts",
+      "import": "./dist/custom-xml/generated/*.js"
+    },
+    "./schema-library": {
+      "types": "./dist/schema-library/index.d.ts",
+      "import": "./dist/schema-library/index.js"
+    },
+    "./schema-library/generated/*": {
+      "types": "./dist/schema-library/generated/*.d.ts",
+      "import": "./dist/schema-library/generated/*.js"
+    },
+    "./locked-canvas": {
+      "types": "./dist/locked-canvas/index.d.ts",
+      "import": "./dist/locked-canvas/index.js"
+    },
+    "./locked-canvas/generated/*": {
+      "types": "./dist/locked-canvas/generated/*.d.ts",
+      "import": "./dist/locked-canvas/generated/*.js"
+    },
+    "./drawing-compatibility": {
+      "types": "./dist/drawing-compatibility/index.d.ts",
+      "import": "./dist/drawing-compatibility/index.js"
+    },
+    "./drawing-compatibility/generated/*": {
+      "types": "./dist/drawing-compatibility/generated/*.d.ts",
+      "import": "./dist/drawing-compatibility/generated/*.js"
+    },
     "./package.json": "./package.json"
   },
   "files": ["dist", "README.md", "LICENSE"],
@@ -128,6 +192,14 @@
     "gen:wordprocessing-drawing": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_wordprocessingDrawing.json --output src/wordprocessing-drawing/generated",
     "gen:chart-drawing": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_chartDrawing.json --output src/chart-drawing/generated",
     "gen:math": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_officeDocument_2006_math.json --output src/math/generated",
+    "gen:extended-properties": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_officeDocument_2006_extended-properties.json --output src/extended-properties/generated",
+    "gen:custom-properties": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_officeDocument_2006_custom-properties.json --output src/custom-properties/generated",
+    "gen:doc-props-vtypes": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_officeDocument_2006_docPropsVTypes.json --output src/doc-props-vtypes/generated",
+    "gen:bibliography": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_officeDocument_2006_bibliography.json --output src/bibliography/generated",
+    "gen:custom-xml": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_officeDocument_2006_customXml.json --output src/custom-xml/generated",
+    "gen:schema-library": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_schemaLibrary_2006_main.json --output src/schema-library/generated",
+    "gen:locked-canvas": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_lockedCanvas.json --output src/locked-canvas/generated",
+    "gen:drawing-compatibility": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_compatibility.json --output src/drawing-compatibility/generated",
     "format": "biome format --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -264,6 +336,54 @@
       "name": "openxml-ts/math (full bundle including registry)",
       "path": "dist/math/index.js",
       "limit": "400 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/extended-properties (full bundle including registry)",
+      "path": "dist/extended-properties/index.js",
+      "limit": "100 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/custom-properties (full bundle including registry)",
+      "path": "dist/custom-properties/index.js",
+      "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/doc-props-vtypes (full bundle including registry)",
+      "path": "dist/doc-props-vtypes/index.js",
+      "limit": "100 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/bibliography (full bundle including registry)",
+      "path": "dist/bibliography/index.js",
+      "limit": "200 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/custom-xml (full bundle including registry)",
+      "path": "dist/custom-xml/index.js",
+      "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/schema-library (full bundle including registry)",
+      "path": "dist/schema-library/index.js",
+      "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/locked-canvas (full bundle including registry)",
+      "path": "dist/locked-canvas/index.js",
+      "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/drawing-compatibility (full bundle including registry)",
+      "path": "dist/drawing-compatibility/index.js",
+      "limit": "50 KB",
       "gzip": true
     }
   ]

@@ -28,6 +28,23 @@ const WELL_KNOWN: readonly NamespaceEntry[] = [
   { uri: "http://schemas.openxmlformats.org/drawingml/2006/chart", prefix: "c" },
   { uri: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", prefix: "xdr" },
   { uri: "http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", prefix: "cdr" },
+  {
+    uri: "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties",
+    prefix: "ap",
+  },
+  {
+    uri: "http://schemas.openxmlformats.org/officeDocument/2006/custom-properties",
+    prefix: "op",
+  },
+  { uri: "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes", prefix: "vt" },
+  { uri: "http://schemas.openxmlformats.org/officeDocument/2006/bibliography", prefix: "b" },
+  { uri: "http://schemas.openxmlformats.org/officeDocument/2006/customXml", prefix: "ds" },
+  { uri: "http://schemas.openxmlformats.org/schemaLibrary/2006/main", prefix: "sl" },
+  { uri: "http://schemas.openxmlformats.org/drawingml/2006/lockedCanvas", prefix: "lc" },
+  {
+    uri: "http://schemas.openxmlformats.org/drawingml/2006/compatibility",
+    prefix: "comp",
+  },
 ];
 
 export function prefixForUri(uri: string): string | undefined {

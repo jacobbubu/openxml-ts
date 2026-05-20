@@ -43,6 +43,46 @@ const ENTRIES = [
   },
   { name: "linq", config: "extractor-linq.json", report: "openxml-ts-linq.api.md" },
   { name: "math", config: "extractor-math.json", report: "openxml-ts-math.api.md" },
+  {
+    name: "extended-properties",
+    config: "extractor-extended-properties.json",
+    report: "openxml-ts-extended-properties.api.md",
+  },
+  {
+    name: "custom-properties",
+    config: "extractor-custom-properties.json",
+    report: "openxml-ts-custom-properties.api.md",
+  },
+  {
+    name: "doc-props-vtypes",
+    config: "extractor-doc-props-vtypes.json",
+    report: "openxml-ts-doc-props-vtypes.api.md",
+  },
+  {
+    name: "bibliography",
+    config: "extractor-bibliography.json",
+    report: "openxml-ts-bibliography.api.md",
+  },
+  {
+    name: "custom-xml",
+    config: "extractor-custom-xml.json",
+    report: "openxml-ts-custom-xml.api.md",
+  },
+  {
+    name: "schema-library",
+    config: "extractor-schema-library.json",
+    report: "openxml-ts-schema-library.api.md",
+  },
+  {
+    name: "locked-canvas",
+    config: "extractor-locked-canvas.json",
+    report: "openxml-ts-locked-canvas.api.md",
+  },
+  {
+    name: "drawing-compatibility",
+    config: "extractor-drawing-compatibility.json",
+    report: "openxml-ts-drawing-compatibility.api.md",
+  },
 ];
 
 const isUpdate = process.argv.includes("--update");
