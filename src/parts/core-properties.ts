@@ -27,9 +27,6 @@ const DCTERMS_NS = "http://purl.org/dc/terms/";
 const DC_PROPS = ["title", "subject", "creator", "description", "language"] as const;
 const CP_PROPS = ["keywords", "lastModifiedBy", "revision", "category", "contentStatus"] as const;
 
-type DcProp = (typeof DC_PROPS)[number];
-type CpProp = (typeof CP_PROPS)[number];
-
 export class CoreProperties {
   constructor(private readonly root: OpenXmlElement) {}
 

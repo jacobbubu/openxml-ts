@@ -112,6 +112,12 @@ entry 含 registry）」两档；DrawingML 仅 full 档。所有阈值都按 gzi
 | 8 | OOXML Strict ↔ Transitional 兼容 | 完成 |
 | 9 | CLI 工具 | 完成 |
 | 10 | 贡献指南 + 架构文档 | 完成（本文件）|
+| 11–29 | 文本 / 图片 / 表格 / 注释 / 修订 / 列表 / 超链接 / 书签 / CoreProperties 等便捷层 | 完成 |
+| 30–44 | Word 段落 & Run 格式、样式、表格底纹、页码、Excel 冻结 / 列宽行高 / 数字格式、PPT 标题 / Run 格式 | 完成 |
+| 45–64 | Cell.value/formula、合并、数据验证、sheet 元数据、PPT 背景 / 转场 / 形状定位旋转 / 加幻灯片 / 隐藏、Word 页眉页脚 / 页面设置 / 脚注、无障碍 | 完成 |
+| infra | codegen 继承 BaseClass 属性（OnOff/measure leaf 全部获得 typed `val`） | 完成 |
 
-未来候选：npm publish CI、v1.0 RC、schema validator、CLI `convert` / `validate`、
-fuzz / property test 覆盖长尾 fixture。
+便捷 helper / 访问器层的完整速查见 [README「便捷 API 速查」](../README.md#便捷-api-速查)。
+
+未来候选：npm publish CI、schema validator、CLI `convert` / `validate`、
+fuzz / property test 覆盖长尾 fixture、加密文件读写、渲染出 PDF。
