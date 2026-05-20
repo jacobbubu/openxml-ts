@@ -25,6 +25,7 @@ import "./extensions/slide-background.js";
 import "./extensions/shape-accessibility.js";
 import "./extensions/shape-xfrm.js";
 import "./extensions/slide-transition.js";
+import "./extensions/shape-rotation.js";
 
 export { PresentationDocument } from "./presentation-document.js";
 export {
