@@ -128,6 +128,11 @@ const ENTRIES = [
     config: "extractor-office-ext.json",
     report: "openxml-ts-office-ext.api.md",
   },
+  {
+    name: "streaming",
+    config: "extractor-streaming.json",
+    report: "openxml-ts-streaming.api.md",
+  },
 ];
 
 const isUpdate = process.argv.includes("--update");
