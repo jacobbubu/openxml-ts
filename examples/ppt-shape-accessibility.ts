@@ -26,7 +26,7 @@ async function main(): Promise<void> {
   }
 
   const doc = PresentationDocument.create();
-  const slide = doc.presentationPart!.slideParts[0]!.slide;
+  const slide = doc.presentationPart?.slideParts[0]?.slide;
 
   // 找到 spTree
   let spTree: OpenXmlCompositeElement | undefined;

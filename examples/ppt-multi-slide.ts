@@ -43,7 +43,7 @@ async function main(): Promise<void> {
   const doc = PresentationDocument.create();
 
   // 取得 slide0，设置第一张标题
-  const slide0 = doc.presentationPart!.slideParts[0] as SlidePart;
+  const slide0 = doc.presentationPart?.slideParts[0] as SlidePart;
   slide0.part.writeAsync(buildSlideXml(TITLES[0] as string));
 
   // 追加 3 张幻灯片（总计 4 张）
@@ -54,7 +54,7 @@ async function main(): Promise<void> {
 
   await doc.saveAsAsync(outputPath);
 
-  const slideParts = doc.presentationPart!.slideParts;
+  const slideParts = doc.presentationPart?.slideParts;
   process.stdout.write(`Wrote ${outputPath} (${slideParts.length} slides)\n`);
   for (let i = 0; i < slideParts.length; i += 1) {
     process.stdout.write(`  Slide ${i + 1}: ${TITLES[i]}\n`);

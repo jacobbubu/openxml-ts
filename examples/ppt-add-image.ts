@@ -35,7 +35,7 @@ async function main(): Promise<void> {
   });
 
   // 把 picture 挂到 slide1 的 spTree。slide root 是 Slide composite，descend 找到 spTree（p:spTree）。
-  const slide = doc.presentationPart!.slideParts[0]!.slide;
+  const slide = doc.presentationPart?.slideParts[0]?.slide;
   // slide > cSld > spTree
   const cSld = slide.firstChild()!;
   const spTree = [...cSld.children].find((c) => c.localName === "spTree") as

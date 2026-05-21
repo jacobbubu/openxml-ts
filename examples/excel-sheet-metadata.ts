@@ -43,7 +43,7 @@ async function main(): Promise<void> {
   const workbook = workbookPart.workbook;
 
   // 取第一个 worksheet
-  const ws = workbookPart.worksheetParts[0]!.worksheet;
+  const ws = workbookPart.worksheetParts[0]?.worksheet;
 
   // 写入一行示例数据
   const sheetData = ws.firstChild(SheetData);

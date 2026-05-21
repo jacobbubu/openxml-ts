@@ -273,11 +273,7 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
+  "files": ["dist", "README.md", "LICENSE"],
   "bin": {
     "openxml-ts": "./dist/bin/openxml-ts.js"
   },

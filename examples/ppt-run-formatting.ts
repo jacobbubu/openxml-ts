@@ -24,7 +24,7 @@ async function main(): Promise<void> {
   }
 
   const doc = PresentationDocument.create();
-  const slide = doc.presentationPart!.slideParts[0]!.slide;
+  const slide = doc.presentationPart?.slideParts[0]?.slide;
   let spTree: OpenXmlCompositeElement | undefined;
   for (const d of slide.descendants()) {
     if (d.localName === "spTree" && d instanceof OpenXmlCompositeElement) {
@@ -61,7 +61,7 @@ async function main(): Promise<void> {
     p.appendChild(r);
     txBody.appendChild(p);
     sp.appendChild(txBody);
-    spTree!.appendChild(sp);
+    spTree?.appendChild(sp);
   }
 
   addShapeWithStyledText({ text: "Plain text" });

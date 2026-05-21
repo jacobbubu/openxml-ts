@@ -65,7 +65,7 @@ async function main(): Promise<void> {
   }
 
   const doc = PresentationDocument.create();
-  const slide = doc.presentationPart!.slideParts[0]!.slide;
+  const slide = doc.presentationPart?.slideParts[0]?.slide;
   appendTitlePlaceholder(slide, "Initial Title");
 
   // 用 setter 改成最终标题

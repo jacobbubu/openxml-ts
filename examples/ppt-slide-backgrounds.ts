@@ -23,7 +23,7 @@ async function main(): Promise<void> {
   }
 
   const doc = PresentationDocument.create();
-  const slide = doc.presentationPart!.slideParts[0]!.slide;
+  const slide = doc.presentationPart?.slideParts[0]?.slide;
 
   // 展示多种颜色（在同一张 slide 上依次设置，最终保留最后一种）
   for (const [hex, label] of COLORS) {
@@ -37,7 +37,7 @@ async function main(): Promise<void> {
 
   // 演示清除
   const tempDoc = PresentationDocument.create();
-  const tempSlide = tempDoc.presentationPart!.slideParts[0]!.slide;
+  const tempSlide = tempDoc.presentationPart?.slideParts[0]?.slide;
   tempSlide.backgroundColorHex = "AABBCC";
   process.stdout.write(`清除前：${tempSlide.backgroundColorHex}\n`);
   tempSlide.backgroundColorHex = undefined;

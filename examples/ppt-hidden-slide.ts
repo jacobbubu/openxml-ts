@@ -24,7 +24,7 @@ async function main(): Promise<void> {
   const doc = PresentationDocument.create();
 
   // 第一张 slide：可见（默认）
-  const slide1 = doc.presentationPart!.slideParts[0]!.slide;
+  const slide1 = doc.presentationPart?.slideParts[0]?.slide;
   process.stdout.write(`第一张 slide hidden=${slide1.hidden}（默认可见）\n`);
 
   // 第二张 slide：新增后隐藏（中间张）
@@ -40,7 +40,7 @@ async function main(): Promise<void> {
 
   await doc.saveAsAsync(outputPath);
 
-  const count = doc.presentationPart!.slideParts.length;
+  const count = doc.presentationPart?.slideParts.length;
   process.stdout.write(`已写入 ${outputPath}（共 ${count} 张幻灯片，第 2 张已隐藏）\n`);
 }
 
