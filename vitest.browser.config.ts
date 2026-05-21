@@ -54,6 +54,8 @@ export default defineConfig({
       "test/element/strict-namespace-validator.test.ts",
       // Epic-89 canonicalization 测试读取 upstream-smoke fixture（node:fs/promises）——只能 Node 跑。
       "test/element/strict-canonicalization.test.ts",
+      // Epic-92 Strict 度量值测试读取 upstream-smoke fixture（node:fs/promises）——只能 Node 跑。
+      "test/element/strict-measure.test.ts",
     ],
     browser: {
       enabled: true,
