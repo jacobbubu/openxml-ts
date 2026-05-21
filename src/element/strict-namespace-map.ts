@@ -89,3 +89,22 @@ export function isStrictUri(uri: string): boolean {
   }
   return false;
 }
+
+/**
+ * 判断某个元素是否来自 Strict 格式文档。
+ *
+ * 反序列化时，当 XML 根元素的 xmlns 绑定包含 Strict URI 时，deserializer
+ * 会把原始 Strict `xmlns:<prefix>` 写入 `extendedAttributes`（以便 re-serialize
+ * 保留命名空间声明）。通过检查该元素的 `extendedAttributes` 中是否存在已知 Strict
+ * URI 值，即可判断整棵文档树是否来自 Strict 格式。
+ *
+ * 典型用途：validator 在 Strict 文档树上跳过 Transitional-only 必填属性校验。
+ */
+export function hasStrictOriginNamespace(el: {
+  extendedAttributes: ReadonlyMap<string, string>;
+}): boolean {
+  for (const value of el.extendedAttributes.values()) {
+    if (isStrictUri(value)) return true;
+  }
+  return false;
+}
