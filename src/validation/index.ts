@@ -1,27 +1,31 @@
 /**
- * openxml-ts validation subsystem — Epic-78 Phase 1 + Epic-79 Phase 2.
+ * openxml-ts validation subsystem — Epic-78 Phase 1 + Epic-79 Phase 2 + Epic-85 cross-part.
  *
  * Exports:
- *  - `OpenXmlValidator`         — structural + attribute + (optional) semantic validator
- *  - `ValidationError`          — error model (type only)
- *  - `ValidationErrorType`      — error classification enum (type only)
- *  - `registerConstraints`      — low-level constraint registration
- *  - `registerWordConstraints`  — register word namespace constraints (lazy)
- *  - `registerExcelConstraints` — register excel namespace constraints (lazy)
- *  - `registerPptConstraints`   — register ppt namespace constraints (lazy)
- *  - `registerDrawingConstraints` — register drawing namespace constraints (lazy)
- *  - `registerAllConstraints`   — register all 4 core namespaces at once
- *  - `evaluateSchematron`       — Phase 2 schematron semantic evaluator (direct access)
- *  - `SCHEMATRON_RULES`         — generated rule array (948 rules categorised)
- *  - `SCHEMATRON_SOURCE_COUNT`  — original rule count
- *  - `SCHEMATRON_COVERED_COUNT` — rules with supported handlers
- *  - `SCHEMATRON_SKIPPED_COUNT` — rules requiring full XPath (skipped)
+ *  - `OpenXmlValidator`              — structural + attribute + (optional) semantic validator
+ *  - `ValidationError`               — error model (type only)
+ *  - `ValidationErrorType`           — error classification enum (type only)
+ *  - `registerConstraints`           — low-level constraint registration
+ *  - `registerWordConstraints`       — register word namespace constraints (lazy)
+ *  - `registerExcelConstraints`      — register excel namespace constraints (lazy)
+ *  - `registerPptConstraints`        — register ppt namespace constraints (lazy)
+ *  - `registerDrawingConstraints`    — register drawing namespace constraints (lazy)
+ *  - `registerAllConstraints`        — register all 4 core namespaces at once
+ *  - `evaluateSchematron`            — Phase 2 schematron semantic evaluator (direct access)
+ *  - `SCHEMATRON_RULES`              — generated rule array (948 rules categorised)
+ *  - `SCHEMATRON_SOURCE_COUNT`       — original rule count
+ *  - `SCHEMATRON_COVERED_COUNT`      — rules with supported handlers
+ *  - `SCHEMATRON_SKIPPED_COUNT`      — rules requiring full XPath (skipped)
+ *  - `WordprocessingDocumentLike`    — interface for validatePackage (type only)
+ *  - `PartResolver`                  — interface for cross-part rule resolution (type only)
  *
  * Phase 2 semantic rules covered:
  *  - Relationship type/existence (r:id lookups)
  *  - Attribute uniqueness (count(distinct-values) patterns)
  *  - String-length attribute constraints
  *  - Numeric range attribute constraints
+ *  - Cross-part reference existence (3.1 refExist)
+ *  - Index-based element count validation (3.2 indexedRef)
  */
 
 export type { ValidationError, ValidationErrorType } from "./ValidationError.js";
@@ -37,6 +41,7 @@ export {
   OpenXmlValidator,
   registerConstraints,
   type OpenXmlValidatorOptions,
+  type WordprocessingDocumentLike,
 } from "./OpenXmlValidator.js";
 export {
   evaluateSchematron,
@@ -52,7 +57,10 @@ export type {
   UniquenessRule,
   StringLengthRule,
   NumericRangeRule,
+  RefExistRule,
+  IndexedRefRule,
   UnsupportedRule,
+  PartResolver,
 } from "./schematron/index.js";
 
 // Lazy registration helpers — each function imports the constraint data once
