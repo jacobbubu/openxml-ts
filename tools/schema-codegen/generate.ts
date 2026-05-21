@@ -37,19 +37,22 @@ const DEFAULT_INPUT = resolve(
 );
 const DEFAULT_OUTPUT = resolve(REPO_ROOT, "src/word/generated");
 
-function parseArgs(): { input: string; output: string } {
+function parseArgs(): { input: string; output: string; elementDepth: number } {
   const args = process.argv.slice(2);
   let input = DEFAULT_INPUT;
   let output = DEFAULT_OUTPUT;
+  let elementDepth = 2; // default: ../../element/index.js (for src/<name>/generated/)
   for (let i = 0; i < args.length; i += 1) {
     const a = args[i];
     if (a === "--input" && args[i + 1] !== undefined) {
       input = resolve(args[++i] as string);
     } else if (a === "--output" && args[i + 1] !== undefined) {
       output = resolve(args[++i] as string);
+    } else if (a === "--element-depth" && args[i + 1] !== undefined) {
+      elementDepth = Number.parseInt(args[++i] as string, 10);
     }
   }
-  return { input, output };
+  return { input, output, elementDepth };
 }
 
 interface GeneratedClass {
@@ -64,7 +67,7 @@ interface GeneratedClass {
 }
 
 async function main(): Promise<void> {
-  const { input, output } = parseArgs();
+  const { input, output, elementDepth } = parseArgs();
   process.stdout.write(`Reading schema: ${input}\n`);
   const json = JSON.parse(await readFile(input, "utf-8")) as SchemaFile;
   await mkdir(output, { recursive: true });
@@ -99,11 +102,14 @@ async function main(): Promise<void> {
     }
     seenFiles.add(fileName);
 
+    const elementPkg =
+      elementDepth === 2 ? undefined : `${"../".repeat(elementDepth)}element/index.js`;
     const content = generateElement(type, {
       targetNamespace: json.TargetNamespace,
       sourcePath,
       dotnetNamespace: subsystem.pascal,
       typeIndex,
+      elementPkg,
     });
     await writeFile(join(output, `${fileName}.ts`), content);
 
@@ -127,7 +133,10 @@ async function main(): Promise<void> {
   generated.sort((a, b) => a.className.localeCompare(b.className));
 
   await writeFile(join(output, "index.ts"), buildIndex(generated, sourcePath));
-  await writeFile(join(output, "_registry.ts"), buildRegistry(generated, sourcePath, subsystem));
+  await writeFile(
+    join(output, "_registry.ts"),
+    buildRegistry(generated, sourcePath, subsystem, elementDepth),
+  );
 
   process.stdout.write(
     `Generated ${generated.length} element classes into ${output}\n${
@@ -248,6 +257,15 @@ function subsystemNameForNamespace(uri: string): { pascal: string; label: string
       pascal: "VmlPowerpoint",
       label: "vml-powerpoint",
     },
+    // Epic-76: disambiguated collision entries
+    "http://schemas.microsoft.com/office/drawing/2013/main/command": {
+      pascal: "Drawing2013Command",
+      label: "drawing-2013-command",
+    },
+    "http://schemas.microsoft.com/office/powerpoint/2013/main/command": {
+      pascal: "Ppt2013Command",
+      label: "ppt-2013-command",
+    },
     // Epic-75: Office extension namespaces
     "http://schemas.microsoft.com/office/drawing/2014/chartex": {
       pascal: "ChartEx",
@@ -276,10 +294,54 @@ function subsystemNameForNamespace(uri: string): { pascal: string; label: string
   };
   const hit = known[uri];
   if (hit !== undefined) return hit;
-  const segments = uri.replace(/\/$/, "").split("/");
-  const last = segments[segments.length - 1] ?? "Generated";
-  const pascal = last.charAt(0).toUpperCase() + last.slice(1);
-  return { pascal, label: last };
+
+  // Improved fallback: derive a unique, human-readable Pascal name from the URI.
+  //
+  // Strategy:
+  //  1. Strip scheme (http://, urn:, etc.) and split on / . - : _
+  //  2. Filter out common low-signal segments (schemas, microsoft, com, office,
+  //     openxmlformats, org, www, w3)
+  //  3. Take up to the last 3 meaningful segments so year+product+suffix stays unique.
+  //  4. PascalCase each token and join.
+  //
+  // Examples:
+  //   .../office/drawing/2010/chartDrawing → Drawing2010ChartDrawing
+  //   .../office/word/2012/wordml         → Word2012Wordml
+  //   .../office/powerpoint/2017/10/main  → Powerpoint201710Main
+  //   http://www.w3.org/2003/04/emma      → W32003Emma  (year+leaf)
+  const NOISE = new Set([
+    "http",
+    "https",
+    "urn",
+    "schemas",
+    "microsoft",
+    "com",
+    "office",
+    "openxmlformats",
+    "org",
+    "www",
+    "w3",
+  ]);
+
+  // Split URI into tokens on / . - : _
+  const rawTokens = uri
+    .replace(/^(https?:\/\/|urn:)/, "")
+    .split(/[/.\-:_]+/)
+    .filter((t) => t.length > 0);
+
+  const meaningful = rawTokens.filter((t) => !NOISE.has(t.toLowerCase()));
+  // Take last 3 segments (or fewer) to keep names unique without being too long
+  const selected = meaningful.slice(-3);
+  if (selected.length === 0) {
+    // absolute fallback
+    const last = rawTokens[rawTokens.length - 1] ?? "Generated";
+    const pascal = last.charAt(0).toUpperCase() + last.slice(1);
+    return { pascal, label: last };
+  }
+
+  const pascal = selected.map((t) => t.charAt(0).toUpperCase() + t.slice(1)).join("");
+  const label = selected.join("-");
+  return { pascal, label };
 }
 
 function buildIndex(classes: readonly GeneratedClass[], sourcePath: string): string {
@@ -295,6 +357,7 @@ function buildRegistry(
   classes: readonly GeneratedClass[],
   sourcePath: string,
   subsystem: { pascal: string; label: string },
+  elementDepth = 2,
 ): string {
   const concrete = classes.filter((c) => !c.isAbstract && c.localName.length > 0);
   // #78：同 (namespaceUri, localName) 多次出现时去重，规则如下：
@@ -364,7 +427,7 @@ function buildRegistry(
     "// THIS FILE IS GENERATED. DO NOT EDIT.",
     `// Source: ${sourcePath}`,
     "",
-    `import type { ElementRegistry } from "../../element/index.js";`,
+    `import type { ElementRegistry } from "${"../".repeat(elementDepth)}element/index.js";`,
     imports,
     "",
     "/**",

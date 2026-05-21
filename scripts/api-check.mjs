@@ -123,6 +123,11 @@ const ENTRIES = [
     config: "extractor-drawing-2010.json",
     report: "openxml-ts-drawing-2010.api.md",
   },
+  {
+    name: "office-ext",
+    config: "extractor-office-ext.json",
+    report: "openxml-ts-office-ext.api.md",
+  },
 ];
 
 const isUpdate = process.argv.includes("--update");
