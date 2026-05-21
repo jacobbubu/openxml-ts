@@ -10,10 +10,12 @@
  */
 
 import type { ElementRegistry } from "../../element/index.js";
+import type { MarkupCompatibilityProcessSettings } from "../../markup-compat/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
 import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
+import type { TypedXmlPart } from "../../parts/typed-xml-part.js";
 
 export interface PartCtor<T> {
   new (part: IPackagePart, registry: ElementRegistry, pkg: IPackage): T;
@@ -30,13 +32,14 @@ export function resolveSinglePart<T>(
   pkg: IPackage,
   registry: ElementRegistry,
   Ctor: PartCtor<T> | SimplePartCtor<T>,
+  mcSettings?: MarkupCompatibilityProcessSettings,
 ): T | undefined {
   for (const rel of source.relationships) {
     if (rel.targetMode !== "internal") continue;
     if (!relationshipTypeMatches(rel.type, Ctor.relationshipType)) continue;
     const targetUri = resolveRelativePartUri(source.uri, rel.target);
     if (targetUri === undefined || !pkg.hasPart(targetUri)) continue;
-    return constructPart(Ctor, pkg.getPart(targetUri), registry, pkg);
+    return constructPart(Ctor, pkg.getPart(targetUri), registry, pkg, mcSettings);
   }
   return undefined;
 }
@@ -46,6 +49,7 @@ export function resolveManyParts<T>(
   pkg: IPackage,
   registry: ElementRegistry,
   Ctor: PartCtor<T> | SimplePartCtor<T>,
+  mcSettings?: MarkupCompatibilityProcessSettings,
 ): T[] {
   const out: T[] = [];
   for (const rel of source.relationships) {
@@ -53,7 +57,7 @@ export function resolveManyParts<T>(
     if (!relationshipTypeMatches(rel.type, Ctor.relationshipType)) continue;
     const targetUri = resolveRelativePartUri(source.uri, rel.target);
     if (targetUri === undefined || !pkg.hasPart(targetUri)) continue;
-    out.push(constructPart(Ctor, pkg.getPart(targetUri), registry, pkg));
+    out.push(constructPart(Ctor, pkg.getPart(targetUri), registry, pkg, mcSettings));
   }
   return out;
 }
@@ -63,10 +67,18 @@ function constructPart<T>(
   part: IPackagePart,
   registry: ElementRegistry,
   pkg: IPackage,
+  mcSettings?: MarkupCompatibilityProcessSettings,
 ): T {
   // 3-arg ctor 接受 pkg；2-arg 忽略它。运行期长度区分（不影响类型）。
+  let instance: T;
   if (Ctor.length >= 3) {
-    return new (Ctor as PartCtor<T>)(part, registry, pkg);
+    instance = new (Ctor as PartCtor<T>)(part, registry, pkg);
+  } else {
+    instance = new (Ctor as SimplePartCtor<T>)(part, registry);
   }
-  return new (Ctor as SimplePartCtor<T>)(part, registry);
+  // 传播 MC 设置（Epic-82）：TypedXmlPart 子类都实现了 setMcSettings
+  if (mcSettings !== undefined) {
+    (instance as unknown as TypedXmlPart<never>).setMcSettings(mcSettings);
+  }
+  return instance;
 }

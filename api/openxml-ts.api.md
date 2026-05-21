@@ -317,6 +317,10 @@ export interface OpenAsyncOptions {
     readonly accessMode?: AccessMode;
     // (undocumented)
     readonly limits?: Partial<ZipLimits>;
+    // Warning: (ae-forgotten-export) The symbol "MarkupCompatibilityProcessSettings" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    readonly markupCompatibilityProcessSettings?: MarkupCompatibilityProcessSettings;
 }
 
 // @public

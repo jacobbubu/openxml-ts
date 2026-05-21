@@ -45,7 +45,13 @@ export class NotesMasterPart extends TypedXmlPart<NotesMaster> {
     if (this._themePart !== undefined) {
       return this._themePart ?? undefined;
     }
-    const resolved = resolveSinglePart(this.part, this.pkg, this.registry, ThemePart);
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      ThemePart,
+      this.mcSettings,
+    );
     this._themePart = resolved ?? null;
     return resolved;
   }

@@ -6,6 +6,7 @@ import { type ZipSource, readSourceToBytes } from "../backends/zip/source-reader
 import type { ZipLimits } from "../backends/zip/zip-config.js";
 import { ZipOpenXmlPackage } from "../backends/zip/zip-package.js";
 import { parseZipBytes } from "../backends/zip/zip-reader.js";
+import type { MarkupCompatibilityProcessSettings } from "../markup-compat/index.js";
 import type { OpenXmlPackage } from "./core/open-xml-package.js";
 import { OpenXmlPackageError } from "./errors.js";
 import type { AccessMode } from "./interfaces/types.js";
@@ -45,10 +46,14 @@ export function openSync(bytes: Uint8Array, options?: MemoryPackageOptions): Ope
  *
  * - `accessMode` 默认 `"read-write"`，传 `"read"` 阻断任何 mutation 调用。
  * - `limits` 透传给 ZIP backend 的解压安全阈值（最大 entry 字节、总字节、压缩比等）。
+ * - `markupCompatibilityProcessSettings` 若设置，文档打开后对每个 typed Part 的元素树
+ *   执行 Markup Compatibility (MC) 协商处理（ISO/IEC 29500 Part 3）。不设置时（默认）
+ *   不执行任何 MC 处理，现有行为完全不变。
  */
 export interface OpenAsyncOptions {
   readonly accessMode?: AccessMode;
   readonly limits?: Partial<ZipLimits>;
+  readonly markupCompatibilityProcessSettings?: MarkupCompatibilityProcessSettings;
 }
 
 /**

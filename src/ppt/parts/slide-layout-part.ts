@@ -48,7 +48,13 @@ export class SlideLayoutPart extends TypedXmlPart<SlideLayout> {
     if (this._slideMasterPart !== undefined) {
       return this._slideMasterPart ?? undefined;
     }
-    const resolved = resolveSinglePart(this.part, this.pkg, this.registry, SlideMasterPart);
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      SlideMasterPart,
+      this.mcSettings,
+    );
     this._slideMasterPart = resolved ?? null;
     return resolved;
   }
@@ -64,7 +70,13 @@ export class SlideLayoutPart extends TypedXmlPart<SlideLayout> {
     if (this._themePart !== undefined) {
       return this._themePart ?? undefined;
     }
-    const resolved = resolveSinglePart(this.part, this.pkg, this.registry, ThemePart);
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      ThemePart,
+      this.mcSettings,
+    );
     this._themePart = resolved ?? null;
     return resolved;
   }

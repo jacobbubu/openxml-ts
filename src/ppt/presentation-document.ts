@@ -26,6 +26,7 @@ import {
   UInt32Value,
 } from "../element/index.js";
 import { OpenXmlUnknownElement } from "../element/unknown-element.js";
+import type { MarkupCompatibilityProcessSettings } from "../markup-compat/index.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import {
   type IPackage,
@@ -98,8 +99,14 @@ export class PresentationDocument {
   private _extendedFilePropertiesPart: ExtendedFilePropertiesPart | undefined;
   /** Epic-72：CustomFilePropertiesPart 缓存。 */
   private _customFilePropertiesPart: CustomFilePropertiesPart | undefined;
+  /** Epic-82：MC 协商处理设置；undefined = NoProcess（默认行为不变）。 */
+  private readonly _mcSettings: MarkupCompatibilityProcessSettings | undefined;
 
-  constructor(private readonly pkg: MemoryOpenXmlPackage) {
+  constructor(
+    private readonly pkg: MemoryOpenXmlPackage,
+    mcSettings?: MarkupCompatibilityProcessSettings,
+  ) {
+    this._mcSettings = mcSettings;
     pkg.registerDiagnosticsElementCounter(() => this.countLoadedElements());
   }
 
@@ -323,6 +330,7 @@ export class PresentationDocument {
 
     // 7. 构造 SlidePart wrapper + 若已缓存则 push 进去
     const newSlidePart = new SlidePart(newPart, pptRegistry, this.pkg);
+    if (this._mcSettings !== undefined) newSlidePart.setMcSettings(this._mcSettings);
     const ppPrivate = pp as unknown as { _slideParts: SlidePart[] | undefined };
     if (ppPrivate._slideParts !== undefined) {
       ppPrivate._slideParts.push(newSlidePart);
@@ -371,6 +379,7 @@ export class PresentationDocument {
       targetMode: "internal",
     });
     const np = new NotesSlidePart(part, pptRegistry, this.pkg);
+    if (this._mcSettings !== undefined) np.setMcSettings(this._mcSettings);
     // 写最小 <p:notes> 树
     seedNotesSlide(np.notesSlide);
     // SlidePart 内部缓存 notesSlidePart——访问 getter 会重读关系并返新实例；为
@@ -427,7 +436,7 @@ export class PresentationDocument {
     options: OpenAsyncOptions = {},
   ): Promise<PresentationDocument> {
     const pkg = await openAsync(source, options);
-    return new PresentationDocument(pkg);
+    return new PresentationDocument(pkg, options.markupCompatibilityProcessSettings);
   }
 
   /**
@@ -565,6 +574,7 @@ export class PresentationDocument {
     if (partUri === undefined || !this.pkg.hasPart(partUri)) return undefined;
     const part = this.pkg.getPart(partUri);
     const pp = new PresentationPart(part, pptRegistry, this.pkg);
+    if (this._mcSettings !== undefined) pp.setMcSettings(this._mcSettings);
     this.typedParts.set(PresentationPart.relationshipType, pp);
     return pp;
   }
