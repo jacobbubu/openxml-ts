@@ -1,5 +1,5 @@
 /**
- * OpenXmlValidator — Phase 1 structural + attribute validation engine.
+ * OpenXmlValidator — Phase 1 structural + attribute validation + Phase 2 schematron semantic.
  *
  * Mirrors .NET `DocumentFormat.OpenXml.Validation.OpenXmlValidator`.
  *
@@ -10,15 +10,23 @@
  *  (d) Required attributes are present (RequiredValidator)
  *  (e) Attribute value constraints (string length / number range) are satisfied
  *
- * NOT in Phase 1:
- *  - Schematron semantic rules (948 XPath rules) — Phase 2
+ * Phase 2 checks (schematron semantic rules):
+ *  (f) Relationship type/existence via r:id attributes
+ *  (g) Attribute uniqueness (count(distinct-values) rules)
+ *  (h) String-length attribute constraints
+ *  (i) Numeric range attribute constraints
+ *
+ * NOT included:
+ *  - Schematron rules requiring full XPath engine or cross-Part resolution — skipped
  *  - Package-level OPC constraints — separate concern
  *
  * The validator NEVER throws on invalid input — it returns a diagnostics list.
  */
 
 import { OpenXmlCompositeElement, type OpenXmlElement } from "../element/element.js";
+import type { IRelationshipCollection } from "../packaging/interfaces/relationship.js";
 import type { ValidationError } from "./ValidationError.js";
+import { SCHEMATRON_RULES, evaluateSchematron } from "./schematron/index.js";
 import type {
   ElementConstraint,
   NormalizedParticle,
@@ -181,6 +189,12 @@ export interface OpenXmlValidatorOptions {
    * has no registered constraint. Default: true (lenient mode for unknown elements).
    */
   readonly skipUnknown?: boolean;
+
+  /**
+   * If true, include Phase 2 schematron semantic validation in `validate()`.
+   * Default: false (Phase 1 only, for backwards compatibility).
+   */
+  readonly includeSemantic?: boolean;
 }
 
 /**
@@ -197,23 +211,59 @@ export interface OpenXmlValidatorOptions {
  */
 export class OpenXmlValidator {
   private readonly skipUnknown: boolean;
+  private readonly includeSemantic: boolean;
 
   constructor(options: OpenXmlValidatorOptions = {}) {
     this.skipUnknown = options.skipUnknown ?? true;
+    this.includeSemantic = options.includeSemantic ?? false;
   }
 
   /**
-   * Validate an element tree recursively.
+   * Validate an element tree recursively (Phase 1: structural + attribute).
+   * If `includeSemantic` option is true, also runs Phase 2 schematron checks.
    * Returns all validation errors found. Never throws.
+   *
+   * @param root    Root element of the tree to validate.
+   * @param partUri Optional part URI for error context (e.g. "/word/document.xml").
+   * @param rels    Optional relationship collection for the part (enables Phase 2 relationship checks).
    */
-  validate(root: OpenXmlElement, partUri?: string): ValidationError[] {
+  validate(
+    root: OpenXmlElement,
+    partUri?: string,
+    rels?: IRelationshipCollection,
+  ): ValidationError[] {
     const errors: ValidationError[] = [];
     try {
       this.walkElement(root, makePath("", root, 0), errors, partUri);
     } catch {
       // Safety net: validation must never throw
     }
+    if (this.includeSemantic) {
+      const semanticErrors = this.validateSemantic(root, partUri, rels);
+      errors.push(...semanticErrors);
+    }
     return errors;
+  }
+
+  /**
+   * Run Phase 2 schematron semantic validation only.
+   * Returns Semantic ValidationErrors. Never throws.
+   *
+   * @param root    Root element of the tree to validate.
+   * @param partUri Optional part URI for error context.
+   * @param rels    Optional relationship collection for relationship-type checks.
+   */
+  validateSemantic(
+    root: OpenXmlElement,
+    partUri?: string,
+    rels?: IRelationshipCollection,
+  ): ValidationError[] {
+    try {
+      return evaluateSchematron(root, SCHEMATRON_RULES, rels, partUri);
+    } catch {
+      // Safety net
+      return [];
+    }
   }
 
   private walkElement(

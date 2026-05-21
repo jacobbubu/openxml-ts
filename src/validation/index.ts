@@ -1,8 +1,8 @@
 /**
- * openxml-ts validation subsystem — Epic-78 Phase 1.
+ * openxml-ts validation subsystem — Epic-78 Phase 1 + Epic-79 Phase 2.
  *
  * Exports:
- *  - `OpenXmlValidator`         — structural + attribute validator
+ *  - `OpenXmlValidator`         — structural + attribute + (optional) semantic validator
  *  - `ValidationError`          — error model (type only)
  *  - `ValidationErrorType`      — error classification enum (type only)
  *  - `registerConstraints`      — low-level constraint registration
@@ -11,9 +11,17 @@
  *  - `registerPptConstraints`   — register ppt namespace constraints (lazy)
  *  - `registerDrawingConstraints` — register drawing namespace constraints (lazy)
  *  - `registerAllConstraints`   — register all 4 core namespaces at once
+ *  - `evaluateSchematron`       — Phase 2 schematron semantic evaluator (direct access)
+ *  - `SCHEMATRON_RULES`         — generated rule array (948 rules categorised)
+ *  - `SCHEMATRON_SOURCE_COUNT`  — original rule count
+ *  - `SCHEMATRON_COVERED_COUNT` — rules with supported handlers
+ *  - `SCHEMATRON_SKIPPED_COUNT` — rules requiring full XPath (skipped)
  *
- * Phase 1 only: structural (Particle) + attribute validation.
- * Schematron semantic rules (Phase 2) are not included.
+ * Phase 2 semantic rules covered:
+ *  - Relationship type/existence (r:id lookups)
+ *  - Attribute uniqueness (count(distinct-values) patterns)
+ *  - String-length attribute constraints
+ *  - Numeric range attribute constraints
  */
 
 export type { ValidationError, ValidationErrorType } from "./ValidationError.js";
@@ -30,6 +38,22 @@ export {
   registerConstraints,
   type OpenXmlValidatorOptions,
 } from "./OpenXmlValidator.js";
+export {
+  evaluateSchematron,
+  resetRuleIndex,
+  SCHEMATRON_RULES,
+  SCHEMATRON_SOURCE_COUNT,
+  SCHEMATRON_COVERED_COUNT,
+  SCHEMATRON_SKIPPED_COUNT,
+} from "./schematron/index.js";
+export type {
+  SchematronRule,
+  RelationshipRule,
+  UniquenessRule,
+  StringLengthRule,
+  NumericRangeRule,
+  UnsupportedRule,
+} from "./schematron/index.js";
 
 // Lazy registration helpers — each function imports the constraint data once
 // and registers it into the global constraint map. Calling multiple times is safe
