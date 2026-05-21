@@ -30,6 +30,9 @@ export type {
   AttrVsAttrRule,
   ReqWhenOtherRule,
   PatternRule,
+  RefExistRule,
+  IndexedRefRule,
   UnsupportedRule,
 } from "./rules.js";
+export type { PartResolver } from "./evaluator.js";
 export { evaluateSchematron, resetRuleIndex } from "./evaluator.js";

@@ -1,6 +1,6 @@
 #!/usr/bin/env -S bun run
 /**
- * Schematron rule codegen — Epic-79 Phase 2 + Epic-84 extended categories.
+ * Schematron rule codegen — Epic-79 Phase 2 + Epic-84 extended categories + Epic-85 cross-part.
  *
  * Reads /Users/rongshen/github/Open-XML-SDK/data/schematrons.json (948 rules)
  * and categorises each rule into one of the SDK's 18 semantic categories.
@@ -19,10 +19,12 @@
  *   2.2  relType       — document(rels)//.../@Type = 'url' (relationship type check)
  *   2.1  relExist      — document(rels)//... (relationship existence check) → covered by relType handler
  *   2.3  uniqueness    — count(distinct-values(...)) = count(...) (in-part uniqueness)
+ *   3.1  refExist      — Index-of(document('Part:X')//ns:el/@attr, @currentAttr) (cross-part attr lookup)
+ *   3.2  indexedRef    — @attr < count(document('Part:X')//ns:el) + N (index-based element count)
  *
  * Skipped safely (no false positives):
- *   3.1/3.2/3.3  — cross-Part reference checks (need part resolver)
- *   1.1          — @attr alone (typed attrs not in extendedAttributes; cannot check without typed access)
+ *   3.3           — root-attribute unique across package (very rare, needs full package walk)
+ *   1.1           — @attr alone (typed attrs not in extendedAttributes; cannot check without typed access)
  *   Complex conditionals not matching the above
  *
  * Emits: src/validation/schematron/rules.ts
@@ -158,6 +160,41 @@ export interface UnsupportedRule {
   readonly app: string;
 }
 
+// ---- Epic-85 cross-part rule kinds ----
+
+/**
+ * 3.1 RefExist — Index-of(document('Part:XxxPart')//ns:el/@attr, @currentAttr)
+ * The current element's refAttr value must exist in the target part's element attribute collection.
+ * partRef = "Part:.." means same part (or parent part). partRef = "Part:FootnotesPart" means cross-part.
+ */
+export interface RefExistRule {
+  readonly kind: "refExist";
+  readonly context: string;
+  readonly refAttr: string; // attribute on current element that holds the reference value
+  readonly partRef: string; // "Part:." | "Part:.." | "Part:XxxPart" | "Part:/WorkbookPart/..."
+  readonly targetPath: string; // XPath steps after document(), e.g. "//w:footnotes/w:footnote/@w:id"
+  readonly targetNs: string; // namespace URI of the target element
+  readonly targetLocal: string; // local name of the target element
+  readonly targetAttr: string; // attribute on the target element whose values form the allowed set
+  readonly app: string;
+}
+
+/**
+ * 3.2 IndexedRef — @attr < count(document('Part:XxxPart')//ns:el) + N
+ * The current element's index attribute (0- or 1-based) must be within bounds of element count in target part.
+ */
+export interface IndexedRefRule {
+  readonly kind: "indexedRef";
+  readonly context: string;
+  readonly indexAttr: string; // attribute on current element (the index)
+  readonly partRef: string; // target part reference
+  readonly targetNs: string; // namespace of elements to count
+  readonly targetLocal: string; // local name of elements to count
+  readonly targetPath: string; // full path after document(), e.g. "//x:cellMetadata/x:bk"
+  readonly indexBase: number; // 0 or 1 (added to count: @attr < count + indexBase means valid if attr < count+indexBase, i.e. attr <= count+indexBase-1)
+  readonly app: string;
+}
+
 export type CategorisedRule =
   | RelationshipRule
   | UniquenessRule
@@ -171,6 +208,8 @@ export type CategorisedRule =
   | AttrVsAttrRule
   | ReqWhenOtherRule
   | PatternRule
+  | RefExistRule
+  | IndexedRefRule
   | UnsupportedRule;
 
 // ---- Pattern matchers ----
@@ -181,6 +220,14 @@ const REL_TYPE_RE =
 
 // 2.1 rel existence: document(rels)//r:Relationship[@Id = current()/@attr]
 const REL_EXIST_RE = /document\(rels\)\/\/r:Relationship\[@Id = current\(\)\/@([^\]]+)\]\s*$/;
+
+// 3.1 refExist: Index-of(document('Part:X')//ns:el/@attr, @currentAttr)
+const REF_EXIST_RE =
+  /^Index-of\(document\('(Part:[^']+)'\)(\/\/[^,]+)\/@([A-Za-z:_][A-Za-z:_0-9]*),\s*@([A-Za-z:_][A-Za-z:_0-9]*)\)$/i;
+
+// 3.2 indexedRef: @attr < count(document('Part:X')//ns:el/...) + N
+const INDEXED_REF_RE =
+  /^@([A-Za-z:_][A-Za-z:_0-9]*)\s*<\s*count\(document\('(Part:[^']+)'\)(\/\/[^)]+)\)\s*\+\s*(\d+)$/;
 
 // 2.3 uniqueness: count(distinct-values(PATH/@attr)) = count(PATH/@attr)
 const UNIQUENESS_RE = /count\(distinct-values\(([^)]+)\)\)\s*=\s*count\(([^)]+)\)/;
@@ -227,6 +274,43 @@ function escapeRegex(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
+// Prefix→namespace (subset used for cross-part rule parsing)
+const CODEGEN_PREFIX_TO_URI: Readonly<Record<string, string>> = {
+  w: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+  x: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+  p: "http://schemas.openxmlformats.org/presentationml/2006/main",
+  a: "http://schemas.openxmlformats.org/drawingml/2006/main",
+  r: "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+  v: "urn:schemas-microsoft-com:vml",
+  x14: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+  x15: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main",
+  ovml: "urn:schemas-microsoft-com:office:powerpoint",
+};
+
+/** Resolve a prefixed element name "ns:local" to {ns, local}. */
+function resolveCodegenQname(qname: string): { ns: string; local: string } {
+  const c = qname.indexOf(":");
+  if (c === -1) return { ns: "", local: qname };
+  const prefix = qname.slice(0, c);
+  return { ns: CODEGEN_PREFIX_TO_URI[prefix] ?? "", local: qname.slice(c + 1) };
+}
+
+/**
+ * Parse an XPath path like "//w:footnotes/w:footnote" to extract the last element's ns/local.
+ * Returns null if path can't be parsed.
+ */
+function parseTargetPath(path: string): { ns: string; local: string } | null {
+  // Strip leading // or /
+  let p = path.trim();
+  if (p.startsWith("//")) p = p.slice(2);
+  else if (p.startsWith("/")) p = p.slice(1);
+  // Get last segment
+  const segments = p.split("/").filter((s) => s.length > 0);
+  if (segments.length === 0) return null;
+  const last = segments[segments.length - 1]!;
+  return resolveCodegenQname(last);
+}
+
 // ---- Category detector ----
 
 function categorise(rule: SchematronEntry): CategorisedRule[] {
@@ -260,11 +344,62 @@ function categorise(rule: SchematronEntry): CategorisedRule[] {
     }
   }
 
-  // ---- 3.1/3.2/3.3 cross-part — skip safely ----
+  // ---- 3.1/3.2 cross-part reference checks ----
   if (
     test.includes("fn:document") ||
     (test.includes("document(") && !test.includes("document(rels)"))
   ) {
+    // 3.1 refExist: Index-of(document('Part:X')//ns:el/@attr, @currentAttr)
+    const refExistMatch = REF_EXIST_RE.exec(test);
+    if (refExistMatch) {
+      const partRef = refExistMatch[1]!;
+      const targetXPath = refExistMatch[2]!; // e.g. "//w:footnotes/w:footnote"
+      const targetAttr = refExistMatch[3]!; // e.g. "w:id"
+      const refAttr = refExistMatch[4]!; // e.g. "w:id"
+      const parsed = parseTargetPath(targetXPath);
+      if (parsed !== null) {
+        return [
+          {
+            kind: "refExist",
+            context,
+            refAttr,
+            partRef,
+            targetPath: targetXPath,
+            targetNs: parsed.ns,
+            targetLocal: parsed.local,
+            targetAttr,
+            app,
+          },
+        ];
+      }
+    }
+
+    // 3.2 indexedRef: @attr < count(document('Part:X')//ns:el) + N
+    const indexedRefMatch = INDEXED_REF_RE.exec(test);
+    if (indexedRefMatch) {
+      const indexAttr = indexedRefMatch[1]!;
+      const partRef = indexedRefMatch[2]!;
+      const targetXPath = indexedRefMatch[3]!; // e.g. "//x:cellMetadata/x:bk"
+      const indexBase = Number(indexedRefMatch[4]!);
+      const parsed = parseTargetPath(targetXPath);
+      if (parsed !== null) {
+        return [
+          {
+            kind: "indexedRef",
+            context,
+            indexAttr,
+            partRef,
+            targetNs: parsed.ns,
+            targetLocal: parsed.local,
+            targetPath: targetXPath,
+            indexBase,
+            app,
+          },
+        ];
+      }
+    }
+
+    // 3.3 and other unrecognised cross-part — skip safely (no false positives)
     return [{ kind: "unsupported", context, test, app }];
   }
 
@@ -525,6 +660,10 @@ function emitRule(r: CategorisedRule): string {
       return `  { kind: "reqWhenOther", context: ${JSON.stringify(r.context)}, requiredAttr: ${JSON.stringify(r.requiredAttr)}, condAttr: ${JSON.stringify(r.condAttr)}, condValues: ${JSON.stringify(r.condValues)}, app: ${JSON.stringify(r.app)} }`;
     case "pattern":
       return `  { kind: "pattern", context: ${JSON.stringify(r.context)}, attrQname: ${JSON.stringify(r.attrQname)}, regex: ${JSON.stringify(r.regex)}, app: ${JSON.stringify(r.app)} }`;
+    case "refExist":
+      return `  { kind: "refExist", context: ${JSON.stringify(r.context)}, refAttr: ${JSON.stringify(r.refAttr)}, partRef: ${JSON.stringify(r.partRef)}, targetPath: ${JSON.stringify(r.targetPath)}, targetNs: ${JSON.stringify(r.targetNs)}, targetLocal: ${JSON.stringify(r.targetLocal)}, targetAttr: ${JSON.stringify(r.targetAttr)}, app: ${JSON.stringify(r.app)} }`;
+    case "indexedRef":
+      return `  { kind: "indexedRef", context: ${JSON.stringify(r.context)}, indexAttr: ${JSON.stringify(r.indexAttr)}, partRef: ${JSON.stringify(r.partRef)}, targetNs: ${JSON.stringify(r.targetNs)}, targetLocal: ${JSON.stringify(r.targetLocal)}, targetPath: ${JSON.stringify(r.targetPath)}, indexBase: ${r.indexBase}, app: ${JSON.stringify(r.app)} }`;
     case "unsupported":
       return `  { kind: "unsupported", context: ${JSON.stringify(r.context)}, test: ${JSON.stringify(r.test)}, app: ${JSON.stringify(r.app)} }`;
   }
@@ -534,7 +673,7 @@ function emitRule(r: CategorisedRule): string {
 const TYPES_HEADER = `// THIS FILE IS GENERATED BY tools/schema-codegen/gen-schematron.ts. DO NOT EDIT.
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schematrons.json
 //
-// Rule coverage summary (Epic-79 + Epic-84):
+// Rule coverage summary (Epic-79 + Epic-84 + Epic-85):
 //   relationship  — relationship type/existence checks via r:id lookups (2.1/2.2)
 //   uniqueness    — count(distinct-values(X)) = count(X) attribute uniqueness (2.3)
 //   stringLength  — string-length(@attr) <= N / >= M constraints (1.12)
@@ -547,7 +686,9 @@ const TYPES_HEADER = `// THIS FILE IS GENERATED BY tools/schema-codegen/gen-sche
 //   attrVsAttr    — value of one attribute must be <= (or <) another (1.17)
 //   reqWhenOther  — attribute is required when another equals a value (1.18)
 //   pattern       — attribute value must match a regular expression (1.2)
-//   unsupported   — rules requiring cross-Part refs or unclassified patterns
+//   refExist      — Index-of(document('Part:X')//el/@attr, @ref) cross-part attr lookup (3.1)
+//   indexedRef    — @attr < count(document('Part:X')//el) + N index-based existence (3.2)
+//   unsupported   — rules requiring full package walk or unclassified patterns
 
 export interface RelationshipRule {
   readonly kind: "relationship";
@@ -657,6 +798,30 @@ export interface UnsupportedRule {
   readonly app: string;
 }
 
+export interface RefExistRule {
+  readonly kind: "refExist";
+  readonly context: string;
+  readonly refAttr: string;
+  readonly partRef: string;
+  readonly targetPath: string;
+  readonly targetNs: string;
+  readonly targetLocal: string;
+  readonly targetAttr: string;
+  readonly app: string;
+}
+
+export interface IndexedRefRule {
+  readonly kind: "indexedRef";
+  readonly context: string;
+  readonly indexAttr: string;
+  readonly partRef: string;
+  readonly targetNs: string;
+  readonly targetLocal: string;
+  readonly targetPath: string;
+  readonly indexBase: number;
+  readonly app: string;
+}
+
 export type SchematronRule =
   | RelationshipRule
   | UniquenessRule
@@ -670,6 +835,8 @@ export type SchematronRule =
   | AttrVsAttrRule
   | ReqWhenOtherRule
   | PatternRule
+  | RefExistRule
+  | IndexedRefRule
   | UnsupportedRule;
 
 `;
@@ -707,6 +874,8 @@ async function main(): Promise<void> {
     "attrVsAttr",
     "reqWhenOther",
     "pattern",
+    "refExist",
+    "indexedRef",
     "unsupported",
   ];
   allRules.sort((a, b) => {
@@ -737,6 +906,8 @@ async function main(): Promise<void> {
     "attrVsAttr",
     "reqWhenOther",
     "pattern",
+    "refExist",
+    "indexedRef",
   ]);
   const supportedCount = allRules.filter((r) => supportedKinds.has(r.kind)).length;
   const unsupportedCount = allRules.filter((r) => r.kind === "unsupported").length;

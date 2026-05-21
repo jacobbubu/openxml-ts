@@ -1,5 +1,5 @@
 /**
- * Schematron semantic rule evaluator — Epic-79 Phase 2 + Epic-84 extended categories.
+ * Schematron semantic rule evaluator — Epic-79 Phase 2 + Epic-84 extended categories + Epic-85 cross-part.
  *
  * Evaluates all supported rule kinds against an element tree:
  *   - relationship  : r:id attr vs the part's IRelationshipCollection (2.1/2.2)
@@ -14,6 +14,8 @@
  *   - attrVsAttr    : @a < (or <=) @b numerically (1.17)
  *   - reqWhenOther  : @a is required when @b equals a value (1.18)
  *   - pattern       : @attr must match a regex (1.2)
+ *   - refExist      : Index-of(document('Part:X')//el/@attr, @ref) cross-part attr lookup (3.1)
+ *   - indexedRef    : @attr < count(document('Part:X')//el) + N index-based existence (3.2)
  *
  * The evaluator NEVER throws; all errors are collected into a ValidationError[].
  */
@@ -21,15 +23,18 @@
 import type { OpenXmlElement } from "../../element/element.js";
 import { OpenXmlCompositeElement } from "../../element/element.js";
 import type { IRelationshipCollection } from "../../packaging/interfaces/relationship.js";
+import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
 import type { ValidationError } from "../ValidationError.js";
 import type {
   AbsentWhenEqRule,
   AbsentWhenNeqRule,
   AttrVsAttrRule,
+  IndexedRefRule,
   InvalidSetRule,
   MutualExclRule,
   NumericRangeRule,
   PatternRule,
+  RefExistRule,
   RelationshipRule,
   ReqWhenOtherRule,
   SchematronRule,
@@ -37,6 +42,29 @@ import type {
   UniquenessRule,
   ValidSetRule,
 } from "./rules.js";
+
+// ---- PartResolver interface ----
+
+/**
+ * Resolves a schematron `Part:XxxPart` reference to the root element of the target part.
+ *
+ * Used by cross-part rule handlers (3.1 refExist, 3.2 indexedRef).
+ * If the target part is not available or not modeled, returns undefined (safe skip).
+ *
+ * `partRef` is the raw string from the schematron test, e.g.:
+ *   "Part:FootnotesPart"                — named part relative to current part's owner
+ *   "Part:/MainDocumentPart/FootnotesPart" — path-rooted part
+ *   "Part:/WorkbookPart/WorkbookStylesPart"
+ *   "Part:."                            — current part's own root (same tree as docRoot)
+ *   "Part:.."                           — parent part's root
+ */
+export interface PartResolver {
+  /**
+   * Resolve `partRef` to the root element of the referenced part.
+   * Returns undefined if the part is not found / not modeled (caller skips the check).
+   */
+  resolve(partRef: string): OpenXmlElement | undefined;
+}
 
 // ---- Prefix→namespace resolution ----
 const PREFIX_TO_URI: Readonly<Record<string, string>> = {
@@ -260,7 +288,7 @@ function handleRelationship(
 
   if (rel === undefined) return;
 
-  if (rule.requiredType !== undefined && rel.type !== rule.requiredType) {
+  if (rule.requiredType !== undefined && !relationshipTypeMatches(rel.type, rule.requiredType)) {
     errors.push(
       makeSemanticError(
         "Sch_SemanticRelationshipType",
@@ -668,6 +696,146 @@ function compileXPathRegex(pattern: string): RegExp | null {
   }
 }
 
+// ---- 3.1 RefExist handler ----
+
+/**
+ * 3.1 RefExist — Index-of(document('Part:X')//el/@attr, @currentAttr)
+ *
+ * The current element's refAttr value must exist in the set of targetAttr values
+ * on targetNs:targetLocal elements in the target part.
+ *
+ * Safe skips (no error):
+ *   - refAttr is absent on current element
+ *   - partResolver is undefined (no package context)
+ *   - target part is not found / not modeled
+ *   - Part:. (same part) — use docRoot itself
+ */
+function handleRefExist(
+  rule: RefExistRule,
+  el: OpenXmlElement,
+  docRoot: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  partResolver: PartResolver | undefined,
+  errors: ValidationError[],
+): void {
+  const refValue = getAttr(el, rule.refAttr);
+  if (refValue === undefined || refValue === "") return;
+
+  // Resolve the target part root
+  let targetRoot: OpenXmlElement | undefined;
+  if (rule.partRef === "Part:." || rule.partRef === "Part:..") {
+    // Same part or parent part — use current docRoot
+    targetRoot = docRoot;
+  } else {
+    if (partResolver === undefined) return; // no package context — skip safely
+    targetRoot = partResolver.resolve(rule.partRef);
+    if (targetRoot === undefined) return; // part not modeled — skip safely
+  }
+
+  // Collect all targetAttr values from targetNs:targetLocal elements
+  const { ns: targetNs, local: targetLocal } = { ns: rule.targetNs, local: rule.targetLocal };
+  const { ns: attrNs, local: attrLocal } = resolveQname(rule.targetAttr);
+
+  const allowedValues = new Set<string>();
+  visitAll(targetRoot, (candidate) => {
+    if (candidate.namespaceUri === targetNs && candidate.localName === targetLocal) {
+      // Look for the target attribute
+      const val = getAttrByNsLocal(candidate, attrNs, attrLocal);
+      if (val !== undefined && val !== "") allowedValues.add(val);
+    }
+  });
+
+  if (!allowedValues.has(refValue)) {
+    errors.push(
+      makeSemanticError(
+        "Sem_MissingReferenceElement",
+        `Element <${el.qualifiedName}> attribute '${rule.refAttr}' = '${refValue}': no matching '${rule.targetAttr}' found in ${rule.partRef}.`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
+/**
+ * Get an attribute value by namespace URI and local name directly.
+ */
+function getAttrByNsLocal(el: OpenXmlElement, ns: string, local: string): string | undefined {
+  // Try extendedAttributes: look for matching ns+local
+  for (const [key, value] of el.extendedAttributes) {
+    const { ns: kNs, local: kLocal } = resolveQname(key);
+    if (kLocal === local && (ns === "" || kNs === ns || kNs === "")) {
+      return value;
+    }
+  }
+  return undefined;
+}
+
+// ---- 3.2 IndexedRef handler ----
+
+/**
+ * 3.2 IndexedRef — @attr < count(document('Part:X')//el) + N
+ *
+ * The current element's indexAttr value must be less than (count of target elements + indexBase).
+ * In other words: if attr >= count + indexBase → error.
+ *
+ * For indexBase=1: attr < count + 1 means attr <= count (1-based, valid range 0..count-1 or 1..count)
+ * For indexBase=0: attr < count + 0 means attr < count (0-based, valid range 0..count-1)
+ *
+ * Safe skips: attr absent, attr not numeric, partResolver undefined, part not found.
+ */
+function handleIndexedRef(
+  rule: IndexedRefRule,
+  el: OpenXmlElement,
+  docRoot: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  partResolver: PartResolver | undefined,
+  errors: ValidationError[],
+): void {
+  const indexStr = getAttr(el, rule.indexAttr);
+  if (indexStr === undefined || indexStr === "") return;
+
+  const indexValue = Number(indexStr);
+  if (!Number.isInteger(indexValue) && Number.isNaN(indexValue)) return;
+  if (Number.isNaN(indexValue)) return;
+
+  // Resolve the target part root
+  let targetRoot: OpenXmlElement | undefined;
+  if (rule.partRef === "Part:." || rule.partRef === "Part:..") {
+    targetRoot = docRoot;
+  } else {
+    if (partResolver === undefined) return;
+    targetRoot = partResolver.resolve(rule.partRef);
+    if (targetRoot === undefined) return;
+  }
+
+  // Count target elements
+  const { ns: targetNs, local: targetLocal } = { ns: rule.targetNs, local: rule.targetLocal };
+  let count = 0;
+  visitAll(targetRoot, (candidate) => {
+    if (candidate.namespaceUri === targetNs && candidate.localName === targetLocal) {
+      count += 1;
+    }
+  });
+
+  // Check: @attr < count + indexBase  →  error if @attr >= count + indexBase
+  const upperBound = count + rule.indexBase;
+  if (indexValue >= upperBound) {
+    errors.push(
+      makeSemanticError(
+        "Sem_MissingIndexedElement",
+        `Element <${el.qualifiedName}> attribute '${rule.indexAttr}' = ${indexValue}: index out of bounds (${count} elements in ${rule.partRef}, index base ${rule.indexBase}).`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
 // ---- Rule index (built once, lazily) ----
 
 interface RuleIndex {
@@ -707,17 +875,20 @@ const _compiledPatterns = new Map<string, RegExp | null>();
 /**
  * Evaluate all supported schematron rules against an element tree.
  *
- * @param docRoot   Root element of the element tree (the document/part root).
- * @param rules     The full rule array from SCHEMATRON_RULES.
- * @param rels      Optional relationship collection for the part.
- * @param partUri   Optional part URI for error context.
- * @returns         Array of Semantic ValidationErrors. Never throws.
+ * @param docRoot      Root element of the element tree (the document/part root).
+ * @param rules        The full rule array from SCHEMATRON_RULES.
+ * @param rels         Optional relationship collection for the part.
+ * @param partUri      Optional part URI for error context.
+ * @param partResolver Optional resolver for cross-part rule evaluation (3.1 refExist, 3.2 indexedRef).
+ *                     When undefined, cross-part rules are safely skipped (no false positives).
+ * @returns            Array of Semantic ValidationErrors. Never throws.
  */
 export function evaluateSchematron(
   docRoot: OpenXmlElement,
   rules: ReadonlyArray<SchematronRule>,
   rels: IRelationshipCollection | undefined,
   partUri: string | undefined,
+  partResolver?: PartResolver,
 ): ValidationError[] {
   const errors: ValidationError[] = [];
 
@@ -725,7 +896,7 @@ export function evaluateSchematron(
     const index = getRuleIndex(rules);
 
     // 1. Apply per-element rules (walk the tree)
-    walkForPerElementRules(docRoot, index, rels, partUri, errors, _compiledPatterns);
+    walkForPerElementRules(docRoot, index, rels, partUri, errors, _compiledPatterns, partResolver);
 
     // 2. Apply uniqueness rules (once per tree)
     for (const rule of index.uniqueness) {
@@ -745,7 +916,12 @@ function walkForPerElementRules(
   partUri: string | undefined,
   errors: ValidationError[],
   compiledPatterns: Map<string, RegExp | null>,
+  partResolver?: PartResolver,
+  docRoot?: OpenXmlElement,
 ): void {
+  // docRoot is the top-level element of this part's tree (for same-part Part:. rules)
+  const root = docRoot ?? el;
+
   const key = `${el.namespaceUri}::${el.localName}`;
   const elRules = index.perElement.get(key);
 
@@ -787,6 +963,12 @@ function walkForPerElementRules(
           case "pattern":
             handlePattern(rule, el, path, partUri, errors, compiledPatterns);
             break;
+          case "refExist":
+            handleRefExist(rule, el, root, path, partUri, partResolver, errors);
+            break;
+          case "indexedRef":
+            handleIndexedRef(rule, el, root, path, partUri, partResolver, errors);
+            break;
         }
       } catch {
         // Individual rule must not crash the evaluator
@@ -796,7 +978,16 @@ function walkForPerElementRules(
 
   if (el instanceof OpenXmlCompositeElement) {
     for (const child of el.children) {
-      walkForPerElementRules(child, index, rels, partUri, errors, compiledPatterns);
+      walkForPerElementRules(
+        child,
+        index,
+        rels,
+        partUri,
+        errors,
+        compiledPatterns,
+        partResolver,
+        root,
+      );
     }
   }
 }

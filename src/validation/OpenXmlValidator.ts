@@ -26,6 +26,7 @@
 import { OpenXmlCompositeElement, type OpenXmlElement } from "../element/element.js";
 import type { IRelationshipCollection } from "../packaging/interfaces/relationship.js";
 import type { ValidationError } from "./ValidationError.js";
+import type { PartResolver } from "./schematron/evaluator.js";
 import { SCHEMATRON_RULES, evaluateSchematron } from "./schematron/index.js";
 import type {
   ElementConstraint,
@@ -249,17 +250,19 @@ export class OpenXmlValidator {
    * Run Phase 2 schematron semantic validation only.
    * Returns Semantic ValidationErrors. Never throws.
    *
-   * @param root    Root element of the tree to validate.
-   * @param partUri Optional part URI for error context.
-   * @param rels    Optional relationship collection for relationship-type checks.
+   * @param root         Root element of the tree to validate.
+   * @param partUri      Optional part URI for error context.
+   * @param rels         Optional relationship collection for relationship-type checks.
+   * @param partResolver Optional cross-part resolver for 3.1/3.2 category rules.
    */
   validateSemantic(
     root: OpenXmlElement,
     partUri?: string,
     rels?: IRelationshipCollection,
+    partResolver?: PartResolver,
   ): ValidationError[] {
     try {
-      return evaluateSchematron(root, SCHEMATRON_RULES, rels, partUri);
+      return evaluateSchematron(root, SCHEMATRON_RULES, rels, partUri, partResolver);
     } catch {
       // Safety net
       return [];
@@ -482,4 +485,177 @@ export class OpenXmlValidator {
       }
     }
   }
+
+  /**
+   * Validate a WordprocessingDocument package (all parts + cross-part semantic rules).
+   *
+   * Mirrors .NET SDK's `OpenXmlValidator.Validate(OpenXmlPackage)`.
+   * Runs Phase 1 structural + Phase 2 schematron (including 3.1 refExist and 3.2 indexedRef
+   * cross-part categories) across all modeled parts of the document.
+   *
+   * Cross-part rules that reference parts not modeled in openxml-ts (e.g. Excel-specific
+   * parts, EndnotesPart) are safely skipped — no false positives.
+   *
+   * @param doc WordprocessingDocument (or any object with a `getValidatableParts()` shape).
+   * @returns   All validation errors found. Never throws.
+   */
+  validatePackage(doc: WordprocessingDocumentLike): ValidationError[] {
+    const errors: ValidationError[] = [];
+    try {
+      const { parts, namedRoots } = getWordParts(doc);
+      const partResolver = buildWordPartResolver(namedRoots);
+
+      for (const entry of parts) {
+        try {
+          // Phase 1: structural validation
+          const structural = this.validate(entry.root, entry.partUri);
+          errors.push(...structural);
+
+          // Phase 2: schematron semantic (including cross-part rules via partResolver)
+          if (this.includeSemantic) {
+            const semantic = this.validateSemantic(
+              entry.root,
+              entry.partUri,
+              entry.rels,
+              partResolver,
+            );
+            errors.push(...semantic);
+          } else {
+            // Always run semantic for validatePackage regardless of includeSemantic option
+            const semantic = evaluateSchematron(
+              entry.root,
+              SCHEMATRON_RULES,
+              entry.rels,
+              entry.partUri,
+              partResolver,
+            );
+            errors.push(...semantic);
+          }
+        } catch {
+          // Individual part must not crash the whole validation
+        }
+      }
+    } catch {
+      // Safety net
+    }
+    return errors;
+  }
+}
+
+// ---- Package-level validation helpers ----
+
+/** Minimal interface for a typed Word part entry used by validatePackage. */
+interface PartEntry {
+  readonly root: OpenXmlElement;
+  readonly partUri: string;
+  readonly rels: IRelationshipCollection | undefined;
+}
+
+/**
+ * Minimal interface that `WordprocessingDocument` must satisfy for `validatePackage`.
+ * Using a structural interface keeps the validator decoupled from the word package.
+ */
+export interface WordprocessingDocumentLike {
+  /** Main document part root element (w:document) and its part URI */
+  readonly mainDocumentPart?:
+    | {
+        readonly document: OpenXmlElement;
+        readonly part: { readonly uri: string; readonly relationships: IRelationshipCollection };
+      }
+    | undefined;
+  /** Comments part (w:comments root) */
+  readonly commentsPart?:
+    | {
+        readonly comments: OpenXmlElement;
+        readonly part: { readonly uri: string; readonly relationships: IRelationshipCollection };
+      }
+    | undefined;
+  /** Footnotes part (w:footnotes root) */
+  readonly footnotesPart?:
+    | {
+        readonly footnotes: OpenXmlElement;
+        readonly part: { readonly uri: string; readonly relationships: IRelationshipCollection };
+      }
+    | undefined;
+  /** Styles part (w:styles root) */
+  readonly stylesPart?:
+    | {
+        readonly styles: OpenXmlElement;
+        readonly part: { readonly uri: string; readonly relationships: IRelationshipCollection };
+      }
+    | undefined;
+  /** Numbering part (w:numbering root) */
+  readonly numberingPart?:
+    | {
+        readonly numbering: OpenXmlElement;
+        readonly part: { readonly uri: string; readonly relationships: IRelationshipCollection };
+      }
+    | undefined;
+}
+
+/**
+ * Named part roots extracted from a WordprocessingDocument.
+ * Used internally by buildWordPartResolver to map SDK Part references
+ * to actual loaded part roots.
+ */
+interface WordPartRoots {
+  commentsPart?: OpenXmlElement;
+  footnotesPart?: OpenXmlElement;
+}
+
+/** Collect all loaded Word parts into PartEntry[] and a named-root map. */
+function getWordParts(doc: WordprocessingDocumentLike): {
+  parts: PartEntry[];
+  namedRoots: WordPartRoots;
+} {
+  const parts: PartEntry[] = [];
+
+  const add = (
+    root: OpenXmlElement | undefined,
+    partData: { uri: string; relationships: IRelationshipCollection } | undefined,
+  ) => {
+    if (root === undefined || partData === undefined) return;
+    parts.push({ root, partUri: partData.uri, rels: partData.relationships });
+  };
+
+  add(doc.mainDocumentPart?.document, doc.mainDocumentPart?.part);
+  add(doc.commentsPart?.comments, doc.commentsPart?.part);
+  add(doc.footnotesPart?.footnotes, doc.footnotesPart?.part);
+  add(doc.stylesPart?.styles, doc.stylesPart?.part);
+  add(doc.numberingPart?.numbering, doc.numberingPart?.part);
+
+  const namedRoots: WordPartRoots = {};
+  if (doc.commentsPart?.comments !== undefined) namedRoots.commentsPart = doc.commentsPart.comments;
+  if (doc.footnotesPart?.footnotes !== undefined)
+    namedRoots.footnotesPart = doc.footnotesPart.footnotes;
+
+  return { parts, namedRoots };
+}
+
+/** Build a PartResolver that maps SDK Part references to loaded part roots. */
+function buildWordPartResolver(namedRoots: WordPartRoots): PartResolver {
+  return {
+    resolve(partRef: string): OpenXmlElement | undefined {
+      // Part:. and Part:.. are handled inline by the walker (same-tree)
+      if (partRef === "Part:." || partRef === "Part:..") return undefined;
+
+      // Comments part (SDK names for Word comments)
+      if (partRef === "Part:WordprocessingCommentsPart" || partRef === "Part:CommentsPart") {
+        return namedRoots.commentsPart;
+      }
+
+      // Footnotes part (SDK names for Word footnotes)
+      if (partRef === "Part:FootnotesPart" || partRef === "Part:/MainDocumentPart/FootnotesPart") {
+        return namedRoots.footnotesPart;
+      }
+
+      // Endnotes part — not currently modeled in openxml-ts → skip safely (no false positive)
+      if (partRef === "Part:/MainDocumentPart/EndnotesPart") {
+        return undefined;
+      }
+
+      // All other part references (Excel, PPT, etc.) — not modeled → skip safely
+      return undefined;
+    },
+  };
 }
