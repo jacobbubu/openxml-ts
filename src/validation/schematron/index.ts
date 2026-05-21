@@ -32,6 +32,8 @@ export type {
   PatternRule,
   RefExistRule,
   IndexedRefRule,
+  AttrPresentRule,
+  AttrValueConditionRule,
   UnsupportedRule,
 } from "./rules.js";
 export type { PartResolver } from "./evaluator.js";
