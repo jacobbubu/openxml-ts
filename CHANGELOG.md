@@ -1,5 +1,42 @@
 # Changelog
 
+## [0.12.0](https://github.com/jacobbubu/openxml-ts/compare/v0.11.0...v0.12.0) (2026-05-21)
+
+
+### Features
+
+* **chart:** Epic-65 Chart c: 命名空间 codegen 基建 + openxml-ts/chart subpath ([cd2122f](https://github.com/jacobbubu/openxml-ts/commit/cd2122f232225cb41518a19582d971388fe899fd))
+* **chart:** Epic-65 Chart c: 命名空间 codegen 基建 + openxml-ts/chart subpath ([#204](https://github.com/jacobbubu/openxml-ts/issues/204)) ([d4f5566](https://github.com/jacobbubu/openxml-ts/commit/d4f55663fba544513a23fd2a391aad88b7e14c39))
+* **chart:** Epic-66 ChartPart typed part + 跨命名空间 registry 解析 ([cdc2d98](https://github.com/jacobbubu/openxml-ts/commit/cdc2d98f3ab2f9e7d9964b437d0acd94b453bd86))
+* **chart:** Epic-66 ChartPart typed part + 跨命名空间 registry 解析 ([#207](https://github.com/jacobbubu/openxml-ts/issues/207)) ([f9e103f](https://github.com/jacobbubu/openxml-ts/commit/f9e103fb39b1cb9509f29d418ca0a6bf0f66c1bf))
+* **codegen:** Epic-68 drawing-family 4 命名空间 codegen（picture/spreadsheetDrawing/wordprocessingDrawing/chartDrawing）([#209](https://github.com/jacobbubu/openxml-ts/issues/209)) ([1f1acf3](https://github.com/jacobbubu/openxml-ts/commit/1f1acf3c42167326538f4c8646288b07cee5f547))
+* **codegen:** Epic-68 drawing-family 4 命名空间 codegen（picture/xdr/wp/cdr） ([fcc26f0](https://github.com/jacobbubu/openxml-ts/commit/fcc26f0e250d9fb60e6076a62a0124e60f884d2f))
+* **codegen:** Epic-69 OMML math m: 命名空间 codegen + openxml-ts/math subpath ([d7b5e2d](https://github.com/jacobbubu/openxml-ts/commit/d7b5e2d3a547807859f3374125b3b88264efa23f))
+* **codegen:** Epic-69 OMML math m: 命名空间 codegen（133 类）+ openxml-ts/math subpath ([#211](https://github.com/jacobbubu/openxml-ts/issues/211)) ([ca845a2](https://github.com/jacobbubu/openxml-ts/commit/ca845a2f6dc93e3f2a6fa60ed2f7f9ecb1df419c))
+* **codegen:** Epic-70 P1 officeDocument/drawing 残余命名空间 codegen（8 namespaces） ([c437205](https://github.com/jacobbubu/openxml-ts/commit/c437205a54f5ffe945a3d4bd86b443a0a68bf691))
+* **codegen:** Epic-70 P1 officeDocument/drawing 残余命名空间 codegen（8 namespaces）([#213](https://github.com/jacobbubu/openxml-ts/issues/213)) ([2270ac4](https://github.com/jacobbubu/openxml-ts/commit/2270ac4e18081a32a22180fcc2ba9fae1c6a7e0d))
+* **codegen:** Epic-71 VML legacy 命名空间 codegen（vml + office:office/excel/word/powerpoint） ([dfe780f](https://github.com/jacobbubu/openxml-ts/commit/dfe780fae50a72b2313e603ceb29b3d4ac3aab13))
+* **codegen:** Epic-71 VML legacy 命名空间 codegen（vml + office:office/excel/word/powerpoint）([#215](https://github.com/jacobbubu/openxml-ts/issues/215)) ([d929f55](https://github.com/jacobbubu/openxml-ts/commit/d929f551d148c4203321e7125105222b23c0e335))
+* **codegen:** Epic-74 DrawingML diagram (SmartArt dgm:) codegen + openxml-ts/diagram subpath ([25fc92d](https://github.com/jacobbubu/openxml-ts/commit/25fc92d0669870fb4ae4b23963a269c1e7c57bce))
+* **codegen:** Epic-74 DrawingML diagram (SmartArt dgm:) codegen + openxml-ts/diagram subpath ([#221](https://github.com/jacobbubu/openxml-ts/issues/221)) ([d515d20](https://github.com/jacobbubu/openxml-ts/commit/d515d20c6ac5ee1029a5e09bd94a41b229edf84f))
+* **codegen:** Epic-75 Office 扩展命名空间 codegen（cx/x14/w14/x15/p14/a14，6 个） ([7521953](https://github.com/jacobbubu/openxml-ts/commit/75219535cb06b3ab977c01ca0ebbdbef4fa6df14))
+* **codegen:** Epic-75 Office 扩展命名空间 codegen（cx/x14/w14/x15/p14/a14，6 个）([#223](https://github.com/jacobbubu/openxml-ts/issues/223)) ([7521953](https://github.com/jacobbubu/openxml-ts/commit/75219535cb06b3ab977c01ca0ebbdbef4fa6df14))
+* **codegen:** Epic-75 Office 扩展命名空间 codegen（cx/x14/w14/x15/p14/a14，6 个）([#223](https://github.com/jacobbubu/openxml-ts/issues/223)) ([2ad0a6a](https://github.com/jacobbubu/openxml-ts/commit/2ad0a6a5d6c4befb1a3007bcb4450913c2dfc63d))
+* **codegen:** Epic-76 批量 codegen 剩余全部扩展命名空间 → openxml-ts/office-ext 统一入口 ([1eeda86](https://github.com/jacobbubu/openxml-ts/commit/1eeda86db32fe331a46100511320d0c0c7730fb2))
+* **codegen:** Epic-76 批量 codegen 剩余全部扩展命名空间 → openxml-ts/office-ext 统一入口（155 schema 全覆盖） ([2003a2e](https://github.com/jacobbubu/openxml-ts/commit/2003a2edd7a96938ebe6a576a2ac289b9c74011d))
+* **codegen:** Epic-77 Part 类层 codegen — 补齐 SDK 全部 typed Part 类（97 个） ([db9e3c7](https://github.com/jacobbubu/openxml-ts/commit/db9e3c74ba9d7b88f9b6bba8b4d2d963825a0f76))
+* **codegen:** Epic-77 Part 类层 codegen — 补齐 SDK 全部 typed Part 类（97 个）([#227](https://github.com/jacobbubu/openxml-ts/issues/227)) ([e007f70](https://github.com/jacobbubu/openxml-ts/commit/e007f70c60e4ae6f10d1d84d055b07f83f47e30e))
+* **parts:** Epic-72 docProps typed Part（ExtendedFilePropertiesPart / CustomFilePropertiesPart）([#217](https://github.com/jacobbubu/openxml-ts/issues/217)) ([#218](https://github.com/jacobbubu/openxml-ts/issues/218)) ([40f699d](https://github.com/jacobbubu/openxml-ts/commit/40f699d62a264ca084c2021efa11169efc3393df))
+* **parts:** Epic-73 CustomXmlPart + CustomXmlPropertiesPart typed Parts（P1 收尾 [#219](https://github.com/jacobbubu/openxml-ts/issues/219)） ([#220](https://github.com/jacobbubu/openxml-ts/issues/220)) ([61fec6b](https://github.com/jacobbubu/openxml-ts/commit/61fec6ba7a2cc32637c8cce04b00e1cd94e5b322))
+* **validation:** Epic-78 OpenXmlValidator Phase 1 — 结构(Particle) + 属性校验 ([#230](https://github.com/jacobbubu/openxml-ts/issues/230)) ([e314c6c](https://github.com/jacobbubu/openxml-ts/commit/e314c6c2fabf134d39b0eac39df8017b8515fe5e))
+
+
+### Bug Fixes
+
+* biome format 新增 test 文件（Epic-75 [#223](https://github.com/jacobbubu/openxml-ts/issues/223)） ([f3b8c99](https://github.com/jacobbubu/openxml-ts/commit/f3b8c9920de0c460fc6bc1b3f664190e2c8b11d2))
+* package.json files 数组格式化为单行（biome canonical）([#204](https://github.com/jacobbubu/openxml-ts/issues/204)) ([6a23168](https://github.com/jacobbubu/openxml-ts/commit/6a23168e30aa16157247e610cec44d8a69963e66))
+* **ppt:** 恢复 Epic-75 误删的 ppt/index.ts 导出（slide-transition/hidden + docProps/customXml parts）([#223](https://github.com/jacobbubu/openxml-ts/issues/223)) ([58f4280](https://github.com/jacobbubu/openxml-ts/commit/58f42804fcdfc2156792a2c39a6b4b0818e0ce4e))
+
 ## [0.11.0](https://github.com/jacobbubu/openxml-ts/compare/v0.10.0...v0.11.0) (2026-05-20)
 
 
