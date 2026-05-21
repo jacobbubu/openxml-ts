@@ -1,3 +1,4 @@
+// openxml-ts 便捷扩展层（非 .NET SDK 原生 API）。详见 docs/convenience-layer.md。
 /**
  * Word 文本访问器（Story-11.1）的共享内部工具。
  *

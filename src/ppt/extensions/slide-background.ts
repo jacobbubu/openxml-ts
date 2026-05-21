@@ -1,3 +1,4 @@
+// openxml-ts 便捷扩展层（非 .NET SDK 原生 API）。详见 docs/convenience-layer.md。
 /**
  * Epic-47：PPT `Slide.backgroundColorHex` 访问器 mixin。
  *

@@ -213,6 +213,15 @@ await part.writeAsync('<w:document xmlns:w="...">...</w:document>');
 const flatXml = pkg.toFlatOpc({ progId: "Word.Document" });
 ```
 
+## 忠实移植层与便捷扩展层
+
+openxml-ts 的 API 分为两类：
+
+- **忠实移植层**：与 .NET DocumentFormat.OpenXml SDK 一一对应的 typed element 类、Part 类、OPC 内核等。这是项目使命的核心。
+- **便捷扩展层**：openxml-ts 自有设计的人机工程学扩展（prototype mixin / 独立函数），.NET SDK 中没有对等 API。所有扩展文件头部都有标准 banner 注释。
+
+完整的便捷扩展层清单（模块路径、API 名称、用途、底层 SDK 元素）见 [docs/convenience-layer.md](./docs/convenience-layer.md)。
+
 ## 便捷 API 速查
 
 每个子系统在 typed element 树之上提供了一层高频场景的便捷 helper / 访问器（mixin 或自由函数）。下表列常用项；完整签名见各 `examples/*`。

@@ -2,6 +2,25 @@
 
 单页地图。详细 ADR 与设计取舍参见 `docs/planning/epic-N-architecture.md`。
 
+## 两类 API 的区分
+
+openxml-ts 的 API 分为两类，消费者需了解这个区别：
+
+### 忠实移植层（Faithful Port）
+
+与 .NET [DocumentFormat.OpenXml SDK](https://github.com/dotnet/Open-XML-SDK) 一一对应的内容：typed element 类（generated）、Part 类、TypedXmlPart 基类、序列化/反序列化、Markup Compatibility（MC）协商、OPC 内核。这是项目使命的核心——「不越界、不遗失」。
+
+### 便捷扩展层（Convenience Layer）
+
+openxml-ts **自有设计**的人机工程学扩展，.NET SDK 中没有对等 API：
+
+- **Word 扩展**（`src/word/extensions/`）：`Paragraph.alignment`、`Run.bold`、`Paragraph.spacing` 等 ~14 个 mixin
+- **PPT 扩展**（`src/ppt/extensions/`）：`Slide.title`、`Shape.position`、`Slide.transition` 等 ~14 个 mixin
+- **Excel 扩展**（`src/excel/` + `src/excel/extensions/`）：`setFreezePanes`、`mergeCells`、`Cell.value` 等 ~11 个模块
+- **Parts 共享函数**（`src/parts/get-or-create-*.ts`）：跨子系统 bootstrap 工具
+
+便捷扩展层政策：**可加不可改**——只做加法，不改变底层 SDK 忠实语义；按需 import，tree-shake 友好。每个扩展文件头部都有标准 banner 注释，完整清单见 [`docs/convenience-layer.md`](./convenience-layer.md)。
+
 ## 五层分层
 
 ```

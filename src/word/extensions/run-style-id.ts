@@ -1,3 +1,4 @@
+// openxml-ts 便捷扩展层（非 .NET SDK 原生 API）。详见 docs/convenience-layer.md。
 /**
  * Epic-41：Word `Run.styleId` 访问器 mixin（与 Epic-40 段落样式 ID 对称）。
  *

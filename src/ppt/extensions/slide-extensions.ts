@@ -1,3 +1,4 @@
+// openxml-ts 便捷扩展层（非 .NET SDK 原生 API）。详见 docs/convenience-layer.md。
 /**
  * Epic-24：PPT \`p:sld\` (Slide) 与 drawingml \`p:sp\` / \`a:txBody\` 的只读 \`text\` getter。
  *
