@@ -60,7 +60,7 @@ async function main(): Promise<void> {
   });
 
   // ─── 构建文档内容 ─────────────────────────────────────────────────────────
-  const body = doc.mainDocumentPart!.document.firstChild()!;
+  const body = doc.mainDocumentPart?.document.firstChild()!;
   const append = (e: unknown): void =>
     (body as { appendChild: (e: unknown) => void }).appendChild(e);
 

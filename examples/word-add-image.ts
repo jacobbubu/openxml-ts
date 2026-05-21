@@ -45,7 +45,7 @@ async function main(): Promise<void> {
   });
 
   // 找到 Body（mainDocumentPart > Document > Body），加一段含图片的 Paragraph
-  const body = doc.mainDocumentPart!.document.firstChild()!;
+  const body = doc.mainDocumentPart?.document.firstChild()!;
   const para = new Paragraph();
   para.appendChild(imageRun);
   (body as { appendChild: (e: unknown) => void }).appendChild(para);

@@ -101,8 +101,8 @@ const UNIQUENESS_RE = /count\(distinct-values\(([^)]+)\)\)\s*=\s*count\(([^)]+)\
 
 // String-length: string-length(@attr) <= N or >= M
 const SL_ATTR_RE = /string-length\(@([^)]+)\)/g;
-const SL_MAX_RE = /string-length\(@[^)]+\)\s*<=\s*(\d+)/;
-const SL_MIN_RE = /string-length\(@[^)]+\)\s*>=\s*(\d+)/;
+const _SL_MAX_RE = /string-length\(@[^)]+\)\s*<=\s*(\d+)/;
+const _SL_MIN_RE = /string-length\(@[^)]+\)\s*>=\s*(\d+)/;
 
 // Numeric range: @attr >= N and @attr <= M  (may appear multiple times)
 const NR_CLAUSE_RE = /@([A-Za-z:_][A-Za-z:_0-9]*)\s*([<>]=?)\s*(-?\d+(?:\.\d+)?)/g;
@@ -155,11 +155,7 @@ function categorise(rule: SchematronRule): CategorisedRule {
 
   // 4. String-length constraints
   // Check string-length without count() or document() in the test
-  if (
-    test.includes("string-length(") &&
-    !test.includes("count(") &&
-    !test.includes("document(")
-  ) {
+  if (test.includes("string-length(") && !test.includes("count(") && !test.includes("document(")) {
     // Extract the attribute name(s)
     const attrMatches = [...test.matchAll(SL_ATTR_RE)];
     if (attrMatches.length > 0) {
@@ -225,8 +221,10 @@ function categorise(rule: SchematronRule): CategorisedRule {
         const val = Number(c[3]);
         if (!attrs.has(attr)) attrs.set(attr, {});
         const entry = attrs.get(attr)!;
-        if (op === ">=" || op === ">") entry.min = entry.min === undefined ? val : Math.min(entry.min, val);
-        else if (op === "<=" || op === "<") entry.max = entry.max === undefined ? val : Math.max(entry.max, val);
+        if (op === ">=" || op === ">")
+          entry.min = entry.min === undefined ? val : Math.min(entry.min, val);
+        else if (op === "<=" || op === "<")
+          entry.max = entry.max === undefined ? val : Math.max(entry.max, val);
       }
 
       // Return first attr's rule (generator handles multi-attr similarly)
@@ -259,11 +257,7 @@ function expandRule(rule: SchematronRule): CategorisedRule[] {
   const { Context: context, Test: test, App: app } = rule;
 
   // String-length: may have multiple attrs
-  if (
-    test.includes("string-length(") &&
-    !test.includes("count(") &&
-    !test.includes("document(")
-  ) {
+  if (test.includes("string-length(") && !test.includes("count(") && !test.includes("document(")) {
     const attrMatches = [...test.matchAll(/string-length\(@([^)]+)\)/g)];
     const seenAttrs = new Set<string>();
     const results: StringLengthRule[] = [];
@@ -294,7 +288,9 @@ function expandRule(rule: SchematronRule): CategorisedRule[] {
     !test.includes("matches(") &&
     (test.includes("<=") || test.includes(">=") || test.includes("< ") || test.includes("> "))
   ) {
-    const clauses = [...test.matchAll(/@([A-Za-z:_][A-Za-z:_0-9]*)\s*([<>]=?)\s*(-?\d+(?:\.\d+)?)/g)];
+    const clauses = [
+      ...test.matchAll(/@([A-Za-z:_][A-Za-z:_0-9]*)\s*([<>]=?)\s*(-?\d+(?:\.\d+)?)/g),
+    ];
     if (clauses.length > 0) {
       const attrs = new Map<string, { min?: number; max?: number }>();
       for (const c of clauses) {
@@ -439,27 +435,24 @@ async function main(): Promise<void> {
 
   await mkdir(resolve(REPO_ROOT, "src/validation/schematron"), { recursive: true });
 
-  const lines = [
-    TYPES_HEADER,
-    `export const SCHEMATRON_RULES: ReadonlyArray<SchematronRule> = [`,
-  ];
+  const lines = [TYPES_HEADER, "export const SCHEMATRON_RULES: ReadonlyArray<SchematronRule> = ["];
 
   for (const r of allRules) {
-    lines.push(emitRule(r) + ",");
+    lines.push(`${emitRule(r)},`);
   }
   lines.push("];");
   lines.push("");
 
   // Emit summary constants for test assertions
-  const supportedKinds = ["relationship", "uniqueness", "stringLength", "numericRange"] as const;
+  const _supportedKinds = ["relationship", "uniqueness", "stringLength", "numericRange"] as const;
   const supportedCount = allRules.filter((r) => r.kind !== "unsupported").length;
   const unsupportedCount = allRules.filter((r) => r.kind === "unsupported").length;
 
-  lines.push(`/** Total rules in schematrons.json (original, before expansion). */`);
+  lines.push("/** Total rules in schematrons.json (original, before expansion). */");
   lines.push(`export const SCHEMATRON_SOURCE_COUNT = ${raw.length};`);
-  lines.push(`/** Rules with recognised patterns (coverable by this evaluator). */`);
+  lines.push("/** Rules with recognised patterns (coverable by this evaluator). */");
   lines.push(`export const SCHEMATRON_COVERED_COUNT = ${supportedCount};`);
-  lines.push(`/** Rules skipped (require full XPath / cross-Part resolution). */`);
+  lines.push("/** Rules skipped (require full XPath / cross-Part resolution). */");
   lines.push(`export const SCHEMATRON_SKIPPED_COUNT = ${unsupportedCount};`);
   lines.push("");
 

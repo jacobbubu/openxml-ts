@@ -23,7 +23,7 @@ async function main(): Promise<void> {
   }
 
   const doc = SpreadsheetDocument.create();
-  const ws = doc.workbookPart!.worksheetParts[0]!.worksheet;
+  const ws = doc.workbookPart?.worksheetParts[0]?.worksheet;
   const sheetData = ws.firstChild(SheetData);
   if (sheetData === undefined) throw new Error("expected default SheetData");
 

@@ -267,13 +267,13 @@
       "types": "./dist/validation/index.d.ts",
       "import": "./dist/validation/index.js"
     },
+    "./streaming": {
+      "types": "./dist/streaming/index.d.ts",
+      "import": "./dist/streaming/index.js"
+    },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
+  "files": ["dist", "README.md", "LICENSE"],
   "bin": {
     "openxml-ts": "./dist/bin/openxml-ts.js"
   },
@@ -594,6 +594,13 @@
       "name": "openxml-ts/office-ext (full bundle including all registries)",
       "path": "dist/office-ext/index.js",
       "limit": "8000 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/streaming (reader + writer, no registry data)",
+      "path": "dist/streaming/index.js",
+      "import": "{ OpenXmlPartReader, OpenXmlPartWriter }",
+      "limit": "50 KB",
       "gzip": true
     }
   ]

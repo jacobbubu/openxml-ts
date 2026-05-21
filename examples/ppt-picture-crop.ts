@@ -46,7 +46,7 @@ async function main(): Promise<void> {
   process.stdout.write(`Applied crop: ${JSON.stringify(crop)}\n`);
 
   // 将 picture 挂到 slide1 的 spTree
-  const slide = doc.presentationPart!.slideParts[0]!.slide;
+  const slide = doc.presentationPart?.slideParts[0]?.slide;
   const cSld = slide.firstChild()!;
   const spTree = [...cSld.children].find((c) => c.localName === "spTree") as
     | { appendChild: (e: unknown) => void }

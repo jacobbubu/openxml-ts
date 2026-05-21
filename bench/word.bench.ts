@@ -71,7 +71,7 @@ describe("WordprocessingDocument.openAsync — 1 MB docx", () => {
 describe("element 树 → bytes — 1 MB docx", () => {
   bench("修改 1 个 Text + saveAsBytes 整包写回", async () => {
     const doc = await WordprocessingDocument.openAsync(oneMegabyteDocx);
-    const [first] = doc.mainDocumentPart!.document.descendants(Text);
+    const [first] = doc.mainDocumentPart?.document.descendants(Text) ?? [];
     if (first !== undefined) first.text = "MUTATED";
     await doc.saveAsBytesAsync();
   });

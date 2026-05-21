@@ -15,7 +15,7 @@ async function main(): Promise<void> {
   }
 
   const doc = PresentationDocument.create();
-  const slide = doc.presentationPart!.slideParts[0]!.slide;
+  const slide = doc.presentationPart?.slideParts[0]?.slide;
   const cSld = slide.firstChild()!;
   const spTree = [...cSld.children].find((c) => c.localName === "spTree") as
     | { appendChild: (e: unknown) => void }

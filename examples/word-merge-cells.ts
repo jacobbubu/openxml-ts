@@ -20,7 +20,7 @@ async function main(): Promise<void> {
   }
 
   const doc = WordprocessingDocument.create();
-  const body = doc.mainDocumentPart!.document.firstChild()!;
+  const body = doc.mainDocumentPart?.document.firstChild()!;
 
   const table = createDocumentTable(3, 3);
   setDocumentTableCellText(table, 0, 0, "Quarter Stats");
