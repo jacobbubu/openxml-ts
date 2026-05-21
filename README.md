@@ -32,6 +32,10 @@ await doc.saveAsAsync("./out.docx");
 | `openxml-ts/excel` | 读 / 写 xlsx | `SpreadsheetDocument` |
 | `openxml-ts/ppt` | 读 / 写 pptx | `PresentationDocument` |
 | `openxml-ts/drawing` | DrawingML 共享层（Theme / Color / Font Scheme） | （仅 element 类）|
+| `openxml-ts/office-ext` | 109 个 Office 扩展命名空间 typed 类（w14/x14/p14 等） | （仅 element 类）|
+| `openxml-ts/validation` | Schema + schematron 语义校验 | `OpenXmlValidator` |
+| `openxml-ts/streaming` | 前向 pull 游标读 / push 写 | `OpenXmlPartReader` / `OpenXmlPartWriter` |
+| `openxml-ts/markup-compat` | Markup Compatibility 协商 | `processMarkupCompatibility` |
 | `openxml-ts/linq` | .NET LINQ to XML 风格 API | `XDocument` |
 | `openxml-ts`（root） | 通用 OPC 包操作 | `openAsync` / `createInMemory` |
 
@@ -213,6 +217,23 @@ await part.writeAsync('<w:document xmlns:w="...">...</w:document>');
 const flatXml = pkg.toFlatOpc({ progId: "Word.Document" });
 ```
 
+## 校验（`openxml-ts/validation`）
+
+`OpenXmlValidator` 做三层校验，永不抛错——只返回 `ValidationError[]`：结构（schema Particle：子元素合法性 / cardinality / 顺序）、属性（必填 / 长度 / 数值范围）、schematron 语义规则（943/948 条，对齐 .NET SDK 的 18 类语义约束）。
+
+```ts
+import { OpenXmlValidator } from "openxml-ts/validation";
+import { WordprocessingDocument } from "openxml-ts/word";
+
+const doc = await WordprocessingDocument.openAsync("./report.docx");
+const errors = new OpenXmlValidator().validatePackage(doc);
+for (const e of errors) {
+  console.log(`[${e.errorType}] ${e.description}`);
+}
+```
+
+校验是开发期质量门禁，不是打开文档的前置条件——反序列化对 schema 越界一律宽容。真实 Office 文件经全套校验零误报。
+
 ## 忠实移植层与便捷扩展层
 
 openxml-ts 的 API 分为两类：
@@ -295,12 +316,16 @@ cd playground && pnpm install && pnpm dev
 **能干**：
 
 - 读 / 写 `.docx` / `.xlsx` / `.pptx`（任意 Office 2007+ 文件）；
-- 字段级强类型 element 树（~1830 个 schema 类，覆盖 wordprocessingml / spreadsheetml / presentationml / drawingml 主命名空间）；
+- 字段级强类型 element 树（~4400 个 schema 类，155 个 OOXML 命名空间全覆盖——含 w14 / x14 / p14 等全部 Office 扩展命名空间）；
+- 强类型 Part 类层（128 个，对齐 .NET SDK `DocumentFormat.OpenXml.Packaging`）；
+- Schema 校验（`OpenXmlValidator`：结构 / Particle + 属性约束 + 943/948 条 schematron 语义规则；真实 Office 文件零误报）；
+- 流式读写（`OpenXmlPartReader` 前向 pull 游标 / `OpenXmlPartWriter` push 写入器，大文件不整树 materialize）；
+- Markup Compatibility 协商（`mc:AlternateContent` / `mc:Ignorable`，`openAsync` 可选自动处理）；
 - 高频场景便捷 helper 层（见上「便捷 API 速查」）：Word 段落 / Run 格式、样式、页眉页脚、页面设置、脚注；Excel 冻结 / 列宽行高 / 数字格式 / 合并 / 数据验证 / Cell.value / 公式；PPT 标题 / 背景 / 转场 / 形状定位旋转 / 演讲者注释；
 - 跨子系统 typed Parts（Word 6 / Excel 6 / PPT 7）+ 共享 ThemePart；
 - PowerPoint 三级版式继承（slide → layout → master → theme）的有效配色/字体/格式解析；
 - LINQ to XML 风格查询 / 写入（Parse → Where/Select → Save 闭环）；
-- ECMA-376 Strict（ISO 29500-1，`http://purl.oclc.org/ooxml/...` URI）兼容；
+- ECMA-376 Strict（ISO 29500-1，`http://purl.oclc.org/ooxml/...` URI）命名空间兼容；
 - 浏览器与 Node / Bun 三端语义一致；
 - CLI 工具（`openxml-ts inspect / cat`）。
 
@@ -308,9 +333,10 @@ cd playground && pnpm install && pnpm dev
 
 - 加密文件读写（OOXML 加密）；
 - Office 文档渲染（出 PDF / 图片）；
-- Schema 校验（不阻塞 unknown element，原样保留为 `OpenXmlUnknownElement`）；
 - 模板引擎（占位符替换等需自己写遍历）；
-- VBA 宏 / 数字签名验证。
+- VBA 宏执行 / 数字签名验证。
+
+> 校验是**可选**的：反序列化本身从不因 schema 越界而中断——未知元素原样保留为 `OpenXmlUnknownElement`，越界属性值保留原始字符串。需要校验时显式调用 `openxml-ts/validation` 的 `OpenXmlValidator`。
 
 ## 调试
 
@@ -325,7 +351,7 @@ console.log(pkg.diagnostics.partCount, pkg.diagnostics.relationshipCount);
 
 当前 **0.x 是 pre-release**，破坏性改动会通过 minor bump 释放（按 semver pre-1.0 惯例）。
 
-进入 **1.0+ 后**：上面 6 个公开 entry（`openxml-ts` + `/word` / `/excel` / `/ppt` / `/drawing` / `/linq`）的命名导出 / 方法签名 / 类层级走严格 semver——任何破坏性改动需要 major bump。`<entry>/generated/*` 深引入路径不在承诺范围。详见 [`docs/api-stability.md`](./docs/api-stability.md)。
+进入 **1.0+ 后**：公开 entry（`openxml-ts` + `/word` / `/excel` / `/ppt` / `/drawing` / `/office-ext` / `/validation` / `/streaming` / `/markup-compat` / `/linq`）的命名导出 / 方法签名 / 类层级走严格 semver——任何破坏性改动需要 major bump。`<entry>/generated/*` 深引入路径不在承诺范围。详见 [`docs/api-stability.md`](./docs/api-stability.md)。
 
 CI 跑 `pnpm api:check`（基于 `@microsoft/api-extractor`），任何 surface 变化要求 PR 一起更新 `api/*.api.md`。
 
