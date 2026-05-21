@@ -15,6 +15,7 @@
       ".omc",
       "coverage",
       "src/**/generated/**",
+      "src/validation/constraints/**",
       "test/fixtures/golden/**/*.golden.json"
     ]
   },
