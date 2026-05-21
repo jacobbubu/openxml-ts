@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_word_2010_wordml.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerWord2010ChildMaps } from "./_child-map.js";
 import { Alpha } from "./alpha.js";
 import { BevelBottom } from "./bevel-bottom.js";
 import { BevelEmpty } from "./bevel-empty.js";
@@ -139,4 +140,5 @@ export function registerWord2010Elements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/word/2010/wordml", "xfrm", Transform2D);
   registry.register("http://schemas.microsoft.com/office/word/2010/wordml", "uncheckedState", UncheckedState);
   registry.register("http://schemas.microsoft.com/office/word/2010/wordml", "nvContentPartPr", WordNonVisualContentPartShapeProperties);
+  registerWord2010ChildMaps(registry);
 }

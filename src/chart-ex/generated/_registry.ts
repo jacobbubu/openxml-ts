@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_drawing_2014_chartex.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerChartExChildMaps } from "./_child-map.js";
 import { Address } from "./address.js";
 import { Aggregation } from "./aggregation.js";
 import { Axis } from "./axis.js";
@@ -237,4 +238,5 @@ export function registerChartExElements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/drawing/2014/chartex", "v", VXsdstring);
   registry.register("http://schemas.microsoft.com/office/drawing/2014/chartex", "binary", Xsdbase64Binary);
   registry.register("http://schemas.microsoft.com/office/drawing/2014/chartex", "binSize", Xsddouble);
+  registerChartExChildMaps(registry);
 }

@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_diagram.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerDiagramChildMaps } from "./_child-map.js";
 import { Adjust } from "./adjust.js";
 import { AdjustList } from "./adjust-list.js";
 import { Algorithm } from "./algorithm.js";
@@ -141,4 +142,5 @@ export function registerDiagramElements(registry: ElementRegistry): void {
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/diagram", "title", Title);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/diagram", "varLst", VariableList);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/diagram", "whole", Whole);
+  registerDiagramChildMaps(registry);
 }

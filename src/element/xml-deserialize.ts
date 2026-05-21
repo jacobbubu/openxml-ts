@@ -40,7 +40,13 @@ export function deserialize(xml: string, options: DeserializeOptions = {}): Open
       const fullScope = mergeScope(parentScope ?? EMPTY_SCOPE, localDecls);
       const { prefix, localName, namespaceUri } = resolveQName(token.name, fullScope);
 
-      const ctor = registry.lookup(namespaceUri, localName);
+      // Epic-86: 上下文感知消歧——先查父元素 child-map，未命中再降级到全局 lookup。
+      const parentEl = stack.length > 0 ? stack[stack.length - 1]?.element : undefined;
+      const parentClassName = parentEl !== undefined ? parentEl.constructor.name : undefined;
+      const ctor =
+        (parentClassName !== undefined
+          ? registry.lookupChild(parentClassName, namespaceUri, localName)
+          : undefined) ?? registry.lookup(namespaceUri, localName);
       const element: OpenXmlElement =
         ctor !== undefined
           ? new ctor()

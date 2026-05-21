@@ -365,8 +365,12 @@ function buildRegistry(
   //  1. 默认按 className 字典序「last wins」——等价于旧实现 (map.set 顺序覆盖)；
   //     这套规则在多数 qname 上是正确的（Excel `x:t` → Text、`x:sheetData` →
   //     SheetData、`x:b` → BooleanItem 等）。
-  //  2. 手工覆盖表 `EXPLICIT_PRIORITY` 列出 1) 不走的特殊 qname。当前只有
-  //     `w:style` 一条：composite Style 必须赢 leaf StyleId（详见 issue #78）。
+  //  2. 手工覆盖表 `EXPLICIT_PRIORITY` 列出不走字典序的特殊 qname。
+  //
+  // Epic-86 之后：EXPLICIT_PRIORITY 在父上下文已知时已被 child-map 取代——
+  // _child-map.ts 按 schema Particle 精确消歧。EXPLICIT_PRIORITY 只剩下两类用途：
+  //   a) 根元素 / 父上下文未知时的全局 fallback（如根级 w:jc、w:rPr 等）；
+  //   b) Leaf vs Composite 同 qname 时必须保 composite（如 w:style）。
   //
   // 为什么不用「composite > leaf」通杀：实测会把 Excel `x:t` 误解析到 MdxTuple
   // (composite)，导致 SST 拿不到 Text 的 .text 字段而崩 resolver。schema 里
@@ -428,15 +432,18 @@ function buildRegistry(
     `// Source: ${sourcePath}`,
     "",
     `import type { ElementRegistry } from "${"../".repeat(elementDepth)}element/index.js";`,
+    `import { register${subsystem.pascal}ChildMaps } from "./_child-map.js";`,
     imports,
     "",
     "/**",
     ` * 把 ${subsystem.label} 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。`,
     " * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，",
     " * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。",
+    " * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。",
     " */",
     `export function register${subsystem.pascal}Elements(registry: ElementRegistry): void {`,
     registrations,
+    `  register${subsystem.pascal}ChildMaps(registry);`,
     "}",
     "",
   ].join("\n");

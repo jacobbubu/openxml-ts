@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_spreadsheetml_2006_main.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerSpreadsheetChildMaps } from "./_child-map.js";
 import { Alignment } from "./alignment.js";
 import { Author } from "./author.js";
 import { Authors } from "./authors.js";
@@ -775,4 +776,5 @@ export function registerSpreadsheetElements(registry: ElementRegistry): void {
   registry.register("http://schemas.openxmlformats.org/spreadsheetml/2006/main", "xmlColumnPr", XmlColumnProperties);
   registry.register("http://schemas.openxmlformats.org/spreadsheetml/2006/main", "xmlPr", XmlProperties);
   registry.register("http://schemas.openxmlformats.org/spreadsheetml/2006/main", "v", Xstring);
+  registerSpreadsheetChildMaps(registry);
 }

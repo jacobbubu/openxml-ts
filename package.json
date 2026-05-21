@@ -277,11 +277,7 @@
     },
     "./package.json": "./package.json"
   },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
+  "files": ["dist", "README.md", "LICENSE"],
   "bin": {
     "openxml-ts": "./dist/bin/openxml-ts.js"
   },
@@ -333,6 +329,7 @@
     "gen:ppt-2010": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_powerpoint_2010_main.json --output src/ppt-2010/generated",
     "gen:drawing-2010": "bun run tools/schema-codegen/generate.ts --input /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_drawing_2010_main.json --output src/drawing-2010/generated",
     "gen:office-ext": "bun run tools/schema-codegen/gen-office-ext.ts",
+    "gen:child-maps": "bun run tools/schema-codegen/gen-child-map.ts",
     "format": "biome format --write .",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",

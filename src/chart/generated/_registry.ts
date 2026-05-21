@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_chart.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerChartChildMaps } from "./_child-map.js";
 import { ApplyToEnd } from "./apply-to-end.js";
 import { ApplyToFront } from "./apply-to-front.js";
 import { ApplyToSides } from "./apply-to-sides.js";
@@ -451,4 +452,5 @@ export function registerChartElements(registry: ElementRegistry): void {
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/chart", "wireframe", Wireframe);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/chart", "xVal", XValues);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/chart", "yVal", YValues);
+  registerChartChildMaps(registry);
 }

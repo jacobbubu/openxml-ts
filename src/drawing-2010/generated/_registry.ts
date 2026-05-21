@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_drawing_2010_main.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerDrawing2010ChildMaps } from "./_child-map.js";
 import { ArtisticBlur } from "./artistic-blur.js";
 import { ArtisticCement } from "./artistic-cement.js";
 import { ArtisticChalkSketch } from "./artistic-chalk-sketch.js";
@@ -109,4 +110,5 @@ export function registerDrawing2010Elements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/drawing/2010/main", "m", TextMath);
   registry.register("http://schemas.microsoft.com/office/drawing/2010/main", "xfrm", Transform2D);
   registry.register("http://schemas.microsoft.com/office/drawing/2010/main", "useLocalDpi", UseLocalDpi);
+  registerDrawing2010ChildMaps(registry);
 }

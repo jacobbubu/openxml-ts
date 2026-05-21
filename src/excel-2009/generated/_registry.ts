@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_spreadsheetml_2009_9_main.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerExcel2009ChildMaps } from "./_child-map.js";
 import { ArgumentDescription } from "./argument-description.js";
 import { ArgumentDescriptions } from "./argument-descriptions.js";
 import { AxisColor } from "./axis-color.js";
@@ -231,4 +232,5 @@ export function registerExcel2009Elements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", "rows", TupleSetRows);
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", "workbookPr", WorkbookProperties);
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", "tupleItem", Xstring);
+  registerExcel2009ChildMaps(registry);
 }

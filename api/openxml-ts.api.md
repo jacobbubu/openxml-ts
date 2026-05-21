@@ -37,6 +37,9 @@ export class BooleanValue {
 }
 
 // @public
+export type ChildMap = ReadonlyMap<string, ElementFactory>;
+
+// @public
 export function collectValidationIssues(root: OpenXmlElement): ValidationIssue[];
 
 // @public
@@ -147,8 +150,10 @@ export class ElementRegistry {
     // (undocumented)
     has(namespaceUri: string, localName: string): boolean;
     lookup(namespaceUri: string, localName: string): ElementFactory | undefined;
+    lookupChild(parentClassName: string, namespaceUri: string, localName: string): ElementFactory | undefined;
     // (undocumented)
     register(namespaceUri: string, localName: string, ctor: ElementFactory): void;
+    registerChildMap(parentClassName: string, entries: ReadonlyArray<readonly [string, string, ElementFactory]>): void;
     // (undocumented)
     get size(): number;
 }

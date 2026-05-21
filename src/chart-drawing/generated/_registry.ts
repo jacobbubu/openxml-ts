@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_chartDrawing.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerChartDrawingChildMaps } from "./_child-map.js";
 import { AbsoluteAnchorSize } from "./absolute-anchor-size.js";
 import { BlipFill } from "./blip-fill.js";
 import { ConnectionShape } from "./connection-shape.js";
@@ -67,4 +68,5 @@ export function registerChartDrawingElements(registry: ElementRegistry): void {
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", "xfrm", Transform);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", "x", XPosition);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/chartDrawing", "y", YPosition);
+  registerChartDrawingChildMaps(registry);
 }

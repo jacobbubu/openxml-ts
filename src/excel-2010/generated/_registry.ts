@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_spreadsheetml_2010_11_main.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerExcel2010ChildMaps } from "./_child-map.js";
 import { AutoFilter } from "./auto-filter.js";
 import { BoundsTimelineRange } from "./bounds-timeline-range.js";
 import { CachedUniqueName } from "./cached-unique-name.js";
@@ -155,4 +156,5 @@ export function registerExcel2010Elements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", "webExtensions", WebExtensions);
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", "workbookPr", WorkbookProperties);
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", "v", Xstring);
+  registerExcel2010ChildMaps(registry);
 }
