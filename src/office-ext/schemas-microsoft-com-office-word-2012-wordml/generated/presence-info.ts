@@ -1,0 +1,20 @@
+// THIS FILE IS GENERATED. DO NOT EDIT.
+// Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_word_2012_wordml.json
+// @see DocumentFormat.OpenXml.Word2012Wordml.PresenceInfo
+
+import {
+  OpenXmlLeafElement,
+} from "../../../element/index.js";
+
+/** Defines the PresenceInfo Class.
+ *
+ * Element: `w15:presenceInfo` */
+export class PresenceInfo extends OpenXmlLeafElement {
+  override readonly localName = "presenceInfo" as const;
+  override readonly prefix = "w15" as const;
+  override readonly namespaceUri = "http://schemas.microsoft.com/office/word/2012/wordml" as const;
+
+
+
+
+}

@@ -71,6 +71,12 @@ export interface GenerateElementOptions {
    * 可选：调用方未提供时退化为「只看自身 Attributes」（保留向后兼容）。
    */
   readonly typeIndex?: ReadonlyMap<string, SchemaType>;
+  /**
+   * element 包的相对 import 路径。
+   * 默认：`"../../element/index.js"`（适合 `src/<name>/generated/` 两层深度）。
+   * office-ext 子目录三层深：`"../../../element/index.js"`。
+   */
+  readonly elementPkg?: string;
 }
 
 const ELEMENT_PKG = "../../element/index.js";
@@ -114,13 +120,14 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
   }
   for (const v of valueImports) imports.push(v);
 
+  const elementPkg = options.elementPkg ?? ELEMENT_PKG;
   const importsBlock =
     imports.length === 0
       ? ""
       : `import {\n${imports
           .sort()
           .map((i) => `  ${i},`)
-          .join("\n")}\n} from "${ELEMENT_PKG}";\n`;
+          .join("\n")}\n} from "${elementPkg}";\n`;
 
   const classKeyword = type.IsAbstract === true ? "abstract class" : "class";
   const baseHint = type.IsAbstract === true ? " (abstract)" : "";

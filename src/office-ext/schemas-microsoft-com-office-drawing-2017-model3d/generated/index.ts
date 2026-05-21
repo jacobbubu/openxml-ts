@@ -1,0 +1,41 @@
+// THIS FILE IS GENERATED. DO NOT EDIT.
+// Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_drawing_2017_model3d.json
+
+export { AmbientLight } from "./ambient-light.js";
+export { Blip } from "./blip.js";
+export { ColorType } from "./color-type.js";
+export { DirectionalLight } from "./directional-light.js";
+export { IlluminancePositiveRatio } from "./illuminance-positive-ratio.js";
+export { IntensityPositiveRatio } from "./intensity-positive-ratio.js";
+export { LookAtPoint3D } from "./look-at-point3-d.js";
+export { MeterPerModelUnitPositiveRatio } from "./meter-per-model-unit-positive-ratio.js";
+export { Model3D } from "./model3-d.js";
+export { Model3DCamera } from "./model3-d-camera.js";
+export { Model3DExtension } from "./model3-d-extension.js";
+export { Model3DExtensionList } from "./model3-d-extension-list.js";
+export { Model3DRaster } from "./model3-d-raster.js";
+export { Model3DTransform } from "./model3-d-transform.js";
+export { ObjectViewport } from "./object-viewport.js";
+export { OfficeArtExtensionList } from "./office-art-extension-list.js";
+export { OpenXmlPoint3DElement } from "./open-xml-point3-d-element.js";
+export { OpenXmlPositiveRatioElement } from "./open-xml-positive-ratio-element.js";
+export { OrthographicProjection } from "./orthographic-projection.js";
+export { PerspectiveProjection } from "./perspective-projection.js";
+export { PictureAttributionSourceURL } from "./picture-attribution-source-url.js";
+export { PointLight } from "./point-light.js";
+export { PosPoint3D } from "./pos-point3-d.js";
+export { PostTransVector3D } from "./post-trans-vector3-d.js";
+export { PreTransVector3D } from "./pre-trans-vector3-d.js";
+export { RatioType } from "./ratio-type.js";
+export { Rotate3D } from "./rotate3-d.js";
+export { Scale3D } from "./scale3-d.js";
+export { ShapeProperties } from "./shape-properties.js";
+export { SpotLight } from "./spot-light.js";
+export { SxRatio } from "./sx-ratio.js";
+export { SyRatio } from "./sy-ratio.js";
+export { SzPositiveRatio } from "./sz-positive-ratio.js";
+export { SzRatio } from "./sz-ratio.js";
+export { UnknownLight } from "./unknown-light.js";
+export { UpVector3D } from "./up-vector3-d.js";
+export { Vector3DType } from "./vector3-d-type.js";
+export { WindowViewport } from "./window-viewport.js";

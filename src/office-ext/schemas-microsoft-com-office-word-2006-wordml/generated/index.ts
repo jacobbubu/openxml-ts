@@ -1,0 +1,42 @@
+// THIS FILE IS GENERATED. DO NOT EDIT.
+// Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_word_2006_wordml.json
+
+export { AcceleratorKeymapType } from "./accelerator-keymap-type.js";
+export { AllocatedCommand } from "./allocated-command.js";
+export { AllocatedCommandKeyboardCustomization } from "./allocated-command-keyboard-customization.js";
+export { AllocatedCommandManifest } from "./allocated-command-manifest.js";
+export { AllocatedCommandManifestEntry } from "./allocated-command-manifest-entry.js";
+export { AllocatedCommands } from "./allocated-commands.js";
+export { CharacterInsertion } from "./character-insertion.js";
+export { DocEvents } from "./doc-events.js";
+export { EventDocBuildingBlockAfterInsertXsdString } from "./event-doc-building-block-after-insert-xsd-string.js";
+export { EventDocCloseXsdString } from "./event-doc-close-xsd-string.js";
+export { EventDocContentControlAfterInsertXsdString } from "./event-doc-content-control-after-insert-xsd-string.js";
+export { EventDocContentControlBeforeDeleteXsdString } from "./event-doc-content-control-before-delete-xsd-string.js";
+export { EventDocContentControlOnEnterXsdString } from "./event-doc-content-control-on-enter-xsd-string.js";
+export { EventDocContentControlOnExistXsdString } from "./event-doc-content-control-on-exist-xsd-string.js";
+export { EventDocContentControlUpdateXsdString } from "./event-doc-content-control-update-xsd-string.js";
+export { EventDocNewXsdString } from "./event-doc-new-xsd-string.js";
+export { EventDocOpenXsdString } from "./event-doc-open-xsd-string.js";
+export { EventDocStoreUpdateXsdString } from "./event-doc-store-update-xsd-string.js";
+export { EventDocSyncXsdString } from "./event-doc-sync-xsd-string.js";
+export { EventDocXmlAfterInsertXsdString } from "./event-doc-xml-after-insert-xsd-string.js";
+export { EventDocXmlBeforeDeleteXsdString } from "./event-doc-xml-before-delete-xsd-string.js";
+export { FixedCommandKeyboardCustomization } from "./fixed-command-keyboard-customization.js";
+export { KeyMapCustomizations } from "./key-map-customizations.js";
+export { KeyMapEntry } from "./key-map-entry.js";
+export { KeymapsType } from "./keymaps-type.js";
+export { MacroKeyboardCustomization } from "./macro-keyboard-customization.js";
+export { MacroWllType } from "./macro-wll-type.js";
+export { MailMergeRecipients } from "./mail-merge-recipients.js";
+export { Mcd } from "./mcd.js";
+export { Mcds } from "./mcds.js";
+export { MismatchedKeyMapCustomization } from "./mismatched-key-map-customization.js";
+export { RecordHashCode } from "./record-hash-code.js";
+export { RecordIncluded } from "./record-included.js";
+export { SingleDataSourceRecord } from "./single-data-source-record.js";
+export { TemplateCommandGroup } from "./template-command-group.js";
+export { ToolbarData } from "./toolbar-data.js";
+export { Toolbars } from "./toolbars.js";
+export { VbaSuppData } from "./vba-supp-data.js";
+export { WllMacroKeyboardCustomization } from "./wll-macro-keyboard-customization.js";
