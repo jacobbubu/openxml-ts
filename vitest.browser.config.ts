@@ -48,6 +48,8 @@ export default defineConfig({
       // Phase C 增的 collectValidationIssues 验证用 upstream-smoke 真实 fixture
       // 跑覆盖，依赖 node:fs/promises 读盘——只能 Node 跑。
       "test/element/validate.test.ts",
+      // Epic-86 上下文感知反序列化测试用 upstream-smoke fixture 读盘做误报扫描——只能 Node 跑。
+      "test/element/context-aware-deserialize.test.ts",
     ],
     browser: {
       enabled: true,
