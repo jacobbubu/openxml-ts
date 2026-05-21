@@ -41,6 +41,7 @@ export {
 } from "./validators/index.js";
 
 export {
+  hasStrictOriginNamespace,
   isStrictUri,
   strictToTransitional,
   transitionalToStrict,

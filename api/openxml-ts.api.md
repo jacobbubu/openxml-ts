@@ -193,6 +193,11 @@ export interface FlatOpcWriteOptions {
 export function fromFlatOpcAsync(xml: string): Promise<OpenXmlPackage>;
 
 // @public
+export function hasStrictOriginNamespace(el: {
+    extendedAttributes: ReadonlyMap<string, string>;
+}): boolean;
+
+// @public
 export class HexBinaryValue {
     constructor(hex: string);
     // (undocumented)

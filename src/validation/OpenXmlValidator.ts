@@ -24,6 +24,7 @@
  */
 
 import { OpenXmlCompositeElement, type OpenXmlElement } from "../element/element.js";
+import { hasStrictOriginNamespace } from "../element/strict-namespace-map.js";
 import type { IRelationshipCollection } from "../packaging/interfaces/relationship.js";
 import type { ValidationError } from "./ValidationError.js";
 import type { PartResolver } from "./schematron/evaluator.js";
@@ -235,7 +236,14 @@ export class OpenXmlValidator {
   ): ValidationError[] {
     const errors: ValidationError[] = [];
     try {
-      this.walkElement(root, makePath("", root, 0), errors, partUri);
+      // Detect Strict-format documents by inspecting the root element's
+      // xmlns declarations.  Deserialization writes original xmlns:<prefix>
+      // values (which may be Strict URIs) into extendedAttributes on the root
+      // element.  For Strict documents we skip required-attribute checks
+      // because the Strict schema (ISO 29500-1) may make certain attrs
+      // optional that the Transitional schema (Part 4) marks required.
+      const strictOrigin = hasStrictOriginNamespace(root);
+      this.walkElement(root, makePath("", root, 0), errors, partUri, strictOrigin);
     } catch {
       // Safety net: validation must never throw
     }
@@ -274,15 +282,25 @@ export class OpenXmlValidator {
     path: string,
     errors: ValidationError[],
     partUri: string | undefined,
+    strictOrigin = false,
   ): void {
     const constraint = lookupConstraint(el);
 
     // --- Attribute validation ---
-    if (constraint !== undefined) {
-      this.validateAttributes(el, constraint, path, errors, partUri);
-    } else {
-      // Fall back to codegen's validateRequired() if available
-      this.validateRequiredViaCodegen(el, path, errors, partUri);
+    // For Strict-format documents, skip required-attribute checks entirely:
+    // the Strict schema (ISO 29500-1) may declare certain attributes optional
+    // that the Transitional schema marks required.  Structural (particle) and
+    // value-constraint checks are unaffected.
+    if (!strictOrigin) {
+      if (constraint !== undefined) {
+        this.validateAttributes(el, constraint, path, errors, partUri);
+      } else {
+        // Fall back to codegen's validateRequired() if available
+        this.validateRequiredViaCodegen(el, path, errors, partUri);
+      }
+    } else if (constraint !== undefined) {
+      // Strict doc: still run attribute value constraints (e), but skip required-attr (d).
+      this.validateAttrConstraintsOnly(el, constraint, path, errors, partUri);
     }
 
     // --- Structural (particle) validation for composite elements ---
@@ -296,7 +314,7 @@ export class OpenXmlValidator {
       // Recurse into children
       let i = 0;
       for (const child of children) {
-        this.walkElement(child, makePath(path, child, i), errors, partUri);
+        this.walkElement(child, makePath(path, child, i), errors, partUri, strictOrigin);
         i += 1;
       }
     }
@@ -325,6 +343,74 @@ export class OpenXmlValidator {
     }
 
     // (e) Attribute value constraints
+    for (const ac of constraint.attrConstraints ?? []) {
+      const value = this.getAttrStringValue(el, ac.qname);
+      if (value === undefined) continue;
+
+      if (ac.maxLength !== undefined && value.length > ac.maxLength) {
+        errors.push(
+          makeError(
+            "Sch_AttributeValueDataTypeDetailed",
+            `Attribute '${ac.qname}' on <${el.qualifiedName}>: string length ${value.length} exceeds MaxLength ${ac.maxLength}.`,
+            el,
+            path,
+            partUri,
+          ),
+        );
+      }
+      if (ac.minLength !== undefined && value.length < ac.minLength) {
+        errors.push(
+          makeError(
+            "Sch_AttributeValueDataTypeDetailed",
+            `Attribute '${ac.qname}' on <${el.qualifiedName}>: string length ${value.length} is less than MinLength ${ac.minLength}.`,
+            el,
+            path,
+            partUri,
+          ),
+        );
+      }
+
+      if (ac.maxValue !== undefined || ac.minValue !== undefined) {
+        const num = Number(value);
+        if (!Number.isNaN(num)) {
+          if (ac.minValue !== undefined && num < ac.minValue) {
+            errors.push(
+              makeError(
+                "Sch_AttributeValueDataTypeDetailed",
+                `Attribute '${ac.qname}' on <${el.qualifiedName}>: value ${num} is less than MinInclusive ${ac.minValue}.`,
+                el,
+                path,
+                partUri,
+              ),
+            );
+          }
+          if (ac.maxValue !== undefined && num > ac.maxValue) {
+            errors.push(
+              makeError(
+                "Sch_AttributeValueDataTypeDetailed",
+                `Attribute '${ac.qname}' on <${el.qualifiedName}>: value ${num} exceeds MaxInclusive ${ac.maxValue}.`,
+                el,
+                path,
+                partUri,
+              ),
+            );
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Run only the attribute value constraint checks (e) — used for Strict-format
+   * documents where required-attribute checks (d) are intentionally skipped.
+   */
+  private validateAttrConstraintsOnly(
+    el: OpenXmlElement,
+    constraint: ElementConstraint,
+    path: string,
+    errors: ValidationError[],
+    partUri: string | undefined,
+  ): void {
     for (const ac of constraint.attrConstraints ?? []) {
       const value = this.getAttrStringValue(el, ac.qname);
       if (value === undefined) continue;
