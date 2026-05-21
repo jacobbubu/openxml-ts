@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.13.0](https://github.com/jacobbubu/openxml-ts/compare/v0.12.0...v0.13.0) (2026-05-21)
+
+
+### Features
+
+* **markup-compat:** Epic-81 Markup Compatibility (MC) 协商处理 ([#236](https://github.com/jacobbubu/openxml-ts/issues/236)) ([#237](https://github.com/jacobbubu/openxml-ts/issues/237)) ([b090268](https://github.com/jacobbubu/openxml-ts/commit/b0902689b0cb44a4d85f47b6b9868ecbfc08e182))
+* **markup-compat:** Epic-82 MC 协商接入文档打开路径（openAsync 自动协商） ([ba7760d](https://github.com/jacobbubu/openxml-ts/commit/ba7760d5d28d20539db7db19b108a935a048a0aa))
+* **markup-compat:** Epic-82 MC 协商接入文档打开路径（openAsync 自动协商）([#238](https://github.com/jacobbubu/openxml-ts/issues/238)) ([99f4108](https://github.com/jacobbubu/openxml-ts/commit/99f4108fdd37944bb86d12cd85707f981808baa0))
+* **streaming:** Epic-80 流式 API — OpenXmlPartReader + OpenXmlPartWriter ([#235](https://github.com/jacobbubu/openxml-ts/issues/235)) ([42064e7](https://github.com/jacobbubu/openxml-ts/commit/42064e7d025b48497fde5352e29fbf65080a76de))
+* **validation:** Epic-79 OpenXmlValidator Phase 2 — schematron 语义规则 ([2f5ad30](https://github.com/jacobbubu/openxml-ts/commit/2f5ad303c9e434cc61e2e4b86f65f34fe50f47be))
+* **validation:** Epic-79 OpenXmlValidator Phase 2 — schematron 语义规则 ([#231](https://github.com/jacobbubu/openxml-ts/issues/231)) ([2f5ad30](https://github.com/jacobbubu/openxml-ts/commit/2f5ad303c9e434cc61e2e4b86f65f34fe50f47be))
+* **validation:** Epic-79 OpenXmlValidator Phase 2 — schematron 语义规则 ([#231](https://github.com/jacobbubu/openxml-ts/issues/231)) ([4a7d3fe](https://github.com/jacobbubu/openxml-ts/commit/4a7d3fee5e8b3571aca7eb56f7be31e28a0f6656))
+
 ## [0.12.0](https://github.com/jacobbubu/openxml-ts/compare/v0.11.0...v0.12.0) (2026-05-21)
 
 
