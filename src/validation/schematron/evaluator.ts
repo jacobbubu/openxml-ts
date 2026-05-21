@@ -1,11 +1,19 @@
 /**
- * Schematron semantic rule evaluator — Epic-79 Phase 2.
+ * Schematron semantic rule evaluator — Epic-79 Phase 2 + Epic-84 extended categories.
  *
- * Evaluates the four supported rule kinds against an element tree:
- *   - relationship  : checks r:id (or similar) attr against the part's IRelationshipCollection
- *   - uniqueness    : count(distinct-values(PATH/@attr)) = count(PATH/@attr) uniqueness in scope
- *   - stringLength  : string-length(@attr) <= N / >= M
- *   - numericRange  : @attr <= N / >= M
+ * Evaluates all supported rule kinds against an element tree:
+ *   - relationship  : r:id attr vs the part's IRelationshipCollection (2.1/2.2)
+ *   - uniqueness    : count(distinct-values(PATH/@attr)) = count(PATH/@attr) (2.3)
+ *   - stringLength  : string-length(@attr) <= N / >= M (1.12)
+ *   - numericRange  : @attr <= N / >= M (1.3)
+ *   - validSet      : @attr must be in enumerated set (1.4)
+ *   - invalidSet    : @attr must NOT be in enumerated set (1.10)
+ *   - absentWhenEq  : @a must be absent if @b equals one of values (1.14)
+ *   - absentWhenNeq : @a must be absent if @b does NOT equal one of values (1.15)
+ *   - mutualExcl    : at most one of attrs may be present (1.16)
+ *   - attrVsAttr    : @a < (or <=) @b numerically (1.17)
+ *   - reqWhenOther  : @a is required when @b equals a value (1.18)
+ *   - pattern       : @attr must match a regex (1.2)
  *
  * The evaluator NEVER throws; all errors are collected into a ValidationError[].
  */
@@ -15,15 +23,22 @@ import { OpenXmlCompositeElement } from "../../element/element.js";
 import type { IRelationshipCollection } from "../../packaging/interfaces/relationship.js";
 import type { ValidationError } from "../ValidationError.js";
 import type {
+  AbsentWhenEqRule,
+  AbsentWhenNeqRule,
+  AttrVsAttrRule,
+  InvalidSetRule,
+  MutualExclRule,
   NumericRangeRule,
+  PatternRule,
   RelationshipRule,
+  ReqWhenOtherRule,
   SchematronRule,
   StringLengthRule,
   UniquenessRule,
+  ValidSetRule,
 } from "./rules.js";
 
 // ---- Prefix→namespace resolution ----
-// Must match the same PREFIX_TO_URI table used in gen-constraints.ts (from schematron Context prefixes).
 const PREFIX_TO_URI: Readonly<Record<string, string>> = {
   w: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
   a: "http://schemas.openxmlformats.org/drawingml/2006/main",
@@ -63,6 +78,14 @@ const PREFIX_TO_URI: Readonly<Record<string, string>> = {
   wpg: "http://schemas.microsoft.com/office/word/2010/wordprocessingGroup",
   wps: "http://schemas.microsoft.com/office/word/2010/wordprocessingShape",
   wetp: "http://schemas.microsoft.com/office/webextensions/taskpanes/2010/11",
+  ovml: "urn:schemas-microsoft-com:office:powerpoint",
+  emma: "http://www.w3.org/2003/04/emma",
+  mso14: "http://schemas.microsoft.com/office/2009/07/customui",
+  p15: "http://schemas.microsoft.com/office/powerpoint/2012/main",
+  thm15: "http://schemas.microsoft.com/office/thememl/2012/main",
+  we: "http://schemas.microsoft.com/office/webextensions/webextension/2010/11",
+  wne: "http://schemas.microsoft.com/office/word/2006/wordml/custom-b",
+  sl2: "http://schemas.openxmlformats.org/schemaLibrary/2006/main",
 };
 
 /** Resolve a prefixed qname ("w:id", "r:embed", "id") to { ns, local }. */
@@ -88,8 +111,7 @@ function elementMatchesContext(el: OpenXmlElement, ns: string, local: string): b
 
 /**
  * Get a string attribute value from an element.
- * Tries both the prefixed form (e.g. "w:id") and the local-only form via extendedAttributes.
- * Also checks namespaced lookups.
+ * Checks extendedAttributes by prefixed form, local form, and namespace match.
  */
 function getAttr(el: OpenXmlElement, attrQname: string): string | undefined {
   const { ns, local } = resolveQname(attrQname);
@@ -116,6 +138,13 @@ function getAttr(el: OpenXmlElement, attrQname: string): string | undefined {
   return undefined;
 }
 
+/**
+ * Check if an attribute is present (has a non-undefined, non-null value).
+ */
+function hasAttr(el: OpenXmlElement, attrQname: string): boolean {
+  return getAttr(el, attrQname) !== undefined;
+}
+
 // ---- Tree traversal ----
 
 /** Collect all descendants of `root` that match ns:local (including root itself). */
@@ -137,32 +166,21 @@ function visitAll(el: OpenXmlElement, visitor: (e: OpenXmlElement) => void): voi
 }
 
 // ---- Scope path parser ----
-// Parses XPath-like scope paths from uniqueness rules.
-// Supported forms:
-//   //prefix:elem                   — global search from root
-//   //prefix:parent/prefix:elem     — global search within parent
-//   ancestor::prefix:ancestor//prefix:elem  — scoped (treated as global search — conservative but safe)
-//
-// Returns a list of (ns, local) steps to walk: the FINAL step is the element to find.
-// We simplify: collect all elements matching the LAST component anywhere in the tree.
 interface PathStep {
   readonly ns: string;
   readonly local: string;
 }
 
 function parseScopePath(scopePath: string): PathStep[] | null {
-  // Strip leading // or ancestor:: prefixes and split on /
   let s = scopePath.trim();
-
-  // Remove ancestor::X// prefix (treat as global)
   s = s.replace(/^ancestor::[^/]+\/\//, "//");
-  // Remove ancestor::X/ prefix
   s = s.replace(/^ancestor::[^/]+\//, "//");
+  // Handle fn:lower-case wrapper
+  s = s.replace(/^fn:lower-case\(/, "").replace(/\)$/, "");
 
   if (!s.startsWith("//")) return null;
   s = s.slice(2);
 
-  // Split remaining on /
   const parts = s.split("/").filter((p) => p.length > 0);
   const steps: PathStep[] = [];
   for (const part of parts) {
@@ -192,9 +210,18 @@ function makeSemanticError(
   return base;
 }
 
-// ---- Path helper (mirrors the one in OpenXmlValidator) ----
 function makePath(el: OpenXmlElement): string {
   return `/${el.localName}[0]`;
+}
+
+// ---- Value comparison ----
+
+/**
+ * Compare attribute value against a constraint value.
+ * Case-insensitive, trims quotes — mirrors SDK's AttributeValueEquals.
+ */
+function attrValueEquals(attrValue: string, constraintValue: string): boolean {
+  return attrValue.trim().toLowerCase() === constraintValue.trim().toLowerCase();
 }
 
 // ---- Handler implementations ----
@@ -207,15 +234,14 @@ function handleRelationship(
   partUri: string | undefined,
   errors: ValidationError[],
 ): void {
-  if (rels === undefined) return; // cannot check without relationships
+  if (rels === undefined) return;
 
   const idValue = getAttr(el, rule.attrQname);
-  if (idValue === undefined) return; // attribute absent — not this rule's job to flag
+  if (idValue === undefined) return;
 
   let rel: ReturnType<IRelationshipCollection["get"]> | undefined;
   try {
     if (!rels.has(idValue)) {
-      // The id doesn't exist in the relationships
       errors.push(
         makeSemanticError(
           "Sch_SemanticRelationshipMissing",
@@ -229,7 +255,7 @@ function handleRelationship(
     }
     rel = rels.get(idValue);
   } catch {
-    return; // rels.get can throw; treat as cannot check
+    return;
   }
 
   if (rel === undefined) return;
@@ -253,14 +279,9 @@ function handleUniqueness(
   partUri: string | undefined,
   errors: ValidationError[],
 ): void {
-  // Parse the scope path to find the target element
-  // scopePath: e.g. "//w:endnotes/w:endnote"  attrQname: "@w:id"
   const steps = parseScopePath(rule.scopePath);
   if (steps === null || steps.length === 0) return;
 
-  // The LAST step is the target element. We collect all elements matching the last step in the tree.
-  // This is a conservative interpretation of the XPath (ignores intermediate path constraints)
-  // which is safe for correctness: false positives not false negatives.
   const lastStep = steps[steps.length - 1] as PathStep;
 
   // Strip leading @ from attrQname
@@ -273,18 +294,20 @@ function handleUniqueness(
   for (const elem of elems) {
     const val = getAttr(elem, attrRaw);
     if (val === undefined) continue;
-    if (seen.has(val)) {
+    // Case-insensitive comparison for uniqueness (some rules use fn:lower-case)
+    const key = val.toLowerCase();
+    if (seen.has(key)) {
       errors.push(
         makeSemanticError(
           "Sch_SemanticUniquenessViolation",
-          `Duplicate value '${val}' for attribute '${attrRaw}' on <${elem.qualifiedName}> — violates uniqueness constraint (count(distinct-values) rule for context '${rule.context}').`,
+          `Duplicate value '${val}' for attribute '${attrRaw}' on <${elem.qualifiedName}> — violates uniqueness constraint (context '${rule.context}').`,
           elem,
           makePath(elem),
           partUri,
         ),
       );
     } else {
-      seen.set(val, elem);
+      seen.set(key, elem);
     }
   }
 }
@@ -334,7 +357,7 @@ function handleNumericRange(
   if (val === undefined) return;
 
   const num = Number(val);
-  if (Number.isNaN(num)) return; // non-numeric attribute value — skip
+  if (Number.isNaN(num)) return;
 
   if (rule.min !== undefined && num < rule.min) {
     errors.push(
@@ -360,17 +383,295 @@ function handleNumericRange(
   }
 }
 
-// ---- Rule index (built once, lazily) ----
+/**
+ * 1.4 ValidSet — attribute value must be in the allowed value set.
+ * Error if attribute is present but not in values[].
+ */
+function handleValidSet(
+  rule: ValidSetRule,
+  el: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  errors: ValidationError[],
+): void {
+  const val = getAttr(el, rule.attrQname);
+  if (val === undefined) return; // absent attr is not this rule's concern
+
+  const inSet = rule.values.some((v) => attrValueEquals(val, v));
+  if (!inSet) {
+    errors.push(
+      makeSemanticError(
+        "Sem_AttributeValueDataTypeDetailed",
+        `Element <${el.qualifiedName}> attribute '${rule.attrQname}' = '${val}': value is not in the allowed set [${rule.values.join(", ")}].`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
 
 /**
- * Index structure for fast dispatch:
- * - per-element rules (relationship, stringLength, numericRange): keyed by "ns::local"
- * - uniqueness rules: stored separately (applied at doc level, not per-element)
+ * 1.10 InvalidSet — attribute value must NOT be in the prohibited value set.
+ * Error if attribute is present and its value IS in values[].
  */
+function handleInvalidSet(
+  rule: InvalidSetRule,
+  el: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  errors: ValidationError[],
+): void {
+  const val = getAttr(el, rule.attrQname);
+  if (val === undefined) return;
+
+  const inSet = rule.values.some((v) => attrValueEquals(val, v));
+  if (inSet) {
+    errors.push(
+      makeSemanticError(
+        "Sem_AttributeValueDataTypeDetailed",
+        `Element <${el.qualifiedName}> attribute '${rule.attrQname}' = '${val}': value is in the prohibited set [${rule.values.join(", ")}].`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
+/**
+ * 1.14 AbsentWhenEq — absentAttr must be absent when condAttr equals one of condValues.
+ * Error if absentAttr is present AND condAttr equals one of condValues.
+ */
+function handleAbsentWhenEq(
+  rule: AbsentWhenEqRule,
+  el: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  errors: ValidationError[],
+): void {
+  // If the "absent" attr is not present, constraint is satisfied.
+  if (!hasAttr(el, rule.absentAttr)) return;
+
+  const condVal = getAttr(el, rule.condAttr);
+  if (condVal === undefined) return;
+
+  const condMatches = rule.condValues.some((v) => attrValueEquals(condVal, v));
+  if (condMatches) {
+    errors.push(
+      makeSemanticError(
+        "Sem_AttributeAbsentConditionToValue",
+        `Element <${el.qualifiedName}> attribute '${rule.absentAttr}' must be absent when '${rule.condAttr}' is '${condVal}'.`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
+/**
+ * 1.15 AbsentWhenNeq — absentAttr must be absent when condAttr does NOT equal any of condValues.
+ * Error if absentAttr is present AND condAttr is NOT one of condValues.
+ */
+function handleAbsentWhenNeq(
+  rule: AbsentWhenNeqRule,
+  el: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  errors: ValidationError[],
+): void {
+  if (!hasAttr(el, rule.absentAttr)) return;
+
+  const condVal = getAttr(el, rule.condAttr);
+  if (condVal === undefined) return;
+
+  const condMatches = rule.condValues.some((v) => attrValueEquals(condVal, v));
+  if (!condMatches) {
+    // condAttr is not one of the "OK" values — so absentAttr must be absent
+    errors.push(
+      makeSemanticError(
+        "Sem_AttributeAbsentConditionToNonValue",
+        `Element <${el.qualifiedName}> attribute '${rule.absentAttr}' must be absent when '${rule.condAttr}' is not one of [${rule.condValues.join(", ")}].`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
+/**
+ * 1.16 MutualExcl — at most one of the listed attributes may be present.
+ * Error if ≥ 2 attrs are present simultaneously.
+ */
+function handleMutualExcl(
+  rule: MutualExclRule,
+  el: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  errors: ValidationError[],
+): void {
+  const presentAttrs: string[] = [];
+  for (const attr of rule.attrs) {
+    if (hasAttr(el, attr)) {
+      presentAttrs.push(attr);
+    }
+  }
+
+  if (presentAttrs.length >= 2) {
+    errors.push(
+      makeSemanticError(
+        "Sem_AttributeMutualExclusive",
+        `Element <${el.qualifiedName}>: attributes [${presentAttrs.join(", ")}] are mutually exclusive — at most one may be present.`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
+/**
+ * 1.17 AttrVsAttr — value of attrA must be less than (or equal to) attrB.
+ * Error if attrA and attrB are both present and the constraint is violated.
+ */
+function handleAttrVsAttr(
+  rule: AttrVsAttrRule,
+  el: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  errors: ValidationError[],
+): void {
+  const valA = getAttr(el, rule.attrA);
+  if (valA === undefined) return;
+  const valB = getAttr(el, rule.attrB);
+  if (valB === undefined) return;
+
+  const numA = Number(valA);
+  const numB = Number(valB);
+  if (Number.isNaN(numA) || Number.isNaN(numB)) return;
+
+  const ok = rule.canEqual ? numA <= numB : numA < numB;
+  if (!ok) {
+    const op = rule.canEqual ? "<=" : "<";
+    errors.push(
+      makeSemanticError(
+        "Sem_AttributeValueLessEqualToAnother",
+        `Element <${el.qualifiedName}>: attribute '${rule.attrA}' = ${numA} must be ${op} '${rule.attrB}' = ${numB}.`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
+/**
+ * 1.18 ReqWhenOther — requiredAttr must be present when condAttr equals one of condValues.
+ * Error if requiredAttr is absent AND condAttr equals one of condValues.
+ */
+function handleReqWhenOther(
+  rule: ReqWhenOtherRule,
+  el: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  errors: ValidationError[],
+): void {
+  // If required attr is already present, constraint is satisfied.
+  if (hasAttr(el, rule.requiredAttr)) return;
+
+  const condVal = getAttr(el, rule.condAttr);
+  if (condVal === undefined) return;
+
+  const condMatches = rule.condValues.some((v) => attrValueEquals(condVal, v));
+  if (condMatches) {
+    errors.push(
+      makeSemanticError(
+        "Sem_AttributeRequiredConditionToValue",
+        `Element <${el.qualifiedName}>: attribute '${rule.requiredAttr}' is required when '${rule.condAttr}' is '${condVal}'.`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
+/**
+ * 1.2 Pattern — attribute value must match a regular expression.
+ * The regex is an XPath regex (POSIX-like). We convert known \p{L} patterns to JS-compatible form.
+ * Error if attr is present but doesn't match.
+ */
+function handlePattern(
+  rule: PatternRule,
+  el: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  errors: ValidationError[],
+  compiledPatterns: Map<string, RegExp | null>,
+): void {
+  const val = getAttr(el, rule.attrQname);
+  if (val === undefined) return;
+
+  const cacheKey = `${rule.context}::${rule.attrQname}::${rule.regex}`;
+  let re: RegExp | null | undefined = compiledPatterns.get(cacheKey);
+
+  if (re === undefined) {
+    re = compileXPathRegex(rule.regex);
+    compiledPatterns.set(cacheKey, re);
+  }
+
+  if (re === null) return; // Could not compile — skip safely (no false positive)
+
+  if (!re.test(val)) {
+    errors.push(
+      makeSemanticError(
+        "Sem_AttributeValueDataTypeDetailed",
+        `Element <${el.qualifiedName}> attribute '${rule.attrQname}' = '${val}': value does not match pattern '${rule.regex}'.`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
+/**
+ * Convert an XPath/XSD regex to a JS RegExp.
+ * Returns null if the pattern uses features we can't safely convert.
+ */
+function compileXPathRegex(pattern: string): RegExp | null {
+  try {
+    // Wrap in ^ ... $ anchors (XPath regex is always a full-string match)
+    let js = pattern;
+
+    // Skip patterns with Unicode categories \p{...} that JS can't handle (pre-ES2018)
+    // In modern V8 (Node 10+), /u flag supports \p{L} etc.
+    // Try to convert \p{L} → unicode property escape
+    if (js.includes("\\p{") || js.includes("\\P{")) {
+      // Use unicode flag — works in V8/Node 12+
+      js = js
+        // \p{L} → \p{L} (keep as-is with u flag)
+        // \P{IsBasicLatin} → \P{ASCII} (approximate — IsBasicLatin = U+0000-U+007F)
+        .replace(/\\P\{IsBasicLatin\}/g, "\\P{ASCII}")
+        .replace(/\\p\{IsBasicLatin\}/g, "\\p{ASCII}");
+      const anchored = `^(?:${js})$`;
+      return new RegExp(anchored, "u");
+    }
+
+    const anchored = `^(?:${js})$`;
+    return new RegExp(anchored);
+  } catch {
+    // Pattern failed to compile — skip safely
+    return null;
+  }
+}
+
+// ---- Rule index (built once, lazily) ----
+
 interface RuleIndex {
-  /** Per-element rules keyed by "ns::local" of the context element. */
   readonly perElement: ReadonlyMap<string, readonly SchematronRule[]>;
-  /** Uniqueness rules (applied once per validateSemantic call). */
   readonly uniqueness: readonly UniquenessRule[];
 }
 
@@ -388,7 +689,6 @@ function getRuleIndex(rules: ReadonlyArray<SchematronRule>): RuleIndex {
       uniqueness.push(rule);
       continue;
     }
-    // relationship, stringLength, numericRange — keyed by context element
     const { ns, local } = parseContext(rule.context);
     const key = `${ns}::${local}`;
     if (!perElement.has(key)) perElement.set(key, []);
@@ -399,6 +699,9 @@ function getRuleIndex(rules: ReadonlyArray<SchematronRule>): RuleIndex {
   return _ruleIndex;
 }
 
+// Compiled regex cache (shared across evaluator calls)
+const _compiledPatterns = new Map<string, RegExp | null>();
+
 // ---- Public API ----
 
 /**
@@ -406,7 +709,7 @@ function getRuleIndex(rules: ReadonlyArray<SchematronRule>): RuleIndex {
  *
  * @param docRoot   Root element of the element tree (the document/part root).
  * @param rules     The full rule array from SCHEMATRON_RULES.
- * @param rels      Optional relationship collection for the part (enables relationship checks).
+ * @param rels      Optional relationship collection for the part.
  * @param partUri   Optional part URI for error context.
  * @returns         Array of Semantic ValidationErrors. Never throws.
  */
@@ -422,7 +725,7 @@ export function evaluateSchematron(
     const index = getRuleIndex(rules);
 
     // 1. Apply per-element rules (walk the tree)
-    walkForPerElementRules(docRoot, index, rels, partUri, errors);
+    walkForPerElementRules(docRoot, index, rels, partUri, errors, _compiledPatterns);
 
     // 2. Apply uniqueness rules (once per tree)
     for (const rule of index.uniqueness) {
@@ -441,6 +744,7 @@ function walkForPerElementRules(
   rels: IRelationshipCollection | undefined,
   partUri: string | undefined,
   errors: ValidationError[],
+  compiledPatterns: Map<string, RegExp | null>,
 ): void {
   const key = `${el.namespaceUri}::${el.localName}`;
   const elRules = index.perElement.get(key);
@@ -449,12 +753,40 @@ function walkForPerElementRules(
     const path = makePath(el);
     for (const rule of elRules) {
       try {
-        if (rule.kind === "relationship") {
-          handleRelationship(rule, el, rels, path, partUri, errors);
-        } else if (rule.kind === "stringLength") {
-          handleStringLength(rule, el, path, partUri, errors);
-        } else if (rule.kind === "numericRange") {
-          handleNumericRange(rule, el, path, partUri, errors);
+        switch (rule.kind) {
+          case "relationship":
+            handleRelationship(rule, el, rels, path, partUri, errors);
+            break;
+          case "stringLength":
+            handleStringLength(rule, el, path, partUri, errors);
+            break;
+          case "numericRange":
+            handleNumericRange(rule, el, path, partUri, errors);
+            break;
+          case "validSet":
+            handleValidSet(rule, el, path, partUri, errors);
+            break;
+          case "invalidSet":
+            handleInvalidSet(rule, el, path, partUri, errors);
+            break;
+          case "absentWhenEq":
+            handleAbsentWhenEq(rule, el, path, partUri, errors);
+            break;
+          case "absentWhenNeq":
+            handleAbsentWhenNeq(rule, el, path, partUri, errors);
+            break;
+          case "mutualExcl":
+            handleMutualExcl(rule, el, path, partUri, errors);
+            break;
+          case "attrVsAttr":
+            handleAttrVsAttr(rule, el, path, partUri, errors);
+            break;
+          case "reqWhenOther":
+            handleReqWhenOther(rule, el, path, partUri, errors);
+            break;
+          case "pattern":
+            handlePattern(rule, el, path, partUri, errors, compiledPatterns);
+            break;
         }
       } catch {
         // Individual rule must not crash the evaluator
@@ -464,15 +796,15 @@ function walkForPerElementRules(
 
   if (el instanceof OpenXmlCompositeElement) {
     for (const child of el.children) {
-      walkForPerElementRules(child, index, rels, partUri, errors);
+      walkForPerElementRules(child, index, rels, partUri, errors, compiledPatterns);
     }
   }
 }
 
 /**
  * Reset the internal rule index (for testing, or after rule set changes).
- * Not needed in production; the index is built once from SCHEMATRON_RULES.
  */
 export function resetRuleIndex(): void {
   _ruleIndex = undefined;
+  _compiledPatterns.clear();
 }
