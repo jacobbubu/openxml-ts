@@ -1,23 +1,22 @@
 /**
- * Epic-87: OOXML Strict 命名空间归一化 — 修 validator 对 Strict 文档的误报。
+ * Epic-87/89: OOXML Strict 命名空间 validator 行为。
  *
- * 问题：OOXML Strict 格式文档用不同的命名空间 URI（purl.oclc.org 而非
- * schemas.openxmlformats.org）。反序列化后 Strict 元素的 extendedAttributes
- * 中包含 Strict namespace URI 的 xmlns 声明，可用于检测文档来源。
+ * Epic-87 做法：检测根元素 xmlns 中含 Strict URI，跳过必填属性校验。
+ * Epic-89 做法：反序列化时把 Strict URI 归一化为 Transitional，validator
+ * 不再需要 Strict 特判路径——Strict 文档走完整校验。
  *
- * 修复：validator 检测根元素的 xmlns 声明，若发现 Strict URI，则跳过
- * required-attribute 校验（Strict schema 对某些属性的 required/optional 定义
- * 与 Transitional 不同）。
+ * 本文件保留 Epic-87 的 hasStrictOriginNamespace 单元测试（该函数仍导出，
+ * 供外部工具检测文档来源用途），并更新 validator 行为测试以反映 Epic-89 后
+ * 的正确语义：validator 对 Strict 文档执行完整校验，不再跳过。
  *
- * 覆盖（≥6 tests）：
+ * 覆盖：
  *  1. hasStrictOriginNamespace 对 Strict xmlns 返回 true
  *  2. hasStrictOriginNamespace 对 Transitional xmlns 返回 false
  *  3. hasStrictOriginNamespace 对空 extendedAttributes 返回 false
- *  4. validate() 在 Strict 文档根元素树上不报 required-attr 错误
- *  5. validate() 在 Transitional 元素（缺少必填属性）上仍报错（回归守卫）
- *  6. Strict01.docx validatePackage → 0 REQUIRED_ATTR_MISSING 误报
- *  7. 全部 Transitional .docx validatePackage → 0 REQUIRED_ATTR_MISSING（回归守卫）
- *  8. hasStrictOriginNamespace 对 Strict relationships URI 也返回 true
+ *  4. validate() 在 Transitional 元素（缺少必填属性）上报错（回归守卫）
+ *  5. Strict01.docx validatePackage → 0 所有错误（完整校验通过）
+ *  6. 全部 Transitional .docx validatePackage → 0 REQUIRED_ATTR_MISSING（回归守卫）
+ *  7. hasStrictOriginNamespace 对 Strict relationships URI 也返回 true
  */
 
 import { readFile, readdir } from "node:fs/promises";
@@ -101,7 +100,7 @@ class StubCnfStyle extends OpenXmlLeafElement {
 
 // ── Validator behavior unit tests ─────────────────────────────────────────────
 
-describe("Epic-87: validator required-attr 行为", () => {
+describe("Epic-87/89: validator required-attr 行为", () => {
   const validator = new OpenXmlValidator({ skipUnknown: true });
 
   it("Transitional 元素缺少必填属性 → validator 报错（回归守卫）", () => {
@@ -111,16 +110,20 @@ describe("Epic-87: validator required-attr 行为", () => {
     expect(errors.length).toBeGreaterThan(0);
   });
 
-  it("Strict 文档根元素有 Strict xmlns → validator 不报 required-attr 错误", () => {
-    // Simulate a Strict-origin root element by adding a Strict xmlns to extendedAttributes
+  it("Epic-89: 反序列化后 Strict xmlns 已归一化，validator 对任何元素执行完整校验", () => {
+    // After Epic-89 canonicalization, extendedAttributes stores Transitional URIs.
+    // The validator no longer has a Strict-skip path — it always runs full validation.
+    // Simulating a manually-constructed element with a Strict xmlns value in
+    // extendedAttributes (i.e. bypassing deserializer canonicalization):
     const el = new StubCnfStyle();
-    el.extendedAttributes.set("xmlns:w", STRICT_W_NS); // Strict origin marker
-    // val is undefined (simulating Strict doc with optional val)
+    el.extendedAttributes.set("xmlns:w", STRICT_W_NS); // manually injected Strict marker
+    // val is still undefined → validator now runs full validation and SHOULD report error
     const errors = validator.validate(el);
     const reqErrors = errors.filter(
       (e) => e.id === "REQUIRED_ATTR_MISSING" || e.id === "Sch_MissingRequiredAttribute",
     );
-    expect(reqErrors).toHaveLength(0);
+    // Epic-89: validator no longer skips required-attr checks; error is now reported.
+    expect(reqErrors.length).toBeGreaterThan(0);
   });
 });
 
