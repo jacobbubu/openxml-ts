@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.15.0](https://github.com/jacobbubu/openxml-ts/compare/v0.14.0...v0.15.0) (2026-05-21)
+
+
+### Features
+
+* **deserialize:** Epic-86 上下文感知反序列化 — 按父元素 schema 消歧同名元素 ([aaf6be9](https://github.com/jacobbubu/openxml-ts/commit/aaf6be99205727bffd54747f0c6b9f8162b94487))
+* **deserialize:** Epic-86 上下文感知反序列化 — 按父元素 schema 消歧同名元素 ([#248](https://github.com/jacobbubu/openxml-ts/issues/248)) ([139eac4](https://github.com/jacobbubu/openxml-ts/commit/139eac4851675156e3c738ef4855363513a50b57))
+* **element:** Epic-88 OpenXmlElement API 完整性审计与补齐（对齐 .NET SDK 元素方法）([#252](https://github.com/jacobbubu/openxml-ts/issues/252)) ([#253](https://github.com/jacobbubu/openxml-ts/issues/253)) ([aebf21d](https://github.com/jacobbubu/openxml-ts/commit/aebf21d879de92935a37449e331cc62fecda74fb))
+* **validation:** Epic-85 schematron 跨 Part 语义约束 — 完成 912/948 全覆盖 ([#246](https://github.com/jacobbubu/openxml-ts/issues/246)) ([#247](https://github.com/jacobbubu/openxml-ts/issues/247)) ([3021be4](https://github.com/jacobbubu/openxml-ts/commit/3021be468fdcb5b3001a14664cf9a5527a76f9b8))
+
+
+### Bug Fixes
+
+* **test:** Epic-86 context-aware-deserialize 测试排除出浏览器跑批 ([88c7498](https://github.com/jacobbubu/openxml-ts/commit/88c74986b189fd3855e64f26b86deca6f1519782))
+* **validation:** Epic-87 Strict 文档 validator 误报必填属性缺失归零 ([#251](https://github.com/jacobbubu/openxml-ts/issues/251)) ([2ae4fc8](https://github.com/jacobbubu/openxml-ts/commit/2ae4fc868c13aff72bbbf82c0bc897840a1f49bc))
+
 ## [0.14.0](https://github.com/jacobbubu/openxml-ts/compare/v0.13.0...v0.14.0) (2026-05-21)
 
 
