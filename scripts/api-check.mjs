@@ -133,6 +133,11 @@ const ENTRIES = [
     config: "extractor-streaming.json",
     report: "openxml-ts-streaming.api.md",
   },
+  {
+    name: "markup-compat",
+    config: "extractor-markup-compat.json",
+    report: "openxml-ts-markup-compat.api.md",
+  },
 ];
 
 const isUpdate = process.argv.includes("--update");
