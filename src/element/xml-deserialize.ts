@@ -12,6 +12,7 @@ import { OpenXmlPackageError } from "../packaging/errors.js";
 import { tokenizeXml } from "../packaging/xml/index.js";
 import { OpenXmlCompositeElement, type OpenXmlElement, OpenXmlLeafElement } from "./element.js";
 import { type ElementRegistry, elementRegistry } from "./registry.js";
+import { strictToTransitional } from "./strict-namespace-map.js";
 import { OpenXmlUnknownElement } from "./unknown-element.js";
 
 export interface DeserializeOptions {
@@ -53,17 +54,21 @@ export function deserialize(xml: string, options: DeserializeOptions = {}): Open
           : new OpenXmlUnknownElement(prefix, localName, namespaceUri);
 
       for (const [key, value] of token.attrs) {
+        // Canonicalize Strict namespace URIs in xmlns declarations so that
+        // extendedAttributes stores Transitional URIs throughout the tree.
+        const canonicalValue =
+          key === "xmlns" || key.startsWith("xmlns:") ? strictToTransitional(value) : value;
         // Deserialize 走 **lenient mode**：schema 长度 / 数值 / 枚举校验失败
         // 不应让 parse 整个挂——真实 Office 文件含大量 schema 越界值（如
         // `<w:color w:val="auto">` 的 4 chars 越过 maxLength=3）。把校验
         // 异常吞掉，保留原始字符串属性即可，让用户能继续遍历 / 修改。严格
         // 校验留给上层（OpenXmlElement.validateRequired() 等显式调用）。
         try {
-          element.applyAttribute(key, value);
+          element.applyAttribute(key, canonicalValue);
         } catch {
           // 校验失败时 typed 字段可能已写入，保留 raw 属性到 extendedAttributes
           if (!element.extendedAttributes.has(key)) {
-            element.extendedAttributes.set(key, value);
+            element.extendedAttributes.set(key, canonicalValue);
           }
         }
       }
@@ -157,9 +162,11 @@ function collectNsDeclarations(attrs: ReadonlyMap<string, string>): NsScope {
   const out = new Map<string, string>();
   for (const [k, v] of attrs) {
     if (k === "xmlns") {
-      out.set("", v);
+      // Canonicalize Strict URI to Transitional so the entire element tree uses
+      // Transitional namespace URIs — mirroring how the .NET SDK normalises on load.
+      out.set("", strictToTransitional(v));
     } else if (k.startsWith("xmlns:")) {
-      out.set(k.slice(6), v);
+      out.set(k.slice(6), strictToTransitional(v));
     }
   }
   return out;

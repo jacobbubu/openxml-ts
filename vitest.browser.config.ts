@@ -50,6 +50,10 @@ export default defineConfig({
       "test/element/validate.test.ts",
       // Epic-86 上下文感知反序列化测试用 upstream-smoke fixture 读盘做误报扫描——只能 Node 跑。
       "test/element/context-aware-deserialize.test.ts",
+      // Epic-87/89 validator 测试读取 upstream-smoke fixture（node:fs/promises）——只能 Node 跑。
+      "test/element/strict-namespace-validator.test.ts",
+      // Epic-89 canonicalization 测试读取 upstream-smoke fixture（node:fs/promises）——只能 Node 跑。
+      "test/element/strict-canonicalization.test.ts",
     ],
     browser: {
       enabled: true,
