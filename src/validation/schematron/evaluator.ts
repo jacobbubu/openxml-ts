@@ -28,6 +28,8 @@ import type { ValidationError } from "../ValidationError.js";
 import type {
   AbsentWhenEqRule,
   AbsentWhenNeqRule,
+  AttrPresentRule,
+  AttrValueConditionRule,
   AttrVsAttrRule,
   IndexedRefRule,
   InvalidSetRule,
@@ -696,6 +698,71 @@ function compileXPathRegex(pattern: string): RegExp | null {
   }
 }
 
+// ---- 1.1 AttrPresent handler ----
+
+/**
+ * 1.1 AttrPresent — attribute must not be omitted (SDK: AttributeCannotOmitConstraint).
+ * Error if the required attribute is absent on the element.
+ */
+function handleAttrPresent(
+  rule: AttrPresentRule,
+  el: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  errors: ValidationError[],
+): void {
+  if (!hasAttr(el, rule.attrQname)) {
+    errors.push(
+      makeSemanticError(
+        "Sem_MissRequiredAttribute",
+        `Element <${el.qualifiedName}> is missing required attribute '${rule.attrQname}'.`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
+// ---- 1.19 AttrValueCondition handler ----
+
+/**
+ * 1.19 AttrValueCondition — SDK's AttributeValueConditionToAnother.
+ * Form: when @attrQname is in attrValues, @condAttr must be in condValues.
+ * Error if attrQname is present and equals one of attrValues, but condAttr does NOT equal any condValue.
+ */
+function handleAttrValueCondition(
+  rule: AttrValueConditionRule,
+  el: OpenXmlElement,
+  path: string,
+  partUri: string | undefined,
+  errors: ValidationError[],
+): void {
+  const attrVal = getAttr(el, rule.attrQname);
+  if (attrVal === undefined) return;
+
+  // Check if attrQname's value is one of attrValues
+  const attrMatches = rule.attrValues.some((v) => attrValueEquals(attrVal, v));
+  if (!attrMatches) return;
+
+  // attrQname matches — now check condAttr is in condValues
+  const condVal = getAttr(el, rule.condAttr);
+  if (condVal === undefined) return;
+
+  const condMatches = rule.condValues.some((v) => attrValueEquals(condVal, v));
+  if (!condMatches) {
+    errors.push(
+      makeSemanticError(
+        "Sem_AttributeValueConditionToAnother",
+        `Element <${el.qualifiedName}> attribute '${rule.attrQname}' = '${attrVal}' requires '${rule.condAttr}' to be one of [${rule.condValues.join(", ")}], but got '${condVal}'.`,
+        el,
+        path,
+        partUri,
+      ),
+    );
+  }
+}
+
 // ---- 3.1 RefExist handler ----
 
 /**
@@ -968,6 +1035,12 @@ function walkForPerElementRules(
             break;
           case "indexedRef":
             handleIndexedRef(rule, el, root, path, partUri, partResolver, errors);
+            break;
+          case "attrPresent":
+            handleAttrPresent(rule, el, path, partUri, errors);
+            break;
+          case "attrValueCondition":
+            handleAttrValueCondition(rule, el, path, partUri, errors);
             break;
         }
       } catch {
