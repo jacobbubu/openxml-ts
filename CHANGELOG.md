@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.16.0](https://github.com/jacobbubu/openxml-ts/compare/v0.15.0...v0.16.0) (2026-05-21)
+
+
+### Features
+
+* **deserialize:** Epic-89 Strict 命名空间反序列化归一化 — 完整校验 ([82ce433](https://github.com/jacobbubu/openxml-ts/commit/82ce4338247b42d9506e9bcbeb60d122ae7e843e))
+* **deserialize:** Epic-89 Strict 命名空间反序列化归一化 — 完整校验 ([#255](https://github.com/jacobbubu/openxml-ts/issues/255)) ([7122203](https://github.com/jacobbubu/openxml-ts/commit/7122203e9a5c5a20f745703fb6f42f9af2c2eb77))
+* **schematron:** Epic-90 完成 943/948 schematron 语义规则覆盖 ([681f842](https://github.com/jacobbubu/openxml-ts/commit/681f84245ab93e30ec818d324a575e2d099c66d6))
+* **schematron:** Epic-90 完成 943/948 schematron 语义规则覆盖 ([fdbab90](https://github.com/jacobbubu/openxml-ts/commit/fdbab90f87ee072425379897f21edf4fe3d49050)), closes [#257](https://github.com/jacobbubu/openxml-ts/issues/257)
+
+
+### Bug Fixes
+
+* **codegen:** 版本条件性 RequiredValidator 不再塌成无条件必填 ([#261](https://github.com/jacobbubu/openxml-ts/issues/261)) ([6ae08a6](https://github.com/jacobbubu/openxml-ts/commit/6ae08a631e8869c999be2d1919dc45836550d386))
+* **codegen:** 版本条件性 RequiredValidator 不再塌成无条件必填 ([#261](https://github.com/jacobbubu/openxml-ts/issues/261)) ([84fe836](https://github.com/jacobbubu/openxml-ts/commit/84fe836d0fee2a500f6b39188b2d16630bd1975a))
+* **test:** 修复 CI lint 与浏览器测试配置 ([#255](https://github.com/jacobbubu/openxml-ts/issues/255)) ([e231a88](https://github.com/jacobbubu/openxml-ts/commit/e231a8874545f33e5d8809e349583ac1a5141379))
+
 ## [0.15.0](https://github.com/jacobbubu/openxml-ts/compare/v0.14.0...v0.15.0) (2026-05-21)
 
 
