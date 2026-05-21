@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.14.0](https://github.com/jacobbubu/openxml-ts/compare/v0.13.0...v0.14.0) (2026-05-21)
+
+
+### Features
+
+* **validation:** Epic-84 schematron 语义约束 — 按 SDK 类别忠实移植（[#244](https://github.com/jacobbubu/openxml-ts/issues/244)） ([#245](https://github.com/jacobbubu/openxml-ts/issues/245)) ([336b91a](https://github.com/jacobbubu/openxml-ts/commit/336b91a2fba47377c33cd4ad7b0ff35aa1f7b392))
+
+
+### Documentation
+
+* **audit:** Epic-83 便捷扩展层审计与定性标注（[#240](https://github.com/jacobbubu/openxml-ts/issues/240)） ([#241](https://github.com/jacobbubu/openxml-ts/issues/241)) ([6d97bbd](https://github.com/jacobbubu/openxml-ts/commit/6d97bbd4b1629ce947015bab85cd54d5d24e3088))
+
 ## [0.13.0](https://github.com/jacobbubu/openxml-ts/compare/v0.12.0...v0.13.0) (2026-05-21)
 
 
