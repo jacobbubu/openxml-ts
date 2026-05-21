@@ -6,7 +6,6 @@ import {
   OpenXmlLeafElement,
   StringValue,
   UInt32Value,
-  assertRequired,
 } from "../../element/index.js";
 
 /** Defines the ModificationVerifier Class.
@@ -110,14 +109,4 @@ export class ModificationVerifier extends OpenXmlLeafElement {
     return out;
   }
 
-  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
-  validateRequired(): void {
-    assertRequired(this.cryptographicProviderType, { attribute: ":cryptProviderType", elementClass: "ModificationVerifier" });
-    assertRequired(this.cryptographicAlgorithmClass, { attribute: ":cryptAlgorithmClass", elementClass: "ModificationVerifier" });
-    assertRequired(this.cryptographicAlgorithmType, { attribute: ":cryptAlgorithmType", elementClass: "ModificationVerifier" });
-    assertRequired(this.cryptographicAlgorithmSid, { attribute: ":cryptAlgorithmSid", elementClass: "ModificationVerifier" });
-    assertRequired(this.spinCount, { attribute: ":spinCount", elementClass: "ModificationVerifier" });
-    assertRequired(this.saltData, { attribute: ":saltData", elementClass: "ModificationVerifier" });
-    assertRequired(this.hashData, { attribute: ":hashData", elementClass: "ModificationVerifier" });
-  }
 }

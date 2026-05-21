@@ -110,7 +110,7 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
   );
   const collectLines = attrs.map((a) => renderCollectLine(a, isLeaf));
   const requiredLines = attrs
-    .filter((a) => hasValidator(a, "RequiredValidator"))
+    .filter(isRequiredAttr)
     .map((a) => renderRequiredCheck(a, type.ClassName, isLeaf));
   if (requiredLines.length > 0) valueImports.add("assertRequired");
 
@@ -319,6 +319,28 @@ function renderRequiredCheck(attr: SchemaAttribute, className: string, isLeaf: b
 
 function hasValidator(attr: SchemaAttribute, name: string): boolean {
   return (attr.Validators ?? []).some((v) => v.Name === name);
+}
+
+/**
+ * 该属性是否「无条件必填」。
+ *
+ * schema 里同一属性可能挂多个版本限定的 `RequiredValidator`：早期版本必填、
+ * 后续版本通过 `IsRequired=False` 参数解除。典型如 `w:cnfStyle/@w:val`——
+ * Office2007 必填，Office2010 起被展开式属性（firstRow/lastRow…）取代而转为
+ * 可选，真实现代 Office 文件不写 `@w:val`。openxml-ts 的校验不做版本目标
+ * 定向，按「现代 Office」语义：只要任一 `RequiredValidator` 声明
+ * `IsRequired=False`，即视为可选，不发无条件必填检查——否则会对合法文件误报。
+ */
+function isRequiredAttr(attr: SchemaAttribute): boolean {
+  const reqs = (attr.Validators ?? []).filter((v) => v.Name === "RequiredValidator");
+  if (reqs.length === 0) return false;
+  for (const v of reqs) {
+    const args = argsToMap(v.Arguments);
+    if (args.IsRequired !== undefined && args.IsRequired.toLowerCase() === "false") {
+      return false;
+    }
+  }
+  return true;
 }
 
 function argsToMap(args: readonly SchemaValidatorArg[] | undefined): Record<string, string> {

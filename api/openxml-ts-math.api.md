@@ -269,7 +269,6 @@ export class BreakBinarySubtraction extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "m";
     val: StringValue | undefined;
-    validateRequired(): void;
 }
 
 // @public
