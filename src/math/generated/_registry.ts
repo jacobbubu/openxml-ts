@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_officeDocument_2006_math.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerMathChildMaps } from "./_child-map.js";
 import { Accent } from "./accent.js";
 import { AccentChar } from "./accent-char.js";
 import { AccentProperties } from "./accent-properties.js";
@@ -257,4 +258,5 @@ export function registerMathElements(registry: ElementRegistry): void {
   registry.register("http://schemas.openxmlformats.org/officeDocument/2006/math", "zeroAsc", ZeroAscent);
   registry.register("http://schemas.openxmlformats.org/officeDocument/2006/math", "zeroDesc", ZeroDescent);
   registry.register("http://schemas.openxmlformats.org/officeDocument/2006/math", "zeroWid", ZeroWidth);
+  registerMathChildMaps(registry);
 }

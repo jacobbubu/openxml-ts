@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_presentationml_2006_main.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerPresentationChildMaps } from "./_child-map.js";
 import { Animate } from "./animate.js";
 import { AnimateColor } from "./animate-color.js";
 import { AnimateEffect } from "./animate-effect.js";
@@ -433,4 +434,5 @@ export function registerPresentationElements(registry: ElementRegistry): void {
   registry.register("http://schemas.openxmlformats.org/presentationml/2006/main", "wheel", WheelTransition);
   registry.register("http://schemas.openxmlformats.org/presentationml/2006/main", "wipe", WipeTransition);
   registry.register("http://schemas.openxmlformats.org/presentationml/2006/main", "zoom", ZoomTransition);
+  registerPresentationChildMaps(registry);
 }

@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_wordprocessingDrawing.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerWordprocessingDrawingChildMaps } from "./_child-map.js";
 import { Anchor } from "./anchor.js";
 import { DocProperties } from "./doc-properties.js";
 import { EffectExtent } from "./effect-extent.js";
@@ -47,4 +48,5 @@ export function registerWordprocessingDrawingElements(registry: ElementRegistry)
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "wrapThrough", WrapThrough);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "wrapTight", WrapTight);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing", "wrapTopAndBottom", WrapTopBottom);
+  registerWordprocessingDrawingChildMaps(registry);
 }

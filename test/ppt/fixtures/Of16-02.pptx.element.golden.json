@@ -750,9 +750,9 @@
                         },
                         {
                           "qname": "a:ext",
-                          "className": "ShapePropertiesExtension",
+                          "className": "Extents",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "cx": "0",
                             "cy": "0"
                           }
@@ -971,7 +971,7 @@
                               "children": [
                                 {
                                   "qname": "a:xfrm",
-                                  "className": "TransformGroup",
+                                  "className": "Transform2D",
                                   "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
                                   "children": [
                                     {
@@ -985,9 +985,9 @@
                                     },
                                     {
                                       "qname": "a:ext",
-                                      "className": "ShapePropertiesExtension",
+                                      "className": "Extents",
                                       "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                                      "extendedAttributes": {
+                                      "typedAttributes": {
                                         "cx": "8128000",
                                         "cy": "5418667"
                                       }
@@ -1021,12 +1021,12 @@
             },
             {
               "qname": "p:extLst",
-              "className": "SlideMasterExtensionList",
+              "className": "CommonSlideDataExtensionList",
               "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
               "children": [
                 {
                   "qname": "p:ext",
-                  "className": "SlideMasterExtension",
+                  "className": "CommonSlideDataExtension",
                   "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
                   "extendedAttributes": {
                     "uri": "{BB962C8B-B14F-4D97-AF65-F5344CB8AC3E}"

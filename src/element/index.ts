@@ -19,6 +19,7 @@ export { OpenXmlElementList } from "./element-list.js";
 export { OpenXmlUnknownElement } from "./unknown-element.js";
 
 export {
+  type ChildMap,
   type ElementFactory,
   ElementRegistry,
   elementRegistry,

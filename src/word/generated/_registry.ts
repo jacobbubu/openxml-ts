@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_wordprocessingml_2006_main.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerWordprocessingChildMaps } from "./_child-map.js";
 import { AbstractNum } from "./abstract-num.js";
 import { AbstractNumId } from "./abstract-num-id.js";
 import { Active } from "./active.js";
@@ -1215,4 +1216,5 @@ export function registerWordprocessingElements(registry: ElementRegistry): void 
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "yearLong", YearLong);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "yearShort", YearShort);
   registry.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "zoom", Zoom);
+  registerWordprocessingChildMaps(registry);
 }

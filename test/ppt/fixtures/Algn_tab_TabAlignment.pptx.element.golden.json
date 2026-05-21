@@ -751,9 +751,9 @@
                         },
                         {
                           "qname": "a:ext",
-                          "className": "ShapePropertiesExtension",
+                          "className": "Extents",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "cx": "0",
                             "cy": "0"
                           }
@@ -821,7 +821,7 @@
                       "children": [
                         {
                           "qname": "a:xfrm",
-                          "className": "TransformGroup",
+                          "className": "Transform2D",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
                           "children": [
                             {
@@ -835,9 +835,9 @@
                             },
                             {
                               "qname": "a:ext",
-                              "className": "ShapePropertiesExtension",
+                              "className": "Extents",
                               "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                              "extendedAttributes": {
+                              "typedAttributes": {
                                 "cx": "5791200",
                                 "cy": "646331"
                               }

@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_spreadsheetDrawing.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerSpreadsheetDrawingChildMaps } from "./_child-map.js";
 import { AbsoluteAnchor } from "./absolute-anchor.js";
 import { BlipFill } from "./blip-fill.js";
 import { ClientData } from "./client-data.js";
@@ -81,4 +82,5 @@ export function registerSpreadsheetDrawingElements(registry: ElementRegistry): v
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", "xfrm", Transform);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", "twoCellAnchor", TwoCellAnchor);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", "wsDr", WorksheetDrawing);
+  registerSpreadsheetDrawingChildMaps(registry);
 }

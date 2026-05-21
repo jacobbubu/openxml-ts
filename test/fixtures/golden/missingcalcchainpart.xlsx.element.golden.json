@@ -216,12 +216,12 @@
       },
       {
         "qname": "x:extLst",
-        "className": "WorksheetExtensionList",
+        "className": "WorkbookExtensionList",
         "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
         "children": [
           {
             "qname": "x:ext",
-            "className": "WorksheetExtension",
+            "className": "WorkbookExtension",
             "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
             "extendedAttributes": {
               "uri": "{140A7094-0E35-4892-8432-C4D2E57EDEB5}",
@@ -240,7 +240,7 @@
           },
           {
             "qname": "x:ext",
-            "className": "WorksheetExtension",
+            "className": "WorkbookExtension",
             "namespaceUri": "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
             "extendedAttributes": {
               "uri": "{B58B0392-4F1F-4190-BB64-5DF3571DCE5F}",

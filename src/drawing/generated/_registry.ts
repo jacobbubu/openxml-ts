@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_main.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerDrawingChildMaps } from "./_child-map.js";
 import { Accent1Color } from "./accent1-color.js";
 import { Accent2Color } from "./accent2-color.js";
 import { Accent3Color } from "./accent3-color.js";
@@ -645,4 +646,5 @@ export function registerDrawingElements(registry: ElementRegistry): void {
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/main", "grpSpPr", VisualGroupShapeProperties);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/main", "wavAudioFile", WaveAudioFile);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/main", "wholeTbl", WholeTable);
+  registerDrawingChildMaps(registry);
 }

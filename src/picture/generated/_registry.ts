@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_drawingml_2006_picture.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerPictureChildMaps } from "./_child-map.js";
 import { BlipFill } from "./blip-fill.js";
 import { NonVisualDrawingProperties } from "./non-visual-drawing-properties.js";
 import { NonVisualPictureDrawingProperties } from "./non-visual-picture-drawing-properties.js";
@@ -21,4 +22,5 @@ export function registerPictureElements(registry: ElementRegistry): void {
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/picture", "nvPicPr", NonVisualPictureProperties);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/picture", "pic", Picture);
   registry.register("http://schemas.openxmlformats.org/drawingml/2006/picture", "spPr", ShapeProperties);
+  registerPictureChildMaps(registry);
 }

@@ -760,9 +760,9 @@
                         },
                         {
                           "qname": "a:ext",
-                          "className": "ShapePropertiesExtension",
+                          "className": "Extents",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "cx": "0",
                             "cy": "0"
                           }
@@ -1082,9 +1082,9 @@
                         },
                         {
                           "qname": "a:ext",
-                          "className": "ShapePropertiesExtension",
+                          "className": "Extents",
                           "namespaceUri": "http://schemas.openxmlformats.org/drawingml/2006/main",
-                          "extendedAttributes": {
+                          "typedAttributes": {
                             "cx": "0",
                             "cy": "0"
                           }

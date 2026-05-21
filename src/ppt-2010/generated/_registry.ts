@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_powerpoint_2010_main.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerPpt2010ChildMaps } from "./_child-map.js";
 import { ApplicationNonVisualDrawingProperties } from "./application-non-visual-drawing-properties.js";
 import { BookmarkTarget } from "./bookmark-target.js";
 import { BrowseMode } from "./browse-mode.js";
@@ -117,4 +118,5 @@ export function registerPpt2010Elements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "warp", WarpTransition);
   registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "wheelReverse", WheelReverseTransition);
   registry.register("http://schemas.microsoft.com/office/powerpoint/2010/main", "window", WindowTransition);
+  registerPpt2010ChildMaps(registry);
 }
