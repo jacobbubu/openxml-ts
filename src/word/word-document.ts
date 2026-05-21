@@ -27,6 +27,7 @@ import {
   StringValue,
 } from "../element/index.js";
 import { OpenXmlUnknownElement } from "../element/unknown-element.js";
+import type { MarkupCompatibilityProcessSettings } from "../markup-compat/index.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import {
   type IPackage,
@@ -117,8 +118,14 @@ export class WordprocessingDocument {
   private _customFilePropertiesPart: CustomFilePropertiesPart | undefined;
   /** Epic-73：CustomXmlPart 多实例缓存（按 main Part URI 索引）。 */
   private _customXmlParts: CustomXmlPart[] | undefined;
+  /** Epic-82：MC 协商处理设置；undefined = NoProcess（默认行为不变）。 */
+  private readonly _mcSettings: MarkupCompatibilityProcessSettings | undefined;
 
-  constructor(private readonly pkg: MemoryOpenXmlPackage) {
+  constructor(
+    private readonly pkg: MemoryOpenXmlPackage,
+    mcSettings?: MarkupCompatibilityProcessSettings,
+  ) {
+    this._mcSettings = mcSettings;
     pkg.registerDiagnosticsElementCounter(() => this.countLoadedElements());
   }
 
@@ -184,7 +191,7 @@ export class WordprocessingDocument {
       target: "styles.xml",
       targetMode: "internal",
     });
-    const sp = new StylesPart(part, wordRegistry);
+    const sp = this.applyMcSettings(new StylesPart(part, wordRegistry));
     // 与 Document 元素一致：注入 xmlns:w 声明，保证序列化后可被反序列化正确识别
     sp.styles.extendedAttributes.set("xmlns:w", WPNS_URI);
     this.typedParts.set(StylesPart.relationshipType, sp);
@@ -246,7 +253,7 @@ export class WordprocessingDocument {
       target: "footnotes.xml",
       targetMode: "internal",
     });
-    const fp = new FootnotesPart(part, wordRegistry);
+    const fp = this.applyMcSettings(new FootnotesPart(part, wordRegistry));
     this.typedParts.set(FootnotesPart.relationshipType, fp);
     return fp;
   }
@@ -310,7 +317,11 @@ export class WordprocessingDocument {
       if (rel.type !== CustomXmlPart.relationshipType) continue;
       const targetUri = resolveRelativePartUri(main.part.uri, rel.target);
       if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
-      out.push(new CustomXmlPart(this.pkg.getPart(targetUri), wordRegistry, this.pkg));
+      out.push(
+        this.applyMcSettings(
+          new CustomXmlPart(this.pkg.getPart(targetUri), wordRegistry, this.pkg),
+        ),
+      );
     }
     this._customXmlParts = out;
     return out;
@@ -344,7 +355,7 @@ export class WordprocessingDocument {
       target: uri.slice("/word/".length),
       targetMode: "internal",
     });
-    const hp = new HeaderPart(part, wordRegistry);
+    const hp = this.applyMcSettings(new HeaderPart(part, wordRegistry));
     fillHeaderFooterBody(hp.header, text);
 
     // sectPr 挂 reference
@@ -382,7 +393,7 @@ export class WordprocessingDocument {
       target: uri.slice("/word/".length),
       targetMode: "internal",
     });
-    const fp = new FooterPart(part, wordRegistry);
+    const fp = this.applyMcSettings(new FooterPart(part, wordRegistry));
     fillHeaderFooterBody(fp.footer, text);
 
     const sectPr = this.ensureSectionProperties();
@@ -592,7 +603,7 @@ export class WordprocessingDocument {
       target: "numbering.xml",
       targetMode: "internal",
     });
-    const np = new NumberingPart(part, wordRegistry);
+    const np = this.applyMcSettings(new NumberingPart(part, wordRegistry));
     this.typedParts.set(NumberingPart.relationshipType, np);
     return np;
   }
@@ -613,7 +624,7 @@ export class WordprocessingDocument {
       target: "comments.xml",
       targetMode: "internal",
     });
-    const cp = new CommentsPart(part, wordRegistry);
+    const cp = this.applyMcSettings(new CommentsPart(part, wordRegistry));
     this.typedParts.set(CommentsPart.relationshipType, cp);
     return cp;
   }
@@ -759,7 +770,7 @@ export class WordprocessingDocument {
     options: OpenAsyncOptions = {},
   ): Promise<WordprocessingDocument> {
     const pkg = await openAsync(source, options);
-    return new WordprocessingDocument(pkg);
+    return new WordprocessingDocument(pkg, options.markupCompatibilityProcessSettings);
   }
 
   /**
@@ -811,6 +822,7 @@ export class WordprocessingDocument {
     if (partUri === undefined || !this.pkg.hasPart(partUri)) return undefined;
     const part = this.pkg.getPart(partUri);
     const typed = new Ctor(part, wordRegistry);
+    if (this._mcSettings !== undefined) typed.setMcSettings(this._mcSettings);
     this.typedParts.set(Ctor.relationshipType, typed);
     return typed;
   }
@@ -830,8 +842,15 @@ export class WordprocessingDocument {
     if (partUri === undefined || !this.pkg.hasPart(partUri)) return undefined;
     const part = this.pkg.getPart(partUri);
     const typed = new Ctor(part, wordRegistry);
+    if (this._mcSettings !== undefined) typed.setMcSettings(this._mcSettings);
     this.typedParts.set(Ctor.relationshipType, typed);
     return typed;
+  }
+
+  /** MC 设置辅助：若设置存在，将其应用到刚构造的 Part 实例。 */
+  private applyMcSettings<T extends TypedXmlPart<OpenXmlElement>>(part: T): T {
+    if (this._mcSettings !== undefined) part.setMcSettings(this._mcSettings);
+    return part;
   }
 }
 

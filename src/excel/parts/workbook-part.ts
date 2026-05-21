@@ -57,7 +57,9 @@ export class WorkbookPart extends TypedXmlPart<Workbook> {
       if (!relationshipTypeMatches(rel.type, WorksheetPart.relationshipType)) continue;
       const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
       if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
-      out.push(new WorksheetPart(this.pkg.getPart(targetUri), this.registry));
+      const wsp = new WorksheetPart(this.pkg.getPart(targetUri), this.registry);
+      if (this.mcSettings !== undefined) wsp.setMcSettings(this.mcSettings);
+      out.push(wsp);
     }
     this._worksheetParts = out;
     return out;

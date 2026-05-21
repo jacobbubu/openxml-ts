@@ -26,6 +26,7 @@ import {
   UInt32Value,
 } from "../element/index.js";
 import { OpenXmlUnknownElement } from "../element/unknown-element.js";
+import type { MarkupCompatibilityProcessSettings } from "../markup-compat/index.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import {
   type IPackage,
@@ -125,8 +126,14 @@ export class SpreadsheetDocument {
   private _extendedFilePropertiesPart: ExtendedFilePropertiesPart | undefined;
   /** Epic-72：CustomFilePropertiesPart 缓存。 */
   private _customFilePropertiesPart: CustomFilePropertiesPart | undefined;
+  /** Epic-82：MC 协商处理设置；undefined = NoProcess（默认行为不变）。 */
+  private readonly _mcSettings: MarkupCompatibilityProcessSettings | undefined;
 
-  constructor(private readonly pkg: MemoryOpenXmlPackage) {
+  constructor(
+    private readonly pkg: MemoryOpenXmlPackage,
+    mcSettings?: MarkupCompatibilityProcessSettings,
+  ) {
+    this._mcSettings = mcSettings;
     pkg.registerDiagnosticsElementCounter(() => this.countLoadedElements());
   }
 
@@ -424,6 +431,7 @@ export class SpreadsheetDocument {
       const cached = this.drawingParts.get(partUri);
       if (cached !== undefined) return cached;
       const dp = new DrawingPart(this.pkg.getPart(partUri), excelRegistry, this.pkg);
+      if (this._mcSettings !== undefined) dp.setMcSettings(this._mcSettings);
       this.drawingParts.set(partUri, dp);
       return dp;
     }
@@ -445,6 +453,7 @@ export class SpreadsheetDocument {
     wsp.worksheet.appendChild(drawingEl);
 
     const dp = new DrawingPart(part, excelRegistry, this.pkg);
+    if (this._mcSettings !== undefined) dp.setMcSettings(this._mcSettings);
     this.drawingParts.set(uri, dp);
     return dp;
   }
@@ -504,7 +513,7 @@ export class SpreadsheetDocument {
     options: OpenAsyncOptions = {},
   ): Promise<SpreadsheetDocument> {
     const pkg = await openAsync(source, options);
-    return new SpreadsheetDocument(pkg);
+    return new SpreadsheetDocument(pkg, options.markupCompatibilityProcessSettings);
   }
 
   /**
@@ -690,6 +699,7 @@ export class SpreadsheetDocument {
     if (partUri === undefined || !this.pkg.hasPart(partUri)) return undefined;
     const part = this.pkg.getPart(partUri);
     const wp = new WorkbookPart(part, excelRegistry, this.pkg);
+    if (this._mcSettings !== undefined) wp.setMcSettings(this._mcSettings);
     this.typedParts.set(WorkbookPart.relationshipType, wp);
     return wp;
   }
@@ -708,6 +718,7 @@ export class SpreadsheetDocument {
     if (partUri === undefined || !this.pkg.hasPart(partUri)) return undefined;
     const part = this.pkg.getPart(partUri);
     const typed = new Ctor(part, excelRegistry);
+    if (this._mcSettings !== undefined) typed.setMcSettings(this._mcSettings);
     this.typedParts.set(Ctor.relationshipType, typed);
     return typed;
   }

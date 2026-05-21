@@ -52,7 +52,13 @@ export class NotesSlidePart extends TypedXmlPart<NotesSlide> {
     if (this._slidePart !== undefined) {
       return this._slidePart ?? undefined;
     }
-    const resolved = resolveSinglePart(this.part, this.pkg, this.registry, SlidePart);
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      SlidePart,
+      this.mcSettings,
+    );
     this._slidePart = resolved ?? null;
     return resolved;
   }

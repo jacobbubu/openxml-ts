@@ -79,7 +79,9 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
       if (target === undefined) continue;
       const targetUri = resolveRelativePartUri(this.part.uri, target);
       if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
-      out.push(new SlidePart(this.pkg.getPart(targetUri), this.registry, this.pkg));
+      const sp = new SlidePart(this.pkg.getPart(targetUri), this.registry, this.pkg);
+      if (this.mcSettings !== undefined) sp.setMcSettings(this.mcSettings);
+      out.push(sp);
     }
     this._slideParts = out;
     return out;

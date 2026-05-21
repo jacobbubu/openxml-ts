@@ -1548,11 +1548,15 @@ export class ThemePart extends TypedXmlPart<OpenXmlElement> {
 
 // @public (undocumented)
 export abstract class TypedXmlPart<T extends OpenXmlElement> {
-    constructor(_part: IPackagePart, registry: ElementRegistry, RootCtor: new () => T);
+    constructor(_part: IPackagePart, registry: ElementRegistry, RootCtor: new () => T, mcSettings?: MarkupCompatibilityProcessSettings | undefined);
     flushAsync(): Promise<void>;
     get isLoaded(): boolean;
     // (undocumented)
     protected _loaded: boolean;
+    // Warning: (ae-forgotten-export) The symbol "MarkupCompatibilityProcessSettings" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    protected mcSettings?: MarkupCompatibilityProcessSettings | undefined;
     get part(): IPackagePart;
     // (undocumented)
     protected readonly _part: IPackagePart;
@@ -1564,6 +1568,7 @@ export abstract class TypedXmlPart<T extends OpenXmlElement> {
     protected _root: T | undefined;
     // (undocumented)
     protected readonly RootCtor: new () => T;
+    setMcSettings(settings: MarkupCompatibilityProcessSettings): void;
 }
 
 // @public
@@ -1595,7 +1600,7 @@ export class WordprocessingDocument {
     // (undocumented)
     [Symbol.asyncDispose](): Promise<void>;
     // Warning: (ae-forgotten-export) The symbol "MemoryOpenXmlPackage" needs to be exported by the entry point index.d.ts
-    constructor(pkg: MemoryOpenXmlPackage);
+    constructor(pkg: MemoryOpenXmlPackage, mcSettings?: MarkupCompatibilityProcessSettings);
     addComment(opts: {
         author: string;
         initials?: string;

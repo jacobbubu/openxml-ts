@@ -15,6 +15,10 @@ import {
   deserialize,
   serialize,
 } from "../element/index.js";
+import {
+  type MarkupCompatibilityProcessSettings,
+  processMarkupCompatibility,
+} from "../markup-compat/index.js";
 import type { IPackagePart } from "../packaging/interfaces/part.js";
 
 /**
@@ -35,11 +39,23 @@ export abstract class TypedXmlPart<T extends OpenXmlElement> {
     protected readonly _part: IPackagePart,
     protected readonly registry: ElementRegistry,
     protected readonly RootCtor: new () => T,
+    protected mcSettings?: MarkupCompatibilityProcessSettings,
   ) {}
 
   /** 原始 IPackagePart 句柄（用于查 part-level relationships 等）。 */
   get part(): IPackagePart {
     return this._part;
+  }
+
+  /**
+   * 设置 MC 协商处理设置（Epic-82）。
+   *
+   * 必须在首次访问 `root`（触发懒加载）之前调用才有效。
+   * 由文档门面（WordprocessingDocument / SpreadsheetDocument / PresentationDocument）
+   * 在构造 Part 实例后立即调用，无需变更各 Part 类的构造函数签名。
+   */
+  setMcSettings(settings: MarkupCompatibilityProcessSettings): void {
+    this.mcSettings = settings;
   }
 
   /** 懒加载 typed 根元素。多次访问返回同一实例。 */
@@ -78,7 +94,12 @@ export abstract class TypedXmlPart<T extends OpenXmlElement> {
     const xml = new TextDecoder("utf-8").decode(bytes);
     _activeLoads += 1;
     try {
-      this._root = deserialize(xml, { registry: this.registry }) as T;
+      let root = deserialize(xml, { registry: this.registry }) as T;
+      // MC 协商处理：若 settings 存在且 processMode 非 NoProcess，对反序列化后的元素树执行 MC 处理
+      if (this.mcSettings !== undefined && this.mcSettings.processMode !== "NoProcess") {
+        root = processMarkupCompatibility(root, this.mcSettings) as T;
+      }
+      this._root = root;
     } finally {
       _activeLoads -= 1;
     }

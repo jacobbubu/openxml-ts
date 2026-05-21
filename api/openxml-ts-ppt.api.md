@@ -243,7 +243,8 @@ export class PresentationDocument {
     // (undocumented)
     [Symbol.asyncDispose](): Promise<void>;
     // Warning: (ae-forgotten-export) The symbol "MemoryOpenXmlPackage" needs to be exported by the entry point index.d.ts
-    constructor(pkg: MemoryOpenXmlPackage);
+    // Warning: (ae-forgotten-export) The symbol "MarkupCompatibilityProcessSettings" needs to be exported by the entry point index.d.ts
+    constructor(pkg: MemoryOpenXmlPackage, mcSettings?: MarkupCompatibilityProcessSettings);
     addImagePart(slide: SlidePart | number, bytes: Uint8Array, opts?: AddImagePartOptions): {
         part: ImagePart;
         relId: string;
@@ -358,11 +359,13 @@ export function sniffImageMime(bytes: Uint8Array): string | undefined;
 
 // @public (undocumented)
 export abstract class TypedXmlPart<T extends OpenXmlElement> {
-    constructor(_part: IPackagePart, registry: ElementRegistry, RootCtor: new () => T);
+    constructor(_part: IPackagePart, registry: ElementRegistry, RootCtor: new () => T, mcSettings?: MarkupCompatibilityProcessSettings | undefined);
     flushAsync(): Promise<void>;
     get isLoaded(): boolean;
     // (undocumented)
     protected _loaded: boolean;
+    // (undocumented)
+    protected mcSettings?: MarkupCompatibilityProcessSettings | undefined;
     get part(): IPackagePart;
     // (undocumented)
     protected readonly _part: IPackagePart;
@@ -374,6 +377,7 @@ export abstract class TypedXmlPart<T extends OpenXmlElement> {
     protected _root: T | undefined;
     // (undocumented)
     protected readonly RootCtor: new () => T;
+    setMcSettings(settings: MarkupCompatibilityProcessSettings): void;
 }
 
 // (No @packageDocumentation comment for this package)
