@@ -271,6 +271,10 @@
       "types": "./dist/streaming/index.d.ts",
       "import": "./dist/streaming/index.js"
     },
+    "./markup-compat": {
+      "types": "./dist/markup-compat/index.d.ts",
+      "import": "./dist/markup-compat/index.js"
+    },
     "./package.json": "./package.json"
   },
   "files": ["dist", "README.md", "LICENSE"],
@@ -601,6 +605,13 @@
       "path": "dist/streaming/index.js",
       "import": "{ OpenXmlPartReader, OpenXmlPartWriter }",
       "limit": "50 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/markup-compat (MC processor + version table)",
+      "path": "dist/markup-compat/index.js",
+      "import": "{ processMarkupCompatibility, FileFormatVersions }",
+      "limit": "20 KB",
       "gzip": true
     }
   ]
