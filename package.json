@@ -1,6 +1,6 @@
 {
   "name": "openxml-ts",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "description": "TypeScript port of Microsoft Open-XML-SDK; pnpm-managed, Bun-first, Node>=20 ESM",
   "license": "MIT",
   "type": "module",
@@ -277,7 +277,11 @@
     },
     "./package.json": "./package.json"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "bin": {
     "openxml-ts": "./dist/bin/openxml-ts.js"
   },
