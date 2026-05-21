@@ -6,7 +6,6 @@ import {
   BooleanValue,
   OpenXmlLeafElement,
   StringValue,
-  assertRequired,
   assertString,
 } from "../../element/index.js";
 
@@ -96,8 +95,4 @@ export class ConditionalFormatStyle extends OpenXmlLeafElement {
     return out;
   }
 
-  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
-  validateRequired(): void {
-    assertRequired(this.val, { attribute: "w:val", elementClass: "ConditionalFormatStyle" });
-  }
 }

@@ -5,7 +5,6 @@
 import {
   OpenXmlLeafElement,
   StringValue,
-  assertRequired,
 } from "../../element/index.js";
 
 /** Break on Binary Subtraction.
@@ -34,8 +33,4 @@ export class BreakBinarySubtraction extends OpenXmlLeafElement {
     return out;
   }
 
-  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
-  validateRequired(): void {
-    assertRequired(this.val, { attribute: "m:val", elementClass: "BreakBinarySubtraction" });
-  }
 }

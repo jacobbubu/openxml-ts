@@ -220,6 +220,7 @@ import { ZoomTransition } from "./zoom-transition.js";
  * 把 presentationml 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function registerPresentationElements(registry: ElementRegistry): void {
   registry.register("http://schemas.openxmlformats.org/presentationml/2006/main", "anim", Animate);
