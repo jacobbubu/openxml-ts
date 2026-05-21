@@ -565,6 +565,9 @@ export function parseFlatOpc(xml: string): ParsedFlatOpc;
 export function parseRelationshipsXml(xml: string): ParsedRelationship[];
 
 // @public
+export function parseUniversalMeasureToTwips(input: string): number | undefined;
+
+// @public
 export type PartUri = string & {
     readonly __brand: "PartUri";
 };
@@ -640,7 +643,6 @@ export function tryPartUri(value: string): PartUri | undefined;
 // @public
 export class UInt32Value {
     constructor(value: number);
-    // (undocumented)
     static parse(input: string | undefined): UInt32Value | undefined;
     // (undocumented)
     toString(): string;
