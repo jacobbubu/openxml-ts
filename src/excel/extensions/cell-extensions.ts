@@ -1,3 +1,4 @@
+// openxml-ts 便捷扩展层（非 .NET SDK 原生 API）。详见 docs/convenience-layer.md。
 /**
  * `Cell` 的 partial mixin（Story-3.4 + Story-3.6）。
  *

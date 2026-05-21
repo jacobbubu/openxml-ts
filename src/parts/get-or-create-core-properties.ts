@@ -1,3 +1,4 @@
+// openxml-ts 便捷扩展层（非 .NET SDK 原生 API）。详见 docs/convenience-layer.md。
 /**
  * 跨子系统共享：找/创建 CorePropertiesPart（Epic-29）。
  *

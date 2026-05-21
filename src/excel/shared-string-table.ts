@@ -1,3 +1,4 @@
+// openxml-ts 便捷扩展层（非 .NET SDK 原生 API）。详见 docs/convenience-layer.md。
 /**
  * SharedStringTable 跨 Part 解引用（Story-3.4 / Architecture §4）。
  *

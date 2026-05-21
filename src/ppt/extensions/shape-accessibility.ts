@@ -1,3 +1,4 @@
+// openxml-ts 便捷扩展层（非 .NET SDK 原生 API）。详见 docs/convenience-layer.md。
 /**
  * Epic-48：PPT `Shape` 无障碍属性访问器 mixin。
  *
