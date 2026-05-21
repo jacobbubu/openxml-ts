@@ -333,13 +333,29 @@ export function openSync(bytes: Uint8Array, options?: MemoryPackageOptions): Ope
 
 // @public (undocumented)
 export abstract class OpenXmlCompositeElement extends OpenXmlElement {
+    append(...newChildren: OpenXmlElement[]): void;
     appendChild<T extends OpenXmlElement>(child: T): T;
     abstract readonly children: OpenXmlElementList;
+    cloneNode(deep: boolean): OpenXmlCompositeElement;
     descendants<T extends OpenXmlElement = OpenXmlElement>(ctor?: ElementCtor<T>): IterableIterator<T>;
     elements<T extends OpenXmlElement = OpenXmlElement>(ctor?: ElementCtor<T>): IterableIterator<T>;
+    // @deprecated
     firstChild<T extends OpenXmlElement = OpenXmlElement>(ctor?: ElementCtor<T>): T | undefined;
+    get firstChildElement(): OpenXmlElement | undefined;
+    getFirstChild<T extends OpenXmlElement>(ctor: ElementCtor<T>): T | undefined;
+    get hasChildren(): boolean;
+    get innerText(): string;
+    insertAfter<T extends OpenXmlElement>(child: T, sibling: OpenXmlElement | undefined): T;
+    insertAt<T extends OpenXmlElement>(child: T, index: number): T;
     insertBefore<T extends OpenXmlElement>(child: T, sibling: OpenXmlElement): T;
+    get lastChildElement(): OpenXmlElement | undefined;
+    prependChild<T extends OpenXmlElement>(child: T): T;
+    // @deprecated
     remove(child: OpenXmlElement): boolean;
+    removeAllChildren(): void;
+    removeAllChildrenOfType<T extends OpenXmlElement>(ctor: ElementCtor<T>): void;
+    removeChild<T extends OpenXmlElement>(child: T): T;
+    replaceChild<T extends OpenXmlElement>(newChild: OpenXmlElement, oldChild: T): T;
     // Warning: (ae-forgotten-export) The symbol "XmlWriter" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
@@ -348,14 +364,33 @@ export abstract class OpenXmlCompositeElement extends OpenXmlElement {
 
 // @public (undocumented)
 export abstract class OpenXmlElement {
+    ancestors(): IterableIterator<OpenXmlCompositeElement>;
+    ancestorsOfType<T extends OpenXmlElement>(ctor: ElementCtor<T>): IterableIterator<T>;
     applyAttribute(qname: string, value: string): void;
+    abstract cloneNode(deep: boolean): OpenXmlElement;
     protected collectAttributes(): Array<[string, string]>;
+    elementsAfter(): IterableIterator<OpenXmlElement>;
+    elementsBefore(): IterableIterator<OpenXmlElement>;
     readonly extendedAttributes: Map<string, string>;
+    get firstChildElement(): OpenXmlElement | undefined;
+    get hasChildren(): boolean;
+    get innerText(): string;
+    insertAfterSelf<T extends OpenXmlElement>(newElement: T): T;
+    insertBeforeSelf<T extends OpenXmlElement>(newElement: T): T;
+    isAfter(other: OpenXmlElement): boolean;
+    isBefore(other: OpenXmlElement): boolean;
+    get lastChildElement(): OpenXmlElement | undefined;
     abstract readonly localName: string;
     abstract readonly namespaceUri: string;
+    nextSibling(): OpenXmlElement | undefined;
+    nextSiblingOfType<T extends OpenXmlElement>(ctor: ElementCtor<T>): T | undefined;
+    get outerXml(): string;
     parent: OpenXmlCompositeElement | undefined;
     abstract readonly prefix: string;
+    previousSibling(): OpenXmlElement | undefined;
+    previousSiblingOfType<T extends OpenXmlElement>(ctor: ElementCtor<T>): T | undefined;
     get qualifiedName(): string;
+    removeSelf(): void;
     abstract writeTo(writer: XmlWriter): void;
 }
 
@@ -375,6 +410,9 @@ export class OpenXmlElementList implements Iterable<OpenXmlElement> {
 
 // @public (undocumented)
 export abstract class OpenXmlLeafElement extends OpenXmlElement {
+    cloneNode(_deep: boolean): OpenXmlLeafElement;
+    get hasChildren(): boolean;
+    get innerText(): string;
     text: string | undefined;
     // (undocumented)
     writeTo(writer: XmlWriter): void;
@@ -457,6 +495,7 @@ export class OpenXmlUnknownElement extends OpenXmlCompositeElement {
     constructor(prefix: string, localName: string, namespaceUri: string);
     // (undocumented)
     readonly children: OpenXmlElementList;
+    cloneNode(deep: boolean): OpenXmlUnknownElement;
     // (undocumented)
     readonly localName: string;
     // (undocumented)

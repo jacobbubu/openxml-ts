@@ -30,6 +30,25 @@ export class OpenXmlUnknownElement extends OpenXmlCompositeElement {
     this.children = new OpenXmlElementList(this);
   }
 
+  /**
+   * 克隆当前 unknown 元素。`deep=true` 时递归复制子树。
+   *
+   * 对位 .NET `OpenXmlElement.CloneNode(bool deep)`。
+   */
+  override cloneNode(deep: boolean): OpenXmlUnknownElement {
+    const clone = new OpenXmlUnknownElement(this.prefix, this.localName, this.namespaceUri);
+    clone.text = this.text;
+    for (const [k, v] of this.extendedAttributes) {
+      clone.extendedAttributes.set(k, v);
+    }
+    if (deep) {
+      for (const child of this.children) {
+        clone.children.append(child.cloneNode(true));
+      }
+    }
+    return clone;
+  }
+
   override writeTo(writer: XmlWriter): void {
     const qname = this.qualifiedName;
     const attrs = [...this.extendedAttributes.entries()];
