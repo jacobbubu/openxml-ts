@@ -26,19 +26,6 @@ export function assertString(value: {
 } | undefined, options: StringValidatorOptions, context: ValidationContext): void;
 
 // @public
-export interface AttrConstraint {
-    // (undocumented)
-    readonly maxLength?: number;
-    // (undocumented)
-    readonly maxValue?: number;
-    // (undocumented)
-    readonly minLength?: number;
-    // (undocumented)
-    readonly minValue?: number;
-    readonly qname: string;
-}
-
-// @public
 export class BooleanValue {
     constructor(value: boolean);
     // (undocumented)
@@ -145,16 +132,6 @@ export function deserialize(xml: string, options?: DeserializeOptions): OpenXmlE
 // @public (undocumented)
 export interface DeserializeOptions {
     readonly registry?: ElementRegistry;
-}
-
-// @public
-export interface ElementConstraint {
-    readonly attrConstraints?: readonly AttrConstraint[];
-    readonly className: string;
-    readonly localName: string;
-    readonly namespaceUri: string;
-    readonly particle?: NormalizedParticle;
-    readonly requiredAttrs?: readonly string[];
 }
 
 // @public
@@ -323,12 +300,6 @@ export function isStrictUri(uri: string): boolean;
 // @public
 export function isXmlContentType(ct: string): boolean;
 
-// @public
-export interface NormalizedParticle {
-    // (undocumented)
-    readonly root: ParticleNode;
-}
-
 // @public (undocumented)
 export interface NumberValidatorOptions {
     // (undocumented)
@@ -489,17 +460,6 @@ export class OpenXmlUnknownElement extends OpenXmlCompositeElement {
 }
 
 // @public
-export class OpenXmlValidator {
-    constructor(options?: OpenXmlValidatorOptions);
-    validate(root: OpenXmlElement, partUri?: string): ValidationError[];
-}
-
-// @public
-export interface OpenXmlValidatorOptions {
-    readonly skipUnknown?: boolean;
-}
-
-// @public
 export interface OverrideEntry {
     // (undocumented)
     readonly contentType: string;
@@ -552,55 +512,12 @@ export function parseFlatOpc(xml: string): ParsedFlatOpc;
 export function parseRelationshipsXml(xml: string): ParsedRelationship[];
 
 // @public
-export interface ParticleComposite {
-    // (undocumented)
-    readonly items: readonly ParticleNode[];
-    // (undocumented)
-    readonly kind: "sequence" | "choice" | "all" | "group";
-    // (undocumented)
-    readonly max: number | "unbounded";
-    // (undocumented)
-    readonly min: number;
-}
-
-// @public
-export interface ParticleLeaf {
-    // (undocumented)
-    readonly kind: "leaf";
-    readonly local: string;
-    readonly max: number | "unbounded";
-    readonly min: number;
-    readonly ns: string;
-}
-
-// @public (undocumented)
-export type ParticleNode = ParticleLeaf | ParticleComposite;
-
-// @public
 export type PartUri = string & {
     readonly __brand: "PartUri";
 };
 
 // @public
 export type PartWriteInput = Uint8Array | ReadableStream<Uint8Array> | Blob | string;
-
-// @public
-export function registerAllConstraints(): Promise<void>;
-
-// @public
-export function registerConstraints(data: ReadonlyArray<ElementConstraint>): void;
-
-// @public
-export function registerDrawingConstraints(): Promise<void>;
-
-// @public
-export function registerExcelConstraints(): Promise<void>;
-
-// @public
-export function registerPptConstraints(): Promise<void>;
-
-// @public
-export function registerWordConstraints(): Promise<void>;
 
 // @public
 export class RelationshipCollection implements IRelationshipCollection {
@@ -683,19 +600,6 @@ export interface ValidationContext {
     readonly attribute: string;
     readonly elementClass: string;
 }
-
-// @public
-export interface ValidationError {
-    readonly description: string;
-    readonly errorType: ValidationErrorType;
-    readonly id: string;
-    readonly node: OpenXmlElement;
-    readonly partUri?: string | undefined;
-    readonly path: string;
-}
-
-// @public
-export type ValidationErrorType = "Schema" | "Semantic" | "Package" | "MarkupCompatibility";
 
 // @public (undocumented)
 export interface ValidationIssue {

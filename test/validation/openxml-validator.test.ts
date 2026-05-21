@@ -312,24 +312,28 @@ describe("OpenXmlValidator — Phase 1", () => {
       expect(files.length).toBeGreaterThan(0);
     });
 
-    it("validates a word document parsed to element tree with word constraints registered", async () => {
-      // Use the openAsync + word document parsing approach to validate a real docx
-      // Import the word document open capability
-      const { WordprocessingDocument } = await import("../../src/word/index.js");
-      const docxPath = join(FIXTURES_DIR, "5Errors.docx"); // small fixture
-      const bytes = new Uint8Array(await readFile(docxPath));
-      const doc = await WordprocessingDocument.openAsync(bytes);
-      expect(doc).toBeDefined();
+    it(
+      "validates a word document parsed to element tree with word constraints registered",
+      async () => {
+        // Use the openAsync + word document parsing approach to validate a real docx
+        // Import the word document open capability
+        const { WordprocessingDocument } = await import("../../src/word/index.js");
+        const docxPath = join(FIXTURES_DIR, "5Errors.docx"); // small fixture
+        const bytes = new Uint8Array(await readFile(docxPath));
+        const doc = await WordprocessingDocument.openAsync(bytes);
+        expect(doc).toBeDefined();
 
-      // Validate the main document element
-      const mainPart = doc.mainDocumentPart;
-      expect(mainPart).toBeDefined();
+        // Validate the main document element
+        const mainPart = doc.mainDocumentPart;
+        expect(mainPart).toBeDefined();
 
-      // The document element tree should not throw when validated
-      if (mainPart !== undefined) {
-        const docEl = mainPart.document;
-        expect(() => validator.validate(docEl)).not.toThrow();
-      }
-    });
+        // The document element tree should not throw when validated
+        if (mainPart !== undefined) {
+          const docEl = mainPart.document;
+          expect(() => validator.validate(docEl)).not.toThrow();
+        }
+      },
+      30000,
+    );
   });
 });

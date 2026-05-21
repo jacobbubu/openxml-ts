@@ -263,6 +263,10 @@
       "types": "./dist/office-ext/*.d.ts",
       "import": "./dist/office-ext/*.js"
     },
+    "./validation": {
+      "types": "./dist/validation/index.d.ts",
+      "import": "./dist/validation/index.js"
+    },
     "./package.json": "./package.json"
   },
   "files": ["dist", "README.md", "LICENSE"],
@@ -368,6 +372,13 @@
       "name": "openxml-ts (root entry, OPC + ZIP backend)",
       "path": "dist/index.js",
       "limit": "100 KB",
+      "gzip": true
+    },
+    {
+      "name": "openxml-ts/validation (validator engine, no constraint data)",
+      "path": "dist/validation/index.js",
+      "import": "{ OpenXmlValidator }",
+      "limit": "50 KB",
       "gzip": true
     },
     {
