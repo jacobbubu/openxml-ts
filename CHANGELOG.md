@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.1.0](https://github.com/jacobbubu/openxml-ts/compare/v1.0.0...v1.1.0) (2026-05-22)
+
+
+### Features
+
+* **facade:** Epic-96 三个文档门面新增 changeDocumentType + documentType ([bad4d28](https://github.com/jacobbubu/openxml-ts/commit/bad4d280ed26782a20e7281f644c3024b8130d72))
+* **facade:** Epic-96 三个文档门面新增 changeDocumentType + documentType（[#273](https://github.com/jacobbubu/openxml-ts/issues/273)） ([e6291cc](https://github.com/jacobbubu/openxml-ts/commit/e6291cc6bd3771b468fc4a1c15dfffd263ff6fdb))
+* **packaging:** Epic-96 文档门面 changeDocumentType ([#273](https://github.com/jacobbubu/openxml-ts/issues/273)) ([cf53fb8](https://github.com/jacobbubu/openxml-ts/commit/cf53fb8f33b76b14387f14d4120430fc6b763d3e))
+* **streaming:** Epic-97 流式 API 封装层直连 + OpenXmlDomReader ([6235ac5](https://github.com/jacobbubu/openxml-ts/commit/6235ac5e96bf4c030227dfefabfc1049ef6cac0a))
+* **streaming:** Epic-97 流式 API 封装层直连 + OpenXmlDomReader ([#274](https://github.com/jacobbubu/openxml-ts/issues/274)) ([afeedf1](https://github.com/jacobbubu/openxml-ts/commit/afeedf1514f840378ee0598f5cb9ab6519acac4e))
+
+
+### Bug Fixes
+
+* **api:** 提交 Epic-97 重新生成的 streaming api 报告 ([#274](https://github.com/jacobbubu/openxml-ts/issues/274)) ([c909d06](https://github.com/jacobbubu/openxml-ts/commit/c909d066d333053e9056e6aa3bbce81fabbfe843))
+
 ## [1.0.0](https://github.com/jacobbubu/openxml-ts/compare/v0.16.0...v1.0.0) (2026-05-22)
 
 
