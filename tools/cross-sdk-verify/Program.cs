@@ -8,6 +8,12 @@
 //   word-create  word-run-formatting  word-paragraph-format  word-add-table
 //   excel-create  excel-cell-value  excel-cell-formula  excel-freeze-panes  excel-merge-cells
 //   ppt-create  ppt-multi-slide  ppt-add-table  ppt-speaker-notes
+//
+// Example names (batch 2):
+//   word-add-hyperlink  word-page-setup  word-add-header-footer  word-header-footer
+//   word-paragraph-spacing  word-paragraph-flow  word-run-fonts
+//   excel-column-row-sizing  excel-number-format  excel-sheet-metadata
+//   ppt-add-notes  ppt-set-titles  ppt-paragraph-formatting  ppt-run-formatting
 
 using CrossSdkVerify;
 using CrossSdkVerify.Replicas;
@@ -84,6 +90,49 @@ if (command == "generate")
                 break;
             case "ppt-speaker-notes":
                 PptSpeakerNotes.Run(outputPath);
+                break;
+            // Batch 2
+            case "word-add-hyperlink":
+                WordAddHyperlink.Run(outputPath);
+                break;
+            case "word-page-setup":
+                WordPageSetup.Run(outputPath);
+                break;
+            case "word-add-header-footer":
+                WordAddHeaderFooter.Run(outputPath);
+                break;
+            case "word-header-footer":
+                WordHeaderFooter.Run(outputPath);
+                break;
+            case "word-paragraph-spacing":
+                WordParagraphSpacing.Run(outputPath);
+                break;
+            case "word-paragraph-flow":
+                WordParagraphFlow.Run(outputPath);
+                break;
+            case "word-run-fonts":
+                WordRunFonts.Run(outputPath);
+                break;
+            case "excel-column-row-sizing":
+                ExcelColumnRowSizing.Run(outputPath);
+                break;
+            case "excel-number-format":
+                ExcelNumberFormat.Run(outputPath);
+                break;
+            case "excel-sheet-metadata":
+                ExcelSheetMetadata.Run(outputPath);
+                break;
+            case "ppt-add-notes":
+                PptAddNotes.Run(outputPath);
+                break;
+            case "ppt-set-titles":
+                PptSetTitles.Run(outputPath);
+                break;
+            case "ppt-paragraph-formatting":
+                PptParagraphFormatting.Run(outputPath);
+                break;
+            case "ppt-run-formatting":
+                PptRunFormatting.Run(outputPath);
                 break;
             default:
                 Console.Error.WriteLine($"Unknown example name: {name}");

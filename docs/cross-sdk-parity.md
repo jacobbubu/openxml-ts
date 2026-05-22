@@ -87,9 +87,38 @@ Run: `bash tools/cross-sdk-verify/run-verify.sh`
 
 ---
 
+## Batch 2 Results (14 examples, +1 N/A)
+
+| # | Example | Subsystem | Operation | Result |
+|---|---------|-----------|-----------|--------|
+| 14 | `word-add-hyperlink` | Word | External + anchor hyperlink runs | **PASS** |
+| 15 | `word-page-setup` | Word | A4 landscape page size + custom margins | **PASS** |
+| 16 | `word-add-header-footer` | Word | Default header + footer parts | **PASS** |
+| 17 | `word-header-footer` | Word | Header "公司机密" + footer "第 X 页" | **PASS** |
+| 18 | `word-paragraph-spacing` | Word | Before/after/line spacing (6 paragraphs) | **PASS** |
+| 19 | `word-paragraph-flow` | Word | keepNext/keepLines/pageBreakBefore | **PASS** |
+| 20 | `word-run-fonts` | Word | fontFamily shortcut + fontFamilyDetail | **PASS** |
+| 21 | `word-text-extract` | Word | Read-only text extraction (no document output) | **N/A** |
+| 22 | `excel-column-row-sizing` | Excel | Column widths 30/15/15/50 + row heights 40/18 | **PASS** |
+| 23 | `excel-number-format` | Excel | Built-in number formats (integer/decimal/percent/currency/date) | **PASS** |
+| 24 | `excel-sheet-metadata` | Excel | Tab color FFFF0000 + activeSheet=0 | **PASS** |
+| 25 | `ppt-add-notes` | PPT | Speaker notes set via setSlideNotes | **PASS** |
+| 26 | `ppt-set-titles` | PPT | Title placeholder set via slide.title setter | **PASS** |
+| 27 | `ppt-paragraph-formatting` | PPT | DrawingML paragraph alignment/margin/indent | **PASS** |
+| 28 | `ppt-run-formatting` | PPT | DrawingML run bold/italic/underline/fontSize/color | **PASS** |
+
+**All 14 batch-2 document-output examples: semantically equivalent. No divergences found.**
+
+`word-text-extract` is a read-only example (opens an existing docx and extracts text to stdout);
+it produces no output document and cannot be output-compared. Marked N/A.
+
+**Running total: 27 covered (27 PASS) out of 60 examples.**
+
+---
+
 ## Divergences Found
 
-None in batch 1.
+None in batches 1 or 2.
 
 During development, two **cosmetic** differences were corrected in the C# replicas
 (not bugs in openxml-ts):
@@ -138,21 +167,14 @@ The harness is structured for mechanical batch extension:
 ### Remaining examples by category
 
 The table below shows all 60 examples and their batch assignment.
-Batch 1 (13) is complete; batches 2–4 are planned.
+Batches 1 (13) and 2 (14) are complete; batches 3–4 are planned.
 
-**Word (21 remaining)**
+**Word (remaining)**
 
 | Example | Complexity | Planned batch |
 |---------|-----------|---------------|
-| word-add-hyperlink | medium | 2 |
-| word-page-setup | medium | 2 |
-| word-add-header-footer | medium | 2 |
-| word-header-footer | medium | 2 |
-| word-paragraph-spacing | low | 2 |
 | word-paragraph-style | medium | 3 |
 | word-paragraph-numbering | medium | 3 |
-| word-paragraph-flow | low | 2 |
-| word-run-fonts | low | 2 |
 | word-run-style | medium | 3 |
 | word-styled-doc | medium | 3 |
 | word-style-inspect | medium | 3 |
@@ -165,17 +187,13 @@ Batch 1 (13) is complete; batches 2–4 are planned.
 | word-table-shading | medium | 3 |
 | word-footnotes | medium | 3 |
 | word-page-numbers | medium | 3 |
-| word-text-extract | low | 2 |
 | word-replace | medium | 3 |
 | word-add-image | high | 4 |
 
-**Excel (7 remaining)**
+**Excel (remaining)**
 
 | Example | Complexity | Planned batch |
 |---------|-----------|---------------|
-| excel-column-row-sizing | low | 2 |
-| excel-number-format | medium | 2 |
-| excel-sheet-metadata | medium | 2 |
 | excel-defined-names | medium | 3 |
 | excel-data-validations | medium | 3 |
 | excel-replace | medium | 3 |
@@ -185,10 +203,6 @@ Batch 1 (13) is complete; batches 2–4 are planned.
 
 | Example | Complexity | Planned batch |
 |---------|-----------|---------------|
-| ppt-add-notes | medium | 2 |
-| ppt-set-titles | low | 2 |
-| ppt-paragraph-formatting | medium | 2 |
-| ppt-run-formatting | medium | 2 |
 | ppt-shape-xfrm | medium | 3 |
 | ppt-shape-rotation | medium | 3 |
 | ppt-hidden-slide | medium | 3 |
@@ -206,14 +220,14 @@ Batch 1 (13) is complete; batches 2–4 are planned.
 - **Hyperlink targets**: normalise rel IDs → sort by target URL
 - **Images**: compare dimensions + content hash (not binary-exact)
 - **Styles**: normalise style names, ignore auto-generated IDs
-- **Comments/revisions**: not in scope for batch 1
+- **Comments/revisions**: not in scope for batch 2
 
 ---
 
 ## Running the Verification
 
 ```bash
-# Full batch 1
+# Full suite (all covered examples)
 bash tools/cross-sdk-verify/run-verify.sh
 
 # Single example

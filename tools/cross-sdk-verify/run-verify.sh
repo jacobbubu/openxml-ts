@@ -31,6 +31,7 @@ csverify() {
 }
 
 # --- Batch 1 examples (13 total) ---
+# --- Batch 2 examples (+14 = 27 total; word-text-extract is N/A: read-only, no output) ---
 ALL_EXAMPLES=(
   word-create
   word-run-formatting
@@ -45,6 +46,20 @@ ALL_EXAMPLES=(
   ppt-multi-slide
   ppt-add-table
   ppt-speaker-notes
+  word-add-hyperlink
+  word-page-setup
+  word-add-header-footer
+  word-header-footer
+  word-paragraph-spacing
+  word-paragraph-flow
+  word-run-fonts
+  excel-column-row-sizing
+  excel-number-format
+  excel-sheet-metadata
+  ppt-add-notes
+  ppt-set-titles
+  ppt-paragraph-formatting
+  ppt-run-formatting
 )
 
 # If specific examples passed, use those; otherwise run all
