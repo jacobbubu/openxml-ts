@@ -1,5 +1,6 @@
 /**
  * Epic-38：Run 格式访问器单测。
+ * Epic-102：rPr 子元素 schema 顺序测试。
  */
 
 import { describe, expect, it } from "vitest";
@@ -105,6 +106,86 @@ describe("Run.colorHex", () => {
     r.colorHex = "00FF00";
     r.colorHex = undefined;
     expect(r.colorHex).toBeUndefined();
+  });
+});
+
+describe("Epic-102：rPr 子元素 schema 顺序", () => {
+  /** 取 rPr 所有子元素的 localName 有序列表 */
+  function rPrChildNames(r: Run): string[] {
+    const rPr = r.firstChild(RunProperties);
+    if (rPr === undefined) return [];
+    return [...rPr.children].map((c) => c.localName);
+  }
+
+  it("bold + colorHex + fontSizeHalfPoints 任意调用顺序 → schema 顺序 b, color, sz", () => {
+    // 调用顺序故意颠倒：sz 先于 color 先于 b
+    const r = new Run();
+    r.fontSizeHalfPoints = 48;
+    r.colorHex = "FF0000";
+    r.bold = true;
+    expect(rPrChildNames(r)).toEqual(["b", "color", "sz"]);
+    expect(r.bold).toBe(true);
+    expect(r.colorHex).toBe("FF0000");
+    expect(r.fontSizeHalfPoints).toBe(48);
+  });
+
+  it("bold + italic + underline + fontSizeHalfPoints + colorHex → 顺序 b, i, color, sz, u", () => {
+    const r = new Run();
+    // 故意以逆序设置
+    r.underline = "single";
+    r.fontSizeHalfPoints = 28;
+    r.colorHex = "0000FF";
+    r.italic = true;
+    r.bold = true;
+    expect(rPrChildNames(r)).toEqual(["b", "i", "color", "sz", "u"]);
+  });
+
+  it("color 始终在 sz 之前", () => {
+    const r = new Run();
+    r.fontSizeHalfPoints = 48;
+    r.colorHex = "FF0000";
+    const names = rPrChildNames(r);
+    const colorIdx = names.indexOf("color");
+    const szIdx = names.indexOf("sz");
+    expect(colorIdx).toBeGreaterThanOrEqual(0);
+    expect(szIdx).toBeGreaterThanOrEqual(0);
+    expect(colorIdx).toBeLessThan(szIdx);
+  });
+
+  it("u 始终在 sz 之後", () => {
+    const r = new Run();
+    r.underline = "single";
+    r.fontSizeHalfPoints = 24;
+    const names = rPrChildNames(r);
+    const szIdx = names.indexOf("sz");
+    const uIdx = names.indexOf("u");
+    expect(szIdx).toBeGreaterThanOrEqual(0);
+    expect(uIdx).toBeGreaterThanOrEqual(0);
+    expect(uIdx).toBeGreaterThan(szIdx);
+  });
+
+  it("后续 set 同属性不改变顺序", () => {
+    const r = new Run();
+    r.bold = true;
+    r.colorHex = "FF0000";
+    r.fontSizeHalfPoints = 24;
+    // 修改值
+    r.colorHex = "00FF00";
+    r.fontSizeHalfPoints = 32;
+    expect(rPrChildNames(r)).toEqual(["b", "color", "sz"]);
+    expect(r.colorHex).toBe("00FF00");
+    expect(r.fontSizeHalfPoints).toBe(32);
+  });
+
+  it("全部五属性任意顺序均得到 b, i, color, sz, u", () => {
+    // 再换一种调用顺序
+    const r = new Run();
+    r.colorHex = "123456";
+    r.underline = "double";
+    r.bold = true;
+    r.fontSizeHalfPoints = 20;
+    r.italic = true;
+    expect(rPrChildNames(r)).toEqual(["b", "i", "color", "sz", "u"]);
   });
 });
 

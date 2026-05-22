@@ -499,7 +499,14 @@ export class WordprocessingDocument {
     const numId = nextNumberingId(np);
 
     const abstractNum = buildAbstractNum(abstractNumId, opts.type);
-    np.numbering.appendChild(abstractNum);
+    // CT_Numbering schema 要求：numPicBullet*, abstractNum*, num*
+    // 新 abstractNum 必须插在所有现有 num 元素之前，保持分组顺序。
+    const firstNum = np.numbering.firstChild(NumberingInstance);
+    if (firstNum === undefined) {
+      np.numbering.appendChild(abstractNum);
+    } else {
+      np.numbering.children.insertBefore(abstractNum, firstNum);
+    }
 
     const numInst = new NumberingInstance();
     numInst.numberID = Int32Value.parse(String(numId));

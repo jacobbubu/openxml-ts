@@ -16,6 +16,7 @@
  * - 共享 rPr lazy-create，rPr 不存在时自动创建并作为 Run 第一个 child
  * - bold / italic 读 OnOff 语义：Bold 子存在 + val 非 "false" → true；val 为 false → false；无 → undefined
  * - 其它字段都是 typed val 直接读写
+ * - Epic-102：rPr 子元素按 CT_RPr / EG_RPrBase schema 顺序插入，非 append
  */
 
 import { BooleanValue, type OpenXmlElement, StringValue } from "../../element/index.js";
@@ -40,6 +41,78 @@ declare module "../generated/run.js" {
     /** 颜色 hex 字符串（无 #），如 "FF0000"；或 "auto"。 */
     colorHex: string | undefined;
   }
+}
+
+// ─── EG_RPrBase schema 顺序表 ────────────────────────────────────────────────
+//
+// CT_RPr / EG_RPrBase 子元素的标准顺序（OOXML §17.3.2.28）。
+// 键为 w: 本地名；值为顺序索引（越小越靠前）。
+// 仅列出便捷 mixin 实际操作的元素；其它元素未出现时插入逻辑会跳过它们。
+//
+// 完整顺序：rStyle(0), rFonts(1), b(2), bCs(3), i(4), iCs(5), caps(6),
+//   smallCaps(7), strike(8), dstrike(9), outline(10), shadow(11), emboss(12),
+//   imprint(13), noProof(14), snapToGrid(15), vanish(16), webHidden(17),
+//   color(18), spacing(19), w(20), kern(21), position(22), sz(23), szCs(24),
+//   highlight(25), u(26), effect(27), bdr(28), shd(29), fitText(30),
+//   vertAlign(31), rtl(32), cs(33), em(34), lang(35), eastAsianLayout(36),
+//   specVanish(37), oMath(38)
+const EG_RPRBASE_ORDER: ReadonlyMap<string, number> = new Map([
+  ["rStyle", 0],
+  ["rFonts", 1],
+  ["b", 2],
+  ["bCs", 3],
+  ["i", 4],
+  ["iCs", 5],
+  ["caps", 6],
+  ["smallCaps", 7],
+  ["strike", 8],
+  ["dstrike", 9],
+  ["outline", 10],
+  ["shadow", 11],
+  ["emboss", 12],
+  ["imprint", 13],
+  ["noProof", 14],
+  ["snapToGrid", 15],
+  ["vanish", 16],
+  ["webHidden", 17],
+  ["color", 18],
+  ["spacing", 19],
+  ["w", 20],
+  ["kern", 21],
+  ["position", 22],
+  ["sz", 23],
+  ["szCs", 24],
+  ["highlight", 25],
+  ["u", 26],
+  ["effect", 27],
+  ["bdr", 28],
+  ["shd", 29],
+  ["fitText", 30],
+  ["vertAlign", 31],
+  ["rtl", 32],
+  ["cs", 33],
+  ["em", 34],
+  ["lang", 35],
+  ["eastAsianLayout", 36],
+  ["specVanish", 37],
+  ["oMath", 38],
+]);
+
+/**
+ * 将 `el` 插入 `rPr` 中，位置按 EG_RPrBase schema 顺序排列。
+ * 遍历现有子元素，找到第一个 schema 顺序 > el 顺序的兄弟，插到其前；
+ * 否则 append 到末尾。
+ */
+function insertRPrChildOrdered(rPr: RunProperties, el: OpenXmlElement): void {
+  const elOrder = EG_RPRBASE_ORDER.get(el.localName) ?? 999;
+  for (const sibling of rPr.children) {
+    const sibOrder = EG_RPRBASE_ORDER.get(sibling.localName) ?? 999;
+    if (sibOrder > elOrder) {
+      rPr.children.insertBefore(el, sibling);
+      return;
+    }
+  }
+  rPr.appendChild(el);
 }
 
 // ─── 内部 helpers ────────────────────────────────────────────────────────────
@@ -83,7 +156,7 @@ function writeOnOff<T extends OnOffElement>(
   }
   if (el === undefined) {
     el = new Cls();
-    rPr.appendChild(el);
+    insertRPrChildOrdered(rPr, el);
   }
   el.val = value ? undefined : new BooleanValue(false);
 }
@@ -128,7 +201,7 @@ Object.defineProperty(Run.prototype, "underline", {
     }
     if (el === undefined) {
       el = new Underline();
-      rPr.appendChild(el);
+      insertRPrChildOrdered(rPr, el);
     }
     el.val = StringValue.parse(value);
   },
@@ -153,7 +226,7 @@ Object.defineProperty(Run.prototype, "fontSizeHalfPoints", {
     }
     if (el === undefined) {
       el = new FontSize();
-      rPr.appendChild(el);
+      insertRPrChildOrdered(rPr, el);
     }
     el.val = StringValue.parse(String(value));
   },
@@ -175,7 +248,7 @@ Object.defineProperty(Run.prototype, "colorHex", {
     }
     if (el === undefined) {
       el = new Color();
-      rPr.appendChild(el);
+      insertRPrChildOrdered(rPr, el);
     }
     el.val = StringValue.parse(value);
   },
