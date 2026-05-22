@@ -32,6 +32,7 @@ csverify() {
 
 # --- Batch 1 examples (13 total) ---
 # --- Batch 2 examples (+14 = 27 total; word-text-extract is N/A: read-only, no output) ---
+# --- Batch 3 examples (+29 = 56 document-producing total; 4 N/A: linq-tutorial, word-text-extract, word-style-inspect, set-core-properties) ---
 ALL_EXAMPLES=(
   word-create
   word-run-formatting
@@ -60,6 +61,35 @@ ALL_EXAMPLES=(
   ppt-set-titles
   ppt-paragraph-formatting
   ppt-run-formatting
+  word-paragraph-style
+  word-paragraph-numbering
+  word-run-style
+  word-styled-doc
+  word-add-list
+  word-add-bookmark
+  word-add-comment
+  word-add-revision
+  word-tab-stops
+  word-merge-cells
+  word-table-shading
+  word-footnotes
+  word-page-numbers
+  word-replace
+  word-add-image
+  excel-defined-names
+  excel-data-validations
+  excel-replace
+  excel-add-image
+  ppt-shape-xfrm
+  ppt-shape-rotation
+  ppt-hidden-slide
+  ppt-transitions
+  ppt-slide-backgrounds
+  ppt-merge-cells
+  ppt-picture-crop
+  ppt-shape-accessibility
+  ppt-replace
+  ppt-add-image
 )
 
 # If specific examples passed, use those; otherwise run all

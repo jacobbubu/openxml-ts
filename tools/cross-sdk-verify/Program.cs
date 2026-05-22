@@ -14,6 +14,16 @@
 //   word-paragraph-spacing  word-paragraph-flow  word-run-fonts
 //   excel-column-row-sizing  excel-number-format  excel-sheet-metadata
 //   ppt-add-notes  ppt-set-titles  ppt-paragraph-formatting  ppt-run-formatting
+//
+// Example names (batch 3):
+//   word-paragraph-style  word-paragraph-numbering  word-run-style  word-styled-doc
+//   word-add-list  word-add-bookmark  word-add-comment  word-add-revision
+//   word-tab-stops  word-merge-cells  word-table-shading  word-footnotes
+//   word-page-numbers  word-replace  word-add-image
+//   excel-defined-names  excel-data-validations  excel-replace  excel-add-image
+//   ppt-shape-xfrm  ppt-shape-rotation  ppt-hidden-slide  ppt-transitions
+//   ppt-slide-backgrounds  ppt-merge-cells  ppt-picture-crop  ppt-shape-accessibility
+//   ppt-replace  ppt-add-image
 
 using CrossSdkVerify;
 using CrossSdkVerify.Replicas;
@@ -133,6 +143,94 @@ if (command == "generate")
                 break;
             case "ppt-run-formatting":
                 PptRunFormatting.Run(outputPath);
+                break;
+            // Batch 3
+            case "word-paragraph-style":
+                WordParagraphStyle.Run(outputPath);
+                break;
+            case "word-paragraph-numbering":
+                WordParagraphNumbering.Run(outputPath);
+                break;
+            case "word-run-style":
+                WordRunStyle.Run(outputPath);
+                break;
+            case "word-styled-doc":
+                WordStyledDoc.Run(outputPath);
+                break;
+            case "word-add-list":
+                WordAddList.Run(outputPath);
+                break;
+            case "word-add-bookmark":
+                WordAddBookmark.Run(outputPath);
+                break;
+            case "word-add-comment":
+                WordAddComment.Run(outputPath);
+                break;
+            case "word-add-revision":
+                WordAddRevision.Run(outputPath);
+                break;
+            case "word-tab-stops":
+                WordTabStops.Run(outputPath);
+                break;
+            case "word-merge-cells":
+                WordMergeCells.Run(outputPath);
+                break;
+            case "word-table-shading":
+                WordTableShading.Run(outputPath);
+                break;
+            case "word-footnotes":
+                WordFootnotes.Run(outputPath);
+                break;
+            case "word-page-numbers":
+                WordPageNumbers.Run(outputPath);
+                break;
+            case "word-replace":
+                WordReplace.Run(outputPath);
+                break;
+            case "word-add-image":
+                WordAddImage.Run(outputPath);
+                break;
+            case "excel-defined-names":
+                ExcelDefinedNames.Run(outputPath);
+                break;
+            case "excel-data-validations":
+                ExcelDataValidations.Run(outputPath);
+                break;
+            case "excel-replace":
+                ExcelReplace.Run(outputPath);
+                break;
+            case "excel-add-image":
+                ExcelAddImage.Run(outputPath);
+                break;
+            case "ppt-shape-xfrm":
+                PptShapeXfrm.Run(outputPath);
+                break;
+            case "ppt-shape-rotation":
+                PptShapeRotation.Run(outputPath);
+                break;
+            case "ppt-hidden-slide":
+                PptHiddenSlide.Run(outputPath);
+                break;
+            case "ppt-transitions":
+                PptTransitions.Run(outputPath);
+                break;
+            case "ppt-slide-backgrounds":
+                PptSlideBackgrounds.Run(outputPath);
+                break;
+            case "ppt-merge-cells":
+                PptMergeCells.Run(outputPath);
+                break;
+            case "ppt-picture-crop":
+                PptPictureCrop.Run(outputPath);
+                break;
+            case "ppt-shape-accessibility":
+                PptShapeAccessibility.Run(outputPath);
+                break;
+            case "ppt-replace":
+                PptReplace.Run(outputPath);
+                break;
+            case "ppt-add-image":
+                PptAddImage.Run(outputPath);
                 break;
             default:
                 Console.Error.WriteLine($"Unknown example name: {name}");
