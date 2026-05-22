@@ -195,16 +195,20 @@ describe("Composite 默认 writeTo · 无 children 写自闭合", () => {
     expect(serialize(p, { withDeclaration: false })).toBe(`<w:p xmlns:w="${W_NS}"/>`);
   });
 
+  // Epic-98：序列化器现在把子树用到的命名空间前缀声明到根元素——
+  // 单独序列化一个带前缀的 leaf 也会补 xmlns:w，使其成为合法的独立 XML。
+  const WT_NS = ' xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"';
+
   it("Leaf 无 text 时也是自闭合", () => {
     const t = new WText();
-    expect(serialize(t, { withDeclaration: false })).toBe("<w:t/>");
+    expect(serialize(t, { withDeclaration: false })).toBe(`<w:t${WT_NS}/>`);
   });
 
   it("Leaf 空字符串 text 序列化为展开形式", () => {
     const t = new WText();
     t.text = "";
     // 空串经 XmlWriter.text() 后是空，open/close 包裹
-    expect(serialize(t, { withDeclaration: false })).toBe("<w:t></w:t>");
+    expect(serialize(t, { withDeclaration: false })).toBe(`<w:t${WT_NS}></w:t>`);
   });
 });
 

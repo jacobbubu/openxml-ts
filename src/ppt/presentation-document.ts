@@ -706,6 +706,21 @@ function seedNotesSlide(notes: OpenXmlElement): void {
 }
 
 /** 在 NotesSlide 树里找 body placeholder shape；找不到就 append 一个新的并返回。 */
+/**
+ * 判断 `<p:ph>` 元素是否为 body 类型。
+ *
+ * Epic-98: 修复后 p:ph 被反序列化为 typed `PlaceholderShape`，`type` 属性
+ * 存在于 `ph.type`（StringValue）而非 `extendedAttributes`。兼容两种情况。
+ */
+function isBodyPlaceholder(ph: OpenXmlElement): boolean {
+  if (ph.localName !== "ph") return false;
+  // typed class（PlaceholderShape）：type 字段（StringValue | undefined）
+  const typed = (ph as unknown as { type?: { toString(): string } }).type;
+  if (typed !== undefined) return typed.toString() === "body";
+  // unknown element：extendedAttributes
+  return ph.extendedAttributes.get("type") === "body";
+}
+
 function ensureNotesBodyShape(notes: OpenXmlElement): OpenXmlCompositeElement {
   if (!(notes instanceof OpenXmlCompositeElement)) {
     throw new Error("ensureNotesBodyShape: notes root not composite");
@@ -714,7 +729,7 @@ function ensureNotesBodyShape(notes: OpenXmlElement): OpenXmlCompositeElement {
     if (sp.localName !== "sp" || !(sp instanceof OpenXmlCompositeElement)) continue;
     // sp > nvSpPr > nvPr > ph[type="body"]
     for (const ph of sp.descendants()) {
-      if (ph.localName === "ph" && ph.extendedAttributes.get("type") === "body") return sp;
+      if (isBodyPlaceholder(ph)) return sp;
     }
   }
   // 没找到——先确保 cSld/spTree，然后 append
@@ -801,7 +816,7 @@ function getNotesText(notes: OpenXmlElement): string {
     if (sp.localName !== "sp" || !(sp instanceof OpenXmlCompositeElement)) continue;
     let isBody = false;
     for (const ph of sp.descendants()) {
-      if (ph.localName === "ph" && ph.extendedAttributes.get("type") === "body") {
+      if (isBodyPlaceholder(ph)) {
         isBody = true;
         break;
       }

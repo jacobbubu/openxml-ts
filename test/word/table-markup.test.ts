@@ -27,7 +27,8 @@ describe("createDocumentTable（Story-21.1）", () => {
       expect([...tc.descendants(Paragraph)]).not.toHaveLength(0);
     }
     const xml = serialize(table);
-    expect(xml).toContain("<w:tbl>");
+    // Epic-98: root element 现在包含 xmlns:w 声明，所以不再是裸 <w:tbl>
+    expect(xml).toContain("<w:tbl");
     expect(xml).toContain("<w:tblPr>");
     expect((xml.match(/<w:gridCol/g) ?? []).length).toBe(2);
   });

@@ -10,9 +10,13 @@ describe("createHyperlinkRun（Story-15.1）", () => {
   it("外链路径：r:id + Hyperlink rStyle", () => {
     const link = createHyperlinkRun({ relId: "rId7", text: "Click here" });
     const xml = serialize(link);
+    // Epic-98: serialize() 现在会在 root element 补全所有用到的 xmlns 声明，
+    // 所以 r:id 的 xmlns:r 和 w:* 的 xmlns:w 都出现在 root 上，顺序不固定。
+    // 分开断言每个属性存在即可。
     expect(xml).toContain(
-      '<w:hyperlink xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="rId7"',
+      'xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"',
     );
+    expect(xml).toContain('r:id="rId7"');
     expect(xml).toContain('<w:rStyle w:val="Hyperlink"');
     expect(xml).toContain(">Click here<");
   });

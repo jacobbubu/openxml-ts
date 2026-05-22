@@ -79,6 +79,34 @@ function collectCoreUnknowns(root: OpenXmlElement): OpenXmlUnknownElement[] {
   return out;
 }
 
+/**
+ * Epic-98: 从 ElementSnapshot（或 JSON 对象）的 extendedAttributes 中删除所有
+ * `xmlns:*` 键，只保留非 namespace 属性。递归应用到整棵快照树。
+ *
+ * 用途：比较 golden（round-1 未修复状态）和 round-2（xmlns 已补全状态）时，
+ * 过滤掉由 serialize() 合法新增的 xmlns 声明，只验证结构与内容不变。
+ */
+function stripXmlns(obj: unknown): unknown {
+  if (obj === null || typeof obj !== "object") return obj;
+  if (Array.isArray(obj)) return obj.map(stripXmlns);
+  const record = obj as Record<string, unknown>;
+  const result: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(record)) {
+    if (k === "extendedAttributes" && v !== null && typeof v === "object") {
+      const filtered: Record<string, unknown> = {};
+      for (const [attrKey, attrVal] of Object.entries(v as Record<string, unknown>)) {
+        if (attrKey !== "xmlns" && !attrKey.startsWith("xmlns:")) {
+          filtered[attrKey] = attrVal;
+        }
+      }
+      if (Object.keys(filtered).length > 0) result[k] = filtered;
+    } else {
+      result[k] = stripXmlns(v);
+    }
+  }
+  return result;
+}
+
 const FIXTURES = ["mcppt.pptx", "autosave.pptx", "Of16-02.pptx"] as const;
 
 for (const fixture of FIXTURES) {
@@ -96,18 +124,21 @@ for (const fixture of FIXTURES) {
       const r1 = await roundtripOnce(bytes);
       const snap = await snapshotPptx(r1);
       const golden = await loadGolden(fixture);
-      expect(snap.presentation).toEqual(golden.presentation);
-      expect(snap.slides).toEqual(golden.slides);
+      // Epic-98: 序列化修复后 root element 可能新增 xmlns: 声明（把子树中用到但缺失的
+      // namespace prefix 补全到 root）。比较时忽略 root 的 xmlns 差异，只验证结构与内容不变。
+      expect(stripXmlns(snap.presentation)).toEqual(stripXmlns(golden.presentation));
+      expect(snap.slides.map(stripXmlns)).toEqual(golden.slides.map(stripXmlns));
     });
 
     it("第三轮再 write → read 一次仍稳定", async () => {
       const bytes = new Uint8Array(await readFile(join(FIXTURES_DIR, fixture)));
       const r1 = await roundtripOnce(bytes);
       const r2 = await roundtripOnce(r1);
-      const snap = await snapshotPptx(r2);
-      const golden = await loadGolden(fixture);
-      expect(snap.presentation).toEqual(golden.presentation);
-      expect(snap.slides).toEqual(golden.slides);
+      const snap2 = await snapshotPptx(r1);
+      const snap3 = await snapshotPptx(r2);
+      // Epic-98: 验证「第二轮 = 第三轮」稳定性（namespace 声明收敛后不再变化）。
+      expect(snap3.presentation).toEqual(snap2.presentation);
+      expect(snap3.slides).toEqual(snap2.slides);
     });
 
     it("核心 namespace（drawingml / presentationml main）内无 Unknown 元素", async () => {
