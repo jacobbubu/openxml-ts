@@ -319,10 +319,6 @@ function renderRequiredCheck(attr: SchemaAttribute, className: string, isLeaf: b
   return `assertRequired(this.${prop}, ${ctx});`;
 }
 
-function hasValidator(attr: SchemaAttribute, name: string): boolean {
-  return (attr.Validators ?? []).some((v) => v.Name === name);
-}
-
 /**
  * 该属性是否「无条件必填」。
  *

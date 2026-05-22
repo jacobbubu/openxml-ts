@@ -130,7 +130,7 @@ let successCount = 0;
 let failCount = 0;
 const failures: string[] = [];
 
-for (const { schemaPath, dir, ns, classCount } of worklist) {
+for (const { schemaPath, dir, classCount } of worklist) {
   const outputDir = join(OUTPUT_BASE, dir, "generated");
   process.stdout.write(
     `  [${String(successCount + failCount + 1).padStart(3)}/${worklist.length}] ${dir} (${classCount} classes) ...\n`,

@@ -55,6 +55,16 @@
     {
       "include": ["package.json"],
       "formatter": { "enabled": false }
+    },
+    {
+      "include": ["test/**", "examples/**", "bench/**", "playground/**", "tools/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noNonNullAssertion": "off"
+          }
+        }
+      }
     }
   ]
 }
