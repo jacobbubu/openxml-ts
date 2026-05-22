@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.1](https://github.com/jacobbubu/openxml-ts/compare/v1.1.0...v1.1.1) (2026-05-22)
+
+
+### Bug Fixes
+
+* **serialize:** 序列化时声明子树用到的全部命名空间前缀 ([#291](https://github.com/jacobbubu/openxml-ts/issues/291)) ([0f31368](https://github.com/jacobbubu/openxml-ts/commit/0f3136817a64fa18b7d1d197a22e87cf2eb68ce4))
+* **serialize:** 序列化时把子树用到的命名空间前缀声明到部件根 ([#291](https://github.com/jacobbubu/openxml-ts/issues/291)) ([08a0b6f](https://github.com/jacobbubu/openxml-ts/commit/08a0b6f83d741c60bc14bab463c2efe95b9955c3))
+* 修复阻塞 CI 的 package.json 格式 + gen-schematron 非空断言 ([36d5cbf](https://github.com/jacobbubu/openxml-ts/commit/36d5cbf6cd837268869b38e1599f18c32f9caba0))
+
 ## [1.1.0](https://github.com/jacobbubu/openxml-ts/compare/v1.0.0...v1.1.0) (2026-05-22)
 
 
