@@ -2,17 +2,17 @@
 # Cross-SDK semantic equivalence verification runner.
 #
 # Usage: ./run-verify.sh [example-name...]
-#   No args → run all batch-1 examples
+#   No args → run all examples (60 total as of batch 4)
 #   With args → run only the named examples
 #
 # Exits 0 if all covered examples are semantically equivalent.
 # Exits 1 if any semantic divergence is found.
 #
-# How to add more examples (batches 2..N):
-#   1. Add a TS example to examples/<name>.ts (already exists for all 60).
-#   2. Add a C# replica to tools/cross-sdk-verify/replicas/<Name>.cs.
-#   3. Add the case to Program.cs generate switch.
-#   4. Add the name to EXAMPLES array below.
+# Comparison modes:
+#   digest   — default; generate files → extract semantic digest → diff JSON
+#   core     — set-core-properties; generate 3 files (prefix) → extract core-props digest per file
+#   stdout   — read-only/tutorial examples; run TS (capture stdout) + run C# replica (capture stdout)
+#              normalize both → diff
 
 set -euo pipefail
 
@@ -30,9 +30,23 @@ csverify() {
   "$DOTNET" "$DLL" "$@"
 }
 
+# Normalize stdout for comparison:
+#   - Strip trailing whitespace on each line
+#   - Normalize the space after full-width colon (Chinese ：) before a value
+#     Bun adds a space: "名字： [" — C# omits it: "名字：[" → unify to no-space
+#   - Normalize "},   {" → "}, {" (whitespace in multi-line GroupBy formatting)
+#   - Normalize CRLF → LF
+normalize_stdout() {
+  sed 's/[[:space:]]*$//' \
+    | sed 's/：[[:space:]]*/：/g' \
+    | sed 's/},[[:space:]]*{/}, {/g' \
+    | tr -d '\r'
+}
+
 # --- Batch 1 examples (13 total) ---
-# --- Batch 2 examples (+14 = 27 total; word-text-extract is N/A: read-only, no output) ---
-# --- Batch 3 examples (+29 = 56 document-producing total; 4 N/A: linq-tutorial, word-text-extract, word-style-inspect, set-core-properties) ---
+# --- Batch 2 examples (+14 = 27 total) ---
+# --- Batch 3 examples (+29 = 56 document-producing total) ---
+# --- Batch 4 examples (+4 = 60 total; stdout + core-props modes) ---
 ALL_EXAMPLES=(
   word-create
   word-run-formatting
@@ -90,6 +104,10 @@ ALL_EXAMPLES=(
   ppt-shape-accessibility
   ppt-replace
   ppt-add-image
+  set-core-properties
+  word-text-extract
+  word-style-inspect
+  linq-tutorial
 )
 
 # If specific examples passed, use those; otherwise run all
@@ -113,6 +131,167 @@ FAIL=0
 DIVERGE=()
 
 for NAME in "${EXAMPLES[@]}"; do
+  echo "--- $NAME ---"
+
+  # ── set-core-properties: core-props digest mode ──────────────────────────────
+  if [[ "$NAME" == "set-core-properties" ]]; then
+    PREFIX_TS="$TMP_DIR/set-core-props_ts"
+    PREFIX_NET="$TMP_DIR/set-core-props_net"
+
+    # 1. Run TS example → 3 files
+    TS_OK=true
+    if ! bun run "$REPO_ROOT/examples/set-core-properties.ts" "$PREFIX_TS" \
+         > "$TMP_DIR/${NAME}_ts.log" 2>&1; then
+      echo "  [ERROR] TS example failed:"
+      cat "$TMP_DIR/${NAME}_ts.log"
+      TS_OK=false
+    fi
+
+    # 2. Run C# replica → 3 files
+    NET_OK=true
+    if ! csverify generate-prefix set-core-properties "$PREFIX_NET" \
+         > "$TMP_DIR/${NAME}_net.log" 2>&1; then
+      echo "  [ERROR] .NET replica failed:"
+      cat "$TMP_DIR/${NAME}_net.log"
+      NET_OK=false
+    fi
+
+    if [[ "$TS_OK" == "false" || "$NET_OK" == "false" ]]; then
+      echo "  [SKIP] Skipping comparison due to generation error"
+      FAIL=$((FAIL + 1))
+      DIVERGE+=("$NAME (generation error)")
+      echo ""
+      continue
+    fi
+
+    # 3. For each of the 3 file types, extract core-props digest and compare
+    OVERALL_OK=true
+    for EXT in docx xlsx pptx; do
+      FILE_TS="${PREFIX_TS}.${EXT}"
+      FILE_NET="${PREFIX_NET}.${EXT}"
+      DIGEST_TS="$TMP_DIR/${NAME}_ts_${EXT}.json"
+      DIGEST_NET="$TMP_DIR/${NAME}_net_${EXT}.json"
+
+      if ! csverify extract-core "$FILE_TS" > "$DIGEST_TS" 2>&1; then
+        echo "  [ERROR] Failed to extract TS core-props for .$EXT"
+        OVERALL_OK=false; continue
+      fi
+      if ! csverify extract-core "$FILE_NET" > "$DIGEST_NET" 2>&1; then
+        echo "  [ERROR] Failed to extract .NET core-props for .$EXT"
+        OVERALL_OK=false; continue
+      fi
+
+      if ! diff -q "$DIGEST_TS" "$DIGEST_NET" > /dev/null 2>&1; then
+        echo "  [FAIL] Core-props divergence detected for .$EXT!"
+        echo "  === TS digest ==="
+        cat "$DIGEST_TS"
+        echo "  === NET digest ==="
+        cat "$DIGEST_NET"
+        echo "  === diff ==="
+        diff "$DIGEST_TS" "$DIGEST_NET" || true
+        OVERALL_OK=false
+      fi
+    done
+
+    if [[ "$OVERALL_OK" == "true" ]]; then
+      echo "  [PASS] Core properties semantically equivalent (docx + xlsx + pptx)"
+      PASS=$((PASS + 1))
+    else
+      FAIL=$((FAIL + 1))
+      DIVERGE+=("$NAME")
+    fi
+    echo ""
+    continue
+  fi
+
+  # ── stdout-comparison mode: word-text-extract, word-style-inspect, linq-tutorial ──
+  if [[ "$NAME" == "word-text-extract" || "$NAME" == "word-style-inspect" || "$NAME" == "linq-tutorial" ]]; then
+    STDOUT_TS="$TMP_DIR/${NAME}_ts.txt"
+    STDOUT_NET="$TMP_DIR/${NAME}_net.txt"
+    NORM_TS="$TMP_DIR/${NAME}_ts_norm.txt"
+    NORM_NET="$TMP_DIR/${NAME}_net_norm.txt"
+
+    TS_OK=true
+    NET_OK=true
+
+    case "$NAME" in
+      word-text-extract|word-style-inspect)
+        # Need an input docx — use word-styled-doc as input (rich enough to exercise styles)
+        INPUT_DOCX="$TMP_DIR/styled-doc-input.docx"
+        if [[ ! -f "$INPUT_DOCX" ]]; then
+          if ! bun run "$REPO_ROOT/examples/word-styled-doc.ts" "$INPUT_DOCX" \
+               > "$TMP_DIR/styled-doc-input.log" 2>&1; then
+            echo "  [ERROR] Failed to generate input docx (word-styled-doc):"
+            cat "$TMP_DIR/styled-doc-input.log"
+            TS_OK=false
+          fi
+        fi
+        if [[ "$TS_OK" == "true" ]]; then
+          if ! bun run "$REPO_ROOT/examples/${NAME}.ts" "$INPUT_DOCX" \
+               > "$STDOUT_TS" 2>"$TMP_DIR/${NAME}_ts_err.log"; then
+            echo "  [ERROR] TS example failed:"
+            cat "$TMP_DIR/${NAME}_ts_err.log"
+            TS_OK=false
+          fi
+          if ! csverify run-stdout "$NAME" "$INPUT_DOCX" \
+               > "$STDOUT_NET" 2>"$TMP_DIR/${NAME}_net_err.log"; then
+            echo "  [ERROR] .NET replica failed:"
+            cat "$TMP_DIR/${NAME}_net_err.log"
+            NET_OK=false
+          fi
+        fi
+        ;;
+      linq-tutorial)
+        if ! bun run "$REPO_ROOT/examples/linq-tutorial.ts" \
+             > "$STDOUT_TS" 2>"$TMP_DIR/${NAME}_ts_err.log"; then
+          echo "  [ERROR] TS example failed:"
+          cat "$TMP_DIR/${NAME}_ts_err.log"
+          TS_OK=false
+        fi
+        if ! csverify run-stdout linq-tutorial \
+             > "$STDOUT_NET" 2>"$TMP_DIR/${NAME}_net_err.log"; then
+          echo "  [ERROR] .NET replica failed:"
+          cat "$TMP_DIR/${NAME}_net_err.log"
+          NET_OK=false
+        fi
+        ;;
+    esac
+
+    if [[ "$TS_OK" == "false" || "$NET_OK" == "false" ]]; then
+      echo "  [SKIP] Skipping comparison due to generation error"
+      FAIL=$((FAIL + 1))
+      DIVERGE+=("$NAME (generation error)")
+      echo ""
+      continue
+    fi
+
+    # Normalize both outputs and compare
+    normalize_stdout < "$STDOUT_TS" > "$NORM_TS"
+    normalize_stdout < "$STDOUT_NET" > "$NORM_NET"
+
+    if diff -q "$NORM_TS" "$NORM_NET" > /dev/null 2>&1; then
+      echo "  [PASS] stdout output semantically equivalent"
+      PASS=$((PASS + 1))
+    else
+      echo "  [FAIL] stdout divergence detected!"
+      echo ""
+      echo "  === TS stdout (normalized) ==="
+      cat "$NORM_TS"
+      echo ""
+      echo "  === NET stdout (normalized) ==="
+      cat "$NORM_NET"
+      echo ""
+      echo "  === diff (TS vs NET, normalized) ==="
+      diff "$NORM_TS" "$NORM_NET" || true
+      FAIL=$((FAIL + 1))
+      DIVERGE+=("$NAME")
+    fi
+    echo ""
+    continue
+  fi
+
+  # ── Default digest mode ───────────────────────────────────────────────────────
+
   # Determine file extension
   case "$NAME" in
     word-*) EXT="docx" ;;
@@ -125,8 +304,6 @@ for NAME in "${EXAMPLES[@]}"; do
   FILE_NET="$TMP_DIR/${NAME}_net.$EXT"
   DIGEST_TS="$TMP_DIR/${NAME}_ts.json"
   DIGEST_NET="$TMP_DIR/${NAME}_net.json"
-
-  echo "--- $NAME ---"
 
   # 1. Generate TS output
   TS_OK=true
