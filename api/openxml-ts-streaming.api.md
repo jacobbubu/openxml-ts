@@ -101,7 +101,7 @@ export interface WriterAttributeDescriptor {
 
 // Warnings were encountered during analysis:
 //
-// src/streaming/openxml-dom-reader.ts:79:16 - (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
+// src/streaming/openxml-dom-reader.ts:77:51 - (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
