@@ -172,6 +172,20 @@ export class EnumValue<T extends string> {
 }
 
 // @public
+export class FeatureCollection implements IFeatureCollection {
+    constructor();
+    constructor(defaults: IFeatureCollection, isReadOnly?: boolean);
+    // (undocumented)
+    get<T>(key: abstract new (...args: never[]) => T): T | undefined;
+    // (undocumented)
+    readonly isReadOnly: boolean;
+    // (undocumented)
+    get revision(): number;
+    // (undocumented)
+    set<T>(key: abstract new (...args: never[]) => T, value: T | undefined): void;
+}
+
+// @public
 export const FLAT_OPC_NS = "http://schemas.microsoft.com/office/2006/xmlPackage";
 
 // @public
@@ -212,6 +226,14 @@ export class HexBinaryValue {
 
 // @public
 export const HYPERLINK_RELATIONSHIP_TYPE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink";
+
+// @public
+export interface IFeatureCollection {
+    get<T>(key: abstract new (...args: never[]) => T): T | undefined;
+    readonly isReadOnly: boolean;
+    readonly revision: number;
+    set<T>(key: abstract new (...args: never[]) => T, value: T | undefined): void;
+}
 
 // @public
 export class Int32Value {
@@ -377,6 +399,7 @@ export abstract class OpenXmlElement {
     elementsAfter(): IterableIterator<OpenXmlElement>;
     elementsBefore(): IterableIterator<OpenXmlElement>;
     readonly extendedAttributes: Map<string, string>;
+    get features(): IFeatureCollection;
     get firstChildElement(): OpenXmlElement | undefined;
     get hasChildren(): boolean;
     get innerText(): string;
