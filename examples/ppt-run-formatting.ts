@@ -7,6 +7,10 @@
 
 import { Run } from "../src/drawing/generated/run.js";
 import { OpenXmlCompositeElement, OpenXmlUnknownElement } from "../src/element/index.js";
+import { ApplicationNonVisualDrawingProperties } from "../src/ppt/generated/application-non-visual-drawing-properties.js";
+import { NonVisualDrawingProperties } from "../src/ppt/generated/non-visual-drawing-properties.js";
+import { NonVisualShapeDrawingProperties } from "../src/ppt/generated/non-visual-shape-drawing-properties.js";
+import { NonVisualShapeProperties } from "../src/ppt/generated/non-visual-shape-properties.js";
 import { PresentationDocument } from "../src/ppt/index.js";
 
 const NS_P = "http://schemas.openxmlformats.org/presentationml/2006/main";
@@ -34,6 +38,8 @@ async function main(): Promise<void> {
   }
   if (spTree === undefined) throw new Error("spTree missing");
 
+  let shapeId = 1;
+
   function addShapeWithStyledText(opts: {
     bold?: boolean;
     italic?: boolean;
@@ -42,8 +48,16 @@ async function main(): Promise<void> {
     colorHex?: string;
     text: string;
   }): void {
+    shapeId += 1;
     const sp = u("p", "sp", NS_P);
-    sp.appendChild(u("p", "nvSpPr", NS_P));
+    const nvSpPr = new NonVisualShapeProperties();
+    const cNvPr = new NonVisualDrawingProperties();
+    cNvPr.applyAttribute("id", String(shapeId));
+    cNvPr.applyAttribute("name", `Shape ${shapeId}`);
+    nvSpPr.appendChild(cNvPr);
+    nvSpPr.appendChild(new NonVisualShapeDrawingProperties());
+    nvSpPr.appendChild(new ApplicationNonVisualDrawingProperties());
+    sp.appendChild(nvSpPr);
     sp.appendChild(u("p", "spPr", NS_P));
     const txBody = u("p", "txBody", NS_P);
     txBody.appendChild(u("a", "bodyPr", NS_A));

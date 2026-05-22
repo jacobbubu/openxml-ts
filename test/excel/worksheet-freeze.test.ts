@@ -142,4 +142,30 @@ describe("setFreezePanes / getFreezePanes", () => {
     expect(paneCount).toBe(1);
     expect(getFreezePanes(ws)).toEqual({ columns: 2, topLeftCell: "C1" });
   });
+
+  it("自动创建的 sheetView 包含 workbookViewId 属性", () => {
+    const ws = new Worksheet();
+    setFreezePanes(ws, { rows: 1 });
+    const view = firstSheetView(ws);
+    expect(view?.workbookViewId).toBeDefined();
+    expect(view?.workbookViewId?.toString()).toBe("0");
+  });
+
+  it("workbookViewId 在 rows+columns 双冻结时也存在", () => {
+    const ws = new Worksheet();
+    setFreezePanes(ws, { rows: 2, columns: 3 });
+    const view = firstSheetView(ws);
+    expect(view?.workbookViewId?.toString()).toBe("0");
+  });
+
+  it("round-trip 后 workbookViewId 仍保留", async () => {
+    const doc = SpreadsheetDocument.create();
+    const ws = doc.workbookPart!.worksheetParts[0]!.worksheet;
+    setFreezePanes(ws, { rows: 1 });
+    const bytes = await doc.saveAsBytesAsync();
+    const reopened = await SpreadsheetDocument.openAsync(bytes);
+    const reWs = reopened.workbookPart!.worksheetParts[0]!.worksheet;
+    const view = reWs.firstChild(SheetViews)?.firstChild(SheetView);
+    expect(view?.workbookViewId?.toString()).toBe("0");
+  });
 });

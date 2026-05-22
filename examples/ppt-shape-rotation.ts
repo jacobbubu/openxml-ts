@@ -6,7 +6,9 @@
  */
 
 import { OpenXmlCompositeElement } from "../src/element/index.js";
+import { ApplicationNonVisualDrawingProperties } from "../src/ppt/generated/application-non-visual-drawing-properties.js";
 import { NonVisualDrawingProperties } from "../src/ppt/generated/non-visual-drawing-properties.js";
+import { NonVisualShapeDrawingProperties } from "../src/ppt/generated/non-visual-shape-drawing-properties.js";
 import { NonVisualShapeProperties } from "../src/ppt/generated/non-visual-shape-properties.js";
 import { Shape } from "../src/ppt/generated/shape.js";
 import { PresentationDocument } from "../src/ppt/index.js";
@@ -50,6 +52,8 @@ async function main(): Promise<void> {
     cNvPr.applyAttribute("id", id);
     cNvPr.applyAttribute("name", name);
     nvSpPr.appendChild(cNvPr);
+    nvSpPr.appendChild(new NonVisualShapeDrawingProperties());
+    nvSpPr.appendChild(new ApplicationNonVisualDrawingProperties());
     sp.appendChild(nvSpPr);
     tree.appendChild(sp);
     sp.position = { xEmu: x, yEmu: y };
