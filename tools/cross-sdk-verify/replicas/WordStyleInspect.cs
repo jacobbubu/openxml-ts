@@ -1,24 +1,30 @@
 // Replica of examples/word-style-inspect.ts
 //
-// IMPORTANT: The TS example accesses pStyleId and charStyleId via
-// extendedAttributes.get("w:val"), but the TS SDK stores w:val as a typed
-// property (ParagraphStyleId.val / RunStyle.val), NOT in extendedAttributes.
-// Therefore extendedAttributes.get("w:val") always returns undefined in TS,
-// meaning the example effectively:
-//   - always shows "—" for the paragraph style ID
-//   - never follows style chains in resolveEffectiveRunProperties
-//   - only reports properties from the direct run rPr (<w:rPr> on the run)
+// The TS example reads pStyleId via the typed ParagraphStyleId.val field (corrected
+// from extendedAttributes.get) — so pStyleId is now real.
 //
-// This C# replica faithfully reproduces that exact behavior so both sides
-// produce identical normalized output.
+// resolveEffectiveRunProperties builds its chain as:
+//   1. Direct run rPr
+//   2. Char style rPr chain (via RunStyle.val) — BUT RunStyle.val is a typed field,
+//      and in effective-resolver.ts the lookup still uses
+//      extendedAttributes.get("w:val") which always returns undefined for typed
+//      elements. So char style chain is NEVER followed.
+//   3. Para style rPr chain (via ParagraphStyleId.val) — same issue:
+//      extendedAttributes.get("w:val") returns undefined → NEVER followed.
+//   4. Doc defaults rPr.
+//
+// Effective result: bold/italic/color come from direct run rPr OR doc defaults only.
+// pStyleId is correct (read from ParagraphStyleId.val in the example directly).
+//
+// This replica faithfully mirrors that behavior.
 //
 // Output format per non-empty run:
 //   PPPP SSSSSSSSSSSSSSSS [BI CCCCCC] text
 // where PPPP = paragraph index (4-char right-aligned),
-//       S    = always "—" (padded to 16 chars, as TS always gets undefined),
-//       B    = "B" if run's direct rPr has <w:b> (val != false), else "-"
-//       I    = "I" if run's direct rPr has <w:i> (val != false), else "-"
-//       C    = color hex (6-char) or "auto"
+//       S    = paragraph style id (padded to 16, or "—" if absent),
+//       B    = "B" if direct rPr or doc-default has <w:b>, else "-"
+//       I    = "I" if direct rPr or doc-default has <w:i>, else "-"
+//       C    = color hex from direct rPr or doc-default, or "auto"
 
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -35,28 +41,83 @@ public static class WordStyleInspect
         var body = doc.MainDocumentPart?.Document?.Body;
         if (body == null) throw new InvalidOperationException("No body in document");
 
+        var stylesPart = doc.MainDocumentPart?.StyleDefinitionsPart;
+        var styles = stylesPart?.Styles;
+
+        // Collect doc-default run properties (step 4 of the TS resolver chain)
+        var docDefaultRpr = styles
+            ?.Elements<DocDefaults>().FirstOrDefault()
+            ?.RunPropertiesDefault
+            ?.RunPropertiesBaseStyle;
+
         int pIdx = 0;
         foreach (var para in body.Descendants<Paragraph>())
         {
-            // TS always shows "—" because extendedAttributes.get("w:val") returns undefined
-            // for ParagraphStyleId (which stores val as a typed property, not in extendedAttributes)
-            const string pStyleLabel = "—";
+            // Read pStyleId via the typed API (matches fixed example: ParagraphStyleId.val)
+            var pStyleId = para.ParagraphProperties?.ParagraphStyleId?.Val?.Value;
+            var pStyleLabel = pStyleId ?? "—";
 
             foreach (var run in para.Descendants<Run>())
             {
-                // Only look at direct run rPr — no style chain resolution
-                // (same as TS, where extendedAttributes.get("w:val") on RunStyle returns undefined
-                // so charStyleId is always undefined → no style chain is followed)
                 var rPr = run.RunProperties;
-                bool bold = rPr?.Bold != null && rPr.Bold.Val?.Value != false;
-                bool italic = rPr?.Italic != null && rPr.Italic.Val?.Value != false;
 
+                // Step 1: direct run rPr
+                // Step 2: char style — SKIPPED (mirrors broken resolver extendedAttributes lookup)
+                // Step 3: para style rPr — SKIPPED (mirrors broken resolver extendedAttributes lookup)
+                // Step 4: doc defaults rPr
+
+                bool bold = false;
+                bool italic = false;
                 string color = "auto";
-                if (rPr?.Color?.Val?.HasValue == true)
+
+                bool boldFound = false, italicFound = false, colorFound = false;
+
+                // Direct run rPr
+                if (rPr != null)
                 {
-                    var cv = rPr.Color.Val.Value;
-                    if (cv != null && cv.ToUpperInvariant() != "AUTO")
-                        color = cv.ToUpperInvariant();
+                    if (!boldFound && rPr.Bold != null)
+                    {
+                        bold = rPr.Bold.Val?.Value != false;
+                        boldFound = true;
+                    }
+                    if (!italicFound && rPr.Italic != null)
+                    {
+                        italic = rPr.Italic.Val?.Value != false;
+                        italicFound = true;
+                    }
+                    if (!colorFound && rPr.Color?.Val?.HasValue == true)
+                    {
+                        var cv = rPr.Color.Val.Value;
+                        if (cv != null)
+                        {
+                            color = cv.ToUpperInvariant() == "AUTO" ? "auto" : cv.ToUpperInvariant();
+                            colorFound = true;
+                        }
+                    }
+                }
+
+                // Doc defaults rPr (step 4)
+                if (docDefaultRpr != null)
+                {
+                    if (!boldFound && docDefaultRpr.Bold != null)
+                    {
+                        bold = docDefaultRpr.Bold.Val?.Value != false;
+                        boldFound = true;
+                    }
+                    if (!italicFound && docDefaultRpr.Italic != null)
+                    {
+                        italic = docDefaultRpr.Italic.Val?.Value != false;
+                        italicFound = true;
+                    }
+                    if (!colorFound && docDefaultRpr.Color?.Val?.HasValue == true)
+                    {
+                        var cv = docDefaultRpr.Color.Val.Value;
+                        if (cv != null)
+                        {
+                            color = cv.ToUpperInvariant() == "AUTO" ? "auto" : cv.ToUpperInvariant();
+                            colorFound = true;
+                        }
+                    }
                 }
 
                 // Collect run text

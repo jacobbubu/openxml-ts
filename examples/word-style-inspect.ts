@@ -38,13 +38,13 @@ async function main(): Promise<void> {
     const pStyleId = p
       .firstChild(ParagraphProperties)
       ?.firstChild(ParagraphStyleId)
-      ?.extendedAttributes.get("w:val");
+      ?.val?.toString();
 
     for (const r of p.descendants(Run)) {
       const eff = resolveEffectiveRunProperties(r, styles);
       const bold = eff.has(Bold) ? "B" : "-";
       const italic = eff.has(Italic) ? "I" : "-";
-      const color = eff.get(Color)?.extendedAttributes.get("w:val") ?? "auto";
+      const color = eff.get(Color)?.val?.toString() ?? "auto";
       const text = r.text;
       if (text.length === 0) continue;
       process.stdout.write(
