@@ -34,9 +34,18 @@ replicas/<Name>.cs  ─dotnet─►  file_net.docx/xlsx/pptx
 | File | Role |
 |------|------|
 | `tools/cross-sdk-verify/DigestExtractor.cs` | Reads any `.docx/.xlsx/.pptx` and emits a deterministic JSON semantic digest |
+| `tools/cross-sdk-verify/CorePropertiesExtractor.cs` | Reads core properties (title/creator/etc., no timestamps) from any OOXML file |
 | `tools/cross-sdk-verify/replicas/*.cs` | C# faithful replicas of each `examples/*.ts` |
-| `tools/cross-sdk-verify/Program.cs` | CLI: `extract <file>` or `generate <name> <file>` |
-| `tools/cross-sdk-verify/run-verify.sh` | Runner: builds the tool, generates both outputs, compares digests |
+| `tools/cross-sdk-verify/Program.cs` | CLI: `extract`, `extract-core`, `generate`, `generate-prefix`, `run-stdout` |
+| `tools/cross-sdk-verify/run-verify.sh` | Runner: builds the tool, runs all 60 examples across 3 comparison modes |
+
+### Comparison Modes
+
+| Mode | Used for | How it works |
+|------|----------|-------------|
+| **digest** | Document-producing examples (56) | generate files → extract semantic digest → diff JSON |
+| **core** | `set-core-properties` (1) | generate prefix → 3 files → extract core-props digest per file → diff |
+| **stdout** | `word-text-extract`, `word-style-inspect`, `linq-tutorial` (3) | run TS (capture stdout) + run C# replica (capture stdout) → normalize → diff |
 
 ---
 
@@ -54,6 +63,9 @@ The digest extractor normalises the following **cosmetic/variable** differences:
 | XML whitespace | Irrelevant when reading via SDK typed accessors |
 | Boolean casing | Normalised: `"true"`/`"false"` lowercase in digest |
 | Excel date serials | Both sides use epoch 1899-12-30 (standard Excel convention) |
+| stdout spacing | Space after full-width `：` colon stripped (Bun adds one, C# omits) |
+| stdout line endings | CRLF normalised to LF; trailing whitespace per line stripped |
+| stdout list formatting | `},   {` normalised to `}, {` (multi-line GroupBy formatting) |
 
 What is **preserved** (genuine semantic content):
 
@@ -87,7 +99,7 @@ Run: `bash tools/cross-sdk-verify/run-verify.sh`
 
 ---
 
-## Batch 2 Results (14 examples, +1 N/A)
+## Batch 2 Results (14 examples)
 
 | # | Example | Subsystem | Operation | Result |
 |---|---------|-----------|-----------|--------|
@@ -98,25 +110,21 @@ Run: `bash tools/cross-sdk-verify/run-verify.sh`
 | 18 | `word-paragraph-spacing` | Word | Before/after/line spacing (6 paragraphs) | **PASS** |
 | 19 | `word-paragraph-flow` | Word | keepNext/keepLines/pageBreakBefore | **PASS** |
 | 20 | `word-run-fonts` | Word | fontFamily shortcut + fontFamilyDetail | **PASS** |
-| 21 | `word-text-extract` | Word | Read-only text extraction (no document output) | **N/A** |
-| 22 | `excel-column-row-sizing` | Excel | Column widths 30/15/15/50 + row heights 40/18 | **PASS** |
-| 23 | `excel-number-format` | Excel | Built-in number formats (integer/decimal/percent/currency/date) | **PASS** |
-| 24 | `excel-sheet-metadata` | Excel | Tab color FFFF0000 + activeSheet=0 | **PASS** |
-| 25 | `ppt-add-notes` | PPT | Speaker notes set via setSlideNotes | **PASS** |
-| 26 | `ppt-set-titles` | PPT | Title placeholder set via slide.title setter | **PASS** |
-| 27 | `ppt-paragraph-formatting` | PPT | DrawingML paragraph alignment/margin/indent | **PASS** |
-| 28 | `ppt-run-formatting` | PPT | DrawingML run bold/italic/underline/fontSize/color | **PASS** |
+| 21 | `excel-column-row-sizing` | Excel | Column widths 30/15/15/50 + row heights 40/18 | **PASS** |
+| 22 | `excel-number-format` | Excel | Built-in number formats (integer/decimal/percent/currency/date) | **PASS** |
+| 23 | `excel-sheet-metadata` | Excel | Tab color FFFF0000 + activeSheet=0 | **PASS** |
+| 24 | `ppt-add-notes` | PPT | Speaker notes set via setSlideNotes | **PASS** |
+| 25 | `ppt-set-titles` | PPT | Title placeholder set via slide.title setter | **PASS** |
+| 26 | `ppt-paragraph-formatting` | PPT | DrawingML paragraph alignment/margin/indent | **PASS** |
+| 27 | `ppt-run-formatting` | PPT | DrawingML run bold/italic/underline/fontSize/color | **PASS** |
 
-**All 14 batch-2 document-output examples: semantically equivalent. No divergences found.**
-
-`word-text-extract` is a read-only example (opens an existing docx and extracts text to stdout);
-it produces no output document and cannot be output-compared. Marked N/A.
+**All 14 batch-2 examples: semantically equivalent. No divergences found.**
 
 **Running total: 27 covered (27 PASS) out of 60 examples.**
 
 ---
 
-## Batch 3 Results (29 examples, +4 N/A)
+## Batch 3 Results (29 examples)
 
 | # | Example | Subsystem | Operation | Result |
 |---|---------|-----------|-----------|--------|
@@ -124,45 +132,53 @@ it produces no output document and cannot be output-compared. Marked N/A.
 | 29 | `word-paragraph-numbering` | Word | Numbering definitions + list paragraphs | **PASS** |
 | 30 | `word-run-style` | Word | Named character styles on runs | **PASS** |
 | 31 | `word-styled-doc` | Word | Full styled document with multiple styles | **PASS** |
-| 32 | `word-style-inspect` | Word | Read-only style inspection (no document output) | **N/A** |
-| 33 | `word-add-list` | Word | Bullet + numbered list items | **PASS** |
-| 34 | `word-add-bookmark` | Word | Bookmark start/end markers | **PASS** |
-| 35 | `word-add-comment` | Word | Comment annotations on runs | **PASS** |
-| 36 | `word-add-revision` | Word | Track-changes revision marks | **PASS** |
-| 37 | `word-tab-stops` | Word | Custom tab stops (left/center/right/decimal) | **PASS** |
-| 38 | `word-merge-cells` | Word | Table cell merges (horizontal + vertical) | **PASS** |
-| 39 | `word-table-shading` | Word | Table cell background shading | **PASS** |
-| 40 | `word-footnotes` | Word | Footnote references + content | **PASS** |
-| 41 | `word-page-numbers` | Word | PAGE/NUMPAGES field codes in footer | **PASS** |
-| 42 | `word-replace` | Word | Open docx, replace `{{client}}` placeholder | **PASS** |
-| 43 | `word-add-image` | Word | Inline image via blipFill | **PASS** |
-| 44 | `excel-defined-names` | Excel | Workbook-scoped defined names | **PASS** |
-| 45 | `excel-data-validations` | Excel | Drop-down list + integer constraints | **PASS** |
-| 46 | `excel-replace` | Excel | Open xlsx, replace `{{client}}` placeholder | **PASS** |
-| 47 | `excel-add-image` | Excel | Embedded image anchored to a cell | **PASS** |
-| 48 | `ppt-shape-xfrm` | PPT | Shape position/size (xfrm) accessors | **PASS** |
-| 49 | `ppt-shape-rotation` | PPT | Shape rotation + flip accessors | **PASS** |
-| 50 | `ppt-hidden-slide` | PPT | Hidden slide flag | **PASS** |
-| 51 | `ppt-transitions` | PPT | Slide transition effects | **PASS** |
-| 52 | `ppt-slide-backgrounds` | PPT | Solid fill slide backgrounds | **PASS** |
-| 53 | `ppt-merge-cells` | PPT | Table cell merges in slide table | **PASS** |
-| 54 | `ppt-picture-crop` | PPT | Picture crop rectangle on image shape | **PASS** |
-| 55 | `ppt-shape-accessibility` | PPT | Alt-text on shapes | **PASS** |
-| 56 | `ppt-replace` | PPT | Open pptx, replace `{{date}}` placeholder | **PASS** |
-| 57 | `ppt-add-image` | PPT | Embedded image blipFill in slide | **PASS** |
-| — | `linq-tutorial` | — | LINQ query tutorial (no document output) | **N/A** |
-| — | `word-text-extract` | — | Read-only text extraction (no document output) | **N/A** |
-| — | `set-core-properties` | — | Core properties setter (no standalone output) | **N/A** |
+| 32 | `word-add-list` | Word | Bullet + numbered list items | **PASS** |
+| 33 | `word-add-bookmark` | Word | Bookmark start/end markers | **PASS** |
+| 34 | `word-add-comment` | Word | Comment annotations on runs | **PASS** |
+| 35 | `word-add-revision` | Word | Track-changes revision marks | **PASS** |
+| 36 | `word-tab-stops` | Word | Custom tab stops (left/center/right/decimal) | **PASS** |
+| 37 | `word-merge-cells` | Word | Table cell merges (horizontal + vertical) | **PASS** |
+| 38 | `word-table-shading` | Word | Table cell background shading | **PASS** |
+| 39 | `word-footnotes` | Word | Footnote references + content | **PASS** |
+| 40 | `word-page-numbers` | Word | PAGE/NUMPAGES field codes in footer | **PASS** |
+| 41 | `word-replace` | Word | Open docx, replace `{{client}}` placeholder | **PASS** |
+| 42 | `word-add-image` | Word | Inline image via blipFill | **PASS** |
+| 43 | `excel-defined-names` | Excel | Workbook-scoped defined names | **PASS** |
+| 44 | `excel-data-validations` | Excel | Drop-down list + integer constraints | **PASS** |
+| 45 | `excel-replace` | Excel | Open xlsx, replace `{{client}}` placeholder | **PASS** |
+| 46 | `excel-add-image` | Excel | Embedded image anchored to a cell | **PASS** |
+| 47 | `ppt-shape-xfrm` | PPT | Shape position/size (xfrm) accessors | **PASS** |
+| 48 | `ppt-shape-rotation` | PPT | Shape rotation + flip accessors | **PASS** |
+| 49 | `ppt-hidden-slide` | PPT | Hidden slide flag | **PASS** |
+| 50 | `ppt-transitions` | PPT | Slide transition effects | **PASS** |
+| 51 | `ppt-slide-backgrounds` | PPT | Solid fill slide backgrounds | **PASS** |
+| 52 | `ppt-merge-cells` | PPT | Table cell merges in slide table | **PASS** |
+| 53 | `ppt-picture-crop` | PPT | Picture crop rectangle on image shape | **PASS** |
+| 54 | `ppt-shape-accessibility` | PPT | Alt-text on shapes | **PASS** |
+| 55 | `ppt-replace` | PPT | Open pptx, replace `{{date}}` placeholder | **PASS** |
+| 56 | `ppt-add-image` | PPT | Embedded image blipFill in slide | **PASS** |
 
-**All 29 batch-3 document-output examples: semantically equivalent. No divergences found.**
+**All 29 batch-3 examples: semantically equivalent. No divergences found.**
 
-N/A examples produce no output document and cannot be compared:
-- `linq-tutorial` — tutorial script with no file output
-- `word-text-extract` — reads an existing docx and extracts text to stdout
-- `word-style-inspect` — reads styles and prints to stdout
-- `set-core-properties` — sets metadata on an existing document (no standalone output)
+**Running total: 56 covered (56 PASS) out of 60 examples.**
 
-**Final total: 56 covered (56 PASS), 4 N/A, 0 known-divergent out of 60 examples.**
+---
+
+## Batch 4 Results (4 examples — stdout + core-props modes)
+
+These examples previously could not be covered with the document-digest approach.
+Batch 4 adds two new comparison modes (stdout and core-props) to verify them.
+
+| # | Example | Mode | Operation | Result |
+|---|---------|------|-----------|--------|
+| 57 | `set-core-properties` | core-props | Writes title/creator/subject/keywords to .docx/.xlsx/.pptx | **PASS** |
+| 58 | `word-text-extract` | stdout | Opens existing .docx, prints paragraphs to stdout | **PASS** |
+| 59 | `word-style-inspect` | stdout | Opens existing .docx, prints run effective properties to stdout | **PASS** |
+| 60 | `linq-tutorial` | stdout | LINQ-to-XML tutorial (6 operations), prints results to stdout | **PASS** |
+
+**All 4 batch-4 examples: semantically equivalent. No divergences found.**
+
+**Final total: 60 covered (60 PASS), 0 N/A, 0 known-divergent out of 60 examples.**
 
 ---
 
@@ -181,12 +197,12 @@ N/A examples produce no output document and cannot be compared:
 | `word-paragraph-spacing` | **PASS** | Batch 2 |
 | `word-paragraph-flow` | **PASS** | Batch 2 |
 | `word-run-fonts` | **PASS** | Batch 2 |
-| `word-text-extract` | **N/A** | Read-only; no document output |
+| `word-text-extract` | **PASS** | Batch 4 — stdout mode |
 | `word-paragraph-style` | **PASS** | Batch 3 |
 | `word-paragraph-numbering` | **PASS** | Batch 3 |
 | `word-run-style` | **PASS** | Batch 3 |
 | `word-styled-doc` | **PASS** | Batch 3 |
-| `word-style-inspect` | **N/A** | Read-only; no document output |
+| `word-style-inspect` | **PASS** | Batch 4 — stdout mode |
 | `word-add-list` | **PASS** | Batch 3 |
 | `word-add-bookmark` | **PASS** | Batch 3 |
 | `word-add-comment` | **PASS** | Batch 3 |
@@ -228,16 +244,16 @@ N/A examples produce no output document and cannot be compared:
 | `ppt-shape-accessibility` | **PASS** | Batch 3 |
 | `ppt-replace` | **PASS** | Batch 3 |
 | `ppt-add-image` | **PASS** | Batch 3 |
-| `linq-tutorial` | **N/A** | No document output (tutorial script) |
-| `set-core-properties` | **N/A** | No standalone document output |
+| `linq-tutorial` | **PASS** | Batch 4 — stdout mode |
+| `set-core-properties` | **PASS** | Batch 4 — core-props mode |
 
-**Summary: 56 PASS · 4 N/A · 0 known-divergent · 60 total**
+**Summary: 60 PASS · 0 N/A · 0 known-divergent · 60 total**
 
 ---
 
 ## Divergences Found
 
-None across all three batches.
+None across all four batches.
 
 During development, the following differences were corrected in the C# replicas or harness
 (none were bugs in openxml-ts):
@@ -261,6 +277,14 @@ During development, the following differences were corrected in the C# replicas 
 5. **Word field-code empty runs** (`word-page-numbers`): The .NET SDK emits empty
    `<w:r>` runs for field codes (fldChar/instrText); openxml-ts emits only the runs
    with visible text. Fixed by filtering empty-text runs in the digest (cosmetic difference).
+
+6. **word-style-inspect extendedAttributes quirk** (batch 4): The TS example reads
+   `ParagraphStyleId` and `RunStyle` via `extendedAttributes.get("w:val")`, but these
+   elements store `w:val` as a typed property — not in `extendedAttributes`. So style
+   IDs are always `undefined` in the TS code, meaning: paragraph style always shown as
+   `—`, and no style chain is followed in `resolveEffectiveRunProperties`. The C# replica
+   faithfully reproduces this behaviour (only direct run `rPr`; no style chain). This is a
+   cosmetic limitation of the example code, not a bug in the openxml-ts library.
 
 ---
 

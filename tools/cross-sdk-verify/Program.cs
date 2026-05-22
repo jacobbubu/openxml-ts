@@ -1,8 +1,11 @@
 // Cross-SDK Verify – entry point
 //
 // Commands:
-//   extract <file>          → print semantic digest JSON to stdout
-//   generate <name> <file>  → run the named C# replica and write to <file>
+//   extract <file>                → print semantic digest JSON to stdout
+//   extract-core <file>           → print core-properties digest JSON to stdout
+//   generate <name> <file>        → run the named C# replica and write to <file>
+//   generate-prefix <name> <pfx>  → run set-core-properties replica writing <pfx>.docx/.xlsx/.pptx
+//   run-stdout <name> [input]     → run the named stdout replica, print its output
 //
 // Example names (batch 1):
 //   word-create  word-run-formatting  word-paragraph-format  word-add-table
@@ -24,13 +27,16 @@
 //   ppt-shape-xfrm  ppt-shape-rotation  ppt-hidden-slide  ppt-transitions
 //   ppt-slide-backgrounds  ppt-merge-cells  ppt-picture-crop  ppt-shape-accessibility
 //   ppt-replace  ppt-add-image
+//
+// Example names (batch 4 – stdout mode):
+//   set-core-properties  word-text-extract  word-style-inspect  linq-tutorial
 
 using CrossSdkVerify;
 using CrossSdkVerify.Replicas;
 
 if (args.Length < 2)
 {
-    Console.Error.WriteLine("Usage: CrossSdkVerify <extract|generate> <args...>");
+    Console.Error.WriteLine("Usage: CrossSdkVerify <extract|extract-core|generate|generate-prefix|run-stdout> <args...>");
     return 1;
 }
 
@@ -46,6 +52,87 @@ if (command == "extract")
     }
     Console.WriteLine(DigestExtractor.Extract(filePath));
     return 0;
+}
+
+if (command == "extract-core")
+{
+    var filePath = args[1];
+    if (!File.Exists(filePath))
+    {
+        Console.Error.WriteLine($"File not found: {filePath}");
+        return 1;
+    }
+    Console.WriteLine(CorePropertiesExtractor.Extract(filePath));
+    return 0;
+}
+
+if (command == "run-stdout")
+{
+    if (args.Length < 2)
+    {
+        Console.Error.WriteLine("Usage: CrossSdkVerify run-stdout <name> [input-file]");
+        return 1;
+    }
+    var name = args[1];
+    var inputArg = args.Length >= 3 ? args[2] : null;
+
+    try
+    {
+        switch (name)
+        {
+            case "word-text-extract":
+                if (inputArg == null) { Console.Error.WriteLine("word-text-extract requires an input file"); return 1; }
+                WordTextExtract.Run(inputArg);
+                break;
+            case "word-style-inspect":
+                if (inputArg == null) { Console.Error.WriteLine("word-style-inspect requires an input file"); return 1; }
+                WordStyleInspect.Run(inputArg);
+                break;
+            case "linq-tutorial":
+                LinqTutorial.Run();
+                break;
+            default:
+                Console.Error.WriteLine($"Unknown stdout example: {name}");
+                return 1;
+        }
+        return 0;
+    }
+    catch (Exception ex)
+    {
+        Console.Error.WriteLine($"Error running {name}: {ex}");
+        return 1;
+    }
+}
+
+if (command == "generate-prefix")
+{
+    if (args.Length < 3)
+    {
+        Console.Error.WriteLine("Usage: CrossSdkVerify generate-prefix <name> <output-prefix>");
+        return 1;
+    }
+    var name = args[1];
+    var outputPrefix = args[2];
+
+    try
+    {
+        switch (name)
+        {
+            case "set-core-properties":
+                SetCoreProperties.Run(outputPrefix);
+                break;
+            default:
+                Console.Error.WriteLine($"Unknown prefix example: {name}");
+                return 1;
+        }
+        Console.WriteLine($"Generated: {outputPrefix}.docx/.xlsx/.pptx");
+        return 0;
+    }
+    catch (Exception ex)
+    {
+        Console.Error.WriteLine($"Error generating {name}: {ex}");
+        return 1;
+    }
 }
 
 if (command == "generate")
