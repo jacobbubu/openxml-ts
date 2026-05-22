@@ -1,0 +1,40 @@
+name: npm publish
+
+# 发布到 npm registry。
+# - release：release-please 打出 GitHub Release 后自动发布该版本；
+# - workflow_dispatch：手动触发（用于补发已有 tag，如首个 npm 发布）。
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # npm provenance 需要
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+          registry-url: "https://registry.npmjs.org"
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
+
+      # 发布前确认产物可用 + 公开面无漂移。
+      - name: API report drift check
+        run: pnpm api:check
+
+      - name: Publish to npm
+        run: pnpm publish --provenance --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
