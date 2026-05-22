@@ -1,5 +1,39 @@
 # Changelog
 
+## [1.0.0](https://github.com/jacobbubu/openxml-ts/compare/v0.16.0...v1.0.0) (2026-05-22)
+
+
+### Features
+
+* **element:** Epic-92 Strict 度量值单位换算 — ST_UniversalMeasure → twips ([6abac87](https://github.com/jacobbubu/openxml-ts/commit/6abac871ac1ae58a37888dc54acb544c02a7d781))
+* **element:** Epic-92 Strict 度量值单位换算 — ST_UniversalMeasure → twips ([#263](https://github.com/jacobbubu/openxml-ts/issues/263)) ([3beae6c](https://github.com/jacobbubu/openxml-ts/commit/3beae6c7efa2d324ceaeda487615b2bfec76f360))
+* **element:** Epic-95 Features 扩展性体系 — IFeatureCollection + FeatureCollection + OpenXmlElement.features ([6bcecc3](https://github.com/jacobbubu/openxml-ts/commit/6bcecc34ed07df54281d4eae261aa32ecb7232b9))
+* **element:** Epic-95 Features 扩展性体系 — 移植 IFeatureCollection + FeatureCollection + OpenXmlElement.features ([#275](https://github.com/jacobbubu/openxml-ts/issues/275)) ([5e6c914](https://github.com/jacobbubu/openxml-ts/commit/5e6c9142d993a2c74c9938568ed9f445b968adb0))
+* **validation:** Epic-93 OpenXmlValidator 版本定向校验（FileFormatVersions targeting） ([8199d3e](https://github.com/jacobbubu/openxml-ts/commit/8199d3ee0b5fc9bcad61f20e6884845291257afc))
+* **validation:** Epic-93 版本定向校验（FileFormatVersions targeting）([#271](https://github.com/jacobbubu/openxml-ts/issues/271)) ([46f9a95](https://github.com/jacobbubu/openxml-ts/commit/46f9a95e6378af17ab9be131f1a07ccd9cb5941c))
+* **values:** Epic-94 补齐 13 个缺失值类型公开面，修复 codegen 映射 ([#272](https://github.com/jacobbubu/openxml-ts/issues/272)) ([b24888f](https://github.com/jacobbubu/openxml-ts/commit/b24888fcc22c15e2a70a2f6a88202056828f6f2f))
+* **values:** Epic-94 补齐 13 个缺失值类型公开面（OnOffValue/TrueFalseValue/DoubleValue/Base64BinaryValue 等） ([3cd81d1](https://github.com/jacobbubu/openxml-ts/commit/3cd81d1e7d1a029d1980880fcd476d7fe8daafe1))
+
+
+### Bug Fixes
+
+* biome format package.json files 字段改为单行（Epic-95 [#275](https://github.com/jacobbubu/openxml-ts/issues/275)） ([bdf8a6a](https://github.com/jacobbubu/openxml-ts/commit/bdf8a6acad472d3a208534b388f9727251781bd2))
+* **format:** package.json "files" 字段改为单行（biome 格式要求）([#271](https://github.com/jacobbubu/openxml-ts/issues/271)) ([fd67bfa](https://github.com/jacobbubu/openxml-ts/commit/fd67bfab46a346c0e3c53b9c6267a16814a3610c))
+* **test:** Epic-92 strict-measure.test.ts 排除浏览器测试（node:fs 不可用） ([06d83f6](https://github.com/jacobbubu/openxml-ts/commit/06d83f61ef31fe4a09ae6cb9f106ed4919aa8dc0))
+
+
+### Documentation
+
+* .NET SDK 公开 API 对齐审查报告（1.0 门禁）([#268](https://github.com/jacobbubu/openxml-ts/issues/268)) ([e2452f3](https://github.com/jacobbubu/openxml-ts/commit/e2452f3620746a5cccf42495f909bec81447e29f))
+* api-stability.md 增加「与 .NET SDK 的对齐边界」声明 ([#270](https://github.com/jacobbubu/openxml-ts/issues/270)) ([dd085b8](https://github.com/jacobbubu/openxml-ts/commit/dd085b8ff541377d35fa983bddac2cb16ace0e43))
+* api-stability.md 增加「与 .NET SDK 的对齐边界」声明 ([#270](https://github.com/jacobbubu/openxml-ts/issues/270)) ([81a4b9a](https://github.com/jacobbubu/openxml-ts/commit/81a4b9a108319673b58573ff73b15b753a7d4b94))
+* 新增 .NET SDK 公开 API 对齐审查报告（1.0 门禁）([#268](https://github.com/jacobbubu/openxml-ts/issues/268)) ([f19d0d2](https://github.com/jacobbubu/openxml-ts/commit/f19d0d2a4542a6c138d52304317f4d729be060f7))
+
+
+### Chore
+
+* 锁定 1.0 正式版 ([98a18cd](https://github.com/jacobbubu/openxml-ts/commit/98a18cd84c2d4bb95627e069585502208c0ce5c1))
+
 ## [0.16.0](https://github.com/jacobbubu/openxml-ts/compare/v0.15.0...v0.16.0) (2026-05-21)
 
 
