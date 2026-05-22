@@ -6,11 +6,14 @@
  * - 底层复用 `tokenizeXml` tokenizer；
  * - `loadCurrentElement()` 利用 `deserialize` 从捕获的 XML 片段物化子树；
  * - 无 Node Readable / async-iterator（SDK 风格）。
+ * - 支持从 `IPackagePart` 同步构造（Epic-97）。
  */
 
+import type { MemoryPackagePart } from "../backends/memory/memory-package-part.js";
 import type { OpenXmlElement } from "../element/element.js";
 import type { ElementRegistry } from "../element/registry.js";
 import { type DeserializeOptions, deserialize } from "../element/xml-deserialize.js";
+import type { IPackagePart } from "../packaging/interfaces/part.js";
 import { xmlEscapeAttr, xmlEscapeText } from "../packaging/xml/escape.js";
 import { type XmlToken, tokenizeXml } from "../packaging/xml/tokenizer.js";
 
@@ -130,7 +133,26 @@ export class OpenXmlPartReader {
   private _current: ReaderNode | undefined;
   private _eof = false;
 
-  constructor(xml: string, options: OpenXmlPartReaderOptions = {}) {
+  /**
+   * 构造 OpenXmlPartReader。
+   *
+   * @param source - XML 字符串（Epic-80 原有方式），或 `IPackagePart`（Epic-97 新增：
+   *   从 part 的字节内容同步读 XML）。
+   * @param options - 可选注册表等选项。
+   *
+   * 对位 .NET：
+   * - `new OpenXmlPartReader(xmlString)` — 原有
+   * - `new OpenXmlPartReader(openXmlPart)` / `OpenXmlReader.Create(part)` — Epic-97
+   */
+  constructor(source: string | IPackagePart, options: OpenXmlPartReaderOptions = {}) {
+    let xml: string;
+    if (typeof source === "string") {
+      xml = source;
+    } else {
+      // IPackagePart — read synchronously via snapshot (MemoryPackagePart)
+      const bytes = (source as MemoryPackagePart).snapshot();
+      xml = new TextDecoder("utf-8").decode(bytes);
+    }
     this._tokens = tokenizeXml(xml);
     this._registry = options.registry;
   }

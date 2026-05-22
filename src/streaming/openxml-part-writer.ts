@@ -5,11 +5,13 @@
  * - 同步推送模型：逐步写入 XML 片段；
  * - 底层复用 `XmlWriter`；
  * - `writeElement()` 将整个 typed element 子树写入；
- * - `close()` 完成并返回最终 XML 字符串；
+ * - `close()` 完成并返回最终 XML 字符串；若构造时传入 `IPackagePart`，
+ *   同时将 XML 内容写回该 part（Epic-97）；
  * - 无 Node Writable（SDK 风格）。
  */
 
 import type { OpenXmlElement } from "../element/element.js";
+import type { IPackagePart } from "../packaging/interfaces/part.js";
 import { XmlWriter } from "../packaging/xml/writer.js";
 
 // ---- Public types ----
@@ -50,6 +52,22 @@ export class OpenXmlPartWriter {
   private readonly _writer: XmlWriter = new XmlWriter();
   private readonly _elementStack: string[] = [];
   private _closed = false;
+  /** 可选的 part 目标（Epic-97）。`closeAsync()` 会将 XML 写回。 */
+  private readonly _part: IPackagePart | undefined;
+
+  /**
+   * 构造 OpenXmlPartWriter。
+   *
+   * @param part - 可选的 `IPackagePart`（Epic-97）。当提供 part 时，`closeAsync()` 会把
+   *   生成的 XML 写回该 part。`close()` 仍返回 string（不写回）。
+   *
+   * 对位 .NET：
+   * - `new OpenXmlPartWriter()` — 原有（字符串构建器）
+   * - `new OpenXmlPartWriter(openXmlPart)` / `OpenXmlWriter.Create(part)` — Epic-97
+   */
+  constructor(part?: IPackagePart) {
+    this._part = part;
+  }
 
   // ---- Document-level ----
 
@@ -134,6 +152,20 @@ export class OpenXmlPartWriter {
     }
     this._closed = true;
     return this._writer.toString();
+  }
+
+  /**
+   * 关闭写入器，若构造时提供了 `IPackagePart`，则将 XML 内容写回该 part。
+   * 返回完整 XML 字符串（同 `close()`）。
+   *
+   * 镜像 .NET `OpenXmlWriter.Create(part)` + `Close()` 语义。Epic-97 新增。
+   */
+  async closeAsync(): Promise<string> {
+    const xml = this.close();
+    if (this._part !== undefined) {
+      await this._part.writeAsync(xml);
+    }
+    return xml;
   }
 
   // ---- Private helpers ----
