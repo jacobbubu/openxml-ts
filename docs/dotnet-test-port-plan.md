@@ -7,13 +7,15 @@
 | Batch | 状态 | PR | 新增 it 数 | 移植方法数 | 跳过（COVERED）| N/A 方法数 |
 |---|---|---|---:|---:|---:|---:|
 | 1 — Simple types 值语义 | **✅ 完成** | #323 | 228 | ~42 | ~13 | ~5 |
-| 2 — Validator 逐类型矩阵 | 待开始 | — | — | ~83 | — | — |
+| 2 — Validator 逐类型矩阵 | **✅ 完成** | #324 | 45 | ~32 | ~8 | ~50 |
 | 3 — MC 展开矩阵 | 待开始 | — | — | ~105 | — | — |
 | 4 — DOM 树操作矩阵 | 待开始 | — | — | ~90 | — | — |
 | 5 — 文档级行为 | 待开始 | — | — | ~110 | — | — |
 | 6 — Conformance 端到端 | 待开始 | — | — | ~50 | — | — |
 
 **Batch 1 详情**（Epic-111 / PR #323）：移植 `test/element/values-dotnet-parity.test.ts`，228 个 `it`，覆盖 20 个值类型的 CompareTo / Equals / GetHashCode / 运算符语义 + HexBinaryValue 专项（ValidateValue / GetBytes / CreateFromBytes）。N/A 项：CompareTo_ArgumentIsNull / CompareTo_NoValue / Equals_NoValue / CompareTo_ArgumentIncompatible / TryWriteBytes（均属 .NET 特有 API，TS 无对应）。
+
+**Batch 2 详情**（Epic-112 / PR #324）：移植 `test/validation/validator-dotnet-parity.test.ts`，45 个 `it`（8 todo），覆盖 SequenceParticleValidator / ChoiceParticleValidator / CompositeParticleValidator / AllParticleValidator / GroupParticleValidator 的粒子成员校验、基数约束、缺失必需子元素，以及必需属性校验和错误模型基线（errorType / id / node / description）。已记录分歧：TODO #325（`Sch_UnexpectedElementContentExpectingComplex` — 需全粒子状态机）、TODO #326（逐类型属性值校验 — Boolean/Byte/Int/Enum/Pattern/HexBinary 等）、TODO #327（重复序列基数 — 平铺基数检查器不理解 `max="unbounded"` 序列节点）。N/A（~50 方法）：`OpenXmlValidatorTest.cs` 大量逐类型属性值断言（含错误文本精确比对）因 openxml-ts 未实现类型级校验而跳过。
 
 ## 1. 背景与目标
 
@@ -57,7 +59,7 @@
 按"语义价值 / 单位成本"排序，建议分 6 批：
 
 - **Batch 1 — Simple types 值语义** ✅（`OpenXmlComparableSimpleValueTests` + `OpenXmlComparableSimpleReferenceTests` 及各子类，约 60 方法）。已完成（Epic-111 / PR #323）：移植 228 个 `it` 到 `test/element/values-dotnet-parity.test.ts`。
-- **Batch 2 — Validator 逐类型矩阵**（`OpenXmlValidatorTest.cs` 63 个 + particle validators 20 个，约 83 方法）。语义价值最高，是 SDK 正确性的核心。需要把微软的预期错误码 / 错误文本作为断言基线移植。
+- **Batch 2 — Validator 逐类型矩阵** ✅（`OpenXmlValidatorTest.cs` 63 个 + particle validators 20 个，约 83 方法）。已完成（Epic-112 / PR #324）：移植 45 个 `it` 到 `test/validation/validator-dotnet-parity.test.ts`；记录分歧 TODO #325/#326/#327。
 - **Batch 3 — MC 展开矩阵**（`MarkupCompatibilityTest.cs` 87 个 + `MCSupport.cs` 12 个 + `McValidationTest.cs` 6 个，约 105 方法）。第二大语义区。可按 Ignorable / ProcessContent / MustUnderstand / AlternateContent 四组分子批落地。
 - **Batch 4 — DOM 树操作矩阵**（`OpenXmlCompositeElementTestClass.cs` 141 个 + `OpenXmlElementTest*.cs` + `OpenXmlReaderWriterTest.cs` + `OpenXmlReaderTest.cs` + `OpenXmlWriterTest.cs`，约 215 方法）。体量最大但很多是同一操作在 docx/pptx/xlsx 三套 fixture 上重复（`*Test` / `*PPTTest` / `*XSLTest`），可去掉 fixture 维度后大幅压缩。
 - **Batch 5 — 文档级行为**（`SaveAndCloneTests.cs` 21 个 + `OpenXmlPackageTest.cs` 23 个 + `Documents/*` + `BugRegressionTest.cs` 28 个回归 + `FileFormatVersionExtensionsTests.cs`，约 110 方法）。Clone / autosave / 版本守卫 / 历史 bug 回归。
