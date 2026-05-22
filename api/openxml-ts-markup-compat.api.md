@@ -22,6 +22,18 @@ export { FileFormatVersions }
 export { FileFormatVersions as FileFormatVersionsType }
 
 // @public
+export function fileFormatVersionsAll(version: number): boolean;
+
+// @public
+export function fileFormatVersionsAndLater(version: number): number;
+
+// @public
+export function fileFormatVersionsAny(version: number): boolean;
+
+// @public
+export function fileFormatVersionsAtLeast(version: number, minimum: number): boolean;
+
+// @public
 export function isNamespaceUnderstood(namespaceUri: string, target: FileFormatVersions): boolean;
 
 // @public
