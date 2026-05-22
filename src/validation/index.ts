@@ -44,6 +44,7 @@ export {
   registerConstraints,
   type OpenXmlValidatorOptions,
   type WordprocessingDocumentLike,
+  type OpcPackageLike,
 } from "./OpenXmlValidator.js";
 export {
   evaluateSchematron,
