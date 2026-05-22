@@ -5,11 +5,36 @@
 ```ts
 
 // @public
-export class OpenXmlPartReader {
-    constructor(xml: string, options?: OpenXmlPartReaderOptions);
+export class OpenXmlDomReader {
+    // Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
+    constructor(element: OpenXmlElement, options?: {
+        readonly registry?: ElementRegistry;
+    });
     get attributes(): readonly ReaderAttribute[];
     get depth(): number;
-    // Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
+    get elementType(): (new () => OpenXmlElement) | undefined;
+    get eof(): boolean;
+    getText(): string;
+    get isEndElement(): boolean;
+    get isMiscNode(): boolean;
+    get isStartElement(): boolean;
+    loadCurrentElement(): OpenXmlElement | undefined;
+    get localName(): string;
+    get namespaceUri(): string;
+    get nodeType(): ReaderNodeType;
+    get prefix(): string;
+    read(): boolean;
+    readFirstChild(): boolean;
+    readNextSibling(): boolean;
+    skip(): boolean;
+}
+
+// @public
+export class OpenXmlPartReader {
+    // Warning: (ae-forgotten-export) The symbol "IPackagePart" needs to be exported by the entry point index.d.ts
+    constructor(source: string | IPackagePart, options?: OpenXmlPartReaderOptions);
+    get attributes(): readonly ReaderAttribute[];
+    get depth(): number;
     get elementType(): (new () => OpenXmlElement) | undefined;
     get eof(): boolean;
     getText(): string;
@@ -28,13 +53,14 @@ export class OpenXmlPartReader {
 
 // @public (undocumented)
 export interface OpenXmlPartReaderOptions {
-    // Warning: (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
     readonly registry?: ElementRegistry;
 }
 
 // @public
 export class OpenXmlPartWriter {
+    constructor(part?: IPackagePart);
     close(): string;
+    closeAsync(): Promise<string>;
     writeElement(element: OpenXmlElement): this;
     writeEndElement(): this;
     writeStartDocument(): this;
@@ -72,6 +98,10 @@ export interface WriterAttributeDescriptor {
     // (undocumented)
     readonly value: string;
 }
+
+// Warnings were encountered during analysis:
+//
+// src/streaming/openxml-dom-reader.ts:77:51 - (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
