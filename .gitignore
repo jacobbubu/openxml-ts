@@ -46,3 +46,7 @@ _bmad/custom/config.user.toml
 # oh-my-claudecode plugin runtime state
 .omc/
 scratch/
+
+# .NET build artifacts (tools/cross-sdk-verify)
+tools/cross-sdk-verify/bin/
+tools/cross-sdk-verify/obj/
