@@ -32,6 +32,7 @@ csverify() {
 
 # --- Batch 1 examples (13 total) ---
 # --- Batch 2 examples (+14 = 27 total; word-text-extract is N/A: read-only, no output) ---
+# --- Batch 3 examples (+29 = 56 document-producing total; 4 N/A: linq-tutorial, word-text-extract, word-style-inspect, set-core-properties) ---
 ALL_EXAMPLES=(
   word-create
   word-run-formatting
@@ -60,6 +61,35 @@ ALL_EXAMPLES=(
   ppt-set-titles
   ppt-paragraph-formatting
   ppt-run-formatting
+  word-paragraph-style
+  word-paragraph-numbering
+  word-run-style
+  word-styled-doc
+  word-add-list
+  word-add-bookmark
+  word-add-comment
+  word-add-revision
+  word-tab-stops
+  word-merge-cells
+  word-table-shading
+  word-footnotes
+  word-page-numbers
+  word-replace
+  word-add-image
+  excel-defined-names
+  excel-data-validations
+  excel-replace
+  excel-add-image
+  ppt-shape-xfrm
+  ppt-shape-rotation
+  ppt-hidden-slide
+  ppt-transitions
+  ppt-slide-backgrounds
+  ppt-merge-cells
+  ppt-picture-crop
+  ppt-shape-accessibility
+  ppt-replace
+  ppt-add-image
 )
 
 # If specific examples passed, use those; otherwise run all
@@ -100,11 +130,61 @@ for NAME in "${EXAMPLES[@]}"; do
 
   # 1. Generate TS output
   TS_OK=true
-  if ! bun run "$REPO_ROOT/examples/${NAME}.ts" "$FILE_TS" > "$TMP_DIR/${NAME}_ts.log" 2>&1; then
-    echo "  [ERROR] TS example failed:"
-    cat "$TMP_DIR/${NAME}_ts.log"
-    TS_OK=false
-  fi
+  # Replace examples need an input file generated first
+  case "$NAME" in
+    word-replace)
+      # Generate a template with {{client}} placeholders, then apply the replace
+      INPUT_FILE="$TMP_DIR/${NAME}_input.$EXT"
+      if ! bun run "$TOOL_DIR/make-word-replace-input.ts" "$INPUT_FILE" > "$TMP_DIR/${NAME}_input.log" 2>&1; then
+        echo "  [ERROR] TS template generation (word-replace input) failed:"
+        cat "$TMP_DIR/${NAME}_input.log"
+        TS_OK=false
+      else
+        if ! bun run "$REPO_ROOT/examples/${NAME}.ts" "$INPUT_FILE" "$FILE_TS" "Acme Corp" > "$TMP_DIR/${NAME}_ts.log" 2>&1; then
+          echo "  [ERROR] TS example failed:"
+          cat "$TMP_DIR/${NAME}_ts.log"
+          TS_OK=false
+        fi
+      fi
+      ;;
+    excel-replace)
+      # Generate a template with {{client}} placeholders, then apply the replace
+      INPUT_FILE="$TMP_DIR/${NAME}_input.$EXT"
+      if ! bun run "$TOOL_DIR/make-excel-replace-input.ts" "$INPUT_FILE" > "$TMP_DIR/${NAME}_input.log" 2>&1; then
+        echo "  [ERROR] TS template generation (excel-replace input) failed:"
+        cat "$TMP_DIR/${NAME}_input.log"
+        TS_OK=false
+      else
+        if ! bun run "$REPO_ROOT/examples/${NAME}.ts" "$INPUT_FILE" "$FILE_TS" "Acme Corp" > "$TMP_DIR/${NAME}_ts.log" 2>&1; then
+          echo "  [ERROR] TS example failed:"
+          cat "$TMP_DIR/${NAME}_ts.log"
+          TS_OK=false
+        fi
+      fi
+      ;;
+    ppt-replace)
+      # ppt-create slide 2 title contains "{{date}}" — use that as input
+      INPUT_FILE="$TMP_DIR/${NAME}_input.$EXT"
+      if ! bun run "$REPO_ROOT/examples/ppt-create.ts" "$INPUT_FILE" > "$TMP_DIR/${NAME}_input.log" 2>&1; then
+        echo "  [ERROR] TS ppt-create (for ppt-replace input) failed:"
+        cat "$TMP_DIR/${NAME}_input.log"
+        TS_OK=false
+      else
+        if ! bun run "$REPO_ROOT/examples/${NAME}.ts" "$INPUT_FILE" "$FILE_TS" "2024-01-01" > "$TMP_DIR/${NAME}_ts.log" 2>&1; then
+          echo "  [ERROR] TS example failed:"
+          cat "$TMP_DIR/${NAME}_ts.log"
+          TS_OK=false
+        fi
+      fi
+      ;;
+    *)
+      if ! bun run "$REPO_ROOT/examples/${NAME}.ts" "$FILE_TS" > "$TMP_DIR/${NAME}_ts.log" 2>&1; then
+        echo "  [ERROR] TS example failed:"
+        cat "$TMP_DIR/${NAME}_ts.log"
+        TS_OK=false
+      fi
+      ;;
+  esac
 
   # 2. Generate .NET output
   NET_OK=true

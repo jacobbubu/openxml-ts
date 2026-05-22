@@ -116,12 +116,131 @@ it produces no output document and cannot be output-compared. Marked N/A.
 
 ---
 
+## Batch 3 Results (29 examples, +4 N/A)
+
+| # | Example | Subsystem | Operation | Result |
+|---|---------|-----------|-----------|--------|
+| 28 | `word-paragraph-style` | Word | Named paragraph styles | **PASS** |
+| 29 | `word-paragraph-numbering` | Word | Numbering definitions + list paragraphs | **PASS** |
+| 30 | `word-run-style` | Word | Named character styles on runs | **PASS** |
+| 31 | `word-styled-doc` | Word | Full styled document with multiple styles | **PASS** |
+| 32 | `word-style-inspect` | Word | Read-only style inspection (no document output) | **N/A** |
+| 33 | `word-add-list` | Word | Bullet + numbered list items | **PASS** |
+| 34 | `word-add-bookmark` | Word | Bookmark start/end markers | **PASS** |
+| 35 | `word-add-comment` | Word | Comment annotations on runs | **PASS** |
+| 36 | `word-add-revision` | Word | Track-changes revision marks | **PASS** |
+| 37 | `word-tab-stops` | Word | Custom tab stops (left/center/right/decimal) | **PASS** |
+| 38 | `word-merge-cells` | Word | Table cell merges (horizontal + vertical) | **PASS** |
+| 39 | `word-table-shading` | Word | Table cell background shading | **PASS** |
+| 40 | `word-footnotes` | Word | Footnote references + content | **PASS** |
+| 41 | `word-page-numbers` | Word | PAGE/NUMPAGES field codes in footer | **PASS** |
+| 42 | `word-replace` | Word | Open docx, replace `{{client}}` placeholder | **PASS** |
+| 43 | `word-add-image` | Word | Inline image via blipFill | **PASS** |
+| 44 | `excel-defined-names` | Excel | Workbook-scoped defined names | **PASS** |
+| 45 | `excel-data-validations` | Excel | Drop-down list + integer constraints | **PASS** |
+| 46 | `excel-replace` | Excel | Open xlsx, replace `{{client}}` placeholder | **PASS** |
+| 47 | `excel-add-image` | Excel | Embedded image anchored to a cell | **PASS** |
+| 48 | `ppt-shape-xfrm` | PPT | Shape position/size (xfrm) accessors | **PASS** |
+| 49 | `ppt-shape-rotation` | PPT | Shape rotation + flip accessors | **PASS** |
+| 50 | `ppt-hidden-slide` | PPT | Hidden slide flag | **PASS** |
+| 51 | `ppt-transitions` | PPT | Slide transition effects | **PASS** |
+| 52 | `ppt-slide-backgrounds` | PPT | Solid fill slide backgrounds | **PASS** |
+| 53 | `ppt-merge-cells` | PPT | Table cell merges in slide table | **PASS** |
+| 54 | `ppt-picture-crop` | PPT | Picture crop rectangle on image shape | **PASS** |
+| 55 | `ppt-shape-accessibility` | PPT | Alt-text on shapes | **PASS** |
+| 56 | `ppt-replace` | PPT | Open pptx, replace `{{date}}` placeholder | **PASS** |
+| 57 | `ppt-add-image` | PPT | Embedded image blipFill in slide | **PASS** |
+| — | `linq-tutorial` | — | LINQ query tutorial (no document output) | **N/A** |
+| — | `word-text-extract` | — | Read-only text extraction (no document output) | **N/A** |
+| — | `set-core-properties` | — | Core properties setter (no standalone output) | **N/A** |
+
+**All 29 batch-3 document-output examples: semantically equivalent. No divergences found.**
+
+N/A examples produce no output document and cannot be compared:
+- `linq-tutorial` — tutorial script with no file output
+- `word-text-extract` — reads an existing docx and extracts text to stdout
+- `word-style-inspect` — reads styles and prints to stdout
+- `set-core-properties` — sets metadata on an existing document (no standalone output)
+
+**Final total: 56 covered (56 PASS), 4 N/A, 0 known-divergent out of 60 examples.**
+
+---
+
+## Complete Coverage Table (all 60 examples)
+
+| Example | Result | Notes |
+|---------|--------|-------|
+| `word-create` | **PASS** | Batch 1 |
+| `word-run-formatting` | **PASS** | Batch 1 |
+| `word-paragraph-format` | **PASS** | Batch 1 |
+| `word-add-table` | **PASS** | Batch 1 |
+| `word-add-hyperlink` | **PASS** | Batch 2 |
+| `word-page-setup` | **PASS** | Batch 2 |
+| `word-add-header-footer` | **PASS** | Batch 2 |
+| `word-header-footer` | **PASS** | Batch 2 |
+| `word-paragraph-spacing` | **PASS** | Batch 2 |
+| `word-paragraph-flow` | **PASS** | Batch 2 |
+| `word-run-fonts` | **PASS** | Batch 2 |
+| `word-text-extract` | **N/A** | Read-only; no document output |
+| `word-paragraph-style` | **PASS** | Batch 3 |
+| `word-paragraph-numbering` | **PASS** | Batch 3 |
+| `word-run-style` | **PASS** | Batch 3 |
+| `word-styled-doc` | **PASS** | Batch 3 |
+| `word-style-inspect` | **N/A** | Read-only; no document output |
+| `word-add-list` | **PASS** | Batch 3 |
+| `word-add-bookmark` | **PASS** | Batch 3 |
+| `word-add-comment` | **PASS** | Batch 3 |
+| `word-add-revision` | **PASS** | Batch 3 |
+| `word-tab-stops` | **PASS** | Batch 3 |
+| `word-merge-cells` | **PASS** | Batch 3 |
+| `word-table-shading` | **PASS** | Batch 3 |
+| `word-footnotes` | **PASS** | Batch 3 |
+| `word-page-numbers` | **PASS** | Batch 3 |
+| `word-replace` | **PASS** | Batch 3 |
+| `word-add-image` | **PASS** | Batch 3 |
+| `excel-create` | **PASS** | Batch 1 |
+| `excel-cell-value` | **PASS** | Batch 1 |
+| `excel-cell-formula` | **PASS** | Batch 1 |
+| `excel-freeze-panes` | **PASS** | Batch 1 |
+| `excel-merge-cells` | **PASS** | Batch 1 |
+| `excel-column-row-sizing` | **PASS** | Batch 2 |
+| `excel-number-format` | **PASS** | Batch 2 |
+| `excel-sheet-metadata` | **PASS** | Batch 2 |
+| `excel-defined-names` | **PASS** | Batch 3 |
+| `excel-data-validations` | **PASS** | Batch 3 |
+| `excel-replace` | **PASS** | Batch 3 |
+| `excel-add-image` | **PASS** | Batch 3 |
+| `ppt-create` | **PASS** | Batch 1 |
+| `ppt-multi-slide` | **PASS** | Batch 1 |
+| `ppt-add-table` | **PASS** | Batch 1 |
+| `ppt-speaker-notes` | **PASS** | Batch 1 |
+| `ppt-add-notes` | **PASS** | Batch 2 |
+| `ppt-set-titles` | **PASS** | Batch 2 |
+| `ppt-paragraph-formatting` | **PASS** | Batch 2 |
+| `ppt-run-formatting` | **PASS** | Batch 2 |
+| `ppt-shape-xfrm` | **PASS** | Batch 3 |
+| `ppt-shape-rotation` | **PASS** | Batch 3 |
+| `ppt-hidden-slide` | **PASS** | Batch 3 |
+| `ppt-transitions` | **PASS** | Batch 3 |
+| `ppt-slide-backgrounds` | **PASS** | Batch 3 |
+| `ppt-merge-cells` | **PASS** | Batch 3 |
+| `ppt-picture-crop` | **PASS** | Batch 3 |
+| `ppt-shape-accessibility` | **PASS** | Batch 3 |
+| `ppt-replace` | **PASS** | Batch 3 |
+| `ppt-add-image` | **PASS** | Batch 3 |
+| `linq-tutorial` | **N/A** | No document output (tutorial script) |
+| `set-core-properties` | **N/A** | No standalone document output |
+
+**Summary: 56 PASS · 4 N/A · 0 known-divergent · 60 total**
+
+---
+
 ## Divergences Found
 
-None in batches 1 or 2.
+None across all three batches.
 
-During development, two **cosmetic** differences were corrected in the C# replicas
-(not bugs in openxml-ts):
+During development, the following differences were corrected in the C# replicas or harness
+(none were bugs in openxml-ts):
 
 1. **Boolean string display** (`excel-cell-value` C4/C5): C# `bool.ToString()` returns
    `"True"`/`"False"` (capitalised); the TS example uses JS `String(bool)` giving
@@ -131,11 +250,21 @@ During development, two **cosmetic** differences were corrected in the C# replic
    `1899-12-31`; the correct Excel epoch is `1899-12-30`. Fixed to match the
    standard convention used by both openxml-ts and Excel.
 
-Neither issue was a bug in the openxml-ts library itself.
+3. **Replace-example runner** (`word-replace`, `excel-replace`, `ppt-replace`): The
+   runner was passing only `<output>` to replace examples that require `<input> <output>`.
+   Fixed by generating a template input file first and passing both paths.
+
+4. **PPT shape-only digest** (`ppt-shape-xfrm`, `ppt-shape-rotation`): The digest
+   extractor skipped shapes with no `TextBody`. Fixed to include any named shape
+   regardless of whether it has a text body.
+
+5. **Word field-code empty runs** (`word-page-numbers`): The .NET SDK emits empty
+   `<w:r>` runs for field codes (fldChar/instrText); openxml-ts emits only the runs
+   with visible text. Fixed by filtering empty-text runs in the digest (cosmetic difference).
 
 ---
 
-## How to Extend to All 60 Examples
+## How to Extend the Harness
 
 The harness is structured for mechanical batch extension:
 
@@ -159,68 +288,13 @@ The harness is structured for mechanical batch extension:
    )
    ```
 
-4. **Run and iterate** until the digest comparison passes:
+4. **For transform examples** (open + modify), add a `case` to the runner's input-generation
+   block and provide a matching C# replica that replicates the same pipeline.
+
+5. **Run and iterate** until the digest comparison passes:
    ```bash
    bash tools/cross-sdk-verify/run-verify.sh my-new-example
    ```
-
-### Remaining examples by category
-
-The table below shows all 60 examples and their batch assignment.
-Batches 1 (13) and 2 (14) are complete; batches 3–4 are planned.
-
-**Word (remaining)**
-
-| Example | Complexity | Planned batch |
-|---------|-----------|---------------|
-| word-paragraph-style | medium | 3 |
-| word-paragraph-numbering | medium | 3 |
-| word-run-style | medium | 3 |
-| word-styled-doc | medium | 3 |
-| word-style-inspect | medium | 3 |
-| word-add-list | medium | 3 |
-| word-add-bookmark | medium | 3 |
-| word-add-comment | high | 4 |
-| word-add-revision | high | 4 |
-| word-tab-stops | medium | 3 |
-| word-merge-cells | medium | 3 |
-| word-table-shading | medium | 3 |
-| word-footnotes | medium | 3 |
-| word-page-numbers | medium | 3 |
-| word-replace | medium | 3 |
-| word-add-image | high | 4 |
-
-**Excel (remaining)**
-
-| Example | Complexity | Planned batch |
-|---------|-----------|---------------|
-| excel-defined-names | medium | 3 |
-| excel-data-validations | medium | 3 |
-| excel-replace | medium | 3 |
-| excel-add-image | high | 4 |
-
-**PPT (remaining)**
-
-| Example | Complexity | Planned batch |
-|---------|-----------|---------------|
-| ppt-shape-xfrm | medium | 3 |
-| ppt-shape-rotation | medium | 3 |
-| ppt-hidden-slide | medium | 3 |
-| ppt-transitions | medium | 3 |
-| ppt-slide-backgrounds | high | 4 |
-| ppt-merge-cells | medium | 3 |
-| ppt-picture-crop | high | 4 |
-| ppt-shape-accessibility | medium | 3 |
-| ppt-replace | medium | 3 |
-| ppt-add-image | high | 4 |
-
-### Digest extractor extensions needed for later batches
-
-- **Header/footer text**: parse `HeaderPart`/`FooterPart` paragraphs
-- **Hyperlink targets**: normalise rel IDs → sort by target URL
-- **Images**: compare dimensions + content hash (not binary-exact)
-- **Styles**: normalise style names, ignore auto-generated IDs
-- **Comments/revisions**: not in scope for batch 2
 
 ---
 
