@@ -130,10 +130,8 @@ describe("Cell.formula 与 Cell.cachedValue 共存（Epic-49）", () => {
 describe("Cell.formula 端到端 round-trip（Epic-49）", () => {
   it("save → reopen 后 formula + cachedValue 保留", async () => {
     const doc = SpreadsheetDocument.create();
-    // biome-ignore lint/style/noNonNullAssertion: parts are always present in create()
     const wsp = doc.workbookPart!.worksheetParts[0]!;
     const ws = wsp.worksheet;
-    // biome-ignore lint/style/noNonNullAssertion: SheetData is always present in create()
     const sheetData = ws.firstChild(SheetData)!;
 
     const row = new Row();
@@ -145,7 +143,6 @@ describe("Cell.formula 端到端 round-trip（Epic-49）", () => {
 
     const bytes = await doc.saveAsBytesAsync();
     const reopened = await SpreadsheetDocument.openAsync(bytes);
-    // biome-ignore lint/style/noNonNullAssertion: parts are always present after roundtrip
     const reCell = [...reopened.workbookPart!.worksheetParts[0]!.worksheet.descendants(Cell)][0];
 
     expect(reCell?.formula).toBe("SUM(A1:A3)");
@@ -154,10 +151,8 @@ describe("Cell.formula 端到端 round-trip（Epic-49）", () => {
 
   it("save → reopen 後无公式的 Cell formula 仍为 undefined", async () => {
     const doc = SpreadsheetDocument.create();
-    // biome-ignore lint/style/noNonNullAssertion: parts are always present in create()
     const wsp = doc.workbookPart!.worksheetParts[0]!;
     const ws = wsp.worksheet;
-    // biome-ignore lint/style/noNonNullAssertion: SheetData is always present in create()
     const sheetData = ws.firstChild(SheetData)!;
 
     const row = new Row();
@@ -168,7 +163,6 @@ describe("Cell.formula 端到端 round-trip（Epic-49）", () => {
 
     const bytes = await doc.saveAsBytesAsync();
     const reopened = await SpreadsheetDocument.openAsync(bytes);
-    // biome-ignore lint/style/noNonNullAssertion: parts are always present after roundtrip
     const reCell = [...reopened.workbookPart!.worksheetParts[0]!.worksheet.descendants(Cell)][0];
 
     expect(reCell?.formula).toBeUndefined();

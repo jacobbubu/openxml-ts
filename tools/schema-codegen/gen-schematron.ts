@@ -304,15 +304,6 @@ const ATTR_VS_ATTR_RE =
 const REQ_WHEN_OTHER_SIMPLE_RE =
   /^\(\s*@([A-Za-z:_][A-Za-z:_0-9-]*)\s+and\s+@([A-Za-z:_][A-Za-z:_0-9-]*)\s*=\s*(?:'([^']*)'|([A-Za-z0-9._:-]*))\s*\)\s+or\s+@[A-Za-z:_][A-Za-z:_0-9-]*\s*!=\s*(?:'[^']*'|[A-Za-z0-9._:-]*)$/;
 
-// 1.19 attr value condition: (@a=v1 and @b=v2) or @b!=v2
-// SDK: AttributeValueConditionToAnother — when @a in attrValues, @b must be in condValues.
-// Covers forms like:
-//   (@x:type = none or @x:type = all) and (@x:scope = data ...) or @x:scope != ...
-//   (@a = v and @b = v2) or @b != v2
-// We parse: leading group has @attrQname = v [...] and @condAttr = cv [...] followed by or @condAttr != ...
-const ATTR_VALUE_COND_RE =
-  /^\(?\(?@([A-Za-z:_][A-Za-z:_0-9-]*)(?:\s*=\s*([A-Za-z0-9._:-]+)(?:\s+or\s+@[A-Za-z:_][A-Za-z:_0-9-]*\s*=\s*[A-Za-z0-9._:-]+)*)?\)?\s+and\s+\(?@([A-Za-z:_][A-Za-z:_0-9-]*)(?:\s*=\s*([A-Za-z0-9._:-]+)(?:\s+or\s+@[A-Za-z:_][A-Za-z:_0-9-]*\s*=\s*[A-Za-z0-9._:-]+)*)?\)?\)\s+or\s+\(?@([A-Za-z:_][A-Za-z:_0-9-]*)\s*!=\s*[A-Za-z0-9._:-]+/;
-
 function escapeRegex(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }

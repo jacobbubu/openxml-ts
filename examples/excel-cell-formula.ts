@@ -104,7 +104,6 @@ async function main(): Promise<void> {
   process.stdout.write("Verifying by reopening…\n");
   const bytes = await doc.saveAsBytesAsync();
   const reopened = await SpreadsheetDocument.openAsync(bytes);
-  // biome-ignore lint/style/noNonNullAssertion: parts are always present in create()
   const cells = [...reopened.workbookPart!.worksheetParts[0]!.worksheet.descendants(Cell)];
 
   const getFormula = (ref: string): string | undefined =>

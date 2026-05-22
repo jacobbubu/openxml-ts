@@ -68,7 +68,6 @@ describe("getSpeakerNotes / setSpeakerNotes（Epic-51）", () => {
   it("slide 不在该 doc 时抛 OpenXmlPackageError", () => {
     const doc1 = PresentationDocument.create();
     const doc2 = PresentationDocument.create();
-    // biome-ignore lint/style/noNonNullAssertion: test helper
     const slide0Doc1 = doc1.presentationPart!.slideParts[0]!.slide;
 
     expect(() => getSpeakerNotes(slide0Doc1, doc2)).toThrow(OpenXmlPackageError);

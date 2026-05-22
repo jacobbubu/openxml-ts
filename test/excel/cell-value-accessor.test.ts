@@ -233,7 +233,6 @@ describe("Cell.value 端到端 round-trip", () => {
     refs: { ref: string; value: number | string | boolean | Date | undefined }[];
   }> {
     const doc = SpreadsheetDocument.create();
-    // biome-ignore lint/style/noNonNullAssertion: parts are always present in create()
     const ws = doc.workbookPart!.worksheetParts[0]!.worksheet;
     let sheetData = ws.firstChild(SheetData);
     if (sheetData === undefined) {
@@ -266,7 +265,6 @@ describe("Cell.value 端到端 round-trip", () => {
   it("number round-trip: save → reopen 读回 number", async () => {
     const { bytes } = await makeDocWithCells();
     const reopened = await SpreadsheetDocument.openAsync(bytes);
-    // biome-ignore lint/style/noNonNullAssertion: test helper, parts are always present in create()
     const cells = [...reopened.workbookPart!.worksheetParts[0]!.worksheet.descendants(Cell)];
     const a1 = cells.find((c) => c.cellReference?.toString() === "A1");
     expect(a1?.value).toBe(42);
@@ -275,7 +273,6 @@ describe("Cell.value 端到端 round-trip", () => {
   it("string round-trip: save → reopen 读回 string", async () => {
     const { bytes } = await makeDocWithCells();
     const reopened = await SpreadsheetDocument.openAsync(bytes);
-    // biome-ignore lint/style/noNonNullAssertion: test helper, parts are always present in create()
     const cells = [...reopened.workbookPart!.worksheetParts[0]!.worksheet.descendants(Cell)];
     const b1 = cells.find((c) => c.cellReference?.toString() === "B1");
     expect(b1?.value).toBe("Apple");
@@ -284,7 +281,6 @@ describe("Cell.value 端到端 round-trip", () => {
   it("boolean true round-trip", async () => {
     const { bytes } = await makeDocWithCells();
     const reopened = await SpreadsheetDocument.openAsync(bytes);
-    // biome-ignore lint/style/noNonNullAssertion: test helper, parts are always present in create()
     const cells = [...reopened.workbookPart!.worksheetParts[0]!.worksheet.descendants(Cell)];
     const c1 = cells.find((c) => c.cellReference?.toString() === "C1");
     expect(c1?.value).toBe(true);
@@ -293,7 +289,6 @@ describe("Cell.value 端到端 round-trip", () => {
   it("boolean false round-trip", async () => {
     const { bytes } = await makeDocWithCells();
     const reopened = await SpreadsheetDocument.openAsync(bytes);
-    // biome-ignore lint/style/noNonNullAssertion: test helper, parts are always present in create()
     const cells = [...reopened.workbookPart!.worksheetParts[0]!.worksheet.descendants(Cell)];
     const d1 = cells.find((c) => c.cellReference?.toString() === "D1");
     expect(d1?.value).toBe(false);
