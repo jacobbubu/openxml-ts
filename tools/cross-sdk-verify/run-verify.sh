@@ -21,8 +21,13 @@ TOOL_DIR="$REPO_ROOT/tools/cross-sdk-verify"
 TMP_DIR="${TMPDIR:-/tmp}/cross-sdk-verify-$$"
 mkdir -p "$TMP_DIR"
 
-DOTNET="$HOME/.dotnet/dotnet"
-export PATH="$HOME/.dotnet:$PATH"
+# Use dotnet from PATH (works both locally and in CI via actions/setup-dotnet).
+# Locally, if dotnet is not on PATH but is at ~/.dotnet/dotnet, add it.
+if ! command -v dotnet > /dev/null 2>&1 && [[ -x "$HOME/.dotnet/dotnet" ]]; then
+  export PATH="$HOME/.dotnet:$PATH"
+fi
+
+DOTNET="dotnet"
 
 # Wrapper: run the CrossSdkVerify DLL via dotnet
 csverify() {
