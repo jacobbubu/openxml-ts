@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.3.0](https://github.com/jacobbubu/openxml-ts/compare/v1.2.0...v1.3.0) (2026-05-22)
+
+
+### Features
+
+* **tools:** Epic-103 跨 SDK 语义等价验证 harness 首批 13 个示例 ([#303](https://github.com/jacobbubu/openxml-ts/issues/303)) ([e757410](https://github.com/jacobbubu/openxml-ts/commit/e7574109d1be8f5797decefd2e8e6df050bab4a5))
+* **tools:** Epic-103 跨 SDK 语义等价验证 harness（首批 13 个，全 60 可扩展） ([a212323](https://github.com/jacobbubu/openxml-ts/commit/a212323c11b4133b843130f0711d0a2936319cd8))
+* **tools:** Epic-104 跨 SDK 语义等价验证 — 批次 2（再覆盖 14 个 example，共 27/60 PASS） ([2780f67](https://github.com/jacobbubu/openxml-ts/commit/2780f6781666f8c98a417fdc013171536f24c12e))
+* **tools:** Epic-104 跨 SDK 语义等价验证 批次 2（再覆盖 14 个 example，共 27/60 PASS）([#306](https://github.com/jacobbubu/openxml-ts/issues/306)) ([14c79d9](https://github.com/jacobbubu/openxml-ts/commit/14c79d990fb48622435da894397c0e9c93f8131e))
+* **tools:** Epic-105 跨 SDK 语义等价验证批次 3 完成——56/56 PASS ([64d32d2](https://github.com/jacobbubu/openxml-ts/commit/64d32d2fa52a6ac115185f9ca1142d288961ea83))
+* **tools:** Epic-105 跨 SDK 验证批次 3 收尾——6 个失败全部修复，56/56 PASS ([#308](https://github.com/jacobbubu/openxml-ts/issues/308)) ([c2ddf55](https://github.com/jacobbubu/openxml-ts/commit/c2ddf550c1e4fb6c5fd7cfdf98043074341aec44))
+
 ## [1.2.0](https://github.com/jacobbubu/openxml-ts/compare/v1.1.1...v1.2.0) (2026-05-22)
 
 
