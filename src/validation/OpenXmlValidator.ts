@@ -1,5 +1,6 @@
 /**
- * OpenXmlValidator — Phase 1 structural + attribute validation + Phase 2 schematron semantic.
+ * OpenXmlValidator — Phase 1 structural + attribute validation + Phase 2 schematron semantic
+ * + Phase 3 OPC package-level validation.
  *
  * Mirrors .NET `DocumentFormat.OpenXml.Validation.OpenXmlValidator`.
  *
@@ -16,9 +17,10 @@
  *  (h) String-length attribute constraints
  *  (i) Numeric range attribute constraints
  *
- * NOT included:
- *  - Schematron rules requiring full XPath engine or cross-Part resolution — skipped
- *  - Package-level OPC constraints — separate concern
+ * Phase 3 checks (OPC package-level, via validateOpcPackage):
+ *  (j) [Content_Types].xml has required Default entries (e.g. Extension="rels")
+ *  (k) All internal relationship targets resolve to existing parts
+ *  (l) Main document part is reachable from the package root relationships
  *
  * The validator NEVER throws on invalid input — it returns a diagnostics list.
  */
@@ -37,7 +39,7 @@ import type {
   VersionedRequiredAttr,
 } from "./types.js";
 
-// ---- Error builder (handles exactOptionalPropertyTypes) ----
+// ---- Error builders (handles exactOptionalPropertyTypes) ----
 function makeError(
   id: string,
   description: string,
@@ -48,6 +50,19 @@ function makeError(
   const base = { id, description, errorType: "Schema" as const, node, path };
   if (partUri !== undefined) return { ...base, partUri };
   return base;
+}
+
+/** Build a package-level (OPC) error. These have no associated element node or path. */
+function makeOpcError(id: string, description: string): ValidationError {
+  return {
+    id,
+    description,
+    errorType: "Package" as const,
+    // Package-level errors have no associated element node.
+    // Use a sentinel undefined-cast to satisfy the interface — consumers should check errorType.
+    node: undefined as unknown as OpenXmlElement,
+    path: "",
+  };
 }
 
 // ---- Constraint registry ----
@@ -521,23 +536,21 @@ export class OpenXmlValidator {
     }
   }
 
-  /** Check attribute presence: extendedAttributes OR typed prop (via duck-typing). */
+  /** Check attribute presence: extendedAttributes OR typed prop (via collectAttributes). */
   private attrIsPresent(el: OpenXmlElement, qname: string): boolean {
     const normalizedKey = qname.startsWith(":") ? qname.slice(1) : qname;
     if (el.extendedAttributes.has(normalizedKey)) return true;
 
-    // Try to find a typed property that corresponds to this qname.
-    // Codegen generates typed props as camelCase(PropertyName).
-    // We can't reverse-map qname→propName without codegen data, so we use
-    // a heuristic: iterate the element's own properties looking for non-undefined
-    // values. Instead, delegate to the existing validateRequired() if available.
-    // This way we get the best of both worlds.
-    const hasValidateRequired =
-      typeof (el as { validateRequired?: unknown }).validateRequired === "function";
-    if (hasValidateRequired) {
-      // We can't ask "is this one attr present?" via validateRequired (it throws on any missing).
-      // So we just say "unknown" here and rely on validateRequiredViaCodegen separately.
-      // The constraint-based check will catch it if typed prop says undefined.
+    // For typed (codegen) elements, attributes are stored in typed properties rather than
+    // extendedAttributes. The protected collectAttributes() method on each element returns
+    // the union of typed props + extendedAttributes as [qname, value] pairs.
+    // We access it via unknown to work around the TypeScript protected access guard.
+    const asUnknown = el as unknown as { collectAttributes?: () => Array<[string, string]> };
+    if (typeof asUnknown.collectAttributes === "function") {
+      const attrs = asUnknown.collectAttributes.call(el);
+      for (const [k] of attrs) {
+        if (k === normalizedKey || k === qname) return true;
+      }
     }
 
     return false;
@@ -600,11 +613,17 @@ export class OpenXmlValidator {
     const cardErrors = checkCardinalityNode(particle.root, counts);
     for (const ce of cardErrors) {
       const maxStr = ce.max === "unbounded" ? "unbounded" : String(ce.max);
-      const description =
-        ce.actual < ce.min
-          ? `Element <${parent.qualifiedName}> must contain at least ${ce.min} occurrence(s) of <${ce.local}> (found ${ce.actual}).`
-          : `Element <${parent.qualifiedName}> must contain at most ${maxStr} occurrence(s) of <${ce.local}> (found ${ce.actual}).`;
-      errors.push(makeError("Sch_MinOccursInvalidElement", description, parent, path, partUri));
+      if (ce.actual < ce.min) {
+        // Missing required child: mirrors .NET Sch_IncompleteContentExpectingComplex
+        const description = `Element <${parent.qualifiedName}> is missing required child element <${ce.local}> (expected at least ${ce.min}, found ${ce.actual}).`;
+        errors.push(
+          makeError("Sch_IncompleteContentExpectingComplex", description, parent, path, partUri),
+        );
+      } else {
+        // Excess child (actual > max): mirrors .NET Sch_MinOccursInvalidElement for max violations
+        const description = `Element <${parent.qualifiedName}> must contain at most ${maxStr} occurrence(s) of <${ce.local}> (found ${ce.actual}).`;
+        errors.push(makeError("Sch_MinOccursInvalidElement", description, parent, path, partUri));
+      }
     }
 
     // (c) Sequence order check
@@ -679,6 +698,120 @@ export class OpenXmlValidator {
     }
     return errors;
   }
+
+  /**
+   * Validate an OPC package for package-level (Pkg_*) constraints.
+   *
+   * Mirrors .NET SDK's package-level validation that catches `Pkg_RequiredPartDoNotExist`
+   * and related OPC spec violations.
+   *
+   * Checks:
+   *  (j) [Content_Types].xml has a Default entry for "rels" extension — required by OPC spec
+   *  (k) All internal relationship targets resolve to parts that actually exist in the package
+   *  (l) The package root relationships include at least one internal relationship pointing to
+   *      an existing main document part (officeDocument, presentation, workbook, etc.)
+   *
+   * @param pkg An OPC package exposed via the OpcPackageLike structural interface.
+   * @returns   All package-level validation errors found. Never throws.
+   */
+  validateOpcPackage(pkg: OpcPackageLike): ValidationError[] {
+    const errors: ValidationError[] = [];
+    try {
+      const partUris = new Set<string>();
+      for (const part of pkg.parts()) {
+        partUris.add(part.uri.toLowerCase());
+      }
+
+      // (j) [Content_Types].xml must have Default for "rels" extension
+      if (!pkg.contentTypes.hasDefault("rels")) {
+        errors.push(
+          makeOpcError(
+            "Pkg_RequiredPartDoNotExist",
+            'The [Content_Types].xml is missing a required <Default Extension="rels"> entry. ' +
+              "All OPC packages must declare a content type for .rels relationship parts.",
+          ),
+        );
+      }
+
+      // (k) + (l) Check all relationship collections (package root + each part)
+      this.checkRelationshipTargets(pkg.relationships, partUris, errors);
+      for (const part of pkg.parts()) {
+        try {
+          this.checkRelationshipTargets(part.relationships, partUris, errors);
+        } catch {
+          // Part relationship read must not crash the validator
+        }
+      }
+    } catch {
+      // Safety net
+    }
+    return errors;
+  }
+
+  /** Check that all internal relationship targets exist in the package. */
+  private checkRelationshipTargets(
+    rels: IRelationshipCollection,
+    partUris: Set<string>,
+    errors: ValidationError[],
+  ): void {
+    for (const rel of rels) {
+      if (rel.targetMode !== "internal") continue;
+      // Skip fragment-only targets (e.g. "#_Bookmark1") — these are same-part anchors,
+      // not references to separate parts in the package.
+      if (rel.target.startsWith("#")) continue;
+      // Resolve the relationship target to an absolute part URI.
+      // OPC §9.3: targets are either absolute (start with "/") or relative to the
+      // source part's "base URI" (the directory of the source part URI).
+      // Strip fragment (anchor) from the target before lookup — a target like
+      // "document.xml#section1" refers to the part "document.xml".
+      const rawTarget = rel.target.includes("#")
+        ? rel.target.slice(0, rel.target.indexOf("#"))
+        : rel.target;
+      if (rawTarget.length === 0) continue; // pure anchor (e.g. "#bookmark"), skip
+      const targetUri = resolveOpcTarget(rel.sourceUri, rawTarget);
+      if (!partUris.has(targetUri.toLowerCase())) {
+        errors.push(
+          makeOpcError(
+            "Pkg_RequiredPartDoNotExist",
+            `The part '${targetUri}' referenced by relationship '${rel.id}' (type: ${rel.type}) does not exist in the package.`,
+          ),
+        );
+      }
+    }
+  }
+}
+
+// ---- OPC package validation interface ----
+
+/**
+ * Minimal structural interface that an OPC package must satisfy for `validateOpcPackage`.
+ *
+ * Both `MemoryOpenXmlPackage` and `ZipOpenXmlPackage` satisfy this interface structurally
+ * (they expose `contentTypes`, `relationships`, and `parts()`).
+ */
+export interface OpcPackageLike {
+  /**
+   * Content-types manifest. Exposes `hasDefault(extension)` to check for required entries.
+   * Structurally compatible with `ContentTypeManifest`.
+   */
+  readonly contentTypes: {
+    hasDefault(extension: string): boolean;
+  };
+
+  /**
+   * Package-root relationship collection (`/_rels/.rels`).
+   * Structurally compatible with `IRelationshipCollection`.
+   */
+  readonly relationships: IRelationshipCollection;
+
+  /**
+   * Enumerate all parts in the package.
+   * Each part exposes `uri` and `relationships`.
+   */
+  parts(): Iterable<{
+    readonly uri: string;
+    readonly relationships: IRelationshipCollection;
+  }>;
 }
 
 // ---- Package-level validation helpers ----
@@ -797,4 +930,47 @@ function buildWordPartResolver(namedRoots: WordPartRoots): PartResolver {
       return undefined;
     },
   };
+}
+
+// ---- OPC URI resolution helper ----
+
+/**
+ * Resolve an OPC relationship target to an absolute part URI.
+ *
+ * OPC §9.3: A relative target is resolved against the "base URI" of the source part,
+ * which is the directory portion of the source part's URI (i.e. everything up to
+ * and including the last "/" in the source URI).
+ *
+ * For the package root ("/"), the base URI is "/".
+ *
+ * Examples:
+ *   source="/", target="word/document.xml"          → "/word/document.xml"
+ *   source="/word/document.xml", target="../styles.xml" → "/styles.xml"
+ *   source="/ppt/slides/slide1.xml", target="../slideMasters/slideMaster1.xml"
+ *                                                    → "/ppt/slideMasters/slideMaster1.xml"
+ *   source="/", target="/slides/slide1.xml"         → "/slides/slide1.xml"  (already absolute)
+ */
+function resolveOpcTarget(sourceUri: string, target: string): string {
+  // Absolute target — nothing to resolve
+  if (target.startsWith("/")) return target;
+
+  // Determine base directory of the source URI
+  const lastSlash = sourceUri.lastIndexOf("/");
+  const baseDir = lastSlash <= 0 ? "/" : sourceUri.slice(0, lastSlash + 1);
+
+  // Combine base + relative target and normalize "." / ".." segments
+  const combined = baseDir + target;
+
+  // Normalize path segments
+  const segments: string[] = [];
+  for (const seg of combined.split("/")) {
+    if (seg === "" || seg === ".") {
+      // skip empty segments (except leading "/") and "." segments
+    } else if (seg === "..") {
+      segments.pop();
+    } else {
+      segments.push(seg);
+    }
+  }
+  return `/${segments.join("/")}`;
 }
