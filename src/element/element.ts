@@ -16,6 +16,7 @@
 
 import { XmlWriter } from "../packaging/xml/index.js";
 import type { OpenXmlElementList } from "./element-list.js";
+import { FeatureCollection, type IFeatureCollection } from "./features.js";
 
 /**
  * Element 构造器类型——抽象/具体均可。本类型仅用于 `instanceof` 类型守卫场景，
@@ -295,6 +296,28 @@ export abstract class OpenXmlElement {
     const writer = new XmlWriter();
     this.writeTo(writer);
     return writer.toString();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Features（对位 .NET OpenXmlElement.Features / IFeatureCollection）
+  // ---------------------------------------------------------------------------
+
+  #features: IFeatureCollection | undefined;
+
+  /**
+   * 当前元素的特性集合（延迟初始化）。
+   *
+   * 对位 .NET `OpenXmlElement.Features`。用法示例：
+   * ```ts
+   * element.features.set(MyFeature, new MyFeatureImpl());
+   * const feat = element.features.get(MyFeature); // MyFeatureImpl | undefined
+   * ```
+   */
+  get features(): IFeatureCollection {
+    if (this.#features === undefined) {
+      this.#features = new FeatureCollection();
+    }
+    return this.#features;
   }
 
   /**

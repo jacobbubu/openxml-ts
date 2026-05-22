@@ -14,6 +14,8 @@ export {
   OpenXmlLeafElement,
 } from "./element.js";
 
+export { FeatureCollection, type IFeatureCollection } from "./features.js";
+
 export { OpenXmlElementList } from "./element-list.js";
 
 export { OpenXmlUnknownElement } from "./unknown-element.js";
