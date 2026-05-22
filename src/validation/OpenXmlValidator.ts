@@ -24,6 +24,7 @@
  */
 
 import { OpenXmlCompositeElement, type OpenXmlElement } from "../element/element.js";
+import type { FileFormatVersions } from "../markup-compat/file-format-versions.js";
 import type { IRelationshipCollection } from "../packaging/interfaces/relationship.js";
 import type { ValidationError } from "./ValidationError.js";
 import type { PartResolver } from "./schematron/evaluator.js";
@@ -33,6 +34,7 @@ import type {
   NormalizedParticle,
   ParticleComposite,
   ParticleNode,
+  VersionedRequiredAttr,
 } from "./types.js";
 
 // ---- Error builder (handles exactOptionalPropertyTypes) ----
@@ -179,6 +181,90 @@ function checkSequenceOrder(
   return errors;
 }
 
+// ---- Version-conditional required attribute resolution ----
+
+/**
+ * Resolve which qnames are actually required given the versioned required attr entries
+ * and the target FileFormatVersions.
+ *
+ * Semantics (mirroring .NET SDK RequiredValidator with Version):
+ *
+ * Each entry represents a "from this version onward" declaration of the required state.
+ * The `minVersion` field is the version at which this declaration takes effect.
+ * `maxVersion` when set means the declaration only applies up to that version.
+ *
+ * - Without a target (undefined): conservative "modern Office" mode.
+ *   An attr is required only if no entry declares it optional (IsRequired=False).
+ *   This matches Epic-91's "IsRequired=False collapse" behavior.
+ *
+ * - With a target: for each qname, find the entry whose minVersion is the highest
+ *   value that is still <= target. That "most recent applicable" entry determines
+ *   the required state. If it says optional → not required. If it says required → required.
+ *   If no entry has minVersion <= target → not required (attribute didn't exist yet).
+ */
+function resolveVersionedRequiredAttrs(
+  entries: readonly VersionedRequiredAttr[],
+  target: FileFormatVersions | undefined,
+): string[] {
+  // Group entries by qname
+  const byQname = new Map<string, VersionedRequiredAttr[]>();
+  for (const entry of entries) {
+    const existing = byQname.get(entry.qname);
+    if (existing === undefined) {
+      byQname.set(entry.qname, [entry]);
+    } else {
+      existing.push(entry);
+    }
+  }
+
+  const result: string[] = [];
+
+  for (const [qname, qnameEntries] of byQname) {
+    if (target === undefined) {
+      // Conservative mode (no version target): an attribute is required if ANY entry
+      // declares it required — even if another entry relaxes it later.
+      // This matches the original behavior where all RequiredValidator entries were
+      // pushed to requiredAttrs unconditionally.
+      //
+      // Rationale: without a target, we don't know which version to validate against,
+      // so we apply the most conservative (strictest) interpretation. If the schema
+      // ever required it, we report it missing. Tools targeting modern Office should
+      // pass a specific FileFormatVersions target to get relaxed behavior.
+      const anyRequired = qnameEntries.some((e) => e.optional !== true);
+      if (anyRequired) {
+        result.push(qname);
+      }
+    } else {
+      // Version-targeted mode: find the most recently applicable entry.
+      // Each entry with minVersion set applies when target >= minVersion.
+      // Among all applicable entries, pick the one with the highest minVersion
+      // (most specific / most recent) — that entry's optional flag determines the state.
+      //
+      // Entries without minVersion (unversioned) are treated as version 0 (always applies).
+      const applicable = qnameEntries.filter((e) => {
+        const minV = e.minVersion ?? 0;
+        return target >= minV;
+      });
+
+      if (applicable.length === 0) {
+        // No entry applies for this version → attribute didn't exist yet → not required
+        continue;
+      }
+
+      // Sort by minVersion descending to get the most recent applicable entry first
+      const sorted = [...applicable].sort((a, b) => (b.minVersion ?? 0) - (a.minVersion ?? 0));
+      const mostRecent = sorted[0] as VersionedRequiredAttr;
+
+      // The most recent applicable entry determines the required state
+      if (mostRecent.optional !== true) {
+        result.push(qname);
+      }
+    }
+  }
+
+  return result;
+}
+
 // ---- Main validator engine ----
 
 /**
@@ -196,6 +282,18 @@ export interface OpenXmlValidatorOptions {
    * Default: false (Phase 1 only, for backwards compatibility).
    */
   readonly includeSemantic?: boolean;
+
+  /**
+   * Target Office version for version-directed validation.
+   *
+   * When set, version-conditional constraints (e.g. an attribute required only in
+   * Office2007 but optional from Office2010) are evaluated against this target.
+   * When unset, the validator uses the conservative "modern Office" default behavior
+   * (equivalent to .NET's `OpenXmlValidator()` no-arg constructor).
+   *
+   * Mirrors .NET `OpenXmlValidator(FileFormatVersions fileFormat)` constructor.
+   */
+  readonly fileFormatVersions?: FileFormatVersions;
 }
 
 /**
@@ -213,10 +311,22 @@ export interface OpenXmlValidatorOptions {
 export class OpenXmlValidator {
   private readonly skipUnknown: boolean;
   private readonly includeSemantic: boolean;
+  private readonly _fileFormat: FileFormatVersions | undefined;
 
   constructor(options: OpenXmlValidatorOptions = {}) {
     this.skipUnknown = options.skipUnknown ?? true;
     this.includeSemantic = options.includeSemantic ?? false;
+    this._fileFormat = options.fileFormatVersions;
+  }
+
+  /**
+   * The target Office version for version-directed validation.
+   *
+   * Mirrors .NET `OpenXmlValidator.FileFormat` property.
+   * Returns undefined when no target was specified (conservative "modern Office" mode).
+   */
+  get fileFormat(): FileFormatVersions | undefined {
+    return this._fileFormat;
   }
 
   /**
@@ -314,7 +424,7 @@ export class OpenXmlValidator {
     errors: ValidationError[],
     partUri: string | undefined,
   ): void {
-    // (d) Required attributes
+    // (d) Required attributes (unconditional)
     for (const qname of constraint.requiredAttrs ?? []) {
       if (!this.attrIsPresent(el, qname)) {
         errors.push(
@@ -326,6 +436,30 @@ export class OpenXmlValidator {
             partUri,
           ),
         );
+      }
+    }
+
+    // (d2) Version-conditional required attributes
+    if (
+      constraint.versionedRequiredAttrs !== undefined &&
+      constraint.versionedRequiredAttrs.length > 0
+    ) {
+      const requiredQnames = resolveVersionedRequiredAttrs(
+        constraint.versionedRequiredAttrs,
+        this._fileFormat,
+      );
+      for (const qname of requiredQnames) {
+        if (!this.attrIsPresent(el, qname)) {
+          errors.push(
+            makeError(
+              "Sch_MissingRequiredAttribute",
+              `Required attribute '${qname}' is missing on element <${el.qualifiedName}>.`,
+              el,
+              path,
+              partUri,
+            ),
+          );
+        }
       }
     }
 
