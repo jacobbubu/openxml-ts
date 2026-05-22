@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.4.0](https://github.com/jacobbubu/openxml-ts/compare/v1.3.0...v1.4.0) (2026-05-22)
+
+
+### Features
+
+* **cross-sdk-verify:** Epic-106 补齐最后 4 个验证 — 真 60/60 ([5a6091a](https://github.com/jacobbubu/openxml-ts/commit/5a6091ab307574390d661f24c8eafbe67fdb53d8))
+* **cross-sdk-verify:** Epic-106 补齐最后 4 个验证 — 真 60/60（[#310](https://github.com/jacobbubu/openxml-ts/issues/310)） ([5835e4d](https://github.com/jacobbubu/openxml-ts/commit/5835e4d86f937b717501dd39be4c9d6caf6f8712))
+
+
+### Bug Fixes
+
+* **word-style-inspect:** 改用 .val 读 ParagraphStyleId/Color typed 属性 ([#312](https://github.com/jacobbubu/openxml-ts/issues/312)) ([d054a47](https://github.com/jacobbubu/openxml-ts/commit/d054a4779fea37f31980babe5cfee5d2d0f1978c))
+* **word-style-inspect:** 改用 .val 读 typed 属性，修复样式永远显示 — 的 bug ([427297c](https://github.com/jacobbubu/openxml-ts/commit/427297c9f7b41a69df21cbec5ef7556a2d67dd8c))
+* **word:** Epic-108 修复有效样式解析器从不跟样式链的 bug ([13b6821](https://github.com/jacobbubu/openxml-ts/commit/13b68216215b3f4898cab6f2ec875b4bb0f6d605))
+* **word:** Epic-108 修复有效样式解析器从不跟样式链的 bug ([#315](https://github.com/jacobbubu/openxml-ts/issues/315)) ([ec6fedf](https://github.com/jacobbubu/openxml-ts/commit/ec6fedfa783c01d152fae307168e1d9ec4f2bbe7))
+
 ## [1.3.0](https://github.com/jacobbubu/openxml-ts/compare/v1.2.0...v1.3.0) (2026-05-22)
 
 
