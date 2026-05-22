@@ -6,6 +6,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Defines the Stroke Class.
@@ -21,7 +22,7 @@ export class Stroke extends OpenXmlCompositeElement {
   id: StringValue | undefined;
 
   /** Stroke Toggle (:on) */
-  on: StringValue | undefined;
+  on: TrueFalseValue | undefined;
 
   /** Stroke Weight (:weight) */
   weight: StringValue | undefined;
@@ -60,7 +61,7 @@ export class Stroke extends OpenXmlCompositeElement {
   imageSize: StringValue | undefined;
 
   /** Stoke Image Alignment (:imagealignshape) */
-  imageAlignShape: StringValue | undefined;
+  imageAlignShape: TrueFalseValue | undefined;
 
   /** Stroke Alternate Pattern Color (:color2) */
   color2: StringValue | undefined;
@@ -93,18 +94,18 @@ export class Stroke extends OpenXmlCompositeElement {
   title: StringValue | undefined;
 
   /** Force Dashed Outline (o:forcedash) */
-  forceDash: StringValue | undefined;
+  forceDash: TrueFalseValue | undefined;
 
   /** Relationship (r:id) */
   relationshipId: StringValue | undefined;
 
   /** Inset Border From Path (:insetpen) */
-  insetpen: StringValue | undefined;
+  insetpen: TrueFalseValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "id": this.id = StringValue.parse(value); return;
-      case "on": this.on = StringValue.parse(value); return;
+      case "on": this.on = TrueFalseValue.parse(value); return;
       case "weight": this.weight = StringValue.parse(value); return;
       case "color": this.color = StringValue.parse(value); return;
       case "opacity": this.opacity = StringValue.parse(value); return;
@@ -117,7 +118,7 @@ export class Stroke extends OpenXmlCompositeElement {
       case "src": this.source = StringValue.parse(value); return;
       case "imageaspect": this.imageAspect = StringValue.parse(value); return;
       case "imagesize": this.imageSize = StringValue.parse(value); return;
-      case "imagealignshape": this.imageAlignShape = StringValue.parse(value); return;
+      case "imagealignshape": this.imageAlignShape = TrueFalseValue.parse(value); return;
       case "color2": this.color2 = StringValue.parse(value); return;
       case "startarrow": this.startArrow = StringValue.parse(value); return;
       case "startarrowwidth": this.startArrowWidth = StringValue.parse(value); return;
@@ -128,9 +129,9 @@ export class Stroke extends OpenXmlCompositeElement {
       case "o:href": this.href = StringValue.parse(value); return;
       case "o:althref": this.alternateImageReference = StringValue.parse(value); return;
       case "o:title": this.title = StringValue.parse(value); return;
-      case "o:forcedash": this.forceDash = StringValue.parse(value); return;
+      case "o:forcedash": this.forceDash = TrueFalseValue.parse(value); return;
       case "r:id": this.relationshipId = StringValue.parse(value); return;
-      case "insetpen": this.insetpen = StringValue.parse(value); return;
+      case "insetpen": this.insetpen = TrueFalseValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

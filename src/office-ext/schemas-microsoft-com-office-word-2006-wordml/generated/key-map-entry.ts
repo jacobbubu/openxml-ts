@@ -3,8 +3,8 @@
 // @see DocumentFormat.OpenXml.Word2006Wordml.KeyMapEntry
 
 import {
-  BooleanValue,
   HexBinaryValue,
+  OnOffValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
 } from "../../../element/index.js";
@@ -31,7 +31,7 @@ export class KeyMapEntry extends OpenXmlCompositeElement {
   keyCodeSecondary: HexBinaryValue | undefined;
 
   /** mask (wne:mask) */
-  mask: BooleanValue | undefined;
+  mask: OnOffValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
@@ -39,7 +39,7 @@ export class KeyMapEntry extends OpenXmlCompositeElement {
       case "wne:chmSecondary": this.characterMapSecondary = HexBinaryValue.parse(value); return;
       case "wne:kcmPrimary": this.keyCodePrimary = HexBinaryValue.parse(value); return;
       case "wne:kcmSecondary": this.keyCodeSecondary = HexBinaryValue.parse(value); return;
-      case "wne:mask": this.mask = BooleanValue.parse(value); return;
+      case "wne:mask": this.mask = OnOffValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

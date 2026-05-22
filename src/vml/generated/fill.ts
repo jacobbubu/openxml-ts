@@ -7,6 +7,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Defines the Fill Class.
@@ -25,7 +26,7 @@ export class Fill extends OpenXmlCompositeElement {
   type: StringValue | undefined;
 
   /** Fill Toggle (:on) */
-  on: StringValue | undefined;
+  on: TrueFalseValue | undefined;
 
   /** Primary Color (:color) */
   color: StringValue | undefined;
@@ -64,7 +65,7 @@ export class Fill extends OpenXmlCompositeElement {
   angle: DecimalValue | undefined;
 
   /** Align Image With Shape (:alignshape) */
-  alignShape: StringValue | undefined;
+  alignShape: TrueFalseValue | undefined;
 
   /** Gradient Center (:focus) */
   focus: StringValue | undefined;
@@ -79,7 +80,7 @@ export class Fill extends OpenXmlCompositeElement {
   method: StringValue | undefined;
 
   /** Detect Mouse Click (o:detectmouseclick) */
-  detectMouseClick: StringValue | undefined;
+  detectMouseClick: TrueFalseValue | undefined;
 
   /** Title (o:title) */
   title: StringValue | undefined;
@@ -88,10 +89,10 @@ export class Fill extends OpenXmlCompositeElement {
   opacity2: StringValue | undefined;
 
   /** Recolor Fill as Picture (:recolor) */
-  recolor: StringValue | undefined;
+  recolor: TrueFalseValue | undefined;
 
   /** Rotate Fill with Shape (:rotate) */
-  rotate: StringValue | undefined;
+  rotate: TrueFalseValue | undefined;
 
   /** Relationship to Part (r:id) */
   relationshipId: StringValue | undefined;
@@ -100,7 +101,7 @@ export class Fill extends OpenXmlCompositeElement {
     switch (qname) {
       case "id": this.id = StringValue.parse(value); return;
       case "type": this.type = StringValue.parse(value); return;
-      case "on": this.on = StringValue.parse(value); return;
+      case "on": this.on = TrueFalseValue.parse(value); return;
       case "color": this.color = StringValue.parse(value); return;
       case "opacity": this.opacity = StringValue.parse(value); return;
       case "color2": this.color2 = StringValue.parse(value); return;
@@ -113,16 +114,16 @@ export class Fill extends OpenXmlCompositeElement {
       case "aspect": this.aspect = StringValue.parse(value); return;
       case "colors": this.colors = StringValue.parse(value); return;
       case "angle": this.angle = DecimalValue.parse(value); return;
-      case "alignshape": this.alignShape = StringValue.parse(value); return;
+      case "alignshape": this.alignShape = TrueFalseValue.parse(value); return;
       case "focus": this.focus = StringValue.parse(value); return;
       case "focussize": this.focusSize = StringValue.parse(value); return;
       case "focusposition": this.focusPosition = StringValue.parse(value); return;
       case "method": this.method = StringValue.parse(value); return;
-      case "o:detectmouseclick": this.detectMouseClick = StringValue.parse(value); return;
+      case "o:detectmouseclick": this.detectMouseClick = TrueFalseValue.parse(value); return;
       case "o:title": this.title = StringValue.parse(value); return;
       case "o:opacity2": this.opacity2 = StringValue.parse(value); return;
-      case "recolor": this.recolor = StringValue.parse(value); return;
-      case "rotate": this.rotate = StringValue.parse(value); return;
+      case "recolor": this.recolor = TrueFalseValue.parse(value); return;
+      case "rotate": this.rotate = TrueFalseValue.parse(value); return;
       case "r:id": this.relationshipId = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);

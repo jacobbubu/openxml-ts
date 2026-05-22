@@ -4,7 +4,9 @@
 
 import {
   OpenXmlLeafElement,
+  SingleValue,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** 3D Extrusion.
@@ -20,7 +22,7 @@ export class Extrusion extends OpenXmlLeafElement {
   extension: StringValue | undefined;
 
   /** Extrusion Toggle (:on) */
-  on: StringValue | undefined;
+  on: TrueFalseValue | undefined;
 
   /** Extrusion Type (:type) */
   type: StringValue | undefined;
@@ -35,7 +37,7 @@ export class Extrusion extends OpenXmlLeafElement {
   viewpoint: StringValue | undefined;
 
   /** Extrusion Skew Angle (:skewangle) */
-  skewAngle: StringValue | undefined;
+  skewAngle: SingleValue | undefined;
 
   /** Extrusion Skew (:skewamt) */
   skewAmount: StringValue | undefined;
@@ -50,13 +52,13 @@ export class Extrusion extends OpenXmlLeafElement {
   orientation: StringValue | undefined;
 
   /** Rotation Around Axis (:orientationangle) */
-  orientationAngle: StringValue | undefined;
+  orientationAngle: SingleValue | undefined;
 
   /** Rotation Toggle (:lockrotationcenter) */
-  lockRotationCenter: StringValue | undefined;
+  lockRotationCenter: TrueFalseValue | undefined;
 
   /** Center of Rotation Toggle (:autorotationcenter) */
-  autoRotationCenter: StringValue | undefined;
+  autoRotationCenter: TrueFalseValue | undefined;
 
   /** Rotation Center (:rotationcenter) */
   rotationCenter: StringValue | undefined;
@@ -68,7 +70,7 @@ export class Extrusion extends OpenXmlLeafElement {
   color: StringValue | undefined;
 
   /** Shininess (:shininess) */
-  shininess: StringValue | undefined;
+  shininess: SingleValue | undefined;
 
   /** Specularity (:specularity) */
   specularity: StringValue | undefined;
@@ -77,7 +79,7 @@ export class Extrusion extends OpenXmlLeafElement {
   diffusity: StringValue | undefined;
 
   /** Metallic Surface Toggle (:metal) */
-  metal: StringValue | undefined;
+  metal: TrueFalseValue | undefined;
 
   /** Simulated Bevel (:edge) */
   edge: StringValue | undefined;
@@ -86,7 +88,7 @@ export class Extrusion extends OpenXmlLeafElement {
   facet: StringValue | undefined;
 
   /** Shape Face Lighting Toggle (:lightface) */
-  lightFace: StringValue | undefined;
+  lightFace: TrueFalseValue | undefined;
 
   /** Brightness (:brightness) */
   brightness: StringValue | undefined;
@@ -98,7 +100,7 @@ export class Extrusion extends OpenXmlLeafElement {
   lightLevel: StringValue | undefined;
 
   /** Primary Light Harshness Toggle (:lightharsh) */
-  lightHarsh: StringValue | undefined;
+  lightHarsh: TrueFalseValue | undefined;
 
   /** Secondary Light Position (:lightposition2) */
   lightPosition2: StringValue | undefined;
@@ -107,41 +109,41 @@ export class Extrusion extends OpenXmlLeafElement {
   lightLevel2: StringValue | undefined;
 
   /** Secondary Light Harshness Toggle (:lightharsh2) */
-  lightHarsh2: StringValue | undefined;
+  lightHarsh2: TrueFalseValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "v:ext": this.extension = StringValue.parse(value); return;
-      case "on": this.on = StringValue.parse(value); return;
+      case "on": this.on = TrueFalseValue.parse(value); return;
       case "type": this.type = StringValue.parse(value); return;
       case "render": this.render = StringValue.parse(value); return;
       case "viewpointorigin": this.viewpointOrigin = StringValue.parse(value); return;
       case "viewpoint": this.viewpoint = StringValue.parse(value); return;
-      case "skewangle": this.skewAngle = StringValue.parse(value); return;
+      case "skewangle": this.skewAngle = SingleValue.parse(value); return;
       case "skewamt": this.skewAmount = StringValue.parse(value); return;
       case "foredepth": this.forceDepth = StringValue.parse(value); return;
       case "backdepth": this.backDepth = StringValue.parse(value); return;
       case "orientation": this.orientation = StringValue.parse(value); return;
-      case "orientationangle": this.orientationAngle = StringValue.parse(value); return;
-      case "lockrotationcenter": this.lockRotationCenter = StringValue.parse(value); return;
-      case "autorotationcenter": this.autoRotationCenter = StringValue.parse(value); return;
+      case "orientationangle": this.orientationAngle = SingleValue.parse(value); return;
+      case "lockrotationcenter": this.lockRotationCenter = TrueFalseValue.parse(value); return;
+      case "autorotationcenter": this.autoRotationCenter = TrueFalseValue.parse(value); return;
       case "rotationcenter": this.rotationCenter = StringValue.parse(value); return;
       case "rotationangle": this.rotationAngle = StringValue.parse(value); return;
       case "color": this.color = StringValue.parse(value); return;
-      case "shininess": this.shininess = StringValue.parse(value); return;
+      case "shininess": this.shininess = SingleValue.parse(value); return;
       case "specularity": this.specularity = StringValue.parse(value); return;
       case "diffusity": this.diffusity = StringValue.parse(value); return;
-      case "metal": this.metal = StringValue.parse(value); return;
+      case "metal": this.metal = TrueFalseValue.parse(value); return;
       case "edge": this.edge = StringValue.parse(value); return;
       case "facet": this.facet = StringValue.parse(value); return;
-      case "lightface": this.lightFace = StringValue.parse(value); return;
+      case "lightface": this.lightFace = TrueFalseValue.parse(value); return;
       case "brightness": this.brightness = StringValue.parse(value); return;
       case "lightposition": this.lightPosition = StringValue.parse(value); return;
       case "lightlevel": this.lightLevel = StringValue.parse(value); return;
-      case "lightharsh": this.lightHarsh = StringValue.parse(value); return;
+      case "lightharsh": this.lightHarsh = TrueFalseValue.parse(value); return;
       case "lightposition2": this.lightPosition2 = StringValue.parse(value); return;
       case "lightlevel2": this.lightLevel2 = StringValue.parse(value); return;
-      case "lightharsh2": this.lightHarsh2 = StringValue.parse(value); return;
+      case "lightharsh2": this.lightHarsh2 = TrueFalseValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

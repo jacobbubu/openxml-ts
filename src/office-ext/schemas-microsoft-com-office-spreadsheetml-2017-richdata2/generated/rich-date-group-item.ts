@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  UInt16Value,
   assertRequired,
 } from "../../../element/index.js";
 
@@ -18,34 +19,34 @@ export class RichDateGroupItem extends OpenXmlLeafElement {
 
 
   /** Year (:year) */
-  year: StringValue | undefined;
+  year: UInt16Value | undefined;
 
   /** Month (:month) */
-  month: StringValue | undefined;
+  month: UInt16Value | undefined;
 
   /** Day (:day) */
-  day: StringValue | undefined;
+  day: UInt16Value | undefined;
 
   /** Hour (:hour) */
-  hour: StringValue | undefined;
+  hour: UInt16Value | undefined;
 
   /** Minute (:minute) */
-  minute: StringValue | undefined;
+  minute: UInt16Value | undefined;
 
   /** Second (:second) */
-  second: StringValue | undefined;
+  second: UInt16Value | undefined;
 
   /** Date Time Grouping (:dateTimeGrouping) */
   dateTimeGrouping: StringValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "year": this.year = StringValue.parse(value); return;
-      case "month": this.month = StringValue.parse(value); return;
-      case "day": this.day = StringValue.parse(value); return;
-      case "hour": this.hour = StringValue.parse(value); return;
-      case "minute": this.minute = StringValue.parse(value); return;
-      case "second": this.second = StringValue.parse(value); return;
+      case "year": this.year = UInt16Value.parse(value); return;
+      case "month": this.month = UInt16Value.parse(value); return;
+      case "day": this.day = UInt16Value.parse(value); return;
+      case "hour": this.hour = UInt16Value.parse(value); return;
+      case "minute": this.minute = UInt16Value.parse(value); return;
+      case "second": this.second = UInt16Value.parse(value); return;
       case "dateTimeGrouping": this.dateTimeGrouping = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);

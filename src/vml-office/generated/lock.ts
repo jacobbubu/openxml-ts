@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Defines the Lock Class.
@@ -20,52 +21,52 @@ export class Lock extends OpenXmlLeafElement {
   extension: StringValue | undefined;
 
   /** Position Lock (:position) */
-  position: StringValue | undefined;
+  position: TrueFalseValue | undefined;
 
   /** Selection Lock (:selection) */
-  selection: StringValue | undefined;
+  selection: TrueFalseValue | undefined;
 
   /** Grouping Lock (:grouping) */
-  grouping: StringValue | undefined;
+  grouping: TrueFalseValue | undefined;
 
   /** Ungrouping Lock (:ungrouping) */
-  ungrouping: StringValue | undefined;
+  ungrouping: TrueFalseValue | undefined;
 
   /** Rotation Lock (:rotation) */
-  rotation: StringValue | undefined;
+  rotation: TrueFalseValue | undefined;
 
   /** Cropping Lock (:cropping) */
-  cropping: StringValue | undefined;
+  cropping: TrueFalseValue | undefined;
 
   /** Vertices Lock (:verticies) */
-  verticies: StringValue | undefined;
+  verticies: TrueFalseValue | undefined;
 
   /** Handles Lock (:adjusthandles) */
-  adjustHandles: StringValue | undefined;
+  adjustHandles: TrueFalseValue | undefined;
 
   /** Text Lock (:text) */
-  textLock: StringValue | undefined;
+  textLock: TrueFalseValue | undefined;
 
   /** Aspect Ratio Lock (:aspectratio) */
-  aspectRatio: StringValue | undefined;
+  aspectRatio: TrueFalseValue | undefined;
 
   /** AutoShape Type Lock (:shapetype) */
-  shapeType: StringValue | undefined;
+  shapeType: TrueFalseValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "v:ext": this.extension = StringValue.parse(value); return;
-      case "position": this.position = StringValue.parse(value); return;
-      case "selection": this.selection = StringValue.parse(value); return;
-      case "grouping": this.grouping = StringValue.parse(value); return;
-      case "ungrouping": this.ungrouping = StringValue.parse(value); return;
-      case "rotation": this.rotation = StringValue.parse(value); return;
-      case "cropping": this.cropping = StringValue.parse(value); return;
-      case "verticies": this.verticies = StringValue.parse(value); return;
-      case "adjusthandles": this.adjustHandles = StringValue.parse(value); return;
-      case "text": this.textLock = StringValue.parse(value); return;
-      case "aspectratio": this.aspectRatio = StringValue.parse(value); return;
-      case "shapetype": this.shapeType = StringValue.parse(value); return;
+      case "position": this.position = TrueFalseValue.parse(value); return;
+      case "selection": this.selection = TrueFalseValue.parse(value); return;
+      case "grouping": this.grouping = TrueFalseValue.parse(value); return;
+      case "ungrouping": this.ungrouping = TrueFalseValue.parse(value); return;
+      case "rotation": this.rotation = TrueFalseValue.parse(value); return;
+      case "cropping": this.cropping = TrueFalseValue.parse(value); return;
+      case "verticies": this.verticies = TrueFalseValue.parse(value); return;
+      case "adjusthandles": this.adjustHandles = TrueFalseValue.parse(value); return;
+      case "text": this.textLock = TrueFalseValue.parse(value); return;
+      case "aspectratio": this.aspectRatio = TrueFalseValue.parse(value); return;
+      case "shapetype": this.shapeType = TrueFalseValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

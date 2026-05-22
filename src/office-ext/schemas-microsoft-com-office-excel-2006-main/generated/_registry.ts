@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_excel_2006_main.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { registerExcel2006MainChildMaps } from "./_child-map.js";
 import { ColumnSortMap } from "./column-sort-map.js";
 import { ColumnSortMapItem } from "./column-sort-map-item.js";
 import { Formula } from "./formula.js";
@@ -15,6 +16,7 @@ import { WorksheetSortMap } from "./worksheet-sort-map.js";
  * 把 excel-2006-main 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function registerExcel2006MainElements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/excel/2006/main", "colSortMap", ColumnSortMap);
@@ -25,4 +27,5 @@ export function registerExcel2006MainElements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/excel/2006/main", "rowSortMap", RowSortMap);
   registry.register("http://schemas.microsoft.com/office/excel/2006/main", "row", RowSortMapItem);
   registry.register("http://schemas.microsoft.com/office/excel/2006/main", "worksheetSortMap", WorksheetSortMap);
+  registerExcel2006MainChildMaps(registry);
 }

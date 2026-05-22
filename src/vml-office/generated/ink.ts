@@ -3,8 +3,9 @@
 // @see DocumentFormat.OpenXml.VmlOffice.Ink
 
 import {
+  Base64BinaryValue,
   OpenXmlLeafElement,
-  StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Ink.
@@ -17,15 +18,15 @@ export class Ink extends OpenXmlLeafElement {
 
 
   /** Ink Data (:i) */
-  inkData: StringValue | undefined;
+  inkData: Base64BinaryValue | undefined;
 
   /** Annotation Flag (:annotation) */
-  annotationFlag: StringValue | undefined;
+  annotationFlag: TrueFalseValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "i": this.inkData = StringValue.parse(value); return;
-      case "annotation": this.annotationFlag = StringValue.parse(value); return;
+      case "i": this.inkData = Base64BinaryValue.parse(value); return;
+      case "annotation": this.annotationFlag = TrueFalseValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

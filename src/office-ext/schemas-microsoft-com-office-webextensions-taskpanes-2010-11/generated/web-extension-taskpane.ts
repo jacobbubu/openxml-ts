@@ -4,6 +4,7 @@
 
 import {
   BooleanValue,
+  DoubleValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -26,7 +27,7 @@ export class WebExtensionTaskpane extends OpenXmlCompositeElement {
   visibility: BooleanValue | undefined;
 
   /** width (:width) */
-  width: StringValue | undefined;
+  width: DoubleValue | undefined;
 
   /** locked (:locked) */
   locked: BooleanValue | undefined;
@@ -35,7 +36,7 @@ export class WebExtensionTaskpane extends OpenXmlCompositeElement {
     switch (qname) {
       case "dockstate": this.dockState = StringValue.parse(value); return;
       case "visibility": this.visibility = BooleanValue.parse(value); return;
-      case "width": this.width = StringValue.parse(value); return;
+      case "width": this.width = DoubleValue.parse(value); return;
       case "locked": this.locked = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);

@@ -4,9 +4,9 @@
 
 import {
   BooleanValue,
+  DoubleValue,
   HexBinaryValue,
   OpenXmlLeafElement,
-  StringValue,
   UInt32Value,
 } from "../../element/index.js";
 
@@ -32,7 +32,7 @@ export class NegativeColor extends OpenXmlLeafElement {
   theme: UInt32Value | undefined;
 
   /** Tint (:tint) */
-  tint: StringValue | undefined;
+  tint: DoubleValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
@@ -40,7 +40,7 @@ export class NegativeColor extends OpenXmlLeafElement {
       case "indexed": this.indexed = UInt32Value.parse(value); return;
       case "rgb": this.rgb = HexBinaryValue.parse(value); return;
       case "theme": this.theme = UInt32Value.parse(value); return;
-      case "tint": this.tint = StringValue.parse(value); return;
+      case "tint": this.tint = DoubleValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

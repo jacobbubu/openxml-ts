@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Defines the Callout Class.
@@ -20,7 +21,7 @@ export class Callout extends OpenXmlLeafElement {
   extension: StringValue | undefined;
 
   /** Callout toggle (:on) */
-  on: StringValue | undefined;
+  on: TrueFalseValue | undefined;
 
   /** Callout type (:type) */
   type: StringValue | undefined;
@@ -32,7 +33,7 @@ export class Callout extends OpenXmlLeafElement {
   angle: StringValue | undefined;
 
   /** Callout automatic drop toggle (:dropauto) */
-  dropAuto: StringValue | undefined;
+  dropAuto: TrueFalseValue | undefined;
 
   /** Callout drop position (:drop) */
   drop: StringValue | undefined;
@@ -41,39 +42,39 @@ export class Callout extends OpenXmlLeafElement {
   distance: StringValue | undefined;
 
   /** Callout length toggle (:lengthspecified) */
-  lengthSpecified: StringValue | undefined;
+  lengthSpecified: TrueFalseValue | undefined;
 
   /** Callout length (:length) */
   length: StringValue | undefined;
 
   /** Callout accent bar toggle (:accentbar) */
-  accentBar: StringValue | undefined;
+  accentBar: TrueFalseValue | undefined;
 
   /** Callout text border toggle (:textborder) */
-  textBorder: StringValue | undefined;
+  textBorder: TrueFalseValue | undefined;
 
   /** Callout flip x (:minusx) */
-  minusX: StringValue | undefined;
+  minusX: TrueFalseValue | undefined;
 
   /** Callout flip y (:minusy) */
-  minusY: StringValue | undefined;
+  minusY: TrueFalseValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "v:ext": this.extension = StringValue.parse(value); return;
-      case "on": this.on = StringValue.parse(value); return;
+      case "on": this.on = TrueFalseValue.parse(value); return;
       case "type": this.type = StringValue.parse(value); return;
       case "gap": this.gap = StringValue.parse(value); return;
       case "angle": this.angle = StringValue.parse(value); return;
-      case "dropauto": this.dropAuto = StringValue.parse(value); return;
+      case "dropauto": this.dropAuto = TrueFalseValue.parse(value); return;
       case "drop": this.drop = StringValue.parse(value); return;
       case "distance": this.distance = StringValue.parse(value); return;
-      case "lengthspecified": this.lengthSpecified = StringValue.parse(value); return;
+      case "lengthspecified": this.lengthSpecified = TrueFalseValue.parse(value); return;
       case "length": this.length = StringValue.parse(value); return;
-      case "accentbar": this.accentBar = StringValue.parse(value); return;
-      case "textborder": this.textBorder = StringValue.parse(value); return;
-      case "minusx": this.minusX = StringValue.parse(value); return;
-      case "minusy": this.minusY = StringValue.parse(value); return;
+      case "accentbar": this.accentBar = TrueFalseValue.parse(value); return;
+      case "textborder": this.textBorder = TrueFalseValue.parse(value); return;
+      case "minusx": this.minusX = TrueFalseValue.parse(value); return;
+      case "minusy": this.minusY = TrueFalseValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

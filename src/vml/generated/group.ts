@@ -3,9 +3,12 @@
 // @see DocumentFormat.OpenXml.Vml.Group
 
 import {
+  IntegerValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  SingleValue,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Shape Group.
@@ -48,61 +51,61 @@ export class Group extends OpenXmlCompositeElement {
   wrapCoordinates: StringValue | undefined;
 
   /** Print Toggle (:print) */
-  print: StringValue | undefined;
+  print: TrueFalseValue | undefined;
 
   /** spid (o:spid) */
   optionalString: StringValue | undefined;
 
   /** oned (o:oned) */
-  oned: StringValue | undefined;
+  oned: TrueFalseValue | undefined;
 
   /** regroupid (o:regroupid) */
-  regroupId: StringValue | undefined;
+  regroupId: IntegerValue | undefined;
 
   /** doubleclicknotify (o:doubleclicknotify) */
-  doubleClickNotify: StringValue | undefined;
+  doubleClickNotify: TrueFalseValue | undefined;
 
   /** button (o:button) */
-  button: StringValue | undefined;
+  button: TrueFalseValue | undefined;
 
   /** userhidden (o:userhidden) */
-  userHidden: StringValue | undefined;
+  userHidden: TrueFalseValue | undefined;
 
   /** bullet (o:bullet) */
-  bullet: StringValue | undefined;
+  bullet: TrueFalseValue | undefined;
 
   /** hr (o:hr) */
-  horizontal: StringValue | undefined;
+  horizontal: TrueFalseValue | undefined;
 
   /** hrstd (o:hrstd) */
-  horizontalStandard: StringValue | undefined;
+  horizontalStandard: TrueFalseValue | undefined;
 
   /** hrnoshade (o:hrnoshade) */
-  horizontalNoShade: StringValue | undefined;
+  horizontalNoShade: TrueFalseValue | undefined;
 
   /** hrpct (o:hrpct) */
-  horizontalPercentage: StringValue | undefined;
+  horizontalPercentage: SingleValue | undefined;
 
   /** hralign (o:hralign) */
   horizontalAlignment: StringValue | undefined;
 
   /** allowincell (o:allowincell) */
-  allowInCell: StringValue | undefined;
+  allowInCell: TrueFalseValue | undefined;
 
   /** allowoverlap (o:allowoverlap) */
-  allowOverlap: StringValue | undefined;
+  allowOverlap: TrueFalseValue | undefined;
 
   /** userdrawn (o:userdrawn) */
-  userDrawn: StringValue | undefined;
+  userDrawn: TrueFalseValue | undefined;
 
   /** dgmlayout (o:dgmlayout) */
-  diagramLayout: StringValue | undefined;
+  diagramLayout: IntegerValue | undefined;
 
   /** dgmnodekind (o:dgmnodekind) */
-  diagramNodeKind: StringValue | undefined;
+  diagramNodeKind: IntegerValue | undefined;
 
   /** dgmlayoutmru (o:dgmlayoutmru) */
-  diagramLayoutMostRecentUsed: StringValue | undefined;
+  diagramLayoutMostRecentUsed: IntegerValue | undefined;
 
   /** insetmode (o:insetmode) */
   insetMode: StringValue | undefined;
@@ -128,25 +131,25 @@ export class Group extends OpenXmlCompositeElement {
       case "coordsize": this.coordinateSize = StringValue.parse(value); return;
       case "coordorigin": this.coordinateOrigin = StringValue.parse(value); return;
       case "wrapcoords": this.wrapCoordinates = StringValue.parse(value); return;
-      case "print": this.print = StringValue.parse(value); return;
+      case "print": this.print = TrueFalseValue.parse(value); return;
       case "o:spid": this.optionalString = StringValue.parse(value); return;
-      case "o:oned": this.oned = StringValue.parse(value); return;
-      case "o:regroupid": this.regroupId = StringValue.parse(value); return;
-      case "o:doubleclicknotify": this.doubleClickNotify = StringValue.parse(value); return;
-      case "o:button": this.button = StringValue.parse(value); return;
-      case "o:userhidden": this.userHidden = StringValue.parse(value); return;
-      case "o:bullet": this.bullet = StringValue.parse(value); return;
-      case "o:hr": this.horizontal = StringValue.parse(value); return;
-      case "o:hrstd": this.horizontalStandard = StringValue.parse(value); return;
-      case "o:hrnoshade": this.horizontalNoShade = StringValue.parse(value); return;
-      case "o:hrpct": this.horizontalPercentage = StringValue.parse(value); return;
+      case "o:oned": this.oned = TrueFalseValue.parse(value); return;
+      case "o:regroupid": this.regroupId = IntegerValue.parse(value); return;
+      case "o:doubleclicknotify": this.doubleClickNotify = TrueFalseValue.parse(value); return;
+      case "o:button": this.button = TrueFalseValue.parse(value); return;
+      case "o:userhidden": this.userHidden = TrueFalseValue.parse(value); return;
+      case "o:bullet": this.bullet = TrueFalseValue.parse(value); return;
+      case "o:hr": this.horizontal = TrueFalseValue.parse(value); return;
+      case "o:hrstd": this.horizontalStandard = TrueFalseValue.parse(value); return;
+      case "o:hrnoshade": this.horizontalNoShade = TrueFalseValue.parse(value); return;
+      case "o:hrpct": this.horizontalPercentage = SingleValue.parse(value); return;
       case "o:hralign": this.horizontalAlignment = StringValue.parse(value); return;
-      case "o:allowincell": this.allowInCell = StringValue.parse(value); return;
-      case "o:allowoverlap": this.allowOverlap = StringValue.parse(value); return;
-      case "o:userdrawn": this.userDrawn = StringValue.parse(value); return;
-      case "o:dgmlayout": this.diagramLayout = StringValue.parse(value); return;
-      case "o:dgmnodekind": this.diagramNodeKind = StringValue.parse(value); return;
-      case "o:dgmlayoutmru": this.diagramLayoutMostRecentUsed = StringValue.parse(value); return;
+      case "o:allowincell": this.allowInCell = TrueFalseValue.parse(value); return;
+      case "o:allowoverlap": this.allowOverlap = TrueFalseValue.parse(value); return;
+      case "o:userdrawn": this.userDrawn = TrueFalseValue.parse(value); return;
+      case "o:dgmlayout": this.diagramLayout = IntegerValue.parse(value); return;
+      case "o:dgmnodekind": this.diagramNodeKind = IntegerValue.parse(value); return;
+      case "o:dgmlayoutmru": this.diagramLayoutMostRecentUsed = IntegerValue.parse(value); return;
       case "o:insetmode": this.insetMode = StringValue.parse(value); return;
       case "editas": this.editAs = StringValue.parse(value); return;
       case "o:tableproperties": this.tableProperties = StringValue.parse(value); return;

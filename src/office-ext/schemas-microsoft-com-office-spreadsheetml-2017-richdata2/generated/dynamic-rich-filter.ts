@@ -4,6 +4,7 @@
 
 import {
   DateTimeValue,
+  DoubleValue,
   OpenXmlLeafElement,
   StringValue,
   assertRequired,
@@ -22,10 +23,10 @@ export class DynamicRichFilter extends OpenXmlLeafElement {
   type: StringValue | undefined;
 
   /** Value (:val) */
-  val: StringValue | undefined;
+  val: DoubleValue | undefined;
 
   /** Max Value (:maxVal) */
-  maxVal: StringValue | undefined;
+  maxVal: DoubleValue | undefined;
 
   /** valIso (:valIso) */
   valIso: DateTimeValue | undefined;
@@ -36,8 +37,8 @@ export class DynamicRichFilter extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "type": this.type = StringValue.parse(value); return;
-      case "val": this.val = StringValue.parse(value); return;
-      case "maxVal": this.maxVal = StringValue.parse(value); return;
+      case "val": this.val = DoubleValue.parse(value); return;
+      case "maxVal": this.maxVal = DoubleValue.parse(value); return;
       case "valIso": this.valIso = DateTimeValue.parse(value); return;
       case "maxValIso": this.maxValIso = DateTimeValue.parse(value); return;
     }

@@ -4,6 +4,7 @@
 
 import {
   BooleanValue,
+  IntegerValue,
   OpenXmlLeafElement,
   StringValue,
   assertString,
@@ -34,7 +35,7 @@ export class EditBox extends OpenXmlLeafElement {
   getImage: StringValue | undefined;
 
   /** maxLength (:maxLength) */
-  maxLength: StringValue | undefined;
+  maxLength: IntegerValue | undefined;
 
   /** getText (:getText) */
   getText: StringValue | undefined;
@@ -118,7 +119,7 @@ export class EditBox extends OpenXmlLeafElement {
       case "image": this.image = StringValue.parse(value); assertString(this.image, { maxLength: 1024, minLength: 1 }, { attribute: ":image", elementClass: "EditBox" }); return;
       case "imageMso": this.imageMso = StringValue.parse(value); assertString(this.imageMso, { maxLength: 1024, minLength: 1 }, { attribute: ":imageMso", elementClass: "EditBox" }); return;
       case "getImage": this.getImage = StringValue.parse(value); assertString(this.getImage, { maxLength: 1024, minLength: 1 }, { attribute: ":getImage", elementClass: "EditBox" }); return;
-      case "maxLength": this.maxLength = StringValue.parse(value); return;
+      case "maxLength": this.maxLength = IntegerValue.parse(value); return;
       case "getText": this.getText = StringValue.parse(value); assertString(this.getText, { maxLength: 1024, minLength: 1 }, { attribute: ":getText", elementClass: "EditBox" }); return;
       case "onChange": this.onChange = StringValue.parse(value); assertString(this.onChange, { maxLength: 1024, minLength: 1 }, { attribute: ":onChange", elementClass: "EditBox" }); return;
       case "sizeString": this.sizeString = StringValue.parse(value); assertString(this.sizeString, { maxLength: 1024, minLength: 1 }, { attribute: ":sizeString", elementClass: "EditBox" }); return;

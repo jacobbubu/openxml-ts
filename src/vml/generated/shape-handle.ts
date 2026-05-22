@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseBlankValue,
 } from "../../element/index.js";
 
 /** Shape Handle.
@@ -26,13 +27,13 @@ export class ShapeHandle extends OpenXmlLeafElement {
   map: StringValue | undefined;
 
   /** Invert Handle's X Position (:invx) */
-  invertX: StringValue | undefined;
+  invertX: TrueFalseBlankValue | undefined;
 
   /** Invert Handle's Y Position (:invy) */
-  invertY: StringValue | undefined;
+  invertY: TrueFalseBlankValue | undefined;
 
   /** Handle Inversion Toggle (:switch) */
-  switch: StringValue | undefined;
+  switch: TrueFalseBlankValue | undefined;
 
   /** Handle X Position Range (:xrange) */
   xRange: StringValue | undefined;
@@ -48,9 +49,9 @@ export class ShapeHandle extends OpenXmlLeafElement {
       case "position": this.position = StringValue.parse(value); return;
       case "polar": this.polar = StringValue.parse(value); return;
       case "map": this.map = StringValue.parse(value); return;
-      case "invx": this.invertX = StringValue.parse(value); return;
-      case "invy": this.invertY = StringValue.parse(value); return;
-      case "switch": this.switch = StringValue.parse(value); return;
+      case "invx": this.invertX = TrueFalseBlankValue.parse(value); return;
+      case "invy": this.invertY = TrueFalseBlankValue.parse(value); return;
+      case "switch": this.switch = TrueFalseBlankValue.parse(value); return;
       case "xrange": this.xRange = StringValue.parse(value); return;
       case "yrange": this.yRange = StringValue.parse(value); return;
       case "radiusrange": this.radiusRange = StringValue.parse(value); return;

@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Excel2009.ProtectedRange
 
 import {
+  Base64BinaryValue,
   HexBinaryValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
@@ -27,10 +28,10 @@ export class ProtectedRange extends OpenXmlCompositeElement {
   algorithmName: StringValue | undefined;
 
   /** hashValue (:hashValue) */
-  hashValue: StringValue | undefined;
+  hashValue: Base64BinaryValue | undefined;
 
   /** saltValue (:saltValue) */
-  saltValue: StringValue | undefined;
+  saltValue: Base64BinaryValue | undefined;
 
   /** spinCount (:spinCount) */
   spinCount: UInt32Value | undefined;
@@ -45,8 +46,8 @@ export class ProtectedRange extends OpenXmlCompositeElement {
     switch (qname) {
       case "password": this.password = HexBinaryValue.parse(value); return;
       case "algorithmName": this.algorithmName = StringValue.parse(value); return;
-      case "hashValue": this.hashValue = StringValue.parse(value); return;
-      case "saltValue": this.saltValue = StringValue.parse(value); return;
+      case "hashValue": this.hashValue = Base64BinaryValue.parse(value); return;
+      case "saltValue": this.saltValue = Base64BinaryValue.parse(value); return;
       case "spinCount": this.spinCount = UInt32Value.parse(value); return;
       case "name": this.name = StringValue.parse(value); return;
       case "securityDescriptor": this.securityDescriptor = StringValue.parse(value); return;

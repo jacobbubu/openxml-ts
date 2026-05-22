@@ -28,10 +28,12 @@ export abstract class BorderType extends OpenXmlLeafElement {
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
-    shadow: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "TrueFalseValue" needs to be exported by the entry point index.d.ts
+    shadow: TrueFalseValue | undefined;
     // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
     type: StringValue | undefined;
-    width: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "IntegerValue" needs to be exported by the entry point index.d.ts
+    width: IntegerValue | undefined;
 }
 
 // @public
@@ -46,9 +48,9 @@ export class BottomBorder extends OpenXmlLeafElement {
     readonly namespaceUri: "urn:schemas-microsoft-com:office:word";
     // (undocumented)
     readonly prefix: "w10";
-    shadow: StringValue | undefined;
+    shadow: TrueFalseValue | undefined;
     type: StringValue | undefined;
-    width: StringValue | undefined;
+    width: IntegerValue | undefined;
 }
 
 // @public
@@ -63,9 +65,9 @@ export class LeftBorder extends OpenXmlLeafElement {
     readonly namespaceUri: "urn:schemas-microsoft-com:office:word";
     // (undocumented)
     readonly prefix: "w10";
-    shadow: StringValue | undefined;
+    shadow: TrueFalseValue | undefined;
     type: StringValue | undefined;
-    width: StringValue | undefined;
+    width: IntegerValue | undefined;
 }
 
 // Warning: (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
@@ -85,9 +87,9 @@ export class RightBorder extends OpenXmlLeafElement {
     readonly namespaceUri: "urn:schemas-microsoft-com:office:word";
     // (undocumented)
     readonly prefix: "w10";
-    shadow: StringValue | undefined;
+    shadow: TrueFalseValue | undefined;
     type: StringValue | undefined;
-    width: StringValue | undefined;
+    width: IntegerValue | undefined;
 }
 
 // @public
@@ -120,9 +122,9 @@ export class TopBorder extends OpenXmlLeafElement {
     readonly namespaceUri: "urn:schemas-microsoft-com:office:word";
     // (undocumented)
     readonly prefix: "w10";
-    shadow: StringValue | undefined;
+    shadow: TrueFalseValue | undefined;
     type: StringValue | undefined;
-    width: StringValue | undefined;
+    width: IntegerValue | undefined;
 }
 
 // (No @packageDocumentation comment for this package)

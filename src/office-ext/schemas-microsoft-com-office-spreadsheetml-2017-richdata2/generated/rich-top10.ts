@@ -4,8 +4,8 @@
 
 import {
   BooleanValue,
+  DoubleValue,
   OpenXmlLeafElement,
-  StringValue,
   assertRequired,
 } from "../../../element/index.js";
 
@@ -25,17 +25,17 @@ export class RichTop10 extends OpenXmlLeafElement {
   percent: BooleanValue | undefined;
 
   /** Top or Bottom Value (:val) */
-  val: StringValue | undefined;
+  val: DoubleValue | undefined;
 
   /** Filter Value (:filterVal) */
-  filterValue: StringValue | undefined;
+  filterValue: DoubleValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "top": this.top = BooleanValue.parse(value); return;
       case "percent": this.percent = BooleanValue.parse(value); return;
-      case "val": this.val = StringValue.parse(value); return;
-      case "filterVal": this.filterValue = StringValue.parse(value); return;
+      case "val": this.val = DoubleValue.parse(value); return;
+      case "filterVal": this.filterValue = DoubleValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

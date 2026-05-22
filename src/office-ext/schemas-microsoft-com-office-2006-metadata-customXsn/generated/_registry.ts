@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_2006_metadata_customXsn.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { register2006MetadataCustomXsnChildMaps } from "./_child-map.js";
 import { CachedView } from "./cached-view.js";
 import { CustomXsn } from "./custom-xsn.js";
 import { OpenByDefault } from "./open-by-default.js";
@@ -12,6 +13,7 @@ import { XsnLocation } from "./xsn-location.js";
  * 把 2006-metadata-customXsn 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function register2006MetadataCustomXsnElements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/2006/metadata/customXsn", "cached", CachedView);
@@ -19,4 +21,5 @@ export function register2006MetadataCustomXsnElements(registry: ElementRegistry)
   registry.register("http://schemas.microsoft.com/office/2006/metadata/customXsn", "openByDefault", OpenByDefault);
   registry.register("http://schemas.microsoft.com/office/2006/metadata/customXsn", "xsnScope", Scope);
   registry.register("http://schemas.microsoft.com/office/2006/metadata/customXsn", "xsnLocation", XsnLocation);
+  register2006MetadataCustomXsnChildMaps(registry);
 }

@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_word_2010_wordprocessingShape.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { registerWord2010WordprocessingShapeChildMaps } from "./_child-map.js";
 import { LinkedTextBox } from "./linked-text-box.js";
 import { NonVisualConnectorProperties } from "./non-visual-connector-properties.js";
 import { NonVisualDrawingProperties } from "./non-visual-drawing-properties.js";
@@ -17,6 +18,7 @@ import { WordprocessingShape } from "./wordprocessing-shape.js";
  * 把 word-2010-wordprocessingShape 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function registerWord2010WordprocessingShapeElements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/word/2010/wordprocessingShape", "linkedTxbx", LinkedTextBox);
@@ -29,4 +31,5 @@ export function registerWord2010WordprocessingShapeElements(registry: ElementReg
   registry.register("http://schemas.microsoft.com/office/word/2010/wordprocessingShape", "bodyPr", TextBodyProperties);
   registry.register("http://schemas.microsoft.com/office/word/2010/wordprocessingShape", "txbx", TextBoxInfo2);
   registry.register("http://schemas.microsoft.com/office/word/2010/wordprocessingShape", "wsp", WordprocessingShape);
+  registerWord2010WordprocessingShapeChildMaps(registry);
 }

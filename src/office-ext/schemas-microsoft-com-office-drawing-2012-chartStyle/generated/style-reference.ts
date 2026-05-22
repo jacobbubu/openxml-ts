@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Drawing2012ChartStyle.StyleReference
 
 import {
+  ListValue,
   OpenXmlCompositeElement,
   StringValue,
   UInt32Value,
@@ -22,12 +23,12 @@ export abstract class StyleReference extends OpenXmlCompositeElement {
   index: UInt32Value | undefined;
 
   /** mods (:mods) */
-  modifiers: StringValue | undefined;
+  modifiers: ListValue<StringValue> | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "idx": this.index = UInt32Value.parse(value); return;
-      case "mods": this.modifiers = StringValue.parse(value); return;
+      case "mods": this.modifiers = ListValue.parse(value, StringValue.parse); return;
     }
     super.applyAttribute(qname, value);
   }

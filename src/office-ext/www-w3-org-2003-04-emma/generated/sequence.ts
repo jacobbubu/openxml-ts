@@ -5,9 +5,12 @@
 import {
   BooleanValue,
   DecimalValue,
+  IntegerValue,
+  ListValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  UInt64Value,
   assertNumber,
   assertRequired,
 } from "../../../element/index.js";
@@ -37,7 +40,7 @@ export class Sequence extends OpenXmlCompositeElement {
   signal: StringValue | undefined;
 
   /** signal-size (emma:signal-size) */
-  signalSize: StringValue | undefined;
+  signalSize: IntegerValue | undefined;
 
   /** media-type (emma:media-type) */
   mediaType: StringValue | undefined;
@@ -49,10 +52,10 @@ export class Sequence extends OpenXmlCompositeElement {
   source: StringValue | undefined;
 
   /** start (emma:start) */
-  start: StringValue | undefined;
+  start: UInt64Value | undefined;
 
   /** end (emma:end) */
-  end: StringValue | undefined;
+  end: UInt64Value | undefined;
 
   /** time-ref-uri (emma:time-ref-uri) */
   timeReference: StringValue | undefined;
@@ -61,16 +64,16 @@ export class Sequence extends OpenXmlCompositeElement {
   timeReferenceAnchorPoint: StringValue | undefined;
 
   /** offset-to-start (emma:offset-to-start) */
-  offsetToStart: StringValue | undefined;
+  offsetToStart: IntegerValue | undefined;
 
   /** duration (emma:duration) */
-  duration: StringValue | undefined;
+  duration: IntegerValue | undefined;
 
   /** medium (emma:medium) */
   medium: StringValue | undefined;
 
   /** mode (emma:mode) */
-  mode: StringValue | undefined;
+  mode: ListValue<StringValue> | undefined;
 
   /** function (emma:function) */
   function: StringValue | undefined;
@@ -100,18 +103,18 @@ export class Sequence extends OpenXmlCompositeElement {
       case "emma:process": this.process = StringValue.parse(value); return;
       case "emma:lang": this.language = StringValue.parse(value); return;
       case "emma:signal": this.signal = StringValue.parse(value); return;
-      case "emma:signal-size": this.signalSize = StringValue.parse(value); return;
+      case "emma:signal-size": this.signalSize = IntegerValue.parse(value); return;
       case "emma:media-type": this.mediaType = StringValue.parse(value); return;
       case "emma:confidence": this.confidence = DecimalValue.parse(value); assertNumber(this.confidence, { min: 0, max: 1 }, { attribute: "emma:confidence", elementClass: "Sequence" }); return;
       case "emma:source": this.source = StringValue.parse(value); return;
-      case "emma:start": this.start = StringValue.parse(value); return;
-      case "emma:end": this.end = StringValue.parse(value); return;
+      case "emma:start": this.start = UInt64Value.parse(value); return;
+      case "emma:end": this.end = UInt64Value.parse(value); return;
       case "emma:time-ref-uri": this.timeReference = StringValue.parse(value); return;
       case "emma:time-ref-anchor-point": this.timeReferenceAnchorPoint = StringValue.parse(value); return;
-      case "emma:offset-to-start": this.offsetToStart = StringValue.parse(value); return;
-      case "emma:duration": this.duration = StringValue.parse(value); return;
+      case "emma:offset-to-start": this.offsetToStart = IntegerValue.parse(value); return;
+      case "emma:duration": this.duration = IntegerValue.parse(value); return;
       case "emma:medium": this.medium = StringValue.parse(value); return;
-      case "emma:mode": this.mode = StringValue.parse(value); return;
+      case "emma:mode": this.mode = ListValue.parse(value, StringValue.parse); return;
       case "emma:function": this.function = StringValue.parse(value); return;
       case "emma:verbal": this.verbal = BooleanValue.parse(value); return;
       case "emma:cost": this.cost = DecimalValue.parse(value); assertNumber(this.cost, { min: 0, max: 10000000 }, { attribute: "emma:cost", elementClass: "Sequence" }); return;

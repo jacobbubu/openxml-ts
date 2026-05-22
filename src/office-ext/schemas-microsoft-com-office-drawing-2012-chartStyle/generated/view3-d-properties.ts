@@ -3,8 +3,11 @@
 // @see DocumentFormat.OpenXml.Drawing2012ChartStyle.View3DProperties
 
 import {
+  ByteValue,
   OpenXmlLeafElement,
+  SByteValue,
   StringValue,
+  UInt16Value,
 } from "../../../element/index.js";
 
 /** Defines the View3DProperties Class.
@@ -17,31 +20,31 @@ export class View3DProperties extends OpenXmlLeafElement {
 
 
   /** rotX (:rotX) */
-  rotX: StringValue | undefined;
+  rotX: SByteValue | undefined;
 
   /** rotY (:rotY) */
-  rotY: StringValue | undefined;
+  rotY: UInt16Value | undefined;
 
   /** rAngAx (:rAngAx) */
   rightAngleAxes: StringValue | undefined;
 
   /** perspective (:perspective) */
-  perspective: StringValue | undefined;
+  perspective: ByteValue | undefined;
 
   /** heightPercent (:heightPercent) */
-  heightPercent: StringValue | undefined;
+  heightPercent: UInt16Value | undefined;
 
   /** depthPercent (:depthPercent) */
-  depthPercent: StringValue | undefined;
+  depthPercent: UInt16Value | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "rotX": this.rotX = StringValue.parse(value); return;
-      case "rotY": this.rotY = StringValue.parse(value); return;
+      case "rotX": this.rotX = SByteValue.parse(value); return;
+      case "rotY": this.rotY = UInt16Value.parse(value); return;
       case "rAngAx": this.rightAngleAxes = StringValue.parse(value); return;
-      case "perspective": this.perspective = StringValue.parse(value); return;
-      case "heightPercent": this.heightPercent = StringValue.parse(value); return;
-      case "depthPercent": this.depthPercent = StringValue.parse(value); return;
+      case "perspective": this.perspective = ByteValue.parse(value); return;
+      case "heightPercent": this.heightPercent = UInt16Value.parse(value); return;
+      case "depthPercent": this.depthPercent = UInt16Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

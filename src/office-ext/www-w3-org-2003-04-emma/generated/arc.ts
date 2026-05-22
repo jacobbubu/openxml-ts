@@ -4,9 +4,12 @@
 
 import {
   DecimalValue,
+  IntegerValue,
+  ListValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  UInt64Value,
   assertNumber,
   assertRequired,
 } from "../../../element/index.js";
@@ -21,22 +24,22 @@ export class Arc extends OpenXmlCompositeElement {
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
   /** from (:from) */
-  from: StringValue | undefined;
+  from: IntegerValue | undefined;
 
   /** to (:to) */
-  to: StringValue | undefined;
+  to: IntegerValue | undefined;
 
   /** start (emma:start) */
-  start: StringValue | undefined;
+  start: UInt64Value | undefined;
 
   /** end (emma:end) */
-  end: StringValue | undefined;
+  end: UInt64Value | undefined;
 
   /** offset-to-start (emma:offset-to-start) */
-  offsetToStart: StringValue | undefined;
+  offsetToStart: IntegerValue | undefined;
 
   /** duration (emma:duration) */
-  duration: StringValue | undefined;
+  duration: IntegerValue | undefined;
 
   /** confidence (emma:confidence) */
   confidence: DecimalValue | undefined;
@@ -51,24 +54,24 @@ export class Arc extends OpenXmlCompositeElement {
   medium: StringValue | undefined;
 
   /** mode (emma:mode) */
-  mode: StringValue | undefined;
+  mode: ListValue<StringValue> | undefined;
 
   /** source (emma:source) */
   source: StringValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "from": this.from = StringValue.parse(value); return;
-      case "to": this.to = StringValue.parse(value); return;
-      case "emma:start": this.start = StringValue.parse(value); return;
-      case "emma:end": this.end = StringValue.parse(value); return;
-      case "emma:offset-to-start": this.offsetToStart = StringValue.parse(value); return;
-      case "emma:duration": this.duration = StringValue.parse(value); return;
+      case "from": this.from = IntegerValue.parse(value); return;
+      case "to": this.to = IntegerValue.parse(value); return;
+      case "emma:start": this.start = UInt64Value.parse(value); return;
+      case "emma:end": this.end = UInt64Value.parse(value); return;
+      case "emma:offset-to-start": this.offsetToStart = IntegerValue.parse(value); return;
+      case "emma:duration": this.duration = IntegerValue.parse(value); return;
       case "emma:confidence": this.confidence = DecimalValue.parse(value); assertNumber(this.confidence, { min: 0, max: 1 }, { attribute: "emma:confidence", elementClass: "Arc" }); return;
       case "emma:cost": this.cost = DecimalValue.parse(value); assertNumber(this.cost, { min: 0, max: 10000000 }, { attribute: "emma:cost", elementClass: "Arc" }); return;
       case "emma:lang": this.language = StringValue.parse(value); return;
       case "emma:medium": this.medium = StringValue.parse(value); return;
-      case "emma:mode": this.mode = StringValue.parse(value); return;
+      case "emma:mode": this.mode = ListValue.parse(value, StringValue.parse); return;
       case "emma:source": this.source = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);

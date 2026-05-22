@@ -8,8 +8,8 @@
 //
 // @public
 export class Arc extends OpenXmlCompositeElement {
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -18,64 +18,68 @@ export class Arc extends OpenXmlCompositeElement {
     borderLeftColor: StringValue | undefined;
     borderRightColor: StringValue | undefined;
     borderTopColor: StringValue | undefined;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // Warning: (ae-forgotten-export) The symbol "OpenXmlElementList" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
     readonly children: OpenXmlElementList;
-    clip: StringValue | undefined;
-    clipToWrap: StringValue | undefined;
+    clip: TrueFalseValue | undefined;
+    clipToWrap: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectorType: StringValue | undefined;
     coordinateOrigin: StringValue | undefined;
     coordinateSize: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     endAngle: DecimalValue | undefined;
     fillColor: StringValue | undefined;
-    filled: StringValue | undefined;
-    forceDash: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
+    forceDash: TrueFalseValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "SingleValue" needs to be exported by the entry point index.d.ts
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "arc";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     normalBlackWhiteMode: StringValue | undefined;
-    ole: StringValue | undefined;
-    oleIcon: StringValue | undefined;
-    oned: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "TrueFalseBlankValue" needs to be exported by the entry point index.d.ts
+    ole: TrueFalseBlankValue | undefined;
+    oleIcon: TrueFalseValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "TrueFalseValue" needs to be exported by the entry point index.d.ts
+    oned: TrueFalseValue | undefined;
     // Warning: (ae-forgotten-export) The symbol "Int32Value" needs to be exported by the entry point index.d.ts
     optionalNumber: Int32Value | undefined;
     // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
     optionalString: StringValue | undefined;
-    preferRelative: StringValue | undefined;
+    preferRelative: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
+    print: TrueFalseValue | undefined;
     pureBlackWhiteMode: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "IntegerValue" needs to be exported by the entry point index.d.ts
+    regroupId: IntegerValue | undefined;
     // Warning: (ae-forgotten-export) The symbol "DecimalValue" needs to be exported by the entry point index.d.ts
     startAngle: DecimalValue | undefined;
     strokeColor: StringValue | undefined;
-    stroked: StringValue | undefined;
+    stroked: TrueFalseValue | undefined;
     strokeWeight: StringValue | undefined;
     style: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapcoords: StringValue | undefined;
 }
 
@@ -89,7 +93,7 @@ export class Background extends OpenXmlCompositeElement {
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     fillcolor: StringValue | undefined;
-    filled: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "background";
@@ -104,8 +108,8 @@ export class Background extends OpenXmlCompositeElement {
 
 // @public
 export class Curve extends OpenXmlCompositeElement {
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -114,13 +118,13 @@ export class Curve extends OpenXmlCompositeElement {
     borderLeftColor: StringValue | undefined;
     borderRightColor: StringValue | undefined;
     borderTopColor: StringValue | undefined;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     class: StringValue | undefined;
-    clip: StringValue | undefined;
-    clipToWrap: StringValue | undefined;
+    clip: TrueFalseValue | undefined;
+    clipToWrap: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectorType: StringValue | undefined;
@@ -128,54 +132,54 @@ export class Curve extends OpenXmlCompositeElement {
     control2: StringValue | undefined;
     coordinateOrigin: StringValue | undefined;
     coordinateSize: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     fillColor: StringValue | undefined;
-    filled: StringValue | undefined;
-    forceDash: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
+    forceDash: TrueFalseValue | undefined;
     from: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "curve";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     normalBlackWhiteMode: StringValue | undefined;
-    ole: StringValue | undefined;
-    oleIcon: StringValue | undefined;
-    oned: StringValue | undefined;
+    ole: TrueFalseBlankValue | undefined;
+    oleIcon: TrueFalseValue | undefined;
+    oned: TrueFalseValue | undefined;
     optionalNumber: Int32Value | undefined;
     optionalString: StringValue | undefined;
-    preferRelative: StringValue | undefined;
+    preferRelative: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
+    print: TrueFalseValue | undefined;
     pureBlackWhiteMode: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    regroupId: IntegerValue | undefined;
     strokeColor: StringValue | undefined;
-    stroked: StringValue | undefined;
+    stroked: TrueFalseValue | undefined;
     strokeWeight: StringValue | undefined;
     style: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
     to: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapCoordinates: StringValue | undefined;
 }
 
 // @public
 export class Fill extends OpenXmlCompositeElement {
-    alignShape: StringValue | undefined;
+    alignShape: TrueFalseValue | undefined;
     alternateImageReference: StringValue | undefined;
     angle: DecimalValue | undefined;
     // (undocumented)
@@ -188,7 +192,7 @@ export class Fill extends OpenXmlCompositeElement {
     color: StringValue | undefined;
     color2: StringValue | undefined;
     colors: StringValue | undefined;
-    detectMouseClick: StringValue | undefined;
+    detectMouseClick: TrueFalseValue | undefined;
     focus: StringValue | undefined;
     focusPosition: StringValue | undefined;
     focusSize: StringValue | undefined;
@@ -199,16 +203,16 @@ export class Fill extends OpenXmlCompositeElement {
     method: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     opacity: StringValue | undefined;
     opacity2: StringValue | undefined;
     origin: StringValue | undefined;
     position: StringValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    recolor: StringValue | undefined;
+    recolor: TrueFalseValue | undefined;
     relationshipId: StringValue | undefined;
-    rotate: StringValue | undefined;
+    rotate: TrueFalseValue | undefined;
     size: StringValue | undefined;
     source: StringValue | undefined;
     title: StringValue | undefined;
@@ -246,13 +250,13 @@ export class Formulas extends OpenXmlCompositeElement {
 
 // @public
 export class Group extends OpenXmlCompositeElement {
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     class: StringValue | undefined;
@@ -260,16 +264,16 @@ export class Group extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     coordinateOrigin: StringValue | undefined;
     coordinateSize: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     editAs: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
@@ -277,19 +281,19 @@ export class Group extends OpenXmlCompositeElement {
     readonly localName: "group";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
-    oned: StringValue | undefined;
+    oned: TrueFalseValue | undefined;
     optionalString: StringValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    print: TrueFalseValue | undefined;
+    regroupId: IntegerValue | undefined;
     style: StringValue | undefined;
     tableLimits: StringValue | undefined;
     tableProperties: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapCoordinates: StringValue | undefined;
 }
 
@@ -297,7 +301,7 @@ export class Group extends OpenXmlCompositeElement {
 export class ImageData extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
-    biLevel: StringValue | undefined;
+    biLevel: TrueFalseValue | undefined;
     blackLevel: StringValue | undefined;
     chromAKey: StringValue | undefined;
     // (undocumented)
@@ -306,11 +310,11 @@ export class ImageData extends OpenXmlLeafElement {
     cropLeft: StringValue | undefined;
     cropRight: StringValue | undefined;
     cropTop: StringValue | undefined;
-    detectMouseClick: StringValue | undefined;
+    detectMouseClick: TrueFalseValue | undefined;
     embossColor: StringValue | undefined;
     gain: StringValue | undefined;
     gamma: StringValue | undefined;
-    grayscale: StringValue | undefined;
+    grayscale: TrueFalseValue | undefined;
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "imagedata";
@@ -328,25 +332,25 @@ export class ImageData extends OpenXmlLeafElement {
 
 // @public
 export class ImageFile extends OpenXmlCompositeElement {
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
-    biLevel: StringValue | undefined;
+    biLevel: TrueFalseValue | undefined;
     blackLevel: StringValue | undefined;
     blackWhiteMode: StringValue | undefined;
     borderBottomColor: StringValue | undefined;
     borderLeftColor: StringValue | undefined;
     borderRightColor: StringValue | undefined;
     borderTopColor: StringValue | undefined;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     class: StringValue | undefined;
-    clip: StringValue | undefined;
-    clipToWrap: StringValue | undefined;
+    clip: TrueFalseValue | undefined;
+    clipToWrap: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectorType: StringValue | undefined;
@@ -355,57 +359,57 @@ export class ImageFile extends OpenXmlCompositeElement {
     cropLeft: StringValue | undefined;
     cropRight: StringValue | undefined;
     cropTop: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     fillColor: StringValue | undefined;
-    filled: StringValue | undefined;
-    forceDash: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
+    forceDash: TrueFalseValue | undefined;
     gain: StringValue | undefined;
     gamma: StringValue | undefined;
-    grayScale: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    grayScale: TrueFalseValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "image";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     normalBlackWhiteMode: StringValue | undefined;
-    ole: StringValue | undefined;
-    oleIcon: StringValue | undefined;
-    oned: StringValue | undefined;
+    ole: TrueFalseBlankValue | undefined;
+    oleIcon: TrueFalseValue | undefined;
+    oned: TrueFalseValue | undefined;
     optionalNumber: Int32Value | undefined;
     optionalString: StringValue | undefined;
-    preferRelative: StringValue | undefined;
+    preferRelative: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
+    print: TrueFalseValue | undefined;
     pureBlackWhiteMode: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    regroupId: IntegerValue | undefined;
     source: StringValue | undefined;
     strokeColor: StringValue | undefined;
-    stroked: StringValue | undefined;
+    stroked: TrueFalseValue | undefined;
     strokeWeight: StringValue | undefined;
     style: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapCoordinates: StringValue | undefined;
 }
 
 // @public
 export class Line extends OpenXmlCompositeElement {
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -414,67 +418,67 @@ export class Line extends OpenXmlCompositeElement {
     borderLeftColor: StringValue | undefined;
     borderRightColor: StringValue | undefined;
     borderTopColor: StringValue | undefined;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     class: StringValue | undefined;
-    clip: StringValue | undefined;
-    clipToWrap: StringValue | undefined;
+    clip: TrueFalseValue | undefined;
+    clipToWrap: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectorType: StringValue | undefined;
     coordinateOrigin: StringValue | undefined;
     coordinateSize: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     fillColor: StringValue | undefined;
-    filled: StringValue | undefined;
-    forceDash: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
+    forceDash: TrueFalseValue | undefined;
     from: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "line";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     normalBlackWhiteMode: StringValue | undefined;
-    ole: StringValue | undefined;
-    oleIcon: StringValue | undefined;
-    oned: StringValue | undefined;
+    ole: TrueFalseBlankValue | undefined;
+    oleIcon: TrueFalseValue | undefined;
+    oned: TrueFalseValue | undefined;
     optionalNumber: Int32Value | undefined;
     optionalString: StringValue | undefined;
-    preferRelative: StringValue | undefined;
+    preferRelative: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
+    print: TrueFalseValue | undefined;
     pureBlackWhiteMode: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    regroupId: IntegerValue | undefined;
     strokeColor: StringValue | undefined;
-    stroked: StringValue | undefined;
+    stroked: TrueFalseValue | undefined;
     strokeWeight: StringValue | undefined;
     style: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
     to: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapCoordinates: StringValue | undefined;
 }
 
 // @public
 export class Oval extends OpenXmlCompositeElement {
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -483,70 +487,70 @@ export class Oval extends OpenXmlCompositeElement {
     borderLeftColor: StringValue | undefined;
     borderRightColor: StringValue | undefined;
     borderTopColor: StringValue | undefined;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     class: StringValue | undefined;
-    clip: StringValue | undefined;
-    clipToWrap: StringValue | undefined;
+    clip: TrueFalseValue | undefined;
+    clipToWrap: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectorType: StringValue | undefined;
     coordinateOrigin: StringValue | undefined;
     coordinateSize: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     fillColor: StringValue | undefined;
-    filled: StringValue | undefined;
-    forceDash: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
+    forceDash: TrueFalseValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "oval";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     normalBlackWhiteMode: StringValue | undefined;
-    ole: StringValue | undefined;
-    oleIcon: StringValue | undefined;
-    oned: StringValue | undefined;
+    ole: TrueFalseBlankValue | undefined;
+    oleIcon: TrueFalseValue | undefined;
+    oned: TrueFalseValue | undefined;
     optionalNumber: Int32Value | undefined;
     optionalString: StringValue | undefined;
-    preferRelative: StringValue | undefined;
+    preferRelative: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
+    print: TrueFalseValue | undefined;
     pureBlackWhiteMode: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    regroupId: IntegerValue | undefined;
     strokeColor: StringValue | undefined;
-    stroked: StringValue | undefined;
+    stroked: TrueFalseValue | undefined;
     strokeWeight: StringValue | undefined;
     style: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapCoordinates: StringValue | undefined;
 }
 
 // @public
 export class Path extends OpenXmlLeafElement {
-    allowExtrusion: StringValue | undefined;
-    allowFill: StringValue | undefined;
-    allowGradientShape: StringValue | undefined;
-    allowInsetPen: StringValue | undefined;
-    allowShading: StringValue | undefined;
-    allowStroke: StringValue | undefined;
-    allowTextPath: StringValue | undefined;
+    allowExtrusion: TrueFalseValue | undefined;
+    allowFill: TrueFalseValue | undefined;
+    allowGradientShape: TrueFalseValue | undefined;
+    allowInsetPen: TrueFalseValue | undefined;
+    allowShading: TrueFalseValue | undefined;
+    allowStroke: TrueFalseValue | undefined;
+    allowTextPath: TrueFalseValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
@@ -562,15 +566,15 @@ export class Path extends OpenXmlLeafElement {
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     // (undocumented)
     readonly prefix: "v";
-    showArrowhead: StringValue | undefined;
+    showArrowhead: TrueFalseValue | undefined;
     textboxRectangle: StringValue | undefined;
     value: StringValue | undefined;
 }
 
 // @public
 export class PolyLine extends OpenXmlCompositeElement {
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -579,66 +583,66 @@ export class PolyLine extends OpenXmlCompositeElement {
     borderLeftColor: StringValue | undefined;
     borderRightColor: StringValue | undefined;
     borderTopColor: StringValue | undefined;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     class: StringValue | undefined;
-    clip: StringValue | undefined;
-    clipToWrap: StringValue | undefined;
+    clip: TrueFalseValue | undefined;
+    clipToWrap: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectorType: StringValue | undefined;
     coordinateOrigin: StringValue | undefined;
     coordinateSize: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     fillColor: StringValue | undefined;
-    filled: StringValue | undefined;
-    forceDash: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
+    forceDash: TrueFalseValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "polyline";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     normalBlackWhiteMode: StringValue | undefined;
-    ole: StringValue | undefined;
-    oleIcon: StringValue | undefined;
-    oned: StringValue | undefined;
+    ole: TrueFalseBlankValue | undefined;
+    oleIcon: TrueFalseValue | undefined;
+    oned: TrueFalseValue | undefined;
     optionalNumber: Int32Value | undefined;
     optionalString: StringValue | undefined;
     points: StringValue | undefined;
-    preferRelative: StringValue | undefined;
+    preferRelative: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
+    print: TrueFalseValue | undefined;
     pureBlackWhiteMode: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    regroupId: IntegerValue | undefined;
     strokeColor: StringValue | undefined;
-    stroked: StringValue | undefined;
+    stroked: TrueFalseValue | undefined;
     strokeWeight: StringValue | undefined;
     style: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapCoordinates: StringValue | undefined;
 }
 
 // @public
 export class Rectangle extends OpenXmlCompositeElement {
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -647,58 +651,58 @@ export class Rectangle extends OpenXmlCompositeElement {
     borderLeftColor: StringValue | undefined;
     borderRightColor: StringValue | undefined;
     borderTopColor: StringValue | undefined;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     class: StringValue | undefined;
-    clip: StringValue | undefined;
-    clipToWrap: StringValue | undefined;
+    clip: TrueFalseValue | undefined;
+    clipToWrap: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectorType: StringValue | undefined;
     coordinateOrigin: StringValue | undefined;
     coordinateSize: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     fillColor: StringValue | undefined;
-    filled: StringValue | undefined;
-    forceDash: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
+    forceDash: TrueFalseValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "rect";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     normalBlackWhiteMode: StringValue | undefined;
-    ole: StringValue | undefined;
-    oleIcon: StringValue | undefined;
-    oned: StringValue | undefined;
+    ole: TrueFalseBlankValue | undefined;
+    oleIcon: TrueFalseValue | undefined;
+    oned: TrueFalseValue | undefined;
     optionalNumber: Int32Value | undefined;
     optionalString: StringValue | undefined;
-    preferRelative: StringValue | undefined;
+    preferRelative: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
+    print: TrueFalseValue | undefined;
     pureBlackWhiteMode: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    regroupId: IntegerValue | undefined;
     strokeColor: StringValue | undefined;
-    stroked: StringValue | undefined;
+    stroked: TrueFalseValue | undefined;
     strokeWeight: StringValue | undefined;
     style: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapCoordinates: StringValue | undefined;
 }
 
@@ -709,8 +713,8 @@ export function registerVmlElements(registry: ElementRegistry): void;
 
 // @public
 export class RoundRectangle extends OpenXmlCompositeElement {
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -720,57 +724,57 @@ export class RoundRectangle extends OpenXmlCompositeElement {
     borderLeftColor: StringValue | undefined;
     borderRightColor: StringValue | undefined;
     borderTopColor: StringValue | undefined;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     class: StringValue | undefined;
-    clip: StringValue | undefined;
-    clipToWrap: StringValue | undefined;
+    clip: TrueFalseValue | undefined;
+    clipToWrap: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectorType: StringValue | undefined;
     coordinateSize: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     fillColor: StringValue | undefined;
-    filled: StringValue | undefined;
-    forceDash: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
+    forceDash: TrueFalseValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "roundrect";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     normalBlackWhiteMode: StringValue | undefined;
-    ole: StringValue | undefined;
-    oleIcon: StringValue | undefined;
-    oned: StringValue | undefined;
+    ole: TrueFalseBlankValue | undefined;
+    oleIcon: TrueFalseValue | undefined;
+    oned: TrueFalseValue | undefined;
     optionalNumber: Int32Value | undefined;
     optionalString: StringValue | undefined;
-    preferRelative: StringValue | undefined;
+    preferRelative: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
+    print: TrueFalseValue | undefined;
     pureBlackWhiteMode: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    regroupId: IntegerValue | undefined;
     strokeColor: StringValue | undefined;
-    stroked: StringValue | undefined;
+    stroked: TrueFalseValue | undefined;
     strokeWeight: StringValue | undefined;
     style: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapCoordinates: StringValue | undefined;
 }
 
@@ -788,10 +792,10 @@ export class Shadow extends OpenXmlLeafElement {
     matrix: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
-    obscured: StringValue | undefined;
+    obscured: TrueFalseValue | undefined;
     offset: StringValue | undefined;
     offset2: StringValue | undefined;
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     opacity: StringValue | undefined;
     origin: StringValue | undefined;
     // (undocumented)
@@ -802,8 +806,8 @@ export class Shadow extends OpenXmlLeafElement {
 // @public
 export class Shape extends OpenXmlCompositeElement {
     adjustment: StringValue | undefined;
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -812,62 +816,63 @@ export class Shape extends OpenXmlCompositeElement {
     borderLeftColor: StringValue | undefined;
     borderRightColor: StringValue | undefined;
     borderTopColor: StringValue | undefined;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     class: StringValue | undefined;
-    clip: StringValue | undefined;
-    clipToWrap: StringValue | undefined;
+    clip: TrueFalseValue | undefined;
+    clipToWrap: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectorType: StringValue | undefined;
     coordinateOrigin: StringValue | undefined;
     coordinateSize: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     edgePath: StringValue | undefined;
-    encodedPackage: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "Base64BinaryValue" needs to be exported by the entry point index.d.ts
+    encodedPackage: Base64BinaryValue | undefined;
     equationXml: StringValue | undefined;
     fillColor: StringValue | undefined;
-    filled: StringValue | undefined;
-    forceDash: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
+    forceDash: TrueFalseValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "shape";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     normalBlackWhiteMode: StringValue | undefined;
-    ole: StringValue | undefined;
-    oleIcon: StringValue | undefined;
-    oned: StringValue | undefined;
+    ole: TrueFalseBlankValue | undefined;
+    oleIcon: TrueFalseValue | undefined;
+    oned: TrueFalseValue | undefined;
     optionalNumber: Int32Value | undefined;
     optionalString: StringValue | undefined;
-    preferRelative: StringValue | undefined;
+    preferRelative: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
+    print: TrueFalseValue | undefined;
     pureBlackWhiteMode: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    regroupId: IntegerValue | undefined;
     strokeColor: StringValue | undefined;
-    stroked: StringValue | undefined;
+    stroked: TrueFalseValue | undefined;
     strokeWeight: StringValue | undefined;
     style: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
     type: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapCoordinates: StringValue | undefined;
 }
 
@@ -877,8 +882,8 @@ export class ShapeHandle extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    invertX: StringValue | undefined;
-    invertY: StringValue | undefined;
+    invertX: TrueFalseBlankValue | undefined;
+    invertY: TrueFalseBlankValue | undefined;
     // (undocumented)
     readonly localName: "h";
     map: StringValue | undefined;
@@ -889,7 +894,7 @@ export class ShapeHandle extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "v";
     radiusRange: StringValue | undefined;
-    switch: StringValue | undefined;
+    switch: TrueFalseBlankValue | undefined;
     xRange: StringValue | undefined;
     yRange: StringValue | undefined;
 }
@@ -909,8 +914,8 @@ export class ShapeHandles extends OpenXmlCompositeElement {
 // @public
 export class Shapetype extends OpenXmlCompositeElement {
     adjustment: StringValue | undefined;
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     alternate: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -919,60 +924,60 @@ export class Shapetype extends OpenXmlCompositeElement {
     borderLeftColor: StringValue | undefined;
     borderRightColor: StringValue | undefined;
     borderTopColor: StringValue | undefined;
-    bullet: StringValue | undefined;
-    button: StringValue | undefined;
+    bullet: TrueFalseValue | undefined;
+    button: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     class: StringValue | undefined;
-    clip: StringValue | undefined;
-    clipToWrap: StringValue | undefined;
+    clip: TrueFalseValue | undefined;
+    clipToWrap: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectorType: StringValue | undefined;
     coordinateOrigin: StringValue | undefined;
     coordinateSize: StringValue | undefined;
-    diagramLayout: StringValue | undefined;
-    diagramLayoutMostRecentUsed: StringValue | undefined;
-    diagramNodeKind: StringValue | undefined;
-    doubleClickNotify: StringValue | undefined;
+    diagramLayout: IntegerValue | undefined;
+    diagramLayoutMostRecentUsed: IntegerValue | undefined;
+    diagramNodeKind: IntegerValue | undefined;
+    doubleClickNotify: TrueFalseValue | undefined;
     edgePath: StringValue | undefined;
     fillColor: StringValue | undefined;
-    filled: StringValue | undefined;
-    forceDash: StringValue | undefined;
-    horizontal: StringValue | undefined;
+    filled: TrueFalseValue | undefined;
+    forceDash: TrueFalseValue | undefined;
+    horizontal: TrueFalseValue | undefined;
     horizontalAlignment: StringValue | undefined;
-    horizontalNoShade: StringValue | undefined;
-    horizontalPercentage: StringValue | undefined;
-    horizontalStandard: StringValue | undefined;
+    horizontalNoShade: TrueFalseValue | undefined;
+    horizontalPercentage: SingleValue | undefined;
+    horizontalStandard: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
     insetMode: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "shapetype";
     master: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     normalBlackWhiteMode: StringValue | undefined;
-    ole: StringValue | undefined;
-    oleIcon: StringValue | undefined;
-    oned: StringValue | undefined;
+    ole: TrueFalseBlankValue | undefined;
+    oleIcon: TrueFalseValue | undefined;
+    oned: TrueFalseValue | undefined;
     optionalNumber: Int32Value | undefined;
     optionalString: StringValue | undefined;
-    preferRelative: StringValue | undefined;
+    preferRelative: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
-    print: StringValue | undefined;
+    print: TrueFalseValue | undefined;
     pureBlackWhiteMode: StringValue | undefined;
-    regroupId: StringValue | undefined;
+    regroupId: IntegerValue | undefined;
     strokeColor: StringValue | undefined;
-    stroked: StringValue | undefined;
+    stroked: TrueFalseValue | undefined;
     strokeWeight: StringValue | undefined;
     style: StringValue | undefined;
     target: StringValue | undefined;
     title: StringValue | undefined;
-    userDrawn: StringValue | undefined;
-    userHidden: StringValue | undefined;
+    userDrawn: TrueFalseValue | undefined;
+    userHidden: TrueFalseValue | undefined;
     wrapCoordinates: StringValue | undefined;
 }
 
@@ -993,13 +998,13 @@ export class Stroke extends OpenXmlCompositeElement {
     endArrowWidth: StringValue | undefined;
     endCap: StringValue | undefined;
     fillType: StringValue | undefined;
-    forceDash: StringValue | undefined;
+    forceDash: TrueFalseValue | undefined;
     href: StringValue | undefined;
     id: StringValue | undefined;
-    imageAlignShape: StringValue | undefined;
+    imageAlignShape: TrueFalseValue | undefined;
     imageAspect: StringValue | undefined;
     imageSize: StringValue | undefined;
-    insetpen: StringValue | undefined;
+    insetpen: TrueFalseValue | undefined;
     joinStyle: StringValue | undefined;
     lineStyle: StringValue | undefined;
     // (undocumented)
@@ -1007,7 +1012,7 @@ export class Stroke extends OpenXmlCompositeElement {
     miterlimit: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     opacity: StringValue | undefined;
     // (undocumented)
     readonly prefix: "v";
@@ -1036,7 +1041,7 @@ export class TextBox extends OpenXmlCompositeElement {
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
     // (undocumented)
     readonly prefix: "v";
-    singleClick: StringValue | undefined;
+    singleClick: TrueFalseValue | undefined;
     style: StringValue | undefined;
 }
 
@@ -1046,20 +1051,20 @@ export class TextPath extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    fitPath: StringValue | undefined;
-    fitShape: StringValue | undefined;
+    fitPath: TrueFalseValue | undefined;
+    fitShape: TrueFalseValue | undefined;
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "textpath";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:vml";
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "v";
     string: StringValue | undefined;
     style: StringValue | undefined;
-    trim: StringValue | undefined;
-    xScale: StringValue | undefined;
+    trim: TrueFalseValue | undefined;
+    xScale: TrueFalseValue | undefined;
 }
 
 // (No @packageDocumentation comment for this package)

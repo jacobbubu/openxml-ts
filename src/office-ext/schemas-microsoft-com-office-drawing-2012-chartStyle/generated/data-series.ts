@@ -3,8 +3,11 @@
 // @see DocumentFormat.OpenXml.Drawing2012ChartStyle.DataSeries
 
 import {
+  ByteValue,
   OpenXmlLeafElement,
+  SByteValue,
   StringValue,
+  UInt16Value,
 } from "../../../element/index.js";
 
 /** Defines the DataSeries Class.
@@ -17,16 +20,16 @@ export class DataSeries extends OpenXmlLeafElement {
 
 
   /** overlap (:overlap) */
-  overlap: StringValue | undefined;
+  overlap: SByteValue | undefined;
 
   /** gapWidth (:gapWidth) */
-  gapWidth: StringValue | undefined;
+  gapWidth: UInt16Value | undefined;
 
   /** gapDepth (:gapDepth) */
-  gapDepth: StringValue | undefined;
+  gapDepth: UInt16Value | undefined;
 
   /** doughnutHoleSize (:doughnutHoleSize) */
-  doughnutHoleSize: StringValue | undefined;
+  doughnutHoleSize: ByteValue | undefined;
 
   /** markerVisible (:markerVisible) */
   markerVisible: StringValue | undefined;
@@ -42,10 +45,10 @@ export class DataSeries extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "overlap": this.overlap = StringValue.parse(value); return;
-      case "gapWidth": this.gapWidth = StringValue.parse(value); return;
-      case "gapDepth": this.gapDepth = StringValue.parse(value); return;
-      case "doughnutHoleSize": this.doughnutHoleSize = StringValue.parse(value); return;
+      case "overlap": this.overlap = SByteValue.parse(value); return;
+      case "gapWidth": this.gapWidth = UInt16Value.parse(value); return;
+      case "gapDepth": this.gapDepth = UInt16Value.parse(value); return;
+      case "doughnutHoleSize": this.doughnutHoleSize = ByteValue.parse(value); return;
       case "markerVisible": this.markerVisible = StringValue.parse(value); return;
       case "hiloLines": this.hiloLines = StringValue.parse(value); return;
       case "dropLines": this.dropLines = StringValue.parse(value); return;

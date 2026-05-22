@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Defines the Path Class.
@@ -29,25 +30,25 @@ export class Path extends OpenXmlLeafElement {
   textboxRectangle: StringValue | undefined;
 
   /** Shape Fill Toggle (:fillok) */
-  allowFill: StringValue | undefined;
+  allowFill: TrueFalseValue | undefined;
 
   /** Stroke Toggle (:strokeok) */
-  allowStroke: StringValue | undefined;
+  allowStroke: TrueFalseValue | undefined;
 
   /** Shadow Toggle (:shadowok) */
-  allowShading: StringValue | undefined;
+  allowShading: TrueFalseValue | undefined;
 
   /** Arrowhead Display Toggle (:arrowok) */
-  showArrowhead: StringValue | undefined;
+  showArrowhead: TrueFalseValue | undefined;
 
   /** Gradient Shape Toggle (:gradientshapeok) */
-  allowGradientShape: StringValue | undefined;
+  allowGradientShape: TrueFalseValue | undefined;
 
   /** Text Path Toggle (:textpathok) */
-  allowTextPath: StringValue | undefined;
+  allowTextPath: TrueFalseValue | undefined;
 
   /** Inset Stroke From Path Flag (:insetpenok) */
-  allowInsetPen: StringValue | undefined;
+  allowInsetPen: TrueFalseValue | undefined;
 
   /** Connection Point Type (o:connecttype) */
   connectionPointType: StringValue | undefined;
@@ -59,7 +60,7 @@ export class Path extends OpenXmlLeafElement {
   connectAngles: StringValue | undefined;
 
   /** Extrusion Toggle (o:extrusionok) */
-  allowExtrusion: StringValue | undefined;
+  allowExtrusion: TrueFalseValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
@@ -67,17 +68,17 @@ export class Path extends OpenXmlLeafElement {
       case "v": this.value = StringValue.parse(value); return;
       case "limo": this.limo = StringValue.parse(value); return;
       case "textboxrect": this.textboxRectangle = StringValue.parse(value); return;
-      case "fillok": this.allowFill = StringValue.parse(value); return;
-      case "strokeok": this.allowStroke = StringValue.parse(value); return;
-      case "shadowok": this.allowShading = StringValue.parse(value); return;
-      case "arrowok": this.showArrowhead = StringValue.parse(value); return;
-      case "gradientshapeok": this.allowGradientShape = StringValue.parse(value); return;
-      case "textpathok": this.allowTextPath = StringValue.parse(value); return;
-      case "insetpenok": this.allowInsetPen = StringValue.parse(value); return;
+      case "fillok": this.allowFill = TrueFalseValue.parse(value); return;
+      case "strokeok": this.allowStroke = TrueFalseValue.parse(value); return;
+      case "shadowok": this.allowShading = TrueFalseValue.parse(value); return;
+      case "arrowok": this.showArrowhead = TrueFalseValue.parse(value); return;
+      case "gradientshapeok": this.allowGradientShape = TrueFalseValue.parse(value); return;
+      case "textpathok": this.allowTextPath = TrueFalseValue.parse(value); return;
+      case "insetpenok": this.allowInsetPen = TrueFalseValue.parse(value); return;
       case "o:connecttype": this.connectionPointType = StringValue.parse(value); return;
       case "o:connectlocs": this.connectionPoints = StringValue.parse(value); return;
       case "o:connectangles": this.connectAngles = StringValue.parse(value); return;
-      case "o:extrusionok": this.allowExtrusion = StringValue.parse(value); return;
+      case "o:extrusionok": this.allowExtrusion = TrueFalseValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

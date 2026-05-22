@@ -4,9 +4,9 @@
 
 import {
   DecimalValue,
+  IntegerValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
-  StringValue,
   assertNumber,
   assertRequired,
 } from "../../../element/index.js";
@@ -21,7 +21,7 @@ export class Node extends OpenXmlCompositeElement {
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
   /** node-number (:node-number) */
-  nodeNumber: StringValue | undefined;
+  nodeNumber: IntegerValue | undefined;
 
   /** confidence (emma:confidence) */
   confidence: DecimalValue | undefined;
@@ -31,7 +31,7 @@ export class Node extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "node-number": this.nodeNumber = StringValue.parse(value); return;
+      case "node-number": this.nodeNumber = IntegerValue.parse(value); return;
       case "emma:confidence": this.confidence = DecimalValue.parse(value); assertNumber(this.confidence, { min: 0, max: 1 }, { attribute: "emma:confidence", elementClass: "Node" }); return;
       case "emma:cost": this.cost = DecimalValue.parse(value); assertNumber(this.cost, { min: 0, max: 10000000 }, { attribute: "emma:cost", elementClass: "Node" }); return;
     }

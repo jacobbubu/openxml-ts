@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Drawing2012ChartStyle.StyleEntry
 
 import {
+  ListValue,
   OpenXmlCompositeElement,
   StringValue,
 } from "../../../element/index.js";
@@ -17,11 +18,11 @@ export abstract class StyleEntry extends OpenXmlCompositeElement {
 
 
   /** mods (:mods) */
-  modifiers: StringValue | undefined;
+  modifiers: ListValue<StringValue> | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "mods": this.modifiers = StringValue.parse(value); return;
+      case "mods": this.modifiers = ListValue.parse(value, StringValue.parse); return;
     }
     super.applyAttribute(qname, value);
   }

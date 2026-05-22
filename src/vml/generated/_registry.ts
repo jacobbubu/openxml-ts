@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas-microsoft-com_vml.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerVmlChildMaps } from "./_child-map.js";
 import { Arc } from "./arc.js";
 import { Background } from "./background.js";
 import { Curve } from "./curve.js";
@@ -30,6 +31,7 @@ import { TextPath } from "./text-path.js";
  * 把 vml 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function registerVmlElements(registry: ElementRegistry): void {
   registry.register("urn:schemas-microsoft-com:vml", "arc", Arc);
@@ -55,4 +57,5 @@ export function registerVmlElements(registry: ElementRegistry): void {
   registry.register("urn:schemas-microsoft-com:vml", "stroke", Stroke);
   registry.register("urn:schemas-microsoft-com:vml", "textbox", TextBox);
   registry.register("urn:schemas-microsoft-com:vml", "textpath", TextPath);
+  registerVmlChildMaps(registry);
 }

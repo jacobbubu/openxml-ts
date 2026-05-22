@@ -3,8 +3,8 @@
 // @see DocumentFormat.OpenXml.Word2006Wordml.RecordHashCode
 
 import {
+  IntegerValue,
   OpenXmlLeafElement,
-  StringValue,
   assertRequired,
 } from "../../../element/index.js";
 
@@ -18,11 +18,11 @@ export class RecordHashCode extends OpenXmlLeafElement {
 
 
   /** val (wne:val) */
-  val: StringValue | undefined;
+  val: IntegerValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "wne:val": this.val = StringValue.parse(value); return;
+      case "wne:val": this.val = IntegerValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

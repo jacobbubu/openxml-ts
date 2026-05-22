@@ -4,6 +4,7 @@
 
 import {
   BooleanValue,
+  ListValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -56,7 +57,7 @@ export class DataValidation extends OpenXmlCompositeElement {
   prompt: StringValue | undefined;
 
   /** sqref (:sqref) */
-  sequenceOfReferences: StringValue | undefined;
+  sequenceOfReferences: ListValue<StringValue> | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
@@ -72,7 +73,7 @@ export class DataValidation extends OpenXmlCompositeElement {
       case "error": this.error = StringValue.parse(value); return;
       case "promptTitle": this.promptTitle = StringValue.parse(value); return;
       case "prompt": this.prompt = StringValue.parse(value); return;
-      case "sqref": this.sequenceOfReferences = StringValue.parse(value); return;
+      case "sqref": this.sequenceOfReferences = ListValue.parse(value, StringValue.parse); return;
     }
     super.applyAttribute(qname, value);
   }

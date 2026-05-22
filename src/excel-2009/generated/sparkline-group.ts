@@ -4,6 +4,7 @@
 
 import {
   BooleanValue,
+  DoubleValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -19,13 +20,13 @@ export class SparklineGroup extends OpenXmlCompositeElement {
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
   /** manualMax (:manualMax) */
-  manualMax: StringValue | undefined;
+  manualMax: DoubleValue | undefined;
 
   /** manualMin (:manualMin) */
-  manualMin: StringValue | undefined;
+  manualMin: DoubleValue | undefined;
 
   /** lineWeight (:lineWeight) */
-  lineWeight: StringValue | undefined;
+  lineWeight: DoubleValue | undefined;
 
   /** type (:type) */
   type: StringValue | undefined;
@@ -71,9 +72,9 @@ export class SparklineGroup extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "manualMax": this.manualMax = StringValue.parse(value); return;
-      case "manualMin": this.manualMin = StringValue.parse(value); return;
-      case "lineWeight": this.lineWeight = StringValue.parse(value); return;
+      case "manualMax": this.manualMax = DoubleValue.parse(value); return;
+      case "manualMin": this.manualMin = DoubleValue.parse(value); return;
+      case "lineWeight": this.lineWeight = DoubleValue.parse(value); return;
       case "type": this.type = StringValue.parse(value); return;
       case "dateAxis": this.dateAxis = BooleanValue.parse(value); return;
       case "displayEmptyCellsAs": this.displayEmptyCellsAs = StringValue.parse(value); return;

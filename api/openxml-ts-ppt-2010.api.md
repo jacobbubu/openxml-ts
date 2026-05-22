@@ -691,7 +691,8 @@ export class SectionOld extends OpenXmlCompositeElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2010/main";
     // (undocumented)
     readonly prefix: "p14";
-    slideIdList: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "ListValue" needs to be exported by the entry point index.d.ts
+    slideIdList: ListValue<UInt32Value> | undefined;
 }
 
 // @public

@@ -399,22 +399,25 @@ class Arc extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     confidence: DecimalValue | undefined;
     cost: DecimalValue | undefined;
-    duration: StringValue | undefined;
-    end: StringValue | undefined;
-    from: StringValue | undefined;
+    duration: IntegerValue | undefined;
+    end: UInt64Value | undefined;
+    // Warning: (ae-forgotten-export) The symbol "IntegerValue" needs to be exported by the entry point index.d.ts
+    from: IntegerValue | undefined;
     language: StringValue | undefined;
     // (undocumented)
     readonly localName: "arc";
     medium: StringValue | undefined;
-    mode: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "ListValue" needs to be exported by the entry point index.d.ts
+    mode: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://www.w3.org/2003/04/emma";
-    offsetToStart: StringValue | undefined;
+    offsetToStart: IntegerValue | undefined;
     // (undocumented)
     readonly prefix: "emma";
     source: StringValue | undefined;
-    start: StringValue | undefined;
-    to: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "UInt64Value" needs to be exported by the entry point index.d.ts
+    start: UInt64Value | undefined;
+    to: IntegerValue | undefined;
     validateRequired(): void;
 }
 
@@ -655,7 +658,7 @@ class AxisTitle extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "axisTitle";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -885,7 +888,7 @@ class BackstageEditBox extends OpenXmlLeafElement {
     label: StringValue | undefined;
     // (undocumented)
     readonly localName: "editBox";
-    maxLength: StringValue | undefined;
+    maxLength: IntegerValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/2009/07/customui";
     onChange: StringValue | undefined;
@@ -1279,10 +1282,10 @@ class BackstageTab extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    columnWidthPercent: StringValue | undefined;
+    columnWidthPercent: IntegerValue | undefined;
     enabled: BooleanValue | undefined;
-    firstColumnMaxWidth: StringValue | undefined;
-    firstColumnMinWidth: StringValue | undefined;
+    firstColumnMaxWidth: IntegerValue | undefined;
+    firstColumnMinWidth: IntegerValue | undefined;
     getEnabled: StringValue | undefined;
     getKeytip: StringValue | undefined;
     getLabel: StringValue | undefined;
@@ -1303,8 +1306,8 @@ class BackstageTab extends OpenXmlCompositeElement {
     // (undocumented)
     readonly prefix: "mso14";
     qualifiedId: StringValue | undefined;
-    secondColumnMaxWidth: StringValue | undefined;
-    secondColumnMinWidth: StringValue | undefined;
+    secondColumnMaxWidth: IntegerValue | undefined;
+    secondColumnMinWidth: IntegerValue | undefined;
     tag: StringValue | undefined;
     title: StringValue | undefined;
     visible: BooleanValue | undefined;
@@ -1943,7 +1946,7 @@ class CategoryAxis extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "categoryAxis";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -2133,7 +2136,7 @@ class ChartArea extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "chartArea";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -2205,7 +2208,8 @@ class ChartTrackingRefBased extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2012/wordml";
     // (undocumented)
     readonly prefix: "w15";
-    val: BooleanValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "OnOffValue" needs to be exported by the entry point index.d.ts
+    val: OnOffValue | undefined;
 }
 
 // @public
@@ -2573,7 +2577,7 @@ class ComboBox extends OpenXmlCompositeElement {
     label: StringValue | undefined;
     // (undocumented)
     readonly localName: "comboBox";
-    maxLength: StringValue | undefined;
+    maxLength: IntegerValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/2006/01/customui";
     onChange: StringValue | undefined;
@@ -2627,7 +2631,7 @@ class ComboBox_2 extends OpenXmlCompositeElement {
     label: StringValue | undefined;
     // (undocumented)
     readonly localName: "comboBox";
-    maxLength: StringValue | undefined;
+    maxLength: IntegerValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/2009/07/customui";
     onChange: StringValue | undefined;
@@ -2744,7 +2748,7 @@ class CommentEx extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    done: BooleanValue | undefined;
+    done: OnOffValue | undefined;
     // (undocumented)
     readonly localName: "commentEx";
     // (undocumented)
@@ -3226,7 +3230,7 @@ class ContextNode extends OpenXmlCompositeElement {
     customRecognizerId: StringValue | undefined;
     descender: StringValue | undefined;
     endModifierType: StringValue | undefined;
-    hotPoints: StringValue | undefined;
+    hotPoints: ListValue<StringValue> | undefined;
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "context";
@@ -3238,10 +3242,10 @@ class ContextNode extends OpenXmlCompositeElement {
     readonly namespaceUri: "http://schemas.microsoft.com/ink/2010/main";
     // (undocumented)
     readonly prefix: "msink";
-    rotatedBoundingBox: StringValue | undefined;
+    rotatedBoundingBox: ListValue<StringValue> | undefined;
     rotationAngle: Int32Value | undefined;
     semanticType: StringValue | undefined;
-    shapeGeometry: StringValue | undefined;
+    shapeGeometry: ListValue<StringValue> | undefined;
     shapeName: StringValue | undefined;
     type: StringValue | undefined;
     validateRequired(): void;
@@ -3686,7 +3690,7 @@ class DataLabel_2 extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dataLabel";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -3703,7 +3707,7 @@ class DataLabelCallout extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dataLabelCallout";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -3816,7 +3820,7 @@ class DataPoint extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dataPoint";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -3833,7 +3837,7 @@ class DataPoint3D extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dataPoint3D";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -3850,7 +3854,7 @@ class DataPointLine extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dataPointLine";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -3867,7 +3871,7 @@ class DataPointMarker extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dataPointMarker";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -3884,7 +3888,7 @@ class DataPointWireframe extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dataPointWireframe";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -3909,17 +3913,20 @@ class DataSeries extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    doughnutHoleSize: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "ByteValue" needs to be exported by the entry point index.d.ts
+    doughnutHoleSize: ByteValue | undefined;
     dropLines: StringValue | undefined;
-    gapDepth: StringValue | undefined;
-    gapWidth: StringValue | undefined;
+    gapDepth: UInt16Value | undefined;
+    // Warning: (ae-forgotten-export) The symbol "UInt16Value" needs to be exported by the entry point index.d.ts
+    gapWidth: UInt16Value | undefined;
     hiloLines: StringValue | undefined;
     // (undocumented)
     readonly localName: "dataSeries";
     markerVisible: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
-    overlap: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "SByteValue" needs to be exported by the entry point index.d.ts
+    overlap: SByteValue | undefined;
     // (undocumented)
     readonly prefix: "cs";
     seriesLines: StringValue | undefined;
@@ -3953,7 +3960,7 @@ class DataTableStyle extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dataTable";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -3982,7 +3989,7 @@ class DataValidation extends OpenXmlCompositeElement {
     readonly prefix: "xr";
     prompt: StringValue | undefined;
     promptTitle: StringValue | undefined;
-    sequenceOfReferences: StringValue | undefined;
+    sequenceOfReferences: ListValue<StringValue> | undefined;
     showDropDown: BooleanValue | undefined;
     showErrorMessage: BooleanValue | undefined;
     showInputMessage: BooleanValue | undefined;
@@ -4022,7 +4029,7 @@ class DefaultCollapsed extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2012/wordml";
     // (undocumented)
     readonly prefix: "w15";
-    val: BooleanValue | undefined;
+    val: OnOffValue | undefined;
 }
 
 // @public
@@ -4389,7 +4396,7 @@ class DoNotAllowInsertDeleteSection extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2012/wordml";
     // (undocumented)
     readonly prefix: "w15";
-    val: BooleanValue | undefined;
+    val: OnOffValue | undefined;
 }
 
 // @public
@@ -4402,7 +4409,7 @@ class DownBar extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "downBar";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -4585,7 +4592,7 @@ class DropLine extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dropLine";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -4887,14 +4894,15 @@ class DynamicRichFilter extends OpenXmlLeafElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dynamicFilter";
-    maxVal: StringValue | undefined;
+    maxVal: DoubleValue | undefined;
     maxValIso: DateTimeValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
     type: StringValue | undefined;
-    val: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "DoubleValue" needs to be exported by the entry point index.d.ts
+    val: DoubleValue | undefined;
     validateRequired(): void;
     // Warning: (ae-forgotten-export) The symbol "DateTimeValue" needs to be exported by the entry point index.d.ts
     valIso: DateTimeValue | undefined;
@@ -4930,7 +4938,7 @@ class EditBox extends OpenXmlLeafElement {
     label: StringValue | undefined;
     // (undocumented)
     readonly localName: "editBox";
-    maxLength: StringValue | undefined;
+    maxLength: IntegerValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/2006/01/customui";
     onChange: StringValue | undefined;
@@ -4974,7 +4982,7 @@ class EditBox_2 extends OpenXmlLeafElement {
     label: StringValue | undefined;
     // (undocumented)
     readonly localName: "editBox";
-    maxLength: StringValue | undefined;
+    maxLength: IntegerValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/2009/07/customui";
     onChange: StringValue | undefined;
@@ -5023,7 +5031,7 @@ class EffectReference extends OpenXmlCompositeElement {
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "effectRef";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -5163,10 +5171,10 @@ class EndPoint extends OpenXmlCompositeElement {
     mediaType: StringValue | undefined;
     medium: StringValue | undefined;
     messageId: StringValue | undefined;
-    mode: StringValue | undefined;
+    mode: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://www.w3.org/2003/04/emma";
-    portNumber: StringValue | undefined;
+    portNumber: IntegerValue | undefined;
     portType: StringValue | undefined;
     // (undocumented)
     readonly prefix: "emma";
@@ -5202,7 +5210,7 @@ class ErrorBar extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "errorBar";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -5815,7 +5823,7 @@ class FillReference extends OpenXmlCompositeElement {
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "fillRef";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -6008,7 +6016,7 @@ class Floor extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "floor";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -6026,7 +6034,7 @@ class FontReference extends OpenXmlCompositeElement {
     index: StringValue | undefined;
     // (undocumented)
     readonly localName: "fontRef";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -6152,7 +6160,7 @@ class Gallery extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    columns: StringValue | undefined;
+    columns: IntegerValue | undefined;
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -6186,8 +6194,8 @@ class Gallery extends OpenXmlCompositeElement {
     insertBeforeMso: StringValue | undefined;
     insertBeforeQ: StringValue | undefined;
     invalidateContentOnDrop: BooleanValue | undefined;
-    itemHeight: StringValue | undefined;
-    itemWidth: StringValue | undefined;
+    itemHeight: IntegerValue | undefined;
+    itemWidth: IntegerValue | undefined;
     keytip: StringValue | undefined;
     label: StringValue | undefined;
     // (undocumented)
@@ -6197,7 +6205,7 @@ class Gallery extends OpenXmlCompositeElement {
     onAction: StringValue | undefined;
     // (undocumented)
     readonly prefix: "mso";
-    rows: StringValue | undefined;
+    rows: IntegerValue | undefined;
     screentip: StringValue | undefined;
     showImage: BooleanValue | undefined;
     showItemImage: BooleanValue | undefined;
@@ -6218,7 +6226,7 @@ class Gallery_2 extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    columns: StringValue | undefined;
+    columns: IntegerValue | undefined;
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -6251,8 +6259,8 @@ class Gallery_2 extends OpenXmlCompositeElement {
     insertBeforeMso: StringValue | undefined;
     insertBeforeQulifiedId: StringValue | undefined;
     invalidateContentOnDrop: BooleanValue | undefined;
-    itemHeight: StringValue | undefined;
-    itemWidth: StringValue | undefined;
+    itemHeight: IntegerValue | undefined;
+    itemWidth: IntegerValue | undefined;
     keytip: StringValue | undefined;
     label: StringValue | undefined;
     // (undocumented)
@@ -6263,7 +6271,7 @@ class Gallery_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly prefix: "mso14";
     qualifiedId: StringValue | undefined;
-    rows: StringValue | undefined;
+    rows: IntegerValue | undefined;
     screentip: StringValue | undefined;
     showImage: BooleanValue | undefined;
     showInRibbon: StringValue | undefined;
@@ -6285,7 +6293,7 @@ class GalleryRegular extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    columns: StringValue | undefined;
+    columns: IntegerValue | undefined;
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -6317,8 +6325,8 @@ class GalleryRegular extends OpenXmlCompositeElement {
     insertBeforeMso: StringValue | undefined;
     insertBeforeQulifiedId: StringValue | undefined;
     invalidateContentOnDrop: BooleanValue | undefined;
-    itemHeight: StringValue | undefined;
-    itemWidth: StringValue | undefined;
+    itemHeight: IntegerValue | undefined;
+    itemWidth: IntegerValue | undefined;
     keytip: StringValue | undefined;
     label: StringValue | undefined;
     // (undocumented)
@@ -6329,7 +6337,7 @@ class GalleryRegular extends OpenXmlCompositeElement {
     // (undocumented)
     readonly prefix: "mso14";
     qualifiedId: StringValue | undefined;
-    rows: StringValue | undefined;
+    rows: IntegerValue | undefined;
     screentip: StringValue | undefined;
     showImage: BooleanValue | undefined;
     showInRibbon: StringValue | undefined;
@@ -6437,7 +6445,7 @@ class GridlineMajor extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "gridlineMajor";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -6454,7 +6462,7 @@ class GridlineMinor extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "gridlineMinor";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -6548,8 +6556,8 @@ class Group_3 extends OpenXmlCompositeElement {
     confidence: DecimalValue | undefined;
     cost: DecimalValue | undefined;
     dialogTurn: StringValue | undefined;
-    duration: StringValue | undefined;
-    end: StringValue | undefined;
+    duration: IntegerValue | undefined;
+    end: UInt64Value | undefined;
     endpointInfoRef: StringValue | undefined;
     function: StringValue | undefined;
     grammarRef: StringValue | undefined;
@@ -6559,18 +6567,18 @@ class Group_3 extends OpenXmlCompositeElement {
     readonly localName: "group";
     mediaType: StringValue | undefined;
     medium: StringValue | undefined;
-    mode: StringValue | undefined;
+    mode: ListValue<StringValue> | undefined;
     modelRef: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://www.w3.org/2003/04/emma";
-    offsetToStart: StringValue | undefined;
+    offsetToStart: IntegerValue | undefined;
     // (undocumented)
     readonly prefix: "emma";
     process: StringValue | undefined;
     signal: StringValue | undefined;
-    signalSize: StringValue | undefined;
+    signalSize: IntegerValue | undefined;
     source: StringValue | undefined;
-    start: StringValue | undefined;
+    start: UInt64Value | undefined;
     timeReference: StringValue | undefined;
     timeReferenceAnchorPoint: StringValue | undefined;
     tokens: StringValue | undefined;
@@ -6814,7 +6822,7 @@ class HiLoLine extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "hiLoLine";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -7163,8 +7171,8 @@ class Interpretation extends OpenXmlCompositeElement {
     confidence: DecimalValue | undefined;
     cost: DecimalValue | undefined;
     dialogTurn: StringValue | undefined;
-    duration: StringValue | undefined;
-    end: StringValue | undefined;
+    duration: IntegerValue | undefined;
+    end: UInt64Value | undefined;
     endpointInfoRef: StringValue | undefined;
     function: StringValue | undefined;
     grammarRef: StringValue | undefined;
@@ -7174,19 +7182,19 @@ class Interpretation extends OpenXmlCompositeElement {
     readonly localName: "interpretation";
     mediaType: StringValue | undefined;
     medium: StringValue | undefined;
-    mode: StringValue | undefined;
+    mode: ListValue<StringValue> | undefined;
     modelRef: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://www.w3.org/2003/04/emma";
     noInput: BooleanValue | undefined;
-    offsetToStart: StringValue | undefined;
+    offsetToStart: IntegerValue | undefined;
     // (undocumented)
     readonly prefix: "emma";
     process: StringValue | undefined;
     signal: StringValue | undefined;
-    signalSize: StringValue | undefined;
+    signalSize: IntegerValue | undefined;
     source: StringValue | undefined;
-    start: StringValue | undefined;
+    start: UInt64Value | undefined;
     timeReference: StringValue | undefined;
     timeReferenceAnchorPoint: StringValue | undefined;
     tokens: StringValue | undefined;
@@ -7350,7 +7358,7 @@ class KeyMapEntry extends OpenXmlCompositeElement {
     keyCodeSecondary: HexBinaryValue | undefined;
     // (undocumented)
     readonly localName: "keymap";
-    mask: BooleanValue | undefined;
+    mask: OnOffValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2006/wordml";
     // (undocumented)
@@ -7465,8 +7473,8 @@ class Lattice extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    final: StringValue | undefined;
-    initial: StringValue | undefined;
+    final: ListValue<DecimalValue> | undefined;
+    initial: IntegerValue | undefined;
     // (undocumented)
     readonly localName: "lattice";
     // (undocumented)
@@ -7522,7 +7530,7 @@ class LeaderLine extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "leaderLine";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -7568,7 +7576,7 @@ class LegendStyle extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "legend";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -7640,7 +7648,7 @@ class LineReference extends OpenXmlCompositeElement {
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "lnRef";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -7740,14 +7748,14 @@ class LinkedTextBox extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    id: StringValue | undefined;
+    id: UInt16Value | undefined;
     // (undocumented)
     readonly localName: "linkedTxbx";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2010/wordprocessingShape";
     // (undocumented)
     readonly prefix: "wps";
-    sequence: StringValue | undefined;
+    sequence: UInt16Value | undefined;
     validateRequired(): void;
 }
 
@@ -8000,7 +8008,7 @@ class MarkerLayoutProperties extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
     readonly prefix: "cs";
-    size: StringValue | undefined;
+    size: ByteValue | undefined;
     symbol: StringValue | undefined;
 }
 
@@ -8786,7 +8794,7 @@ class Node extends OpenXmlCompositeElement {
     readonly localName: "node";
     // (undocumented)
     readonly namespaceUri: "http://www.w3.org/2003/04/emma";
-    nodeNumber: StringValue | undefined;
+    nodeNumber: IntegerValue | undefined;
     // (undocumented)
     readonly prefix: "emma";
     validateRequired(): void;
@@ -11217,8 +11225,8 @@ class OneOf extends OpenXmlCompositeElement {
     cost: DecimalValue | undefined;
     dialogTurn: StringValue | undefined;
     disjunctionType: StringValue | undefined;
-    duration: StringValue | undefined;
-    end: StringValue | undefined;
+    duration: IntegerValue | undefined;
+    end: UInt64Value | undefined;
     endpointInfoRef: StringValue | undefined;
     function: StringValue | undefined;
     grammarRef: StringValue | undefined;
@@ -11228,18 +11236,18 @@ class OneOf extends OpenXmlCompositeElement {
     readonly localName: "one-of";
     mediaType: StringValue | undefined;
     medium: StringValue | undefined;
-    mode: StringValue | undefined;
+    mode: ListValue<StringValue> | undefined;
     modelRef: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://www.w3.org/2003/04/emma";
-    offsetToStart: StringValue | undefined;
+    offsetToStart: IntegerValue | undefined;
     // (undocumented)
     readonly prefix: "emma";
     process: StringValue | undefined;
     signal: StringValue | undefined;
-    signalSize: StringValue | undefined;
+    signalSize: IntegerValue | undefined;
     source: StringValue | undefined;
-    start: StringValue | undefined;
+    start: UInt64Value | undefined;
     timeReference: StringValue | undefined;
     timeReferenceAnchorPoint: StringValue | undefined;
     tokens: StringValue | undefined;
@@ -11259,7 +11267,7 @@ abstract class OnOffType extends OpenXmlLeafElement {
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
-    val: BooleanValue | undefined;
+    val: OnOffValue | undefined;
 }
 
 // @public
@@ -11836,7 +11844,7 @@ class pivotTableDefinition extends OpenXmlCompositeElement {
     columnHeaderCaption: StringValue | undefined;
     compact: BooleanValue | undefined;
     compactData: BooleanValue | undefined;
-    createdVersion: StringValue | undefined;
+    createdVersion: ByteValue | undefined;
     customListSort: BooleanValue | undefined;
     dataCaption: StringValue | undefined;
     dataOnRows: BooleanValue | undefined;
@@ -11857,7 +11865,7 @@ class pivotTableDefinition extends OpenXmlCompositeElement {
     readonly localName: "pivotTableDefinition";
     mdxSubqueries: BooleanValue | undefined;
     mergeItem: BooleanValue | undefined;
-    minRefreshableVersion: StringValue | undefined;
+    minRefreshableVersion: ByteValue | undefined;
     missingCaption: StringValue | undefined;
     multipleFieldFilters: BooleanValue | undefined;
     name: StringValue | undefined;
@@ -11892,7 +11900,7 @@ class pivotTableDefinition extends OpenXmlCompositeElement {
     stopImmersiveUi: BooleanValue | undefined;
     subtotalHiddenItems: BooleanValue | undefined;
     tag: StringValue | undefined;
-    updatedVersion: StringValue | undefined;
+    updatedVersion: ByteValue | undefined;
     useAutoFormatting: BooleanValue | undefined;
     vacatedStyle: StringValue | undefined;
     validateRequired(): void;
@@ -11967,7 +11975,7 @@ class PlotArea extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "plotArea";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -11984,7 +11992,7 @@ class PlotArea3D extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "plotArea3D";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -12438,7 +12446,7 @@ class RecordHashCode extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2006/wordml";
     // (undocumented)
     readonly prefix: "wne";
-    val: StringValue | undefined;
+    val: IntegerValue | undefined;
     validateRequired(): void;
 }
 
@@ -12454,7 +12462,7 @@ class RecordIncluded extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2006/wordml";
     // (undocumented)
     readonly prefix: "wne";
-    val: BooleanValue | undefined;
+    val: OnOffValue | undefined;
 }
 
 // @public
@@ -13027,19 +13035,19 @@ class RichDateGroupItem extends OpenXmlLeafElement {
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     dateTimeGrouping: StringValue | undefined;
-    day: StringValue | undefined;
-    hour: StringValue | undefined;
+    day: UInt16Value | undefined;
+    hour: UInt16Value | undefined;
     // (undocumented)
     readonly localName: "dateGroupItem";
-    minute: StringValue | undefined;
-    month: StringValue | undefined;
+    minute: UInt16Value | undefined;
+    month: UInt16Value | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
-    second: StringValue | undefined;
+    second: UInt16Value | undefined;
     validateRequired(): void;
-    year: StringValue | undefined;
+    year: UInt16Value | undefined;
 }
 
 // @public
@@ -13194,7 +13202,7 @@ class RichTop10 extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    filterValue: StringValue | undefined;
+    filterValue: DoubleValue | undefined;
     // (undocumented)
     readonly localName: "top10";
     // (undocumented)
@@ -13203,7 +13211,7 @@ class RichTop10 extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "xlrd2";
     top: BooleanValue | undefined;
-    val: StringValue | undefined;
+    val: DoubleValue | undefined;
     validateRequired(): void;
 }
 
@@ -13670,8 +13678,8 @@ class Sequence extends OpenXmlCompositeElement {
     confidence: DecimalValue | undefined;
     cost: DecimalValue | undefined;
     dialogTurn: StringValue | undefined;
-    duration: StringValue | undefined;
-    end: StringValue | undefined;
+    duration: IntegerValue | undefined;
+    end: UInt64Value | undefined;
     endpointInfoRef: StringValue | undefined;
     function: StringValue | undefined;
     grammarRef: StringValue | undefined;
@@ -13681,18 +13689,18 @@ class Sequence extends OpenXmlCompositeElement {
     readonly localName: "sequence";
     mediaType: StringValue | undefined;
     medium: StringValue | undefined;
-    mode: StringValue | undefined;
+    mode: ListValue<StringValue> | undefined;
     modelRef: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://www.w3.org/2003/04/emma";
-    offsetToStart: StringValue | undefined;
+    offsetToStart: IntegerValue | undefined;
     // (undocumented)
     readonly prefix: "emma";
     process: StringValue | undefined;
     signal: StringValue | undefined;
-    signalSize: StringValue | undefined;
+    signalSize: IntegerValue | undefined;
     source: StringValue | undefined;
-    start: StringValue | undefined;
+    start: UInt64Value | undefined;
     timeReference: StringValue | undefined;
     timeReferenceAnchorPoint: StringValue | undefined;
     tokens: StringValue | undefined;
@@ -13720,7 +13728,7 @@ class SeriesAxis extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "seriesAxis";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -13758,7 +13766,7 @@ class SeriesLine extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "seriesLine";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -14463,12 +14471,12 @@ class SparklineGroup extends OpenXmlCompositeElement {
     first: BooleanValue | undefined;
     high: BooleanValue | undefined;
     last: BooleanValue | undefined;
-    lineWeight: StringValue | undefined;
+    lineWeight: DoubleValue | undefined;
     // (undocumented)
     readonly localName: "sparklineGroup";
     low: BooleanValue | undefined;
-    manualMax: StringValue | undefined;
-    manualMin: StringValue | undefined;
+    manualMax: DoubleValue | undefined;
+    manualMin: DoubleValue | undefined;
     markers: BooleanValue | undefined;
     maxAxisType: StringValue | undefined;
     minAxisType: StringValue | undefined;
@@ -14796,7 +14804,7 @@ class Style extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2007/8/2/chart";
     // (undocumented)
     readonly prefix: "c14";
-    val: StringValue | undefined;
+    val: ByteValue | undefined;
     validateRequired(): void;
 }
 
@@ -14825,7 +14833,7 @@ abstract class StyleEntry extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
@@ -14857,7 +14865,7 @@ abstract class StyleReference extends OpenXmlCompositeElement {
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
@@ -16160,7 +16168,7 @@ class TextBoxInfo2 extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    id: StringValue | undefined;
+    id: UInt16Value | undefined;
     // (undocumented)
     readonly localName: "txbx";
     // (undocumented)
@@ -16479,7 +16487,7 @@ class TitleStyle extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "title";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -16930,7 +16938,7 @@ class TrendlineLabel extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "trendlineLabel";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -16947,7 +16955,7 @@ class TrendlineStyle extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "trendline";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -17236,7 +17244,7 @@ class UnsizedGallery extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    columns: StringValue | undefined;
+    columns: IntegerValue | undefined;
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -17269,8 +17277,8 @@ class UnsizedGallery extends OpenXmlCompositeElement {
     insertBeforeMso: StringValue | undefined;
     insertBeforeQ: StringValue | undefined;
     invalidateContentOnDrop: BooleanValue | undefined;
-    itemHeight: StringValue | undefined;
-    itemWidth: StringValue | undefined;
+    itemHeight: IntegerValue | undefined;
+    itemWidth: IntegerValue | undefined;
     keytip: StringValue | undefined;
     label: StringValue | undefined;
     // (undocumented)
@@ -17280,7 +17288,7 @@ class UnsizedGallery extends OpenXmlCompositeElement {
     onAction: StringValue | undefined;
     // (undocumented)
     readonly prefix: "mso";
-    rows: StringValue | undefined;
+    rows: IntegerValue | undefined;
     screentip: StringValue | undefined;
     showImage: BooleanValue | undefined;
     showItemImage: BooleanValue | undefined;
@@ -17425,7 +17433,7 @@ class UpBar extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "upBar";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -17490,7 +17498,7 @@ class ValueAxis extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "valueAxis";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -17598,18 +17606,18 @@ class View3DProperties extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    depthPercent: StringValue | undefined;
-    heightPercent: StringValue | undefined;
+    depthPercent: UInt16Value | undefined;
+    heightPercent: UInt16Value | undefined;
     // (undocumented)
     readonly localName: "view3D";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
-    perspective: StringValue | undefined;
+    perspective: ByteValue | undefined;
     // (undocumented)
     readonly prefix: "cs";
     rightAngleAxes: StringValue | undefined;
-    rotX: StringValue | undefined;
-    rotY: StringValue | undefined;
+    rotX: SByteValue | undefined;
+    rotY: UInt16Value | undefined;
 }
 
 // @public
@@ -17804,7 +17812,7 @@ class Wall extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "wall";
-    modifiers: StringValue | undefined;
+    modifiers: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2012/chartStyle";
     // (undocumented)
@@ -17874,7 +17882,7 @@ class WebExtensionCreated extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2012/wordml";
     // (undocumented)
     readonly prefix: "w15";
-    val: BooleanValue | undefined;
+    val: OnOffValue | undefined;
 }
 
 // @public
@@ -17889,7 +17897,7 @@ class WebExtensionLinked extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2012/wordml";
     // (undocumented)
     readonly prefix: "w15";
-    val: BooleanValue | undefined;
+    val: OnOffValue | undefined;
 }
 
 // @public
@@ -17992,7 +18000,7 @@ class WebExtensionTaskpane extends OpenXmlCompositeElement {
     readonly prefix: "wetp";
     validateRequired(): void;
     visibility: BooleanValue | undefined;
-    width: StringValue | undefined;
+    width: DoubleValue | undefined;
 }
 
 // @public

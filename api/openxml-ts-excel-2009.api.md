@@ -62,8 +62,8 @@ export class AxisColor extends OpenXmlLeafElement {
     // Warning: (ae-forgotten-export) The symbol "HexBinaryValue" needs to be exported by the entry point index.d.ts
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
-    tint: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "DoubleValue" needs to be exported by the entry point index.d.ts
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -82,7 +82,7 @@ export class BarAxisColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -101,7 +101,7 @@ export class BorderColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -147,6 +147,7 @@ export class CalculatedMember extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
+    // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
     displayFolder: StringValue | undefined;
     dynamicSet: BooleanValue | undefined;
     flattenHierarchies: BooleanValue | undefined;
@@ -193,7 +194,7 @@ export class Color extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -224,7 +225,7 @@ export abstract class ColorType extends OpenXmlLeafElement {
     readonly prefix: "";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -659,7 +660,7 @@ export class FillColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -693,7 +694,7 @@ export class FirstMarkerColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -759,7 +760,7 @@ export class HighMarkerColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -863,7 +864,7 @@ export class LastMarkerColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -904,7 +905,7 @@ export class LowMarkerColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -923,7 +924,7 @@ export class MarkersColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -942,7 +943,7 @@ export class NegativeBorderColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -961,7 +962,7 @@ export class NegativeColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -980,7 +981,7 @@ export class NegativeFillColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -1385,7 +1386,8 @@ export class ProtectedRange extends OpenXmlCompositeElement {
     readonly children: OpenXmlElementList;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    hashValue: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "Base64BinaryValue" needs to be exported by the entry point index.d.ts
+    hashValue: Base64BinaryValue | undefined;
     // (undocumented)
     readonly localName: "protectedRange";
     name: StringValue | undefined;
@@ -1394,7 +1396,7 @@ export class ProtectedRange extends OpenXmlCompositeElement {
     password: HexBinaryValue | undefined;
     // (undocumented)
     readonly prefix: "x14";
-    saltValue: StringValue | undefined;
+    saltValue: Base64BinaryValue | undefined;
     securityDescriptor: StringValue | undefined;
     spinCount: UInt32Value | undefined;
     validateRequired(): void;
@@ -1433,7 +1435,7 @@ export class SeriesColor extends OpenXmlLeafElement {
     readonly prefix: "x14";
     rgb: HexBinaryValue | undefined;
     theme: UInt32Value | undefined;
-    tint: StringValue | undefined;
+    tint: DoubleValue | undefined;
 }
 
 // @public
@@ -1760,12 +1762,12 @@ export class SparklineGroup extends OpenXmlCompositeElement {
     first: BooleanValue | undefined;
     high: BooleanValue | undefined;
     last: BooleanValue | undefined;
-    lineWeight: StringValue | undefined;
+    lineWeight: DoubleValue | undefined;
     // (undocumented)
     readonly localName: "sparklineGroup";
     low: BooleanValue | undefined;
-    manualMax: StringValue | undefined;
-    manualMin: StringValue | undefined;
+    manualMax: DoubleValue | undefined;
+    manualMin: DoubleValue | undefined;
     markers: BooleanValue | undefined;
     maxAxisType: StringValue | undefined;
     minAxisType: StringValue | undefined;

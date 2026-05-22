@@ -4,6 +4,7 @@
 
 import {
   BooleanValue,
+  IntegerValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -74,19 +75,19 @@ export class BackstageTab extends OpenXmlCompositeElement {
   getTitle: StringValue | undefined;
 
   /** columnWidthPercent (:columnWidthPercent) */
-  columnWidthPercent: StringValue | undefined;
+  columnWidthPercent: IntegerValue | undefined;
 
   /** firstColumnMinWidth (:firstColumnMinWidth) */
-  firstColumnMinWidth: StringValue | undefined;
+  firstColumnMinWidth: IntegerValue | undefined;
 
   /** firstColumnMaxWidth (:firstColumnMaxWidth) */
-  firstColumnMaxWidth: StringValue | undefined;
+  firstColumnMaxWidth: IntegerValue | undefined;
 
   /** secondColumnMinWidth (:secondColumnMinWidth) */
-  secondColumnMinWidth: StringValue | undefined;
+  secondColumnMinWidth: IntegerValue | undefined;
 
   /** secondColumnMaxWidth (:secondColumnMaxWidth) */
-  secondColumnMaxWidth: StringValue | undefined;
+  secondColumnMaxWidth: IntegerValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
@@ -108,11 +109,11 @@ export class BackstageTab extends OpenXmlCompositeElement {
       case "getKeytip": this.getKeytip = StringValue.parse(value); assertString(this.getKeytip, { maxLength: 1024, minLength: 1 }, { attribute: ":getKeytip", elementClass: "BackstageTab" }); return;
       case "title": this.title = StringValue.parse(value); assertString(this.title, { maxLength: 1024, minLength: 1 }, { attribute: ":title", elementClass: "BackstageTab" }); return;
       case "getTitle": this.getTitle = StringValue.parse(value); assertString(this.getTitle, { maxLength: 1024, minLength: 1 }, { attribute: ":getTitle", elementClass: "BackstageTab" }); return;
-      case "columnWidthPercent": this.columnWidthPercent = StringValue.parse(value); return;
-      case "firstColumnMinWidth": this.firstColumnMinWidth = StringValue.parse(value); return;
-      case "firstColumnMaxWidth": this.firstColumnMaxWidth = StringValue.parse(value); return;
-      case "secondColumnMinWidth": this.secondColumnMinWidth = StringValue.parse(value); return;
-      case "secondColumnMaxWidth": this.secondColumnMaxWidth = StringValue.parse(value); return;
+      case "columnWidthPercent": this.columnWidthPercent = IntegerValue.parse(value); return;
+      case "firstColumnMinWidth": this.firstColumnMinWidth = IntegerValue.parse(value); return;
+      case "firstColumnMaxWidth": this.firstColumnMaxWidth = IntegerValue.parse(value); return;
+      case "secondColumnMinWidth": this.secondColumnMinWidth = IntegerValue.parse(value); return;
+      case "secondColumnMaxWidth": this.secondColumnMaxWidth = IntegerValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

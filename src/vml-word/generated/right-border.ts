@@ -3,8 +3,10 @@
 // @see DocumentFormat.OpenXml.VmlWord.RightBorder
 
 import {
+  IntegerValue,
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Right Border.
@@ -20,16 +22,16 @@ export class RightBorder extends OpenXmlLeafElement {
   type: StringValue | undefined;
 
   /** Border Width (:width) */
-  width: StringValue | undefined;
+  width: IntegerValue | undefined;
 
   /** Border shadow (:shadow) */
-  shadow: StringValue | undefined;
+  shadow: TrueFalseValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "type": this.type = StringValue.parse(value); return;
-      case "width": this.width = StringValue.parse(value); return;
-      case "shadow": this.shadow = StringValue.parse(value); return;
+      case "width": this.width = IntegerValue.parse(value); return;
+      case "shadow": this.shadow = TrueFalseValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

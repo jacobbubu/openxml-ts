@@ -23,12 +23,12 @@ export class BottomStroke extends OpenXmlLeafElement {
     // Warning: (ae-forgotten-export) The symbol "StringValue" needs to be exported by the entry point index.d.ts
     extension: StringValue | undefined;
     fillType: StringValue | undefined;
-    forceDash: StringValue | undefined;
+    forceDash: TrueFalseValue | undefined;
     href: StringValue | undefined;
-    imageAlignShape: StringValue | undefined;
+    imageAlignShape: TrueFalseValue | undefined;
     imageAspect: StringValue | undefined;
     imageSize: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     joinStyle: StringValue | undefined;
     lineStyle: StringValue | undefined;
     // (undocumented)
@@ -37,7 +37,8 @@ export class BottomStroke extends OpenXmlLeafElement {
     miterLimit: DecimalValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
-    on: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "TrueFalseValue" needs to be exported by the entry point index.d.ts
+    on: TrueFalseValue | undefined;
     opacity: StringValue | undefined;
     // (undocumented)
     readonly prefix: "o";
@@ -51,7 +52,7 @@ export class BottomStroke extends OpenXmlLeafElement {
 
 // @public
 export class Callout extends OpenXmlLeafElement {
-    accentBar: StringValue | undefined;
+    accentBar: TrueFalseValue | undefined;
     angle: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
@@ -59,21 +60,21 @@ export class Callout extends OpenXmlLeafElement {
     protected collectAttributes(): Array<[string, string]>;
     distance: StringValue | undefined;
     drop: StringValue | undefined;
-    dropAuto: StringValue | undefined;
+    dropAuto: TrueFalseValue | undefined;
     extension: StringValue | undefined;
     gap: StringValue | undefined;
     length: StringValue | undefined;
-    lengthSpecified: StringValue | undefined;
+    lengthSpecified: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "callout";
-    minusX: StringValue | undefined;
-    minusY: StringValue | undefined;
+    minusX: TrueFalseValue | undefined;
+    minusY: TrueFalseValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "o";
-    textBorder: StringValue | undefined;
+    textBorder: TrueFalseValue | undefined;
     type: StringValue | undefined;
 }
 
@@ -144,12 +145,12 @@ export class ColumnStroke extends OpenXmlLeafElement {
     endCap: StringValue | undefined;
     extension: StringValue | undefined;
     fillType: StringValue | undefined;
-    forceDash: StringValue | undefined;
+    forceDash: TrueFalseValue | undefined;
     href: StringValue | undefined;
-    imageAlignShape: StringValue | undefined;
+    imageAlignShape: TrueFalseValue | undefined;
     imageAspect: StringValue | undefined;
     imageSize: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     joinStyle: StringValue | undefined;
     lineStyle: StringValue | undefined;
     // (undocumented)
@@ -157,7 +158,7 @@ export class ColumnStroke extends OpenXmlLeafElement {
     miterLimit: DecimalValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     opacity: StringValue | undefined;
     // (undocumented)
     readonly prefix: "o";
@@ -190,9 +191,9 @@ export class Complex extends OpenXmlLeafElement {
 export class Diagram extends OpenXmlCompositeElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
-    autoFormat: StringValue | undefined;
-    autoLayout: StringValue | undefined;
-    baseTextScale: StringValue | undefined;
+    autoFormat: TrueFalseValue | undefined;
+    autoLayout: TrueFalseValue | undefined;
+    baseTextScale: IntegerValue | undefined;
     // Warning: (ae-forgotten-export) The symbol "OpenXmlElementList" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
@@ -201,17 +202,18 @@ export class Diagram extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     constrainBounds: StringValue | undefined;
     extension: StringValue | undefined;
-    fontSize: StringValue | undefined;
+    fontSize: IntegerValue | undefined;
     // (undocumented)
     readonly localName: "diagram";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
     // (undocumented)
     readonly prefix: "o";
-    reverse: StringValue | undefined;
-    scaleX: StringValue | undefined;
-    scaleY: StringValue | undefined;
-    style: StringValue | undefined;
+    reverse: TrueFalseValue | undefined;
+    scaleX: IntegerValue | undefined;
+    scaleY: IntegerValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "IntegerValue" needs to be exported by the entry point index.d.ts
+    style: IntegerValue | undefined;
 }
 
 // @public
@@ -235,7 +237,7 @@ export class Entry extends OpenXmlLeafElement {
 export class Extrusion extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
-    autoRotationCenter: StringValue | undefined;
+    autoRotationCenter: TrueFalseValue | undefined;
     backDepth: StringValue | undefined;
     brightness: StringValue | undefined;
     // (undocumented)
@@ -246,30 +248,31 @@ export class Extrusion extends OpenXmlLeafElement {
     extension: StringValue | undefined;
     facet: StringValue | undefined;
     forceDepth: StringValue | undefined;
-    lightFace: StringValue | undefined;
-    lightHarsh: StringValue | undefined;
-    lightHarsh2: StringValue | undefined;
+    lightFace: TrueFalseValue | undefined;
+    lightHarsh: TrueFalseValue | undefined;
+    lightHarsh2: TrueFalseValue | undefined;
     lightLevel: StringValue | undefined;
     lightLevel2: StringValue | undefined;
     lightPosition: StringValue | undefined;
     lightPosition2: StringValue | undefined;
     // (undocumented)
     readonly localName: "extrusion";
-    lockRotationCenter: StringValue | undefined;
-    metal: StringValue | undefined;
+    lockRotationCenter: TrueFalseValue | undefined;
+    metal: TrueFalseValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     orientation: StringValue | undefined;
-    orientationAngle: StringValue | undefined;
+    orientationAngle: SingleValue | undefined;
     // (undocumented)
     readonly prefix: "o";
     render: StringValue | undefined;
     rotationAngle: StringValue | undefined;
     rotationCenter: StringValue | undefined;
-    shininess: StringValue | undefined;
+    shininess: SingleValue | undefined;
     skewAmount: StringValue | undefined;
-    skewAngle: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "SingleValue" needs to be exported by the entry point index.d.ts
+    skewAngle: SingleValue | undefined;
     specularity: StringValue | undefined;
     type: StringValue | undefined;
     viewpoint: StringValue | undefined;
@@ -304,12 +307,13 @@ export class FillExtendedProperties extends OpenXmlLeafElement {
 
 // @public
 export class Ink extends OpenXmlLeafElement {
-    annotationFlag: StringValue | undefined;
+    annotationFlag: TrueFalseValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    inkData: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "Base64BinaryValue" needs to be exported by the entry point index.d.ts
+    inkData: Base64BinaryValue | undefined;
     // (undocumented)
     readonly localName: "ink";
     // (undocumented)
@@ -334,12 +338,12 @@ export class LeftStroke extends OpenXmlLeafElement {
     endCap: StringValue | undefined;
     extension: StringValue | undefined;
     fillType: StringValue | undefined;
-    forceDash: StringValue | undefined;
+    forceDash: TrueFalseValue | undefined;
     href: StringValue | undefined;
-    imageAlignShape: StringValue | undefined;
+    imageAlignShape: TrueFalseValue | undefined;
     imageAspect: StringValue | undefined;
     imageSize: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     joinStyle: StringValue | undefined;
     lineStyle: StringValue | undefined;
     // (undocumented)
@@ -347,7 +351,7 @@ export class LeftStroke extends OpenXmlLeafElement {
     miterLimit: DecimalValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     opacity: StringValue | undefined;
     // (undocumented)
     readonly prefix: "o";
@@ -371,28 +375,28 @@ export class LinkType extends OpenXmlLeafElement {
 
 // @public
 export class Lock extends OpenXmlLeafElement {
-    adjustHandles: StringValue | undefined;
+    adjustHandles: TrueFalseValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
-    aspectRatio: StringValue | undefined;
+    aspectRatio: TrueFalseValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
-    cropping: StringValue | undefined;
+    cropping: TrueFalseValue | undefined;
     extension: StringValue | undefined;
-    grouping: StringValue | undefined;
+    grouping: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "lock";
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
-    position: StringValue | undefined;
+    position: TrueFalseValue | undefined;
     // (undocumented)
     readonly prefix: "o";
-    rotation: StringValue | undefined;
-    selection: StringValue | undefined;
-    shapeType: StringValue | undefined;
-    textLock: StringValue | undefined;
-    ungrouping: StringValue | undefined;
-    verticies: StringValue | undefined;
+    rotation: TrueFalseValue | undefined;
+    selection: TrueFalseValue | undefined;
+    shapeType: TrueFalseValue | undefined;
+    textLock: TrueFalseValue | undefined;
+    ungrouping: TrueFalseValue | undefined;
+    verticies: TrueFalseValue | undefined;
 }
 
 // @public
@@ -435,7 +439,7 @@ class Proxy_2 extends OpenXmlLeafElement {
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     connectionLocation: Int32Value | undefined;
-    end: StringValue | undefined;
+    end: TrueFalseBlankValue | undefined;
     // (undocumented)
     readonly localName: "proxy";
     // (undocumented)
@@ -443,7 +447,8 @@ class Proxy_2 extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "o";
     shapeReference: StringValue | undefined;
-    start: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "TrueFalseBlankValue" needs to be exported by the entry point index.d.ts
+    start: TrueFalseBlankValue | undefined;
     validateRequired(): void;
 }
 export { Proxy_2 as Proxy }
@@ -521,12 +526,12 @@ export class RightStroke extends OpenXmlLeafElement {
     endCap: StringValue | undefined;
     extension: StringValue | undefined;
     fillType: StringValue | undefined;
-    forceDash: StringValue | undefined;
+    forceDash: TrueFalseValue | undefined;
     href: StringValue | undefined;
-    imageAlignShape: StringValue | undefined;
+    imageAlignShape: TrueFalseValue | undefined;
     imageAspect: StringValue | undefined;
     imageSize: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     joinStyle: StringValue | undefined;
     lineStyle: StringValue | undefined;
     // (undocumented)
@@ -534,7 +539,7 @@ export class RightStroke extends OpenXmlLeafElement {
     miterLimit: DecimalValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     opacity: StringValue | undefined;
     // (undocumented)
     readonly prefix: "o";
@@ -586,11 +591,11 @@ export class Rules extends OpenXmlCompositeElement {
 
 // @public
 export class ShapeDefaults extends OpenXmlCompositeElement {
-    allowInCell: StringValue | undefined;
-    allowOverlap: StringValue | undefined;
+    allowInCell: TrueFalseValue | undefined;
+    allowOverlap: TrueFalseValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
-    beFilled: StringValue | undefined;
+    beFilled: TrueFalseValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
@@ -598,10 +603,10 @@ export class ShapeDefaults extends OpenXmlCompositeElement {
     extension: StringValue | undefined;
     fillColor: StringValue | undefined;
     insetMode: StringValue | undefined;
-    isStroke: StringValue | undefined;
+    isStroke: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "shapedefaults";
-    maxShapeId: StringValue | undefined;
+    maxShapeId: IntegerValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
     // (undocumented)
@@ -646,14 +651,14 @@ export class ShapeLayout extends OpenXmlCompositeElement {
 // @public
 export class SignatureLine extends OpenXmlLeafElement {
     additionalXml: StringValue | undefined;
-    allowComments: StringValue | undefined;
+    allowComments: TrueFalseValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     extension: StringValue | undefined;
     id: StringValue | undefined;
-    isSignatureLine: StringValue | undefined;
+    isSignatureLine: TrueFalseValue | undefined;
     // (undocumented)
     readonly localName: "signatureline";
     // (undocumented)
@@ -661,10 +666,10 @@ export class SignatureLine extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "o";
     providerId: StringValue | undefined;
-    showSignDate: StringValue | undefined;
+    showSignDate: TrueFalseValue | undefined;
     signatureProviderUrl: StringValue | undefined;
     signingInstructions: StringValue | undefined;
-    signingInstructionsSet: StringValue | undefined;
+    signingInstructionsSet: TrueFalseValue | undefined;
     suggestedSigner: StringValue | undefined;
     suggestedSigner2: StringValue | undefined;
     suggestedSignerEmail: StringValue | undefined;
@@ -684,7 +689,7 @@ export class Skew extends OpenXmlLeafElement {
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
     offset: StringValue | undefined;
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     origin: StringValue | undefined;
     // (undocumented)
     readonly prefix: "o";
@@ -706,12 +711,12 @@ export abstract class StrokeChildType extends OpenXmlLeafElement {
     endCap: StringValue | undefined;
     extension: StringValue | undefined;
     fillType: StringValue | undefined;
-    forceDash: StringValue | undefined;
+    forceDash: TrueFalseValue | undefined;
     href: StringValue | undefined;
-    imageAlignShape: StringValue | undefined;
+    imageAlignShape: TrueFalseValue | undefined;
     imageAspect: StringValue | undefined;
     imageSize: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     joinStyle: StringValue | undefined;
     lineStyle: StringValue | undefined;
     // (undocumented)
@@ -719,7 +724,7 @@ export abstract class StrokeChildType extends OpenXmlLeafElement {
     miterLimit: DecimalValue | undefined;
     // (undocumented)
     readonly namespaceUri: "";
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     opacity: StringValue | undefined;
     // (undocumented)
     readonly prefix: "";
@@ -747,12 +752,12 @@ export class TopStroke extends OpenXmlLeafElement {
     endCap: StringValue | undefined;
     extension: StringValue | undefined;
     fillType: StringValue | undefined;
-    forceDash: StringValue | undefined;
+    forceDash: TrueFalseValue | undefined;
     href: StringValue | undefined;
-    imageAlignShape: StringValue | undefined;
+    imageAlignShape: TrueFalseValue | undefined;
     imageAspect: StringValue | undefined;
     imageSize: StringValue | undefined;
-    insetPen: StringValue | undefined;
+    insetPen: TrueFalseValue | undefined;
     joinStyle: StringValue | undefined;
     lineStyle: StringValue | undefined;
     // (undocumented)
@@ -760,7 +765,7 @@ export class TopStroke extends OpenXmlLeafElement {
     miterLimit: DecimalValue | undefined;
     // (undocumented)
     readonly namespaceUri: "urn:schemas-microsoft-com:office:office";
-    on: StringValue | undefined;
+    on: TrueFalseValue | undefined;
     opacity: StringValue | undefined;
     // (undocumented)
     readonly prefix: "o";

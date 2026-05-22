@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_word_2006_wordml.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { registerWord2006WordmlChildMaps } from "./_child-map.js";
 import { AllocatedCommandKeyboardCustomization } from "./allocated-command-keyboard-customization.js";
 import { AllocatedCommandManifest } from "./allocated-command-manifest.js";
 import { AllocatedCommandManifestEntry } from "./allocated-command-manifest-entry.js";
@@ -42,6 +43,7 @@ import { WllMacroKeyboardCustomization } from "./wll-macro-keyboard-customizatio
  * 把 word-2006-wordml 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function registerWord2006WordmlElements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/word/2006/wordml", "acd", AllocatedCommandKeyboardCustomization);
@@ -79,4 +81,5 @@ export function registerWord2006WordmlElements(registry: ElementRegistry): void 
   registry.register("http://schemas.microsoft.com/office/word/2006/wordml", "toolbars", Toolbars);
   registry.register("http://schemas.microsoft.com/office/word/2006/wordml", "vbaSuppData", VbaSuppData);
   registry.register("http://schemas.microsoft.com/office/word/2006/wordml", "wll", WllMacroKeyboardCustomization);
+  registerWord2006WordmlChildMaps(registry);
 }

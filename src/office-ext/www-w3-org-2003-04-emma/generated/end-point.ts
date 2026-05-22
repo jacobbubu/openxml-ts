@@ -3,6 +3,8 @@
 // @see DocumentFormat.OpenXml.200304Emma.EndPoint
 
 import {
+  IntegerValue,
+  ListValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -31,7 +33,7 @@ export class EndPoint extends OpenXmlCompositeElement {
   messageId: StringValue | undefined;
 
   /** port-num (emma:port-num) */
-  portNumber: StringValue | undefined;
+  portNumber: IntegerValue | undefined;
 
   /** port-type (emma:port-type) */
   portType: StringValue | undefined;
@@ -49,7 +51,7 @@ export class EndPoint extends OpenXmlCompositeElement {
   medium: StringValue | undefined;
 
   /** mode (emma:mode) */
-  mode: StringValue | undefined;
+  mode: ListValue<StringValue> | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
@@ -57,13 +59,13 @@ export class EndPoint extends OpenXmlCompositeElement {
       case "emma:endpoint-role": this.endpointRole = StringValue.parse(value); return;
       case "emma:endpoint-address": this.endPointAddress = StringValue.parse(value); return;
       case "emma:message-id": this.messageId = StringValue.parse(value); return;
-      case "emma:port-num": this.portNumber = StringValue.parse(value); return;
+      case "emma:port-num": this.portNumber = IntegerValue.parse(value); return;
       case "emma:port-type": this.portType = StringValue.parse(value); return;
       case "emma:endpoint-pair-ref": this.endpointPairRef = StringValue.parse(value); return;
       case "emma:service-name": this.serviceName = StringValue.parse(value); return;
       case "emma:media-type": this.mediaType = StringValue.parse(value); return;
       case "emma:medium": this.medium = StringValue.parse(value); return;
-      case "emma:mode": this.mode = StringValue.parse(value); return;
+      case "emma:mode": this.mode = ListValue.parse(value, StringValue.parse); return;
     }
     super.applyAttribute(qname, value);
   }

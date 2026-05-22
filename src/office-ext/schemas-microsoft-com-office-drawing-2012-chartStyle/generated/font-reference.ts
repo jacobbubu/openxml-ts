@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Drawing2012ChartStyle.FontReference
 
 import {
+  ListValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -22,12 +23,12 @@ export class FontReference extends OpenXmlCompositeElement {
   index: StringValue | undefined;
 
   /** mods (:mods) */
-  modifiers: StringValue | undefined;
+  modifiers: ListValue<StringValue> | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "idx": this.index = StringValue.parse(value); return;
-      case "mods": this.modifiers = StringValue.parse(value); return;
+      case "mods": this.modifiers = ListValue.parse(value, StringValue.parse); return;
     }
     super.applyAttribute(qname, value);
   }

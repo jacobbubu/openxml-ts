@@ -26,6 +26,18 @@ export function assertString(value: {
 } | undefined, options: StringValidatorOptions, context: ValidationContext): void;
 
 // @public
+export class Base64BinaryValue {
+    constructor(value: string);
+    static fromBytes(bytes: Uint8Array): Base64BinaryValue;
+    static parse(input: string | undefined): Base64BinaryValue | undefined;
+    toBytes(): Uint8Array;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: string;
+}
+
+// @public
 export class BooleanValue {
     constructor(value: boolean);
     // (undocumented)
@@ -34,6 +46,17 @@ export class BooleanValue {
     toString(): string;
     // (undocumented)
     readonly value: boolean;
+}
+
+// @public
+export class ByteValue {
+    constructor(value: number);
+    // (undocumented)
+    static parse(input: string | undefined): ByteValue | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: number;
 }
 
 // @public
@@ -138,6 +161,17 @@ export interface DeserializeOptions {
 }
 
 // @public
+export class DoubleValue {
+    constructor(value: number);
+    // (undocumented)
+    static parse(input: string | undefined): DoubleValue | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: number;
+}
+
+// @public
 export type ElementCtor<T extends OpenXmlElement = OpenXmlElement> = abstract new (...args: never[]) => T;
 
 // @public (undocumented)
@@ -236,6 +270,17 @@ export interface IFeatureCollection {
 }
 
 // @public
+export class Int16Value {
+    constructor(value: number);
+    // (undocumented)
+    static parse(input: string | undefined): Int16Value | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: number;
+}
+
+// @public
 export class Int32Value {
     constructor(value: number);
     static parse(input: string | undefined): Int32Value | undefined;
@@ -250,6 +295,17 @@ export class Int64Value {
     constructor(value: bigint);
     // (undocumented)
     static parse(input: string | undefined): Int64Value | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: bigint;
+}
+
+// @public
+export class IntegerValue {
+    constructor(value: bigint);
+    // (undocumented)
+    static parse(input: string | undefined): IntegerValue | undefined;
     // (undocumented)
     toString(): string;
     // (undocumented)
@@ -332,12 +388,37 @@ export function isStrictUri(uri: string): boolean;
 // @public
 export function isXmlContentType(ct: string): boolean;
 
+// @public
+export class ListValue<T extends {
+    toString(): string;
+}> {
+    constructor(items: readonly T[]);
+    // (undocumented)
+    readonly items: readonly T[];
+    static parse<T extends {
+        toString(): string;
+    }>(input: string | undefined, parseItem: (s: string | undefined) => T | undefined): ListValue<T> | undefined;
+    // (undocumented)
+    toString(): string;
+}
+
 // @public (undocumented)
 export interface NumberValidatorOptions {
     // (undocumented)
     readonly max?: number;
     // (undocumented)
     readonly min?: number;
+}
+
+// @public
+export class OnOffValue {
+    constructor(value: boolean);
+    // (undocumented)
+    static parse(input: string | undefined): OnOffValue | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: boolean;
 }
 
 // @public
@@ -621,6 +702,17 @@ export class RelationshipCollection implements IRelationshipCollection {
 // @public
 export const RELATIONSHIPS_NS = "http://schemas.openxmlformats.org/package/2006/relationships";
 
+// @public
+export class SByteValue {
+    constructor(value: number);
+    // (undocumented)
+    static parse(input: string | undefined): SByteValue | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: number;
+}
+
 // @public (undocumented)
 export function serialize(element: OpenXmlElement, options?: SerializeOptions): string;
 
@@ -631,6 +723,17 @@ export interface SerializeOptions {
 
 // @public
 export function serializeRelationshipsXml(rels: Iterable<IPackageRelationship>): string;
+
+// @public
+export class SingleValue {
+    constructor(value: number);
+    // (undocumented)
+    static parse(input: string | undefined): SingleValue | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: number;
+}
 
 // @public
 export function strictToTransitional(uri: string): string;
@@ -661,7 +764,40 @@ export type TargetMode = "internal" | "external";
 export function transitionalToStrict(uri: string): string;
 
 // @public
+export class TrueFalseBlankValue {
+    constructor(value: boolean);
+    // (undocumented)
+    static parse(input: string | undefined): TrueFalseBlankValue | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: boolean;
+}
+
+// @public
+export class TrueFalseValue {
+    constructor(value: boolean);
+    // (undocumented)
+    static parse(input: string | undefined): TrueFalseValue | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: boolean;
+}
+
+// @public
 export function tryPartUri(value: string): PartUri | undefined;
+
+// @public
+export class UInt16Value {
+    constructor(value: number);
+    // (undocumented)
+    static parse(input: string | undefined): UInt16Value | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: number;
+}
 
 // @public
 export class UInt32Value {
@@ -671,6 +807,17 @@ export class UInt32Value {
     toString(): string;
     // (undocumented)
     readonly value: number;
+}
+
+// @public
+export class UInt64Value {
+    constructor(value: bigint);
+    // (undocumented)
+    static parse(input: string | undefined): UInt64Value | undefined;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: bigint;
 }
 
 // @public

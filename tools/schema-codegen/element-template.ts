@@ -274,7 +274,9 @@ function renderApplyAttrCase(
   const t = mapSchemaType(attr.Type);
   const prop = resolveAttrPropName(attr.PropertyName, isLeaf);
   const ctx = `{ attribute: ${quote(attr.QName)}, elementClass: ${quote(className)} }`;
-  const calls: string[] = [`this.${prop} = ${t.expr}.parse(value);`];
+  const parseCall =
+    t.parseExpr !== undefined ? t.parseExpr.replace("VALUE", "value") : `${t.expr}.parse(value)`;
+  const calls: string[] = [`this.${prop} = ${parseCall};`];
 
   // 值容器与 validator 的类型必须匹配——schema 里偶尔会出现「StringValue 上带
   // NumberValidator」这种怪癖（比如 w:id），跳过即可，不强行注入会导致 TS 类型错。

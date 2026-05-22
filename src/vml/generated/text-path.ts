@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Defines the TextPath Class.
@@ -23,19 +24,19 @@ export class TextPath extends OpenXmlLeafElement {
   style: StringValue | undefined;
 
   /** Text Path Toggle (:on) */
-  on: StringValue | undefined;
+  on: TrueFalseValue | undefined;
 
   /** Shape Fit Toggle (:fitshape) */
-  fitShape: StringValue | undefined;
+  fitShape: TrueFalseValue | undefined;
 
   /** Path Fit Toggle (:fitpath) */
-  fitPath: StringValue | undefined;
+  fitPath: TrueFalseValue | undefined;
 
   /** Text Path Trim Toggle (:trim) */
-  trim: StringValue | undefined;
+  trim: TrueFalseValue | undefined;
 
   /** Text X-Scaling (:xscale) */
-  xScale: StringValue | undefined;
+  xScale: TrueFalseValue | undefined;
 
   /** Text Path Text (:string) */
   string: StringValue | undefined;
@@ -44,11 +45,11 @@ export class TextPath extends OpenXmlLeafElement {
     switch (qname) {
       case "id": this.id = StringValue.parse(value); return;
       case "style": this.style = StringValue.parse(value); return;
-      case "on": this.on = StringValue.parse(value); return;
-      case "fitshape": this.fitShape = StringValue.parse(value); return;
-      case "fitpath": this.fitPath = StringValue.parse(value); return;
-      case "trim": this.trim = StringValue.parse(value); return;
-      case "xscale": this.xScale = StringValue.parse(value); return;
+      case "on": this.on = TrueFalseValue.parse(value); return;
+      case "fitshape": this.fitShape = TrueFalseValue.parse(value); return;
+      case "fitpath": this.fitPath = TrueFalseValue.parse(value); return;
+      case "trim": this.trim = TrueFalseValue.parse(value); return;
+      case "xscale": this.xScale = TrueFalseValue.parse(value); return;
       case "string": this.string = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);

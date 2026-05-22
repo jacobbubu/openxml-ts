@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/www_w3_org_2003_04_emma.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { register200304EmmaChildMaps } from "./_child-map.js";
 import { Arc } from "./arc.js";
 import { Derivation } from "./derivation.js";
 import { DerivedFrom } from "./derived-from.js";
@@ -24,6 +25,7 @@ import { Sequence } from "./sequence.js";
  * 把 2003-04-emma 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function register200304EmmaElements(registry: ElementRegistry): void {
   registry.register("http://www.w3.org/2003/04/emma", "arc", Arc);
@@ -43,4 +45,5 @@ export function register200304EmmaElements(registry: ElementRegistry): void {
   registry.register("http://www.w3.org/2003/04/emma", "node", Node);
   registry.register("http://www.w3.org/2003/04/emma", "one-of", OneOf);
   registry.register("http://www.w3.org/2003/04/emma", "sequence", Sequence);
+  register200304EmmaChildMaps(registry);
 }
