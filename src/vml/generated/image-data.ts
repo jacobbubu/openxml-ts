@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Defines the ImageData Class.
@@ -44,10 +45,10 @@ export class ImageData extends OpenXmlLeafElement {
   gamma: StringValue | undefined;
 
   /** Image Grayscale Toggle (:grayscale) */
-  grayscale: StringValue | undefined;
+  grayscale: TrueFalseValue | undefined;
 
   /** Image Bilevel Toggle (:bilevel) */
-  biLevel: StringValue | undefined;
+  biLevel: TrueFalseValue | undefined;
 
   /** Embossed Color (:embosscolor) */
   embossColor: StringValue | undefined;
@@ -59,7 +60,7 @@ export class ImageData extends OpenXmlLeafElement {
   title: StringValue | undefined;
 
   /** Detect Mouse Click (o:detectmouseclick) */
-  detectMouseClick: StringValue | undefined;
+  detectMouseClick: TrueFalseValue | undefined;
 
   /** Relationship to Part (o:relid) */
   relId: StringValue | undefined;
@@ -84,12 +85,12 @@ export class ImageData extends OpenXmlLeafElement {
       case "gain": this.gain = StringValue.parse(value); return;
       case "blacklevel": this.blackLevel = StringValue.parse(value); return;
       case "gamma": this.gamma = StringValue.parse(value); return;
-      case "grayscale": this.grayscale = StringValue.parse(value); return;
-      case "bilevel": this.biLevel = StringValue.parse(value); return;
+      case "grayscale": this.grayscale = TrueFalseValue.parse(value); return;
+      case "bilevel": this.biLevel = TrueFalseValue.parse(value); return;
       case "embosscolor": this.embossColor = StringValue.parse(value); return;
       case "recolortarget": this.recolorTarget = StringValue.parse(value); return;
       case "o:title": this.title = StringValue.parse(value); return;
-      case "o:detectmouseclick": this.detectMouseClick = StringValue.parse(value); return;
+      case "o:detectmouseclick": this.detectMouseClick = TrueFalseValue.parse(value); return;
       case "o:relid": this.relId = StringValue.parse(value); return;
       case "r:id": this.relationshipId = StringValue.parse(value); return;
       case "r:pict": this.picture = StringValue.parse(value); return;

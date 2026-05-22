@@ -3,8 +3,8 @@
 // @see DocumentFormat.OpenXml.Word2012Wordml.CommentEx
 
 import {
-  BooleanValue,
   HexBinaryValue,
+  OnOffValue,
   OpenXmlLeafElement,
   assertRequired,
 } from "../../../element/index.js";
@@ -25,13 +25,13 @@ export class CommentEx extends OpenXmlLeafElement {
   paraIdParent: HexBinaryValue | undefined;
 
   /** done (w15:done) */
-  done: BooleanValue | undefined;
+  done: OnOffValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "w15:paraId": this.paraId = HexBinaryValue.parse(value); return;
       case "w15:paraIdParent": this.paraIdParent = HexBinaryValue.parse(value); return;
-      case "w15:done": this.done = BooleanValue.parse(value); return;
+      case "w15:done": this.done = OnOffValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

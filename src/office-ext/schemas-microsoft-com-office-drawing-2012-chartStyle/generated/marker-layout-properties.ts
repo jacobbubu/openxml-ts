@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Drawing2012ChartStyle.MarkerLayoutProperties
 
 import {
+  ByteValue,
   OpenXmlLeafElement,
   StringValue,
 } from "../../../element/index.js";
@@ -20,12 +21,12 @@ export class MarkerLayoutProperties extends OpenXmlLeafElement {
   symbol: StringValue | undefined;
 
   /** size (:size) */
-  size: StringValue | undefined;
+  size: ByteValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "symbol": this.symbol = StringValue.parse(value); return;
-      case "size": this.size = StringValue.parse(value); return;
+      case "size": this.size = ByteValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

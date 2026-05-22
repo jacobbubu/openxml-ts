@@ -4,6 +4,7 @@
 
 import {
   BooleanValue,
+  ByteValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -84,10 +85,10 @@ export class pivotTableDefinition extends OpenXmlCompositeElement {
   tag: StringValue | undefined;
 
   /** updatedVersion (:updatedVersion) */
-  updatedVersion: StringValue | undefined;
+  updatedVersion: ByteValue | undefined;
 
   /** minRefreshableVersion (:minRefreshableVersion) */
-  minRefreshableVersion: StringValue | undefined;
+  minRefreshableVersion: ByteValue | undefined;
 
   /** asteriskTotals (:asteriskTotals) */
   asteriskTotals: BooleanValue | undefined;
@@ -168,7 +169,7 @@ export class pivotTableDefinition extends OpenXmlCompositeElement {
   showDropZones: BooleanValue | undefined;
 
   /** createdVersion (:createdVersion) */
-  createdVersion: StringValue | undefined;
+  createdVersion: ByteValue | undefined;
 
   /** indent (:indent) */
   indent: UInt32Value | undefined;
@@ -247,8 +248,8 @@ export class pivotTableDefinition extends OpenXmlCompositeElement {
       case "pivotTableStyle": this.pivotTableStyleName = StringValue.parse(value); return;
       case "vacatedStyle": this.vacatedStyle = StringValue.parse(value); return;
       case "tag": this.tag = StringValue.parse(value); return;
-      case "updatedVersion": this.updatedVersion = StringValue.parse(value); return;
-      case "minRefreshableVersion": this.minRefreshableVersion = StringValue.parse(value); return;
+      case "updatedVersion": this.updatedVersion = ByteValue.parse(value); return;
+      case "minRefreshableVersion": this.minRefreshableVersion = ByteValue.parse(value); return;
       case "asteriskTotals": this.asteriskTotals = BooleanValue.parse(value); return;
       case "showItems": this.showItems = BooleanValue.parse(value); return;
       case "editData": this.editData = BooleanValue.parse(value); return;
@@ -275,7 +276,7 @@ export class pivotTableDefinition extends OpenXmlCompositeElement {
       case "itemPrintTitles": this.itemPrintTitles = BooleanValue.parse(value); return;
       case "mergeItem": this.mergeItem = BooleanValue.parse(value); return;
       case "showDropZones": this.showDropZones = BooleanValue.parse(value); return;
-      case "createdVersion": this.createdVersion = StringValue.parse(value); return;
+      case "createdVersion": this.createdVersion = ByteValue.parse(value); return;
       case "indent": this.indent = UInt32Value.parse(value); return;
       case "showEmptyRow": this.showEmptyRow = BooleanValue.parse(value); return;
       case "showEmptyCol": this.showEmptyColumn = BooleanValue.parse(value); return;

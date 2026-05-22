@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Drawing2012ChartStyle.PlotArea
 
 import {
+  ListValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -18,11 +19,11 @@ export class PlotArea extends OpenXmlCompositeElement {
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
   /** mods (:mods) */
-  modifiers: StringValue | undefined;
+  modifiers: ListValue<StringValue> | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "mods": this.modifiers = StringValue.parse(value); return;
+      case "mods": this.modifiers = ListValue.parse(value, StringValue.parse); return;
     }
     super.applyAttribute(qname, value);
   }

@@ -6,6 +6,7 @@ import {
   Int32Value,
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseBlankValue,
   assertRequired,
 } from "../../element/index.js";
 
@@ -19,10 +20,10 @@ export class Proxy extends OpenXmlLeafElement {
 
 
   /** Start Point Connection Flag (:start) */
-  start: StringValue | undefined;
+  start: TrueFalseBlankValue | undefined;
 
   /** End Point Connection Flag (:end) */
-  end: StringValue | undefined;
+  end: TrueFalseBlankValue | undefined;
 
   /** Proxy Shape Reference (:idref) */
   shapeReference: StringValue | undefined;
@@ -32,8 +33,8 @@ export class Proxy extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "start": this.start = StringValue.parse(value); return;
-      case "end": this.end = StringValue.parse(value); return;
+      case "start": this.start = TrueFalseBlankValue.parse(value); return;
+      case "end": this.end = TrueFalseBlankValue.parse(value); return;
       case "idref": this.shapeReference = StringValue.parse(value); return;
       case "connectloc": this.connectionLocation = Int32Value.parse(value); return;
     }

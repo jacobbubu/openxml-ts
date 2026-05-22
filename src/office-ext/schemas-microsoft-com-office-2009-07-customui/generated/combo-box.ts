@@ -4,6 +4,7 @@
 
 import {
   BooleanValue,
+  IntegerValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -62,7 +63,7 @@ export class ComboBox extends OpenXmlCompositeElement {
   getImage: StringValue | undefined;
 
   /** maxLength (:maxLength) */
-  maxLength: StringValue | undefined;
+  maxLength: IntegerValue | undefined;
 
   /** getText (:getText) */
   getText: StringValue | undefined;
@@ -152,7 +153,7 @@ export class ComboBox extends OpenXmlCompositeElement {
       case "image": this.image = StringValue.parse(value); assertString(this.image, { maxLength: 1024, minLength: 1 }, { attribute: ":image", elementClass: "ComboBox" }); return;
       case "imageMso": this.imageMso = StringValue.parse(value); assertString(this.imageMso, { maxLength: 1024, minLength: 1 }, { attribute: ":imageMso", elementClass: "ComboBox" }); return;
       case "getImage": this.getImage = StringValue.parse(value); assertString(this.getImage, { maxLength: 1024, minLength: 1 }, { attribute: ":getImage", elementClass: "ComboBox" }); return;
-      case "maxLength": this.maxLength = StringValue.parse(value); return;
+      case "maxLength": this.maxLength = IntegerValue.parse(value); return;
       case "getText": this.getText = StringValue.parse(value); assertString(this.getText, { maxLength: 1024, minLength: 1 }, { attribute: ":getText", elementClass: "ComboBox" }); return;
       case "onChange": this.onChange = StringValue.parse(value); assertString(this.onChange, { maxLength: 1024, minLength: 1 }, { attribute: ":onChange", elementClass: "ComboBox" }); return;
       case "id": this.id = StringValue.parse(value); assertString(this.id, { maxLength: 1024, minLength: 1 }, { attribute: ":id", elementClass: "ComboBox" }); return;

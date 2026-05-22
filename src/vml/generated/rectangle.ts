@@ -4,9 +4,13 @@
 
 import {
   Int32Value,
+  IntegerValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  SingleValue,
   StringValue,
+  TrueFalseBlankValue,
+  TrueFalseValue,
   assertNumber,
 } from "../../element/index.js";
 
@@ -50,52 +54,52 @@ export class Rectangle extends OpenXmlCompositeElement {
   wrapCoordinates: StringValue | undefined;
 
   /** Print Toggle (:print) */
-  print: StringValue | undefined;
+  print: TrueFalseValue | undefined;
 
   /** Optional String (o:spid) */
   optionalString: StringValue | undefined;
 
   /** Shape Handle Toggle (o:oned) */
-  oned: StringValue | undefined;
+  oned: TrueFalseValue | undefined;
 
   /** Regroup ID (o:regroupid) */
-  regroupId: StringValue | undefined;
+  regroupId: IntegerValue | undefined;
 
   /** Double-click Notification Toggle (o:doubleclicknotify) */
-  doubleClickNotify: StringValue | undefined;
+  doubleClickNotify: TrueFalseValue | undefined;
 
   /** Button Behavior Toggle (o:button) */
-  button: StringValue | undefined;
+  button: TrueFalseValue | undefined;
 
   /** Hide Script Anchors (o:userhidden) */
-  userHidden: StringValue | undefined;
+  userHidden: TrueFalseValue | undefined;
 
   /** Graphical Bullet (o:bullet) */
-  bullet: StringValue | undefined;
+  bullet: TrueFalseValue | undefined;
 
   /** Horizontal Rule Toggle (o:hr) */
-  horizontal: StringValue | undefined;
+  horizontal: TrueFalseValue | undefined;
 
   /** Horizontal Rule Standard Display Toggle (o:hrstd) */
-  horizontalStandard: StringValue | undefined;
+  horizontalStandard: TrueFalseValue | undefined;
 
   /** Horizontal Rule 3D Shading Toggle (o:hrnoshade) */
-  horizontalNoShade: StringValue | undefined;
+  horizontalNoShade: TrueFalseValue | undefined;
 
   /** Horizontal Rule Length Percentage (o:hrpct) */
-  horizontalPercentage: StringValue | undefined;
+  horizontalPercentage: SingleValue | undefined;
 
   /** Horizontal Rule Alignment (o:hralign) */
   horizontalAlignment: StringValue | undefined;
 
   /** Allow in Table Cell (o:allowincell) */
-  allowInCell: StringValue | undefined;
+  allowInCell: TrueFalseValue | undefined;
 
   /** Allow Shape Overlap (o:allowoverlap) */
-  allowOverlap: StringValue | undefined;
+  allowOverlap: TrueFalseValue | undefined;
 
   /** Exists In Master Slide (o:userdrawn) */
-  userDrawn: StringValue | undefined;
+  userDrawn: TrueFalseValue | undefined;
 
   /** Border Top Color (o:bordertopcolor) */
   borderTopColor: StringValue | undefined;
@@ -110,25 +114,25 @@ export class Rectangle extends OpenXmlCompositeElement {
   borderRightColor: StringValue | undefined;
 
   /** Diagram Node Layout Identifier (o:dgmlayout) */
-  diagramLayout: StringValue | undefined;
+  diagramLayout: IntegerValue | undefined;
 
   /** Diagram Node Identifier (o:dgmnodekind) */
-  diagramNodeKind: StringValue | undefined;
+  diagramNodeKind: IntegerValue | undefined;
 
   /** Diagram Node Recent Layout Identifier (o:dgmlayoutmru) */
-  diagramLayoutMostRecentUsed: StringValue | undefined;
+  diagramLayoutMostRecentUsed: IntegerValue | undefined;
 
   /** Text Inset Mode (o:insetmode) */
   insetMode: StringValue | undefined;
 
   /** Shape Fill Toggle (:filled) */
-  filled: StringValue | undefined;
+  filled: TrueFalseValue | undefined;
 
   /** Fill Color (:fillcolor) */
   fillColor: StringValue | undefined;
 
   /** Shape Stroke Toggle (:stroked) */
-  stroked: StringValue | undefined;
+  stroked: TrueFalseValue | undefined;
 
   /** Shape Stroke Color (:strokecolor) */
   strokeColor: StringValue | undefined;
@@ -137,7 +141,7 @@ export class Rectangle extends OpenXmlCompositeElement {
   strokeWeight: StringValue | undefined;
 
   /** Inset Border From Path (:insetpen) */
-  insetPen: StringValue | undefined;
+  insetPen: TrueFalseValue | undefined;
 
   /** Optional Number (o:spt) */
   optionalNumber: Int32Value | undefined;
@@ -155,22 +159,22 @@ export class Rectangle extends OpenXmlCompositeElement {
   normalBlackWhiteMode: StringValue | undefined;
 
   /** Force Dashed Outline (o:forcedash) */
-  forceDash: StringValue | undefined;
+  forceDash: TrueFalseValue | undefined;
 
   /** Embedded Object Icon Toggle (o:oleicon) */
-  oleIcon: StringValue | undefined;
+  oleIcon: TrueFalseValue | undefined;
 
   /** Embedded Object Toggle (o:ole) */
-  ole: StringValue | undefined;
+  ole: TrueFalseBlankValue | undefined;
 
   /** Relative Resize Toggle (o:preferrelative) */
-  preferRelative: StringValue | undefined;
+  preferRelative: TrueFalseValue | undefined;
 
   /** Clip to Wrapping Polygon (o:cliptowrap) */
-  clipToWrap: StringValue | undefined;
+  clipToWrap: TrueFalseValue | undefined;
 
   /** Clipping Toggle (o:clip) */
-  clip: StringValue | undefined;
+  clip: TrueFalseValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
@@ -184,47 +188,47 @@ export class Rectangle extends OpenXmlCompositeElement {
       case "coordsize": this.coordinateSize = StringValue.parse(value); return;
       case "coordorigin": this.coordinateOrigin = StringValue.parse(value); return;
       case "wrapcoords": this.wrapCoordinates = StringValue.parse(value); return;
-      case "print": this.print = StringValue.parse(value); return;
+      case "print": this.print = TrueFalseValue.parse(value); return;
       case "o:spid": this.optionalString = StringValue.parse(value); return;
-      case "o:oned": this.oned = StringValue.parse(value); return;
-      case "o:regroupid": this.regroupId = StringValue.parse(value); return;
-      case "o:doubleclicknotify": this.doubleClickNotify = StringValue.parse(value); return;
-      case "o:button": this.button = StringValue.parse(value); return;
-      case "o:userhidden": this.userHidden = StringValue.parse(value); return;
-      case "o:bullet": this.bullet = StringValue.parse(value); return;
-      case "o:hr": this.horizontal = StringValue.parse(value); return;
-      case "o:hrstd": this.horizontalStandard = StringValue.parse(value); return;
-      case "o:hrnoshade": this.horizontalNoShade = StringValue.parse(value); return;
-      case "o:hrpct": this.horizontalPercentage = StringValue.parse(value); return;
+      case "o:oned": this.oned = TrueFalseValue.parse(value); return;
+      case "o:regroupid": this.regroupId = IntegerValue.parse(value); return;
+      case "o:doubleclicknotify": this.doubleClickNotify = TrueFalseValue.parse(value); return;
+      case "o:button": this.button = TrueFalseValue.parse(value); return;
+      case "o:userhidden": this.userHidden = TrueFalseValue.parse(value); return;
+      case "o:bullet": this.bullet = TrueFalseValue.parse(value); return;
+      case "o:hr": this.horizontal = TrueFalseValue.parse(value); return;
+      case "o:hrstd": this.horizontalStandard = TrueFalseValue.parse(value); return;
+      case "o:hrnoshade": this.horizontalNoShade = TrueFalseValue.parse(value); return;
+      case "o:hrpct": this.horizontalPercentage = SingleValue.parse(value); return;
       case "o:hralign": this.horizontalAlignment = StringValue.parse(value); return;
-      case "o:allowincell": this.allowInCell = StringValue.parse(value); return;
-      case "o:allowoverlap": this.allowOverlap = StringValue.parse(value); return;
-      case "o:userdrawn": this.userDrawn = StringValue.parse(value); return;
+      case "o:allowincell": this.allowInCell = TrueFalseValue.parse(value); return;
+      case "o:allowoverlap": this.allowOverlap = TrueFalseValue.parse(value); return;
+      case "o:userdrawn": this.userDrawn = TrueFalseValue.parse(value); return;
       case "o:bordertopcolor": this.borderTopColor = StringValue.parse(value); return;
       case "o:borderleftcolor": this.borderLeftColor = StringValue.parse(value); return;
       case "o:borderbottomcolor": this.borderBottomColor = StringValue.parse(value); return;
       case "o:borderrightcolor": this.borderRightColor = StringValue.parse(value); return;
-      case "o:dgmlayout": this.diagramLayout = StringValue.parse(value); return;
-      case "o:dgmnodekind": this.diagramNodeKind = StringValue.parse(value); return;
-      case "o:dgmlayoutmru": this.diagramLayoutMostRecentUsed = StringValue.parse(value); return;
+      case "o:dgmlayout": this.diagramLayout = IntegerValue.parse(value); return;
+      case "o:dgmnodekind": this.diagramNodeKind = IntegerValue.parse(value); return;
+      case "o:dgmlayoutmru": this.diagramLayoutMostRecentUsed = IntegerValue.parse(value); return;
       case "o:insetmode": this.insetMode = StringValue.parse(value); return;
-      case "filled": this.filled = StringValue.parse(value); return;
+      case "filled": this.filled = TrueFalseValue.parse(value); return;
       case "fillcolor": this.fillColor = StringValue.parse(value); return;
-      case "stroked": this.stroked = StringValue.parse(value); return;
+      case "stroked": this.stroked = TrueFalseValue.parse(value); return;
       case "strokecolor": this.strokeColor = StringValue.parse(value); return;
       case "strokeweight": this.strokeWeight = StringValue.parse(value); return;
-      case "insetpen": this.insetPen = StringValue.parse(value); return;
+      case "insetpen": this.insetPen = TrueFalseValue.parse(value); return;
       case "o:spt": this.optionalNumber = Int32Value.parse(value); assertNumber(this.optionalNumber, { min: 0, max: 202 }, { attribute: "o:spt", elementClass: "Rectangle" }); return;
       case "o:connectortype": this.connectorType = StringValue.parse(value); return;
       case "o:bwmode": this.blackWhiteMode = StringValue.parse(value); return;
       case "o:bwpure": this.pureBlackWhiteMode = StringValue.parse(value); return;
       case "o:bwnormal": this.normalBlackWhiteMode = StringValue.parse(value); return;
-      case "o:forcedash": this.forceDash = StringValue.parse(value); return;
-      case "o:oleicon": this.oleIcon = StringValue.parse(value); return;
-      case "o:ole": this.ole = StringValue.parse(value); return;
-      case "o:preferrelative": this.preferRelative = StringValue.parse(value); return;
-      case "o:cliptowrap": this.clipToWrap = StringValue.parse(value); return;
-      case "o:clip": this.clip = StringValue.parse(value); return;
+      case "o:forcedash": this.forceDash = TrueFalseValue.parse(value); return;
+      case "o:oleicon": this.oleIcon = TrueFalseValue.parse(value); return;
+      case "o:ole": this.ole = TrueFalseBlankValue.parse(value); return;
+      case "o:preferrelative": this.preferRelative = TrueFalseValue.parse(value); return;
+      case "o:cliptowrap": this.clipToWrap = TrueFalseValue.parse(value); return;
+      case "o:clip": this.clip = TrueFalseValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

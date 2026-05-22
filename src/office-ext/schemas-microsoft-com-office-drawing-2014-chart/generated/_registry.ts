@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_drawing_2014_chart.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { registerDrawing2014ChartChildMaps } from "./_child-map.js";
 import { BooleanFalse } from "./boolean-false.js";
 import { Bubble3DBoolean } from "./bubble3-d-boolean.js";
 import { CategoryFilterException } from "./category-filter-exception.js";
@@ -27,6 +28,7 @@ import { XsdunsignedInt } from "./xsdunsigned-int.js";
  * 把 drawing-2014-chart 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function registerDrawing2014ChartElements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/drawing/2014/chart", "showExpandCollapseFieldButtons", BooleanFalse);
@@ -49,4 +51,5 @@ export function registerDrawing2014ChartElements(registry: ElementRegistry): voi
   registry.register("http://schemas.microsoft.com/office/drawing/2014/chart", "uniqueId", UniqueIdChartUniqueID);
   registry.register("http://schemas.microsoft.com/office/drawing/2014/chart", "explosion", UnsignedIntegerType);
   registry.register("http://schemas.microsoft.com/office/drawing/2014/chart", "ptidx", XsdunsignedInt);
+  registerDrawing2014ChartChildMaps(registry);
 }

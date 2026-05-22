@@ -274,8 +274,8 @@ describe("transforms", () => {
     const { mapSchemaType } = await import("../../tools/schema-codegen/index.js");
     expect(mapSchemaType("StringValue")).toEqual({ expr: "StringValue", imports: ["StringValue"] });
     expect(mapSchemaType("OnOffValue")).toEqual({
-      expr: "BooleanValue",
-      imports: ["BooleanValue"],
+      expr: "OnOffValue",
+      imports: ["OnOffValue"],
     });
     expect(mapSchemaType("Int64Value")).toEqual({ expr: "Int64Value", imports: ["Int64Value"] });
     expect(mapSchemaType("UnknownTypeXX")).toEqual({

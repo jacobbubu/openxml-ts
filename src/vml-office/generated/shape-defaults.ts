@@ -3,9 +3,11 @@
 // @see DocumentFormat.OpenXml.VmlOffice.ShapeDefaults
 
 import {
+  IntegerValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** New Shape Defaults.
@@ -21,28 +23,28 @@ export class ShapeDefaults extends OpenXmlCompositeElement {
   extension: StringValue | undefined;
 
   /** Shape ID Optional Storage (:spidmax) */
-  maxShapeId: StringValue | undefined;
+  maxShapeId: IntegerValue | undefined;
 
   /** style (:style) */
   style: StringValue | undefined;
 
   /** Shape Fill Toggle (:fill) */
-  beFilled: StringValue | undefined;
+  beFilled: TrueFalseValue | undefined;
 
   /** Default Fill Color (:fillcolor) */
   fillColor: StringValue | undefined;
 
   /** Shape Stroke Toggle (:stroke) */
-  isStroke: StringValue | undefined;
+  isStroke: TrueFalseValue | undefined;
 
   /** Shape Stroke Color (:strokecolor) */
   strokeColor: StringValue | undefined;
 
   /** Allow in Table Cell (o:allowincell) */
-  allowInCell: StringValue | undefined;
+  allowInCell: TrueFalseValue | undefined;
 
   /** allowoverlap (o:allowoverlap) */
-  allowOverlap: StringValue | undefined;
+  allowOverlap: TrueFalseValue | undefined;
 
   /** insetmode (o:insetmode) */
   insetMode: StringValue | undefined;
@@ -50,14 +52,14 @@ export class ShapeDefaults extends OpenXmlCompositeElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "v:ext": this.extension = StringValue.parse(value); return;
-      case "spidmax": this.maxShapeId = StringValue.parse(value); return;
+      case "spidmax": this.maxShapeId = IntegerValue.parse(value); return;
       case "style": this.style = StringValue.parse(value); return;
-      case "fill": this.beFilled = StringValue.parse(value); return;
+      case "fill": this.beFilled = TrueFalseValue.parse(value); return;
       case "fillcolor": this.fillColor = StringValue.parse(value); return;
-      case "stroke": this.isStroke = StringValue.parse(value); return;
+      case "stroke": this.isStroke = TrueFalseValue.parse(value); return;
       case "strokecolor": this.strokeColor = StringValue.parse(value); return;
-      case "o:allowincell": this.allowInCell = StringValue.parse(value); return;
-      case "o:allowoverlap": this.allowOverlap = StringValue.parse(value); return;
+      case "o:allowincell": this.allowInCell = TrueFalseValue.parse(value); return;
+      case "o:allowoverlap": this.allowOverlap = TrueFalseValue.parse(value); return;
       case "o:insetmode": this.insetMode = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);

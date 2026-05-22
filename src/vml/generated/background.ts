@@ -6,6 +6,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  TrueFalseValue,
   assertString,
 } from "../../element/index.js";
 
@@ -22,7 +23,7 @@ export class Background extends OpenXmlCompositeElement {
   id: StringValue | undefined;
 
   /** Shape Fill Toggle (:fill) */
-  filled: StringValue | undefined;
+  filled: TrueFalseValue | undefined;
 
   /** Fill Color (:fillcolor) */
   fillcolor: StringValue | undefined;
@@ -42,7 +43,7 @@ export class Background extends OpenXmlCompositeElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "id": this.id = StringValue.parse(value); assertString(this.id, { maxLength: 255 }, { attribute: ":id", elementClass: "Background" }); return;
-      case "fill": this.filled = StringValue.parse(value); return;
+      case "fill": this.filled = TrueFalseValue.parse(value); return;
       case "fillcolor": this.fillcolor = StringValue.parse(value); return;
       case "o:bwmode": this.blackWhiteMode = StringValue.parse(value); return;
       case "o:bwpure": this.pureBlackWhiteMode = StringValue.parse(value); return;

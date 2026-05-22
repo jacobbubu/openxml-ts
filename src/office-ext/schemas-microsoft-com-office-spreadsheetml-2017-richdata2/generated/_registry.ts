@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_spreadsheetml_2017_richdata2.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { registerSpreadsheetml2017Richdata2ChildMaps } from "./_child-map.js";
 import { ArrayData } from "./array-data.js";
 import { CustomRichFilter } from "./custom-rich-filter.js";
 import { CustomRichFilters } from "./custom-rich-filters.js";
@@ -41,6 +42,7 @@ import { SupportingPropertyBagValue } from "./supporting-property-bag-value.js";
  * 把 spreadsheetml-2017-richdata2 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function registerSpreadsheetml2017Richdata2Elements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2", "arrayData", ArrayData);
@@ -77,4 +79,5 @@ export function registerSpreadsheetml2017Richdata2Elements(registry: ElementRegi
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2", "s", SupportingPropertyBagStructure);
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2", "spbStructures", SupportingPropertyBagStructures);
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2", "v", SupportingPropertyBagValue);
+  registerSpreadsheetml2017Richdata2ChildMaps(registry);
 }

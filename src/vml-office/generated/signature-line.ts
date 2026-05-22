@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Digital Signature Line.
@@ -20,7 +21,7 @@ export class SignatureLine extends OpenXmlLeafElement {
   extension: StringValue | undefined;
 
   /** Signature Line Flag (:issignatureline) */
-  isSignatureLine: StringValue | undefined;
+  isSignatureLine: TrueFalseValue | undefined;
 
   /** Unique ID (:id) */
   id: StringValue | undefined;
@@ -29,13 +30,13 @@ export class SignatureLine extends OpenXmlLeafElement {
   providerId: StringValue | undefined;
 
   /** Use Signing Instructions Flag (:signinginstructionsset) */
-  signingInstructionsSet: StringValue | undefined;
+  signingInstructionsSet: TrueFalseValue | undefined;
 
   /** User-specified Comments Flag (:allowcomments) */
-  allowComments: StringValue | undefined;
+  allowComments: TrueFalseValue | undefined;
 
   /** Show Signed Date Flag (:showsigndate) */
-  showSignDate: StringValue | undefined;
+  showSignDate: TrueFalseValue | undefined;
 
   /** Suggested Signer Line 1 (o:suggestedsigner) */
   suggestedSigner: StringValue | undefined;
@@ -58,12 +59,12 @@ export class SignatureLine extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "v:ext": this.extension = StringValue.parse(value); return;
-      case "issignatureline": this.isSignatureLine = StringValue.parse(value); return;
+      case "issignatureline": this.isSignatureLine = TrueFalseValue.parse(value); return;
       case "id": this.id = StringValue.parse(value); return;
       case "provid": this.providerId = StringValue.parse(value); return;
-      case "signinginstructionsset": this.signingInstructionsSet = StringValue.parse(value); return;
-      case "allowcomments": this.allowComments = StringValue.parse(value); return;
-      case "showsigndate": this.showSignDate = StringValue.parse(value); return;
+      case "signinginstructionsset": this.signingInstructionsSet = TrueFalseValue.parse(value); return;
+      case "allowcomments": this.allowComments = TrueFalseValue.parse(value); return;
+      case "showsigndate": this.showSignDate = TrueFalseValue.parse(value); return;
       case "o:suggestedsigner": this.suggestedSigner = StringValue.parse(value); return;
       case "o:suggestedsigner2": this.suggestedSigner2 = StringValue.parse(value); return;
       case "o:suggestedsigneremail": this.suggestedSignerEmail = StringValue.parse(value); return;

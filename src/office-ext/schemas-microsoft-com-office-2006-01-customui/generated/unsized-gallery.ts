@@ -4,6 +4,7 @@
 
 import {
   BooleanValue,
+  IntegerValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -29,16 +30,16 @@ export class UnsizedGallery extends OpenXmlCompositeElement {
   invalidateContentOnDrop: BooleanValue | undefined;
 
   /** columns (:columns) */
-  columns: StringValue | undefined;
+  columns: IntegerValue | undefined;
 
   /** rows (:rows) */
-  rows: StringValue | undefined;
+  rows: IntegerValue | undefined;
 
   /** itemWidth (:itemWidth) */
-  itemWidth: StringValue | undefined;
+  itemWidth: IntegerValue | undefined;
 
   /** itemHeight (:itemHeight) */
-  itemHeight: StringValue | undefined;
+  itemHeight: IntegerValue | undefined;
 
   /** getItemWidth (:getItemWidth) */
   getItemWidth: StringValue | undefined;
@@ -168,10 +169,10 @@ export class UnsizedGallery extends OpenXmlCompositeElement {
       case "description": this.description = StringValue.parse(value); assertString(this.description, { maxLength: 4096, minLength: 1 }, { attribute: ":description", elementClass: "UnsizedGallery" }); return;
       case "getDescription": this.getDescription = StringValue.parse(value); assertString(this.getDescription, { maxLength: 1024, minLength: 1 }, { attribute: ":getDescription", elementClass: "UnsizedGallery" }); return;
       case "invalidateContentOnDrop": this.invalidateContentOnDrop = BooleanValue.parse(value); return;
-      case "columns": this.columns = StringValue.parse(value); return;
-      case "rows": this.rows = StringValue.parse(value); return;
-      case "itemWidth": this.itemWidth = StringValue.parse(value); return;
-      case "itemHeight": this.itemHeight = StringValue.parse(value); return;
+      case "columns": this.columns = IntegerValue.parse(value); return;
+      case "rows": this.rows = IntegerValue.parse(value); return;
+      case "itemWidth": this.itemWidth = IntegerValue.parse(value); return;
+      case "itemHeight": this.itemHeight = IntegerValue.parse(value); return;
       case "getItemWidth": this.getItemWidth = StringValue.parse(value); assertString(this.getItemWidth, { maxLength: 1024, minLength: 1 }, { attribute: ":getItemWidth", elementClass: "UnsizedGallery" }); return;
       case "getItemHeight": this.getItemHeight = StringValue.parse(value); assertString(this.getItemHeight, { maxLength: 1024, minLength: 1 }, { attribute: ":getItemHeight", elementClass: "UnsizedGallery" }); return;
       case "showItemLabel": this.showItemLabel = BooleanValue.parse(value); return;

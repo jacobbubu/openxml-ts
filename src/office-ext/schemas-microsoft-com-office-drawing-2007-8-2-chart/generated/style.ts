@@ -3,8 +3,8 @@
 // @see DocumentFormat.OpenXml.82Chart.Style
 
 import {
+  ByteValue,
   OpenXmlLeafElement,
-  StringValue,
   assertRequired,
 } from "../../../element/index.js";
 
@@ -18,11 +18,11 @@ export class Style extends OpenXmlLeafElement {
 
 
   /** val (:val) */
-  val: StringValue | undefined;
+  val: ByteValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "val": this.val = StringValue.parse(value); return;
+      case "val": this.val = ByteValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

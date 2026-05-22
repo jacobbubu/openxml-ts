@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_spreadsheetml_2022_featurepropertybag.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { registerSpreadsheetml2022FeaturepropertybagChildMaps } from "./_child-map.js";
 import { ArrayFeatureProperty } from "./array-feature-property.js";
 import { BagExtensions } from "./bag-extensions.js";
 import { ColumnBodyRevDxfTableRevDxf } from "./column-body-rev-dxf-table-rev-dxf.js";
@@ -32,6 +33,7 @@ import { XsdunsignedInt } from "./xsdunsigned-int.js";
  * 把 spreadsheetml-2022-featurepropertybag 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function registerSpreadsheetml2022FeaturepropertybagElements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag", "a", ArrayFeatureProperty);
@@ -59,4 +61,5 @@ export function registerSpreadsheetml2022FeaturepropertybagElements(registry: El
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag", "d", Xsddouble);
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag", "i", Xsdinteger);
   registry.register("http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag", "bagId", XsdunsignedInt);
+  registerSpreadsheetml2022FeaturepropertybagChildMaps(registry);
 }

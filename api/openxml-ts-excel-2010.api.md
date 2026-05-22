@@ -175,7 +175,8 @@ export class DataModel extends OpenXmlCompositeElement {
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)
     readonly localName: "dataModel";
-    minVersionLoad: StringValue | undefined;
+    // Warning: (ae-forgotten-export) The symbol "ByteValue" needs to be exported by the entry point index.d.ts
+    minVersionLoad: ByteValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main";
     // (undocumented)
@@ -426,8 +427,8 @@ export class PivotCacheDecoupled extends OpenXmlLeafElement {
 export class PivotCacheIdVersion extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
-    cacheIdCreatedVersion: StringValue | undefined;
-    cacheIdSupportedVersion: StringValue | undefined;
+    cacheIdCreatedVersion: ByteValue | undefined;
+    cacheIdSupportedVersion: ByteValue | undefined;
     // (undocumented)
     protected collectAttributes(): Array<[string, string]>;
     // (undocumented)

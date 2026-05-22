@@ -5,7 +5,7 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
-  StringValue,
+  UInt16Value,
 } from "../../../element/index.js";
 
 /** Defines the TextBoxInfo2 Class.
@@ -18,11 +18,11 @@ export class TextBoxInfo2 extends OpenXmlCompositeElement {
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
   /** id (:id) */
-  id: StringValue | undefined;
+  id: UInt16Value | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "id": this.id = StringValue.parse(value); return;
+      case "id": this.id = UInt16Value.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

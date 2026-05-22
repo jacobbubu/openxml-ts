@@ -4,6 +4,7 @@
 
 import {
   BooleanValue,
+  IntegerValue,
   OpenXmlLeafElement,
   StringValue,
   assertString,
@@ -64,7 +65,7 @@ export class BackstageEditBox extends OpenXmlLeafElement {
   onChange: StringValue | undefined;
 
   /** maxLength (:maxLength) */
-  maxLength: StringValue | undefined;
+  maxLength: IntegerValue | undefined;
 
   /** sizeString (:sizeString) */
   sizeString: StringValue | undefined;
@@ -86,7 +87,7 @@ export class BackstageEditBox extends OpenXmlLeafElement {
       case "getKeytip": this.getKeytip = StringValue.parse(value); assertString(this.getKeytip, { maxLength: 1024, minLength: 1 }, { attribute: ":getKeytip", elementClass: "BackstageEditBox" }); return;
       case "getText": this.getText = StringValue.parse(value); assertString(this.getText, { maxLength: 1024, minLength: 1 }, { attribute: ":getText", elementClass: "BackstageEditBox" }); return;
       case "onChange": this.onChange = StringValue.parse(value); assertString(this.onChange, { maxLength: 1024, minLength: 1 }, { attribute: ":onChange", elementClass: "BackstageEditBox" }); return;
-      case "maxLength": this.maxLength = StringValue.parse(value); return;
+      case "maxLength": this.maxLength = IntegerValue.parse(value); return;
       case "sizeString": this.sizeString = StringValue.parse(value); assertString(this.sizeString, { maxLength: 1024, minLength: 1 }, { attribute: ":sizeString", elementClass: "BackstageEditBox" }); return;
     }
     super.applyAttribute(qname, value);

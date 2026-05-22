@@ -6,6 +6,7 @@ import {
   DecimalValue,
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Text Box Top Stroke.
@@ -21,7 +22,7 @@ export class TopStroke extends OpenXmlLeafElement {
   extension: StringValue | undefined;
 
   /** Stroke Toggle (:on) */
-  on: StringValue | undefined;
+  on: TrueFalseValue | undefined;
 
   /** Stroke Weight (:weight) */
   weight: StringValue | undefined;
@@ -51,7 +52,7 @@ export class TopStroke extends OpenXmlLeafElement {
   dashStyle: StringValue | undefined;
 
   /** Inset Border From Path (:insetpen) */
-  insetPen: StringValue | undefined;
+  insetPen: TrueFalseValue | undefined;
 
   /** Stroke Image Style (:filltype) */
   fillType: StringValue | undefined;
@@ -66,7 +67,7 @@ export class TopStroke extends OpenXmlLeafElement {
   imageSize: StringValue | undefined;
 
   /** Stoke Image Alignment (:imagealignshape) */
-  imageAlignShape: StringValue | undefined;
+  imageAlignShape: TrueFalseValue | undefined;
 
   /** Line Start Arrowhead (:startarrow) */
   startArrow: StringValue | undefined;
@@ -96,12 +97,12 @@ export class TopStroke extends OpenXmlLeafElement {
   title: StringValue | undefined;
 
   /** Force Dashed Outline (o:forcedash) */
-  forceDash: StringValue | undefined;
+  forceDash: TrueFalseValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "v:ext": this.extension = StringValue.parse(value); return;
-      case "on": this.on = StringValue.parse(value); return;
+      case "on": this.on = TrueFalseValue.parse(value); return;
       case "weight": this.weight = StringValue.parse(value); return;
       case "color": this.color = StringValue.parse(value); return;
       case "color2": this.color2 = StringValue.parse(value); return;
@@ -111,12 +112,12 @@ export class TopStroke extends OpenXmlLeafElement {
       case "joinstyle": this.joinStyle = StringValue.parse(value); return;
       case "endcap": this.endCap = StringValue.parse(value); return;
       case "dashstyle": this.dashStyle = StringValue.parse(value); return;
-      case "insetpen": this.insetPen = StringValue.parse(value); return;
+      case "insetpen": this.insetPen = TrueFalseValue.parse(value); return;
       case "filltype": this.fillType = StringValue.parse(value); return;
       case "src": this.source = StringValue.parse(value); return;
       case "imageaspect": this.imageAspect = StringValue.parse(value); return;
       case "imagesize": this.imageSize = StringValue.parse(value); return;
-      case "imagealignshape": this.imageAlignShape = StringValue.parse(value); return;
+      case "imagealignshape": this.imageAlignShape = TrueFalseValue.parse(value); return;
       case "startarrow": this.startArrow = StringValue.parse(value); return;
       case "startarrowwidth": this.startArrowWidth = StringValue.parse(value); return;
       case "startarrowlength": this.startArrowLength = StringValue.parse(value); return;
@@ -126,7 +127,7 @@ export class TopStroke extends OpenXmlLeafElement {
       case "o:href": this.href = StringValue.parse(value); return;
       case "o:althref": this.alternateImageReference = StringValue.parse(value); return;
       case "o:title": this.title = StringValue.parse(value); return;
-      case "o:forcedash": this.forceDash = StringValue.parse(value); return;
+      case "o:forcedash": this.forceDash = TrueFalseValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

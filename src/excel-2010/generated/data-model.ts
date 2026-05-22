@@ -3,9 +3,9 @@
 // @see DocumentFormat.OpenXml.Excel2010.DataModel
 
 import {
+  ByteValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
-  StringValue,
 } from "../../element/index.js";
 
 /** Defines the DataModel Class.
@@ -18,11 +18,11 @@ export class DataModel extends OpenXmlCompositeElement {
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
   /** minVersionLoad (:minVersionLoad) */
-  minVersionLoad: StringValue | undefined;
+  minVersionLoad: ByteValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "minVersionLoad": this.minVersionLoad = StringValue.parse(value); return;
+      case "minVersionLoad": this.minVersionLoad = ByteValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

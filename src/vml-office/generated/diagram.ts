@@ -3,9 +3,11 @@
 // @see DocumentFormat.OpenXml.VmlOffice.Diagram
 
 import {
+  IntegerValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** VML Diagram.
@@ -21,44 +23,44 @@ export class Diagram extends OpenXmlCompositeElement {
   extension: StringValue | undefined;
 
   /** Diagram Style Options (:dgmstyle) */
-  style: StringValue | undefined;
+  style: IntegerValue | undefined;
 
   /** Diagram Automatic Format (:autoformat) */
-  autoFormat: StringValue | undefined;
+  autoFormat: TrueFalseValue | undefined;
 
   /** Diagram Reverse Direction (:reverse) */
-  reverse: StringValue | undefined;
+  reverse: TrueFalseValue | undefined;
 
   /** Diagram Automatic Layout (:autolayout) */
-  autoLayout: StringValue | undefined;
+  autoLayout: TrueFalseValue | undefined;
 
   /** Diagram Layout X Scale (:dgmscalex) */
-  scaleX: StringValue | undefined;
+  scaleX: IntegerValue | undefined;
 
   /** Diagram Layout Y Scale (:dgmscaley) */
-  scaleY: StringValue | undefined;
+  scaleY: IntegerValue | undefined;
 
   /** Diagram Font Size (:dgmfontsize) */
-  fontSize: StringValue | undefined;
+  fontSize: IntegerValue | undefined;
 
   /** Diagram Layout Extents (:constrainbounds) */
   constrainBounds: StringValue | undefined;
 
   /** Diagram Base Font Size (:dgmbasetextscale) */
-  baseTextScale: StringValue | undefined;
+  baseTextScale: IntegerValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "v:ext": this.extension = StringValue.parse(value); return;
-      case "dgmstyle": this.style = StringValue.parse(value); return;
-      case "autoformat": this.autoFormat = StringValue.parse(value); return;
-      case "reverse": this.reverse = StringValue.parse(value); return;
-      case "autolayout": this.autoLayout = StringValue.parse(value); return;
-      case "dgmscalex": this.scaleX = StringValue.parse(value); return;
-      case "dgmscaley": this.scaleY = StringValue.parse(value); return;
-      case "dgmfontsize": this.fontSize = StringValue.parse(value); return;
+      case "dgmstyle": this.style = IntegerValue.parse(value); return;
+      case "autoformat": this.autoFormat = TrueFalseValue.parse(value); return;
+      case "reverse": this.reverse = TrueFalseValue.parse(value); return;
+      case "autolayout": this.autoLayout = TrueFalseValue.parse(value); return;
+      case "dgmscalex": this.scaleX = IntegerValue.parse(value); return;
+      case "dgmscaley": this.scaleY = IntegerValue.parse(value); return;
+      case "dgmfontsize": this.fontSize = IntegerValue.parse(value); return;
       case "constrainbounds": this.constrainBounds = StringValue.parse(value); return;
-      case "dgmbasetextscale": this.baseTextScale = StringValue.parse(value); return;
+      case "dgmbasetextscale": this.baseTextScale = IntegerValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

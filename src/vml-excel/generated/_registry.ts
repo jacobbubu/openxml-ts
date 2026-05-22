@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas-microsoft-com_office_excel.json
 
 import type { ElementRegistry } from "../../element/index.js";
+import { registerVmlExcelChildMaps } from "./_child-map.js";
 import { AcceleratorPrimary } from "./accelerator-primary.js";
 import { AcceleratorSecondary } from "./accelerator-secondary.js";
 import { Anchor } from "./anchor.js";
@@ -75,6 +76,7 @@ import { Visible } from "./visible.js";
  * 把 vml-excel 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function registerVmlExcelElements(registry: ElementRegistry): void {
   registry.register("urn:schemas-microsoft-com:office:excel", "Accel", AcceleratorPrimary);
@@ -145,4 +147,5 @@ export function registerVmlExcelElements(registry: ElementRegistry): void {
   registry.register("urn:schemas-microsoft-com:office:excel", "VScroll", VerticalScrollBar);
   registry.register("urn:schemas-microsoft-com:office:excel", "TextVAlign", VerticalTextAlignment);
   registry.register("urn:schemas-microsoft-com:office:excel", "Visible", Visible);
+  registerVmlExcelChildMaps(registry);
 }

@@ -3,8 +3,8 @@
 // @see DocumentFormat.OpenXml.Excel2010.PivotCacheIdVersion
 
 import {
+  ByteValue,
   OpenXmlLeafElement,
-  StringValue,
   assertRequired,
 } from "../../element/index.js";
 
@@ -18,15 +18,15 @@ export class PivotCacheIdVersion extends OpenXmlLeafElement {
 
 
   /** cacheIdSupportedVersion (:cacheIdSupportedVersion) */
-  cacheIdSupportedVersion: StringValue | undefined;
+  cacheIdSupportedVersion: ByteValue | undefined;
 
   /** cacheIdCreatedVersion (:cacheIdCreatedVersion) */
-  cacheIdCreatedVersion: StringValue | undefined;
+  cacheIdCreatedVersion: ByteValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "cacheIdSupportedVersion": this.cacheIdSupportedVersion = StringValue.parse(value); return;
-      case "cacheIdCreatedVersion": this.cacheIdCreatedVersion = StringValue.parse(value); return;
+      case "cacheIdSupportedVersion": this.cacheIdSupportedVersion = ByteValue.parse(value); return;
+      case "cacheIdCreatedVersion": this.cacheIdCreatedVersion = ByteValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

@@ -3,7 +3,7 @@
 // @see DocumentFormat.OpenXml.Word2006Wordml.RecordIncluded
 
 import {
-  BooleanValue,
+  OnOffValue,
   OpenXmlLeafElement,
 } from "../../../element/index.js";
 
@@ -17,11 +17,11 @@ export class RecordIncluded extends OpenXmlLeafElement {
 
 
   /** val (wne:val) */
-  val: BooleanValue | undefined;
+  val: OnOffValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "wne:val": this.val = BooleanValue.parse(value); return;
+      case "wne:val": this.val = OnOffValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

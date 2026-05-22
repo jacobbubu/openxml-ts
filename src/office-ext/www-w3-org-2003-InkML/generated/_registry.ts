@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/www_w3_org_2003_InkML.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { register2003InkMLChildMaps } from "./_child-map.js";
 import { ActiveArea } from "./active-area.js";
 import { Annotation } from "./annotation.js";
 import { AnnotationXml } from "./annotation-xml.js";
@@ -34,6 +35,7 @@ import { TraceView } from "./trace-view.js";
  * 把 2003-InkML 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function register2003InkMLElements(registry: ElementRegistry): void {
   registry.register("http://www.w3.org/2003/InkML", "activeArea", ActiveArea);
@@ -63,4 +65,5 @@ export function register2003InkMLElements(registry: ElementRegistry): void {
   registry.register("http://www.w3.org/2003/InkML", "traceFormat", TraceFormat);
   registry.register("http://www.w3.org/2003/InkML", "traceGroup", TraceGroup);
   registry.register("http://www.w3.org/2003/InkML", "traceView", TraceView);
+  register2003InkMLChildMaps(registry);
 }

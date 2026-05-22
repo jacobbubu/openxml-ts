@@ -6,6 +6,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Defines the TextBox Class.
@@ -27,14 +28,14 @@ export class TextBox extends OpenXmlCompositeElement {
   inset: StringValue | undefined;
 
   /** Text Box Single-Click Selection Toggle (o:singleclick) */
-  singleClick: StringValue | undefined;
+  singleClick: TrueFalseValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "id": this.id = StringValue.parse(value); return;
       case "style": this.style = StringValue.parse(value); return;
       case "inset": this.inset = StringValue.parse(value); return;
-      case "o:singleclick": this.singleClick = StringValue.parse(value); return;
+      case "o:singleclick": this.singleClick = TrueFalseValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

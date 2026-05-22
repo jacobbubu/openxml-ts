@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_2009_07_customui.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { register200907CustomuiChildMaps } from "./_child-map.js";
 import { Backstage } from "./backstage.js";
 import { BackstageGroups } from "./backstage-groups.js";
 import { BackstageMenuGroup } from "./backstage-menu-group.js";
@@ -56,6 +57,7 @@ import { VisibleToggleButton } from "./visible-toggle-button.js";
  * 把 2009-07-customui 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function register200907CustomuiElements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/2009/07/customui", "backstage", Backstage);
@@ -107,4 +109,5 @@ export function register200907CustomuiElements(registry: ElementRegistry): void 
   registry.register("http://schemas.microsoft.com/office/2009/07/customui", "topItems", TopItemsGroupControls);
   registry.register("http://schemas.microsoft.com/office/2009/07/customui", "button", VisibleButton);
   registry.register("http://schemas.microsoft.com/office/2009/07/customui", "toggleButton", VisibleToggleButton);
+  register200907CustomuiChildMaps(registry);
 }

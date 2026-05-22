@@ -194,6 +194,17 @@ const SCHEMAS: ReadonlyArray<readonly [string, string, number, string]> = [
     2,
     "Drawing2010",
   ],
+  // vml family (Epic-94: regenerated with new value types, needs _child-map.ts)
+  ["schemas-microsoft-com_vml.json", "src/vml/generated", 2, "Vml"],
+  ["schemas-microsoft-com_office_office.json", "src/vml-office/generated", 2, "VmlOffice"],
+  ["schemas-microsoft-com_office_word.json", "src/vml-word/generated", 2, "VmlWord"],
+  ["schemas-microsoft-com_office_excel.json", "src/vml-excel/generated", 2, "VmlExcel"],
+  [
+    "schemas-microsoft-com_office_powerpoint.json",
+    "src/vml-powerpoint/generated",
+    2,
+    "VmlPowerpoint",
+  ],
 ];
 
 function resolveNs(prefix: string, targetNs: string): string {

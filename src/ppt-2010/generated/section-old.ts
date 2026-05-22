@@ -3,9 +3,11 @@
 // @see DocumentFormat.OpenXml.Ppt2010.SectionOld
 
 import {
+  ListValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  UInt32Value,
 } from "../../element/index.js";
 
 /** Defines the SectionOld Class.
@@ -21,7 +23,7 @@ export class SectionOld extends OpenXmlCompositeElement {
   name: StringValue | undefined;
 
   /** slideIdLst (:slideIdLst) */
-  slideIdList: StringValue | undefined;
+  slideIdList: ListValue<UInt32Value> | undefined;
 
   /** id (:id) */
   id: StringValue | undefined;
@@ -29,7 +31,7 @@ export class SectionOld extends OpenXmlCompositeElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "name": this.name = StringValue.parse(value); return;
-      case "slideIdLst": this.slideIdList = StringValue.parse(value); return;
+      case "slideIdLst": this.slideIdList = ListValue.parse(value, UInt32Value.parse); return;
       case "id": this.id = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);

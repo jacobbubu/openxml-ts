@@ -4,6 +4,7 @@
 
 import {
   Int32Value,
+  ListValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -26,7 +27,7 @@ export class ContextNode extends OpenXmlCompositeElement {
   type: StringValue | undefined;
 
   /** rotatedBoundingBox (:rotatedBoundingBox) */
-  rotatedBoundingBox: StringValue | undefined;
+  rotatedBoundingBox: ListValue<StringValue> | undefined;
 
   /** alignmentLevel (:alignmentLevel) */
   alignmentLevel: Int32Value | undefined;
@@ -68,7 +69,7 @@ export class ContextNode extends OpenXmlCompositeElement {
   rotationAngle: Int32Value | undefined;
 
   /** hotPoints (:hotPoints) */
-  hotPoints: StringValue | undefined;
+  hotPoints: ListValue<StringValue> | undefined;
 
   /** centroid (:centroid) */
   centroid: StringValue | undefined;
@@ -80,13 +81,13 @@ export class ContextNode extends OpenXmlCompositeElement {
   shapeName: StringValue | undefined;
 
   /** shapeGeometry (:shapeGeometry) */
-  shapeGeometry: StringValue | undefined;
+  shapeGeometry: ListValue<StringValue> | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "id": this.id = StringValue.parse(value); return;
       case "type": this.type = StringValue.parse(value); return;
-      case "rotatedBoundingBox": this.rotatedBoundingBox = StringValue.parse(value); return;
+      case "rotatedBoundingBox": this.rotatedBoundingBox = ListValue.parse(value, StringValue.parse); return;
       case "alignmentLevel": this.alignmentLevel = Int32Value.parse(value); return;
       case "contentType": this.contentType = Int32Value.parse(value); return;
       case "ascender": this.ascender = StringValue.parse(value); return;
@@ -100,11 +101,11 @@ export class ContextNode extends OpenXmlCompositeElement {
       case "beginModifierType": this.beginModifierType = StringValue.parse(value); return;
       case "endModifierType": this.endModifierType = StringValue.parse(value); return;
       case "rotationAngle": this.rotationAngle = Int32Value.parse(value); return;
-      case "hotPoints": this.hotPoints = StringValue.parse(value); return;
+      case "hotPoints": this.hotPoints = ListValue.parse(value, StringValue.parse); return;
       case "centroid": this.centroid = StringValue.parse(value); return;
       case "semanticType": this.semanticType = StringValue.parse(value); return;
       case "shapeName": this.shapeName = StringValue.parse(value); return;
-      case "shapeGeometry": this.shapeGeometry = StringValue.parse(value); return;
+      case "shapeGeometry": this.shapeGeometry = ListValue.parse(value, StringValue.parse); return;
     }
     super.applyAttribute(qname, value);
   }

@@ -3,6 +3,9 @@
 // @see DocumentFormat.OpenXml.200304Emma.Lattice
 
 import {
+  DecimalValue,
+  IntegerValue,
+  ListValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -19,10 +22,10 @@ export class Lattice extends OpenXmlCompositeElement {
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
   /** initial (:initial) */
-  initial: StringValue | undefined;
+  initial: IntegerValue | undefined;
 
   /** final (:final) */
-  final: StringValue | undefined;
+  final: ListValue<DecimalValue> | undefined;
 
   /** time-ref-uri (emma:time-ref-uri) */
   timeReference: StringValue | undefined;
@@ -32,8 +35,8 @@ export class Lattice extends OpenXmlCompositeElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "initial": this.initial = StringValue.parse(value); return;
-      case "final": this.final = StringValue.parse(value); return;
+      case "initial": this.initial = IntegerValue.parse(value); return;
+      case "final": this.final = ListValue.parse(value, DecimalValue.parse); return;
       case "emma:time-ref-uri": this.timeReference = StringValue.parse(value); return;
       case "emma:time-ref-anchor-point": this.timeReferenceAnchorPoint = StringValue.parse(value); return;
     }

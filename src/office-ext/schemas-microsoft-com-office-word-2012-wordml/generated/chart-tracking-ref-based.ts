@@ -3,7 +3,7 @@
 // @see DocumentFormat.OpenXml.Word2012Wordml.ChartTrackingRefBased
 
 import {
-  BooleanValue,
+  OnOffValue,
   OpenXmlLeafElement,
 } from "../../../element/index.js";
 
@@ -17,11 +17,11 @@ export class ChartTrackingRefBased extends OpenXmlLeafElement {
 
 
   /** On/Off Value (w:val) */
-  val: BooleanValue | undefined;
+  val: OnOffValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = BooleanValue.parse(value); return;
+      case "w:val": this.val = OnOffValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }

@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Skew Transform.
@@ -23,7 +24,7 @@ export class Skew extends OpenXmlLeafElement {
   id: StringValue | undefined;
 
   /** Skew Toggle (:on) */
-  on: StringValue | undefined;
+  on: TrueFalseValue | undefined;
 
   /** Skew Offset (:offset) */
   offset: StringValue | undefined;
@@ -38,7 +39,7 @@ export class Skew extends OpenXmlLeafElement {
     switch (qname) {
       case "v:ext": this.extension = StringValue.parse(value); return;
       case "id": this.id = StringValue.parse(value); return;
-      case "on": this.on = StringValue.parse(value); return;
+      case "on": this.on = TrueFalseValue.parse(value); return;
       case "offset": this.offset = StringValue.parse(value); return;
       case "origin": this.origin = StringValue.parse(value); return;
       case "matrix": this.matrix = StringValue.parse(value); return;

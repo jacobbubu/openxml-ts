@@ -5,6 +5,7 @@
 import {
   OpenXmlLeafElement,
   StringValue,
+  TrueFalseValue,
 } from "../../element/index.js";
 
 /** Defines the Shadow Class.
@@ -20,13 +21,13 @@ export class Shadow extends OpenXmlLeafElement {
   id: StringValue | undefined;
 
   /** Shadow Toggle (:on) */
-  on: StringValue | undefined;
+  on: TrueFalseValue | undefined;
 
   /** Shadow Type (:type) */
   type: StringValue | undefined;
 
   /** Shadow Transparency (:obscured) */
-  obscured: StringValue | undefined;
+  obscured: TrueFalseValue | undefined;
 
   /** Shadow Primary Color (:color) */
   color: StringValue | undefined;
@@ -52,9 +53,9 @@ export class Shadow extends OpenXmlLeafElement {
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "id": this.id = StringValue.parse(value); return;
-      case "on": this.on = StringValue.parse(value); return;
+      case "on": this.on = TrueFalseValue.parse(value); return;
       case "type": this.type = StringValue.parse(value); return;
-      case "obscured": this.obscured = StringValue.parse(value); return;
+      case "obscured": this.obscured = TrueFalseValue.parse(value); return;
       case "color": this.color = StringValue.parse(value); return;
       case "opacity": this.opacity = StringValue.parse(value); return;
       case "offset": this.offset = StringValue.parse(value); return;

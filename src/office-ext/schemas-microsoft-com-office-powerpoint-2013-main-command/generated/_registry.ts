@@ -2,6 +2,7 @@
 // Source: /Users/rongshen/github/Open-XML-SDK/data/schemas/schemas_microsoft_com_office_powerpoint_2013_main_command.json
 
 import type { ElementRegistry } from "../../../element/index.js";
+import { registerPpt2013CommandChildMaps } from "./_child-map.js";
 import { AnimEffectMkLstAnimationEffectMonikerList } from "./anim-effect-mk-lst-animation-effect-moniker-list.js";
 import { AnimEffectParentMkLstAnimationEffectMonikerList } from "./anim-effect-parent-mk-lst-animation-effect-moniker-list.js";
 import { CommentAuthorMonikerList } from "./comment-author-moniker-list.js";
@@ -31,6 +32,7 @@ import { SummaryZoomMonikerList } from "./summary-zoom-moniker-list.js";
  * 把 ppt-2013-command 主 namespace 下全部具体 element 类注册到给定 ElementRegistry。
  * 调用方按需 import 此函数来启用 typed XML 反序列化；不调用时 registry 保持空，
  * 让 tree-shaker 把生成类从 bundle 中剔除（ADR-012）。
+ * Epic-86：同时注册父→子上下文映射以启用上下文感知反序列化。
  */
 export function registerPpt2013CommandElements(registry: ElementRegistry): void {
   registry.register("http://schemas.microsoft.com/office/powerpoint/2013/main/command", "animEffectMkLst", AnimEffectMkLstAnimationEffectMonikerList);
@@ -57,4 +59,5 @@ export function registerPpt2013CommandElements(registry: ElementRegistry): void 
   registry.register("http://schemas.microsoft.com/office/powerpoint/2013/main/command", "sldPosMkLst", SlidePosMonikerList);
   registry.register("http://schemas.microsoft.com/office/powerpoint/2013/main/command", "tagMkLst", StringTagMonikerList);
   registry.register("http://schemas.microsoft.com/office/powerpoint/2013/main/command", "tocMkLst", SummaryZoomMonikerList);
+  registerPpt2013CommandChildMaps(registry);
 }
