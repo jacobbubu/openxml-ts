@@ -16,7 +16,9 @@
       "coverage",
       "src/**/generated/**",
       "src/validation/constraints/**",
-      "test/fixtures/golden/**/*.golden.json"
+      "test/fixtures/golden/**/*.golden.json",
+      "tools/cross-sdk-verify/bin/**",
+      "tools/cross-sdk-verify/obj/**"
     ]
   },
   "formatter": {
