@@ -1,11 +1,10 @@
-name: npm publish
+name: npm publish (manual)
 
-# 发布到 npm registry。
-# - release：release-please 打出 GitHub Release 后自动发布该版本；
-# - workflow_dispatch：手动触发（用于补发已有 tag，如首个 npm 发布）。
+# 手动补发入口——用于补发已有 tag（如某次自动发布失败后重试）。
+# 常规自动发布由 release-please.yml 的 publish job 完成（release-please
+# 用 GITHUB_TOKEN 创建 Release，`release: published` 事件不会触发独立
+# workflow，故发布必须在 release-please 同一个 workflow run 内进行）。
 on:
-  release:
-    types: [published]
   workflow_dispatch:
 
 permissions:
@@ -30,7 +29,6 @@ jobs:
 
       - run: pnpm build
 
-      # 发布前确认产物可用 + 公开面无漂移。
       - name: API report drift check
         run: pnpm api:check
 
