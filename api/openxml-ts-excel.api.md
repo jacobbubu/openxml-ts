@@ -889,11 +889,13 @@ export class SpreadsheetDocument {
         relId: string;
     };
     get calculationChainPart(): CalculationChainPart | undefined;
+    changeDocumentType(newType: SpreadsheetDocumentType): void;
     get coreProperties(): CoreProperties;
     static create(): SpreadsheetDocument;
     get customFileProperties(): CustomFilePropertiesPart;
     // (undocumented)
     dispose(): Promise<void>;
+    get documentType(): SpreadsheetDocumentType | undefined;
     get extendedFileProperties(): ExtendedFilePropertiesPart;
     listDefinedNames(): Array<{
         name: string;
@@ -917,6 +919,15 @@ export class SpreadsheetDocument {
     get themePart(): ThemePart | undefined;
     get workbookPart(): WorkbookPart | undefined;
     get workbookStylesPart(): WorkbookStylesPart | undefined;
+}
+
+// @public
+export enum SpreadsheetDocumentType {
+    AddIn = "AddIn",
+    MacroEnabledTemplate = "MacroEnabledTemplate",
+    MacroEnabledWorkbook = "MacroEnabledWorkbook",
+    Template = "Template",
+    Workbook = "Workbook"
 }
 
 // @public

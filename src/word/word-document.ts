@@ -93,6 +93,40 @@ import {
   WebSettingsPart,
 } from "./parts/index.js";
 
+/**
+ * Word 文档类型枚举——对位 .NET `WordprocessingDocumentType`。
+ *
+ * 控制主文档 Part（`/word/document.xml`）的 content-type，决定文件以
+ * `.docx` / `.dotx` / `.docm` / `.dotm` 保存时的语义。
+ */
+export enum WordprocessingDocumentType {
+  /** 普通 Word 文档（.docx）。 */
+  Document = "Document",
+  /** Word 模板（.dotx）。 */
+  Template = "Template",
+  /** 启用宏的 Word 文档（.docm）。 */
+  MacroEnabledDocument = "MacroEnabledDocument",
+  /** 启用宏的 Word 模板（.dotm）。 */
+  MacroEnabledTemplate = "MacroEnabledTemplate",
+}
+
+/** 文档类型 → 主文档 Part 的 content-type 映射（同 .NET SDK GetContentType）。 */
+const WORD_CONTENT_TYPES: Readonly<Record<WordprocessingDocumentType, string>> = {
+  [WordprocessingDocumentType.Document]:
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+  [WordprocessingDocumentType.Template]:
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml",
+  [WordprocessingDocumentType.MacroEnabledDocument]:
+    "application/vnd.ms-word.document.macroEnabled.main+xml",
+  [WordprocessingDocumentType.MacroEnabledTemplate]:
+    "application/vnd.ms-word.template.macroEnabledTemplate.main+xml",
+};
+
+/** content-type → 文档类型的反向映射（同 .NET SDK GetDocumentType）。 */
+const WORD_DOCUMENT_TYPE_BY_CT = new Map<string, WordprocessingDocumentType>(
+  Object.entries(WORD_CONTENT_TYPES).map(([t, ct]) => [ct, t as WordprocessingDocumentType]),
+);
+
 /** Word 子系统共用的 typed element registry（包内自管，不污染全局）。 */
 const wordRegistry: ElementRegistry = (() => {
   const r = new ElementRegistry();
@@ -760,6 +794,46 @@ export class WordprocessingDocument {
 
   [Symbol.asyncDispose](): Promise<void> {
     return this.dispose();
+  }
+
+  /**
+   * 当前文档类型（Epic-96，对位 .NET `WordprocessingDocument.DocumentType`）。
+   *
+   * 读取主文档 Part 的 content-type 并反向映射到 `WordprocessingDocumentType`。
+   * 主文档 Part 不存在或 content-type 未知时返回 `undefined`。
+   */
+  get documentType(): WordprocessingDocumentType | undefined {
+    const main = this.mainDocumentPart;
+    if (main === undefined) return undefined;
+    const ct = this.pkg.contentTypes.resolveContentType(main.part.uri as PartUri);
+    if (ct === undefined) return undefined;
+    return WORD_DOCUMENT_TYPE_BY_CT.get(ct);
+  }
+
+  /**
+   * 切换文档类型（Epic-96，对位 .NET `WordprocessingDocument.ChangeDocumentType`）。
+   *
+   * 重写主文档 Part 在 `[Content_Types].xml` 中的 Override 条目，使其 content-type
+   * 匹配目标类型（Document / Template / MacroEnabledDocument / MacroEnabledTemplate）。
+   *
+   * 行为对位 .NET SDK：
+   * - 与当前类型相同时静默返回（no-op）。
+   * - 主文档 Part 不存在时静默返回。
+   *
+   * @param newType 目标文档类型。
+   */
+  changeDocumentType(newType: WordprocessingDocumentType): void {
+    const main = this.mainDocumentPart;
+    if (main === undefined) return;
+
+    const newContentType = WORD_CONTENT_TYPES[newType];
+    const partUri = main.part.uri as PartUri;
+    const currentContentType = this.pkg.contentTypes.resolveContentType(partUri);
+
+    if (currentContentType === newContentType) return;
+
+    this.pkg.contentTypes.removeOverride(partUri);
+    this.pkg.contentTypes.addOverride(partUri, newContentType);
   }
 
   // ─── 静态工厂 ───────────────────────────────────────────────────────────────

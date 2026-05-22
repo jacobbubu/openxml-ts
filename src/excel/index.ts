@@ -26,7 +26,7 @@ import "./extensions/cell-value-accessor.js";
 import "./extensions/cell-formula-accessor.js";
 
 // 门面 + typed Parts
-export { SpreadsheetDocument } from "./spreadsheet-document.js";
+export { SpreadsheetDocument, SpreadsheetDocumentType } from "./spreadsheet-document.js";
 export {
   CalculationChainPart,
   ChartPart,
