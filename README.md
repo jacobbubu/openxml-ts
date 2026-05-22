@@ -349,9 +349,9 @@ console.log(pkg.diagnostics.partCount, pkg.diagnostics.relationshipCount);
 
 ## API 稳定承诺
 
-当前 **0.x 是 pre-release**，破坏性改动会通过 minor bump 释放（按 semver pre-1.0 惯例）。
+**1.0 起走严格 semver**：上面 10 个公开 entry（`openxml-ts` + `/word` / `/excel` / `/ppt` / `/drawing` / `/office-ext` / `/validation` / `/streaming` / `/markup-compat` / `/linq`）的命名导出 / 方法签名 / 类层级——任何破坏性改动需要 major bump。`<entry>/generated/*` 深引入路径不在承诺范围。
 
-进入 **1.0+ 后**：公开 entry（`openxml-ts` + `/word` / `/excel` / `/ppt` / `/drawing` / `/office-ext` / `/validation` / `/streaming` / `/markup-compat` / `/linq`）的命名导出 / 方法签名 / 类层级走严格 semver——任何破坏性改动需要 major bump。`<entry>/generated/*` 深引入路径不在承诺范围。详见 [`docs/api-stability.md`](./docs/api-stability.md)。
+与 .NET DocumentFormat.OpenXml SDK 的对齐边界（已对齐的核心 vs 有意分叉/省略）见 [`docs/api-stability.md`](./docs/api-stability.md) 与逐类比对 [`docs/sdk-parity-audit.md`](./docs/sdk-parity-audit.md)。
 
 CI 跑 `pnpm api:check`（基于 `@microsoft/api-extractor`），任何 surface 变化要求 PR 一起更新 `api/*.api.md`。
 
