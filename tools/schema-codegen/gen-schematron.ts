@@ -348,16 +348,21 @@ function parseAttrValueCondition(
   );
   const m2 = wCompatRe.exec(test);
   if (m2) {
-    const innerPart = m2[1]!;
-    const attrM = new RegExp(`^@(${QNAME})`).exec(innerPart.trim());
-    if (attrM) {
-      const attrQname = attrM[1]!;
-      const attrValues: string[] = [];
-      for (const vm of innerPart.matchAll(new RegExp(`=\\s*(${VAL})`, "g"))) {
-        if (!attrValues.includes(vm[1]!)) attrValues.push(vm[1]!);
-      }
-      if (attrValues.length > 0) {
-        return { attrQname, attrValues, condAttr: m2[2]!, condValues: [m2[3]!] };
+    const innerPart = m2[1];
+    const condAttr = m2[2];
+    const condValue = m2[3];
+    if (innerPart !== undefined && condAttr !== undefined && condValue !== undefined) {
+      const attrM = new RegExp(`^@(${QNAME})`).exec(innerPart.trim());
+      const attrQname = attrM?.[1];
+      if (attrQname !== undefined) {
+        const attrValues: string[] = [];
+        for (const vm of innerPart.matchAll(new RegExp(`=\\s*(${VAL})`, "g"))) {
+          const v = vm[1];
+          if (v !== undefined && !attrValues.includes(v)) attrValues.push(v);
+        }
+        if (attrValues.length > 0) {
+          return { attrQname, attrValues, condAttr, condValues: [condValue] };
+        }
       }
     }
   }
