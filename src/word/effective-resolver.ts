@@ -104,7 +104,7 @@ export function resolveEffectiveParagraphProperties(
   if (directPpr !== undefined) chain.push(directPpr);
 
   if (styles !== undefined) {
-    const styleId = directPpr?.firstChild(ParagraphStyleId)?.extendedAttributes.get("w:val");
+    const styleId = directPpr?.firstChild(ParagraphStyleId)?.val?.toString();
     if (styleId !== undefined) {
       collectStylePPrChain(styles, styleId, chain);
     }
@@ -124,7 +124,7 @@ export function resolveEffectiveRunProperties(r: Run, styles?: Styles): Effectiv
   if (directRpr !== undefined) chain.push(directRpr);
 
   if (styles !== undefined) {
-    const charStyleId = directRpr?.firstChild(RunStyle)?.extendedAttributes.get("w:val");
+    const charStyleId = directRpr?.firstChild(RunStyle)?.val?.toString();
     if (charStyleId !== undefined) {
       collectStyleRPrChain(styles, charStyleId, chain);
     }
@@ -135,7 +135,7 @@ export function resolveEffectiveRunProperties(r: Run, styles?: Styles): Effectiv
       const paraStyleId = parentParagraph
         .firstChild(ParagraphProperties)
         ?.firstChild(ParagraphStyleId)
-        ?.extendedAttributes.get("w:val");
+        ?.val?.toString();
       if (paraStyleId !== undefined) {
         collectStyleRPrChain(styles, paraStyleId, chain);
       }
@@ -166,7 +166,7 @@ function collectStylePPrChain(
     if (style === undefined) return;
     const ppr = style.firstChild(StyleParagraphProperties);
     if (ppr !== undefined) out.push(ppr);
-    currentId = style.firstChild(BasedOn)?.extendedAttributes.get("w:val");
+    currentId = style.firstChild(BasedOn)?.val?.toString();
   }
 }
 
@@ -186,7 +186,7 @@ function collectStyleRPrChain(
     if (style === undefined) return;
     const rpr = style.firstChild(StyleRunProperties);
     if (rpr !== undefined) out.push(rpr);
-    currentId = style.firstChild(BasedOn)?.extendedAttributes.get("w:val");
+    currentId = style.firstChild(BasedOn)?.val?.toString();
   }
 }
 

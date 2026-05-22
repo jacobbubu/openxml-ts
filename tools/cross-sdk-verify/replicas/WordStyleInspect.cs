@@ -1,30 +1,22 @@
 // Replica of examples/word-style-inspect.ts
 //
-// The TS example reads pStyleId via the typed ParagraphStyleId.val field (corrected
-// from extendedAttributes.get) — so pStyleId is now real.
+// Epic-108 fix: resolveEffectiveRunProperties now correctly reads typed fields
+// (.val) instead of extendedAttributes.get("w:val"), so the full style chain is
+// followed.
 //
-// resolveEffectiveRunProperties builds its chain as:
+// resolveEffectiveRunProperties chain (in precedence order):
 //   1. Direct run rPr
-//   2. Char style rPr chain (via RunStyle.val) — BUT RunStyle.val is a typed field,
-//      and in effective-resolver.ts the lookup still uses
-//      extendedAttributes.get("w:val") which always returns undefined for typed
-//      elements. So char style chain is NEVER followed.
-//   3. Para style rPr chain (via ParagraphStyleId.val) — same issue:
-//      extendedAttributes.get("w:val") returns undefined → NEVER followed.
-//   4. Doc defaults rPr.
-//
-// Effective result: bold/italic/color come from direct run rPr OR doc defaults only.
-// pStyleId is correct (read from ParagraphStyleId.val in the example directly).
-//
-// This replica faithfully mirrors that behavior.
+//   2. Char style rPr chain (rStyle → basedOn ancestors)
+//   3. Para style rPr chain (pStyle → basedOn ancestors)
+//   4. Doc defaults rPr
 //
 // Output format per non-empty run:
 //   PPPP SSSSSSSSSSSSSSSS [BI CCCCCC] text
 // where PPPP = paragraph index (4-char right-aligned),
 //       S    = paragraph style id (padded to 16, or "—" if absent),
-//       B    = "B" if direct rPr or doc-default has <w:b>, else "-"
-//       I    = "I" if direct rPr or doc-default has <w:i>, else "-"
-//       C    = color hex from direct rPr or doc-default, or "auto"
+//       B    = "B" if effective rPr has <w:b>, else "-"
+//       I    = "I" if effective rPr has <w:i>, else "-"
+//       C    = color hex from effective rPr, or "auto"
 
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -53,7 +45,7 @@ public static class WordStyleInspect
         int pIdx = 0;
         foreach (var para in body.Descendants<Paragraph>())
         {
-            // Read pStyleId via the typed API (matches fixed example: ParagraphStyleId.val)
+            // Read pStyleId via the typed API
             var pStyleId = para.ParagraphProperties?.ParagraphStyleId?.Val?.Value;
             var pStyleLabel = pStyleId ?? "—";
 
@@ -61,63 +53,46 @@ public static class WordStyleInspect
             {
                 var rPr = run.RunProperties;
 
-                // Step 1: direct run rPr
-                // Step 2: char style — SKIPPED (mirrors broken resolver extendedAttributes lookup)
-                // Step 3: para style rPr — SKIPPED (mirrors broken resolver extendedAttributes lookup)
-                // Step 4: doc defaults rPr
-
                 bool bold = false;
                 bool italic = false;
                 string color = "auto";
 
                 bool boldFound = false, italicFound = false, colorFound = false;
 
-                // Direct run rPr
+                // Step 1: Direct run rPr
                 if (rPr != null)
                 {
-                    if (!boldFound && rPr.Bold != null)
+                    ApplyRpr(rPr.Bold, rPr.Italic, rPr.Color,
+                        ref bold, ref italic, ref color,
+                        ref boldFound, ref italicFound, ref colorFound);
+                }
+
+                // Step 2: Char style rPr chain (rStyle → basedOn ancestors)
+                if (!AllFound(boldFound, italicFound, colorFound) && rPr != null && styles != null)
+                {
+                    var charStyleId = rPr.RunStyle?.Val?.Value;
+                    if (charStyleId != null)
                     {
-                        bold = rPr.Bold.Val?.Value != false;
-                        boldFound = true;
-                    }
-                    if (!italicFound && rPr.Italic != null)
-                    {
-                        italic = rPr.Italic.Val?.Value != false;
-                        italicFound = true;
-                    }
-                    if (!colorFound && rPr.Color?.Val?.HasValue == true)
-                    {
-                        var cv = rPr.Color.Val.Value;
-                        if (cv != null)
-                        {
-                            color = cv.ToUpperInvariant() == "AUTO" ? "auto" : cv.ToUpperInvariant();
-                            colorFound = true;
-                        }
+                        CollectStyleRprChain(styles, charStyleId,
+                            ref bold, ref italic, ref color,
+                            ref boldFound, ref italicFound, ref colorFound);
                     }
                 }
 
-                // Doc defaults rPr (step 4)
-                if (docDefaultRpr != null)
+                // Step 3: Para style rPr chain (pStyle → basedOn ancestors)
+                if (!AllFound(boldFound, italicFound, colorFound) && pStyleId != null && styles != null)
                 {
-                    if (!boldFound && docDefaultRpr.Bold != null)
-                    {
-                        bold = docDefaultRpr.Bold.Val?.Value != false;
-                        boldFound = true;
-                    }
-                    if (!italicFound && docDefaultRpr.Italic != null)
-                    {
-                        italic = docDefaultRpr.Italic.Val?.Value != false;
-                        italicFound = true;
-                    }
-                    if (!colorFound && docDefaultRpr.Color?.Val?.HasValue == true)
-                    {
-                        var cv = docDefaultRpr.Color.Val.Value;
-                        if (cv != null)
-                        {
-                            color = cv.ToUpperInvariant() == "AUTO" ? "auto" : cv.ToUpperInvariant();
-                            colorFound = true;
-                        }
-                    }
+                    CollectStyleRprChain(styles, pStyleId,
+                        ref bold, ref italic, ref color,
+                        ref boldFound, ref italicFound, ref colorFound);
+                }
+
+                // Step 4: Doc defaults rPr
+                if (!AllFound(boldFound, italicFound, colorFound) && docDefaultRpr != null)
+                {
+                    ApplyRpr(docDefaultRpr.Bold, docDefaultRpr.Italic, docDefaultRpr.Color,
+                        ref bold, ref italic, ref color,
+                        ref boldFound, ref italicFound, ref colorFound);
                 }
 
                 // Collect run text
@@ -140,4 +115,81 @@ public static class WordStyleInspect
             pIdx++;
         }
     }
+
+    /// <summary>
+    /// Walk the style chain starting at styleId (then basedOn ancestors, up to depth 8),
+    /// collecting rPr properties in precedence order (first found wins).
+    /// </summary>
+    private static void CollectStyleRprChain(
+        DocumentFormat.OpenXml.Wordprocessing.Styles styles,
+        string startStyleId,
+        ref bool bold, ref bool italic, ref string color,
+        ref bool boldFound, ref bool italicFound, ref bool colorFound)
+    {
+        var visited = new HashSet<string>();
+        string? currentId = startStyleId;
+        int depth = 0;
+        const int MaxDepth = 8;
+
+        while (currentId != null && depth < MaxDepth)
+        {
+            if (!visited.Add(currentId)) break; // cycle guard
+            depth++;
+
+            var style = FindStyleById(styles, currentId);
+            if (style == null) break;
+
+            var styleRpr = style.StyleRunProperties;
+            if (styleRpr != null)
+            {
+                ApplyRpr(styleRpr.Bold, styleRpr.Italic, styleRpr.Color,
+                    ref bold, ref italic, ref color,
+                    ref boldFound, ref italicFound, ref colorFound);
+            }
+
+            if (AllFound(boldFound, italicFound, colorFound)) break;
+
+            currentId = style.BasedOn?.Val?.Value;
+        }
+    }
+
+    private static Style? FindStyleById(
+        DocumentFormat.OpenXml.Wordprocessing.Styles styles,
+        string styleId)
+    {
+        foreach (var s in styles.Elements<Style>())
+        {
+            if (s.StyleId?.Value == styleId) return s;
+        }
+        return null;
+    }
+
+    private static void ApplyRpr(
+        Bold? boldEl, Italic? italicEl, Color? colorEl,
+        ref bool bold, ref bool italic, ref string color,
+        ref bool boldFound, ref bool italicFound, ref bool colorFound)
+    {
+        if (!boldFound && boldEl != null)
+        {
+            bold = boldEl.Val?.Value != false;
+            boldFound = true;
+        }
+        if (!italicFound && italicEl != null)
+        {
+            italic = italicEl.Val?.Value != false;
+            italicFound = true;
+        }
+        if (!colorFound && colorEl?.Val?.HasValue == true)
+        {
+            var cv = colorEl.Val.Value;
+            if (cv != null)
+            {
+                color = cv.ToUpperInvariant() == "AUTO" ? "auto" : cv.ToUpperInvariant();
+                colorFound = true;
+            }
+        }
+    }
+
+    private static bool AllFound(bool boldFound, bool italicFound, bool colorFound)
+        => boldFound && italicFound && colorFound;
 }
