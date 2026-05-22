@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.2.0](https://github.com/jacobbubu/openxml-ts/compare/v1.1.1...v1.2.0) (2026-05-22)
+
+
+### Features
+
+* **validation:** Epic-101 OpenXmlValidator 加固——补 OPC 包级校验，消除漏报 ([a50991b](https://github.com/jacobbubu/openxml-ts/commit/a50991be273e4c428087a0834d8d62d6f4e51a72))
+* **validation:** Epic-101 OpenXmlValidator 加固——补 OPC 包级校验，消除漏报 ([#296](https://github.com/jacobbubu/openxml-ts/issues/296)) ([4b8bace](https://github.com/jacobbubu/openxml-ts/commit/4b8bace878223c6e3e14a3994388d6a70dcbaca3))
+
+
+### Bug Fixes
+
+* **ppt,excel:** 修复 PPT 形状 nvSpPr 缺 cNvSpPr/nvPr + Excel sheetView 缺 workbookViewId ([fa7d243](https://github.com/jacobbubu/openxml-ts/commit/fa7d243a62717ac2065613bd2b051160b94c09a6))
+* **ppt,excel:** 修复 PPT 形状 nvSpPr 缺 cNvSpPr/nvPr + Excel sheetView 缺 workbookViewId（[#295](https://github.com/jacobbubu/openxml-ts/issues/295)） ([c698d2b](https://github.com/jacobbubu/openxml-ts/commit/c698d2be889799884ce8e277cb4fda66cd0653af))
+* **word:** Epic-102 修复子元素顺序违规（rPr schema 顺序 + numbering 分组） ([7824e19](https://github.com/jacobbubu/openxml-ts/commit/7824e19bf8b37c484260615639ff1d25cf7d790e))
+* **word:** Epic-102 修复子元素顺序违规（rPr schema 顺序 + numbering 分组）([#301](https://github.com/jacobbubu/openxml-ts/issues/301)) ([afebc3d](https://github.com/jacobbubu/openxml-ts/commit/afebc3daee023bd69c2248c3671b733750ef530a))
+* **word:** 修复 Word create() 缺 Default content-type 声明（Epic-99 [#294](https://github.com/jacobbubu/openxml-ts/issues/294)） ([cb1fc0e](https://github.com/jacobbubu/openxml-ts/commit/cb1fc0e1c17e9dca04f91e4f59e34fa3b4d6ff65))
+* **word:** 修复 Word create() 缺 Default content-type 声明（Epic-99） ([19a225e](https://github.com/jacobbubu/openxml-ts/commit/19a225e220525794b706dff86d39633621a84ce1))
+
 ## [1.1.1](https://github.com/jacobbubu/openxml-ts/compare/v1.1.0...v1.1.1) (2026-05-22)
 
 
