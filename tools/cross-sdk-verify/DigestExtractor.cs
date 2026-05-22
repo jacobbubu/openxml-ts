@@ -167,7 +167,9 @@ public static class DigestExtractor
             if (child is DocumentFormat.OpenXml.Wordprocessing.Run run)
             {
                 var rd = ExtractRun(run);
-                runs.Add(rd);
+                // Skip empty-text runs (e.g. field-code runs emitted by .NET that TS omits)
+                if (rd.Text.Length > 0)
+                    runs.Add(rd);
                 fullText.Append(rd.Text);
             }
         }
@@ -408,22 +410,25 @@ public static class DigestExtractor
                 var cNvPr = nvSpPr?.NonVisualDrawingProperties;
                 var name = cNvPr?.Name?.Value;
 
+                string? text = null;
                 var txBody = sp.TextBody;
-                if (txBody == null) continue;
-
-                var sb = new StringBuilder();
-                foreach (var para in txBody.Descendants<A.Paragraph>())
+                if (txBody != null)
                 {
-                    if (sb.Length > 0) sb.Append('\n');
-                    foreach (var run in para.Descendants<A.Run>())
+                    var sb = new StringBuilder();
+                    foreach (var para in txBody.Descendants<A.Paragraph>())
                     {
-                        sb.Append(run.Text?.Text ?? "");
+                        if (sb.Length > 0) sb.Append('\n');
+                        foreach (var run in para.Descendants<A.Run>())
+                        {
+                            sb.Append(run.Text?.Text ?? "");
+                        }
                     }
+                    var t = sb.ToString().Trim();
+                    if (t.Length > 0) text = t;
                 }
 
-                var text = sb.ToString().Trim();
-                if (text.Length > 0 || name != null)
-                    shapes.Add(new ShapeDigest(name, text.Length > 0 ? text : null));
+                if (text != null || name != null)
+                    shapes.Add(new ShapeDigest(name, text));
             }
 
             // Extract tables from graphicFrame
