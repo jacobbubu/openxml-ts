@@ -2,7 +2,7 @@
 
 > 只读审计。不改任何代码。本文档是把微软 `DocumentFormat.OpenXml` SDK 自带测试套件移植进 `openxml-ts` 的分诊（triage）与排重（dedup）计划。
 
-## 移植进度
+## 移植进度（**全部完成**）
 
 | Batch | 状态 | PR | 新增 it 数 | 移植方法数 | 跳过（COVERED）| N/A 方法数 |
 |---|---|---|---:|---:|---:|---:|
@@ -11,7 +11,43 @@
 | 3 — MC 展开矩阵 | **✅ 完成** | #326 | 69 | ~75 | ~12 | ~19 |
 | 4 — DOM 树操作矩阵 | **✅ 完成** | #329 | 109 | ~46 | ~41 | ~12 |
 | 5 — 文档级行为 | **✅ 完成** | #330 | 75 | ~110 | ~4 | ~31 |
-| 6 — Conformance 端到端 | 待开始 | — | — | ~50 | — | — |
+| 6 — Conformance 端到端 | **✅ 完成** | #332 | 29 | ~50 | ~7 | ~32 |
+| **合计** | **✅ 全 6 批完成** | — | **555** | **~357** | **~85** | **~149** |
+
+### 最终总览
+
+- **总移植（PORTABLE → 新增 it）**：555 个 `it`（含 .skip N/A 存根）
+- **跳过（COVERED）**：约 85 个方法（openxml-ts 已有等价断言）
+- **不适用（N/A）**：约 149 个方法（.NET 特有 API / 运行时 / 重架构）
+- **测试套件总量**（merge 后）：≥ 2429 个 `it` 通过（比 Batch 1 开始前 ~1800 增加约 630）
+
+**核心结论**：openxml-ts 的测试套件现已锚定到微软的 Open-XML-SDK 测试套件（经排重）。全部 6 批移植完成，实现的对齐层次覆盖：Simple type 值语义、Validator 逐类型矩阵、MC 展开矩阵、DOM 树操作矩阵、文档级行为、Conformance 端到端。
+
+**Batch 6 详情**（Epic-116 / PR #332）：移植 `test/conformance/conformance-dotnet-parity.test.ts`，29 个 `it`（含 28 个 `.skip` N/A 存根），覆盖：
+- **ConformanceTest/CommentEx**：`CommentExInvalidFormat`（含 W15 CommentEx 的 docx OPC 层可打开）。
+- **ConformanceTest/FootnoteColumns**：`FootnoteColumnsReadWriteTest`（W15.FootnoteColumns 元素构造 + val 属性读写）。
+- **ConformanceTest/PresetTransition**：`PresetTransitionReadWriteTest`（P15.PresetTransition 元素构造 + preset 属性读写）。
+- **ConformanceTest/WebExtension**：`WebExtensionAcceptance`（Bing.xlsx / Youtube.xlsx OPC + SpreadsheetDocument 层打开）。
+- **TestOffice2016**：Of16-01..08.docx 打开（8 个）+ Of16-01..03.pptx 打开（3 个）+ Of16-10-SymEx.docx 打开（共 12 个文件级 it.each）。
+- **DocxTests01**：W052（UnknownElement.docx）、W054（Strict01.docx ISO Strict）、W055（DataBound-Content-Controls.docx）。
+- **XlsxTests01**：X007/X004（basicspreadsheet.xlsx）、X002（程序化创建 xlsx）。
+- **PptxTests01**：P006/P004（animation.pptx）、P003（程序化创建 pptx）。
+
+N/A 存根（~32）：大量 ConformanceTest 目录依赖 C# `GeneratedDocument.CreatePackage()`（生成含 W15/P15/X15 Part 的复杂文档）+ typed Part 访问路径（WordprocessingCommentsExPart / WordprocessingPeoplePart / TimelineCachePart / SlicerCachePart / ConnectionsPart / WebExtensionPart 等）在 openxml-ts 门面未暴露；IsoStrictTest（`StrictRelationshipFound` 属性未暴露，O14ISOStrict fixture 未批量引入）。新引入 fixture（按需，不整体搬运）：`test/fixtures/conformance/`（Invalid_Word15Comments.docx / Bing.xlsx / Youtube.xlsx）、`test/fixtures/office2016/`（Of16-01..08.docx + Of16-01..03.pptx + Of16-10-SymEx.docx）共 16 个文件。
+
+### 已知分歧存根（跨批次 .todo 清单）
+
+以下分歧在测试中以 `it.skip` / `it.todo` 形式记录，对应 openxml-ts 与 .NET SDK 的已知实现差距：
+
+| 存根编号 | 来源 Batch | 分歧描述 | 相关 issue |
+|---|---|---|---|
+| TODO #325 | Batch 2 | `Sch_UnexpectedElementContentExpectingComplex` — 需全粒子状态机（当前平铺检查器不处理跨序列节点边界错误） | — |
+| TODO #326 | Batch 2 | 逐类型属性值校验 — Boolean/Byte/Int/Enum/Pattern/HexBinary 等 simple type 的属性级 schema 报错（openxml-ts 未实现类型级属性校验） | — |
+| TODO #327 | Batch 2 | 重复序列基数 — 平铺基数检查器不理解 `max="unbounded"` 序列节点 | — |
+| N/A (Batch 6) | Batch 6 | WordprocessingCommentsExPart / WordprocessingPeoplePart 未集成到 Word 门面 | — |
+| N/A (Batch 6) | Batch 6 | TimelineCachePart / SlicerCachePart / ConnectionsPart 未集成到 Excel 门面 | — |
+| N/A (Batch 6) | Batch 6 | WebExtensionPart 访问路径（WorksheetPart.DrawingsPart.WebExtensionParts）未集成到 Excel 门面 | — |
+| N/A (Batch 6) | Batch 6 | `StrictRelationshipFound` 属性未在 Word/Excel/PPT 门面暴露；O14ISOStrict fixture 未批量引入 | — |
 
 **Batch 5 详情**（Epic-115 / PR #330）：移植 `test/packaging/document-behavior-dotnet-parity.test.ts`，75 个 `it`，覆盖 `FileFormatVersionExtensionsTests`（any/all/andLater/atLeast 位掩码语义 + 越界抛 RangeError）、Word/Excel/Ppt create+save 往返、Strict 文件打开、UTF-8 无 BOM 编码、OpenXml package 基础创建。新增 4 个公开函数：`fileFormatVersionsAny` / `fileFormatVersionsAll` / `fileFormatVersionsAtLeast` / `fileFormatVersionsAndLater`（`src/markup-compat/`）。N/A 项（~31）：Clone API（openxml-ts 无 `.clone()`）、AutoSave=false 模式（openxml-ts 用显式 `saveAsBytesAsync()`）、`DataParts`/`MediaReferenceRelationship`（API 重架构）、`GetAllParts()`（API 重架构）、`BugRegressionTest` 的逐属性错误码回归（依赖未实现的类型级校验）。COVERED（~4）：`FlatOpcAndCloningTests`（flat-opc 已充分覆盖）、`DocumentTests.FlatOpcTests`（排重）。
 
