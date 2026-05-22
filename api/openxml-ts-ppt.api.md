@@ -252,11 +252,13 @@ export class PresentationDocument {
     addSlide(options?: {
         layoutPart?: SlideLayoutPart;
     }): SlidePart;
+    changeDocumentType(newType: PresentationDocumentType): void;
     get coreProperties(): CoreProperties;
     static create(): PresentationDocument;
     get customFileProperties(): CustomFilePropertiesPart;
     // (undocumented)
     dispose(): Promise<void>;
+    get documentType(): PresentationDocumentType | undefined;
     get extendedFileProperties(): ExtendedFilePropertiesPart;
     getSlideNotes(slide: SlidePart | number): string;
     // Warning: (ae-forgotten-export) The symbol "ZipSource" needs to be exported by the entry point index.d.ts
@@ -270,6 +272,17 @@ export class PresentationDocument {
     saveAsBytesAsync(): Promise<Uint8Array>;
     saveAsync(): Promise<void>;
     setSlideNotes(slide: SlidePart | number, text: string): void;
+}
+
+// @public
+export enum PresentationDocumentType {
+    AddIn = "AddIn",
+    MacroEnabledPresentation = "MacroEnabledPresentation",
+    MacroEnabledSlideshow = "MacroEnabledSlideshow",
+    MacroEnabledTemplate = "MacroEnabledTemplate",
+    Presentation = "Presentation",
+    Slideshow = "Slideshow",
+    Template = "Template"
 }
 
 // Warning: (ae-forgotten-export) The symbol "Presentation" needs to be exported by the entry point index.d.ts

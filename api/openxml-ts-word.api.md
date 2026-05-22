@@ -1635,6 +1635,7 @@ export class WordprocessingDocument {
     }): {
         numId: number;
     };
+    changeDocumentType(newType: WordprocessingDocumentType): void;
     get commentsPart(): CommentsPart | undefined;
     get coreProperties(): CoreProperties;
     static create(): WordprocessingDocument;
@@ -1642,6 +1643,7 @@ export class WordprocessingDocument {
     get customXmlParts(): readonly CustomXmlPart[];
     // (undocumented)
     dispose(): Promise<void>;
+    get documentType(): WordprocessingDocumentType | undefined;
     get extendedFileProperties(): ExtendedFilePropertiesPart;
     // (undocumented)
     get fontTablePart(): FontTablePart | undefined;
@@ -1671,6 +1673,14 @@ export class WordprocessingDocument {
     get themePart(): ThemePart | undefined;
     // (undocumented)
     get webSettingsPart(): WebSettingsPart | undefined;
+}
+
+// @public
+export enum WordprocessingDocumentType {
+    Document = "Document",
+    MacroEnabledDocument = "MacroEnabledDocument",
+    MacroEnabledTemplate = "MacroEnabledTemplate",
+    Template = "Template"
 }
 
 // (No @packageDocumentation comment for this package)

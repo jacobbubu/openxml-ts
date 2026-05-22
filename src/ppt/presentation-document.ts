@@ -67,6 +67,51 @@ import { PresentationPart } from "./parts/presentation-part.js";
 import { SlideLayoutPart } from "./parts/slide-layout-part.js";
 import { SlidePart } from "./parts/slide-part.js";
 
+/**
+ * PowerPoint 文档类型枚举——对位 .NET `PresentationDocumentType`。
+ *
+ * 控制主演示 Part（`/ppt/presentation.xml`）的 content-type，决定文件以
+ * `.pptx` / `.potx` / `.ppsx` / `.pptm` / `.potm` / `.ppsm` / `.ppam` 保存时的语义。
+ */
+export enum PresentationDocumentType {
+  /** 普通 PowerPoint 演示文稿（.pptx）。 */
+  Presentation = "Presentation",
+  /** PowerPoint 模板（.potx）。 */
+  Template = "Template",
+  /** PowerPoint 放映文件（.ppsx）。 */
+  Slideshow = "Slideshow",
+  /** 启用宏的 PowerPoint 演示文稿（.pptm）。 */
+  MacroEnabledPresentation = "MacroEnabledPresentation",
+  /** 启用宏的 PowerPoint 模板（.potm）。 */
+  MacroEnabledTemplate = "MacroEnabledTemplate",
+  /** 启用宏的 PowerPoint 放映文件（.ppsm）。 */
+  MacroEnabledSlideshow = "MacroEnabledSlideshow",
+  /** PowerPoint 加载项（.ppam）。 */
+  AddIn = "AddIn",
+}
+
+/** 文档類型 → 主演示 Part 的 content-type 映射（同 .NET SDK GetContentType）。 */
+const PRESENTATION_CONTENT_TYPES: Readonly<Record<PresentationDocumentType, string>> = {
+  [PresentationDocumentType.Presentation]:
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml",
+  [PresentationDocumentType.Template]:
+    "application/vnd.openxmlformats-officedocument.presentationml.template.main+xml",
+  [PresentationDocumentType.Slideshow]:
+    "application/vnd.openxmlformats-officedocument.presentationml.slideshow.main+xml",
+  [PresentationDocumentType.MacroEnabledPresentation]:
+    "application/vnd.ms-powerpoint.presentation.macroEnabled.main+xml",
+  [PresentationDocumentType.MacroEnabledTemplate]:
+    "application/vnd.ms-powerpoint.template.macroEnabled.main+xml",
+  [PresentationDocumentType.MacroEnabledSlideshow]:
+    "application/vnd.ms-powerpoint.slideshow.macroEnabled.main+xml",
+  [PresentationDocumentType.AddIn]: "application/vnd.ms-powerpoint.addin.macroEnabled.main+xml",
+};
+
+/** content-type → 文档类型的反向映射（同 .NET SDK GetDocumentType）。 */
+const PRESENTATION_DOCUMENT_TYPE_BY_CT = new Map<string, PresentationDocumentType>(
+  Object.entries(PRESENTATION_CONTENT_TYPES).map(([t, ct]) => [ct, t as PresentationDocumentType]),
+);
+
 const DEFAULT_PRESENTATION_URI = "/ppt/presentation.xml" as PartUri;
 const DEFAULT_SLIDE_URI = "/ppt/slides/slide1.xml" as PartUri;
 const DEFAULT_SLIDE_LAYOUT_URI = "/ppt/slideLayouts/slideLayout1.xml" as PartUri;
@@ -426,6 +471,46 @@ export class PresentationDocument {
 
   [Symbol.asyncDispose](): Promise<void> {
     return this.dispose();
+  }
+
+  /**
+   * 当前文档类型（Epic-96，对位 .NET `PresentationDocument.DocumentType`）。
+   *
+   * 读取主演示 Part 的 content-type 并反向映射到 `PresentationDocumentType`。
+   * 主演示 Part 不存在或 content-type 未知时返回 `undefined`。
+   */
+  get documentType(): PresentationDocumentType | undefined {
+    const pp = this.presentationPart;
+    if (pp === undefined) return undefined;
+    const ct = this.pkg.contentTypes.resolveContentType(pp.part.uri as PartUri);
+    if (ct === undefined) return undefined;
+    return PRESENTATION_DOCUMENT_TYPE_BY_CT.get(ct);
+  }
+
+  /**
+   * 切换文档类型（Epic-96，对位 .NET `PresentationDocument.ChangeDocumentType`）。
+   *
+   * 重写主演示 Part 在 `[Content_Types].xml` 中的 Override 条目，使其 content-type
+   * 匹配目标类型（Presentation / Template / Slideshow / MacroEnabled* / AddIn）。
+   *
+   * 行为对位 .NET SDK：
+   * - 与当前类型相同时静默返回（no-op）。
+   * - 主演示 Part 不存在时静默返回。
+   *
+   * @param newType 目标文档类型。
+   */
+  changeDocumentType(newType: PresentationDocumentType): void {
+    const pp = this.presentationPart;
+    if (pp === undefined) return;
+
+    const newContentType = PRESENTATION_CONTENT_TYPES[newType];
+    const partUri = pp.part.uri as PartUri;
+    const currentContentType = this.pkg.contentTypes.resolveContentType(partUri);
+
+    if (currentContentType === newContentType) return;
+
+    this.pkg.contentTypes.removeOverride(partUri);
+    this.pkg.contentTypes.addOverride(partUri, newContentType);
   }
 
   // ─── 静态工厂 ───────────────────────────────────────────────────────────────

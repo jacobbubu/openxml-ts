@@ -28,7 +28,7 @@ import "./extensions/run-fonts.js";
 import "./extensions/run-style-id.js";
 import "./extensions/table-cell-shading.js";
 
-export { WordprocessingDocument } from "./word-document.js";
+export { WordprocessingDocument, WordprocessingDocumentType } from "./word-document.js";
 
 export {
   EffectiveProperties,

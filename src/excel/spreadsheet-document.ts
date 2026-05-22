@@ -90,6 +90,43 @@ import {
 import { SharedStringResolver, registerSharedStringResolver } from "./shared-string-table.js";
 
 /**
+ * Excel 文档类型枚举——对位 .NET `SpreadsheetDocumentType`。
+ *
+ * 控制主工作簿 Part（`/xl/workbook.xml`）的 content-type，决定文件以
+ * `.xlsx` / `.xltx` / `.xlsm` / `.xltm` / `.xlam` 保存时的语义。
+ */
+export enum SpreadsheetDocumentType {
+  /** 普通 Excel 工作簿（.xlsx）。 */
+  Workbook = "Workbook",
+  /** Excel 模板（.xltx）。 */
+  Template = "Template",
+  /** 启用宏的 Excel 工作簿（.xlsm）。 */
+  MacroEnabledWorkbook = "MacroEnabledWorkbook",
+  /** 启用宏的 Excel 模板（.xltm）。 */
+  MacroEnabledTemplate = "MacroEnabledTemplate",
+  /** Excel 加载项（.xlam）。 */
+  AddIn = "AddIn",
+}
+
+/** 文档类型 → 主工作簿 Part 的 content-type 映射（同 .NET SDK GetContentType）。 */
+const SPREADSHEET_CONTENT_TYPES: Readonly<Record<SpreadsheetDocumentType, string>> = {
+  [SpreadsheetDocumentType.Workbook]:
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml",
+  [SpreadsheetDocumentType.Template]:
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.template.main+xml",
+  [SpreadsheetDocumentType.MacroEnabledWorkbook]:
+    "application/vnd.ms-excel.sheet.macroEnabled.main+xml",
+  [SpreadsheetDocumentType.MacroEnabledTemplate]:
+    "application/vnd.ms-excel.template.macroEnabled.main+xml",
+  [SpreadsheetDocumentType.AddIn]: "application/vnd.ms-excel.addin.macroEnabled.main+xml",
+};
+
+/** content-type → 文档类型的反向映射（同 .NET SDK GetDocumentType）。 */
+const SPREADSHEET_DOCUMENT_TYPE_BY_CT = new Map<string, SpreadsheetDocumentType>(
+  Object.entries(SPREADSHEET_CONTENT_TYPES).map(([t, ct]) => [ct, t as SpreadsheetDocumentType]),
+);
+
+/**
  * Excel 子系统共用的 typed element registry（包内自管，不污染全局）。
  *
  * 注：spreadsheetml schema 有多处 (namespace, localName) 二义性——同一 localName
@@ -503,6 +540,46 @@ export class SpreadsheetDocument {
 
   [Symbol.asyncDispose](): Promise<void> {
     return this.dispose();
+  }
+
+  /**
+   * 当前文档类型（Epic-96，对位 .NET `SpreadsheetDocument.DocumentType`）。
+   *
+   * 读取主工作簿 Part 的 content-type 并反向映射到 `SpreadsheetDocumentType`。
+   * 主工作簿 Part 不存在或 content-type 未知时返回 `undefined`。
+   */
+  get documentType(): SpreadsheetDocumentType | undefined {
+    const wp = this.workbookPart;
+    if (wp === undefined) return undefined;
+    const ct = this.pkg.contentTypes.resolveContentType(wp.part.uri as PartUri);
+    if (ct === undefined) return undefined;
+    return SPREADSHEET_DOCUMENT_TYPE_BY_CT.get(ct);
+  }
+
+  /**
+   * 切换文档类型（Epic-96，对位 .NET `SpreadsheetDocument.ChangeDocumentType`）。
+   *
+   * 重写主工作簿 Part 在 `[Content_Types].xml` 中的 Override 条目，使其 content-type
+   * 匹配目标类型（Workbook / Template / MacroEnabledWorkbook / MacroEnabledTemplate / AddIn）。
+   *
+   * 行为对位 .NET SDK：
+   * - 与当前类型相同时静默返回（no-op）。
+   * - 主工作簿 Part 不存在时静默返回。
+   *
+   * @param newType 目标文档类型。
+   */
+  changeDocumentType(newType: SpreadsheetDocumentType): void {
+    const wp = this.workbookPart;
+    if (wp === undefined) return;
+
+    const newContentType = SPREADSHEET_CONTENT_TYPES[newType];
+    const partUri = wp.part.uri as PartUri;
+    const currentContentType = this.pkg.contentTypes.resolveContentType(partUri);
+
+    if (currentContentType === newContentType) return;
+
+    this.pkg.contentTypes.removeOverride(partUri);
+    this.pkg.contentTypes.addOverride(partUri, newContentType);
   }
 
   // ─── 静态工厂 ───────────────────────────────────────────────────────────────

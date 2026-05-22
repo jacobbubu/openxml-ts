@@ -28,7 +28,7 @@ import "./extensions/slide-transition.js";
 import "./extensions/shape-rotation.js";
 import "./extensions/slide-hidden.js";
 
-export { PresentationDocument } from "./presentation-document.js";
+export { PresentationDocument, PresentationDocumentType } from "./presentation-document.js";
 export {
   NotesMasterPart,
   NotesSlidePart,
