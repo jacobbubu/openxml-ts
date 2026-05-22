@@ -50,5 +50,11 @@
       "trailingCommas": "all",
       "arrowParentheses": "always"
     }
-  }
+  },
+  "overrides": [
+    {
+      "include": ["package.json"],
+      "formatter": { "enabled": false }
+    }
+  ]
 }
