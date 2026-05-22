@@ -692,7 +692,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "ConditionalFormatStyle",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "cnfStyle",
-    requiredAttrs: ["w:val", "w:val", "w:val"],
+    versionedRequiredAttrs: [
+      { qname: "w:val", minVersion: 1, maxVersion: 1 },
+      { qname: "w:val", minVersion: 2, optional: true },
+      { qname: "w:val", minVersion: 4, maxVersion: 4 },
+    ],
     attrConstraints: [
       { qname: "w:val", minLength: 12, maxLength: 12 },
     ],

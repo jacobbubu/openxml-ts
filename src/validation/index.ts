@@ -36,7 +36,9 @@ export type {
   ParticleNode,
   ParticleLeaf,
   ParticleComposite,
+  VersionedRequiredAttr,
 } from "./types.js";
+export { FileFormatVersions } from "../markup-compat/file-format-versions.js";
 export {
   OpenXmlValidator,
   registerConstraints,

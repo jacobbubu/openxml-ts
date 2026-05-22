@@ -107,6 +107,17 @@ const CORE_SCHEMAS: ReadonlyArray<{ file: string; outName: string; ns: string }>
   },
 ];
 
+// ---- Version name → numeric value mapping (mirrors FileFormatVersions enum) ----
+const VERSION_VALUES: Record<string, number> = {
+  Office2007: 1,
+  Office2010: 2,
+  Office2013: 4,
+  Office2016: 8,
+  Office2019: 16,
+  Office2021: 32,
+  Microsoft365: 64,
+};
+
 // ---- Types matching the schema JSON structure ----
 interface SchemaValidatorArg {
   readonly Name?: string;
@@ -116,6 +127,7 @@ interface SchemaValidatorArg {
 interface SchemaValidator {
   readonly Name: string;
   readonly Arguments?: readonly SchemaValidatorArg[];
+  readonly Version?: string;
 }
 interface SchemaAttribute {
   readonly QName: string;
@@ -186,12 +198,21 @@ interface AttrConstraint {
   readonly maxValue?: number;
 }
 
+/** A version-scoped required attribute entry (matches VersionedRequiredAttr in types.ts). */
+interface VersionedRequiredAttr {
+  readonly qname: string;
+  readonly minVersion?: number;
+  readonly maxVersion?: number;
+  readonly optional?: true;
+}
+
 interface ElementConstraint {
   readonly className: string;
   readonly namespaceUri: string;
   readonly localName: string;
   readonly particle?: NormalizedParticle;
   readonly requiredAttrs?: readonly string[];
+  readonly versionedRequiredAttrs?: readonly VersionedRequiredAttr[];
   readonly attrConstraints?: readonly AttrConstraint[];
 }
 
@@ -270,19 +291,68 @@ function normalizeParticle(particle: SchemaParticle, targetNs: string): Normaliz
 
 function extractAttrConstraints(attrs: readonly SchemaAttribute[]): {
   required: string[];
+  versionedRequired: VersionedRequiredAttr[];
   constraints: AttrConstraint[];
 } {
   const required: string[] = [];
+  const versionedRequired: VersionedRequiredAttr[] = [];
   const constraints: AttrConstraint[] = [];
 
   for (const attr of attrs) {
     let hasConstraint = false;
     const c: Partial<AttrConstraint> = { qname: attr.QName };
 
+    // Collect all RequiredValidator entries for this attribute
+    const reqValidators = (attr.Validators ?? []).filter((v) => v.Name === "RequiredValidator");
+
+    if (reqValidators.length > 0) {
+      const hasVersioned = reqValidators.some((v) => v.Version !== undefined);
+
+      if (!hasVersioned) {
+        // Check if any declares IsRequired=False (unconditional optional override)
+        const anyOptional = reqValidators.some((v) => {
+          const args = argsToMap(v.Arguments);
+          return args.IsRequired?.toLowerCase() === "false";
+        });
+        if (!anyOptional) {
+          required.push(attr.QName);
+        }
+        // else: all validators have IsRequired=False → attribute is optional, skip
+      } else {
+        // Has versioned RequiredValidators — build VersionedRequiredAttr entries
+        // Sort by version value to determine min/max per version entry
+        // Group into "required" ranges and "optional" (IsRequired=False) declarations
+        for (const v of reqValidators) {
+          const args = argsToMap(v.Arguments);
+          const isOptional = args.IsRequired?.toLowerCase() === "false";
+          const versionName = v.Version;
+          const versionValue =
+            versionName !== undefined ? (VERSION_VALUES[versionName] ?? undefined) : undefined;
+
+          if (isOptional) {
+            // This version says it's NOT required — emit optional override
+            const entry: VersionedRequiredAttr = {
+              qname: attr.QName,
+              ...(versionValue !== undefined ? { minVersion: versionValue } : {}),
+              optional: true,
+            };
+            versionedRequired.push(entry);
+          } else {
+            // This version says it IS required
+            const entry: VersionedRequiredAttr = {
+              qname: attr.QName,
+              ...(versionValue !== undefined
+                ? { minVersion: versionValue, maxVersion: versionValue }
+                : {}),
+            };
+            versionedRequired.push(entry);
+          }
+        }
+      }
+    }
+
     for (const v of attr.Validators ?? []) {
-      if (v.Name === "RequiredValidator") {
-        required.push(attr.QName);
-      } else if (v.Name === "StringValidator") {
+      if (v.Name === "StringValidator") {
         const args = argsToMap(v.Arguments);
         if (args.MaxLength !== undefined) {
           c.maxLength = Number(args.MaxLength);
@@ -315,7 +385,7 @@ function extractAttrConstraints(attrs: readonly SchemaAttribute[]): {
     }
   }
 
-  return { required, constraints };
+  return { required, versionedRequired, constraints };
 }
 
 function argsToMap(args: readonly SchemaValidatorArg[] | undefined): Record<string, string> {
@@ -370,8 +440,13 @@ function processSchema(schemaData: SchemaFile): ElementConstraint[] {
 
     // Attribute constraints
     if (type.Attributes !== undefined && type.Attributes.length > 0) {
-      const { required, constraints: attrC } = extractAttrConstraints(type.Attributes);
+      const {
+        required,
+        versionedRequired,
+        constraints: attrC,
+      } = extractAttrConstraints(type.Attributes);
       if (required.length > 0) constraint.requiredAttrs = required;
+      if (versionedRequired.length > 0) constraint.versionedRequiredAttrs = versionedRequired;
       if (attrC.length > 0) constraint.attrConstraints = attrC;
     }
 
@@ -379,6 +454,7 @@ function processSchema(schemaData: SchemaFile): ElementConstraint[] {
     if (
       constraint.particle !== undefined ||
       constraint.requiredAttrs !== undefined ||
+      constraint.versionedRequiredAttrs !== undefined ||
       constraint.attrConstraints !== undefined
     ) {
       constraints.push(constraint as ElementConstraint);
@@ -426,6 +502,18 @@ function buildOutput(constraints: ElementConstraint[], sourcePath: string): stri
       lines.push(
         `    requiredAttrs: [${c.requiredAttrs.map((a) => JSON.stringify(a)).join(", ")}],`,
       );
+    }
+
+    if (c.versionedRequiredAttrs !== undefined && c.versionedRequiredAttrs.length > 0) {
+      lines.push("    versionedRequiredAttrs: [");
+      for (const vr of c.versionedRequiredAttrs) {
+        const parts: string[] = [`qname: ${JSON.stringify(vr.qname)}`];
+        if (vr.minVersion !== undefined) parts.push(`minVersion: ${vr.minVersion}`);
+        if (vr.maxVersion !== undefined) parts.push(`maxVersion: ${vr.maxVersion}`);
+        if (vr.optional === true) parts.push("optional: true");
+        lines.push(`      { ${parts.join(", ")} },`);
+      }
+      lines.push("    ],");
     }
 
     if (c.attrConstraints !== undefined && c.attrConstraints.length > 0) {
