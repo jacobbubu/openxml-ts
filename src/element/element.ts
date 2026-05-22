@@ -532,6 +532,9 @@ export abstract class OpenXmlCompositeElement extends OpenXmlElement {
    * 对位 .NET `OpenXmlCompositeElement.RemoveChild<T>(T)`。
    */
   removeChild<T extends OpenXmlElement>(child: T): T {
+    if (child.parent !== this) {
+      throw new Error("removeChild: the element is not a child of this element.");
+    }
     this.children.remove(child);
     return child;
   }
@@ -565,6 +568,9 @@ export abstract class OpenXmlCompositeElement extends OpenXmlElement {
    * 对位 .NET `OpenXmlCompositeElement.ReplaceChild<T>(OpenXmlElement, T)`。
    */
   replaceChild<T extends OpenXmlElement>(newChild: OpenXmlElement, oldChild: T): T {
+    if (oldChild.parent !== this) {
+      throw new Error("replaceChild: oldChild is not a child of this element.");
+    }
     const ref = oldChild.nextSibling();
     this.children.remove(oldChild);
     if (ref === undefined) {
