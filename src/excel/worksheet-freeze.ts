@@ -14,7 +14,7 @@
  * 不在范围：拆分窗格 (\`<x:pane state="split">\`)、多 selection、视图缩放等。
  */
 
-import { StringValue } from "../element/index.js";
+import { StringValue, UInt32Value } from "../element/index.js";
 import { Pane } from "./generated/pane.js";
 import { Selection } from "./generated/selection.js";
 import { SheetView } from "./generated/sheet-view.js";
@@ -146,6 +146,8 @@ function ensureSheetView(worksheet: Worksheet, readOnly: boolean): SheetView | u
   if (view === undefined) {
     if (readOnly) return undefined;
     view = new SheetView();
+    // workbookViewId は CT_SheetView の必須属性（schema 要求）。
+    view.workbookViewId = new UInt32Value(0);
     views.appendChild(view);
   }
   return view;
