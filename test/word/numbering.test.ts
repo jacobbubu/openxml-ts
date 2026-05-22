@@ -1,10 +1,13 @@
 /**
  * Story-22：NumberingPart + addNumberingDefinition + createListParagraph 单元测试。
+ * Epic-102：numbering abstractNum/num 元素分组顺序测试。
  */
 
 import { describe, expect, it } from "vitest";
 import { serialize } from "../../src/element/index.js";
 import { OpenXmlPackageError } from "../../src/packaging/errors.js";
+import { AbstractNum } from "../../src/word/generated/abstract-num.js";
+import { NumberingInstance } from "../../src/word/generated/numbering-instance.js";
 import {
   NumberingPart,
   Paragraph,
@@ -115,5 +118,61 @@ describe("端到端 列表 round-trip", () => {
     expect((xml.match(/<w:numPr>/g) ?? []).length).toBe(3);
     expect(xml).toContain(`<w:numId w:val="${numId}"`);
     expect(reopened.numberingPart).toBeDefined();
+  });
+});
+
+describe("Epic-102：CT_Numbering abstractNum/num 分组顺序", () => {
+  /** 取 numbering 根下所有直接子元素的 localName 有序列表。 */
+  function numberingChildNames(doc: WordprocessingDocument): string[] {
+    const np = doc.numberingPart;
+    if (np === undefined) return [];
+    return [...np.numbering.children].map((c) => c.localName);
+  }
+
+  it("两次 addNumberingDefinition 后 all abstractNum 在 all num 之前", () => {
+    const doc = WordprocessingDocument.create();
+    doc.addNumberingDefinition({ type: "decimal" });
+    doc.addNumberingDefinition({ type: "bullet" });
+
+    const names = numberingChildNames(doc);
+    const lastAbstract = names.lastIndexOf("abstractNum");
+    const firstNum = names.indexOf("num");
+
+    expect(lastAbstract).toBeGreaterThanOrEqual(0);
+    expect(firstNum).toBeGreaterThanOrEqual(0);
+    expect(lastAbstract).toBeLessThan(firstNum);
+  });
+
+  it("三次 addNumberingDefinition 后顺序为 abstractNum×3, num×3", () => {
+    const doc = WordprocessingDocument.create();
+    doc.addNumberingDefinition({ type: "decimal" });
+    doc.addNumberingDefinition({ type: "bullet" });
+    doc.addNumberingDefinition({ type: "decimal" });
+
+    const names = numberingChildNames(doc);
+    // 前三个是 abstractNum，后三个是 num
+    expect(names.slice(0, 3)).toEqual(["abstractNum", "abstractNum", "abstractNum"]);
+    expect(names.slice(3)).toEqual(["num", "num", "num"]);
+  });
+
+  it("直接 descendants 类型顺序也正确", () => {
+    const doc = WordprocessingDocument.create();
+    doc.addNumberingDefinition({ type: "decimal" });
+    doc.addNumberingDefinition({ type: "bullet" });
+
+    const np = doc.numberingPart!;
+    const children = [...np.numbering.children];
+    const abstractNums = children.filter((c) => c instanceof AbstractNum);
+    const numInsts = children.filter((c) => c instanceof NumberingInstance);
+
+    expect(abstractNums).toHaveLength(2);
+    expect(numInsts).toHaveLength(2);
+
+    // 每个 abstractNum 的索引都小于每个 num 的索引
+    const abstractIndices = abstractNums.map((c) => children.indexOf(c));
+    const numIndices = numInsts.map((c) => children.indexOf(c));
+    const maxAbstract = Math.max(...abstractIndices);
+    const minNum = Math.min(...numIndices);
+    expect(maxAbstract).toBeLessThan(minNum);
   });
 });

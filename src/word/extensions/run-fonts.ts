@@ -23,7 +23,7 @@
  *   w:cs         → complexScript
  */
 
-import { StringValue } from "../../element/index.js";
+import { type OpenXmlElement, StringValue } from "../../element/index.js";
 import { RunFonts } from "../generated/run-fonts.js";
 import { RunProperties } from "../generated/run-properties.js";
 import { Run } from "../generated/run.js";
@@ -57,6 +57,62 @@ declare module "../generated/run.js" {
   }
 }
 
+// ─── EG_RPrBase schema 顺序（rFonts 在 index 1）────────────────────────────
+// 与 run-formatting.ts 中的顺序表保持一致，仅用于 rFonts 插入定位。
+const EG_RPRBASE_ORDER_FONTS: ReadonlyMap<string, number> = new Map([
+  ["rStyle", 0],
+  ["rFonts", 1],
+  ["b", 2],
+  ["bCs", 3],
+  ["i", 4],
+  ["iCs", 5],
+  ["caps", 6],
+  ["smallCaps", 7],
+  ["strike", 8],
+  ["dstrike", 9],
+  ["outline", 10],
+  ["shadow", 11],
+  ["emboss", 12],
+  ["imprint", 13],
+  ["noProof", 14],
+  ["snapToGrid", 15],
+  ["vanish", 16],
+  ["webHidden", 17],
+  ["color", 18],
+  ["spacing", 19],
+  ["w", 20],
+  ["kern", 21],
+  ["position", 22],
+  ["sz", 23],
+  ["szCs", 24],
+  ["highlight", 25],
+  ["u", 26],
+  ["effect", 27],
+  ["bdr", 28],
+  ["shd", 29],
+  ["fitText", 30],
+  ["vertAlign", 31],
+  ["rtl", 32],
+  ["cs", 33],
+  ["em", 34],
+  ["lang", 35],
+  ["eastAsianLayout", 36],
+  ["specVanish", 37],
+  ["oMath", 38],
+]);
+
+function insertRPrChildOrderedFonts(rPr: RunProperties, el: OpenXmlElement): void {
+  const elOrder = EG_RPRBASE_ORDER_FONTS.get(el.localName) ?? 999;
+  for (const sibling of rPr.children) {
+    const sibOrder = EG_RPRBASE_ORDER_FONTS.get(sibling.localName) ?? 999;
+    if (sibOrder > elOrder) {
+      rPr.children.insertBefore(el, sibling);
+      return;
+    }
+  }
+  rPr.appendChild(el);
+}
+
 // ─── 内部 helpers ────────────────────────────────────────────────────────────
 
 function ensureRPr(run: Run, readOnly: true): RunProperties | undefined;
@@ -81,7 +137,7 @@ function ensureRFonts(run: Run): RunFonts {
   let rf = rPr.firstChild(RunFonts);
   if (rf === undefined) {
     rf = new RunFonts();
-    rPr.appendChild(rf);
+    insertRPrChildOrderedFonts(rPr, rf);
   }
   return rf;
 }
