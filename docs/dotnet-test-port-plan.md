@@ -10,8 +10,10 @@
 | 2 — Validator 逐类型矩阵 | **✅ 完成** | #324 | 45 | ~32 | ~8 | ~50 |
 | 3 — MC 展开矩阵 | **✅ 完成** | #326 | 69 | ~75 | ~12 | ~19 |
 | 4 — DOM 树操作矩阵 | **✅ 完成** | #329 | 109 | ~46 | ~41 | ~12 |
-| 5 — 文档级行为 | 待开始 | — | — | ~110 | — | — |
+| 5 — 文档级行为 | **✅ 完成** | #330 | 75 | ~110 | ~4 | ~31 |
 | 6 — Conformance 端到端 | 待开始 | — | — | ~50 | — | — |
+
+**Batch 5 详情**（Epic-115 / PR #330）：移植 `test/packaging/document-behavior-dotnet-parity.test.ts`，75 个 `it`，覆盖 `FileFormatVersionExtensionsTests`（any/all/andLater/atLeast 位掩码语义 + 越界抛 RangeError）、Word/Excel/Ppt create+save 往返、Strict 文件打开、UTF-8 无 BOM 编码、OpenXml package 基础创建。新增 4 个公开函数：`fileFormatVersionsAny` / `fileFormatVersionsAll` / `fileFormatVersionsAtLeast` / `fileFormatVersionsAndLater`（`src/markup-compat/`）。N/A 项（~31）：Clone API（openxml-ts 无 `.clone()`）、AutoSave=false 模式（openxml-ts 用显式 `saveAsBytesAsync()`）、`DataParts`/`MediaReferenceRelationship`（API 重架构）、`GetAllParts()`（API 重架构）、`BugRegressionTest` 的逐属性错误码回归（依赖未实现的类型级校验）。COVERED（~4）：`FlatOpcAndCloningTests`（flat-opc 已充分覆盖）、`DocumentTests.FlatOpcTests`（排重）。
 
 **Batch 1 详情**（Epic-111 / PR #323）：移植 `test/element/values-dotnet-parity.test.ts`，228 个 `it`，覆盖 20 个值类型的 CompareTo / Equals / GetHashCode / 运算符语义 + HexBinaryValue 专项（ValidateValue / GetBytes / CreateFromBytes）。N/A 项：CompareTo_ArgumentIsNull / CompareTo_NoValue / Equals_NoValue / CompareTo_ArgumentIncompatible / TryWriteBytes（均属 .NET 特有 API，TS 无对应）。
 

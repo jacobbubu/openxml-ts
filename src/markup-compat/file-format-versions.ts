@@ -175,3 +175,89 @@ export function isNamespaceUnderstood(namespaceUri: string, target: FileFormatVe
   // "understood" 当且仅当 target >= minVersion（数值比较即可，因为是单调递增编号）
   return target >= minVersion;
 }
+
+// ── FileFormatVersions 扩展函数（镜像 .NET FileFormatVersionExtensions） ──────
+
+/** 所有已知的单版本值（单个位置位）。 */
+const SINGLE_VERSION_VALUES: ReadonlySet<number> = new Set([
+  FileFormatVersions.Office2007,
+  FileFormatVersions.Office2010,
+  FileFormatVersions.Office2013,
+  FileFormatVersions.Office2016,
+  FileFormatVersions.Office2019,
+  FileFormatVersions.Office2021,
+  FileFormatVersions.Microsoft365,
+]);
+
+/** 所有版本的 OR 组合（AllVersions 掩码）。 */
+const ALL_VERSIONS_MASK =
+  FileFormatVersions.Office2007 |
+  FileFormatVersions.Office2010 |
+  FileFormatVersions.Office2013 |
+  FileFormatVersions.Office2016 |
+  FileFormatVersions.Office2019 |
+  FileFormatVersions.Office2021 |
+  FileFormatVersions.Microsoft365;
+
+/**
+ * 是否为单一版本（恰好一个位置位）。
+ * 镜像 .NET `FileFormatVersionExtensions.Any()`
+ */
+export function fileFormatVersionsAny(version: number): boolean {
+  return SINGLE_VERSION_VALUES.has(version);
+}
+
+/**
+ * 是否包含所有已知版本（ALL 掩码）。
+ * 镜像 .NET `FileFormatVersionExtensions.All()`
+ */
+export function fileFormatVersionsAll(version: number): boolean {
+  return (version & ALL_VERSIONS_MASK) === ALL_VERSIONS_MASK;
+}
+
+/**
+ * 检查 `version` 是否 ≥ `minimum`（单版本间的版本顺序比较）。
+ *
+ * 要求：
+ *  - `version` 可以是单个版本或多个版本的 OR 组合；当为组合时，只要其中任意
+ *    一个单版本 ≥ minimum 即视为满足（对齐 .NET SDK 行为：组合版本测试时
+ *    AtLeast 检查「是否包含至少一个满足条件的成员版本」）。
+ *  - `minimum` 必须是单个有效版本值（非 None、非组合），否则抛 RangeError。
+ *  - `version` 若含无效位（超出所有已知版本的联合掩码）则抛 RangeError。
+ *
+ * 镜像 .NET `FileFormatVersionExtensions.AtLeast()`
+ */
+export function fileFormatVersionsAtLeast(version: number, minimum: number): boolean {
+  if (!SINGLE_VERSION_VALUES.has(minimum)) {
+    throw new RangeError(`minimum must be a single valid FileFormatVersions value; got ${minimum}`);
+  }
+  // 检查 version 是否含超出已知掩码的位（无效位）
+  if ((version & ~ALL_VERSIONS_MASK) !== 0) {
+    throw new RangeError(`version contains unknown FileFormatVersions bits; got ${version}`);
+  }
+  if (version === FileFormatVersions.None) return false;
+  // 对 version 中每个单版本位检测是否 >= minimum
+  for (const v of SINGLE_VERSION_VALUES) {
+    if ((version & v) !== 0 && v >= minimum) return true;
+  }
+  return false;
+}
+
+/**
+ * 返回「minimum 版本及之后所有版本」的组合掩码。
+ *
+ * 要求：`version` 必须是单个有效版本值，否则抛 RangeError。
+ * 镜像 .NET `FileFormatVersionExtensions.AndLater()`
+ */
+export function fileFormatVersionsAndLater(version: number): number {
+  if (!SINGLE_VERSION_VALUES.has(version)) {
+    throw new RangeError(
+      `version must be a single valid FileFormatVersions value for andLater; got ${version}`,
+    ); // biome-ignore format: long message
+  }
+  let mask = 0;
+  for (const v of SINGLE_VERSION_VALUES) {
+    if (v >= version) mask |= v;
+  }
+  return mask;
+}
