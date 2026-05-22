@@ -42,7 +42,7 @@ async function main(): Promise<void> {
   sumRow.rowIndex = UInt32Value.parse("7");
   const sumLabelCell = new Cell();
   sumLabelCell.cellReference = StringValue.parse("A7");
-  sumLabelCell.cachedValue = "SUM";
+  sumLabelCell.value = "SUM";
   sumRow.appendChild(sumLabelCell);
 
   const sumCell = new Cell();
@@ -57,7 +57,7 @@ async function main(): Promise<void> {
   avgRow.rowIndex = UInt32Value.parse("8");
   const avgLabelCell = new Cell();
   avgLabelCell.cellReference = StringValue.parse("A8");
-  avgLabelCell.cachedValue = "AVERAGE";
+  avgLabelCell.value = "AVERAGE";
   avgRow.appendChild(avgLabelCell);
 
   const avgCell = new Cell();
@@ -72,7 +72,7 @@ async function main(): Promise<void> {
   maxRow.rowIndex = UInt32Value.parse("9");
   const maxLabelCell = new Cell();
   maxLabelCell.cellReference = StringValue.parse("A9");
-  maxLabelCell.cachedValue = "MAX";
+  maxLabelCell.value = "MAX";
   maxRow.appendChild(maxLabelCell);
 
   const maxCell = new Cell();
@@ -87,7 +87,7 @@ async function main(): Promise<void> {
   minRow.rowIndex = UInt32Value.parse("10");
   const minLabelCell = new Cell();
   minLabelCell.cellReference = StringValue.parse("A10");
-  minLabelCell.cachedValue = "MIN";
+  minLabelCell.value = "MIN";
   minRow.appendChild(minLabelCell);
 
   const minCell = new Cell();

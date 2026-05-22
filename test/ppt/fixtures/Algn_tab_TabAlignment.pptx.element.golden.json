@@ -9,9 +9,9 @@
       "saveSubsetFonts": "1"
     },
     "extendedAttributes": {
-      "xmlns:a": "http://purl.oclc.org/ooxml/drawingml/main",
-      "xmlns:p": "http://purl.oclc.org/ooxml/presentationml/main",
-      "xmlns:r": "http://purl.oclc.org/ooxml/officeDocument/relationships"
+      "xmlns:a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+      "xmlns:p": "http://schemas.openxmlformats.org/presentationml/2006/main",
+      "xmlns:r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
     },
     "children": [
       {
@@ -689,9 +689,9 @@
       "className": "Slide",
       "namespaceUri": "http://schemas.openxmlformats.org/presentationml/2006/main",
       "extendedAttributes": {
-        "xmlns:a": "http://purl.oclc.org/ooxml/drawingml/main",
-        "xmlns:p": "http://purl.oclc.org/ooxml/presentationml/main",
-        "xmlns:r": "http://purl.oclc.org/ooxml/officeDocument/relationships"
+        "xmlns:a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+        "xmlns:p": "http://schemas.openxmlformats.org/presentationml/2006/main",
+        "xmlns:r": "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
       },
       "children": [
         {

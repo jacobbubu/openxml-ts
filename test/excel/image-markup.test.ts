@@ -15,7 +15,8 @@ describe("createImageTwoCellAnchorForExcel（Story-13.3）", () => {
     );
     const xml = serialize(anchor);
 
-    expect(xml).toContain('<xdr:twoCellAnchor editAs="oneCell">');
+    // Epic-98: root element 现在包含 xmlns: 声明，所以 editAs 前有 xmlns 属性
+    expect(xml).toContain('editAs="oneCell"');
     expect(xml).toContain("<xdr:from>");
     expect(xml).toContain("<xdr:col>1</xdr:col>");
     expect(xml).toContain("<xdr:row>1</xdr:row>");
