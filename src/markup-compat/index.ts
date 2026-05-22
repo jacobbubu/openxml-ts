@@ -16,6 +16,10 @@
 export {
   FileFormatVersions,
   NAMESPACE_VERSION_MAP,
+  fileFormatVersionsAll,
+  fileFormatVersionsAndLater,
+  fileFormatVersionsAtLeast,
+  fileFormatVersionsAny,
   isNamespaceUnderstood,
 } from "./file-format-versions.js";
 
