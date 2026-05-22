@@ -107,8 +107,8 @@ function prefixesToUris(prefixes: string[], nsMap: Map<string, string>): string[
 interface McContext {
   /** 当前元素作用域内的 ignorable 前缀 → URI */
   ignorable: Set<string>;
-  /** processContent 前缀 → URI（匹配时提升子节点）*/
-  processContent: Set<string>;
+  /** processContent (ns URI → Set<localName | '*'>) — 匹配时提升子节点 */
+  processContent: Map<string, Set<string>>;
   /** preserveElements (ns URI → Set<localName | '*'>) — 排除忽略 */
   preserveElements: Map<string, Set<string>>;
   /** preserveAttributes (ns URI → Set<localName | '*'>) */
@@ -120,7 +120,7 @@ interface McContext {
 function emptyContext(): McContext {
   return {
     ignorable: new Set(),
-    processContent: new Set(),
+    processContent: new Map(),
     preserveElements: new Map(),
     preserveAttributes: new Map(),
     nsMap: new Map(),
@@ -282,12 +282,10 @@ function processElement(
     }
   }
 
-  const newProcessContent = new Set(ctx.processContent);
-  if (processContentStr !== undefined) {
-    const prefixes = parsePrefixList(processContentStr);
-    const uris = prefixesToUris(prefixes, mergedNsMap);
-    for (const uri of uris) newProcessContent.add(uri);
-  }
+  const newProcessContent = mergePreserve(
+    ctx.processContent,
+    processContentStr !== undefined ? parsePreserveList(processContentStr, mergedNsMap) : new Map(),
+  );
 
   const newPreserveElements = mergePreserve(
     ctx.preserveElements,
@@ -324,8 +322,8 @@ function processElement(
     // 从父节点移除
     if (el.parent !== undefined) el.parent.remove(el);
 
-    // mc:ProcessContent — 提升子节点
-    if (newProcessContent.has(el.namespaceUri) && el instanceof OpenXmlCompositeElement) {
+    // mc:ProcessContent — 提升子节点（按 ns URI + localName 或 * 匹配）
+    if (isPreserved(el, newProcessContent) && el instanceof OpenXmlCompositeElement) {
       return processChildren(el, target, childCtx);
     }
     return [];
@@ -335,7 +333,7 @@ function processElement(
   removeMcAttrs(el);
 
   // 清理 ignorable 命名空间上的属性（非 preserve）
-  cleanIgnorableAttributes(el, newIgnorable, newPreserveAttributes);
+  cleanIgnorableAttributes(el, newIgnorable, newPreserveAttributes, mergedNsMap);
 
   if (el instanceof OpenXmlCompositeElement) {
     const snapshot = el.children.toArray();
@@ -392,20 +390,19 @@ function appendAtIndex(
 /**
  * 清理元素上属于 ignorable 命名空间的属性（非 preserve 的）。
  * MC 属性（mc:*）已由 removeMcAttrs 删除；此处处理其他命名空间属性如 `x14:foo="…"`。
+ * nsMap 为继承的命名空间映射，用于解析属性前缀。
  */
 function cleanIgnorableAttributes(
   el: OpenXmlElement,
   ignorable: Set<string>,
   preserveAttrs: Map<string, Set<string>>,
+  nsMap: Map<string, string>,
 ): void {
-  // extendedAttributes 中形如 `prefix:localName` 的属性需要从 nsMap 解析
-  // 但这里我们没有完整的 nsMap；保守策略：跳过（typed 属性由代码生成负责）
-  // 对于 OpenXmlUnknownElement 中的 extended attrs，我们可以检查 xmlns: 声明
   const toRemove: string[] = [];
-  if (!(el instanceof OpenXmlUnknownElement)) return;
 
-  // 收集 prefix → uri（仅从本元素的 extendedAttributes）
+  // 合并继承 nsMap 与本元素声明的命名空间（本元素优先）
   const localNsMap = collectNsMap(el);
+  const effectiveNsMap = localNsMap.size === 0 ? nsMap : new Map([...nsMap, ...localNsMap]);
 
   for (const [key] of el.extendedAttributes) {
     if (key.startsWith("xmlns")) continue; // 保留命名空间声明
@@ -413,7 +410,7 @@ function cleanIgnorableAttributes(
     if (colon === -1) continue; // 无前缀属性不属于任何命名空间
     const prefix = key.slice(0, colon);
     const localName = key.slice(colon + 1);
-    const uri = localNsMap.get(prefix);
+    const uri = effectiveNsMap.get(prefix);
     if (uri === undefined) continue; // 无法解析前缀
     if (!ignorable.has(uri)) continue; // 不是 ignorable 命名空间
     // 检查是否 preserved

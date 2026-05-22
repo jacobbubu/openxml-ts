@@ -220,7 +220,7 @@ describe("mc:Ignorable", () => {
 // ── 测试 4：mc:ProcessContent 子节点提升 ──────────────────────────────────
 describe("mc:ProcessContent", () => {
   it("Ignorable + ProcessContent → 子节点提升到父级", () => {
-    const xml = `<w:body xmlns:w="${W_NS}" xmlns:mc="${MC_NS}" mc:Ignorable="w14" mc:ProcessContent="w14" xmlns:w14="${W14_NS}">
+    const xml = `<w:body xmlns:w="${W_NS}" xmlns:mc="${MC_NS}" mc:Ignorable="w14" mc:ProcessContent="w14:*" xmlns:w14="${W14_NS}">
       <w14:wrapper>
         <w:p/>
         <w:p/>
