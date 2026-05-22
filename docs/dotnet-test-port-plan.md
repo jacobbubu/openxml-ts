@@ -2,6 +2,19 @@
 
 > 只读审计。不改任何代码。本文档是把微软 `DocumentFormat.OpenXml` SDK 自带测试套件移植进 `openxml-ts` 的分诊（triage）与排重（dedup）计划。
 
+## 移植进度
+
+| Batch | 状态 | PR | 新增 it 数 | 移植方法数 | 跳过（COVERED）| N/A 方法数 |
+|---|---|---|---:|---:|---:|---:|
+| 1 — Simple types 值语义 | **✅ 完成** | #323 | 228 | ~42 | ~13 | ~5 |
+| 2 — Validator 逐类型矩阵 | 待开始 | — | — | ~83 | — | — |
+| 3 — MC 展开矩阵 | 待开始 | — | — | ~105 | — | — |
+| 4 — DOM 树操作矩阵 | 待开始 | — | — | ~90 | — | — |
+| 5 — 文档级行为 | 待开始 | — | — | ~110 | — | — |
+| 6 — Conformance 端到端 | 待开始 | — | — | ~50 | — | — |
+
+**Batch 1 详情**（Epic-111 / PR #323）：移植 `test/element/values-dotnet-parity.test.ts`，228 个 `it`，覆盖 20 个值类型的 CompareTo / Equals / GetHashCode / 运算符语义 + HexBinaryValue 专项（ValidateValue / GetBytes / CreateFromBytes）。N/A 项：CompareTo_ArgumentIsNull / CompareTo_NoValue / Equals_NoValue / CompareTo_ArgumentIncompatible / TryWriteBytes（均属 .NET 特有 API，TS 无对应）。
+
 ## 1. 背景与目标
 
 `openxml-ts` 当前有 1800 个 vitest 断言（153 个测试文件），但这些测试是独立编写的，**不是**从 .NET SDK 测试套件派生的。要做到忠实移植，测试正确性应锚定到微软自己的测试。本文档枚举 .NET SDK 全部测试，逐条对照 `openxml-ts` 现有覆盖，得出三类结论：
@@ -43,7 +56,7 @@
 
 按"语义价值 / 单位成本"排序，建议分 6 批：
 
-- **Batch 1 — Simple types 值语义**（`OpenXmlSimpleValueTest.cs` + `OpenXmlSimpleValueTest2.cs` + `OpenXmlComparableSimpleValueTests` + `Spreadsheet/CellValueTests.cs`，约 60 方法）。成本最低、纯逻辑、无需 fixture，直接对齐 parse / clone / compare / 边界。先做这批能立刻把"值层"锚死。
+- **Batch 1 — Simple types 值语义** ✅（`OpenXmlComparableSimpleValueTests` + `OpenXmlComparableSimpleReferenceTests` 及各子类，约 60 方法）。已完成（Epic-111 / PR #323）：移植 228 个 `it` 到 `test/element/values-dotnet-parity.test.ts`。
 - **Batch 2 — Validator 逐类型矩阵**（`OpenXmlValidatorTest.cs` 63 个 + particle validators 20 个，约 83 方法）。语义价值最高，是 SDK 正确性的核心。需要把微软的预期错误码 / 错误文本作为断言基线移植。
 - **Batch 3 — MC 展开矩阵**（`MarkupCompatibilityTest.cs` 87 个 + `MCSupport.cs` 12 个 + `McValidationTest.cs` 6 个，约 105 方法）。第二大语义区。可按 Ignorable / ProcessContent / MustUnderstand / AlternateContent 四组分子批落地。
 - **Batch 4 — DOM 树操作矩阵**（`OpenXmlCompositeElementTestClass.cs` 141 个 + `OpenXmlElementTest*.cs` + `OpenXmlReaderWriterTest.cs` + `OpenXmlReaderTest.cs` + `OpenXmlWriterTest.cs`，约 215 方法）。体量最大但很多是同一操作在 docx/pptx/xlsx 三套 fixture 上重复（`*Test` / `*PPTTest` / `*XSLTest`），可去掉 fixture 维度后大幅压缩。
