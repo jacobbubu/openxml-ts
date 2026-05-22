@@ -855,14 +855,25 @@ export class WordprocessingDocument {
    * 与异步 writeAsync 的竞态）；flush 时统一序列化回 part bytes。
    */
   static create(): WordprocessingDocument {
-    const inMemory = createInMemory();
+    const inMemory = createInMemory() as MemoryOpenXmlPackage;
+
+    // OPC §10.1：每个合规包必须声明 Default content-type。
+    // 缺 <Default Extension="rels"> 时，`.rels` 文件没有 content-type，
+    // OpenXmlValidator 报 Pkg_RequiredPartDoNotExist —— 整个包被视为损坏。
+    // Excel / PPT 的 create() 已按此规范添加，Word 补齐。
+    inMemory.contentTypes.addDefault(
+      "rels",
+      "application/vnd.openxmlformats-package.relationships+xml",
+    );
+    inMemory.contentTypes.addDefault("xml", "application/xml");
+
     inMemory.createPart(DEFAULT_MAIN_DOC_URI, MainDocumentPart.contentType);
     inMemory.relationships.create({
       type: MainDocumentPart.relationshipType,
       target: "word/document.xml",
       targetMode: "internal",
     });
-    const wpd = new WordprocessingDocument(inMemory as MemoryOpenXmlPackage);
+    const wpd = new WordprocessingDocument(inMemory);
     const main = wpd.mainDocumentPart;
     if (main !== undefined) {
       const docElem = new Document();
