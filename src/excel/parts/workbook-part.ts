@@ -11,6 +11,9 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { ConnectionsPart } from "../../parts/generated/connections-part.js";
+import { SlicerCachePart } from "../../parts/generated/slicer-cache-part.js";
+import { TimeLineCachePart } from "../../parts/generated/time-line-cache-part.js";
 import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
@@ -25,6 +28,12 @@ export class WorkbookPart extends TypedXmlPart<Workbook> {
 
   /** 已解析的 worksheetParts 缓存——首次访问后冻结顺序，便于多次访问返回同一引用。 */
   private _worksheetParts: WorksheetPart[] | undefined;
+  /** 已解析的 slicerCacheParts 缓存。 */
+  private _slicerCacheParts: SlicerCachePart[] | undefined;
+  /** 已解析的 timeLineCacheParts 缓存。 */
+  private _timeLineCacheParts: TimeLineCachePart[] | undefined;
+  /** 已解析的 connectionsPart 缓存（null = 不存在，undefined = 未查）。 */
+  private _connectionsPart: ConnectionsPart | null | undefined;
 
   constructor(
     part: IPackagePart,
@@ -63,5 +72,69 @@ export class WorkbookPart extends TypedXmlPart<Workbook> {
     }
     this._worksheetParts = out;
     return out;
+  }
+
+  /**
+   * 工作簿下属的所有 `SlicerCachePart`，按 part-level 关系遍历顺序排列。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.WorkbookPart.SlicerCacheParts
+   */
+  get slicerCacheParts(): readonly SlicerCachePart[] {
+    if (this._slicerCacheParts !== undefined) return this._slicerCacheParts;
+    const out: SlicerCachePart[] = [];
+    for (const rel of this.part.relationships) {
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, SlicerCachePart.relationshipType)) continue;
+      const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
+      if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
+      const p = new SlicerCachePart(this.pkg.getPart(targetUri), this.registry);
+      if (this.mcSettings !== undefined) p.setMcSettings(this.mcSettings);
+      out.push(p);
+    }
+    this._slicerCacheParts = out;
+    return out;
+  }
+
+  /**
+   * 工作簿下属的所有 `TimeLineCachePart`，按 part-level 关系遍历顺序排列。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.WorkbookPart.TimeLineCacheParts
+   */
+  get timeLineCacheParts(): readonly TimeLineCachePart[] {
+    if (this._timeLineCacheParts !== undefined) return this._timeLineCacheParts;
+    const out: TimeLineCachePart[] = [];
+    for (const rel of this.part.relationships) {
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, TimeLineCachePart.relationshipType)) continue;
+      const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
+      if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
+      const p = new TimeLineCachePart(this.pkg.getPart(targetUri), this.registry);
+      if (this.mcSettings !== undefined) p.setMcSettings(this.mcSettings);
+      out.push(p);
+    }
+    this._timeLineCacheParts = out;
+    return out;
+  }
+
+  /**
+   * 工作簿的 `ConnectionsPart`（外部数据连接）。
+   * 不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.WorkbookPart.ConnectionsPart
+   */
+  get connectionsPart(): ConnectionsPart | undefined {
+    if (this._connectionsPart !== undefined) return this._connectionsPart ?? undefined;
+    for (const rel of this.part.relationships) {
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, ConnectionsPart.relationshipType)) continue;
+      const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
+      if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
+      const p = new ConnectionsPart(this.pkg.getPart(targetUri), this.registry);
+      if (this.mcSettings !== undefined) p.setMcSettings(this.mcSettings);
+      this._connectionsPart = p;
+      return p;
+    }
+    this._connectionsPart = null;
+    return undefined;
   }
 }

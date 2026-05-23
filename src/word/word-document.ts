@@ -193,7 +193,17 @@ export class WordprocessingDocument {
    * 多次访问返回同一 typed wrapper 实例。
    */
   get mainDocumentPart(): MainDocumentPart | undefined {
-    return this.getOrLoadTypedPart(MainDocumentPart);
+    const cached = this.typedParts.get(MainDocumentPart.relationshipType);
+    if (cached !== undefined) return cached as MainDocumentPart;
+    const rel = findRelationship(this.pkg.relationships, MainDocumentPart.relationshipType);
+    if (rel === undefined) return undefined;
+    const partUri = resolveRelativePartUri("/", rel.target);
+    if (partUri === undefined || !this.pkg.hasPart(partUri)) return undefined;
+    const part = this.pkg.getPart(partUri);
+    const typed = new MainDocumentPart(part, wordRegistry, this.pkg);
+    if (this._mcSettings !== undefined) typed.setMcSettings(this._mcSettings);
+    this.typedParts.set(MainDocumentPart.relationshipType, typed);
+    return typed;
   }
 
   get stylesPart(): StylesPart | undefined {

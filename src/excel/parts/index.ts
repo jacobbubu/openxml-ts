@@ -7,3 +7,6 @@ export { SharedStringTablePart } from "./shared-string-table-part.js";
 export { WorkbookStylesPart } from "./workbook-styles-part.js";
 export { CalculationChainPart } from "./calculation-chain-part.js";
 export { DrawingPart } from "./drawing-part.js";
+export { ConnectionsPart } from "../../parts/generated/connections-part.js";
+export { SlicerCachePart } from "../../parts/generated/slicer-cache-part.js";
+export { TimeLineCachePart } from "../../parts/generated/time-line-cache-part.js";

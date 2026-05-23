@@ -30,9 +30,12 @@ export { SpreadsheetDocument, SpreadsheetDocumentType } from "./spreadsheet-docu
 export {
   CalculationChainPart,
   ChartPart,
+  ConnectionsPart,
   DrawingPart,
   SharedStringTablePart,
+  SlicerCachePart,
   ThemePart,
+  TimeLineCachePart,
   TypedXmlPart,
   WorkbookPart,
   WorkbookStylesPart,

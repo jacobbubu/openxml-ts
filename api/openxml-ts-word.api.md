@@ -914,13 +914,15 @@ export class KeepNext extends OpenXmlLeafElement {
 
 // @public
 export class MainDocumentPart extends TypedXmlPart<Document> {
-    constructor(part: IPackagePart, registry: ElementRegistry);
+    constructor(part: IPackagePart, registry: ElementRegistry, _pkg?: IPackage | undefined);
     // (undocumented)
     static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
     get document(): Document;
     set document(value: Document);
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+    get wordprocessingCommentsExPart(): WordprocessingCommentsExPart | undefined;
+    get wordprocessingPeoplePart(): WordprocessingPeoplePart | undefined;
 }
 
 // @public
@@ -1595,6 +1597,17 @@ export class WebSettingsPart extends TypedXmlPart<WebSettings> {
     set webSettings(value: WebSettings);
 }
 
+// Warning: (ae-forgotten-export) The symbol "OpenXmlUnknownElement" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class WordprocessingCommentsExPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtended+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2011/relationships/commentsExtended";
+}
+
 // @public (undocumented)
 export class WordprocessingDocument {
     // (undocumented)
@@ -1681,6 +1694,15 @@ export enum WordprocessingDocumentType {
     MacroEnabledDocument = "MacroEnabledDocument",
     MacroEnabledTemplate = "MacroEnabledTemplate",
     Template = "Template"
+}
+
+// @public (undocumented)
+export class WordprocessingPeoplePart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.people+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2011/relationships/people";
 }
 
 // (No @packageDocumentation comment for this package)

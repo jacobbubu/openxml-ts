@@ -279,6 +279,17 @@ export interface ColumnWidthRange {
     readonly widthChars: number | undefined;
 }
 
+// Warning: (ae-forgotten-export) The symbol "OpenXmlUnknownElement" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class ConnectionsPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.connections+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/connections";
+}
+
 // @public (undocumented)
 export class CoreProperties {
     constructor(root: OpenXmlElement);
@@ -332,8 +343,6 @@ export class CorePropertiesPart extends TypedXmlPart<OpenXmlElement> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
 }
 
-// Warning: (ae-forgotten-export) The symbol "OpenXmlUnknownElement" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function createImageTwoCellAnchorForExcel(relId: string, from: CellAnchorPoint, to: CellAnchorPoint, options?: CreateTwoCellAnchorOptions): OpenXmlUnknownElement;
 
@@ -869,6 +878,15 @@ export class SheetViews extends OpenXmlCompositeElement {
     readonly prefix: "x";
 }
 
+// @public (undocumented)
+export class SlicerCachePart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.ms-excel.slicerCache+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2007/relationships/slicerCache";
+}
+
 // @public
 export function sniffImageMime(bytes: Uint8Array): string | undefined;
 
@@ -990,6 +1008,15 @@ export class ThemePart extends TypedXmlPart<OpenXmlElement> {
 }
 
 // @public (undocumented)
+export class TimeLineCachePart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.ms-excel.timelineCache+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2011/relationships/timelineCache";
+}
+
+// @public (undocumented)
 export abstract class TypedXmlPart<T extends OpenXmlElement> {
     constructor(_part: IPackagePart, registry: ElementRegistry, RootCtor: new () => T, mcSettings?: MarkupCompatibilityProcessSettings | undefined);
     flushAsync(): Promise<void>;
@@ -1035,10 +1062,13 @@ export class Workbook extends OpenXmlCompositeElement {
 // @public (undocumented)
 export class WorkbookPart extends TypedXmlPart<Workbook> {
     constructor(part: IPackagePart, registry: ElementRegistry, pkg: IPackage);
+    get connectionsPart(): ConnectionsPart | undefined;
     // (undocumented)
     static readonly contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml";
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+    get slicerCacheParts(): readonly SlicerCachePart[];
+    get timeLineCacheParts(): readonly TimeLineCachePart[];
     get workbook(): Workbook;
     set workbook(value: Workbook);
     get worksheetParts(): readonly WorksheetPart[];
