@@ -19,6 +19,7 @@ import type { FormatScheme } from "../../drawing/generated/format-scheme.js";
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { SlideCommentsPart } from "../../parts/generated/slide-comments-part.js";
 import { ThemePart } from "../../parts/theme-part.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import {
@@ -41,6 +42,8 @@ export class SlidePart extends TypedXmlPart<Slide> {
   private _slideLayoutPart: SlideLayoutPart | null | undefined;
   /** `notesSlidePart` 解析结果缓存（语义同上）。 */
   private _notesSlidePart: NotesSlidePart | null | undefined;
+  /** `slideCommentsPart` 解析结果缓存（语义同上）。 */
+  private _slideCommentsPart: SlideCommentsPart | null | undefined;
   /** `themePart` 解析结果缓存。Slide 直接挂 theme 是 theme-override 场景。 */
   private _themePart: ThemePart | null | undefined;
   /** effective* 缓存。三档独立 lazy。 */
@@ -95,6 +98,23 @@ export class SlidePart extends TypedXmlPart<Slide> {
       this.mcSettings,
     );
     this._notesSlidePart = resolved ?? null;
+    return resolved;
+  }
+
+  /** 关联的 SlideCommentsPart；slide 无批注时为 undefined。
+   * @see DocumentFormat.OpenXml.Packaging.SlidePart.SlideCommentsPart */
+  get slideCommentsPart(): SlideCommentsPart | undefined {
+    if (this._slideCommentsPart !== undefined) {
+      return this._slideCommentsPart ?? undefined;
+    }
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      SlideCommentsPart,
+      this.mcSettings,
+    );
+    this._slideCommentsPart = resolved ?? null;
     return resolved;
   }
 

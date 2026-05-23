@@ -49,6 +49,7 @@ import {
   Person,
   PresenceInfo,
 } from "../../src/office-ext/schemas-microsoft-com-office-word-2012-wordml/generated/index.js";
+import { CommentExtension } from "../../src/ppt/generated/comment-extension.js";
 import { PresentationExtensionList } from "../../src/ppt/generated/presentation-extension-list.js";
 import { PresentationExtension } from "../../src/ppt/generated/presentation-extension.js";
 import { PresentationPropertiesExtensionList } from "../../src/ppt/generated/presentation-properties-extension-list.js";
@@ -1056,16 +1057,154 @@ describe("ConformanceTest/Theme (源：ThemeTest.cs)", () => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 describe("ConformanceTest/ThreadingInfo (源：ThreadingInfoTest.cs)", () => {
+  const FIXTURE = join(CONFORMANCE_GEN_DIR, "ThreadingInfo.pptx");
+
+  /** timeZoneBias 值（对应 .NET TestEntities.timeZoneBiasValue = 60）。 */
+  const TIME_ZONE_BIAS = 60;
+
+  /** 从 fixture 中找 Comment idx=1 的 ThreadingInfo，返回其父 CommentExtension 的 uri 值。
+   * 对应 .NET TestEntities 构造函数逻辑。 */
+  async function getThreadingInfoExtUri(bytes: Uint8Array): Promise<string> {
+    const doc = await PresentationDocument.openAsync(bytes);
+    for (const slidePart of doc.presentationPart!.slideParts) {
+      const cmPart = slidePart.slideCommentsPart;
+      if (!cmPart) continue;
+      for (const comment of cmPart.commentList.elements()) {
+        if (comment.index?.value !== 1) continue;
+        const ti = [
+          ...comment.commentExtensionList!.descendants(officePowerpoint2012Main.ThreadingInfo),
+        ][0];
+        if (!ti) continue;
+        return (ti.parent as CommentExtension).uri!.value!;
+      }
+    }
+    throw new Error("ThreadingInfo ExtUri not found in fixture");
+  }
+
   /**
-   * N/A — ThreadingInfo01EditElement / ThreadingInfo03DeleteAddElement
+   * PORTABLE
+   * 源：ThreadingInfoTest.ThreadingInfo01EditElement [Fact]
    *
-   * ThreadingInfoTest.cs 使用 PresentationDocument（非 WordprocessingDocument）；
-   * 测试操作 P15.ThreadingInfo（PowerPoint 2013 扩展），fixture 为 ThreadingInfo.pptx。
-   * 本范围（Epic-118b）限定 Word ONLY，PPT 侧由单独 Agent 处理。
-   * 参见：#341
+   * .NET 原意：CreatePackage → EditElements（设 timeZoneBias = 60）→ VerifyElements（断言值）。
+   * openxml-ts 移植：SlidePart.slideCommentsPart → CommentList → Comment（idx=1）
+   * → commentExtensionList.descendants(ThreadingInfo) → 设 timeZoneBias → saveAsBytesAsync → 重读验证。
    */
-  it.skip("ThreadingInfo01EditElement [N/A — PPT scope] — ThreadingInfoTest 使用 PresentationDocument + P15.ThreadingInfo；不属 Word 范围", () => {});
-  it.skip("ThreadingInfo03DeleteAddElement [N/A — PPT scope] — 同上", () => {});
+  it("ThreadingInfo01EditElement — 设置 P15.ThreadingInfo.timeZoneBias 并验证", async () => {
+    const bytes = new Uint8Array(await readFile(FIXTURE));
+
+    // 编辑：找到 Comment idx=1 的 ThreadingInfo，设 timeZoneBias
+    const doc = await PresentationDocument.openAsync(bytes);
+    let edited = false;
+    for (const slidePart of doc.presentationPart!.slideParts) {
+      const cmPart = slidePart.slideCommentsPart;
+      if (!cmPart) continue;
+      for (const comment of cmPart.commentList.elements()) {
+        if (comment.index?.value !== 1) continue;
+        const ti = [
+          ...comment.commentExtensionList!.descendants(officePowerpoint2012Main.ThreadingInfo),
+        ][0]!;
+        ti.timeZoneBias = new Int32Value(TIME_ZONE_BIAS);
+        edited = true;
+      }
+    }
+    expect(edited).toBe(true);
+
+    const saved = await doc.saveAsBytesAsync();
+
+    // 验证
+    const doc2 = await PresentationDocument.openAsync(saved);
+    let verified = false;
+    for (const slidePart of doc2.presentationPart!.slideParts) {
+      const cmPart = slidePart.slideCommentsPart;
+      if (!cmPart) continue;
+      for (const comment of cmPart.commentList.elements()) {
+        if (comment.index?.value !== 1) continue;
+        const ti = [
+          ...comment.commentExtensionList!.descendants(officePowerpoint2012Main.ThreadingInfo),
+        ][0]!;
+        expect(ti.timeZoneBias?.value).toBe(TIME_ZONE_BIAS);
+        verified = true;
+      }
+    }
+    expect(verified).toBe(true);
+  });
+
+  /**
+   * PORTABLE
+   * 源：ThreadingInfoTest.ThreadingInfo03DeleteAddElement [Fact]
+   *
+   * .NET 原意：CreatePackage → DeleteElements（移除 ThreadingInfo + 所在 ext）→
+   * VerifyDeleteElements（断言 count=0）→ AddElements（重建 ext + ThreadingInfo）→
+   * VerifyAddElements（断言 count=1）。
+   */
+  it("ThreadingInfo03DeleteAddElement — 删除 P15.ThreadingInfo 后重新添加并验证", async () => {
+    const bytes = new Uint8Array(await readFile(FIXTURE));
+    const extUri = await getThreadingInfoExtUri(bytes);
+
+    // 删除：移除 Comment idx=1 中 uri 匹配的 CommentExtension（含其中的 ThreadingInfo）
+    const doc = await PresentationDocument.openAsync(bytes);
+    for (const slidePart of doc.presentationPart!.slideParts) {
+      const cmPart = slidePart.slideCommentsPart;
+      if (!cmPart) continue;
+      for (const comment of cmPart.commentList.elements()) {
+        if (comment.index?.value !== 1) continue;
+        const extLst = comment.commentExtensionList!;
+        for (const ext of [...extLst.descendants(CommentExtension)]) {
+          if (ext.uri?.value === extUri) {
+            ext.removeSelf();
+          }
+        }
+      }
+    }
+
+    const saved1 = await doc.saveAsBytesAsync();
+
+    // 验证删除
+    const doc2 = await PresentationDocument.openAsync(saved1);
+    for (const slidePart of doc2.presentationPart!.slideParts) {
+      const cmPart = slidePart.slideCommentsPart;
+      if (!cmPart) continue;
+      for (const comment of cmPart.commentList.elements()) {
+        if (comment.index?.value !== 1) continue;
+        const tiCount = [
+          ...comment.commentExtensionList!.descendants(officePowerpoint2012Main.ThreadingInfo),
+        ].length;
+        expect(tiCount).toBe(0);
+      }
+    }
+
+    // 添加：新建 CommentExtension + ThreadingInfo，追加到 Comment idx=1 的 extLst
+    const doc3 = await PresentationDocument.openAsync(saved1);
+    for (const slidePart of doc3.presentationPart!.slideParts) {
+      const cmPart = slidePart.slideCommentsPart;
+      if (!cmPart) continue;
+      for (const comment of cmPart.commentList.elements()) {
+        if (comment.index?.value !== 1) continue;
+        const newExt = new CommentExtension();
+        newExt.uri = new StringValue(extUri);
+        const ti = new officePowerpoint2012Main.ThreadingInfo();
+        ti.timeZoneBias = new Int32Value(TIME_ZONE_BIAS);
+        newExt.appendChild(ti);
+        comment.commentExtensionList!.appendChild(newExt);
+      }
+    }
+
+    const saved2 = await doc3.saveAsBytesAsync();
+
+    // 验证添加
+    const doc4 = await PresentationDocument.openAsync(saved2);
+    for (const slidePart of doc4.presentationPart!.slideParts) {
+      const cmPart = slidePart.slideCommentsPart;
+      if (!cmPart) continue;
+      for (const comment of cmPart.commentList.elements()) {
+        if (comment.index?.value !== 1) continue;
+        const tiCount = [
+          ...comment.commentExtensionList!.descendants(officePowerpoint2012Main.ThreadingInfo),
+        ].length;
+        expect(tiCount).toBe(1);
+      }
+    }
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
