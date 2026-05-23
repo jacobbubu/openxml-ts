@@ -18,6 +18,9 @@ export class RichDateGroupItem extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2" as const;
 
 
+  /** key (:key) */
+  key: StringValue | undefined;
+
   /** Year (:year) */
   year: UInt16Value | undefined;
 
@@ -41,6 +44,7 @@ export class RichDateGroupItem extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
+      case "key": this.key = StringValue.parse(value); return;
       case "year": this.year = UInt16Value.parse(value); return;
       case "month": this.month = UInt16Value.parse(value); return;
       case "day": this.day = UInt16Value.parse(value); return;
@@ -52,9 +56,10 @@ export class RichDateGroupItem extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.key !== undefined) out.push(["key", this.key.toString()]);
     if (this.year !== undefined) out.push(["year", this.year.toString()]);
     if (this.month !== undefined) out.push(["month", this.month.toString()]);
     if (this.day !== undefined) out.push(["day", this.day.toString()]);

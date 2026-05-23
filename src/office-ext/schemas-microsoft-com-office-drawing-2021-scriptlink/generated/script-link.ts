@@ -5,6 +5,7 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  StringValue,
 } from "../../../element/index.js";
 
 /** Defines the ScriptLink Class.
@@ -16,6 +17,21 @@ export class ScriptLink extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/drawing/2021/scriptlink" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** val (:val) */
+  val: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "val": this.val = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
+    return out;
+  }
 
 }

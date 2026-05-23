@@ -3,7 +3,10 @@
 // @see DocumentFormat.OpenXml.201912Main.TaskPriorityRecord
 
 import {
+  Int32Value,
   OpenXmlLeafElement,
+  assertNumber,
+  assertRequired,
 } from "../../../element/index.js";
 
 /** Defines the TaskPriorityRecord Class.
@@ -15,6 +18,25 @@ export class TaskPriorityRecord extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/powerpoint/2019/12/main" as const;
 
 
+  /** val (:val) */
+  val: Int32Value | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "val": this.val = Int32Value.parse(value); assertNumber(this.val, { min: 0, max: 10 }, { attribute: ":val", elementClass: "TaskPriorityRecord" }); return;
+    }
+    super.applyAttribute(qname, value);
+  }
 
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: ":val", elementClass: "TaskPriorityRecord" });
+  }
 }

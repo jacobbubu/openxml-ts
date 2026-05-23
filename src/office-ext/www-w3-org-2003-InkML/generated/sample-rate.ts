@@ -32,8 +32,8 @@ export class SampleRate extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.uniform !== undefined) out.push(["uniform", this.uniform.toString()]);
     if (this.value !== undefined) out.push(["value", this.value.toString()]);

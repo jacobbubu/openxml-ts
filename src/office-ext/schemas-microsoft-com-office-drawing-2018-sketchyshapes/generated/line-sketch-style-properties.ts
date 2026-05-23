@@ -5,6 +5,7 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  UInt32Value,
 } from "../../../element/index.js";
 
 /** Defines the LineSketchStyleProperties Class.
@@ -16,6 +17,21 @@ export class LineSketchStyleProperties extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/drawing/2018/sketchyshapes" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** sd (:sd) */
+  sd: UInt32Value | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "sd": this.sd = UInt32Value.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.sd !== undefined) out.push(["sd", this.sd.toString()]);
+    return out;
+  }
 
 }

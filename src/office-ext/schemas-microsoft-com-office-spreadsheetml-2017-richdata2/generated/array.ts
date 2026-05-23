@@ -5,6 +5,8 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  UInt32Value,
+  assertRequired,
 } from "../../../element/index.js";
 
 /** Defines the Array Class.
@@ -16,6 +18,30 @@ export class Array extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** r (:r) */
+  r: UInt32Value | undefined;
 
+  /** c (:c) */
+  c: UInt32Value | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "r": this.r = UInt32Value.parse(value); return;
+      case "c": this.c = UInt32Value.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.r !== undefined) out.push(["r", this.r.toString()]);
+    if (this.c !== undefined) out.push(["c", this.c.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.r, { attribute: ":r", elementClass: "Array" });
+  }
 }

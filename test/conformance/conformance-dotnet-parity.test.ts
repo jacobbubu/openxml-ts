@@ -23,6 +23,10 @@ import { Int32Value, StringValue } from "../../src/element/index.js";
 import { SpreadsheetDocument } from "../../src/excel/index.js";
 import { openAsync } from "../../src/index.js";
 import { officePowerpoint2012Main, officeWord2012Wordml } from "../../src/office-ext/index.js";
+import {
+  Person,
+  PresenceInfo,
+} from "../../src/office-ext/schemas-microsoft-com-office-word-2012-wordml/generated/index.js";
 import { PresentationDocument } from "../../src/ppt/index.js";
 import { WordprocessingDocument } from "../../src/word/index.js";
 
@@ -99,16 +103,75 @@ describe("ConformanceTest/CommentEx (源：CommentExTest.cs)", () => {
 
 describe("ConformanceTest/CommentExPeople (源：CommentExPeopleTest.cs)", () => {
   /**
-   * N/A — CommentExPeople01ReadElement / CommentExPeople02EditElement
+   * PORTABLE
+   * 源：CommentExPeopleTest.CommentExPeople01ReadElement [Fact]
    *
-   * 依赖 GeneratedDocument.CreatePackage（C# 程序化生成含 WordprocessingPeoplePart 的 docx），
-   * 无对应 fixture 文件可直接移植；且 W15.Person / W15.PresenceInfo 的 typed 访问需要
-   * office-word-2010 命名空间 typed schema 支持（当前 root 是 OpenXmlUnknownElement 占位）。
-   * WordprocessingPeoplePart 访问器本身已接入 MainDocumentPart（Epic-117），
-   * 但无 fixture 进行端到端验证，保留 skip。
+   * .NET 原意：打开含 WordprocessingPeoplePart 的 docx，验证 W15.Person.Author /
+   * W15.PresenceInfo.ProviderId / W15.PresenceInfo.UserId 可读。
+   * openxml-ts 移植：用 CommentExPeople.docx fixture（test/fixtures/conformance/generated/）。
+   * WordprocessingPeoplePart 已接入 MainDocumentPart；W15 typed schema 在 wordRegistry
+   * 中通过 registerWord2012WordmlElements 注册，Person / PresenceInfo 可 typed 访问。
+   *
+   * 来源资产：test/fixtures/conformance/generated/CommentExPeople.docx
    */
-  it.skip("CommentExPeople01ReadElement [N/A] — 无 W15 People fixture；GeneratedDocument 程序化生成无法移植", () => {});
-  it.skip("CommentExPeople02EditElement [N/A] — 同上；W15.Person typed 访问依赖 office-word-2010 schema", () => {});
+  it("CommentExPeople01ReadElement — CommentExPeople.docx 的 WordprocessingPeoplePart 可访问，W15 Person/PresenceInfo typed", async () => {
+    const bytes = await readFixture(join(CONFORMANCE_DIR, "generated"), "CommentExPeople.docx");
+    const doc = await WordprocessingDocument.openAsync(bytes);
+    const main = doc.mainDocumentPart;
+    expect(main).toBeDefined();
+
+    const peoplePart = main!.wordprocessingPeoplePart;
+    expect(peoplePart).toBeDefined();
+
+    // .NET: person.Author.Value == "Masaki Tamura (Pasona Tech)"
+    const person = [...peoplePart!.people.descendants(Person)][0];
+    expect(person).toBeInstanceOf(Person);
+    expect(person!.author?.value).toBe("Masaki Tamura (Pasona Tech)");
+
+    // .NET: presenceInfo.ProviderId.Value == "AD"
+    //       presenceInfo.UserId.Value == "S-1-5-21-2146773085-903363285-719344707-1318535"
+    const presenceInfo = [...peoplePart!.people.descendants(PresenceInfo)][0];
+    expect(presenceInfo).toBeInstanceOf(PresenceInfo);
+    expect(presenceInfo!.providerId?.value).toBe("AD");
+    expect(presenceInfo!.userId?.value).toBe("S-1-5-21-2146773085-903363285-719344707-1318535");
+  });
+
+  /**
+   * PORTABLE
+   * 源：CommentExPeopleTest.CommentExPeople02EditElement [Fact]
+   *
+   * .NET 原意：编辑 Person.Author / PresenceInfo.ProviderId / UserId，保存，重开，验证更新值。
+   * openxml-ts 移植：编辑 typed 字段，saveAsBytesAsync，重新打开验证。
+   */
+  it("CommentExPeople02EditElement — 编辑 W15 Person/PresenceInfo，saveAsBytesAsync，重读验证", async () => {
+    const editAuthor = "Dan Ito";
+    const editProviderId = "LDAP";
+    const editUserId = "S-1-5-21-2146773085-903363285-719344707-75298";
+
+    let bytes = await readFixture(join(CONFORMANCE_DIR, "generated"), "CommentExPeople.docx");
+
+    // 编辑：通过 doc.wordprocessingPeoplePart 访问（注册在 typedParts Map，flush 时序列化）
+    const doc = await WordprocessingDocument.openAsync(bytes);
+    const peoplePart = doc.wordprocessingPeoplePart!;
+    const person = [...peoplePart.people.descendants(Person)][0]!;
+    const presenceInfo = [...peoplePart.people.descendants(PresenceInfo)][0]!;
+
+    person.author = StringValue.parse(editAuthor);
+    presenceInfo.providerId = StringValue.parse(editProviderId);
+    presenceInfo.userId = StringValue.parse(editUserId);
+
+    bytes = await doc.saveAsBytesAsync();
+
+    // 重读验证
+    const doc2 = await WordprocessingDocument.openAsync(bytes);
+    const pp2 = doc2.wordprocessingPeoplePart!;
+    const person2 = [...pp2.people.descendants(Person)][0]!;
+    const pi2 = [...pp2.people.descendants(PresenceInfo)][0]!;
+
+    expect(person2.author?.value).toBe(editAuthor);
+    expect(pi2.providerId?.value).toBe(editProviderId);
+    expect(pi2.userId?.value).toBe(editUserId);
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -268,13 +331,13 @@ describe("ConformanceTest/ThreadingInfo (源：ThreadingInfoTest.cs)", () => {
   /**
    * N/A — ThreadingInfo01EditElement / ThreadingInfo03DeleteAddElement
    *
-   * 依赖 GeneratedDocument（C# 程序化生成含 CommentsExPart 的 docx）。
-   * WordprocessingCommentsExPart 已接入 MainDocumentPart（Epic-117），
-   * 但 W15.CommentEx.ThreadingInfo typed 访问依赖 office-word-2012 schema，
-   * 且无对应 fixture 文件进行端到端验证。
+   * ThreadingInfoTest.cs 使用 PresentationDocument（非 WordprocessingDocument）；
+   * 测试操作 P15.ThreadingInfo（PowerPoint 2013 扩展），fixture 为 ThreadingInfo.pptx。
+   * 本范围（Epic-118b）限定 Word ONLY，PPT 侧由单独 Agent 处理。
+   * 参见：#341
    */
-  it.skip("ThreadingInfo01EditElement [N/A] — 无 ThreadingInfo fixture；W15.ThreadingInfo typed 访问依赖 office-word-2012 schema", () => {});
-  it.skip("ThreadingInfo03DeleteAddElement [N/A] — 同上", () => {});
+  it.skip("ThreadingInfo01EditElement [N/A — PPT scope] — ThreadingInfoTest 使用 PresentationDocument + P15.ThreadingInfo；不属 Word 范围", () => {});
+  it.skip("ThreadingInfo03DeleteAddElement [N/A — PPT scope] — 同上", () => {});
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -357,16 +420,37 @@ describe("ConformanceTest/WorkbookPr (源：WorkBookPrTest.cs)", () => {
 
 describe("IsoStrictTest (源：IsoStrictTest.cs)", () => {
   /**
-   * N/A — TestISOStrictNamespace [Theory × 10] / ValidateISOStrictNamespace [Theory × 60+]
+   * PORTABLE
+   * 源：IsoStrictTest.TestISOStrictNamespace [Theory]
+   * Office15TCM: 41257: OOXML SDK: ISO Strict Namespace / Relationship Mapping - Readability
    *
-   * openxml-ts N/A 原因：
-   *   1. `StrictRelationshipFound` 属性尚未在 Word/Excel/PPT 门面上暴露
-   *      （ISO Strict 命名空间转换内部状态已有，但门面未暴露）。
-   *   2. O14ISOStrict 资产约 60+ 文件，按 asset 策略不整体搬运。
-   * 已有覆盖：test/element/strict-namespace.test.ts 覆盖 ISO Strict 命名空间翻译逻辑。
+   * .NET 原意：打开 O14ISOStrict 文件，断言 document.StrictRelationshipFound == true。
+   * openxml-ts 移植：使用已有 Strict01.docx fixture（_rels/.rels 含 purl.oclc.org 关系），
+   * 断言 WordprocessingDocument.strictRelationshipFound == true。
+   * O14ISOStrict 资产约 60+ 文件，按 asset 策略不整体搬运；Strict01.docx 代表性足够。
+   *
+   * 来源资产：test/fixtures/upstream-smoke/Strict01.docx（已有）
    */
-  it.skip("TestISOStrictNamespace [N/A] — StrictRelationshipFound 属性未暴露；O14ISOStrict fixture 未批量引入", () => {});
-  it.skip("ValidateISOStrictNamespace [N/A] — 同上；O14ISOStrict fixture 未批量引入", () => {});
+  it("TestISOStrictNamespace — Strict01.docx 的 strictRelationshipFound 为 true", async () => {
+    const bytes = await readFixture(SMOKE_DIR, "Strict01.docx");
+    const doc = await WordprocessingDocument.openAsync(bytes);
+    expect(doc.strictRelationshipFound).toBe(true);
+  });
+
+  it("strictRelationshipFound — 普通 Transitional docx 返 false", async () => {
+    const bytes = await readFixture(SMOKE_DIR, "HelloWorld.docx");
+    const doc = await WordprocessingDocument.openAsync(bytes);
+    expect(doc.strictRelationshipFound).toBe(false);
+  });
+
+  /**
+   * N/A — ValidateISOStrictNamespace [Theory × 60+]
+   *
+   * 依赖 O14ISOStrict 资产约 60+ 文件（Excel / PowerPoint / Word / Graphics），
+   * 按 asset 策略不整体搬运；且 OpenXmlValidator 在 openxml-ts 中尚未实现 ISO Strict
+   * 特有的完整校验语义。留 skip 直至 validator 成熟。
+   */
+  it.skip("ValidateISOStrictNamespace [N/A] — O14ISOStrict fixture 未批量引入；OpenXmlValidator ISO Strict 校验未实现", () => {});
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -472,18 +556,19 @@ describe("DocxTests01 (源：DocxTests01.cs，精选)", () => {
    *
    * .NET 原意：打开 Strict01.docx（ISO Strict），StrictRelationshipFound==true，
    * 插入段落，校验 relationship types。
-   * openxml-ts 移植：打开不抛，mainDocumentPart 可访问，Document root 存在。
-   * StrictRelationshipFound → N/A（属性未暴露）。
+   * openxml-ts 移植：打开不抛，mainDocumentPart 可访问，Document root 存在，
+   * strictRelationshipFound == true。
    *
    * 来源资产：test/fixtures/upstream-smoke/Strict01.docx（已有）
    */
-  it("W054 — Strict01.docx 可打开（ISO Strict），mainDocumentPart 可访问", async () => {
+  it("W054 — Strict01.docx 可打开（ISO Strict），mainDocumentPart 可访问，strictRelationshipFound 为 true", async () => {
     const bytes = await readFixture(SMOKE_DIR, "Strict01.docx");
     const doc = await WordprocessingDocument.openAsync(bytes);
     expect(doc.mainDocumentPart).toBeDefined();
     const document = doc.mainDocumentPart!.document;
     expect(document).toBeDefined();
     expect(document.localName).toBe("document");
+    expect(doc.strictRelationshipFound).toBe(true);
   });
 
   /**

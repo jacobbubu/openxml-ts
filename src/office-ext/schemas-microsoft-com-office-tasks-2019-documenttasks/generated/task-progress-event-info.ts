@@ -3,7 +3,10 @@
 // @see DocumentFormat.OpenXml.Tasks2019Documenttasks.TaskProgressEventInfo
 
 import {
+  Int32Value,
   OpenXmlLeafElement,
+  assertNumber,
+  assertRequired,
 } from "../../../element/index.js";
 
 /** Defines the TaskProgressEventInfo Class.
@@ -15,6 +18,25 @@ export class TaskProgressEventInfo extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/tasks/2019/documenttasks" as const;
 
 
+  /** percentComplete (:percentComplete) */
+  percentComplete: Int32Value | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "percentComplete": this.percentComplete = Int32Value.parse(value); assertNumber(this.percentComplete, { min: 0, max: 100 }, { attribute: ":percentComplete", elementClass: "TaskProgressEventInfo" }); return;
+    }
+    super.applyAttribute(qname, value);
+  }
 
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.percentComplete !== undefined) out.push(["percentComplete", this.percentComplete.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.percentComplete, { attribute: ":percentComplete", elementClass: "TaskProgressEventInfo" });
+  }
 }

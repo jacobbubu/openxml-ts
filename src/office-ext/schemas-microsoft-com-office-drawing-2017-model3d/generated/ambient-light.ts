@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Drawing2017Model3d.AmbientLight
 
 import {
+  BooleanValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
 } from "../../../element/index.js";
@@ -16,6 +17,21 @@ export class AmbientLight extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/drawing/2017/model3d" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** enabled (:enabled) */
+  enabled: BooleanValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "enabled": this.enabled = BooleanValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.enabled !== undefined) out.push(["enabled", this.enabled.toString()]);
+    return out;
+  }
 
 }

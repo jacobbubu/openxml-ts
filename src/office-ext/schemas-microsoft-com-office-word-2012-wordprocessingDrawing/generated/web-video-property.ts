@@ -35,8 +35,8 @@ export class WebVideoProperty extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.embeddedHtml !== undefined) out.push(["embeddedHtml", this.embeddedHtml.toString()]);
     if (this.height !== undefined) out.push(["h", this.height.toString()]);

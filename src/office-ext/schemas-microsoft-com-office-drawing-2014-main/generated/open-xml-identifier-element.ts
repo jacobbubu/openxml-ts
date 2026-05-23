@@ -4,6 +4,8 @@
 
 import {
   OpenXmlLeafElement,
+  UInt32Value,
+  assertRequired,
 } from "../../../element/index.js";
 
 /** Defines the OpenXmlIdentifierElement Class.
@@ -15,6 +17,25 @@ export abstract class OpenXmlIdentifierElement extends OpenXmlLeafElement {
   override readonly namespaceUri = "" as const;
 
 
+  /** val (:val) */
+  val: UInt32Value | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "val": this.val = UInt32Value.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
 
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: ":val", elementClass: "OpenXmlIdentifierElement" });
+  }
 }

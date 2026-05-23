@@ -4,6 +4,8 @@
 
 import {
   OpenXmlLeafElement,
+  StringValue,
+  assertRequired,
 } from "../../../element/index.js";
 
 /** Defines the RichFormatProperty Class.
@@ -15,6 +17,31 @@ export class RichFormatProperty extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2" as const;
 
 
+  /** n (:n) */
+  n: StringValue | undefined;
 
+  /** t (:t) */
+  t: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "n": this.n = StringValue.parse(value); return;
+      case "t": this.t = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.n !== undefined) out.push(["n", this.n.toString()]);
+    if (this.t !== undefined) out.push(["t", this.t.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.n, { attribute: ":n", elementClass: "RichFormatProperty" });
+    assertRequired(this.t, { attribute: ":t", elementClass: "RichFormatProperty" });
+  }
 }

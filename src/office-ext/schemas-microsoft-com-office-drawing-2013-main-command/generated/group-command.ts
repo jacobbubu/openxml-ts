@@ -3,8 +3,10 @@
 // @see DocumentFormat.OpenXml.Drawing2013Command.GroupCommand
 
 import {
+  BooleanValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  UInt32Value,
 } from "../../../element/index.js";
 
 /** Defines the GroupCommand Class.
@@ -16,6 +18,31 @@ export class GroupCommand extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/drawing/2013/main/command" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** verId (:verId) */
+  verId: UInt32Value | undefined;
 
+  /** preventRegroup (:preventRegroup) */
+  preventRegroup: BooleanValue | undefined;
+
+  /** grpId (:grpId) */
+  grpId: UInt32Value | undefined;
+
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "verId": this.verId = UInt32Value.parse(value); return;
+      case "preventRegroup": this.preventRegroup = BooleanValue.parse(value); return;
+      case "grpId": this.grpId = UInt32Value.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.verId !== undefined) out.push(["verId", this.verId.toString()]);
+    if (this.preventRegroup !== undefined) out.push(["preventRegroup", this.preventRegroup.toString()]);
+    if (this.grpId !== undefined) out.push(["grpId", this.grpId.toString()]);
+    return out;
+  }
 
 }

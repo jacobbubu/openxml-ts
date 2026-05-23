@@ -39,8 +39,8 @@ export class ActiveArea extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.size !== undefined) out.push(["size", this.size.toString()]);
     if (this.height !== undefined) out.push(["height", this.height.toString()]);

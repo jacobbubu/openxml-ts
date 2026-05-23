@@ -5,6 +5,9 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  StringValue,
+  UInt32Value,
+  assertRequired,
 } from "../../../element/index.js";
 
 /** Defines the ColumnFilter Class.
@@ -16,6 +19,30 @@ export class ColumnFilter extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** colId (:colId) */
+  colId: UInt32Value | undefined;
 
+  /** id (:id) */
+  id: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "colId": this.colId = UInt32Value.parse(value); return;
+      case "id": this.id = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.colId !== undefined) out.push(["colId", this.colId.toString()]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.colId, { attribute: ":colId", elementClass: "ColumnFilter" });
+  }
 }

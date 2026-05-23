@@ -55,6 +55,9 @@ export class TaskFormGroup extends OpenXmlCompositeElement {
   /** getShowLabel (:getShowLabel) */
   getShowLabel: StringValue | undefined;
 
+  /** allowedTaskSizes (:allowedTaskSizes) */
+  allowedTaskSizes: StringValue | undefined;
+
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "id": this.id = StringValue.parse(value); assertString(this.id, { maxLength: 1024, minLength: 1 }, { attribute: ":id", elementClass: "TaskFormGroup" }); return;
@@ -69,12 +72,13 @@ export class TaskFormGroup extends OpenXmlCompositeElement {
       case "getHelperText": this.getHelperText = StringValue.parse(value); assertString(this.getHelperText, { maxLength: 1024, minLength: 1 }, { attribute: ":getHelperText", elementClass: "TaskFormGroup" }); return;
       case "showLabel": this.showLabel = BooleanValue.parse(value); return;
       case "getShowLabel": this.getShowLabel = StringValue.parse(value); assertString(this.getShowLabel, { maxLength: 1024, minLength: 1 }, { attribute: ":getShowLabel", elementClass: "TaskFormGroup" }); return;
+      case "allowedTaskSizes": this.allowedTaskSizes = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.id !== undefined) out.push(["id", this.id.toString()]);
     if (this.qualifiedId !== undefined) out.push(["idQ", this.qualifiedId.toString()]);
@@ -88,6 +92,7 @@ export class TaskFormGroup extends OpenXmlCompositeElement {
     if (this.getHelperText !== undefined) out.push(["getHelperText", this.getHelperText.toString()]);
     if (this.showLabel !== undefined) out.push(["showLabel", this.showLabel.toString()]);
     if (this.getShowLabel !== undefined) out.push(["getShowLabel", this.getShowLabel.toString()]);
+    if (this.allowedTaskSizes !== undefined) out.push(["allowedTaskSizes", this.allowedTaskSizes.toString()]);
     return out;
   }
 

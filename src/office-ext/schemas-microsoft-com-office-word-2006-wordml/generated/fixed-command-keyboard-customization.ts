@@ -35,8 +35,8 @@ export class FixedCommandKeyboardCustomization extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.commandName !== undefined) out.push(["wne:fciName", this.commandName.toString()]);
     if (this.commandIndex !== undefined) out.push(["wne:fciIndex", this.commandIndex.toString()]);

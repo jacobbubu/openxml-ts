@@ -4,6 +4,7 @@
 
 import {
   OpenXmlLeafElement,
+  StringValue,
 } from "../../../element/index.js";
 
 /** Defines the ResourceUrl Class.
@@ -15,6 +16,26 @@ export class ResourceUrl extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/drawing/2013/main/command" as const;
 
 
+  /** src (:src) */
+  src: StringValue | undefined;
 
+  /** linkage (:linkage) */
+  linkage: StringValue | undefined;
+
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "src": this.src = StringValue.parse(value); return;
+      case "linkage": this.linkage = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.src !== undefined) out.push(["src", this.src.toString()]);
+    if (this.linkage !== undefined) out.push(["linkage", this.linkage.toString()]);
+    return out;
+  }
 
 }

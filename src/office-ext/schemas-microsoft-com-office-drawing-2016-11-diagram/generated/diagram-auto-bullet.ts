@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.201611Diagram.DiagramAutoBullet
 
 import {
+  BooleanValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
@@ -20,17 +21,22 @@ export class DiagramAutoBullet extends OpenXmlCompositeElement {
   /** prefix (:prefix) */
   autoBulletPrefix: StringValue | undefined;
 
+  /** leadZeros (:leadZeros) */
+  leadZeros: BooleanValue | undefined;
+
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "prefix": this.autoBulletPrefix = StringValue.parse(value); return;
+      case "leadZeros": this.leadZeros = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.autoBulletPrefix !== undefined) out.push(["prefix", this.autoBulletPrefix.toString()]);
+    if (this.leadZeros !== undefined) out.push(["leadZeros", this.leadZeros.toString()]);
     return out;
   }
 

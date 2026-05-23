@@ -26,8 +26,10 @@ import {
   type OpenXmlElement,
   StringValue,
 } from "../element/index.js";
+import { isStrictUri } from "../element/strict-namespace-map.js";
 import { OpenXmlUnknownElement } from "../element/unknown-element.js";
 import type { MarkupCompatibilityProcessSettings } from "../markup-compat/index.js";
+import { registerWord2012WordmlElements } from "../office-ext/schemas-microsoft-com-office-word-2012-wordml/generated/_registry.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import {
   type IPackage,
@@ -91,6 +93,7 @@ import {
   ThemePart,
   type TypedXmlPart,
   WebSettingsPart,
+  WordprocessingPeoplePart,
 } from "./parts/index.js";
 
 /**
@@ -135,6 +138,8 @@ const wordRegistry: ElementRegistry = (() => {
   // <w:footnotes> 内的 <w:footnote> 是复合元素（Footnote）；用 Footnote 替换，
   // 使反序列化时能正确挂子树（Epic-64）。
   r.register("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "footnote", Footnote);
+  // W15（word/2012/wordml）扩展元素——WordprocessingPeoplePart 等需要 typed 反序列化。
+  registerWord2012WordmlElements(r);
   return r;
 })();
 
@@ -186,6 +191,22 @@ export class WordprocessingDocument {
   /** 底层 OPC 包句柄；需要 OPC 级操作（addPart/relationships/contentTypes）时用。 */
   get package(): IPackage {
     return this.pkg;
+  }
+
+  /**
+   * 是否在打开时检测到 ISO Strict 关系命名空间（对位 .NET `OpenXmlPackage.StrictRelationshipFound`）。
+   *
+   * 检测原理：扫描包级关系集合（`_rels/.rels`），若任一关系的 `type` 属于已知
+   * Strict URI（`http://purl.oclc.org/ooxml/...`），则返回 `true`。
+   * 这与 .NET SDK 的 `IStrictNamespaceFeature.Found` 等价。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.OpenXmlPackage.StrictRelationshipFound
+   */
+  get strictRelationshipFound(): boolean {
+    for (const rel of this.pkg.relationships) {
+      if (isStrictUri(rel.type)) return true;
+    }
+    return false;
   }
 
   /**
@@ -271,6 +292,11 @@ export class WordprocessingDocument {
   /** Word 脚注 Part（mainDocumentPart 的 part-level 关系）；不存在时返 undefined。 */
   get footnotesPart(): FootnotesPart | undefined {
     return this.getOrLoadTypedPartFromMain(FootnotesPart);
+  }
+
+  /** W15 批注人员 Part（mainDocumentPart 的 part-level 关系）；不存在时返 undefined。 */
+  get wordprocessingPeoplePart(): WordprocessingPeoplePart | undefined {
+    return this.getOrLoadTypedPartFromMain(WordprocessingPeoplePart);
   }
 
   /**

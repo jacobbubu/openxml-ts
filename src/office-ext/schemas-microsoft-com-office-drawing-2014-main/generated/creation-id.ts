@@ -4,6 +4,7 @@
 
 import {
   OpenXmlLeafElement,
+  StringValue,
 } from "../../../element/index.js";
 
 /** Defines the CreationId Class.
@@ -15,6 +16,21 @@ export class CreationId extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/drawing/2014/main" as const;
 
 
+  /** id (:id) */
+  id: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "id": this.id = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.id !== undefined) out.push(["id", this.id.toString()]);
+    return out;
+  }
 
 }

@@ -4,6 +4,7 @@
 
 import {
   OpenXmlLeafElement,
+  UInt32Value,
 } from "../../../element/index.js";
 
 /** Defines the Version Class.
@@ -15,6 +16,26 @@ export class Version extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2024/workbookCompatibilityVersion" as const;
 
 
+  /** warnBelowVersion (:warnBelowVersion) */
+  warnBelowVersion: UInt32Value | undefined;
 
+  /** setVersion (:setVersion) */
+  setVersion: UInt32Value | undefined;
+
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "warnBelowVersion": this.warnBelowVersion = UInt32Value.parse(value); return;
+      case "setVersion": this.setVersion = UInt32Value.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.warnBelowVersion !== undefined) out.push(["warnBelowVersion", this.warnBelowVersion.toString()]);
+    if (this.setVersion !== undefined) out.push(["setVersion", this.setVersion.toString()]);
+    return out;
+  }
 
 }

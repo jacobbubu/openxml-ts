@@ -4,6 +4,8 @@
 
 import {
   OpenXmlLeafElement,
+  StringValue,
+  assertRequired,
 } from "../../../element/index.js";
 
 /** Defines the FeatureSupport Class.
@@ -15,6 +17,25 @@ export class FeatureSupport extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2023/pivot2023Calculation" as const;
 
 
+  /** featureName (:featureName) */
+  featureName: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "featureName": this.featureName = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
 
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.featureName !== undefined) out.push(["featureName", this.featureName.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.featureName, { attribute: ":featureName", elementClass: "FeatureSupport" });
+  }
 }

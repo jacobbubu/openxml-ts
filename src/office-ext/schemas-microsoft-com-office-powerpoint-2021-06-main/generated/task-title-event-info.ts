@@ -4,6 +4,8 @@
 
 import {
   OpenXmlLeafElement,
+  StringValue,
+  assertRequired,
 } from "../../../element/index.js";
 
 /** Defines the TaskTitleEventInfo Class.
@@ -15,6 +17,25 @@ export class TaskTitleEventInfo extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/powerpoint/2021/06/main" as const;
 
 
+  /** val (:val) */
+  val: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "val": this.val = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
 
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.val !== undefined) out.push(["val", this.val.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: ":val", elementClass: "TaskTitleEventInfo" });
+  }
 }

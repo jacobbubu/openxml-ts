@@ -8,6 +8,7 @@ import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
   StringValue,
+  UInt32Value,
   assertRequired,
 } from "../../../element/index.js";
 
@@ -29,6 +30,9 @@ export class WebExtensionTaskpane extends OpenXmlCompositeElement {
   /** width (:width) */
   width: DoubleValue | undefined;
 
+  /** row (:row) */
+  row: UInt32Value | undefined;
+
   /** locked (:locked) */
   locked: BooleanValue | undefined;
 
@@ -37,17 +41,19 @@ export class WebExtensionTaskpane extends OpenXmlCompositeElement {
       case "dockstate": this.dockState = StringValue.parse(value); return;
       case "visibility": this.visibility = BooleanValue.parse(value); return;
       case "width": this.width = DoubleValue.parse(value); return;
+      case "row": this.row = UInt32Value.parse(value); return;
       case "locked": this.locked = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.dockState !== undefined) out.push(["dockstate", this.dockState.toString()]);
     if (this.visibility !== undefined) out.push(["visibility", this.visibility.toString()]);
     if (this.width !== undefined) out.push(["width", this.width.toString()]);
+    if (this.row !== undefined) out.push(["row", this.row.toString()]);
     if (this.locked !== undefined) out.push(["locked", this.locked.toString()]);
     return out;
   }
@@ -57,5 +63,6 @@ export class WebExtensionTaskpane extends OpenXmlCompositeElement {
     assertRequired(this.dockState, { attribute: ":dockstate", elementClass: "WebExtensionTaskpane" });
     assertRequired(this.visibility, { attribute: ":visibility", elementClass: "WebExtensionTaskpane" });
     assertRequired(this.width, { attribute: ":width", elementClass: "WebExtensionTaskpane" });
+    assertRequired(this.row, { attribute: ":row", elementClass: "WebExtensionTaskpane" });
   }
 }

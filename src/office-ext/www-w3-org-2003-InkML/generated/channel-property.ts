@@ -40,8 +40,8 @@ export class ChannelProperty extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.channel !== undefined) out.push(["channel", this.channel.toString()]);
     if (this.name !== undefined) out.push(["name", this.name.toString()]);

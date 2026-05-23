@@ -31,8 +31,8 @@ export class SxRatio extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.numerator !== undefined) out.push(["n", this.numerator.toString()]);
     if (this.denominator !== undefined) out.push(["d", this.denominator.toString()]);

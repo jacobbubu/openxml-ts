@@ -16,6 +16,9 @@ export class CustomRichFilter extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2" as const;
 
 
+  /** key (:key) */
+  key: StringValue | undefined;
+
   /** Filter Comparison Operator (:operator) */
   operator: StringValue | undefined;
 
@@ -24,15 +27,17 @@ export class CustomRichFilter extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
+      case "key": this.key = StringValue.parse(value); return;
       case "operator": this.operator = StringValue.parse(value); return;
       case "val": this.val = StringValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.key !== undefined) out.push(["key", this.key.toString()]);
     if (this.operator !== undefined) out.push(["operator", this.operator.toString()]);
     if (this.val !== undefined) out.push(["val", this.val.toString()]);
     return out;

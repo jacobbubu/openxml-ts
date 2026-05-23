@@ -33,11 +33,33 @@ export interface SchemaValidator {
 
 export interface SchemaAttribute {
   readonly QName: string;
-  readonly PropertyName: string;
+  /** May be absent in some schema JSON entries; fall back to PropertyComments. */
+  readonly PropertyName?: string | null;
   readonly Type: string;
   readonly PropertyComments?: string;
   readonly Version?: string;
   readonly Validators?: readonly SchemaValidator[];
+}
+
+/** Regex for a valid single-word identifier (no spaces, no punctuation). */
+const SIMPLE_IDENTIFIER_RE = /^[A-Za-z_$][A-Za-z0-9_$]*$/;
+
+/**
+ * Effective property name for an attribute: prefers `PropertyName`, falls back
+ * to `PropertyComments` only when it is a simple identifier (no spaces/punctuation),
+ * then to the local part of `QName` (after the colon).
+ */
+function effectivePropertyName(attr: SchemaAttribute): string {
+  if (typeof attr.PropertyName === "string" && attr.PropertyName.length > 0)
+    return attr.PropertyName;
+  if (
+    typeof attr.PropertyComments === "string" &&
+    attr.PropertyComments.length > 0 &&
+    SIMPLE_IDENTIFIER_RE.test(attr.PropertyComments)
+  )
+    return attr.PropertyComments;
+  const colon = attr.QName.indexOf(":");
+  return colon >= 0 ? attr.QName.slice(colon + 1) : attr.QName;
 }
 
 export interface SchemaType {
@@ -97,11 +119,7 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
   const collectedAttrs = collectAttributesWithInherited(type, options.typeIndex);
   // 过滤掉 schema 中偶尔出现的「无 PropertyName / 无 QName」记录，避免下游崩
   const attrs = collectedAttrs.filter(
-    (a) =>
-      typeof a.PropertyName === "string" &&
-      a.PropertyName.length > 0 &&
-      typeof a.QName === "string" &&
-      a.QName.length > 0,
+    (a) => typeof a.QName === "string" && a.QName.length > 0 && effectivePropertyName(a).length > 0,
   );
   const isLeaf = type.IsLeafElement === true || type.IsLeafText === true;
   const attrLines = attrs.map((a) => renderAttrField(a, valueImports, isLeaf));
@@ -160,7 +178,7 @@ export function generateElement(type: SchemaType, options: GenerateElementOption
   const collectBlock =
     collectLines.length === 0
       ? ""
-      : `\n  protected override collectAttributes(): Array<[string, string]> {\n    const out: Array<[string, string]> = [];\n    for (const [k, v] of this.extendedAttributes) out.push([k, v]);\n${collectLines
+      : `\n  protected override collectAttributes(): [string, string][] {\n    const out: [string, string][] = [];\n    for (const [k, v] of this.extendedAttributes) out.push([k, v]);\n${collectLines
           .map((c) => `    ${c}`)
           .join("\n")}\n    return out;\n  }\n`;
 
@@ -255,7 +273,7 @@ function renderAttrField(attr: SchemaAttribute, imports: Set<string>, isLeaf: bo
   const t = mapSchemaType(attr.Type);
   for (const i of t.imports) imports.add(i);
   const comment = attr.PropertyComments?.trim() ?? attr.QName;
-  const prop = resolveAttrPropName(attr.PropertyName, isLeaf);
+  const prop = resolveAttrPropName(effectivePropertyName(attr), isLeaf);
   return `  /** ${comment} (${attr.QName}) */\n  ${prop}: ${t.expr} | undefined;`;
 }
 
@@ -272,7 +290,7 @@ function renderApplyAttrCase(
   isLeaf: boolean,
 ): string {
   const t = mapSchemaType(attr.Type);
-  const prop = resolveAttrPropName(attr.PropertyName, isLeaf);
+  const prop = resolveAttrPropName(effectivePropertyName(attr), isLeaf);
   const ctx = `{ attribute: ${quote(attr.QName)}, elementClass: ${quote(className)} }`;
   const parseCall =
     t.parseExpr !== undefined ? t.parseExpr.replace("VALUE", "value") : `${t.expr}.parse(value)`;
@@ -309,12 +327,12 @@ function renderApplyAttrCase(
 }
 
 function renderCollectLine(attr: SchemaAttribute, isLeaf: boolean): string {
-  const prop = resolveAttrPropName(attr.PropertyName, isLeaf);
+  const prop = resolveAttrPropName(effectivePropertyName(attr), isLeaf);
   return `if (this.${prop} !== undefined) out.push([${quote(normalizeAttrQName(attr.QName))}, this.${prop}.toString()]);`;
 }
 
 function renderRequiredCheck(attr: SchemaAttribute, className: string, isLeaf: boolean): string {
-  const prop = resolveAttrPropName(attr.PropertyName, isLeaf);
+  const prop = resolveAttrPropName(effectivePropertyName(attr), isLeaf);
   const ctx = `{ attribute: ${quote(attr.QName)}, elementClass: ${quote(className)} }`;
   return `assertRequired(this.${prop}, ${ctx});`;
 }
