@@ -183,6 +183,8 @@ export class PresentationDocument {
         if (layout?.isLoaded) tally(layout.root);
         const notes = sp.notesSlidePart;
         if (notes?.isLoaded) tally(notes.root);
+        const comments = sp.slideCommentsPart;
+        if (comments?.isLoaded) tally(comments.root);
       }
     }
     return { elementCount, unknownElementCount };
@@ -646,6 +648,8 @@ export class PresentationDocument {
         if (layout?.isLoaded) promises.push(layout.flushAsync());
         const notes = sp.notesSlidePart;
         if (notes?.isLoaded) promises.push(notes.flushAsync());
+        const comments = sp.slideCommentsPart;
+        if (comments?.isLoaded) promises.push(comments.flushAsync());
       }
       // Flush SlideMasterParts + their ThemeParts (if already loaded via cache)
       const ppInternal = pp as unknown as {

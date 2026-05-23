@@ -9,6 +9,7 @@ import {
   UInt32Value,
   assertRequired,
 } from "../../element/index.js";
+import { CommentExtensionList } from "./comment-extension-list.js";
 
 /** Comment.
  *
@@ -50,5 +51,11 @@ export class Comment extends OpenXmlCompositeElement {
   validateRequired(): void {
     assertRequired(this.authorId, { attribute: ":authorId", elementClass: "Comment" });
     assertRequired(this.index, { attribute: ":idx", elementClass: "Comment" });
+  }
+
+  /** `<p:extLst>` — CommentExtensionList child element (p:cm → p:extLst).
+   * @see DocumentFormat.OpenXml.Presentation.Comment.CommentExtensionList */
+  get commentExtensionList(): CommentExtensionList | undefined {
+    return this.getFirstChild(CommentExtensionList);
   }
 }

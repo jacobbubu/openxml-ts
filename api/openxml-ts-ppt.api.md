@@ -379,6 +379,8 @@ export class SlidePart extends TypedXmlPart<Slide> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide";
     get slide(): Slide;
     set slide(value: Slide);
+    // Warning: (ae-forgotten-export) The symbol "SlideCommentsPart" needs to be exported by the entry point index.d.ts
+    get slideCommentsPart(): SlideCommentsPart | undefined;
     get slideLayoutPart(): SlideLayoutPart | undefined;
     get themePart(): ThemePart | undefined;
 }
