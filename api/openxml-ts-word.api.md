@@ -1536,16 +1536,18 @@ export class Text extends OpenXmlLeafElement {
     space: StringValue | undefined;
 }
 
+// Warning: (ae-forgotten-export) The symbol "Theme" needs to be exported by the entry point index.d.ts
+//
 // @public
-export class ThemePart extends TypedXmlPart<OpenXmlElement> {
+export class ThemePart extends TypedXmlPart<Theme> {
     constructor(part: IPackagePart, registry: ElementRegistry);
     // (undocumented)
     static readonly contentType = "application/vnd.openxmlformats-officedocument.theme+xml";
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme";
     // (undocumented)
-    get theme(): OpenXmlElement;
-    set theme(value: OpenXmlElement);
+    get theme(): Theme;
+    set theme(value: Theme);
 }
 
 // @public (undocumented)

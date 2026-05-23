@@ -27,6 +27,7 @@ import {
 } from "../element/index.js";
 import { OpenXmlUnknownElement } from "../element/unknown-element.js";
 import type { MarkupCompatibilityProcessSettings } from "../markup-compat/index.js";
+import { registerPowerpoint2012MainElements } from "../office-ext/schemas-microsoft-com-office-powerpoint-2012-main/generated/_registry.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import {
   type IPackage,
@@ -120,11 +121,12 @@ const DEFAULT_THEME_URI = "/ppt/theme/theme1.xml" as PartUri;
 
 const PNS_REGISTRY = "http://schemas.openxmlformats.org/presentationml/2006/main";
 
-/** ppt 子系统共用的 typed element registry（presentation + drawing 联合）。 */
+/** ppt 子系统共用的 typed element registry（presentation + drawing + P15 联合）。 */
 const pptRegistry: ElementRegistry = (() => {
   const r = new ElementRegistry();
   registerPresentationElements(r);
   registerDrawingElements(r);
+  registerPowerpoint2012MainElements(r);
   // codegen 字母序最后一次注册胜出，对若干 (ns, localName) 二义性元素的 canonical
   // 选择不利；按 .NET SDK 默认 + slideMaster.xml 使用场景显式 override：
   // - `<p:sld>`（slide.xml 根）→ Slide，而非 SlideListEntry / OutlineViewSlideListEntry；
@@ -644,6 +646,29 @@ export class PresentationDocument {
         if (layout?.isLoaded) promises.push(layout.flushAsync());
         const notes = sp.notesSlidePart;
         if (notes?.isLoaded) promises.push(notes.flushAsync());
+      }
+      // Flush SlideMasterParts + their ThemeParts (if already loaded via cache)
+      const ppInternal = pp as unknown as {
+        _slideMasterParts: import("./parts/slide-master-part.js").SlideMasterPart[] | undefined;
+        _presentationPropertiesPart:
+          | import("../parts/generated/presentation-properties-part.js").PresentationPropertiesPart
+          | null
+          | undefined;
+      };
+      if (ppInternal._slideMasterParts !== undefined) {
+        for (const smp of ppInternal._slideMasterParts) {
+          if (smp.isLoaded) promises.push(smp.flushAsync());
+          const smpInternal = smp as unknown as {
+            _themePart: import("../parts/theme-part.js").ThemePart | null | undefined;
+          };
+          if (smpInternal._themePart?.isLoaded) {
+            promises.push(smpInternal._themePart.flushAsync());
+          }
+        }
+      }
+      // Flush PresentationPropertiesPart (if already loaded via cache)
+      if (ppInternal._presentationPropertiesPart?.isLoaded) {
+        promises.push(ppInternal._presentationPropertiesPart.flushAsync());
       }
     }
     await Promise.all(promises);
