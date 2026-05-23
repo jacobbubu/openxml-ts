@@ -294,9 +294,25 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
     static readonly contentType = "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml";
     get presentation(): Presentation;
     set presentation(value: Presentation);
+    get presentationPropertiesPart(): PresentationPropertiesPart | undefined;
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+    get slideMasterParts(): readonly SlideMasterPart[];
     get slideParts(): readonly SlidePart[];
+}
+
+// Warning: (ae-forgotten-export) The symbol "PresentationProperties" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class PresentationPropertiesPart extends TypedXmlPart<PresentationProperties> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.presentationml.presProps+xml";
+    // (undocumented)
+    get presentationProperties(): PresentationProperties;
+    set presentationProperties(value: PresentationProperties);
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/presProps";
 }
 
 // @public

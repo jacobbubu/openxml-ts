@@ -13,12 +13,14 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { PresentationPropertiesPart } from "../../parts/generated/presentation-properties-part.js";
 import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import { Presentation } from "../generated/presentation.js";
 import { SlideIdList } from "../generated/slide-id-list.js";
 import { SlideId } from "../generated/slide-id.js";
+import { SlideMasterPart } from "./slide-master-part.js";
 import { SlidePart } from "./slide-part.js";
 
 export class PresentationPart extends TypedXmlPart<Presentation> {
@@ -29,6 +31,10 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
 
   /** 已解析的 slideParts 缓存——首次访问后冻结顺序，便于多次访问返回同一引用。 */
   private _slideParts: SlidePart[] | undefined;
+  /** slideMasterParts 缓存（lazy）。 */
+  private _slideMasterParts: SlideMasterPart[] | undefined;
+  /** presentationPropertiesPart 缓存（null = 已查无此 Part）。 */
+  private _presentationPropertiesPart: PresentationPropertiesPart | null | undefined;
 
   constructor(
     part: IPackagePart,
@@ -45,6 +51,50 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
 
   set presentation(value: Presentation) {
     this.root = value;
+  }
+
+  /**
+   * 演示文稿下属的所有 `SlideMasterPart`，按 part-level 关系遍历顺序。
+   *
+   * 对位 .NET `PresentationPart.SlideMasterParts`。
+   */
+  get slideMasterParts(): readonly SlideMasterPart[] {
+    if (this._slideMasterParts !== undefined) return this._slideMasterParts;
+    const out: SlideMasterPart[] = [];
+    for (const rel of this.part.relationships) {
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, SlideMasterPart.relationshipType)) continue;
+      const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
+      if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
+      const smp = new SlideMasterPart(this.pkg.getPart(targetUri), this.registry, this.pkg);
+      if (this.mcSettings !== undefined) smp.setMcSettings(this.mcSettings);
+      out.push(smp);
+    }
+    this._slideMasterParts = out;
+    return out;
+  }
+
+  /**
+   * 演示文稿属性 Part（`/ppt/presProps.xml`）；不存在时为 undefined。
+   *
+   * 对位 .NET `PresentationPart.PresentationPropertiesPart`。
+   */
+  get presentationPropertiesPart(): PresentationPropertiesPart | undefined {
+    if (this._presentationPropertiesPart !== undefined) {
+      return this._presentationPropertiesPart ?? undefined;
+    }
+    for (const rel of this.part.relationships) {
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, PresentationPropertiesPart.relationshipType)) continue;
+      const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
+      if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
+      const ppp = new PresentationPropertiesPart(this.pkg.getPart(targetUri), this.registry);
+      if (this.mcSettings !== undefined) ppp.setMcSettings(this.mcSettings);
+      this._presentationPropertiesPart = ppp;
+      return ppp;
+    }
+    this._presentationPropertiesPart = null;
+    return undefined;
   }
 
   /**

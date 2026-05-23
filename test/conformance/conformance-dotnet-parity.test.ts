@@ -19,7 +19,7 @@ import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { Int32Value, StringValue } from "../../src/element/index.js";
+import { Int32Value, StringValue, UInt32Value } from "../../src/element/index.js";
 import { SpreadsheetDocument } from "../../src/excel/index.js";
 import { openAsync } from "../../src/index.js";
 import { officePowerpoint2012Main, officeWord2012Wordml } from "../../src/office-ext/index.js";
@@ -27,6 +27,10 @@ import {
   Person,
   PresenceInfo,
 } from "../../src/office-ext/schemas-microsoft-com-office-word-2012-wordml/generated/index.js";
+import { PresentationExtensionList } from "../../src/ppt/generated/presentation-extension-list.js";
+import { PresentationExtension } from "../../src/ppt/generated/presentation-extension.js";
+import { PresentationPropertiesExtensionList } from "../../src/ppt/generated/presentation-properties-extension-list.js";
+import { PresentationPropertiesExtension } from "../../src/ppt/generated/presentation-properties-extension.js";
 import { PresentationDocument } from "../../src/ppt/index.js";
 import { WordprocessingDocument } from "../../src/word/index.js";
 
@@ -250,14 +254,123 @@ describe("ConformanceTest/PresetTransition (源：PresetTransitionTest.cs)", () 
 // ─────────────────────────────────────────────────────────────────────────────
 
 describe("ConformanceTest/ChartTrackingRefBased (源：ChartTrackingRefBasedTest.cs)", () => {
+  const FIXTURE = join(
+    dirname(fileURLToPath(import.meta.url)),
+    "../fixtures/conformance/generated/ChartTrackingRefBased.pptx",
+  );
+
   /**
-   * N/A — ChartTrackingRefBasedTest01 / ChartTrackingRefBasedTest03DeleteAddElement
+   * PORTABLE
+   * 源：ChartTrackingRefBasedTest.ChartTrackingRefBasedTest01 [Fact]
    *
-   * 依赖 pptx GeneratedDocument + PresentationPart → SlideParts → ChartTrackingRefBased，
-   * openxml-ts PPT 门面暂未暴露此 typed Part 访问路径。
+   * .NET 原意：打开 pptx，通过 PresentationPropertiesPart → PresentationProperties →
+   * PresentationPropertiesExtensionList.Descendants<P15.ChartTrackingReferenceBased>()
+   * 取到元素，把 val 从 false 改成 true，重读验证。
+   * openxml-ts 移植：PresentationPart.presentationPropertiesPart 路径（Epic-118b）。
    */
-  it.skip("ChartTrackingRefBasedTest01 [N/A] — pptx GeneratedDocument + ChartTrackingRefBased Part 访问路径未暴露", () => {});
-  it.skip("ChartTrackingRefBasedTest03DeleteAddElement [N/A] — 同上", () => {});
+  it("ChartTrackingRefBasedTest01 — 编辑 ChartTrackingReferenceBased.val true 并验证", async () => {
+    const bytes = new Uint8Array(await readFile(FIXTURE));
+
+    // 打开并编辑
+    const doc = await PresentationDocument.openAsync(bytes);
+    const pp = doc.presentationPart!;
+    const presPropsRoot = pp.presentationPropertiesPart!.presentationProperties;
+
+    const extLst = presPropsRoot.firstChild(PresentationPropertiesExtensionList)!;
+    expect(extLst).toBeDefined();
+
+    const ctrb = [...extLst.descendants(officePowerpoint2012Main.ChartTrackingReferenceBased)][0]!;
+    expect(ctrb).toBeDefined();
+
+    // 取 URI（同 .NET TestEntities 构造函数）
+    const ext = ctrb.parent as InstanceType<typeof PresentationPropertiesExtension>;
+    const extUri = ext.uri?.value ?? ext.extendedAttributes.get("uri") ?? "";
+    expect(extUri).toBeTruthy();
+
+    // 编辑
+    ctrb.val = new (await import("../../src/element/index.js")).BooleanValue(true);
+
+    const saved = await doc.saveAsBytesAsync();
+
+    // 验证
+    const doc2 = await PresentationDocument.openAsync(saved);
+    const pp2 = doc2.presentationPart!;
+    const presPropsRoot2 = pp2.presentationPropertiesPart!.presentationProperties;
+    const extLst2 = presPropsRoot2.firstChild(PresentationPropertiesExtensionList)!;
+    const ctrb2 = [
+      ...extLst2.descendants(officePowerpoint2012Main.ChartTrackingReferenceBased),
+    ][0]!;
+    expect(ctrb2.val?.value).toBe(true);
+  });
+
+  /**
+   * PORTABLE
+   * 源：ChartTrackingRefBasedTest.ChartTrackingRefBasedTest03DeleteAddElement [Fact]
+   *
+   * .NET 原意：取 P15.ChartTrackingReferenceBased，删除元素 + 父 Extension，
+   * 验证不存在，再添加回来验证。
+   */
+  it("ChartTrackingRefBasedTest03DeleteAddElement — 删除后添加 ChartTrackingReferenceBased", async () => {
+    const bytes = new Uint8Array(await readFile(FIXTURE));
+
+    const doc = await PresentationDocument.openAsync(bytes);
+    const pp = doc.presentationPart!;
+    const presPropsRoot = pp.presentationPropertiesPart!.presentationProperties;
+
+    const extLst = presPropsRoot.firstChild(PresentationPropertiesExtensionList)!;
+
+    // 取 URI
+    const ctrb = [...extLst.descendants(officePowerpoint2012Main.ChartTrackingReferenceBased)][0]!;
+    const ext = ctrb.parent as InstanceType<typeof PresentationPropertiesExtension>;
+    const extUri = ext.uri?.value ?? ext.extendedAttributes.get("uri") ?? "";
+
+    // 删除
+    ctrb.removeSelf();
+    ext.removeSelf();
+
+    const saved1 = await doc.saveAsBytesAsync();
+
+    // 验证删除
+    const doc2 = await PresentationDocument.openAsync(saved1);
+    const extLst2 =
+      doc2.presentationPart!.presentationPropertiesPart!.presentationProperties.firstChild(
+        PresentationPropertiesExtensionList,
+      )!;
+    const remaining = [
+      ...extLst2.descendants(officePowerpoint2012Main.ChartTrackingReferenceBased),
+    ];
+    const matchingExts = [...extLst2.elements(PresentationPropertiesExtension)].filter(
+      (e) => (e.uri?.value ?? e.extendedAttributes.get("uri") ?? "") === extUri,
+    );
+    expect(matchingExts).toHaveLength(0);
+    expect(remaining).toHaveLength(0);
+
+    // 重新添加
+    const { BooleanValue } = await import("../../src/element/index.js");
+    const newExt = new PresentationPropertiesExtension();
+    newExt.extendedAttributes.set("uri", extUri);
+    const newCtrb = new officePowerpoint2012Main.ChartTrackingReferenceBased();
+    newCtrb.val = new BooleanValue(true);
+    newExt.appendChild(newCtrb);
+    extLst2.appendChild(newExt);
+
+    const saved2 = await doc2.saveAsBytesAsync();
+
+    // 验证添加
+    const doc3 = await PresentationDocument.openAsync(saved2);
+    const extLst3 =
+      doc3.presentationPart!.presentationPropertiesPart!.presentationProperties.firstChild(
+        PresentationPropertiesExtensionList,
+      )!;
+    const addedExts = [...extLst3.elements(PresentationPropertiesExtension)].filter(
+      (e) => (e.uri?.value ?? e.extendedAttributes.get("uri") ?? "") === extUri,
+    );
+    expect(addedExts).toHaveLength(1);
+    const addedCtrbs = [
+      ...extLst3.descendants(officePowerpoint2012Main.ChartTrackingReferenceBased),
+    ];
+    expect(addedCtrbs).toHaveLength(1);
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -265,14 +378,293 @@ describe("ConformanceTest/ChartTrackingRefBased (源：ChartTrackingRefBasedTest
 // ─────────────────────────────────────────────────────────────────────────────
 
 describe("ConformanceTest/Guide (源：GuideTest.cs)", () => {
+  const FIXTURE = join(
+    dirname(fileURLToPath(import.meta.url)),
+    "../fixtures/conformance/generated/Guide.pptx",
+  );
+
+  // Color constants (matches .NET TestEntities)
+  const Color1 = "FF0000";
+  const Color2 = "00FF00";
+  const Color3 = "0000FF";
+  const Color4 = "F0F0F0";
+  const Id1 = 1;
+  const Id2 = 2;
+  const Id3 = 3;
+  const Id4 = 4;
+  const position1 = 1000;
+  const position2 = 2000;
+  const position3 = 3000;
+  const position4 = 4000;
+
+  // Get URIs from the fixture (matches .NET TestEntities constructor)
+  async function getExtUris(
+    bytes: Uint8Array,
+  ): Promise<{ sldExtUri: string; notesExtUri: string }> {
+    const doc = await PresentationDocument.openAsync(bytes);
+    const presentation = doc.presentationPart!.presentation;
+    const slideGuideList = [
+      ...presentation.descendants(officePowerpoint2012Main.SlideGuideList),
+    ][0]!;
+    const sldExt = slideGuideList.parent!;
+    const sldExtUri =
+      sldExt.extendedAttributes.get("uri") ??
+      (sldExt as InstanceType<typeof PresentationExtension>).uri?.value ??
+      "";
+
+    const notesGuideList = [
+      ...presentation.descendants(officePowerpoint2012Main.NotesGuideList),
+    ][0]!;
+    const notesExt = notesGuideList.parent!;
+    const notesExtUri =
+      notesExt.extendedAttributes.get("uri") ??
+      (notesExt as InstanceType<typeof PresentationExtension>).uri?.value ??
+      "";
+
+    return { sldExtUri, notesExtUri };
+  }
+
   /**
-   * N/A — Guide01EditElement / Guide03DeleteAddElement
+   * PORTABLE
+   * 源：GuideTest.Guide01EditElement [Fact]
    *
-   * 依赖 pptx GeneratedDocument + SlideMasterPart.SlideLayout.CommonSlideData.GuideList，
-   * PPT 门面未暴露 SlideLayoutPart 的 Guide 集合访问器。
+   * .NET 原意：通过 PresentationPart.RootElement.Descendants<PresentationExtensionList>()
+   * 找到 SlideGuideList 和 NotesGuideList，编辑 ExtendedGuide 的 pos/orient/clr，
+   * 再重读验证。
+   * openxml-ts 移植：presentation.descendants() 遍历（P15 元素已注册到 pptRegistry）。
    */
-  it.skip("Guide01EditElement [N/A] — SlideLayoutPart.GuideList 访问路径未暴露", () => {});
-  it.skip("Guide03DeleteAddElement [N/A] — 同上", () => {});
+  it("Guide01EditElement — 编辑 SlideGuideList/NotesGuideList 中的 ExtendedGuide 并验证", async () => {
+    const bytes = new Uint8Array(await readFile(FIXTURE));
+    const { sldExtUri, notesExtUri } = await getExtUris(bytes);
+
+    // 编辑
+    const doc = await PresentationDocument.openAsync(bytes);
+    const presentation = doc.presentationPart!.presentation;
+
+    // 找到 SlideGuideList 内的 guide
+    const extLst = [...presentation.descendants(PresentationExtensionList)][0]!;
+    const ext1 = [...extLst.elements(PresentationExtension)].find(
+      (e) => (e.uri?.value ?? e.extendedAttributes.get("uri") ?? "") === sldExtUri,
+    )!;
+    const sldGuideLst = [...ext1.descendants(officePowerpoint2012Main.SlideGuideList)][0]!;
+
+    const guide1 = [...sldGuideLst.descendants(officePowerpoint2012Main.ExtendedGuide)].find(
+      (g) => g.id?.value === Id1,
+    )!;
+    guide1.position = new Int32Value(position1);
+    guide1.orientation = new StringValue("horz");
+    // Edit via extendedAttributes fallback if not typed
+    const rgbEl1 = [...guide1.descendants()].find((e) => e.localName === "srgbClr")!;
+    if ((rgbEl1 as { val?: { value?: string } }).val !== undefined) {
+      (rgbEl1 as { val: { value: string } }).val.value = Color1;
+    } else {
+      rgbEl1.extendedAttributes.set("val", Color1);
+    }
+
+    const guide2 = [...sldGuideLst.descendants(officePowerpoint2012Main.ExtendedGuide)].find(
+      (g) => g.id?.value === Id2,
+    )!;
+    guide2.position = new Int32Value(position2);
+    guide2.orientation = new StringValue("vert");
+    const rgbEl2 = [...guide2.descendants()].find((e) => e.localName === "srgbClr")!;
+    if ((rgbEl2 as { val?: { value?: string } }).val !== undefined) {
+      (rgbEl2 as { val: { value: string } }).val.value = Color2;
+    } else {
+      rgbEl2.extendedAttributes.set("val", Color2);
+    }
+
+    // 找到 NotesGuideList 内的 guide
+    const ext2 = [...extLst.elements(PresentationExtension)].find(
+      (e) => (e.uri?.value ?? e.extendedAttributes.get("uri") ?? "") === notesExtUri,
+    )!;
+    const notesGuideLst = [...ext2.descendants(officePowerpoint2012Main.NotesGuideList)][0]!;
+
+    const guide3 = [...notesGuideLst.descendants(officePowerpoint2012Main.ExtendedGuide)].find(
+      (g) => g.id?.value === Id1,
+    )!;
+    guide3.position = new Int32Value(position3);
+    guide3.orientation = new StringValue("vert");
+    const rgbEl3 = [...guide3.descendants()].find((e) => e.localName === "srgbClr")!;
+    if ((rgbEl3 as { val?: { value?: string } }).val !== undefined) {
+      (rgbEl3 as { val: { value: string } }).val.value = Color3;
+    } else {
+      rgbEl3.extendedAttributes.set("val", Color3);
+    }
+
+    const guide4 = [...notesGuideLst.descendants(officePowerpoint2012Main.ExtendedGuide)].find(
+      (g) => g.id?.value === Id2,
+    )!;
+    guide4.position = new Int32Value(position4);
+    guide4.orientation = new StringValue("horz");
+    const rgbEl4 = [...guide4.descendants()].find((e) => e.localName === "srgbClr")!;
+    if ((rgbEl4 as { val?: { value?: string } }).val !== undefined) {
+      (rgbEl4 as { val: { value: string } }).val.value = Color4;
+    } else {
+      rgbEl4.extendedAttributes.set("val", Color4);
+    }
+
+    const saved = await doc.saveAsBytesAsync();
+
+    // 验证
+    const doc2 = await PresentationDocument.openAsync(saved);
+    const pres2 = doc2.presentationPart!.presentation;
+    const extLst2 = [...pres2.descendants(PresentationExtensionList)][0]!;
+
+    const ext1b = [...extLst2.elements(PresentationExtension)].find(
+      (e) => (e.uri?.value ?? e.extendedAttributes.get("uri") ?? "") === sldExtUri,
+    )!;
+    const sldGuideLst2 = [...ext1b.descendants(officePowerpoint2012Main.SlideGuideList)][0]!;
+    const g1b = [...sldGuideLst2.descendants(officePowerpoint2012Main.ExtendedGuide)].find(
+      (g) => g.id?.value === Id1,
+    )!;
+    expect(g1b.position?.value).toBe(position1);
+    expect(g1b.orientation?.value).toBe("horz");
+    const rgb1b = [...g1b.descendants()].find((e) => e.localName === "srgbClr")!;
+    expect(
+      (rgb1b as { val?: { value?: string } }).val?.value ?? rgb1b.extendedAttributes.get("val"),
+    ).toBe(Color1);
+
+    const g2b = [...sldGuideLst2.descendants(officePowerpoint2012Main.ExtendedGuide)].find(
+      (g) => g.id?.value === Id2,
+    )!;
+    expect(g2b.position?.value).toBe(position2);
+    expect(g2b.orientation?.value).toBe("vert");
+    const rgb2b = [...g2b.descendants()].find((e) => e.localName === "srgbClr")!;
+    expect(
+      (rgb2b as { val?: { value?: string } }).val?.value ?? rgb2b.extendedAttributes.get("val"),
+    ).toBe(Color2);
+
+    const ext2b = [...extLst2.elements(PresentationExtension)].find(
+      (e) => (e.uri?.value ?? e.extendedAttributes.get("uri") ?? "") === notesExtUri,
+    )!;
+    const notesGuideLst2 = [...ext2b.descendants(officePowerpoint2012Main.NotesGuideList)][0]!;
+    const g3b = [...notesGuideLst2.descendants(officePowerpoint2012Main.ExtendedGuide)].find(
+      (g) => g.id?.value === Id1,
+    )!;
+    expect(g3b.position?.value).toBe(position3);
+    expect(g3b.orientation?.value).toBe("vert");
+
+    const g4b = [...notesGuideLst2.descendants(officePowerpoint2012Main.ExtendedGuide)].find(
+      (g) => g.id?.value === Id2,
+    )!;
+    expect(g4b.position?.value).toBe(position4);
+    expect(g4b.orientation?.value).toBe("horz");
+  });
+
+  /**
+   * PORTABLE
+   * 源：GuideTest.Guide03DeleteAddElement [Fact]
+   *
+   * .NET 原意：删除所有 RgbColorModelHex、ColorType、ExtendedGuide、SlideGuideList、
+   * PresentationExtension、PresentationExtensionList，验证删除；
+   * 再新建 SlideGuideList + NotesGuideList 并 append，验证添加。
+   */
+  it("Guide03DeleteAddElement — 删除全部 Guide 元素后重建并验证", async () => {
+    const bytes = new Uint8Array(await readFile(FIXTURE));
+    const { sldExtUri, notesExtUri } = await getExtUris(bytes);
+
+    const doc = await PresentationDocument.openAsync(bytes);
+    const presentation = doc.presentationPart!.presentation;
+
+    // 删除（同 .NET TestEntities.DeleteElement 顺序）
+    for (const el of [...presentation.descendants()].filter((e) => e.localName === "srgbClr")) {
+      el.removeSelf();
+    }
+    for (const el of [...presentation.descendants(officePowerpoint2012Main.ColorType)]) {
+      el.removeSelf();
+    }
+    for (const el of [...presentation.descendants(officePowerpoint2012Main.ExtendedGuide)]) {
+      el.removeSelf();
+    }
+    for (const el of [...presentation.descendants(officePowerpoint2012Main.SlideGuideList)]) {
+      el.removeSelf();
+    }
+    const extLst = [...presentation.descendants(PresentationExtensionList)][0];
+    if (extLst) {
+      for (const ext of [...extLst.elements(PresentationExtension)]) {
+        ext.removeSelf();
+      }
+      extLst.removeSelf();
+    }
+
+    const saved1 = await doc.saveAsBytesAsync();
+
+    // 验证删除
+    const doc2 = await PresentationDocument.openAsync(saved1);
+    const pres2 = doc2.presentationPart!.presentation;
+    expect([...pres2.descendants(PresentationExtensionList)]).toHaveLength(0);
+    expect([...pres2.descendants(PresentationExtension)]).toHaveLength(0);
+    expect([...pres2.descendants(officePowerpoint2012Main.SlideGuideList)]).toHaveLength(0);
+    expect([...pres2.descendants(officePowerpoint2012Main.ExtendedGuide)]).toHaveLength(0);
+    expect([...pres2.descendants(officePowerpoint2012Main.ColorType)]).toHaveLength(0);
+
+    // 重建（同 .NET TestEntities.AddElement）
+    const newExtLst = new PresentationExtensionList();
+
+    // SlideGuideList branch
+    const newSldExt = new PresentationExtension();
+    newSldExt.extendedAttributes.set("uri", sldExtUri);
+    const newSldGuideLst = new officePowerpoint2012Main.SlideGuideList();
+    const newGuide1 = new officePowerpoint2012Main.ExtendedGuide();
+    newGuide1.id = new UInt32Value(Id3);
+    newGuide1.position = new Int32Value(position3);
+    newGuide1.orientation = new StringValue("vert");
+    const newClrType1 = new officePowerpoint2012Main.ColorType();
+    const newRgb1El = new (
+      await import("../../src/drawing/generated/rgb-color-model-hex.js")
+    ).RgbColorModelHex();
+    newRgb1El.extendedAttributes.set("val", Color3);
+    newClrType1.appendChild(newRgb1El);
+    newGuide1.appendChild(newClrType1);
+    newSldGuideLst.appendChild(newGuide1);
+    newSldExt.appendChild(newSldGuideLst);
+    newExtLst.appendChild(newSldExt);
+
+    // NotesGuideList branch
+    const newNotesExt = new PresentationExtension();
+    newNotesExt.extendedAttributes.set("uri", notesExtUri);
+    const newNotesGuideLst = new officePowerpoint2012Main.NotesGuideList();
+    const newGuide2 = new officePowerpoint2012Main.ExtendedGuide();
+    newGuide2.id = new UInt32Value(Id4);
+    newGuide2.position = new Int32Value(position4);
+    newGuide2.orientation = new StringValue("vert");
+    const newClrType2 = new officePowerpoint2012Main.ColorType();
+    const newRgb2El = new (
+      await import("../../src/drawing/generated/rgb-color-model-hex.js")
+    ).RgbColorModelHex();
+    newRgb2El.extendedAttributes.set("val", Color4);
+    newClrType2.appendChild(newRgb2El);
+    newGuide2.appendChild(newClrType2);
+    newNotesGuideLst.appendChild(newGuide2);
+    newNotesExt.appendChild(newNotesGuideLst);
+    newExtLst.appendChild(newNotesExt);
+
+    pres2.appendChild(newExtLst);
+
+    const saved2 = await doc2.saveAsBytesAsync();
+
+    // 验证添加
+    const doc3 = await PresentationDocument.openAsync(saved2);
+    const pres3 = doc3.presentationPart!.presentation;
+    const extLst3 = [...pres3.descendants(PresentationExtensionList)][0]!;
+    expect(extLst3).toBeDefined();
+
+    const sldExt3 = [...extLst3.elements(PresentationExtension)].find(
+      (e) => (e.uri?.value ?? e.extendedAttributes.get("uri") ?? "") === sldExtUri,
+    )!;
+    expect(sldExt3).toBeDefined();
+    expect([...sldExt3.descendants(officePowerpoint2012Main.SlideGuideList)]).toHaveLength(1);
+    expect([...sldExt3.descendants(officePowerpoint2012Main.ExtendedGuide)]).toHaveLength(1);
+    expect([...sldExt3.descendants(officePowerpoint2012Main.ColorType)]).toHaveLength(1);
+
+    const notesExt3 = [...extLst3.elements(PresentationExtension)].find(
+      (e) => (e.uri?.value ?? e.extendedAttributes.get("uri") ?? "") === notesExtUri,
+    )!;
+    expect(notesExt3).toBeDefined();
+    expect([...notesExt3.descendants(officePowerpoint2012Main.NotesGuideList)]).toHaveLength(1);
+    expect([...notesExt3.descendants(officePowerpoint2012Main.ExtendedGuide)]).toHaveLength(1);
+    expect([...notesExt3.descendants(officePowerpoint2012Main.ColorType)]).toHaveLength(1);
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -312,15 +704,81 @@ describe("ConformanceTest/Slicer (源：SlicerTest.cs)", () => {
 // ─────────────────────────────────────────────────────────────────────────────
 
 describe("ConformanceTest/Theme (源：ThemeTest.cs)", () => {
+  const FIXTURE = join(
+    dirname(fileURLToPath(import.meta.url)),
+    "../fixtures/conformance/generated/Theme.pptx",
+  );
+
+  // Theme ID constants (matches .NET TestEntities)
+  const ThemeId1 = "{BBB17459-96FE-44C7-A45E-966A49711E99}";
+  const ThemeId2 = "{E13D3DE1-D0A1-4459-9464-6F999792E799}";
+  const ThemeIdTest = "TEST";
+
   /**
-   * N/A — Theme01EditAttribute / Theme03DeleteAttribute
+   * PORTABLE
+   * 源：ThemeTest.Theme01EditAttribute [Fact]
    *
-   * 依赖 pptx GeneratedDocument + Thm15.ThemeId 属性（Thm15 命名空间），
-   * TestEntities 链路涉及多步 .NET 特有 Part 关系遍历。
-   * openxml-ts 已有 test/ppt/ 层 Theme 基础测试。
+   * .NET 原意：先设 ThemeId = "TEST"，再 EditAttribute 改成 ThemeId2，验证。
+   * openxml-ts 移植：PresentationPart.slideMasterParts[0].themePart.theme.themeId（Epic-118b）。
    */
-  it.skip("Theme01EditAttribute [N/A] — Thm15.ThemeId 设置器链路依赖 .NET Part 遍历", () => {});
-  it.skip("Theme03DeleteAttribute [N/A] — 同上", () => {});
+  it("Theme01EditAttribute — 设置 theme.themeId 属性并验证", async () => {
+    const bytes = new Uint8Array(await readFile(FIXTURE));
+
+    // 第一步：添加 ThemeId（对应 .NET Theme01EditAttribute 中的 "Adding ThemeId"）
+    const doc = await PresentationDocument.openAsync(bytes);
+    const theme = doc.presentationPart!.slideMasterParts[0]!.themePart!.theme;
+    theme.themeId = new StringValue(ThemeIdTest);
+
+    const saved1 = await doc.saveAsBytesAsync();
+
+    // 第二步：EditAttribute（改为 ThemeId2）
+    const doc2 = await PresentationDocument.openAsync(saved1);
+    const theme2 = doc2.presentationPart!.slideMasterParts[0]!.themePart!.theme;
+    theme2.themeId!.value = ThemeId2;
+
+    const saved2 = await doc2.saveAsBytesAsync();
+
+    // 验证
+    const doc3 = await PresentationDocument.openAsync(saved2);
+    const theme3 = doc3.presentationPart!.slideMasterParts[0]!.themePart!.theme;
+    expect(theme3.themeId?.value).toBe(ThemeId2);
+  });
+
+  /**
+   * PORTABLE
+   * 源：ThemeTest.Theme03DeleteAttribute [Fact]
+   *
+   * .NET 原意：删除 ThemeId 属性，验证 null；再添加 ThemeId1，验证值。
+   */
+  it("Theme03DeleteAttribute — 删除 themeId 后重新添加并验证", async () => {
+    const bytes = new Uint8Array(await readFile(FIXTURE));
+
+    // 先添加 ThemeId（模拟 fixture 有 themeId 的状态）
+    const docPre = await PresentationDocument.openAsync(bytes);
+    const themePre = docPre.presentationPart!.slideMasterParts[0]!.themePart!.theme;
+    themePre.themeId = new StringValue(ThemeId1);
+    const bytesPre = await docPre.saveAsBytesAsync();
+
+    // 删除
+    const doc = await PresentationDocument.openAsync(bytesPre);
+    const theme = doc.presentationPart!.slideMasterParts[0]!.themePart!.theme;
+    theme.themeId = undefined;
+    const saved1 = await doc.saveAsBytesAsync();
+
+    // 验证删除
+    const doc2 = await PresentationDocument.openAsync(saved1);
+    const theme2 = doc2.presentationPart!.slideMasterParts[0]!.themePart!.theme;
+    expect(theme2.themeId).toBeUndefined();
+
+    // 重新添加
+    theme2.themeId = new StringValue(ThemeId1);
+    const saved2 = await doc2.saveAsBytesAsync();
+
+    // 验证添加
+    const doc3 = await PresentationDocument.openAsync(saved2);
+    const theme3 = doc3.presentationPart!.slideMasterParts[0]!.themePart!.theme;
+    expect(theme3.themeId?.value).toBe(ThemeId1);
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
