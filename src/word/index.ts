@@ -49,6 +49,8 @@ export {
   ThemePart,
   type TypedXmlPart,
   WebSettingsPart,
+  WordprocessingCommentsExPart,
+  WordprocessingPeoplePart,
 } from "./parts/index.js";
 
 export { BinaryPart } from "../parts/binary-part.js";

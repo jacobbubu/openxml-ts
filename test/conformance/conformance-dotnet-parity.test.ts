@@ -61,14 +61,36 @@ describe("ConformanceTest/CommentEx (源：CommentExTest.cs)", () => {
   });
 
   /**
-   * N/A — CommentExTest.CommentEx02VerifyEdit / CommentEx04VerifyDelete [Fact]
+   * PORTABLE（部分）
+   * 源：CommentExTest.CommentEx02VerifyEdit / CommentEx04VerifyDelete [Fact]
    *
-   * 依赖 GeneratedDocument.Generate(stream)（C# 代码生成的复杂多 Part 文档），
-   * 并访问 WordprocessingCommentsExPart / WordprocessingCommentsPart（Word 门面未暴露）。
-   * → 待 CommentsExPart 集成后补充。
+   * .NET 原意：通过 GeneratedDocument.Generate(stream) 程序化创建多 Part 文档，
+   * 验证 WordprocessingCommentsExPart / WordprocessingCommentsPart 可访问并编辑。
+   * openxml-ts 移植：用已有 Invalid_Word15Comments.docx fixture（含 commentsExtended.xml）
+   * 验证 mainDocumentPart.wordprocessingCommentsExPart 可导航，root 有内容。
+   * C# GeneratedDocument 程序化生成路径无法直接移植，故只做访问器 smoke 验证。
    */
-  it.skip("CommentEx02VerifyEdit [N/A] — 依赖 WordprocessingCommentsExPart（Word 门面未暴露）", () => {});
-  it.skip("CommentEx04VerifyDelete [N/A] — 依赖 WordprocessingCommentsExPart（Word 门面未暴露）", () => {});
+  it("CommentEx02VerifyEdit — Invalid_Word15Comments.docx 的 wordprocessingCommentsExPart 可访问", async () => {
+    const bytes = await readFixture(CONFORMANCE_DIR, "Invalid_Word15Comments.docx");
+    const doc = await WordprocessingDocument.openAsync(bytes);
+    const main = doc.mainDocumentPart;
+    expect(main).toBeDefined();
+    const commentsExPart = main!.wordprocessingCommentsExPart;
+    expect(commentsExPart).toBeDefined();
+    // root 应是 commentsExtended 元素（实际加载后有子节点）
+    expect(commentsExPart!.root).toBeDefined();
+  });
+
+  it("CommentEx04VerifyDelete — wordprocessingCommentsExPart 不存在时返 undefined（无此 Part 的文档）", async () => {
+    // 使用没有 commentsExtended 的普通 docx
+    const bytes = await readFixture(SMOKE_DIR, "HelloWorld.docx");
+    const doc = await WordprocessingDocument.openAsync(bytes);
+    const main = doc.mainDocumentPart;
+    expect(main).toBeDefined();
+    // HelloWorld.docx 不含 commentsExtended，应返 undefined
+    const commentsExPart = main!.wordprocessingCommentsExPart;
+    expect(commentsExPart).toBeUndefined();
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -79,11 +101,14 @@ describe("ConformanceTest/CommentExPeople (源：CommentExPeopleTest.cs)", () =>
   /**
    * N/A — CommentExPeople01ReadElement / CommentExPeople02EditElement
    *
-   * 依赖 WordprocessingPeoplePart（W15 People part），Word 门面尚未暴露此 typed Part。
-   * → 待 WordprocessingPeoplePart 集成后补充。
+   * 依赖 GeneratedDocument.CreatePackage（C# 程序化生成含 WordprocessingPeoplePart 的 docx），
+   * 无对应 fixture 文件可直接移植；且 W15.Person / W15.PresenceInfo 的 typed 访问需要
+   * office-word-2010 命名空间 typed schema 支持（当前 root 是 OpenXmlUnknownElement 占位）。
+   * WordprocessingPeoplePart 访问器本身已接入 MainDocumentPart（Epic-117），
+   * 但无 fixture 进行端到端验证，保留 skip。
    */
-  it.skip("CommentExPeople01ReadElement [N/A] — 依赖 WordprocessingPeoplePart（Word 门面未暴露）", () => {});
-  it.skip("CommentExPeople02EditElement [N/A] — 依赖 WordprocessingPeoplePart（Word 门面未暴露）", () => {});
+  it.skip("CommentExPeople01ReadElement [N/A] — 无 W15 People fixture；GeneratedDocument 程序化生成无法移植", () => {});
+  it.skip("CommentExPeople02EditElement [N/A] — 同上；W15.Person typed 访问依赖 office-word-2010 schema", () => {});
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -195,10 +220,11 @@ describe("ConformanceTest/Pivot (源：PivotTest.cs)", () => {
   /**
    * N/A — PivotConnection01EditElement / 03DeleteElement / 03AddElement
    *
-   * 依赖 xlsx GeneratedDocument + ConnectionsPart / X15.Connection 访问路径，
-   * Excel 门面未暴露 ConnectionsPart。
+   * 依赖 ConnectionGeneratedDocument.CreatePackage（C# 程序化生成含 ConnectionsPart 的 xlsx），
+   * 无对应 fixture 文件。ConnectionsPart 已接入 WorkbookPart（Epic-117），
+   * 但无 fixture 进行端到端验证；X15.Connection typed 访问依赖 excel-2010 schema。
    */
-  it.skip("PivotConnection01EditElement [N/A] — ConnectionsPart 未集成到 Excel 门面", () => {});
+  it.skip("PivotConnection01EditElement [N/A] — 无 Connections fixture；GeneratedDocument 程序化生成无法移植", () => {});
   it.skip("PivotConnection03DeleteElement [N/A] — 同上", () => {});
   it.skip("PivotConnection03AddElement [N/A] — 同上", () => {});
 });
@@ -211,10 +237,11 @@ describe("ConformanceTest/Slicer (源：SlicerTest.cs)", () => {
   /**
    * N/A — Slicer01EditElement
    *
-   * 依赖 xlsx GeneratedDocument + SlicerCachePart / X14.Slicer，
-   * Excel 门面未暴露这条 Part 访问路径。
+   * 依赖 GeneratedDocument.CreatePackage（C# 程序化生成含 SlicerCachePart 的 xlsx），
+   * 无对应 fixture 文件。SlicerCachePart 已接入 WorkbookPart.slicerCacheParts（Epic-117），
+   * 但无 fixture 进行端到端验证；X14/X15 Slicer typed 访问依赖 excel-2009/2010 schema。
    */
-  it.skip("Slicer01EditElement [N/A] — SlicerCachePart 未集成到 Excel 门面", () => {});
+  it.skip("Slicer01EditElement [N/A] — 无 SlicerCache fixture；GeneratedDocument 程序化生成无法移植", () => {});
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -241,10 +268,12 @@ describe("ConformanceTest/ThreadingInfo (源：ThreadingInfoTest.cs)", () => {
   /**
    * N/A — ThreadingInfo01EditElement / ThreadingInfo03DeleteAddElement
    *
-   * 依赖 docx GeneratedDocument + WordprocessingCommentsExPart.CommentsEx 访问路径，
-   * Word 门面尚未暴露。
+   * 依赖 GeneratedDocument（C# 程序化生成含 CommentsExPart 的 docx）。
+   * WordprocessingCommentsExPart 已接入 MainDocumentPart（Epic-117），
+   * 但 W15.CommentEx.ThreadingInfo typed 访问依赖 office-word-2012 schema，
+   * 且无对应 fixture 文件进行端到端验证。
    */
-  it.skip("ThreadingInfo01EditElement [N/A] — WordprocessingCommentsExPart 未暴露", () => {});
+  it.skip("ThreadingInfo01EditElement [N/A] — 无 ThreadingInfo fixture；W15.ThreadingInfo typed 访问依赖 office-word-2012 schema", () => {});
   it.skip("ThreadingInfo03DeleteAddElement [N/A] — 同上", () => {});
 });
 
@@ -256,10 +285,11 @@ describe("ConformanceTest/Timeline (源：TimeLineTest.cs)", () => {
   /**
    * N/A — TimeLineEditAttributes
    *
-   * 依赖 xlsx GeneratedDocument + TimelineCachePart / X15.Timeline，
-   * Excel 门面未暴露这条 Part 访问路径。
+   * 依赖 GeneratedDocument.CreatePackage（C# 程序化生成含 TimelineCachePart 的 xlsx），
+   * 无对应 fixture 文件。TimeLineCachePart 已接入 WorkbookPart.timeLineCacheParts（Epic-117），
+   * 但无 fixture 进行端到端验证；X15.Timeline typed 访问依赖 excel-2010 schema。
    */
-  it.skip("TimeLineEditAttributes [N/A] — TimelineCachePart 未集成到 Excel 门面", () => {});
+  it.skip("TimeLineEditAttributes [N/A] — 无 TimelineCache fixture；GeneratedDocument 程序化生成无法移植", () => {});
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
