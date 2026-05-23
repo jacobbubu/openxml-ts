@@ -1,0 +1,82 @@
+name: npm deprecate / unpublish (manual)
+
+# 手动废弃/撤回旧版本入口。
+# 默认逻辑：先尝试 npm unpublish（24h-72h 窗口内可成功），失败则 deprecate。
+# 用法：Actions → "npm deprecate / unpublish (manual)" → Run workflow。
+
+on:
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: "Comma-separated versions (e.g. 1.1.0,1.1.1,1.2.0)"
+        required: true
+        default: "1.1.0,1.1.1,1.2.0,1.3.0,1.4.0,1.5.0"
+      message:
+        description: "Deprecation message (used if unpublish fails or skip-unpublish)"
+        required: true
+        default: "早期迭代版本，已被 1.6.0+ 取代（typed accessor / conformance 测试 / MC 修复）。请升级到最新。"
+      try_unpublish_first:
+        description: "Try unpublish first; fall back to deprecate on failure"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Deprecate / unpublish requested versions
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          INPUT_VERSIONS: ${{ inputs.versions }}
+          INPUT_MESSAGE: ${{ inputs.message }}
+          INPUT_TRY_UNPUB: ${{ inputs.try_unpublish_first }}
+        run: |
+          set -u
+          IFS=',' read -ra VERS <<< "${INPUT_VERSIONS}"
+          unpubbed=()
+          deprecated=()
+          failed=()
+          for raw in "${VERS[@]}"; do
+            v="$(echo "$raw" | xargs)"
+            [ -z "$v" ] && continue
+            echo "::group::openxml-ts@${v}"
+            done_one=0
+            if [ "${INPUT_TRY_UNPUB}" = "true" ]; then
+              echo "Trying: npm unpublish openxml-ts@${v}"
+              if npm unpublish "openxml-ts@${v}"; then
+                echo "✓ unpublished ${v}"
+                unpubbed+=("$v")
+                done_one=1
+              else
+                echo "× unpublish failed (likely >72h or has dependents)"
+              fi
+            fi
+            if [ "$done_one" -eq 0 ]; then
+              echo "Falling back: npm deprecate openxml-ts@${v}"
+              if npm deprecate "openxml-ts@${v}" "${INPUT_MESSAGE}"; then
+                echo "✓ deprecated ${v}"
+                deprecated+=("$v")
+              else
+                echo "× deprecate also failed for ${v}"
+                failed+=("$v")
+              fi
+            fi
+            echo "::endgroup::"
+          done
+          echo ""
+          echo "==== Summary ===="
+          echo "unpublished: ${unpubbed[*]:-(none)}"
+          echo "deprecated:  ${deprecated[*]:-(none)}"
+          echo "failed:      ${failed[*]:-(none)}"
+          if [ "${#failed[@]}" -gt 0 ]; then
+            exit 1
+          fi
