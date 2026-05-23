@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.7.0](https://github.com/jacobbubu/openxml-ts/compare/v1.6.0...v1.7.0) (2026-05-23)
+
+
+### Features
+
+* **excel:** Issue-347 WebExtensionPart 接入 + 解除 WebExtensionFullyFledgedValidation skip ([#347](https://github.com/jacobbubu/openxml-ts/issues/347)) ([b38fbd6](https://github.com/jacobbubu/openxml-ts/commit/b38fbd6dd95bd2cd9d347e5fab1e987b607e395f))
+* **excel:** WebExtensionPart 接入 + 解除 WebExtensionFullyFledgedValidation skip ([ec8d366](https://github.com/jacobbubu/openxml-ts/commit/ec8d366dabaadff3b10936bb7f9f45a342fea3c6))
+* **ppt:** [#346](https://github.com/jacobbubu/openxml-ts/issues/346) ThreadingInfo typed accessor — SlidePart.slideCommentsPart + P15 conformance tests ([7ad2130](https://github.com/jacobbubu/openxml-ts/commit/7ad213093c77b9fa38eaa06556f04f95a9617e67))
+* **ppt:** [#346](https://github.com/jacobbubu/openxml-ts/issues/346) ThreadingInfo 类型访问器 + SlidePart.slideCommentsPart + 解除 2 个一致性测试 skip ([2918136](https://github.com/jacobbubu/openxml-ts/commit/291813683f6b97cf7761e7167bd0b4bafc3e0fae))
+
 ## [1.6.0](https://github.com/jacobbubu/openxml-ts/compare/v1.5.0...v1.6.0) (2026-05-23)
 
 
