@@ -110,8 +110,8 @@ export class ContextNode extends OpenXmlCompositeElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.id !== undefined) out.push(["id", this.id.toString()]);
     if (this.type !== undefined) out.push(["type", this.type.toString()]);

@@ -30,8 +30,8 @@ export class SourceLink extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.direction !== undefined) out.push(["direction", this.direction.toString()]);
     if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);

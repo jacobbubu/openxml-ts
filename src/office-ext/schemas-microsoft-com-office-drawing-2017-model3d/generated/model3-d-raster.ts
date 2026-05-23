@@ -5,6 +5,8 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  StringValue,
+  assertRequired,
 } from "../../../element/index.js";
 
 /** Defines the Model3DRaster Class.
@@ -16,6 +18,31 @@ export class Model3DRaster extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/drawing/2017/model3d" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** rName (:rName) */
+  rName: StringValue | undefined;
 
+  /** rVer (:rVer) */
+  rVer: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "rName": this.rName = StringValue.parse(value); return;
+      case "rVer": this.rVer = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.rName !== undefined) out.push(["rName", this.rName.toString()]);
+    if (this.rVer !== undefined) out.push(["rVer", this.rVer.toString()]);
+    return out;
+  }
+
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.rName, { attribute: ":rName", elementClass: "Model3DRaster" });
+    assertRequired(this.rVer, { attribute: ":rVer", elementClass: "Model3DRaster" });
+  }
 }

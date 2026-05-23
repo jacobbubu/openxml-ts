@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Spreadsheetml2019Extlinksprops.ExternalLinksPr
 
 import {
+  BooleanValue,
   OpenXmlLeafElement,
 } from "../../../element/index.js";
 
@@ -15,6 +16,21 @@ export class ExternalLinksPr extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2019/extlinksprops" as const;
 
 
+  /** autoRefresh (:autoRefresh) */
+  autoRefresh: BooleanValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "autoRefresh": this.autoRefresh = BooleanValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.autoRefresh !== undefined) out.push(["autoRefresh", this.autoRefresh.toString()]);
+    return out;
+  }
 
 }

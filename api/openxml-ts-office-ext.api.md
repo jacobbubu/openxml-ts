@@ -11,7 +11,7 @@ class AbsolutePath extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "absPath";
     // (undocumented)
@@ -26,11 +26,17 @@ class AbsolutePath extends OpenXmlLeafElement {
 // @public
 class AbsoluteUrlAlternateUrl extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "absoluteUrl";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2021/extlinks2021";
     // (undocumented)
     readonly prefix: "xxl21";
+    validateRequired(): void;
 }
 
 // @public
@@ -39,7 +45,7 @@ abstract class AcceleratorKeymapType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "";
     // (undocumented)
@@ -53,7 +59,7 @@ class ActiveArea extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // Warning: (ae-forgotten-export) The symbol "DecimalValue" needs to be exported by the entry point index.d.ts
     height: DecimalValue | undefined;
     // (undocumented)
@@ -79,7 +85,7 @@ class ActiveXControlData extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     license: StringValue | undefined;
     // (undocumented)
@@ -99,7 +105,7 @@ class ActiveXObjectProperty extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "ocxPr";
     name: StringValue | undefined;
@@ -156,21 +162,35 @@ class AdditionalCharacteristicsInfo extends OpenXmlCompositeElement {
 // @public
 class AddressWebImageSupportingRichDataRelationship extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "address";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2020/richdatawebimage";
     // (undocumented)
     readonly prefix: "xlrdwi";
+    validateRequired(): void;
 }
 
 // @public
 class AggregationInfo extends OpenXmlLeafElement {
+    aggregationType: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "aggregationInfo";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2023/pivot2023Calculation";
     // (undocumented)
     readonly prefix: "xlpcalc";
+    // Warning: (ae-forgotten-export) The symbol "UInt32Value" needs to be exported by the entry point index.d.ts
+    sourceField: UInt32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -180,7 +200,7 @@ class AllocatedCommand extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     argumentValue: StringValue | undefined;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     commandBasedOn: StringValue | undefined;
     // Warning: (ae-forgotten-export) The symbol "HexBinaryValue" needs to be exported by the entry point index.d.ts
     commandIndexBasedOn: HexBinaryValue | undefined;
@@ -198,7 +218,7 @@ class AllocatedCommandKeyboardCustomization extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "acd";
     // (undocumented)
@@ -225,7 +245,7 @@ class AllocatedCommandManifestEntry extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "acdEntry";
     // (undocumented)
@@ -249,7 +269,13 @@ class AllocatedCommands extends OpenXmlCompositeElement {
 // @public
 class AmbientLight extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // Warning: (ae-forgotten-export) The symbol "BooleanValue" needs to be exported by the entry point index.d.ts
+    enabled: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "ambientLight";
     // (undocumented)
@@ -261,25 +287,49 @@ class AmbientLight extends OpenXmlCompositeElement {
 // @public
 class AnimationProperties extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    auto: BooleanValue | undefined;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: StringValue | undefined;
+    end: StringValue | undefined;
+    length: StringValue | undefined;
+    // (undocumented)
     readonly localName: "animPr";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2018/animation";
+    offset: StringValue | undefined;
     // (undocumented)
     readonly prefix: "aanim";
+    st: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class AnimationProperties_2 extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    auto: BooleanValue | undefined;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: StringValue | undefined;
+    end: StringValue | undefined;
+    length: StringValue | undefined;
+    // (undocumented)
     readonly localName: "animPr";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2018/animation/model3d";
+    offset: StringValue | undefined;
     // (undocumented)
     readonly prefix: "a3danim";
+    st: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -311,7 +361,7 @@ class Annotation extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     encoding: StringValue | undefined;
     // (undocumented)
     readonly localName: "annotation";
@@ -329,7 +379,7 @@ class AnnotationXml extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     encoding: StringValue | undefined;
     href: StringValue | undefined;
     // (undocumented)
@@ -346,7 +396,7 @@ class Appearance extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "appearance";
     // (undocumented)
@@ -361,7 +411,7 @@ class ApplicationNonVisualDrawingProperties extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "nvPr";
     macro: StringValue | undefined;
@@ -369,7 +419,6 @@ class ApplicationNonVisualDrawingProperties extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2010/chartDrawing";
     // (undocumented)
     readonly prefix: "cdr14";
-    // Warning: (ae-forgotten-export) The symbol "BooleanValue" needs to be exported by the entry point index.d.ts
     published: BooleanValue | undefined;
 }
 
@@ -378,7 +427,7 @@ class ApplicationNonVisualDrawingProperties_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "nvPr";
     macro: StringValue | undefined;
@@ -396,7 +445,7 @@ class Arc extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     confidence: DecimalValue | undefined;
     cost: DecimalValue | undefined;
     duration: IntegerValue | undefined;
@@ -436,139 +485,225 @@ class AreaChartSeries extends OpenXmlCompositeElement {
 // @public
 class Array_2 extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    c: UInt32Value | undefined;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "a";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    r: UInt32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class ArrayData extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "arrayData";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    validateRequired(): void;
 }
 
 // @public
 class ArrayFeatureProperty extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    k: StringValue | undefined;
     // (undocumented)
     readonly localName: "a";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag";
     // (undocumented)
     readonly prefix: "xfpb";
+    validateRequired(): void;
 }
 
 // @public
 class ArrayValue extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "v";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    t: StringValue | undefined;
 }
 
 // @public
 class AsgnTaskAssignUnassignUser extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "asgn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    validateRequired(): void;
 }
 
 // @public
 class AsgnTaskAssignUnassignUser_2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "asgn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    validateRequired(): void;
 }
 
 // @public
 class AsgnTaskAssignUnassignUser_3 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "asgn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2022/08/main";
     // (undocumented)
     readonly prefix: "p228";
+    validateRequired(): void;
 }
 
 // @public
 class AssignTaskUser extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "Assign";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
     // (undocumented)
     readonly prefix: "t";
+    userId: StringValue | undefined;
+    userName: StringValue | undefined;
+    userProvider: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class AtrbtnTaskAssignUnassignUser extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "atrbtn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    validateRequired(): void;
 }
 
 // @public
 class AtrbtnTaskAssignUnassignUser_2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "atrbtn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    validateRequired(): void;
 }
 
 // @public
 class AtrbtnTaskAssignUnassignUser_3 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "atrbtn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2022/08/main";
     // (undocumented)
     readonly prefix: "p228";
+    validateRequired(): void;
 }
 
 // @public
 class AttributionTaskUser extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "Attribution";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
     // (undocumented)
     readonly prefix: "t";
+    userId: StringValue | undefined;
+    userName: StringValue | undefined;
+    userProvider: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class Author extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    initials: StringValue | undefined;
+    // (undocumented)
     readonly localName: "author";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2018/8/main";
     // (undocumented)
     readonly prefix: "p188";
+    providerId: StringValue | undefined;
+    userId: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -590,7 +725,7 @@ class AutoFilter extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "autoFilter";
     // (undocumented)
@@ -605,7 +740,7 @@ class AutoGeneneratedCategories extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "autoCat";
     // (undocumented)
@@ -632,7 +767,7 @@ abstract class AxisProperties extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     labelPosition: StringValue | undefined;
     // (undocumented)
     readonly localName: "";
@@ -655,7 +790,7 @@ class AxisTitle extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "axisTitle";
     modifiers: ListValue<StringValue> | undefined;
@@ -718,7 +853,7 @@ class BackgroundProperties extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "backgroundPr";
     mode: StringValue | undefined;
@@ -750,7 +885,7 @@ class Backstage extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "backstage";
     // (undocumented)
@@ -766,7 +901,7 @@ class BackstageCheckBox extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     expand: StringValue | undefined;
@@ -803,7 +938,7 @@ class BackstageComboBox extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     expand: StringValue | undefined;
     getEnabled: StringValue | undefined;
@@ -838,7 +973,7 @@ class BackstageDropDown extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     expand: StringValue | undefined;
     getEnabled: StringValue | undefined;
@@ -875,7 +1010,7 @@ class BackstageEditBox extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     expand: StringValue | undefined;
     getEnabled: StringValue | undefined;
@@ -905,7 +1040,7 @@ class BackstageFastCommandButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -942,7 +1077,7 @@ class BackstageGroup extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getHelperText: StringValue | undefined;
     getLabel: StringValue | undefined;
     getShowLabel: StringValue | undefined;
@@ -974,7 +1109,7 @@ class BackstageGroupButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     expand: StringValue | undefined;
     getEnabled: StringValue | undefined;
@@ -1022,7 +1157,7 @@ abstract class BackstageItemType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getLabel: StringValue | undefined;
     id: StringValue | undefined;
     label: StringValue | undefined;
@@ -1040,7 +1175,7 @@ class BackstageLabelControl extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     expand: StringValue | undefined;
     getEnabled: StringValue | undefined;
@@ -1052,6 +1187,7 @@ class BackstageLabelControl extends OpenXmlLeafElement {
     readonly localName: "labelControl";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/2009/07/customui";
+    noWrap: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "mso14";
     qualifiedId: StringValue | undefined;
@@ -1064,7 +1200,7 @@ class BackstageMenuButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -1096,7 +1232,7 @@ class BackstageMenuCheckBox extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -1127,7 +1263,7 @@ class BackstageMenuGroup extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getLabel: StringValue | undefined;
     id: StringValue | undefined;
     itemSize: StringValue | undefined;
@@ -1147,7 +1283,7 @@ class BackstageMenuToggleButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -1181,7 +1317,7 @@ class BackstagePrimaryMenu extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -1213,7 +1349,7 @@ class BackstageRegularButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -1249,7 +1385,7 @@ class BackstageSubMenu extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -1281,7 +1417,7 @@ class BackstageTab extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     columnWidthPercent: IntegerValue | undefined;
     enabled: BooleanValue | undefined;
     firstColumnMaxWidth: IntegerValue | undefined;
@@ -1328,11 +1464,17 @@ class BagExtensions extends OpenXmlCompositeElement {
 // @public
 class BagFeatureProperty extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    k: StringValue | undefined;
+    // (undocumented)
     readonly localName: "bagId";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag";
     // (undocumented)
     readonly prefix: "xfpb";
+    validateRequired(): void;
 }
 
 // @public
@@ -1352,7 +1494,7 @@ class Bind extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     column: StringValue | undefined;
     // (undocumented)
     readonly localName: "bind";
@@ -1372,7 +1514,7 @@ class Blip extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     compressionState: StringValue | undefined;
     embed: StringValue | undefined;
     link: StringValue | undefined;
@@ -1391,8 +1533,7 @@ class BlipFillProperties extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
-    // Warning: (ae-forgotten-export) The symbol "UInt32Value" needs to be exported by the entry point index.d.ts
+    protected collectAttributes(): [string, string][];
     dpi: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "blipFill";
@@ -1406,31 +1547,47 @@ class BlipFillProperties extends OpenXmlCompositeElement {
 // @public
 class BlipWebImageSupportingRichDataRelationship extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "blip";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2020/richdatawebimage";
     // (undocumented)
     readonly prefix: "xlrdwi";
+    validateRequired(): void;
 }
 
 // @public
 class BooleanFalse extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "showExpandCollapseFieldButtons";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2014/chart";
     // (undocumented)
     readonly prefix: "c16";
+    val: BooleanValue | undefined;
 }
 
 // @public
 class BooleanFalse_2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dispNaAsBlank";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/03/chart";
     // (undocumented)
     readonly prefix: "c16r3";
+    val: BooleanValue | undefined;
 }
 
 // @public
@@ -1438,7 +1595,7 @@ abstract class BooleanFalseType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "";
     // (undocumented)
@@ -1453,7 +1610,7 @@ abstract class BooleanType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "";
     // (undocumented)
@@ -1468,7 +1625,7 @@ abstract class BooleanType_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "";
     // (undocumented)
@@ -1481,11 +1638,17 @@ abstract class BooleanType_2 extends OpenXmlLeafElement {
 // @public
 class BoolFeatureProperty extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    k: StringValue | undefined;
+    // (undocumented)
     readonly localName: "b";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag";
     // (undocumented)
     readonly prefix: "xfpb";
+    validateRequired(): void;
 }
 
 // @public
@@ -1503,11 +1666,21 @@ class BottomItemsGroupControls extends OpenXmlCompositeElement {
 // @public
 class BoundRect extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    b: Int64Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // Warning: (ae-forgotten-export) The symbol "Int64Value" needs to be exported by the entry point index.d.ts
+    l: Int64Value | undefined;
+    // (undocumented)
     readonly localName: "bounds";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    r: Int64Value | undefined;
+    t: Int64Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -1518,7 +1691,7 @@ class Box extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getVisible: StringValue | undefined;
     id: StringValue | undefined;
     idQ: StringValue | undefined;
@@ -1543,7 +1716,7 @@ class Box_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getVisible: StringValue | undefined;
     id: StringValue | undefined;
     insertAfterMso: StringValue | undefined;
@@ -1569,7 +1742,7 @@ class Brush extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "brush";
@@ -1586,7 +1759,7 @@ class BrushProperty extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "brushProperty";
     name: StringValue | undefined;
@@ -1604,7 +1777,7 @@ class Bubble3D extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "bubble3D";
     // (undocumented)
@@ -1619,7 +1792,7 @@ class Bubble3DBoolean extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "bubble3D";
     // (undocumented)
@@ -1646,7 +1819,7 @@ class Button extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -1692,7 +1865,7 @@ class Button_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -1740,7 +1913,7 @@ class ButtonGroup extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getVisible: StringValue | undefined;
     id: StringValue | undefined;
     idQ: StringValue | undefined;
@@ -1764,7 +1937,7 @@ class ButtonGroup_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getVisible: StringValue | undefined;
     id: StringValue | undefined;
     insertAfterMso: StringValue | undefined;
@@ -1787,7 +1960,7 @@ class ButtonRegular extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -1861,11 +2034,17 @@ class CacheVersionInfo extends OpenXmlCompositeElement {
 // @public
 class CalcFeature extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "feature";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2018/calcfeatures";
     // (undocumented)
     readonly prefix: "xcalcf";
+    validateRequired(): void;
 }
 
 // @public
@@ -1883,11 +2062,20 @@ class CalcFeatures extends OpenXmlCompositeElement {
 // @public
 class CalculatedTimeColumn extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    columnId: StringValue | undefined;
+    columnName: StringValue | undefined;
+    contentType: StringValue | undefined;
+    isSelected: BooleanValue | undefined;
+    // (undocumented)
     readonly localName: "calculatedTimeColumn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/11/main";
     // (undocumented)
     readonly prefix: "x16";
+    validateRequired(): void;
 }
 
 // @public
@@ -1907,7 +2095,7 @@ class Canvas extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "canvas";
@@ -1925,7 +2113,7 @@ class CanvasTransform extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     invertible: BooleanValue | undefined;
     // (undocumented)
@@ -1943,7 +2131,7 @@ class CategoryAxis extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "categoryAxis";
     modifiers: ListValue<StringValue> | undefined;
@@ -1958,7 +2146,7 @@ class CategoryAxisProperties extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     labelPosition: StringValue | undefined;
     // (undocumented)
     readonly localName: "categoryAxis";
@@ -2025,13 +2213,22 @@ class CategoryFilterExceptions_2 extends OpenXmlCompositeElement {
 // @public
 class ChangeCellSubEdit extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "ccse";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    r: StringValue | undefined;
+    t: StringValue | undefined;
+    validateRequired(): void;
+    w: UInt32Value | undefined;
+    x: StringValue | undefined;
 }
 
 // @public
@@ -2041,7 +2238,7 @@ class Channel extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     default: StringValue | undefined;
     id: StringValue | undefined;
     // (undocumented)
@@ -2078,7 +2275,7 @@ class ChannelProperty extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     channel: StringValue | undefined;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "channelProperty";
     name: StringValue | undefined;
@@ -2096,7 +2293,7 @@ class CharacterInsertion extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "wch";
     // (undocumented)
@@ -2112,7 +2309,7 @@ class Characteristic extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "characteristic";
     name: StringValue | undefined;
@@ -2133,7 +2330,7 @@ class ChartArea extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "chartArea";
     modifiers: ListValue<StringValue> | undefined;
@@ -2174,7 +2371,7 @@ class ChartStyle extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "chartStyle";
@@ -2201,7 +2398,7 @@ class ChartTrackingRefBased extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "chartTrackingRefBased";
     // (undocumented)
@@ -2217,7 +2414,7 @@ class ChartTrackingReferenceBased extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "chartTrackingRefBased";
     // (undocumented)
@@ -2233,7 +2430,7 @@ class CheckBox extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -2271,7 +2468,7 @@ class CheckBox_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -2307,13 +2504,19 @@ class CheckBox_2 extends OpenXmlLeafElement {
 // @public
 class ClassificationExtension extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "ext";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/2020/mipLabelMetadata";
     // (undocumented)
     readonly prefix: "clbl";
+    uri: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -2330,12 +2533,26 @@ class ClassificationExtensionList extends OpenXmlCompositeElement {
 
 // @public
 class ClassificationLabel extends OpenXmlLeafElement {
+    actionId: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    contentBits: UInt32Value | undefined;
+    enabled: BooleanValue | undefined;
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "label";
+    method: StringValue | undefined;
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/2020/mipLabelMetadata";
     // (undocumented)
     readonly prefix: "clbl";
+    removed: BooleanValue | undefined;
+    setDate: StringValue | undefined;
+    siteId: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -2353,6 +2570,11 @@ class ClassificationLabelList extends OpenXmlCompositeElement {
 // @public
 class ClassificationOutcome extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    classificationOutcomeType: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "classification";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2020/classificationShape";
@@ -2363,21 +2585,32 @@ class ClassificationOutcome extends OpenXmlLeafElement {
 // @public
 class ClassificationOutcome_2 extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "classification";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2018/4/main";
     // (undocumented)
     readonly prefix: "p184";
+    val: StringValue | undefined;
 }
 
 // @public
 class ColIdIdentifier extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "colId";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2014/main";
     // (undocumented)
     readonly prefix: "a16";
+    val: UInt32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -2385,7 +2618,7 @@ class Color extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "color";
     // (undocumented)
@@ -2406,7 +2639,7 @@ class ColorStyle extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "colorStyle";
@@ -2469,13 +2702,20 @@ class ColumnBodyRevDxfTableRevDxf extends OpenXmlCompositeElement {
 // @public
 class ColumnFilter extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    colId: UInt32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "columnFilter";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews";
     // (undocumented)
     readonly prefix: "xnsv";
+    validateRequired(): void;
 }
 
 // @public
@@ -2497,7 +2737,7 @@ class ColumnSortMap extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "colSortMap";
@@ -2514,7 +2754,7 @@ class ColumnSortMapItem extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "col";
     // (undocumented)
@@ -2545,7 +2785,7 @@ class ComboBox extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -2600,7 +2840,7 @@ class ComboBox_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -2653,7 +2893,7 @@ class Command extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     idMso: StringValue | undefined;
@@ -2681,53 +2921,96 @@ class Commands extends OpenXmlCompositeElement {
 // @public
 class Comment extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    assignedTo: ListValue<StringValue> | undefined;
+    authorId: StringValue | undefined;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // Warning: (ae-forgotten-export) The symbol "Int32Value" needs to be exported by the entry point index.d.ts
+    complete: Int32Value | undefined;
+    // Warning: (ae-forgotten-export) The symbol "DateTimeValue" needs to be exported by the entry point index.d.ts
+    created: DateTimeValue | undefined;
+    dueDate: DateTimeValue | undefined;
+    id: StringValue | undefined;
+    likes: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly localName: "cm";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2018/8/main";
     // (undocumented)
     readonly prefix: "p188";
+    priority: UInt32Value | undefined;
+    startDate: DateTimeValue | undefined;
+    status: StringValue | undefined;
+    tags: ListValue<StringValue> | undefined;
+    title: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class CommentAnchor extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "comment";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    validateRequired(): void;
 }
 
 // @public
 class CommentAnchor_2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "comment";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    validateRequired(): void;
 }
 
 // @public
 class CommentAnchor_3 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "comment";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2022/08/main";
     // (undocumented)
     readonly prefix: "p228";
+    validateRequired(): void;
 }
 
 // @public
 class CommentAnchor_4 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "Comment";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
     // (undocumented)
     readonly prefix: "t";
+    validateRequired(): void;
 }
 
 // @public
@@ -2747,7 +3030,7 @@ class CommentEx extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     done: OnOffValue | undefined;
     // (undocumented)
     readonly localName: "commentEx";
@@ -2763,35 +3046,58 @@ class CommentEx extends OpenXmlLeafElement {
 // @public
 class CommentExtensible extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    dateUtc: DateTimeValue | undefined;
+    durableId: HexBinaryValue | undefined;
+    intelligentPlaceholder: OnOffValue | undefined;
     // (undocumented)
     readonly localName: "commentExtensible";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2018/wordml/cex";
     // (undocumented)
     readonly prefix: "w16cex";
+    validateRequired(): void;
 }
 
 // @public
 class CommentHyperlink extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    length: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "hyperlink";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2020/threadedcomments2";
     // (undocumented)
     readonly prefix: "xltc2";
+    startIndex: UInt32Value | undefined;
+    url: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class CommentId extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    durableId: HexBinaryValue | undefined;
+    // (undocumented)
     readonly localName: "commentId";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2016/wordml/cid";
+    paraId: HexBinaryValue | undefined;
     // (undocumented)
     readonly prefix: "w16cid";
+    validateRequired(): void;
 }
 
 // @public
@@ -2833,23 +3139,40 @@ class CommentPropertiesExtensionList extends OpenXmlCompositeElement {
 // @public
 class CommentRelationship extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "commentRel";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2018/8/main";
     // (undocumented)
     readonly prefix: "p188";
+    validateRequired(): void;
 }
 
 // @public
 class CommentReply extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    created: DateTimeValue | undefined;
+    id: StringValue | undefined;
+    likes: ListValue<StringValue> | undefined;
     // (undocumented)
     readonly localName: "reply";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2018/8/main";
     // (undocumented)
     readonly prefix: "p188";
+    status: StringValue | undefined;
+    tags: ListValue<StringValue> | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -2867,11 +3190,17 @@ class CommentReplyList extends OpenXmlCompositeElement {
 // @public
 class CommentReplyV2Moniker extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "cmRplyMk";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/9/main/command";
     // (undocumented)
     readonly prefix: "pc2";
+    validateRequired(): void;
 }
 
 // @public
@@ -2947,11 +3276,17 @@ class CommentUnknownAnchor extends OpenXmlLeafElement {
 // @public
 class CommentV2Moniker extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "cmMK";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/9/main/command";
     // (undocumented)
     readonly prefix: "pc2";
+    validateRequired(): void;
 }
 
 // @public
@@ -3011,7 +3346,7 @@ class CompatibilityShape extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "compatSp";
     // (undocumented)
@@ -3025,21 +3360,34 @@ class CompatibilityShape extends OpenXmlLeafElement {
 // @public
 class CompressPictureProps extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    cstate: StringValue | undefined;
+    // (undocumented)
     readonly localName: "compressPicPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    removeCrop: BooleanValue | undefined;
+    useLocalDpi: BooleanValue | undefined;
 }
 
 // @public
 class ConnectableReferences extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    end: StringValue | undefined;
     // (undocumented)
     readonly localName: "cxnDERefs";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2014/main";
     // (undocumented)
     readonly prefix: "a16";
+    st: StringValue | undefined;
 }
 
 // @public
@@ -3047,7 +3395,7 @@ abstract class ConnectionType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: UInt32Value | undefined;
     index: UInt32Value | undefined;
     // (undocumented)
@@ -3062,11 +3410,18 @@ abstract class ConnectionType extends OpenXmlLeafElement {
 // @public
 class ConnectorMoniker extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    creationId: StringValue | undefined;
+    id: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "cxnSpMk";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    validateRequired(): void;
 }
 
 // @public
@@ -3089,7 +3444,7 @@ class ContentPart extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "contentPart";
     // (undocumented)
@@ -3108,7 +3463,7 @@ class ContentPart_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "contentPart";
     // (undocumented)
@@ -3126,12 +3481,11 @@ class ContentTypeSchema extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     contentTypeDescription: StringValue | undefined;
     contentTypeID: StringValue | undefined;
     contentTypeName: StringValue | undefined;
     contentTypeScope: StringValue | undefined;
-    // Warning: (ae-forgotten-export) The symbol "Int32Value" needs to be exported by the entry point index.d.ts
     contentTypeVersion: Int32Value | undefined;
     // (undocumented)
     readonly localName: "contentTypeSchema";
@@ -3154,7 +3508,7 @@ class Context extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     contextRef: StringValue | undefined;
     id: StringValue | undefined;
     inkSourceRef: StringValue | undefined;
@@ -3173,7 +3527,7 @@ abstract class ContextLinkType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     direction: StringValue | undefined;
     // (undocumented)
     readonly localName: "";
@@ -3191,7 +3545,7 @@ class ContextMenu extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     idMso: StringValue | undefined;
     // (undocumented)
     readonly localName: "contextMenu";
@@ -3225,7 +3579,7 @@ class ContextNode extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     contentType: Int32Value | undefined;
     customRecognizerId: StringValue | undefined;
     descender: StringValue | undefined;
@@ -3256,7 +3610,7 @@ class ContextNodeProperty extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "property";
     // (undocumented)
@@ -3285,7 +3639,7 @@ class ContextualTabSet extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getVisible: StringValue | undefined;
     idMso: StringValue | undefined;
     // (undocumented)
@@ -3315,7 +3669,7 @@ class ControlClone extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -3359,7 +3713,7 @@ class ControlClone_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -3403,7 +3757,7 @@ class ControlCloneQat extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -3447,7 +3801,7 @@ class ControlCloneRegular extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -3497,6 +3851,11 @@ class CoverPageProperties extends OpenXmlCompositeElement {
 // @public
 class CreationId extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "creationId";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2014/main";
@@ -3533,7 +3892,8 @@ class CustomRichFilter extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
+    key: StringValue | undefined;
     // (undocumented)
     readonly localName: "customFilter";
     // (undocumented)
@@ -3546,8 +3906,13 @@ class CustomRichFilter extends OpenXmlLeafElement {
 
 // @public
 class CustomRichFilters extends OpenXmlCompositeElement {
+    and: BooleanValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "customFilters";
     // (undocumented)
@@ -3575,7 +3940,7 @@ class CustomUI extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     loadImage: StringValue | undefined;
     // (undocumented)
     readonly localName: "customUI";
@@ -3593,7 +3958,7 @@ class CustomUI_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     loadImage: StringValue | undefined;
     // (undocumented)
     readonly localName: "customUI";
@@ -3633,7 +3998,7 @@ class DataBinding extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataBinding";
     // (undocumented)
@@ -3661,11 +4026,19 @@ class DataDisplayOptions16 extends OpenXmlCompositeElement {
 // @public
 class DataFieldFutureData extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "dataFieldFutureData";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2020/pivotNov2020";
     // (undocumented)
     readonly prefix: "xxpim";
+    sourceField: UInt32Value | undefined;
+    validateRequired(): void;
+    // Warning: (ae-forgotten-export) The symbol "ByteValue" needs to be exported by the entry point index.d.ts
+    version: ByteValue | undefined;
 }
 
 // @public
@@ -3687,7 +4060,7 @@ class DataLabel_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataLabel";
     modifiers: ListValue<StringValue> | undefined;
@@ -3704,7 +4077,7 @@ class DataLabelCallout extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataLabelCallout";
     modifiers: ListValue<StringValue> | undefined;
@@ -3756,7 +4129,7 @@ class DataLabels extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     categoryName: StringValue | undefined;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     legendKey: StringValue | undefined;
     // (undocumented)
     readonly localName: "dataLabels";
@@ -3799,7 +4172,7 @@ class DataModelExtensionBlock extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataModelExt";
     minVer: StringValue | undefined;
@@ -3817,7 +4190,7 @@ class DataPoint extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataPoint";
     modifiers: ListValue<StringValue> | undefined;
@@ -3834,7 +4207,7 @@ class DataPoint3D extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataPoint3D";
     modifiers: ListValue<StringValue> | undefined;
@@ -3851,7 +4224,7 @@ class DataPointLine extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataPointLine";
     modifiers: ListValue<StringValue> | undefined;
@@ -3868,7 +4241,7 @@ class DataPointMarker extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataPointMarker";
     modifiers: ListValue<StringValue> | undefined;
@@ -3885,7 +4258,7 @@ class DataPointWireframe extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataPointWireframe";
     modifiers: ListValue<StringValue> | undefined;
@@ -3912,8 +4285,7 @@ class DataSeries extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
-    // Warning: (ae-forgotten-export) The symbol "ByteValue" needs to be exported by the entry point index.d.ts
+    protected collectAttributes(): [string, string][];
     doughnutHoleSize: ByteValue | undefined;
     dropLines: StringValue | undefined;
     gapDepth: UInt16Value | undefined;
@@ -3937,7 +4309,7 @@ class DataTable extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     horizontalBorder: StringValue | undefined;
     legendKeys: StringValue | undefined;
     // (undocumented)
@@ -3957,7 +4329,7 @@ class DataTableStyle extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataTable";
     modifiers: ListValue<StringValue> | undefined;
@@ -3975,7 +4347,7 @@ class DataValidation extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     error: StringValue | undefined;
     errorStyle: StringValue | undefined;
     errorTitle: StringValue | undefined;
@@ -4000,21 +4372,32 @@ class DataValidation extends OpenXmlCompositeElement {
 // @public
 class DecimalFeatureProperty extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    k: StringValue | undefined;
+    // (undocumented)
     readonly localName: "d";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag";
     // (undocumented)
     readonly prefix: "xfpb";
+    validateRequired(): void;
 }
 
 // @public
 class Decorative extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "decorative";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/decorative";
     // (undocumented)
     readonly prefix: "adec";
+    val: BooleanValue | undefined;
 }
 
 // @public
@@ -4022,7 +4405,7 @@ class DefaultCollapsed extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "collapsed";
     // (undocumented)
@@ -4095,7 +4478,7 @@ class DerivedFrom extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     composite: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "derived-from";
@@ -4110,17 +4493,27 @@ class DerivedFrom extends OpenXmlLeafElement {
 // @public
 class DesignElement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "designElem";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2015/main";
     // (undocumented)
     readonly prefix: "p16";
+    val: BooleanValue | undefined;
 }
 
 // @public
 class DesignerDrawingProps extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    edtDesignElem: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "designPr";
     // (undocumented)
@@ -4132,11 +4525,18 @@ class DesignerDrawingProps extends OpenXmlCompositeElement {
 // @public
 class DesignerTag extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "designTag";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2020/02/main";
     // (undocumented)
     readonly prefix: "p202";
+    val: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -4180,7 +4580,7 @@ class DestinationLink extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     direction: StringValue | undefined;
     // (undocumented)
     readonly localName: "destinationLink";
@@ -4211,7 +4611,8 @@ class DiagramAutoBullet extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
+    leadZeros: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "buPr";
     // (undocumented)
@@ -4282,14 +4683,21 @@ class DifferentialFormatType_3 extends OpenXmlCompositeElement {
 
 // @public
 class DirectionalLight extends OpenXmlCompositeElement {
+    angularRad: Int32Value | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    enabled: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "dirLight";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    validateRequired(): void;
 }
 
 // @public
@@ -4389,7 +4797,7 @@ class DoNotAllowInsertDeleteSection extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "doNotAllowInsertDeleteSection";
     // (undocumented)
@@ -4406,7 +4814,7 @@ class DownBar extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "downBar";
     modifiers: ListValue<StringValue> | undefined;
@@ -4479,7 +4887,7 @@ class DropDown extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -4534,7 +4942,7 @@ class DropDownRegular extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -4589,7 +4997,7 @@ class DropLine extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dropLine";
     modifiers: ListValue<StringValue> | undefined;
@@ -4604,7 +5012,7 @@ class DropZoneCategories extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dropZoneCategories";
     // (undocumented)
@@ -4619,7 +5027,7 @@ class DropZoneData extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dropZoneData";
     // (undocumented)
@@ -4634,7 +5042,7 @@ class DropZoneFilter extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dropZoneFilter";
     // (undocumented)
@@ -4649,7 +5057,7 @@ class DropZoneSeries extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dropZoneSeries";
     // (undocumented)
@@ -4664,7 +5072,7 @@ class DropZonesVisible extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dropZonesVisible";
     // (undocumented)
@@ -4679,7 +5087,7 @@ class Dummy extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     decimals: StringValue | undefined;
     default: StringValue | undefined;
     description: StringValue | undefined;
@@ -4708,11 +5116,17 @@ class Dummy extends OpenXmlLeafElement {
 // @public
 class DXFComplement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    i: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "DXFComplement";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag";
     // (undocumented)
     readonly prefix: "xfpb";
+    validateRequired(): void;
 }
 
 // @public
@@ -4722,7 +5136,7 @@ class Dxfs extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "dxfs";
@@ -4735,7 +5149,13 @@ class Dxfs extends OpenXmlCompositeElement {
 // @public
 class DynamicArrayProperties extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    fCollapsed: BooleanValue | undefined;
+    fDynamic: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "dynamicArrayProperties";
     // (undocumented)
@@ -4749,7 +5169,7 @@ class DynamicMenu extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getContent: StringValue | undefined;
@@ -4797,7 +5217,7 @@ class DynamicMenu_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getContent: StringValue | undefined;
@@ -4845,7 +5265,7 @@ class DynamicMenuRegular extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getContent: StringValue | undefined;
@@ -4891,7 +5311,8 @@ class DynamicRichFilter extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
+    key: StringValue | undefined;
     // (undocumented)
     readonly localName: "dynamicFilter";
     maxVal: DoubleValue | undefined;
@@ -4904,7 +5325,6 @@ class DynamicRichFilter extends OpenXmlLeafElement {
     // Warning: (ae-forgotten-export) The symbol "DoubleValue" needs to be exported by the entry point index.d.ts
     val: DoubleValue | undefined;
     validateRequired(): void;
-    // Warning: (ae-forgotten-export) The symbol "DateTimeValue" needs to be exported by the entry point index.d.ts
     valIso: DateTimeValue | undefined;
 }
 
@@ -4913,7 +5333,7 @@ class EditBox extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -4958,7 +5378,7 @@ class EditBox_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -5027,7 +5447,7 @@ class EffectReference extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "effectRef";
@@ -5046,7 +5466,7 @@ class EffectRefStyleMatrixReference extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "effectRef";
@@ -5059,14 +5479,20 @@ class EffectRefStyleMatrixReference extends OpenXmlCompositeElement {
 
 // @public
 class EmbeddedAnimation extends OpenXmlCompositeElement {
+    animId: UInt32Value | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "embedAnim";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2018/animation/model3d";
     // (undocumented)
     readonly prefix: "a3danim";
+    validateRequired(): void;
 }
 
 // @public
@@ -5076,7 +5502,7 @@ class Emma extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "emma";
     // (undocumented)
@@ -5132,7 +5558,7 @@ class EndCxnConnection extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: UInt32Value | undefined;
     index: UInt32Value | undefined;
     // (undocumented)
@@ -5161,7 +5587,7 @@ class EndPoint extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     endPointAddress: StringValue | undefined;
     endpointPairRef: StringValue | undefined;
     endpointRole: StringValue | undefined;
@@ -5189,7 +5615,7 @@ class EndPointInfo extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "endpoint-info";
@@ -5207,7 +5633,7 @@ class ErrorBar extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "errorBar";
     modifiers: ListValue<StringValue> | undefined;
@@ -5364,7 +5790,7 @@ class ExceptionForSave extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "xForSave";
     // (undocumented)
@@ -5379,7 +5805,7 @@ class Explosion extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "explosion";
     // (undocumented)
@@ -5397,7 +5823,7 @@ class ExtendedGuide extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: UInt32Value | undefined;
     isUserDrawn: BooleanValue | undefined;
     // (undocumented)
@@ -5425,25 +5851,35 @@ abstract class ExtendedGuideList extends OpenXmlCompositeElement {
 // @public
 class Extension extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "ext";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/2019/extlst";
     // (undocumented)
     readonly prefix: "oel";
+    uri: StringValue | undefined;
 }
 
 // @public
 class Extension_2 extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "ext";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2018/wordml";
     // (undocumented)
     readonly prefix: "w16cur";
+    uri: StringValue | undefined;
 }
 
 // @public
@@ -5689,7 +6125,13 @@ class ExtensionList_9 extends OpenXmlCompositeElement {
 // @public
 class ExternalBookAlternateUrls extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    driveId: StringValue | undefined;
+    itemId: StringValue | undefined;
     // (undocumented)
     readonly localName: "alternateUrls";
     // (undocumented)
@@ -5701,17 +6143,29 @@ class ExternalBookAlternateUrls extends OpenXmlCompositeElement {
 // @public
 class ExternalCodeService extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    autoShow: UInt32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "externalCodeService";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2023/externalCodeService";
     // (undocumented)
     readonly prefix: "xlecs";
+    timeout: UInt32Value | undefined;
 }
 
 // @public
 class ExternalCodeServiceImageAsInput extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "externalCodeServiceImageAsInput";
+    maxHeight: UInt32Value | undefined;
+    maxWidth: UInt32Value | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2025/externalCodeService2";
     // (undocumented)
@@ -5720,6 +6174,11 @@ class ExternalCodeServiceImageAsInput extends OpenXmlLeafElement {
 
 // @public
 class ExternalLinksPr extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    autoRefresh: BooleanValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "externalLinksPr";
     // (undocumented)
@@ -5741,19 +6200,33 @@ class ExtLstEmpty extends OpenXmlLeafElement {
 // @public
 class FeaturePropertyBag extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    att: StringValue | undefined;
+    bagExtId: UInt32Value | undefined;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    extRef: StringValue | undefined;
     // (undocumented)
     readonly localName: "bag";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag";
     // (undocumented)
     readonly prefix: "xfpb";
+    type: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class FeaturePropertyBags extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "FeaturePropertyBags";
     // (undocumented)
@@ -5765,11 +6238,17 @@ class FeaturePropertyBags extends OpenXmlCompositeElement {
 // @public
 class FeatureSupport extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    featureName: StringValue | undefined;
+    // (undocumented)
     readonly localName: "featureSupportInfo";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2023/pivot2023Calculation";
     // (undocumented)
     readonly prefix: "xlpcalc";
+    validateRequired(): void;
 }
 
 // @public
@@ -5805,11 +6284,19 @@ class FillModeEmpty extends OpenXmlLeafElement {
 // @public
 class FillRectRelativeRectProps extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    b: Int32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    l: Int32Value | undefined;
+    // (undocumented)
     readonly localName: "fillRect";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    r: Int32Value | undefined;
+    t: Int32Value | undefined;
 }
 
 // @public
@@ -5819,7 +6306,7 @@ class FillReference extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "fillRef";
@@ -5838,7 +6325,7 @@ class FillRefStyleMatrixReference extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "fillRef";
@@ -5856,7 +6343,7 @@ class FilterColumn extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     columnId: UInt32Value | undefined;
     hiddenButton: BooleanValue | undefined;
     // (undocumented)
@@ -5995,7 +6482,7 @@ class FixedCommandKeyboardCustomization extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     argument: HexBinaryValue | undefined;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     commandIndex: HexBinaryValue | undefined;
     commandName: StringValue | undefined;
     // (undocumented)
@@ -6013,7 +6500,7 @@ class Floor extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "floor";
     modifiers: ListValue<StringValue> | undefined;
@@ -6030,7 +6517,7 @@ class FontReference extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: StringValue | undefined;
     // (undocumented)
     readonly localName: "fontRef";
@@ -6049,7 +6536,7 @@ class FontReference_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: StringValue | undefined;
     // (undocumented)
     readonly localName: "fontRef";
@@ -6065,7 +6552,7 @@ class FootnoteColumns extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "footnoteColumns";
     // (undocumented)
@@ -6121,7 +6608,12 @@ class FormulaReference extends OpenXmlCompositeElement {
 // @public
 class FpbsFeaturePropertyBags extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "fpbs";
     // (undocumented)
@@ -6133,11 +6625,16 @@ class FpbsFeaturePropertyBags extends OpenXmlCompositeElement {
 // @public
 class FreezePanes extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "freezePanes";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    sheetViewUid: StringValue | undefined;
 }
 
 // @public
@@ -6159,7 +6656,7 @@ class Gallery extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     columns: IntegerValue | undefined;
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
@@ -6225,7 +6722,7 @@ class Gallery_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     columns: IntegerValue | undefined;
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
@@ -6292,7 +6789,7 @@ class GalleryRegular extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     columns: IntegerValue | undefined;
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
@@ -6365,7 +6862,7 @@ class Grammar extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "grammar";
@@ -6392,11 +6889,18 @@ class GraphicFrame extends OpenXmlCompositeElement {
 // @public
 class GraphicFrameMoniker extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    creationId: StringValue | undefined;
+    id: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "graphicFrameMk";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    validateRequired(): void;
 }
 
 // @public
@@ -6442,7 +6946,7 @@ class GridlineMajor extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "gridlineMajor";
     modifiers: ListValue<StringValue> | undefined;
@@ -6459,7 +6963,7 @@ class GridlineMinor extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "gridlineMinor";
     modifiers: ListValue<StringValue> | undefined;
@@ -6476,7 +6980,7 @@ class Group extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getImage: StringValue | undefined;
     getKeytip: StringValue | undefined;
     getLabel: StringValue | undefined;
@@ -6515,7 +7019,7 @@ class Group_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getImage: StringValue | undefined;
     getKeytip: StringValue | undefined;
     getLabel: StringValue | undefined;
@@ -6552,7 +7056,7 @@ class Group_3 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     confidence: DecimalValue | undefined;
     cost: DecimalValue | undefined;
     dialogTurn: StringValue | undefined;
@@ -6593,7 +7097,7 @@ class GroupBox extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     expand: StringValue | undefined;
     getLabel: StringValue | undefined;
     id: StringValue | undefined;
@@ -6611,13 +7115,20 @@ class GroupBox extends OpenXmlCompositeElement {
 // @public
 class GroupCommand extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    grpId: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "grpCmd";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    preventRegroup: BooleanValue | undefined;
+    verId: UInt32Value | undefined;
 }
 
 // @public
@@ -6637,7 +7148,7 @@ class GroupInfo extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "group-info";
     // (undocumented)
@@ -6674,11 +7185,18 @@ class GroupShape_2 extends OpenXmlCompositeElement {
 // @public
 class GroupShapeMoniker extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    creationId: StringValue | undefined;
+    id: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "grpSpMk";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    validateRequired(): void;
 }
 
 // @public
@@ -6713,7 +7231,7 @@ class GroupShapeProperties extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "grpSpPr";
     // (undocumented)
@@ -6730,7 +7248,7 @@ class GroupShapeProperties_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "grpSpPr";
     // (undocumented)
@@ -6747,7 +7265,7 @@ class GroupShapeProperties_3 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "grpSpPr";
     // (undocumented)
@@ -6805,11 +7323,17 @@ class HeaderRowRevDxfTableRevDxf extends OpenXmlCompositeElement {
 // @public
 class HideUnhideSheet extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    hide: BooleanValue | undefined;
+    // (undocumented)
     readonly localName: "hideUnhideSheet";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    validateRequired(): void;
 }
 
 // @public
@@ -6819,7 +7343,7 @@ class HiLoLine extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "hiLoLine";
     modifiers: ListValue<StringValue> | undefined;
@@ -6841,14 +7365,25 @@ class HlinkClickEmpty extends OpenXmlLeafElement {
 
 // @public
 class HlinkClickHyperlinkProps extends OpenXmlCompositeElement {
+    action: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    endSnd: BooleanValue | undefined;
+    highlightClick: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "hlinkClick";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    sndName: StringValue | undefined;
+    source: StringValue | undefined;
+    tgtFrame: StringValue | undefined;
+    tooltip: StringValue | undefined;
 }
 
 // @public
@@ -6863,14 +7398,25 @@ class HlinkHoverEmpty extends OpenXmlLeafElement {
 
 // @public
 class HlinkHoverHyperlinkProps extends OpenXmlCompositeElement {
+    action: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    endSnd: BooleanValue | undefined;
+    highlightClick: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "hlinkHover";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    sndName: StringValue | undefined;
+    source: StringValue | undefined;
+    tgtFrame: StringValue | undefined;
+    tooltip: StringValue | undefined;
 }
 
 // @public
@@ -6879,7 +7425,7 @@ class Hyperlink extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     expand: StringValue | undefined;
     getEnabled: StringValue | undefined;
@@ -6915,7 +7461,7 @@ class Hyperlink_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     display: StringValue | undefined;
     id: StringValue | undefined;
     // (undocumented)
@@ -6935,7 +7481,7 @@ class HyperlinkColor extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "hlinkClr";
     // (undocumented)
@@ -6961,21 +7507,34 @@ class HyperlinkMonikerList extends OpenXmlCompositeElement {
 // @public
 class Ignorable extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "ignorableAfterVersion";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2020/pivotNov2020";
     // (undocumented)
     readonly prefix: "xxpim";
+    validateRequired(): void;
+    version: ByteValue | undefined;
 }
 
 // @public
 class IlluminancePositiveRatio extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    d: UInt64Value | undefined;
+    // (undocumented)
     readonly localName: "illuminance";
+    n: UInt64Value | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    validateRequired(): void;
 }
 
 // @public
@@ -6984,7 +7543,7 @@ class ImageControl extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getAltText: StringValue | undefined;
     getEnabled: StringValue | undefined;
@@ -7007,6 +7566,11 @@ class ImageControl extends OpenXmlLeafElement {
 // @public
 class ImageFormula extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    formula: StringValue | undefined;
+    // (undocumented)
     readonly localName: "imageFormula";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2022/imageformula";
@@ -7027,11 +7591,17 @@ class ImgDataImgData extends OpenXmlLeafElement {
 // @public
 class ImgLink extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "imgLink";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    tgt: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -7041,7 +7611,7 @@ class Info extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "info";
@@ -7058,7 +7628,7 @@ class Ink extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     documentId: StringValue | undefined;
     // (undocumented)
     readonly localName: "ink";
@@ -7081,11 +7651,18 @@ declare namespace ink2010Main {
 // @public
 class InkMoniker extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    creationId: StringValue | undefined;
+    id: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "inkMk";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    validateRequired(): void;
 }
 
 // @public
@@ -7107,7 +7684,7 @@ class InkSource extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     id: StringValue | undefined;
     // (undocumented)
@@ -7128,7 +7705,7 @@ class InSketchMode extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "inSketchMode";
     // (undocumented)
@@ -7141,11 +7718,18 @@ class InSketchMode extends OpenXmlLeafElement {
 // @public
 class IntensityPositiveRatio extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    d: UInt64Value | undefined;
+    // (undocumented)
     readonly localName: "intensity";
+    n: UInt64Value | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    validateRequired(): void;
 }
 
 // @public
@@ -7167,7 +7751,7 @@ class Interpretation extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     confidence: DecimalValue | undefined;
     cost: DecimalValue | undefined;
     dialogTurn: StringValue | undefined;
@@ -7206,11 +7790,17 @@ class Interpretation extends OpenXmlCompositeElement {
 // @public
 class IntFeatureProperty extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    k: StringValue | undefined;
+    // (undocumented)
     readonly localName: "i";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag";
     // (undocumented)
     readonly prefix: "xfpb";
+    validateRequired(): void;
 }
 
 // @public
@@ -7218,7 +7808,7 @@ class InvertIfNegativeBoolean extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "invertIfNegative";
     // (undocumented)
@@ -7233,7 +7823,7 @@ class InvertIfNegativeBoolean_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "invertIfNegative";
     // (undocumented)
@@ -7260,7 +7850,7 @@ class Item extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     image: StringValue | undefined;
     imageMso: StringValue | undefined;
@@ -7280,7 +7870,7 @@ class Item_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     image: StringValue | undefined;
     imageMso: StringValue | undefined;
@@ -7300,7 +7890,7 @@ class ItemBackstageItem extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getLabel: StringValue | undefined;
     id: StringValue | undefined;
     label: StringValue | undefined;
@@ -7325,11 +7915,18 @@ class Key extends OpenXmlLeafElement {
 // @public
 class Key_2 extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "k";
+    n: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata";
     // (undocumented)
     readonly prefix: "xlrd";
+    t: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -7353,7 +7950,7 @@ class KeyMapEntry extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     keyCodePrimary: HexBinaryValue | undefined;
     keyCodeSecondary: HexBinaryValue | undefined;
     // (undocumented)
@@ -7380,7 +7977,7 @@ class LabelControl extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getLabel: StringValue | undefined;
@@ -7454,7 +8051,7 @@ class Latency extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "latency";
     // (undocumented)
@@ -7472,7 +8069,7 @@ class Lattice extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     final: ListValue<DecimalValue> | undefined;
     initial: IntegerValue | undefined;
     // (undocumented)
@@ -7506,7 +8103,7 @@ class LayoutContainer extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     expand: StringValue | undefined;
     id: StringValue | undefined;
     layoutChildren: StringValue | undefined;
@@ -7527,7 +8124,7 @@ class LeaderLine extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "leaderLine";
     modifiers: ListValue<StringValue> | undefined;
@@ -7554,7 +8151,7 @@ class Legend extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     includeInLayout: StringValue | undefined;
     // (undocumented)
     readonly localName: "legend";
@@ -7573,7 +8170,7 @@ class LegendStyle extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "legend";
     modifiers: ListValue<StringValue> | undefined;
@@ -7626,7 +8223,7 @@ class LinePropertiesType extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     compoundLineType: StringValue | undefined;
     // (undocumented)
     readonly localName: "lineProps";
@@ -7644,7 +8241,7 @@ class LineReference extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "lnRef";
@@ -7709,13 +8306,18 @@ class LineSketchSeed extends OpenXmlLeafElement {
 // @public
 class LineSketchStyleProperties extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "lineSketchStyleProps";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2018/sketchyshapes";
     // (undocumented)
     readonly prefix: "ask";
+    sd: UInt32Value | undefined;
 }
 
 // @public
@@ -7747,7 +8349,7 @@ class LinkedTextBox extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: UInt16Value | undefined;
     // (undocumented)
     readonly localName: "linkedTxbx";
@@ -7782,11 +8384,17 @@ class Literal extends OpenXmlLeafElement {
 // @public
 class LiteralDataChart extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "literalDataChart";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2014/chart";
     // (undocumented)
     readonly prefix: "c16";
+    val: BooleanValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -7830,7 +8438,7 @@ class LnRefStyleMatrixReference extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "lnRef";
@@ -7858,7 +8466,7 @@ class LongProperty extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "LongProp";
     name: StringValue | undefined;
@@ -7873,7 +8481,7 @@ class LookAtPoint3D extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "lookAt";
     // (undocumented)
@@ -7881,7 +8489,6 @@ class LookAtPoint3D extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "am3d";
     validateRequired(): void;
-    // Warning: (ae-forgotten-export) The symbol "Int64Value" needs to be exported by the entry point index.d.ts
     x: Int64Value | undefined;
     y: Int64Value | undefined;
     z: Int64Value | undefined;
@@ -7892,7 +8499,7 @@ class MacroKeyboardCustomization extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "macro";
     macroName: StringValue | undefined;
@@ -7919,7 +8526,7 @@ abstract class MacroWllType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "";
     macroName: StringValue | undefined;
@@ -7960,7 +8567,7 @@ class Mapping extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "mapping";
@@ -8001,7 +8608,7 @@ class MarkerLayoutProperties extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "dataPointMarkerLayout";
     // (undocumented)
@@ -8017,7 +8624,7 @@ class Matrix extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "matrix";
@@ -8030,7 +8637,16 @@ class Matrix extends OpenXmlLeafElement {
 // @public
 class Mcd extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    bEncrypt: HexBinaryValue | undefined;
+    cmg: HexBinaryValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "mcd";
+    macroName: StringValue | undefined;
+    menuHelp: StringValue | undefined;
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2006/wordml";
     // (undocumented)
@@ -8052,11 +8668,20 @@ class Mcds extends OpenXmlCompositeElement {
 // @public
 class Mention extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    length: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "mention";
+    mentionId: StringValue | undefined;
+    mentionpersonId: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2018/threadedcomments";
     // (undocumented)
     readonly prefix: "xltc";
+    startIndex: UInt32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -8066,7 +8691,7 @@ class Menu extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -8114,7 +8739,7 @@ class Menu_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -8162,7 +8787,7 @@ class MenuRegular extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -8208,7 +8833,7 @@ class MenuRoot extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getTitle: StringValue | undefined;
     itemSize: StringValue | undefined;
     // (undocumented)
@@ -8227,7 +8852,7 @@ class MenuRoot_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getTitle: StringValue | undefined;
     itemSize: StringValue | undefined;
     // (undocumented)
@@ -8244,7 +8869,7 @@ class MenuSeparator extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getTitle: StringValue | undefined;
     id: StringValue | undefined;
     idQ: StringValue | undefined;
@@ -8266,7 +8891,7 @@ class MenuSeparator_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getTitle: StringValue | undefined;
     id: StringValue | undefined;
     insertAfterMso: StringValue | undefined;
@@ -8289,7 +8914,7 @@ class MenuSeparatorNoTitle extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     insertAfterMso: StringValue | undefined;
     insertAfterQulifiedId: StringValue | undefined;
@@ -8312,7 +8937,7 @@ class MenuWithTitle extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -8358,7 +8983,7 @@ class MenuWithTitle_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -8400,11 +9025,18 @@ class MenuWithTitle_2 extends OpenXmlCompositeElement {
 // @public
 class MeterPerModelUnitPositiveRatio extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    d: UInt64Value | undefined;
+    // (undocumented)
     readonly localName: "meterPerModelUnit";
+    n: UInt64Value | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    validateRequired(): void;
 }
 
 // @public
@@ -8426,7 +9058,7 @@ class Model extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "model";
@@ -8445,7 +9077,7 @@ class Model3D extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     embed: StringValue | undefined;
     link: StringValue | undefined;
     // (undocumented)
@@ -8471,13 +9103,19 @@ class Model3DCamera extends OpenXmlCompositeElement {
 // @public
 class Model3DExtension extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "ext";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    uRI: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -8507,13 +9145,20 @@ class Model3DMonikerList extends OpenXmlCompositeElement {
 // @public
 class Model3DRaster extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "raster";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    rName: StringValue | undefined;
+    rVer: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -8531,13 +9176,21 @@ class Model3DTransform extends OpenXmlCompositeElement {
 // @public
 class ModelTimeGrouping extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    columnId: StringValue | undefined;
+    columnName: StringValue | undefined;
     // (undocumented)
     readonly localName: "modelTimeGrouping";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/11/main";
     // (undocumented)
     readonly prefix: "x16";
+    tableName: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -8567,11 +9220,25 @@ class ModifyHyperlinkProps extends OpenXmlCompositeElement {
 // @public
 class ModifyNonVisualConnectorProps extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "cNvCxnSpPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
+    noAdjustHandles: BooleanValue | undefined;
+    noChangeArrowheads: BooleanValue | undefined;
+    noChangeAspect: BooleanValue | undefined;
+    noChangeShapeType: BooleanValue | undefined;
+    noEditPoints: BooleanValue | undefined;
+    noGrp: BooleanValue | undefined;
+    noMove: BooleanValue | undefined;
+    noResize: BooleanValue | undefined;
+    noRot: BooleanValue | undefined;
+    noSelect: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "oac";
 }
@@ -8579,29 +9246,65 @@ class ModifyNonVisualConnectorProps extends OpenXmlCompositeElement {
 // @public
 class ModifyNonVisualDrawingProps extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    decor: BooleanValue | undefined;
+    descr: StringValue | undefined;
+    hidden: BooleanValue | undefined;
+    // (undocumented)
     readonly localName: "cNvPr";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    scriptLink: StringValue | undefined;
+    title: StringValue | undefined;
 }
 
 // @public
 class ModifyNonVisualDrawingShapeProps extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "cNvSpPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
+    noAdjustHandles: BooleanValue | undefined;
+    noChangeArrowheads: BooleanValue | undefined;
+    noChangeAspect: BooleanValue | undefined;
+    noChangeShapeType: BooleanValue | undefined;
+    noEditPoints: BooleanValue | undefined;
+    noGrp: BooleanValue | undefined;
+    noMove: BooleanValue | undefined;
+    noResize: BooleanValue | undefined;
+    noRot: BooleanValue | undefined;
+    noSelect: BooleanValue | undefined;
+    noTextEdit: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "oac";
+    txBox: BooleanValue | undefined;
 }
 
 // @public
 class ModifyNonVisualGraphicFrameProps extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "cNvGraphicFramePr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
+    noChangeAspect: BooleanValue | undefined;
+    noDrilldown: BooleanValue | undefined;
+    noGrp: BooleanValue | undefined;
+    noMove: BooleanValue | undefined;
+    noResize: BooleanValue | undefined;
+    noSelect: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "oac";
 }
@@ -8609,9 +9312,20 @@ class ModifyNonVisualGraphicFrameProps extends OpenXmlLeafElement {
 // @public
 class ModifyNonVisualGroupDrawingShapeProps extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "cNvGrpSpPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
+    noChangeAspect: BooleanValue | undefined;
+    noGrp: BooleanValue | undefined;
+    noMove: BooleanValue | undefined;
+    noResize: BooleanValue | undefined;
+    noRot: BooleanValue | undefined;
+    noSelect: BooleanValue | undefined;
+    noUngrp: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "oac";
 }
@@ -8619,9 +9333,24 @@ class ModifyNonVisualGroupDrawingShapeProps extends OpenXmlLeafElement {
 // @public
 class ModifyNonVisualInkProps extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    isComment: BooleanValue | undefined;
+    // (undocumented)
     readonly localName: "cNvInkPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
+    noAdjustHandles: BooleanValue | undefined;
+    noChangeArrowheads: BooleanValue | undefined;
+    noChangeAspect: BooleanValue | undefined;
+    noChangeShapeType: BooleanValue | undefined;
+    noEditPoints: BooleanValue | undefined;
+    noGrp: BooleanValue | undefined;
+    noMove: BooleanValue | undefined;
+    noResize: BooleanValue | undefined;
+    noRot: BooleanValue | undefined;
+    noSelect: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "oac";
 }
@@ -8629,9 +9358,25 @@ class ModifyNonVisualInkProps extends OpenXmlLeafElement {
 // @public
 class ModifyNonVisualPictureProps extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "cNvPicPr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
+    noAdjustHandles: BooleanValue | undefined;
+    noChangeArrowheads: BooleanValue | undefined;
+    noChangeAspect: BooleanValue | undefined;
+    noChangeShapeType: BooleanValue | undefined;
+    noCrop: BooleanValue | undefined;
+    noEditPoints: BooleanValue | undefined;
+    noGrp: BooleanValue | undefined;
+    noMove: BooleanValue | undefined;
+    noResize: BooleanValue | undefined;
+    noRot: BooleanValue | undefined;
+    noSelect: BooleanValue | undefined;
+    preferRelativeResize: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "oac";
 }
@@ -8651,33 +9396,59 @@ class ModifyShapeStyleProps extends OpenXmlCompositeElement {
 // @public
 class ModifyTransformProps extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    cx: Int64Value | undefined;
+    cy: Int64Value | undefined;
+    flipH: BooleanValue | undefined;
+    flipV: BooleanValue | undefined;
+    // (undocumented)
     readonly localName: "xfrm";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    rot: Int32Value | undefined;
+    x: Int64Value | undefined;
+    y: Int64Value | undefined;
 }
 
 // @public
 class MoreImagesAddressWebImageSupportingRichDataRelationship extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "moreImagesAddress";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2020/richdatawebimage";
     // (undocumented)
     readonly prefix: "xlrdwi";
+    validateRequired(): void;
 }
 
 // @public
 class MsForm extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    isFormConnected: BooleanValue | undefined;
+    latestEventMarker: StringValue | undefined;
+    // (undocumented)
     readonly localName: "msForm";
+    maxResponseId: Int32Value | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2023/msForms";
     // (undocumented)
     readonly prefix: "xlmsforms";
+    validateRequired(): void;
 }
 
 // @public
@@ -8719,13 +9490,20 @@ class MultiLvlStrFilteredLiteralCache extends OpenXmlCompositeElement {
 // @public
 class NamedSheetView extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "namedSheetView";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews";
     // (undocumented)
     readonly prefix: "xnsv";
+    validateRequired(): void;
 }
 
 // @public
@@ -8787,7 +9565,7 @@ class Node extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     confidence: DecimalValue | undefined;
     cost: DecimalValue | undefined;
     // (undocumented)
@@ -8861,7 +9639,7 @@ class NonVisualDrawingProperties extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     hidden: BooleanValue | undefined;
     id: UInt32Value | undefined;
@@ -8883,7 +9661,7 @@ class NonVisualDrawingProperties_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     hidden: BooleanValue | undefined;
     id: UInt32Value | undefined;
@@ -8905,7 +9683,7 @@ class NonVisualDrawingProperties_3 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     hidden: BooleanValue | undefined;
     id: UInt32Value | undefined;
@@ -8927,7 +9705,7 @@ class NonVisualDrawingProperties_4 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     hidden: BooleanValue | undefined;
     id: UInt32Value | undefined;
@@ -8949,7 +9727,7 @@ class NonVisualDrawingProperties_5 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     hidden: BooleanValue | undefined;
     id: UInt32Value | undefined;
@@ -8971,7 +9749,7 @@ class NonVisualDrawingProperties_6 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     hidden: BooleanValue | undefined;
     id: UInt32Value | undefined;
@@ -8993,7 +9771,7 @@ class NonVisualDrawingProps extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     hidden: BooleanValue | undefined;
     id: UInt32Value | undefined;
@@ -9015,7 +9793,7 @@ class NonVisualDrawingShapeProperties extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "cNvSpPr";
     // (undocumented)
@@ -9032,7 +9810,7 @@ class NonVisualDrawingShapeProperties_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "cNvSpPr";
     // (undocumented)
@@ -9095,7 +9873,7 @@ class NonVisualGroupProperties extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     isLegacyGroup: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "nonVisualGroupProps";
@@ -9112,7 +9890,7 @@ class NonVisualInkContentPartProperties extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     isComment: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "cNvContentPartPr";
@@ -9129,7 +9907,7 @@ class NonVisualInkContentPartProperties_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     isComment: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "cNvContentPartPr";
@@ -9274,13 +10052,21 @@ declare namespace ns2003Inkml {
 // @public
 class NsvFilter extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    filterId: StringValue | undefined;
     // (undocumented)
     readonly localName: "nsvFilter";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews";
     // (undocumented)
     readonly prefix: "xnsv";
+    ref: StringValue | undefined;
+    tableId: UInt32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -9298,13 +10084,20 @@ class NumberDataType extends OpenXmlCompositeElement {
 // @public
 class NumberDiagramInfo extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "autoBuNodeInfo";
+    lvl: UInt32Value | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2016/11/diagram";
     // (undocumented)
     readonly prefix: "dgm1611";
+    ptType: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -9324,7 +10117,7 @@ class NumberingFormat extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     formatCode: StringValue | undefined;
     // (undocumented)
     readonly localName: "numFmt";
@@ -9353,7 +10146,7 @@ class ObjectProperties extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     isActiveX: BooleanValue | undefined;
     linkType: StringValue | undefined;
@@ -9368,35 +10161,56 @@ class ObjectProperties extends OpenXmlLeafElement {
 // @public
 class ObjectViewport extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "objViewport";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    validateRequired(): void;
+    viewportSz: Int64Value | undefined;
 }
 
 // @public
 class OEmbed extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "oembed";
+    mediaType: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2020/oembed";
+    oEmbedUrl: StringValue | undefined;
+    picLocksAutoForOEmbed: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "woe";
+    validateRequired(): void;
 }
 
 // @public
 class OEmbedShared extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "oembedShared";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2021/oembed";
     // (undocumented)
     readonly prefix: "aoe";
+    srcUrl: StringValue | undefined;
+    type: StringValue | undefined;
+    validateRequired(): void;
 }
 
 declare namespace office200601Customui {
@@ -11220,7 +12034,7 @@ class OneOf extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     confidence: DecimalValue | undefined;
     cost: DecimalValue | undefined;
     dialogTurn: StringValue | undefined;
@@ -11260,7 +12074,7 @@ abstract class OnOffType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "";
     // (undocumented)
@@ -11283,11 +12097,17 @@ class OpenByDefault extends OpenXmlLeafElement {
 // @public
 abstract class OpenXmlAlternateUrlElement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    validateRequired(): void;
 }
 
 // @public
@@ -11333,6 +12153,11 @@ abstract class OpenXmlEmptyElement_2 extends OpenXmlLeafElement {
 // @public
 abstract class OpenXmlFeaturePropertyBagsElement extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
@@ -11342,22 +12167,39 @@ abstract class OpenXmlFeaturePropertyBagsElement extends OpenXmlCompositeElement
 
 // @public
 abstract class OpenXmlHyperlinkPropsElement extends OpenXmlCompositeElement {
+    action: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    endSnd: BooleanValue | undefined;
+    highlightClick: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    sndName: StringValue | undefined;
+    source: StringValue | undefined;
+    tgtFrame: StringValue | undefined;
+    tooltip: StringValue | undefined;
 }
 
 // @public
 abstract class OpenXmlIdentifierElement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    val: UInt32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -11373,11 +12215,18 @@ abstract class OpenXmlImgDataElement extends OpenXmlLeafElement {
 // @public
 abstract class OpenXmlPivotItemSubtotalElement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    itemLocation: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    subtotalType: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -11385,7 +12234,7 @@ abstract class OpenXmlPoint3DElement extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "";
     // (undocumented)
@@ -11401,21 +12250,36 @@ abstract class OpenXmlPoint3DElement extends OpenXmlLeafElement {
 // @public
 abstract class OpenXmlPositiveRatioElement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    d: UInt64Value | undefined;
+    // (undocumented)
     readonly localName: "";
+    n: UInt64Value | undefined;
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    validateRequired(): void;
 }
 
 // @public
 abstract class OpenXmlRelativeRectPropsElement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    b: Int32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    l: Int32Value | undefined;
+    // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    r: Int32Value | undefined;
+    t: Int32Value | undefined;
 }
 
 // @public
@@ -11431,51 +12295,83 @@ abstract class OpenXmlTableRevDxfElement extends OpenXmlCompositeElement {
 // @public
 abstract class OpenXmlTaskAssignUnassignUserElement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    validateRequired(): void;
 }
 
 // @public
 abstract class OpenXmlTaskAssignUnassignUserElement_2 extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    validateRequired(): void;
 }
 
 // @public
 abstract class OpenXmlTaskAssignUnassignUserElement_3 extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    validateRequired(): void;
 }
 
 // @public
 abstract class OpenXmlTaskUserElement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    userId: StringValue | undefined;
+    userName: StringValue | undefined;
+    userProvider: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 abstract class OpenXmlWebImageSupportingRichDataRelationshipElement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "";
     // (undocumented)
     readonly namespaceUri: "";
     // (undocumented)
     readonly prefix: "";
+    validateRequired(): void;
 }
 
 // @public
@@ -11515,23 +12411,36 @@ class OsfTaskPaneAppMonikerList extends OpenXmlCompositeElement {
 // @public
 class Outline extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    isCollapsed: BooleanValue | undefined;
+    level: ByteValue | undefined;
+    // (undocumented)
     readonly localName: "outline";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    validateRequired(): void;
 }
 
 // @public
 class Outlines extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    isRow: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "outlines";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    validateRequired(): void;
 }
 
 // @public
@@ -11540,7 +12449,7 @@ class ParentCommentIdentifier extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     authorId: UInt32Value | undefined;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "parentCm";
@@ -11605,23 +12514,37 @@ class PercentageWidth extends OpenXmlLeafElement {
 // @public
 class PersistentDocumentId extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "docId";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2012/wordml";
     // (undocumented)
     readonly prefix: "w15";
+    val: StringValue | undefined;
 }
 
 // @public
 class Person extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    displayName: StringValue | undefined;
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "person";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2018/threadedcomments";
     // (undocumented)
     readonly prefix: "xltc";
+    providerId: StringValue | undefined;
+    userId: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -11632,7 +12555,7 @@ class Person_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "person";
     // (undocumented)
@@ -11657,43 +12580,68 @@ class PersonList extends OpenXmlCompositeElement {
 // @public
 class PerspectiveProjection extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    fov: Int32Value | undefined;
     // (undocumented)
     readonly localName: "perspective";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    validateRequired(): void;
 }
 
 // @public
 class PictureAttributionSourceURL extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "picAttrSrcUrl";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2016/11/main";
     // (undocumented)
     readonly prefix: "a1611";
+    validateRequired(): void;
 }
 
 // @public
 class PictureAttributionSourceURL_2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "attrSrcUrl";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    validateRequired(): void;
 }
 
 // @public
 class PictureMoniker extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    creationId: StringValue | undefined;
+    id: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "picMk";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    validateRequired(): void;
 }
 
 // @public
@@ -11735,33 +12683,52 @@ class PivotAreaReferenceSubtotals extends OpenXmlCompositeElement {
 // @public
 class PivotCacheDataSource extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "pivotCacheDataSource";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2025/pivotDataSource";
     // (undocumented)
     readonly prefix: "xlpds";
+    ref: StringValue | undefined;
 }
 
 // @public
 class PivotCacheDynamicArray extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "pivotCacheDynamicArray";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2024/pivotDynamicArrays";
     // (undocumented)
     readonly prefix: "xlpda";
+    ref: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class PivotCacheRichInfo extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "richInfo";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/pivotRichData";
+    pivotCacheGuid: StringValue | undefined;
+    pivotIgnoreInvalidCache: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "xprd";
+    validateRequired(): void;
 }
 
 // @public
@@ -11815,11 +12782,17 @@ class PivotSource extends OpenXmlCompositeElement {
 // @public
 class PivotSubtotalType extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "subtotal";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2023/pivot2023Calculation";
     // (undocumented)
     readonly prefix: "xlpcalc";
+    subtotalType: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -11839,7 +12812,7 @@ class pivotTableDefinition extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     columnGrandTotals: BooleanValue | undefined;
     columnHeaderCaption: StringValue | undefined;
     compact: BooleanValue | undefined;
@@ -11910,11 +12883,18 @@ class pivotTableDefinition extends OpenXmlCompositeElement {
 // @public
 class PivotTableDefinition16 extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    enabledSubtotalsDefault: BooleanValue | undefined;
+    insertBlankRowDefault: BooleanValue | undefined;
+    // (undocumented)
     readonly localName: "pivotTableDefinition16";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2016/pivotdefaultlayout";
     // (undocumented)
     readonly prefix: "xpdl";
+    subtotalsOnTopDefault: BooleanValue | undefined;
 }
 
 // @public
@@ -11972,7 +12952,7 @@ class PlotArea extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "plotArea";
     modifiers: ListValue<StringValue> | undefined;
@@ -11989,7 +12969,7 @@ class PlotArea3D extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "plotArea3D";
     modifiers: ListValue<StringValue> | undefined;
@@ -12004,7 +12984,7 @@ class Point2DType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "off";
     // (undocumented)
@@ -12021,7 +13001,7 @@ class Point2DType_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "pos";
     // (undocumented)
@@ -12036,13 +13016,20 @@ class Point2DType_2 extends OpenXmlLeafElement {
 // @public
 class PointLight extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    enabled: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "ptLight";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    rad: Int64Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -12050,7 +13037,7 @@ class PosPoint3D extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "pos";
     // (undocumented)
@@ -12065,12 +13052,19 @@ class PosPoint3D extends OpenXmlLeafElement {
 
 // @public
 class PosterFrame extends OpenXmlLeafElement {
+    animId: UInt32Value | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    frame: Int32Value | undefined;
     // (undocumented)
     readonly localName: "posterFrame";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2018/animation/model3d";
     // (undocumented)
     readonly prefix: "a3danim";
+    validateRequired(): void;
 }
 
 // @public
@@ -12078,7 +13072,7 @@ class PostTransVector3D extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     dx: Int64Value | undefined;
     dy: Int64Value | undefined;
     dz: Int64Value | undefined;
@@ -12094,9 +13088,14 @@ class PostTransVector3D extends OpenXmlLeafElement {
 // @public
 class PredecessorDrawingElementReference extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "predDERef";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2014/main";
+    pred: StringValue | undefined;
     // (undocumented)
     readonly prefix: "a16";
 }
@@ -12106,7 +13105,7 @@ class PresenceInfo extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "presenceInfo";
     // (undocumented)
@@ -12121,11 +13120,18 @@ class PresenceInfo extends OpenXmlLeafElement {
 // @public
 class PresenceInfo_2 extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "presenceInfo";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2012/wordml";
     // (undocumented)
     readonly prefix: "w15";
+    providerId: StringValue | undefined;
+    userId: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -12133,7 +13139,9 @@ class PresetTransition extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
+    invX: BooleanValue | undefined;
+    invY: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "prstTrans";
     // (undocumented)
@@ -12148,7 +13156,7 @@ class PreTransVector3D extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     dx: Int64Value | undefined;
     dy: Int64Value | undefined;
     dz: Int64Value | undefined;
@@ -12216,13 +13224,19 @@ abstract class QatItemsType_2 extends OpenXmlCompositeElement {
 // @public
 class Question extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "question";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2023/msForms";
     // (undocumented)
     readonly prefix: "xlmsforms";
+    validateRequired(): void;
 }
 
 // @public
@@ -12254,7 +13268,7 @@ class QuickAccessToolbarControlClone extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -12310,7 +13324,7 @@ class RadioButtonBackstageItem extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getLabel: StringValue | undefined;
     id: StringValue | undefined;
     label: StringValue | undefined;
@@ -12330,7 +13344,7 @@ class RadioGroup extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     expand: StringValue | undefined;
     getEnabled: StringValue | undefined;
@@ -12361,7 +13375,7 @@ abstract class RatioType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     denominator: Int32Value | undefined;
     // (undocumented)
     readonly localName: "";
@@ -12376,25 +13390,38 @@ abstract class RatioType extends OpenXmlLeafElement {
 // @public
 class Reaction extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "rxn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2022/03/main";
     // (undocumented)
     readonly prefix: "p223";
+    type: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class ReactionInstance extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "instance";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2022/03/main";
     // (undocumented)
     readonly prefix: "p223";
+    time: DateTimeValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -12412,11 +13439,17 @@ class Reactions extends OpenXmlCompositeElement {
 // @public
 class ReadonlyRecommended extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "readonlyRecommended";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2017/10/main";
     // (undocumented)
     readonly prefix: "p1710";
+    val: BooleanValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -12424,7 +13457,7 @@ class RecolorImages extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "recolorImg";
     // (undocumented)
@@ -12439,7 +13472,7 @@ class RecordHashCode extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "hash";
     // (undocumented)
@@ -12455,7 +13488,7 @@ class RecordIncluded extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "active";
     // (undocumented)
@@ -12467,12 +13500,24 @@ class RecordIncluded extends OpenXmlLeafElement {
 
 // @public
 class RefCell extends OpenXmlLeafElement {
+    ajt: StringValue | undefined;
+    ajtx: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    homeRef: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "ref";
+    n: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    r: ListValue<StringValue> | undefined;
+    uid: StringValue | undefined;
+    uidLast: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -12509,22 +13554,50 @@ class RefMap extends OpenXmlCompositeElement {
 
 // @public
 class RefOartAnchor extends OpenXmlLeafElement {
+    ajt: StringValue | undefined;
+    ajtx: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    cx: Int64Value | undefined;
+    cy: Int64Value | undefined;
+    fromColOff: Int64Value | undefined;
+    fromRowOff: Int64Value | undefined;
+    homeRef: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "oartAnchor";
+    n: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
+    oat: StringValue | undefined;
     // (undocumented)
     readonly prefix: "xr";
+    r: StringValue | undefined;
+    toColOff: Int64Value | undefined;
+    toRowOff: Int64Value | undefined;
+    validateRequired(): void;
+    x: Int64Value | undefined;
+    y: Int64Value | undefined;
 }
 
 // @public
 class RefTest extends OpenXmlLeafElement {
+    ajt: StringValue | undefined;
+    ajtx: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    homeRef: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "test";
+    n: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    validateRequired(): void;
 }
 
 // Warning: (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
@@ -12539,7 +13612,7 @@ class RelativeHeight extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "sizeRelV";
     // (undocumented)
@@ -12553,11 +13626,17 @@ class RelativeHeight extends OpenXmlCompositeElement {
 // @public
 class RelativeUrlAlternateUrl extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "relativeUrl";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2021/extlinks2021";
     // (undocumented)
     readonly prefix: "xxl21";
+    validateRequired(): void;
 }
 
 // @public
@@ -12567,7 +13646,7 @@ class RelativeWidth extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "sizeRelH";
     // (undocumented)
@@ -12581,11 +13660,17 @@ class RelativeWidth extends OpenXmlCompositeElement {
 // @public
 class RelFeatureProperty extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    k: StringValue | undefined;
+    // (undocumented)
     readonly localName: "rel";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag";
     // (undocumented)
     readonly prefix: "xfpb";
+    validateRequired(): void;
 }
 
 // @public
@@ -12603,7 +13688,7 @@ class RepurposedCommand extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     idMso: StringValue | undefined;
@@ -12733,23 +13818,37 @@ class ResetXsdboolean extends OpenXmlLeafElement {
 // @public
 class ResourceUrl extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    linkage: StringValue | undefined;
+    // (undocumented)
     readonly localName: "imgUrl";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    src: StringValue | undefined;
 }
 
 // @public
 class RevCell extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "c";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
+    nop: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "xr";
+    rep: UInt32Value | undefined;
+    t: StringValue | undefined;
+    tick: BooleanValue | undefined;
 }
 
 // @public
@@ -12767,125 +13866,274 @@ class RevDxf extends OpenXmlCompositeElement {
 // @public
 class RevExChangeCell extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
+    listUid: StringValue | undefined;
     // (undocumented)
     readonly localName: "xrrc";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    r: StringValue | undefined;
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    t: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
+    w: UInt32Value | undefined;
+    x: StringValue | undefined;
 }
 
 // @public
 class RevExChgObj extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
     // (undocumented)
     readonly localName: "xrrco";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevExDefinedName extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    comment: StringValue | undefined;
+    ctx: StringValue | undefined;
+    customMenu: StringValue | undefined;
+    customView: BooleanValue | undefined;
+    description: StringValue | undefined;
+    function: BooleanValue | undefined;
+    functionGroupId: ByteValue | undefined;
+    help: StringValue | undefined;
+    hidden: BooleanValue | undefined;
+    // (undocumented)
     readonly localName: "xrrDefName";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    shortcutKey: ByteValue | undefined;
+    statusBar: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevExDelObj extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
     // (undocumented)
     readonly localName: "xrrdo";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevExFormatting extends OpenXmlCompositeElement {
+    applyAlignment: BooleanValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    applyBorder: BooleanValue | undefined;
+    applyFill: BooleanValue | undefined;
+    applyFont: BooleanValue | undefined;
+    applyNumberFormat: BooleanValue | undefined;
+    applyProtection: BooleanValue | undefined;
     // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
+    fBlankCell: BooleanValue | undefined;
+    length: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "xrrf";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
+    numFmtId: UInt32Value | undefined;
     // (undocumented)
     readonly prefix: "xr";
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    sqref: ListValue<StringValue> | undefined;
+    start: UInt32Value | undefined;
+    style: BooleanValue | undefined;
+    styleUid: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
+    xfDxf: BooleanValue | undefined;
 }
 
 // @public
 class RevExFuture extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
     // (undocumented)
     readonly localName: "xrrftr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    sti: BooleanValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevExHeader extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "hdr";
+    maxRev: UInt64Value | undefined;
+    minRev: UInt64Value | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    time: DateTimeValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevExHeaders extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    docId: StringValue | undefined;
+    endpointId: StringValue | undefined;
+    // (undocumented)
     readonly localName: "revHdrs";
+    maxRev: UInt64Value | undefined;
+    minRev: UInt64Value | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    validateRequired(): void;
 }
 
 // @public
 class RevExMove extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
+    dst: StringValue | undefined;
     // (undocumented)
     readonly localName: "xrrm";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    src: StringValue | undefined;
+    srcSh: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevExRowColumn extends OpenXmlLeafElement {
+    action: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
+    eol: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "xrrrc";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    ref: StringValue | undefined;
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevExSheetOp extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
+    idNew: UInt32Value | undefined;
+    idOrig: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "xrrSheet";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
+    op: StringValue | undefined;
     // (undocumented)
     readonly prefix: "xr";
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -12913,53 +14161,108 @@ class RevExTest extends OpenXmlLeafElement {
 // @public
 class RevExTrimmed extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
+    // (undocumented)
     readonly localName: "xrrTrim";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevExUnsupported extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
     // (undocumented)
     readonly localName: "xrrUspt";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevGroup extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
     // (undocumented)
     readonly localName: "xrrg";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevisionList extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
+    data: BooleanValue | undefined;
+    fake: BooleanValue | undefined;
+    formatting: BooleanValue | undefined;
+    headers: BooleanValue | undefined;
+    insDelHeaders: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "xrrList";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    rangeBased: BooleanValue | undefined;
+    ref: StringValue | undefined;
+    rev: UInt64Value | undefined;
+    rId: UInt32Value | undefined;
+    sh: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RevisionPtr extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    documentId: StringValue | undefined;
     // (undocumented)
     readonly localName: "revisionPtr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    revIDLastSave: UInt64Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -12977,21 +14280,39 @@ class RevisionState extends OpenXmlCompositeElement {
 // @public
 class RevisionStateLink extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "link";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    validateRequired(): void;
 }
 
 // @public
 class RevListAutoExpandRw extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    ctx: StringValue | undefined;
+    listGuid: StringValue | undefined;
     // (undocumented)
     readonly localName: "xrrListExpR";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    refAdded: StringValue | undefined;
+    rev: UInt64Value | undefined;
+    sh: StringValue | undefined;
+    uid: StringValue | undefined;
+    uidp: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -13001,7 +14322,7 @@ class Ribbon extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "ribbon";
     // (undocumented)
@@ -13018,7 +14339,7 @@ class Ribbon_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "ribbon";
     // (undocumented)
@@ -13033,10 +14354,11 @@ class RichDateGroupItem extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     dateTimeGrouping: StringValue | undefined;
     day: UInt16Value | undefined;
     hour: UInt16Value | undefined;
+    key: StringValue | undefined;
     // (undocumented)
     readonly localName: "dateGroupItem";
     minute: UInt16Value | undefined;
@@ -13053,11 +14375,19 @@ class RichDateGroupItem extends OpenXmlLeafElement {
 // @public
 class RichFilter extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    blank: BooleanValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    key: StringValue | undefined;
+    // (undocumented)
     readonly localName: "filter";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
+    nodata: BooleanValue | undefined;
     // (undocumented)
     readonly prefix: "xlrd2";
+    val: StringValue | undefined;
 }
 
 // @public
@@ -13099,11 +14429,18 @@ class RichFormatProperties extends OpenXmlCompositeElement {
 // @public
 class RichFormatProperty extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "rPr";
+    n: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    t: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -13111,7 +14448,7 @@ class RichSortCondition extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     customList: StringValue | undefined;
     descending: BooleanValue | undefined;
     formatId: UInt32Value | undefined;
@@ -13124,6 +14461,7 @@ class RichSortCondition extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "xlrd2";
     reference: StringValue | undefined;
+    richSortKey: StringValue | undefined;
     sortBy: StringValue | undefined;
     validateRequired(): void;
 }
@@ -13133,7 +14471,7 @@ class RichSortCondition_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     customList: StringValue | undefined;
     descending: BooleanValue | undefined;
     formatId: UInt32Value | undefined;
@@ -13146,6 +14484,7 @@ class RichSortCondition_2 extends OpenXmlLeafElement {
     // (undocumented)
     readonly prefix: "xnsv";
     reference: StringValue | undefined;
+    richSortKey: StringValue | undefined;
     sortBy: StringValue | undefined;
     validateRequired(): void;
 }
@@ -13153,7 +14492,12 @@ class RichSortCondition_2 extends OpenXmlLeafElement {
 // @public
 class RichStyle extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    dxfid: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "rSty";
     // (undocumented)
@@ -13165,11 +14509,17 @@ class RichStyle extends OpenXmlCompositeElement {
 // @public
 class RichStylePropertyValue extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    i: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "rpv";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    validateRequired(): void;
 }
 
 // @public
@@ -13201,8 +14551,9 @@ class RichTop10 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     filterValue: DoubleValue | undefined;
+    key: StringValue | undefined;
     // (undocumented)
     readonly localName: "top10";
     // (undocumented)
@@ -13218,45 +14569,68 @@ class RichTop10 extends OpenXmlLeafElement {
 // @public
 class RichValue extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "rv";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata";
     // (undocumented)
     readonly prefix: "xlrd";
+    s: UInt32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RichValueBlock extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    i: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "rvb";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata";
     // (undocumented)
     readonly prefix: "xlrd";
+    validateRequired(): void;
 }
 
 // @public
 class RichValueData extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "rvData";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata";
     // (undocumented)
     readonly prefix: "xlrd";
+    validateRequired(): void;
 }
 
 // @public
 class RichValueFallback extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "fb";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata";
     // (undocumented)
     readonly prefix: "xlrd";
+    t: StringValue | undefined;
 }
 
 // @public
@@ -13274,11 +14648,19 @@ class RichValueGlobalType extends OpenXmlCompositeElement {
 // @public
 class RichValueRefreshInterval extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    interval: Int32Value | undefined;
+    // (undocumented)
     readonly localName: "refreshInterval";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2020/richvaluerefresh";
     // (undocumented)
     readonly prefix: "xlrvr";
+    resourceIdInt: Int32Value | undefined;
+    resourceIdStr: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -13296,11 +14678,17 @@ class RichValueRefreshIntervals extends OpenXmlCompositeElement {
 // @public
 class RichValueRelRelationship extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "rel";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/richvaluerel";
     // (undocumented)
     readonly prefix: "xlrvrel";
+    validateRequired(): void;
 }
 
 // @public
@@ -13318,37 +14706,55 @@ class RichValueRels extends OpenXmlCompositeElement {
 // @public
 class RichValueStructure extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "s";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata";
     // (undocumented)
     readonly prefix: "xlrd";
+    t: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RichValueStructures extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "rvStructures";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata";
     // (undocumented)
     readonly prefix: "xlrd";
+    validateRequired(): void;
 }
 
 // @public
 class RichValueType extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "type";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    validateRequired(): void;
 }
 
 // @public
@@ -13366,23 +14772,36 @@ class RichValueTypeKeyFlags extends OpenXmlCompositeElement {
 // @public
 class RichValueTypeReservedKey extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "key";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    validateRequired(): void;
 }
 
 // @public
 class RichValueTypeReservedKeyFlag extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "flag";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    validateRequired(): void;
+    value: BooleanValue | undefined;
 }
 
 // @public
@@ -13424,6 +14843,13 @@ class RoamingProperty extends OpenXmlCompositeElement {
 // @public
 class Rotate3D extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    ax: Int32Value | undefined;
+    ay: Int32Value | undefined;
+    az: Int32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "rot";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
@@ -13443,22 +14869,37 @@ class RotWithShapeEmpty extends OpenXmlLeafElement {
 
 // @public
 class RowColVisualOps extends OpenXmlLeafElement {
+    action: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    isRow: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "rowColVisualOps";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    size: UInt32Value | undefined;
+    userSized: BooleanValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class RowIdIdentifier extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "rowId";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2014/main";
     // (undocumented)
     readonly prefix: "a16";
+    val: UInt32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -13468,7 +14909,7 @@ class RowSortMap extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "rowSortMap";
@@ -13485,7 +14926,7 @@ class RowSortMapItem extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "row";
     // (undocumented)
@@ -13514,7 +14955,7 @@ class SampleRate extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "sampleRate";
     // (undocumented)
@@ -13573,13 +15014,18 @@ class Scope extends OpenXmlLeafElement {
 // @public
 class ScriptLink extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "scriptLink";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2021/scriptlink";
     // (undocumented)
     readonly prefix: "asl";
+    val: StringValue | undefined;
 }
 
 // @public
@@ -13633,7 +15079,7 @@ class SectionTitle extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "sectionTitle";
     // (undocumented)
@@ -13649,7 +15095,7 @@ class Separator extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getVisible: StringValue | undefined;
     id: StringValue | undefined;
     insertAfterMso: StringValue | undefined;
@@ -13674,7 +15120,7 @@ class Sequence extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     confidence: DecimalValue | undefined;
     cost: DecimalValue | undefined;
     dialogTurn: StringValue | undefined;
@@ -13725,7 +15171,7 @@ class SeriesAxis extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "seriesAxis";
     modifiers: ListValue<StringValue> | undefined;
@@ -13740,7 +15186,7 @@ class SeriesAxisProperties extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     labelPosition: StringValue | undefined;
     // (undocumented)
     readonly localName: "seriesAxis";
@@ -13763,7 +15209,7 @@ class SeriesLine extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "seriesLine";
     modifiers: ListValue<StringValue> | undefined;
@@ -13780,7 +15226,7 @@ class Shape extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "sp";
     modelId: StringValue | undefined;
@@ -13794,11 +15240,18 @@ class Shape extends OpenXmlCompositeElement {
 // @public
 class ShapeMoniker extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    creationId: StringValue | undefined;
+    id: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "spMk";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    validateRequired(): void;
 }
 
 // @public
@@ -13833,7 +15286,7 @@ class ShapeProperties extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "spPr";
     // (undocumented)
@@ -13850,7 +15303,7 @@ class ShapeProperties_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "spPr";
     // (undocumented)
@@ -13867,7 +15320,7 @@ class ShapeProperties_3 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "spPr";
     // (undocumented)
@@ -13884,7 +15337,7 @@ class ShapeProperties_4 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "spPr";
     // (undocumented)
@@ -13901,7 +15354,7 @@ class ShapeProperties_5 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "spPr";
     // (undocumented)
@@ -13918,7 +15371,7 @@ class ShapeProperties_6 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "spPr";
     // (undocumented)
@@ -13935,7 +15388,7 @@ class ShapeProperties_7 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "spPr";
     // (undocumented)
@@ -13952,7 +15405,7 @@ class ShapeProperties_8 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "spPr";
     // (undocumented)
@@ -13969,7 +15422,7 @@ class ShapeProperties_9 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "spPr";
     // (undocumented)
@@ -14045,7 +15498,7 @@ class SharedComFont extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "font";
@@ -14061,7 +15514,7 @@ class SharedComPicture extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "picture";
@@ -14097,12 +15550,22 @@ class SharedQatControls extends OpenXmlCompositeElement {
 
 // @public
 class SheetXluid extends OpenXmlLeafElement {
+    ajt: StringValue | undefined;
+    ajtx: StringValue | undefined;
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    homeRef: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "sheetUid";
+    n: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    uid: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -14110,7 +15573,7 @@ class ShowDataLabelsRange extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "showDataLabelsRange";
     // (undocumented)
@@ -14123,11 +15586,18 @@ class ShowDataLabelsRange extends OpenXmlLeafElement {
 // @public
 class ShowGridlinesHeadings extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "showGridlinesHeadings";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    showGridLines: BooleanValue | undefined;
+    showRowCol: BooleanValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -14135,7 +15605,7 @@ class ShowLeaderLines extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "showLeaderLines";
     // (undocumented)
@@ -14160,7 +15630,7 @@ class ShowSketchButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "showSketchBtn";
     // (undocumented)
@@ -14177,7 +15647,7 @@ class SignatureLine extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     isSignatureLine: BooleanValue | undefined;
     // (undocumented)
@@ -14239,7 +15709,7 @@ class Slicer extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "slicer";
     name: StringValue | undefined;
@@ -14289,11 +15759,18 @@ class SlideLayoutMonikerList extends OpenXmlCompositeElement {
 // @public
 class SlideMoniker extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    cId: UInt32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "sldMk";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2013/main/command";
     // (undocumented)
     readonly prefix: "pc";
+    sldId: UInt32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -14327,7 +15804,7 @@ class Snapshot extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     compressionState: StringValue | undefined;
     embed: StringValue | undefined;
     link: StringValue | undefined;
@@ -14354,7 +15831,7 @@ class SortCondition extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     customList: StringValue | undefined;
     descending: BooleanValue | undefined;
     formatId: UInt32Value | undefined;
@@ -14376,7 +15853,7 @@ abstract class SortMapItemType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "";
     // (undocumented)
@@ -14391,25 +15868,38 @@ abstract class SortMapItemType extends OpenXmlLeafElement {
 // @public
 class SortRule extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    colId: UInt32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "sortRule";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews";
     // (undocumented)
     readonly prefix: "xnsv";
+    validateRequired(): void;
 }
 
 // @public
 class SortRules extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    caseSensitive: BooleanValue | undefined;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "sortRules";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews";
     // (undocumented)
     readonly prefix: "xnsv";
+    sortMethod: StringValue | undefined;
 }
 
 // @public
@@ -14417,7 +15907,7 @@ class SourceLink extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     direction: StringValue | undefined;
     // (undocumented)
     readonly localName: "sourceLink";
@@ -14433,7 +15923,7 @@ class SourceProperty extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "srcProperty";
     name: StringValue | undefined;
@@ -14463,7 +15953,7 @@ class SparklineGroup extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     dateAxis: BooleanValue | undefined;
     displayEmptyCellsAs: StringValue | undefined;
     displayHidden: BooleanValue | undefined;
@@ -14496,7 +15986,7 @@ class SplitButton extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getKeytip: StringValue | undefined;
@@ -14530,7 +16020,7 @@ class SplitButton_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getKeytip: StringValue | undefined;
@@ -14564,7 +16054,7 @@ class SplitButtonRegular extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getKeytip: StringValue | undefined;
@@ -14596,7 +16086,7 @@ class SplitButtonWithTitle extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getKeytip: StringValue | undefined;
@@ -14628,7 +16118,7 @@ class SplitButtonWithTitle_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getKeytip: StringValue | undefined;
@@ -14656,13 +16146,21 @@ class SplitButtonWithTitle_2 extends OpenXmlCompositeElement {
 // @public
 class SpotLight extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    enabled: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "spotLight";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    rad: Int64Value | undefined;
+    spotAng: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -14678,23 +16176,41 @@ class SrcRectEmpty extends OpenXmlLeafElement {
 // @public
 class SrcRectRelativeRectProps extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    b: Int32Value | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    l: Int32Value | undefined;
+    // (undocumented)
     readonly localName: "srcRect";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    r: Int32Value | undefined;
+    t: Int32Value | undefined;
 }
 
 // @public
 class StateBasedHeader extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    eft: StringValue | undefined;
+    eftx: StringValue | undefined;
     // (undocumented)
     readonly localName: "hdr";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
     // (undocumented)
     readonly prefix: "xr";
+    seft: StringValue | undefined;
+    seftx: StringValue | undefined;
+    uid: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -14714,7 +16230,7 @@ class StCxnConnection extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: UInt32Value | undefined;
     index: UInt32Value | undefined;
     // (undocumented)
@@ -14773,11 +16289,17 @@ class StringDataType_2 extends OpenXmlCompositeElement {
 // @public
 class StringFeatureProperty extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    k: StringValue | undefined;
+    // (undocumented)
     readonly localName: "s";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag";
     // (undocumented)
     readonly prefix: "xfpb";
+    validateRequired(): void;
 }
 
 // @public
@@ -14797,7 +16319,7 @@ class Style extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "style";
     // (undocumented)
@@ -14815,7 +16337,7 @@ class StyleColor extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "styleClr";
     // (undocumented)
@@ -14830,7 +16352,7 @@ abstract class StyleEntry extends OpenXmlCompositeElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "";
     modifiers: ListValue<StringValue> | undefined;
@@ -14845,7 +16367,7 @@ abstract class StyleMatrixReferenceType extends OpenXmlCompositeElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "";
@@ -14861,7 +16383,7 @@ abstract class StyleReference extends OpenXmlCompositeElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     index: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "";
@@ -14876,21 +16398,35 @@ abstract class StyleReference extends OpenXmlCompositeElement {
 // @public
 class SubtotalLineItemPivotItemSubtotal extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    itemLocation: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "subtotalLineItem";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2023/pivot2023Calculation";
     // (undocumented)
     readonly prefix: "xlpcalc";
+    subtotalType: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class SubtotalPivotItemSubtotal extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    itemLocation: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "subtotal";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2023/pivot2023Calculation";
     // (undocumented)
     readonly prefix: "xlpcalc";
+    subtotalType: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -14908,69 +16444,105 @@ class SummaryZoomMonikerList extends OpenXmlCompositeElement {
 // @public
 class SupportingPropertyBag extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "spb";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    s: UInt32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class SupportingPropertyBagArray extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "a";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    validateRequired(): void;
 }
 
 // @public
 class SupportingPropertyBagArrayData extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "spbArrays";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    validateRequired(): void;
 }
 
 // @public
 class SupportingPropertyBagArrayValue extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "v";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    t: StringValue | undefined;
 }
 
 // @public
 class SupportingPropertyBagData extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "spbData";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    validateRequired(): void;
 }
 
 // @public
 class SupportingPropertyBagKey extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "k";
+    n: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    t: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -15000,13 +16572,19 @@ class SupportingPropertyBagStructure extends OpenXmlCompositeElement {
 // @public
 class SupportingPropertyBagStructures extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    count: UInt32Value | undefined;
     // (undocumented)
     readonly localName: "spbStructures";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2";
     // (undocumented)
     readonly prefix: "xlrd2";
+    validateRequired(): void;
 }
 
 // @public
@@ -15036,7 +16614,7 @@ class SVGBlip extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     embed: StringValue | undefined;
     link: StringValue | undefined;
     // (undocumented)
@@ -15064,7 +16642,7 @@ class SxRatio extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     denominator: Int32Value | undefined;
     // (undocumented)
     readonly localName: "sx";
@@ -15089,6 +16667,12 @@ class SXsdstring extends OpenXmlLeafElement {
 // @public
 class SymEx extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    char: HexBinaryValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    font: StringValue | undefined;
+    // (undocumented)
     readonly localName: "symEx";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/word/2015/wordml/symex";
@@ -15111,7 +16695,7 @@ class SyRatio extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     denominator: Int32Value | undefined;
     // (undocumented)
     readonly localName: "sy";
@@ -15126,11 +16710,18 @@ class SyRatio extends OpenXmlLeafElement {
 // @public
 class SzPositiveRatio extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    d: UInt64Value | undefined;
+    // (undocumented)
     readonly localName: "sz";
+    n: UInt64Value | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2017/model3d";
     // (undocumented)
     readonly prefix: "am3d";
+    validateRequired(): void;
 }
 
 // @public
@@ -15138,7 +16729,7 @@ class SzRatio extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     denominator: Int32Value | undefined;
     // (undocumented)
     readonly localName: "sz";
@@ -15157,7 +16748,7 @@ class Tab extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getKeytip: StringValue | undefined;
     getLabel: StringValue | undefined;
     getVisible: StringValue | undefined;
@@ -15187,7 +16778,7 @@ class Tab_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getKeytip: StringValue | undefined;
     getLabel: StringValue | undefined;
     getVisible: StringValue | undefined;
@@ -15216,7 +16807,7 @@ class Table extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     interpolation: StringValue | undefined;
     // (undocumented)
@@ -15318,7 +16909,7 @@ class TabSet extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getVisible: StringValue | undefined;
     idMso: StringValue | undefined;
     // (undocumented)
@@ -15334,13 +16925,19 @@ class TabSet extends OpenXmlCompositeElement {
 // @public
 class Task extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "Task";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
     // (undocumented)
     readonly prefix: "t";
+    validateRequired(): void;
 }
 
 // @public
@@ -15414,7 +17011,13 @@ class TaskDeleteEventInfo extends OpenXmlLeafElement {
 // @public
 class TaskDetails extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    deleted: BooleanValue | undefined;
+    inactive: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "taskDetails";
     // (undocumented)
@@ -15425,12 +17028,13 @@ class TaskDetails extends OpenXmlCompositeElement {
 
 // @public
 class TaskFormGroup extends OpenXmlCompositeElement {
+    allowedTaskSizes: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getHelperText: StringValue | undefined;
     getLabel: StringValue | undefined;
     getShowLabel: StringValue | undefined;
@@ -15458,7 +17062,7 @@ class TaskFormGroupCategory extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getLabel: StringValue | undefined;
     getVisible: StringValue | undefined;
     id: StringValue | undefined;
@@ -15486,7 +17090,7 @@ class TaskFormGroupTask extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -15518,12 +17122,13 @@ class TaskFormGroupTask extends OpenXmlCompositeElement {
 
 // @public
 class TaskGroup extends OpenXmlCompositeElement {
+    allowedTaskSizes: StringValue | undefined;
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getHelperText: StringValue | undefined;
     getLabel: StringValue | undefined;
     getShowLabel: StringValue | undefined;
@@ -15555,7 +17160,7 @@ class TaskGroupCategory extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getLabel: StringValue | undefined;
     getVisible: StringValue | undefined;
     id: StringValue | undefined;
@@ -15581,7 +17186,7 @@ class TaskGroupTask extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -15664,73 +17269,113 @@ class TaskHistory_4 extends OpenXmlCompositeElement {
 // @public
 class TaskHistoryDetails extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "taskHistoryDetails";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    validateRequired(): void;
 }
 
 // @public
 class TaskHistoryDetails_2 extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "taskHistoryDetails";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    validateRequired(): void;
 }
 
 // @public
 class TaskHistoryEvent extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "event";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    time: DateTimeValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskHistoryEvent_2 extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "event";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    time: DateTimeValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskHistoryEvent_3 extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "event";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2022/08/main";
     // (undocumented)
     readonly prefix: "p228";
+    time: DateTimeValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskHistoryEvent_4 extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "Event";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
     // (undocumented)
     readonly prefix: "t";
+    time: DateTimeValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -15748,71 +17393,113 @@ class Taskpanes extends OpenXmlCompositeElement {
 // @public
 class TaskPriorityEventInfo extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "Priority";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
     // (undocumented)
     readonly prefix: "t";
+    validateRequired(): void;
+    value: Int32Value | undefined;
 }
 
 // @public
 class TaskPriorityRecord extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "pri";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskPriorityRecord_2 extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "pri";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskProgressEventInfo extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "pcntCmplt";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskProgressEventInfo_2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "pcntCmplt";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskProgressEventInfo_3 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "pcntCmplt";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2022/08/main";
     // (undocumented)
     readonly prefix: "p228";
+    val: Int32Value | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskProgressEventInfo_4 extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "Progress";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
+    percentComplete: Int32Value | undefined;
     // (undocumented)
     readonly prefix: "t";
+    validateRequired(): void;
 }
 
 // @public
@@ -15830,81 +17517,129 @@ class Tasks extends OpenXmlCompositeElement {
 // @public
 class TaskScheduleEventInfo extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    endDt: DateTimeValue | undefined;
+    // (undocumented)
     readonly localName: "date";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    stDt: DateTimeValue | undefined;
 }
 
 // @public
 class TaskScheduleEventInfo_2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    endDt: DateTimeValue | undefined;
     // (undocumented)
     readonly localName: "date";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    stDt: DateTimeValue | undefined;
 }
 
 // @public
 class TaskScheduleEventInfo_3 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    endDt: DateTimeValue | undefined;
     // (undocumented)
     readonly localName: "date";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2022/08/main";
     // (undocumented)
     readonly prefix: "p228";
+    stDt: DateTimeValue | undefined;
 }
 
 // @public
 class TaskScheduleEventInfo_4 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    dueDate: DateTimeValue | undefined;
     // (undocumented)
     readonly localName: "Schedule";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
     // (undocumented)
     readonly prefix: "t";
+    startDate: DateTimeValue | undefined;
 }
 
 // @public
 class TaskTitleEventInfo extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "title";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    val: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskTitleEventInfo_2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "title";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    val: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskTitleEventInfo_3 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "title";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2022/08/main";
     // (undocumented)
     readonly prefix: "p228";
+    val: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
 class TaskTitleEventInfo_4 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "SetTitle";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
     // (undocumented)
     readonly prefix: "t";
+    title: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -15930,41 +17665,65 @@ class TaskUndeleteEventInfo extends OpenXmlLeafElement {
 // @public
 class TaskUndo extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "undo";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    validateRequired(): void;
 }
 
 // @public
 class TaskUndo_2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "undo";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    validateRequired(): void;
 }
 
 // @public
 class TaskUndo_3 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "undo";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2022/08/main";
     // (undocumented)
     readonly prefix: "p228";
+    validateRequired(): void;
 }
 
 // @public
 class TaskUndo_4 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "Undo";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
     // (undocumented)
     readonly prefix: "t";
+    validateRequired(): void;
 }
 
 // @public
@@ -16053,7 +17812,7 @@ class TextBodyProperties extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     columnCount: Int32Value | undefined;
     columnSpacing: Int32Value | undefined;
     compatibleLineSpacing: BooleanValue | undefined;
@@ -16088,7 +17847,7 @@ class TextBodyProperties_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     columnCount: Int32Value | undefined;
     columnSpacing: Int32Value | undefined;
     compatibleLineSpacing: BooleanValue | undefined;
@@ -16123,7 +17882,7 @@ class TextBodyProperties_3 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     columnCount: Int32Value | undefined;
     columnSpacing: Int32Value | undefined;
     compatibleLineSpacing: BooleanValue | undefined;
@@ -16167,7 +17926,7 @@ class TextBoxInfo2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: UInt16Value | undefined;
     // (undocumented)
     readonly localName: "txbx";
@@ -16189,7 +17948,7 @@ class TextCharacterPropertiesType extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     dirty: BooleanValue | undefined;
     fontSize: Int32Value | undefined;
     italic: BooleanValue | undefined;
@@ -16215,11 +17974,18 @@ class TextCharacterPropertiesType extends OpenXmlCompositeElement {
 // @public
 class TextCharRangeContext extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    hash: UInt32Value | undefined;
+    len: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "context";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/drawing/2013/main/command";
     // (undocumented)
     readonly prefix: "oac";
+    validateRequired(): void;
 }
 
 // @public
@@ -16249,7 +18015,7 @@ class TextLabel extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getLabel: StringValue | undefined;
@@ -16298,7 +18064,7 @@ class TextParagraphPropertiesType extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     defaultTabSize: Int32Value | undefined;
     eastAsianLineBreak: BooleanValue | undefined;
     fontAlignment: StringValue | undefined;
@@ -16320,13 +18086,21 @@ class TextParagraphPropertiesType extends OpenXmlCompositeElement {
 // @public
 class ThemeFamily extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "themeFamily";
+    name: StringValue | undefined;
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/thememl/2012/main";
     // (undocumented)
     readonly prefix: "thm15";
+    validateRequired(): void;
+    vid: StringValue | undefined;
 }
 
 // @public
@@ -16336,7 +18110,8 @@ class ThemeVariant extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "themeVariant";
     name: StringValue | undefined;
@@ -16345,6 +18120,7 @@ class ThemeVariant extends OpenXmlCompositeElement {
     // (undocumented)
     readonly prefix: "thm15";
     validateRequired(): void;
+    vid: StringValue | undefined;
     x: Int64Value | undefined;
     y: Int64Value | undefined;
 }
@@ -16364,13 +18140,24 @@ class ThemeVariantList extends OpenXmlCompositeElement {
 // @public
 class ThreadedComment extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    done: BooleanValue | undefined;
+    dT: DateTimeValue | undefined;
+    id: StringValue | undefined;
     // (undocumented)
     readonly localName: "threadedComment";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2018/threadedcomments";
+    parentId: StringValue | undefined;
+    personId: StringValue | undefined;
     // (undocumented)
     readonly prefix: "xltc";
+    ref: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -16414,7 +18201,7 @@ class ThreadingInfo extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "threadingInfo";
     // (undocumented)
@@ -16431,7 +18218,7 @@ class TimeSlicer extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "timeslicer";
     name: StringValue | undefined;
@@ -16447,7 +18234,7 @@ class Timestamp extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "timestamp";
@@ -16467,7 +18254,7 @@ class Title extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "title";
     // (undocumented)
@@ -16484,7 +18271,7 @@ class TitleStyle extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "title";
     modifiers: ListValue<StringValue> | undefined;
@@ -16499,7 +18286,7 @@ class ToggleButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -16546,7 +18333,7 @@ class ToggleButton_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -16593,7 +18380,7 @@ class ToggleButtonRegular extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -16638,7 +18425,7 @@ class ToolbarData extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "toolbarData";
@@ -16703,7 +18490,7 @@ class Trace extends OpenXmlLeafElement {
     applyAttribute(qname: string, value: string): void;
     brushRef: StringValue | undefined;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     contextRef: StringValue | undefined;
     continuation: StringValue | undefined;
     duration: DecimalValue | undefined;
@@ -16726,7 +18513,7 @@ class TraceFormat extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "traceFormat";
@@ -16744,7 +18531,7 @@ class TraceGroup extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     contextRef: StringValue | undefined;
     id: StringValue | undefined;
     // (undocumented)
@@ -16762,7 +18549,7 @@ class TraceView extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     contextRef: StringValue | undefined;
     from: StringValue | undefined;
     id: StringValue | undefined;
@@ -16781,8 +18568,11 @@ class Track extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     embed: StringValue | undefined;
+    id: StringValue | undefined;
+    label: StringValue | undefined;
+    lang: StringValue | undefined;
     link: StringValue | undefined;
     // (undocumented)
     readonly localName: "track";
@@ -16790,6 +18580,7 @@ class Track extends OpenXmlLeafElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2017/3/main";
     // (undocumented)
     readonly prefix: "p173";
+    validateRequired(): void;
 }
 
 // @public
@@ -16807,13 +18598,19 @@ class TrackList extends OpenXmlCompositeElement {
 // @public
 class TracksInfo extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    displayLoc: StringValue | undefined;
     // (undocumented)
     readonly localName: "tracksInfo";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2017/3/main";
     // (undocumented)
     readonly prefix: "p173";
+    validateRequired(): void;
 }
 
 // @public
@@ -16823,7 +18620,7 @@ class Transform2D extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     horizontalFlip: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "txXfrm";
@@ -16842,7 +18639,7 @@ class Transform2D_2 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     horizontalFlip: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "xfrm";
@@ -16861,7 +18658,7 @@ class Transform2D_3 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     horizontalFlip: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "xfrm";
@@ -16880,7 +18677,7 @@ class Transform2D_4 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     horizontalFlip: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "xfrm";
@@ -16899,7 +18696,7 @@ class Transform2D_5 extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     horizontalFlip: BooleanValue | undefined;
     // (undocumented)
     readonly localName: "xfrm";
@@ -16917,7 +18714,7 @@ class Trendline extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     equation: StringValue | undefined;
     // (undocumented)
     readonly localName: "trendline";
@@ -16935,7 +18732,7 @@ class TrendlineLabel extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "trendlineLabel";
     modifiers: ListValue<StringValue> | undefined;
@@ -16952,7 +18749,7 @@ class TrendlineStyle extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "trendline";
     modifiers: ListValue<StringValue> | undefined;
@@ -16995,31 +18792,51 @@ class UnasgnAllEmpty_3 extends OpenXmlLeafElement {
 // @public
 class UnAsgnTaskAssignUnassignUser extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "unAsgn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2019/12/main";
     // (undocumented)
     readonly prefix: "p1912";
+    validateRequired(): void;
 }
 
 // @public
 class UnAsgnTaskAssignUnassignUser_2 extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    authorId: StringValue | undefined;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "unAsgn";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/powerpoint/2021/06/main";
     // (undocumented)
     readonly prefix: "p216";
+    validateRequired(): void;
 }
 
 // @public
 class UnassignTaskUser extends OpenXmlLeafElement {
+    // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "Unassign";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/tasks/2019/documenttasks";
     // (undocumented)
     readonly prefix: "t";
+    userId: StringValue | undefined;
+    userName: StringValue | undefined;
+    userProvider: StringValue | undefined;
+    validateRequired(): void;
 }
 
 // @public
@@ -17027,7 +18844,7 @@ class UniqueID extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "uniqueID";
     // (undocumented)
@@ -17043,7 +18860,7 @@ abstract class UniqueIDChart extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "";
     // (undocumented)
@@ -17059,7 +18876,7 @@ class UniqueIdChartUniqueID extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "uniqueId";
     // (undocumented)
@@ -17095,7 +18912,7 @@ class UnsignedIntegerType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "explosion";
     // (undocumented)
@@ -17111,7 +18928,7 @@ class UnsizedButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -17155,7 +18972,7 @@ class UnsizedControlClone extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getImage: StringValue | undefined;
@@ -17195,7 +19012,7 @@ class UnsizedDynamicMenu extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getContent: StringValue | undefined;
@@ -17243,7 +19060,7 @@ class UnsizedGallery extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     columns: IntegerValue | undefined;
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
@@ -17307,7 +19124,7 @@ class UnsizedMenu extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -17353,7 +19170,7 @@ class UnsizedSplitButton extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     enabled: BooleanValue | undefined;
     getEnabled: StringValue | undefined;
     getKeytip: StringValue | undefined;
@@ -17383,7 +19200,7 @@ class UnsizedToggleButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -17430,7 +19247,7 @@ class UpBar extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "upBar";
     modifiers: ListValue<StringValue> | undefined;
@@ -17445,7 +19262,7 @@ class UpVector3D extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     dx: Int64Value | undefined;
     dy: Int64Value | undefined;
     dz: Int64Value | undefined;
@@ -17495,7 +19312,7 @@ class ValueAxis extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "valueAxis";
     modifiers: ListValue<StringValue> | undefined;
@@ -17510,7 +19327,7 @@ class ValueAxisProperties extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     labelPosition: StringValue | undefined;
     // (undocumented)
     readonly localName: "valueAxis";
@@ -17543,7 +19360,7 @@ abstract class Vector3DType extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     dx: Int64Value | undefined;
     dy: Int64Value | undefined;
     dz: Int64Value | undefined;
@@ -17559,11 +19376,17 @@ abstract class Vector3DType extends OpenXmlLeafElement {
 // @public
 class Version extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    // (undocumented)
     readonly localName: "version";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2024/workbookCompatibilityVersion";
     // (undocumented)
     readonly prefix: "xlwcv";
+    setVersion: UInt32Value | undefined;
+    warnBelowVersion: UInt32Value | undefined;
 }
 
 // @public
@@ -17583,7 +19406,7 @@ class VerticalSeparator extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     getVisible: StringValue | undefined;
     id: StringValue | undefined;
     idQ: StringValue | undefined;
@@ -17605,7 +19428,7 @@ class View3DProperties extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     depthPercent: UInt16Value | undefined;
     heightPercent: UInt16Value | undefined;
     // (undocumented)
@@ -17637,7 +19460,7 @@ class VisibleButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -17679,7 +19502,7 @@ class VisibleButton_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -17721,7 +19544,7 @@ class VisibleToggleButton extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -17764,7 +19587,7 @@ class VisibleToggleButton_2 extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     description: StringValue | undefined;
     enabled: BooleanValue | undefined;
     getDescription: StringValue | undefined;
@@ -17809,7 +19632,7 @@ class Wall extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "wall";
     modifiers: ListValue<StringValue> | undefined;
@@ -17826,7 +19649,7 @@ class WebExtension extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     frozen: BooleanValue | undefined;
     id: StringValue | undefined;
     // (undocumented)
@@ -17846,7 +19669,7 @@ class WebExtensionBinding extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "binding";
@@ -17875,7 +19698,7 @@ class WebExtensionCreated extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "webExtensionCreated";
     // (undocumented)
@@ -17890,7 +19713,7 @@ class WebExtensionLinked extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "webExtensionLinked";
     // (undocumented)
@@ -17903,11 +19726,17 @@ class WebExtensionLinked extends OpenXmlLeafElement {
 // @public
 class WebExtensionPartReference extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "webextensionref";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/webextensions/taskpanes/2010/11";
     // (undocumented)
     readonly prefix: "wetp";
+    validateRequired(): void;
 }
 
 // @public
@@ -17915,7 +19744,7 @@ class WebExtensionProperty extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "property";
     name: StringValue | undefined;
@@ -17942,11 +19771,17 @@ class WebExtensionPropertyBag extends OpenXmlCompositeElement {
 // @public
 class WebExtensionReference extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    id: StringValue | undefined;
+    // (undocumented)
     readonly localName: "webextensionref";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/webextensions/webextension/2010/11";
     // (undocumented)
     readonly prefix: "we";
+    validateRequired(): void;
 }
 
 // @public
@@ -17968,7 +19803,7 @@ class WebExtensionStoreReference extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     id: StringValue | undefined;
     // (undocumented)
     readonly localName: "reference";
@@ -17989,7 +19824,7 @@ class WebExtensionTaskpane extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     dockState: StringValue | undefined;
     // (undocumented)
     readonly localName: "taskpane";
@@ -17998,6 +19833,7 @@ class WebExtensionTaskpane extends OpenXmlCompositeElement {
     readonly namespaceUri: "http://schemas.microsoft.com/office/webextensions/taskpanes/2010/11";
     // (undocumented)
     readonly prefix: "wetp";
+    row: UInt32Value | undefined;
     validateRequired(): void;
     visibility: BooleanValue | undefined;
     width: DoubleValue | undefined;
@@ -18032,7 +19868,7 @@ class WebVideoProperty extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     embeddedHtml: StringValue | undefined;
     height: UInt32Value | undefined;
     // (undocumented)
@@ -18073,7 +19909,7 @@ class WllMacroKeyboardCustomization extends OpenXmlLeafElement {
     // (undocumented)
     applyAttribute(qname: string, value: string): void;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "wll";
     macroName: StringValue | undefined;
@@ -18124,7 +19960,7 @@ class WordprocessingShape extends OpenXmlCompositeElement {
     // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
-    protected collectAttributes(): Array<[string, string]>;
+    protected collectAttributes(): [string, string][];
     // (undocumented)
     readonly localName: "wsp";
     // (undocumented)
@@ -18149,11 +19985,17 @@ class WorksheetSortMap extends OpenXmlCompositeElement {
 // @public
 class XfComplement extends OpenXmlLeafElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
+    protected collectAttributes(): [string, string][];
+    i: UInt32Value | undefined;
+    // (undocumented)
     readonly localName: "xfComplement";
     // (undocumented)
     readonly namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2022/featurepropertybag";
     // (undocumented)
     readonly prefix: "xfpb";
+    validateRequired(): void;
 }
 
 // @public

@@ -65,8 +65,8 @@ describe("element-template · 5 种核心形态", () => {
           super.applyAttribute(qname, value);
         }
 
-        protected override collectAttributes(): Array<[string, string]> {
-          const out: Array<[string, string]> = [];
+        protected override collectAttributes(): [string, string][] {
+          const out: [string, string][] = [];
           for (const [k, v] of this.extendedAttributes) out.push([k, v]);
           if (this.author !== undefined) out.push(["w:author", this.author.toString()]);
           if (this.date !== undefined) out.push(["w:date", this.date.toString()]);
@@ -133,8 +133,8 @@ describe("element-template · 5 种核心形态", () => {
           super.applyAttribute(qname, value);
         }
 
-        protected override collectAttributes(): Array<[string, string]> {
-          const out: Array<[string, string]> = [];
+        protected override collectAttributes(): [string, string][] {
+          const out: [string, string][] = [];
           for (const [k, v] of this.extendedAttributes) out.push([k, v]);
           if (this.rsidParagraphAddition !== undefined) out.push(["w:rsidR", this.rsidParagraphAddition.toString()]);
           if (this.rsidParagraphMarkRevision !== undefined) out.push(["w:rsidRPr", this.rsidParagraphMarkRevision.toString()]);

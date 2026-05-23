@@ -53,8 +53,8 @@ export class SortCondition extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.descending !== undefined) out.push(["descending", this.descending.toString()]);
     if (this.sortBy !== undefined) out.push(["sortBy", this.sortBy.toString()]);

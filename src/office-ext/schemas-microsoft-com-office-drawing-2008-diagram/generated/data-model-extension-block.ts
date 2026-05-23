@@ -30,8 +30,8 @@ export class DataModelExtensionBlock extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.relId !== undefined) out.push(["relId", this.relId.toString()]);
     if (this.minVer !== undefined) out.push(["minVer", this.minVer.toString()]);

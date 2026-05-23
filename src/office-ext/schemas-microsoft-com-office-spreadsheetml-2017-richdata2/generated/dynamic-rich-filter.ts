@@ -19,6 +19,9 @@ export class DynamicRichFilter extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2" as const;
 
 
+  /** key (:key) */
+  key: StringValue | undefined;
+
   /** Dynamic filter type (:type) */
   type: StringValue | undefined;
 
@@ -36,6 +39,7 @@ export class DynamicRichFilter extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
+      case "key": this.key = StringValue.parse(value); return;
       case "type": this.type = StringValue.parse(value); return;
       case "val": this.val = DoubleValue.parse(value); return;
       case "maxVal": this.maxVal = DoubleValue.parse(value); return;
@@ -45,9 +49,10 @@ export class DynamicRichFilter extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.key !== undefined) out.push(["key", this.key.toString()]);
     if (this.type !== undefined) out.push(["type", this.type.toString()]);
     if (this.val !== undefined) out.push(["val", this.val.toString()]);
     if (this.maxVal !== undefined) out.push(["maxVal", this.maxVal.toString()]);

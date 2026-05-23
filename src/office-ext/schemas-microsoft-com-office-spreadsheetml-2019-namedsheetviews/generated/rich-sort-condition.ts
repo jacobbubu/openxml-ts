@@ -19,6 +19,9 @@ export class RichSortCondition extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2019/namedsheetviews" as const;
 
 
+  /** richSortKey (:richSortKey) */
+  richSortKey: StringValue | undefined;
+
   /** descending (:descending) */
   descending: BooleanValue | undefined;
 
@@ -42,6 +45,7 @@ export class RichSortCondition extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
+      case "richSortKey": this.richSortKey = StringValue.parse(value); return;
       case "descending": this.descending = BooleanValue.parse(value); return;
       case "sortBy": this.sortBy = StringValue.parse(value); return;
       case "ref": this.reference = StringValue.parse(value); return;
@@ -53,9 +57,10 @@ export class RichSortCondition extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.richSortKey !== undefined) out.push(["richSortKey", this.richSortKey.toString()]);
     if (this.descending !== undefined) out.push(["descending", this.descending.toString()]);
     if (this.sortBy !== undefined) out.push(["sortBy", this.sortBy.toString()]);
     if (this.reference !== undefined) out.push(["ref", this.reference.toString()]);

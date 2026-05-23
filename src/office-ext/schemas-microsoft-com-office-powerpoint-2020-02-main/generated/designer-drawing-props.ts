@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.202002Main.DesignerDrawingProps
 
 import {
+  BooleanValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
 } from "../../../element/index.js";
@@ -16,6 +17,21 @@ export class DesignerDrawingProps extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/powerpoint/2020/02/main" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** edtDesignElem (:edtDesignElem) */
+  edtDesignElem: BooleanValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "edtDesignElem": this.edtDesignElem = BooleanValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.edtDesignElem !== undefined) out.push(["edtDesignElem", this.edtDesignElem.toString()]);
+    return out;
+  }
 
 }

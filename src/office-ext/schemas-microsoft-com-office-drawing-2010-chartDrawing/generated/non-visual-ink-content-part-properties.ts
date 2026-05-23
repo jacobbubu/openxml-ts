@@ -27,8 +27,8 @@ export class NonVisualInkContentPartProperties extends OpenXmlCompositeElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.isComment !== undefined) out.push(["isComment", this.isComment.toString()]);
     return out;

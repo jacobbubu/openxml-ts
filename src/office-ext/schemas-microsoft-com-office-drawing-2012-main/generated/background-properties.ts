@@ -38,8 +38,8 @@ export class BackgroundProperties extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.mode !== undefined) out.push(["bwMode", this.mode.toString()]);
     if (this.pure !== undefined) out.push(["bwPure", this.pure.toString()]);

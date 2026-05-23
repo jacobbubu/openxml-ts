@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Spreadsheetml2017Richdata2.CustomRichFilters
 
 import {
+  BooleanValue,
   OpenXmlCompositeElement,
   OpenXmlElementList,
 } from "../../../element/index.js";
@@ -16,6 +17,21 @@ export class CustomRichFilters extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** and (:and) */
+  and: BooleanValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "and": this.and = BooleanValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.and !== undefined) out.push(["and", this.and.toString()]);
+    return out;
+  }
 
 }

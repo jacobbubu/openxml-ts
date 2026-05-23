@@ -112,8 +112,8 @@ export class BackstageGroupButton extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.expand !== undefined) out.push(["expand", this.expand.toString()]);
     if (this.style !== undefined) out.push(["style", this.style.toString()]);

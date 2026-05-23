@@ -6,6 +6,7 @@ import {
   BooleanValue,
   DoubleValue,
   OpenXmlLeafElement,
+  StringValue,
   assertRequired,
 } from "../../../element/index.js";
 
@@ -17,6 +18,9 @@ export class RichTop10 extends OpenXmlLeafElement {
   override readonly prefix = "xlrd2" as const;
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata2" as const;
 
+
+  /** key (:key) */
+  key: StringValue | undefined;
 
   /** Top (:top) */
   top: BooleanValue | undefined;
@@ -32,6 +36,7 @@ export class RichTop10 extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
+      case "key": this.key = StringValue.parse(value); return;
       case "top": this.top = BooleanValue.parse(value); return;
       case "percent": this.percent = BooleanValue.parse(value); return;
       case "val": this.val = DoubleValue.parse(value); return;
@@ -40,9 +45,10 @@ export class RichTop10 extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.key !== undefined) out.push(["key", this.key.toString()]);
     if (this.top !== undefined) out.push(["top", this.top.toString()]);
     if (this.percent !== undefined) out.push(["percent", this.percent.toString()]);
     if (this.val !== undefined) out.push(["val", this.val.toString()]);

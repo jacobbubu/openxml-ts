@@ -27,8 +27,8 @@ export class NonVisualDrawingShapeProperties extends OpenXmlCompositeElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.textBox !== undefined) out.push(["txBox", this.textBox.toString()]);
     return out;

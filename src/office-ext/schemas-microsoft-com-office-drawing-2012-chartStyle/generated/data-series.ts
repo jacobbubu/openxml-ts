@@ -57,8 +57,8 @@ export class DataSeries extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.overlap !== undefined) out.push(["overlap", this.overlap.toString()]);
     if (this.gapWidth !== undefined) out.push(["gapWidth", this.gapWidth.toString()]);

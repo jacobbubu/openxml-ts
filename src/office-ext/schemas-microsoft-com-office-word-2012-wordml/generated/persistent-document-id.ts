@@ -4,6 +4,7 @@
 
 import {
   OpenXmlLeafElement,
+  StringValue,
 } from "../../../element/index.js";
 
 /** Defines the PersistentDocumentId Class.
@@ -15,6 +16,21 @@ export class PersistentDocumentId extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/word/2012/wordml" as const;
 
 
+  /** val (w15:val) */
+  val: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "w15:val": this.val = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.val !== undefined) out.push(["w15:val", this.val.toString()]);
+    return out;
+  }
 
 }

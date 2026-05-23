@@ -93,8 +93,8 @@ export class SparklineGroup extends OpenXmlCompositeElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.manualMax !== undefined) out.push(["manualMax", this.manualMax.toString()]);
     if (this.manualMin !== undefined) out.push(["manualMin", this.manualMin.toString()]);

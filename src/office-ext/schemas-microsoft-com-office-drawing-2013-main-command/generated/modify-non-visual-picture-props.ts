@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.Drawing2013Command.ModifyNonVisualPictureProps
 
 import {
+  BooleanValue,
   OpenXmlLeafElement,
 } from "../../../element/index.js";
 
@@ -15,6 +16,76 @@ export class ModifyNonVisualPictureProps extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/drawing/2013/main/command" as const;
 
 
+  /** noGrp (:noGrp) */
+  noGrp: BooleanValue | undefined;
 
+  /** noSelect (:noSelect) */
+  noSelect: BooleanValue | undefined;
+
+  /** noRot (:noRot) */
+  noRot: BooleanValue | undefined;
+
+  /** noChangeAspect (:noChangeAspect) */
+  noChangeAspect: BooleanValue | undefined;
+
+  /** noMove (:noMove) */
+  noMove: BooleanValue | undefined;
+
+  /** noResize (:noResize) */
+  noResize: BooleanValue | undefined;
+
+  /** noEditPoints (:noEditPoints) */
+  noEditPoints: BooleanValue | undefined;
+
+  /** noAdjustHandles (:noAdjustHandles) */
+  noAdjustHandles: BooleanValue | undefined;
+
+  /** noChangeArrowheads (:noChangeArrowheads) */
+  noChangeArrowheads: BooleanValue | undefined;
+
+  /** noChangeShapeType (:noChangeShapeType) */
+  noChangeShapeType: BooleanValue | undefined;
+
+  /** noCrop (:noCrop) */
+  noCrop: BooleanValue | undefined;
+
+  /** preferRelativeResize (:preferRelativeResize) */
+  preferRelativeResize: BooleanValue | undefined;
+
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "noGrp": this.noGrp = BooleanValue.parse(value); return;
+      case "noSelect": this.noSelect = BooleanValue.parse(value); return;
+      case "noRot": this.noRot = BooleanValue.parse(value); return;
+      case "noChangeAspect": this.noChangeAspect = BooleanValue.parse(value); return;
+      case "noMove": this.noMove = BooleanValue.parse(value); return;
+      case "noResize": this.noResize = BooleanValue.parse(value); return;
+      case "noEditPoints": this.noEditPoints = BooleanValue.parse(value); return;
+      case "noAdjustHandles": this.noAdjustHandles = BooleanValue.parse(value); return;
+      case "noChangeArrowheads": this.noChangeArrowheads = BooleanValue.parse(value); return;
+      case "noChangeShapeType": this.noChangeShapeType = BooleanValue.parse(value); return;
+      case "noCrop": this.noCrop = BooleanValue.parse(value); return;
+      case "preferRelativeResize": this.preferRelativeResize = BooleanValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.noGrp !== undefined) out.push(["noGrp", this.noGrp.toString()]);
+    if (this.noSelect !== undefined) out.push(["noSelect", this.noSelect.toString()]);
+    if (this.noRot !== undefined) out.push(["noRot", this.noRot.toString()]);
+    if (this.noChangeAspect !== undefined) out.push(["noChangeAspect", this.noChangeAspect.toString()]);
+    if (this.noMove !== undefined) out.push(["noMove", this.noMove.toString()]);
+    if (this.noResize !== undefined) out.push(["noResize", this.noResize.toString()]);
+    if (this.noEditPoints !== undefined) out.push(["noEditPoints", this.noEditPoints.toString()]);
+    if (this.noAdjustHandles !== undefined) out.push(["noAdjustHandles", this.noAdjustHandles.toString()]);
+    if (this.noChangeArrowheads !== undefined) out.push(["noChangeArrowheads", this.noChangeArrowheads.toString()]);
+    if (this.noChangeShapeType !== undefined) out.push(["noChangeShapeType", this.noChangeShapeType.toString()]);
+    if (this.noCrop !== undefined) out.push(["noCrop", this.noCrop.toString()]);
+    if (this.preferRelativeResize !== undefined) out.push(["preferRelativeResize", this.preferRelativeResize.toString()]);
+    return out;
+  }
 
 }

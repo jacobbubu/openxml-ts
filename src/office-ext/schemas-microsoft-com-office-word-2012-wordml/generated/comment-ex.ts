@@ -36,8 +36,8 @@ export class CommentEx extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.paraId !== undefined) out.push(["w15:paraId", this.paraId.toString()]);
     if (this.paraIdParent !== undefined) out.push(["w15:paraIdParent", this.paraIdParent.toString()]);

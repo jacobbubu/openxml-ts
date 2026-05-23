@@ -92,8 +92,8 @@ export class Dummy extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.decimals !== undefined) out.push(["decimals", this.decimals.toString()]);
     if (this.default !== undefined) out.push(["default", this.default.toString()]);

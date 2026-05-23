@@ -39,8 +39,8 @@ export class AllocatedCommand extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.argumentValue !== undefined) out.push(["wne:argValue", this.argumentValue.toString()]);
     if (this.commandBasedOn !== undefined) out.push(["wne:fciBasedOn", this.commandBasedOn.toString()]);

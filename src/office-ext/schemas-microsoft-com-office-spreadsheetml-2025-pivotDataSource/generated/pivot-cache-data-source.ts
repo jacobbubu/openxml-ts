@@ -5,6 +5,7 @@
 import {
   OpenXmlCompositeElement,
   OpenXmlElementList,
+  StringValue,
 } from "../../../element/index.js";
 
 /** Defines the PivotCacheDataSource Class.
@@ -16,6 +17,21 @@ export class PivotCacheDataSource extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2025/pivotDataSource" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
+  /** ref (:ref) */
+  ref: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "ref": this.ref = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.ref !== undefined) out.push(["ref", this.ref.toString()]);
+    return out;
+  }
 
 }

@@ -51,6 +51,9 @@ export class BackstageLabelControl extends OpenXmlLeafElement {
   /** getVisible (:getVisible) */
   getVisible: StringValue | undefined;
 
+  /** noWrap (:noWrap) */
+  noWrap: BooleanValue | undefined;
+
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
       case "id": this.id = StringValue.parse(value); assertString(this.id, { maxLength: 1024, minLength: 1 }, { attribute: ":id", elementClass: "BackstageLabelControl" }); return;
@@ -64,12 +67,13 @@ export class BackstageLabelControl extends OpenXmlLeafElement {
       case "getLabel": this.getLabel = StringValue.parse(value); assertString(this.getLabel, { maxLength: 1024, minLength: 1 }, { attribute: ":getLabel", elementClass: "BackstageLabelControl" }); return;
       case "visible": this.visible = BooleanValue.parse(value); return;
       case "getVisible": this.getVisible = StringValue.parse(value); assertString(this.getVisible, { maxLength: 1024, minLength: 1 }, { attribute: ":getVisible", elementClass: "BackstageLabelControl" }); return;
+      case "noWrap": this.noWrap = BooleanValue.parse(value); return;
     }
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.id !== undefined) out.push(["id", this.id.toString()]);
     if (this.qualifiedId !== undefined) out.push(["idQ", this.qualifiedId.toString()]);
@@ -82,6 +86,7 @@ export class BackstageLabelControl extends OpenXmlLeafElement {
     if (this.getLabel !== undefined) out.push(["getLabel", this.getLabel.toString()]);
     if (this.visible !== undefined) out.push(["visible", this.visible.toString()]);
     if (this.getVisible !== undefined) out.push(["getVisible", this.getVisible.toString()]);
+    if (this.noWrap !== undefined) out.push(["noWrap", this.noWrap.toString()]);
     return out;
   }
 

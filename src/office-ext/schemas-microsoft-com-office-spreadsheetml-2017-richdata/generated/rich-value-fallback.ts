@@ -5,6 +5,7 @@
 import {
   OpenXmlElementList,
   OpenXmlLeafElement,
+  StringValue,
 } from "../../../element/index.js";
 
 /** Defines the RichValueFallback Class.
@@ -16,6 +17,21 @@ export class RichValueFallback extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/spreadsheetml/2017/richdata" as const;
 
 
+  /** t (:t) */
+  t: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "t": this.t = StringValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.t !== undefined) out.push(["t", this.t.toString()]);
+    return out;
+  }
 
 }

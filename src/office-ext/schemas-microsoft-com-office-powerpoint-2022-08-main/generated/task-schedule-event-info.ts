@@ -3,6 +3,7 @@
 // @see DocumentFormat.OpenXml.202208Main.TaskScheduleEventInfo
 
 import {
+  DateTimeValue,
   OpenXmlLeafElement,
 } from "../../../element/index.js";
 
@@ -15,6 +16,26 @@ export class TaskScheduleEventInfo extends OpenXmlLeafElement {
   override readonly namespaceUri = "http://schemas.microsoft.com/office/powerpoint/2022/08/main" as const;
 
 
+  /** stDt (:stDt) */
+  stDt: DateTimeValue | undefined;
 
+  /** endDt (:endDt) */
+  endDt: DateTimeValue | undefined;
+
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "stDt": this.stDt = DateTimeValue.parse(value); return;
+      case "endDt": this.endDt = DateTimeValue.parse(value); return;
+    }
+    super.applyAttribute(qname, value);
+  }
+
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.stDt !== undefined) out.push(["stDt", this.stDt.toString()]);
+    if (this.endDt !== undefined) out.push(["endDt", this.endDt.toString()]);
+    return out;
+  }
 
 }

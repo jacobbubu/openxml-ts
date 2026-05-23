@@ -32,8 +32,8 @@ export class DerivedFrom extends OpenXmlLeafElement {
     super.applyAttribute(qname, value);
   }
 
-  protected override collectAttributes(): Array<[string, string]> {
-    const out: Array<[string, string]> = [];
+  protected override collectAttributes(): [string, string][] {
+    const out: [string, string][] = [];
     for (const [k, v] of this.extendedAttributes) out.push([k, v]);
     if (this.resource !== undefined) out.push(["resource", this.resource.toString()]);
     if (this.composite !== undefined) out.push(["composite", this.composite.toString()]);

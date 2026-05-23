@@ -1680,12 +1680,14 @@ export class WordprocessingDocument {
     saveAsync(): Promise<void>;
     // (undocumented)
     get settingsPart(): SettingsPart | undefined;
+    get strictRelationshipFound(): boolean;
     // (undocumented)
     get stylesPart(): StylesPart | undefined;
     // (undocumented)
     get themePart(): ThemePart | undefined;
     // (undocumented)
     get webSettingsPart(): WebSettingsPart | undefined;
+    get wordprocessingPeoplePart(): WordprocessingPeoplePart | undefined;
 }
 
 // @public
@@ -1696,11 +1698,14 @@ export enum WordprocessingDocumentType {
     Template = "Template"
 }
 
+// Warning: (ae-forgotten-export) The symbol "People" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class WordprocessingPeoplePart extends TypedXmlPart<OpenXmlUnknownElement> {
+export class WordprocessingPeoplePart extends TypedXmlPart<People> {
     constructor(part: IPackagePart, registry: ElementRegistry);
     // (undocumented)
     static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.people+xml";
+    get people(): People;
     // (undocumented)
     static readonly relationshipType = "http://schemas.microsoft.com/office/2011/relationships/people";
 }
