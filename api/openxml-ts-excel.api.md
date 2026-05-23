@@ -452,6 +452,7 @@ export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
     static readonly contentType = "application/vnd.openxmlformats-officedocument.drawing+xml";
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing";
+    get webExtensionParts(): readonly WebExtensionPart[];
     get wsDr(): OpenXmlElement;
     set wsDr(value: OpenXmlElement);
 }
@@ -1156,6 +1157,7 @@ export class WorksheetPart extends TypedXmlPart<Worksheet> {
     constructor(part: IPackagePart, registry: ElementRegistry);
     // (undocumented)
     static readonly contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml";
+    get drawingsPart(): DrawingPart | undefined;
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet";
     // Warning: (ae-forgotten-export) The symbol "SlicersPart" needs to be exported by the entry point index.d.ts
