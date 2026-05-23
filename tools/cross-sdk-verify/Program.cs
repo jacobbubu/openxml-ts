@@ -334,5 +334,36 @@ if (command == "generate")
     }
 }
 
+if (command == "generate-fixtures")
+{
+    if (args.Length < 2)
+    {
+        Console.Error.WriteLine("Usage: CrossSdkVerify generate-fixtures <output-dir>");
+        return 1;
+    }
+    var outputDir = args[1];
+#if CONFORMANCE_FIXTURES_ENABLED
+    Console.WriteLine($"Generating conformance fixtures into: {outputDir}");
+    try
+    {
+        CrossSdkVerify.Replicas.ConformanceFixtures.GenerateAll(outputDir);
+        Console.WriteLine("Done.");
+        return 0;
+    }
+    catch (Exception ex)
+    {
+        Console.Error.WriteLine($"Error generating fixtures: {ex}");
+        return 1;
+    }
+#else
+    Console.Error.WriteLine("generate-fixtures requires OpenXmlSdkTestPath to be set at build time.");
+    Console.Error.WriteLine("Example:");
+    Console.Error.WriteLine("  dotnet run -p:OpenXmlSdkTestPath=/path/to/Open-XML-SDK/test/DocumentFormat.OpenXml.Tests/ConformanceTest \\");
+    Console.Error.WriteLine("    -- generate-fixtures <output-dir>");
+    Console.Error.WriteLine("See test/fixtures/conformance/generated/README.md.");
+    return 1;
+#endif
+}
+
 Console.Error.WriteLine($"Unknown command: {command}");
 return 1;

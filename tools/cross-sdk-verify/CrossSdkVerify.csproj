@@ -13,4 +13,31 @@
     <PackageReference Include="DocumentFormat.OpenXml" Version="3.5.1" />
   </ItemGroup>
 
+  <!--
+    Conformance fixture regeneration is opt-in. Set OpenXmlSdkTestPath at build/run
+    time to a local clone of Open-XML-SDK's ConformanceTest directory; this pulls
+    in the upstream GeneratedDocument.cs files so the 'generate-fixtures' subcommand
+    can run. CI builds without this property — the conformance generator is excluded
+    and Program.cs degrades the subcommand to a helpful error message.
+    See test/fixtures/conformance/generated/README.md for usage.
+  -->
+  <PropertyGroup Condition="'$(OpenXmlSdkTestPath)' != ''">
+    <DefineConstants>$(DefineConstants);CONFORMANCE_FIXTURES_ENABLED</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(OpenXmlSdkTestPath)' != ''">
+    <Compile Include="$(OpenXmlSdkTestPath)/Guide/GeneratedDocument.cs" />
+    <Compile Include="$(OpenXmlSdkTestPath)/Theme/GeneratedDocument.cs" />
+    <Compile Include="$(OpenXmlSdkTestPath)/ChartTrackingRefBased/GeneratedDocument.cs" />
+    <Compile Include="$(OpenXmlSdkTestPath)/WorkbookPr/GeneratedDocument.cs" />
+    <Compile Include="$(OpenXmlSdkTestPath)/Slicer/GeneratedDocument.cs" />
+    <Compile Include="$(OpenXmlSdkTestPath)/Pivot/ConnectionGeneratedDocument.cs" />
+    <Compile Include="$(OpenXmlSdkTestPath)/Timeline/GeneratedDocument.cs" />
+    <Compile Include="$(OpenXmlSdkTestPath)/CommentExPeople/GeneratedDocument.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(OpenXmlSdkTestPath)' == ''">
+    <Compile Remove="replicas/ConformanceFixtures.cs" />
+  </ItemGroup>
+
 </Project>
