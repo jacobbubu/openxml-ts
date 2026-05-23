@@ -22,6 +22,7 @@ import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
 import type { PartUri } from "../../packaging/interfaces/types.js";
 import { ChartPart } from "../../parts/chart-part.js";
+import { WebExtensionPart } from "../../parts/generated/web-extension-part.js";
 import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
@@ -35,6 +36,8 @@ export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
 
   /** 已解析的 ChartPart 缓存——首次访问后冻结。 */
   private _chartParts: ChartPart[] | undefined;
+  /** 已解析的 WebExtensionPart 缓存——首次访问后冻结。 */
+  private _webExtensionParts: WebExtensionPart[] | undefined;
 
   constructor(
     part: IPackagePart,
@@ -70,6 +73,30 @@ export class DrawingPart extends TypedXmlPart<OpenXmlElement> {
       }
     }
     this._chartParts = out;
+    return out;
+  }
+
+  /**
+   * 本 DrawingPart 通过 part-level 关系引用的所有 WebExtensionPart。
+   * 需要传入 `pkg` 构造参数才能解析 Part URI；未传时返回空数组。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.DrawingsPart.WebExtensionParts
+   */
+  get webExtensionParts(): readonly WebExtensionPart[] {
+    if (this._webExtensionParts !== undefined) return this._webExtensionParts;
+    const out: WebExtensionPart[] = [];
+    if (this.pkg !== undefined) {
+      for (const rel of this.part.relationships) {
+        if (rel.targetMode !== "internal") continue;
+        if (!relationshipTypeMatches(rel.type, WebExtensionPart.relationshipType)) continue;
+        const targetUri = resolveRelativePartUri(this.part.uri, rel.target) as PartUri | undefined;
+        if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
+        const p = new WebExtensionPart(this.pkg.getPart(targetUri), this.registry);
+        if (this.mcSettings !== undefined) p.setMcSettings(this.mcSettings);
+        out.push(p);
+      }
+    }
+    this._webExtensionParts = out;
     return out;
   }
 }

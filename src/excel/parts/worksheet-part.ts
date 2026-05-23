@@ -12,6 +12,7 @@ import { relationshipTypeMatches } from "../../parts/relationship-type-match.js"
 import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import { Worksheet } from "../generated/worksheet.js";
+import { DrawingPart } from "./drawing-part.js";
 
 export class WorksheetPart extends TypedXmlPart<Worksheet> {
   static readonly relationshipType =
@@ -23,6 +24,8 @@ export class WorksheetPart extends TypedXmlPart<Worksheet> {
   private _slicersParts: SlicersPart[] | undefined;
   /** 已解析的 timeLineParts 缓存。 */
   private _timeLineParts: TimeLinePart[] | undefined;
+  /** 已解析的 drawingsPart 缓存（null = 不存在，undefined = 未查）。 */
+  private _drawingsPart: DrawingPart | null | undefined;
 
   constructor(part: IPackagePart, registry: ElementRegistry) {
     super(part, registry, Worksheet);
@@ -79,5 +82,28 @@ export class WorksheetPart extends TypedXmlPart<Worksheet> {
     }
     this._timeLineParts = out;
     return out;
+  }
+
+  /**
+   * 工作表的 `DrawingsPart`（图形绘制容器）。
+   * 不存在时返回 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.WorksheetPart.DrawingsPart
+   */
+  get drawingsPart(): DrawingPart | undefined {
+    if (this._drawingsPart !== undefined) return this._drawingsPart ?? undefined;
+    const pkg = this.part.package;
+    for (const rel of this.part.relationships) {
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, DrawingPart.relationshipType)) continue;
+      const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
+      if (targetUri === undefined || !pkg.hasPart(targetUri)) continue;
+      const p = new DrawingPart(pkg.getPart(targetUri), this.registry, pkg);
+      if (this.mcSettings !== undefined) p.setMcSettings(this.mcSettings);
+      this._drawingsPart = p;
+      return p;
+    }
+    this._drawingsPart = null;
+    return undefined;
   }
 }
