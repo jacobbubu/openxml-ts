@@ -1,5 +1,29 @@
 # Changelog
 
+## [1.5.0](https://github.com/jacobbubu/openxml-ts/compare/v1.4.0...v1.5.0) (2026-05-22)
+
+
+### Features
+
+* **test:** Epic-111 移植 .NET SDK 测试批次 1：simple types 值语义 ([16d8daf](https://github.com/jacobbubu/openxml-ts/commit/16d8daf4f70a2252ab21ea7b4cc7786cdc09a663))
+* **test:** Epic-111 移植 .NET SDK 测试批次 1：simple types 值语义（[#322](https://github.com/jacobbubu/openxml-ts/issues/322)） ([79cdfea](https://github.com/jacobbubu/openxml-ts/commit/79cdfea1cfec1c05062a0c8f5a168a706cd95787))
+* **test:** Epic-112 移植 .NET SDK 测试批次 2 — Validator 逐类型 + particle validators ([c1e268a](https://github.com/jacobbubu/openxml-ts/commit/c1e268aa522f4f3f70ae28e796d1ec77dc23dc98))
+* **test:** Epic-112 移植 .NET SDK 测试批次 2：Validator 逐类型 + particle validators（[#324](https://github.com/jacobbubu/openxml-ts/issues/324)） ([ce4fe9e](https://github.com/jacobbubu/openxml-ts/commit/ce4fe9e6975d7ffd7ae1fe7d8ecc2a6b76ff8c51))
+* **test:** Epic-113 移植 .NET SDK 测试批次 3：Markup Compatibility 展开矩阵 ([3c1b2cc](https://github.com/jacobbubu/openxml-ts/commit/3c1b2ccab8aafbeddd0f3e9ae8de8f37ed48d311))
+* **test:** Epic-113 移植 .NET SDK 测试批次 3：Markup Compatibility 展开矩阵（[#326](https://github.com/jacobbubu/openxml-ts/issues/326)） ([bcc62e0](https://github.com/jacobbubu/openxml-ts/commit/bcc62e055024df67e072b37b4c2cce2ba3176eaa))
+* **test:** Epic-114 移植 .NET SDK 测试 — 批次 4：DOM 树操作矩阵 ([#328](https://github.com/jacobbubu/openxml-ts/issues/328)) ([2639385](https://github.com/jacobbubu/openxml-ts/commit/2639385740b1a8ad390f8d6559a47a7d581b6816))
+* **test:** Epic-114 移植 .NET SDK 测试 — 批次 4：DOM 树操作矩阵 ([#328](https://github.com/jacobbubu/openxml-ts/issues/328)) ([394ab45](https://github.com/jacobbubu/openxml-ts/commit/394ab45699a46ceab3345d5eb4e1862ce50c08e0))
+* **test:** Epic-116 移植 .NET SDK 测试 — 批次 6：Conformance 端到端（收尾） ([4afabe4](https://github.com/jacobbubu/openxml-ts/commit/4afabe425e51c2fadc69fb3483793130bf84002d))
+* **test:** Epic-116 移植 .NET SDK 测试 — 批次 6：Conformance 端到端（收尾）([#332](https://github.com/jacobbubu/openxml-ts/issues/332)) ([f64855e](https://github.com/jacobbubu/openxml-ts/commit/f64855e0b60b906140652cb1cf343bd77b926843))
+* **tests:** Epic-115 移植 .NET SDK 测试批次 5 — 文档级行为 ([b19e1c3](https://github.com/jacobbubu/openxml-ts/commit/b19e1c33d996879c558998c9ec8ec69e99e74962))
+* **tests:** Epic-115 移植 .NET SDK 测试批次 5 — 文档级行为 ([#330](https://github.com/jacobbubu/openxml-ts/issues/330)) ([969b72d](https://github.com/jacobbubu/openxml-ts/commit/969b72d14189d4175c80f53c3b94a1879619d9d3))
+
+
+### Documentation
+
+* .NET SDK 测试套件移植审计与排重映射 ([#319](https://github.com/jacobbubu/openxml-ts/issues/319)) ([3fa65ce](https://github.com/jacobbubu/openxml-ts/commit/3fa65cefc14d405fb2d3f61e36f951c27d5551b5))
+* 新增 .NET SDK 测试套件移植审计与排重映射 ([4a55c61](https://github.com/jacobbubu/openxml-ts/commit/4a55c61c9148a6d1fc6012b203a5c2114019489a))
+
 ## [1.4.0](https://github.com/jacobbubu/openxml-ts/compare/v1.3.0...v1.4.0) (2026-05-22)
 
 
