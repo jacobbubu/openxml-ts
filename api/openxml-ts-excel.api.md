@@ -279,11 +279,13 @@ export interface ColumnWidthRange {
     readonly widthChars: number | undefined;
 }
 
-// Warning: (ae-forgotten-export) The symbol "OpenXmlUnknownElement" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "Connections" needs to be exported by the entry point index.d.ts
 //
 // @public (undocumented)
-export class ConnectionsPart extends TypedXmlPart<OpenXmlUnknownElement> {
+export class ConnectionsPart extends TypedXmlPart<Connections> {
     constructor(part: IPackagePart, registry: ElementRegistry);
+    get connections(): Connections;
+    set connections(value: Connections);
     // (undocumented)
     static readonly contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.connections+xml";
     // (undocumented)
@@ -343,6 +345,8 @@ export class CorePropertiesPart extends TypedXmlPart<OpenXmlElement> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
 }
 
+// Warning: (ae-forgotten-export) The symbol "OpenXmlUnknownElement" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
 export function createImageTwoCellAnchorForExcel(relId: string, from: CellAnchorPoint, to: CellAnchorPoint, options?: CreateTwoCellAnchorOptions): OpenXmlUnknownElement;
 
@@ -878,13 +882,17 @@ export class SheetViews extends OpenXmlCompositeElement {
     readonly prefix: "x";
 }
 
+// Warning: (ae-forgotten-export) The symbol "SlicerCacheDefinition" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class SlicerCachePart extends TypedXmlPart<OpenXmlUnknownElement> {
+export class SlicerCachePart extends TypedXmlPart<SlicerCacheDefinition> {
     constructor(part: IPackagePart, registry: ElementRegistry);
     // (undocumented)
     static readonly contentType = "application/vnd.ms-excel.slicerCache+xml";
     // (undocumented)
     static readonly relationshipType = "http://schemas.microsoft.com/office/2007/relationships/slicerCache";
+    get slicerCacheDefinition(): SlicerCacheDefinition;
+    set slicerCacheDefinition(value: SlicerCacheDefinition);
 }
 
 // @public
@@ -1009,13 +1017,17 @@ export class ThemePart extends TypedXmlPart<Theme> {
     set theme(value: Theme);
 }
 
+// Warning: (ae-forgotten-export) The symbol "TimelineCacheDefinition" needs to be exported by the entry point index.d.ts
+//
 // @public (undocumented)
-export class TimeLineCachePart extends TypedXmlPart<OpenXmlUnknownElement> {
+export class TimeLineCachePart extends TypedXmlPart<TimelineCacheDefinition> {
     constructor(part: IPackagePart, registry: ElementRegistry);
     // (undocumented)
     static readonly contentType = "application/vnd.ms-excel.timelineCache+xml";
     // (undocumented)
     static readonly relationshipType = "http://schemas.microsoft.com/office/2011/relationships/timelineCache";
+    get timelineCacheDefinition(): TimelineCacheDefinition;
+    set timelineCacheDefinition(value: TimelineCacheDefinition);
 }
 
 // @public (undocumented)
@@ -1044,6 +1056,15 @@ export abstract class TypedXmlPart<T extends OpenXmlElement> {
 // @public
 export function unmergeCells(worksheet: Worksheet, range: string): void;
 
+// @public (undocumented)
+export class WebExtensionPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.ms-office.webextension+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2011/relationships/webextension";
+}
+
 // @public
 export class Workbook extends OpenXmlCompositeElement {
     // (undocumented)
@@ -1071,6 +1092,7 @@ export class WorkbookPart extends TypedXmlPart<Workbook> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
     get slicerCacheParts(): readonly SlicerCachePart[];
     get timeLineCacheParts(): readonly TimeLineCachePart[];
+    get webExtensionParts(): readonly WebExtensionPart[];
     get workbook(): Workbook;
     set workbook(value: Workbook);
     get worksheetParts(): readonly WorksheetPart[];
@@ -1136,6 +1158,10 @@ export class WorksheetPart extends TypedXmlPart<Worksheet> {
     static readonly contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml";
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet";
+    // Warning: (ae-forgotten-export) The symbol "SlicersPart" needs to be exported by the entry point index.d.ts
+    get slicersParts(): readonly SlicersPart[];
+    // Warning: (ae-forgotten-export) The symbol "TimeLinePart" needs to be exported by the entry point index.d.ts
+    get timeLineParts(): readonly TimeLinePart[];
     get worksheet(): Worksheet;
     set worksheet(value: Worksheet);
 }

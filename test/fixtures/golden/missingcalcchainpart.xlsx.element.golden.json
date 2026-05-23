@@ -230,10 +230,10 @@
             "children": [
               {
                 "qname": "x15:workbookPr",
-                "className": "OpenXmlUnknownElement",
+                "className": "WorkbookProperties",
                 "namespaceUri": "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main",
-                "extendedAttributes": {
-                  "chartTrackingRefBase": "1"
+                "typedAttributes": {
+                  "chartTrackingReferenceBase": "1"
                 }
               }
             ]

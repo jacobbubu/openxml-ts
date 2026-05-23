@@ -37,6 +37,7 @@ export {
   ThemePart,
   TimeLineCachePart,
   TypedXmlPart,
+  WebExtensionPart,
   WorkbookPart,
   WorkbookStylesPart,
   WorksheetPart,

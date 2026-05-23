@@ -10,3 +10,4 @@ export { DrawingPart } from "./drawing-part.js";
 export { ConnectionsPart } from "../../parts/generated/connections-part.js";
 export { SlicerCachePart } from "../../parts/generated/slicer-cache-part.js";
 export { TimeLineCachePart } from "../../parts/generated/time-line-cache-part.js";
+export { WebExtensionPart } from "../../parts/generated/web-extension-part.js";
