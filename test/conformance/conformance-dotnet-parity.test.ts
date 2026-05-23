@@ -55,6 +55,8 @@ import { PresentationExtension } from "../../src/ppt/generated/presentation-exte
 import { PresentationPropertiesExtensionList } from "../../src/ppt/generated/presentation-properties-extension-list.js";
 import { PresentationPropertiesExtension } from "../../src/ppt/generated/presentation-properties-extension.js";
 import { PresentationDocument } from "../../src/ppt/index.js";
+import { OpenXmlValidator, registerConstraints } from "../../src/validation/OpenXmlValidator.js";
+import { constraints as wordConstraints } from "../../src/validation/constraints/word.js";
 import { WordprocessingDocument } from "../../src/word/index.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -1552,13 +1554,38 @@ describe("IsoStrictTest (源：IsoStrictTest.cs)", () => {
   });
 
   /**
-   * N/A — ValidateISOStrictNamespace [Theory × 60+]
+   * PORTABLE
+   * 源：IsoStrictTest.ValidateISOStrictNamespace [Theory × 60+]
+   * Office15TCM: 41263: OOXML SDK: File Validation - OOXML ISO Strict Files (DrawingML)
    *
-   * 依赖 O14ISOStrict 资产约 60+ 文件（Excel / PowerPoint / Word / Graphics），
-   * 按 asset 策略不整体搬运；且 OpenXmlValidator 在 openxml-ts 中尚未实现 ISO Strict
-   * 特有的完整校验语义。留 skip 直至 validator 成熟。
+   * .NET 原意：对 O14ISOStrict 文件运行 OpenXmlValidator(Office2010).Validate(document)，
+   * 断言返回值不为 null（测试不抛异常、校验器可正常运行）。
+   * 注意：.NET 测试仅断言 errorList != null，不断言 0 错误。
+   *
+   * openxml-ts 移植：用已有 Strict01.docx（upstream-smoke）作为代表性 Strict 文档，
+   * 断言：
+   *   (a) strictRelationshipFound == true（文档确为 Strict 格式）
+   *   (b) validator.validatePackage() 返回非 null 数组（校验器正常运行不抛）
+   *
+   * 实现说明：Epic-89 在反序列化阶段把 Strict URI 归一化为 Transitional，
+   * validator 看到的已是 Transitional URI，走完整校验路径，无需额外 Strict 分支。
+   *
+   * 来源资产：test/fixtures/upstream-smoke/Strict01.docx（已有）
    */
-  it.skip("ValidateISOStrictNamespace [N/A] — O14ISOStrict fixture 未批量引入；OpenXmlValidator ISO Strict 校验未实现", () => {});
+  it("ValidateISOStrictNamespace — Strict01.docx 可正常校验（validator 不抛、返回列表）", async () => {
+    registerConstraints(wordConstraints);
+    const bytes = await readFixture(SMOKE_DIR, "Strict01.docx");
+    const doc = await WordprocessingDocument.openAsync(bytes);
+
+    // (a) 确认是 Strict 格式文档（对位 .NET TestISOStrictNamespace 断言）
+    expect(doc.strictRelationshipFound).toBe(true);
+
+    // (b) validator 正常运行，返回非 null 列表（对位 .NET ValidateISOStrictNamespace 断言）
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2010 });
+    const errorList = validator.validatePackage(doc);
+    expect(errorList).not.toBeNull();
+    expect(Array.isArray(errorList)).toBe(true);
+  }, 30000);
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
