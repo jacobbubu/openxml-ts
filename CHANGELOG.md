@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.6.0](https://github.com/jacobbubu/openxml-ts/compare/v1.5.0...v1.6.0) (2026-05-23)
+
+
+### Features
+
+* **excel:** Epic-118b Excel typed accessors + un-skip 7 Excel conformance tests ([155a649](https://github.com/jacobbubu/openxml-ts/commit/155a649f81370af3ca581faec826114f613e638b))
+* **excel:** Epic-118b Excel typed accessors + un-skip 7 Excel conformance tests ([#118](https://github.com/jacobbubu/openxml-ts/issues/118)) ([a791a3c](https://github.com/jacobbubu/openxml-ts/commit/a791a3c9c78ef63cf8f243005ef70a75cb28f3ab))
+* **parts:** Epic-117 扩展 Part 类接入文档门面 + un-skip 批6 conformance ([d09c722](https://github.com/jacobbubu/openxml-ts/commit/d09c722c77b8466d8c132eb7e8b51ad964e91321))
+* **parts:** Epic-117 接入扩展 Part 到文档门面 + 更新 批6 conformance 测试 ([#334](https://github.com/jacobbubu/openxml-ts/issues/334)) ([14b4632](https://github.com/jacobbubu/openxml-ts/commit/14b4632eab009194153a17f525d44e29c6aa7728))
+* **ppt:** Epic-118b-ppt PPT typed accessors + 解除 6 个 conformance 测试的 skip ([5eef278](https://github.com/jacobbubu/openxml-ts/commit/5eef2783dc652e5e11705d0d1f65486b462a71bf))
+* **ppt:** Epic-118b-ppt PPT 类型化访问器 + 解除 6 个 conformance 测试的 skip ([#342](https://github.com/jacobbubu/openxml-ts/issues/342)) ([d00dd3f](https://github.com/jacobbubu/openxml-ts/commit/d00dd3f6f7e3682760cf392454e663a88075fe92))
+* **word:** Epic-118b Word typed accessor + un-skip Word conformance tests ([c3ffa74](https://github.com/jacobbubu/openxml-ts/commit/c3ffa7433751ef4f02451f71bf67f0ff442ca084))
+* **word:** Epic-118b Word typed accessor + un-skip Word conformance tests ([1f1bebd](https://github.com/jacobbubu/openxml-ts/commit/1f1bebd04e8ec536b5735da20ef6198f471406d9))
+
 ## [1.5.0](https://github.com/jacobbubu/openxml-ts/compare/v1.4.0...v1.5.0) (2026-05-22)
 
 
