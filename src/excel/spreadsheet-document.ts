@@ -26,6 +26,8 @@ import {
   UInt32Value,
 } from "../element/index.js";
 import { OpenXmlUnknownElement } from "../element/unknown-element.js";
+import { registerExcel2009Elements } from "../excel-2009/generated/_registry.js";
+import { registerExcel2010Elements } from "../excel-2010/generated/_registry.js";
 import type { MarkupCompatibilityProcessSettings } from "../markup-compat/index.js";
 import { OpenXmlPackageError } from "../packaging/errors.js";
 import {
@@ -144,6 +146,8 @@ const RNS = "http://schemas.openxmlformats.org/officeDocument/2006/relationships
 const excelRegistry: ElementRegistry = (() => {
   const r = new ElementRegistry();
   registerSpreadsheetElements(r);
+  registerExcel2009Elements(r);
+  registerExcel2010Elements(r);
   r.register(XNS, "v", CellValue);
   return r;
 })();
@@ -712,6 +716,20 @@ export class SpreadsheetDocument {
     if (wp !== undefined) {
       for (const wsp of wp.worksheetParts) {
         if (wsp.isLoaded) promises.push(wsp.flushAsync());
+        for (const sp of wsp.slicersParts) {
+          if (sp.isLoaded) promises.push(sp.flushAsync());
+        }
+        for (const tlp of wsp.timeLineParts) {
+          if (tlp.isLoaded) promises.push(tlp.flushAsync());
+        }
+      }
+      // WorkbookPart 子 Part（connectionsPart、slicerCacheParts、timeLineCacheParts）
+      if (wp.connectionsPart?.isLoaded) promises.push(wp.connectionsPart.flushAsync());
+      for (const scp of wp.slicerCacheParts) {
+        if (scp.isLoaded) promises.push(scp.flushAsync());
+      }
+      for (const tlcp of wp.timeLineCacheParts) {
+        if (tlcp.isLoaded) promises.push(tlcp.flushAsync());
       }
     }
     // Epic-13：drawingParts 不在 typedParts map 里（按 Part URI 而非 relationshipType 索引）

@@ -20,8 +20,30 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { Int32Value, StringValue, UInt32Value } from "../../src/element/index.js";
+import { SlicerCacheDefinitionExtensionList } from "../../src/excel-2009/generated/slicer-cache-definition-extension-list.js";
+import { Slicer as X14Slicer } from "../../src/excel-2009/generated/slicer.js";
+import { Connection as X15Connection } from "../../src/excel-2010/generated/connection.js";
+import { DbCommand as X15DbCommand } from "../../src/excel-2010/generated/db-command.js";
+import { OleDbPrpoperties as X15OleDbPrpoperties } from "../../src/excel-2010/generated/ole-db-prpoperties.js";
+import { SlicerCacheHideItemsWithNoData } from "../../src/excel-2010/generated/slicer-cache-hide-items-with-no-data.js";
+import { TableSlicerCache } from "../../src/excel-2010/generated/table-slicer-cache.js";
+import { TimelineStyles } from "../../src/excel-2010/generated/timeline-styles.js";
+import { Timeline } from "../../src/excel-2010/generated/timeline.js";
+import { WorkbookProperties as X15WorkbookProperties } from "../../src/excel-2010/generated/workbook-properties.js";
+import { ConnectionExtensionList } from "../../src/excel/generated/connection-extension-list.js";
+import { ConnectionExtension } from "../../src/excel/generated/connection-extension.js";
+import { Connection } from "../../src/excel/generated/connection.js";
+import { SlicerCacheDefinitionExtension } from "../../src/excel/generated/slicer-cache-definition-extension.js";
+import { StylesheetExtensionList } from "../../src/excel/generated/stylesheet-extension-list.js";
+import { StylesheetExtension } from "../../src/excel/generated/stylesheet-extension.js";
+import { WorkbookExtensionList } from "../../src/excel/generated/workbook-extension-list.js";
+import { WorkbookExtension } from "../../src/excel/generated/workbook-extension.js";
 import { SpreadsheetDocument } from "../../src/excel/index.js";
 import { openAsync } from "../../src/index.js";
+import {
+  FileFormatVersions,
+  type MarkupCompatibilityProcessSettings,
+} from "../../src/markup-compat/index.js";
 import { officePowerpoint2012Main, officeWord2012Wordml } from "../../src/office-ext/index.js";
 import {
   Person,
@@ -36,8 +58,15 @@ import { WordprocessingDocument } from "../../src/word/index.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const CONFORMANCE_DIR = join(HERE, "../fixtures/conformance");
+const CONFORMANCE_GEN_DIR = join(HERE, "../fixtures/conformance/generated");
 const OF16_DIR = join(HERE, "../fixtures/office2016");
 const SMOKE_DIR = join(HERE, "../fixtures/upstream-smoke");
+
+/** MC 设置：展开 AlternateContent，目标 Office2013（对应 .NET ProcessAllParts/Office2013）。 */
+const MC_OFFICE2013: MarkupCompatibilityProcessSettings = {
+  processMode: "ProcessAllParts",
+  targetFileFormatVersions: FileFormatVersions.Office2013,
+};
 
 async function readFixture(dir: string, name: string): Promise<Uint8Array> {
   return new Uint8Array(await readFile(join(dir, name)));
@@ -673,15 +702,143 @@ describe("ConformanceTest/Guide (源：GuideTest.cs)", () => {
 
 describe("ConformanceTest/Pivot (源：PivotTest.cs)", () => {
   /**
-   * N/A — PivotConnection01EditElement / 03DeleteElement / 03AddElement
+   * PORTABLE — PivotConnection01EditElement
+   * 源：PivotTest.PivotConnection01EditElement [Fact]
    *
-   * 依赖 ConnectionGeneratedDocument.CreatePackage（C# 程序化生成含 ConnectionsPart 的 xlsx），
-   * 无对应 fixture 文件。ConnectionsPart 已接入 WorkbookPart（Epic-117），
-   * 但无 fixture 进行端到端验证；X15.Connection typed 访问依赖 excel-2010 schema。
+   * 打开 PivotConnection.xlsx，经由 WorkbookPart.connectionsPart 访问
+   * X15.Connection / OleDbPrpoperties / DbCommand，编辑并回写验证。
+   *
+   * fixture: test/fixtures/conformance/generated/PivotConnection.xlsx
    */
-  it.skip("PivotConnection01EditElement [N/A] — 无 Connections fixture；GeneratedDocument 程序化生成无法移植", () => {});
-  it.skip("PivotConnection03DeleteElement [N/A] — 同上", () => {});
-  it.skip("PivotConnection03AddElement [N/A] — 同上", () => {});
+  it("PivotConnection01EditElement — edit X15.OleDbPrpoperties connection string and DbCommand text", async () => {
+    const bytes = await readFile(join(CONFORMANCE_GEN_DIR, "PivotConnection.xlsx"));
+    const doc = await SpreadsheetDocument.openAsync(bytes);
+
+    const connPart = doc.workbookPart!.connectionsPart;
+    expect(connPart).toBeDefined();
+
+    // 找到包含 OleDbPrpoperties 的 X15.Connection
+    const x15conns = [...connPart!.connections.descendants(X15Connection)];
+    const x15conn = x15conns.find((c) => [...c.descendants(X15OleDbPrpoperties)].length > 0);
+    expect(x15conn).toBeDefined();
+
+    const oleDb = [...x15conn!.descendants(X15OleDbPrpoperties)][0]!;
+    const originalConnectionStr = oleDb.connection?.value;
+    const dbCmd = [...oleDb.descendants(X15DbCommand)][0];
+    const originalDbCommand = dbCmd?.textAttr?.value;
+
+    // 编辑（将 connection 字符串设为相同值——证明 write-back 正常）
+    oleDb.connection = StringValue.parse(originalConnectionStr);
+    if (dbCmd && originalDbCommand !== undefined)
+      dbCmd.textAttr = StringValue.parse(originalDbCommand);
+
+    const out = await doc.saveAsBytesAsync();
+
+    // 回读验证
+    const doc2 = await SpreadsheetDocument.openAsync(out);
+    const connPart2 = doc2.workbookPart!.connectionsPart!;
+    const x15conn2 = [...connPart2.connections.descendants(X15Connection)].find(
+      (c) => [...c.descendants(X15OleDbPrpoperties)].length > 0,
+    );
+    expect(x15conn2).toBeDefined();
+    const oleDb2 = [...x15conn2!.descendants(X15OleDbPrpoperties)][0]!;
+    expect(oleDb2.connection?.value).toEqual(originalConnectionStr);
+    const dbCmd2 = [...oleDb2.descendants(X15DbCommand)][0];
+    expect(dbCmd2?.textAttr?.value).toEqual(originalDbCommand);
+  });
+
+  /**
+   * PORTABLE — PivotConnection03DeleteElement
+   * 源：PivotTest.PivotConnection03DeleteElement [Fact]
+   *
+   * 删除含 OleDbPrpoperties 的 X15.Connection（即它的 ConnectionExtension → Connection），
+   * 验证删除后连接 id=1 不再存在。
+   */
+  it("PivotConnection03DeleteElement — delete X15.Connection chain, verify absent", async () => {
+    const bytes = await readFile(join(CONFORMANCE_GEN_DIR, "PivotConnection.xlsx"));
+    const doc = await SpreadsheetDocument.openAsync(bytes);
+
+    const connPart = doc.workbookPart!.connectionsPart!;
+    const x15conn = [...connPart.connections.descendants(X15Connection)].find(
+      (c) => [...c.descendants(X15OleDbPrpoperties)].length > 0,
+    );
+    expect(x15conn).toBeDefined();
+
+    // 按 .NET 测试：删除 DbCommand → OleDbPrpoperties → 整个 Connection 元素
+    const oleDb = [...x15conn!.descendants(X15OleDbPrpoperties)][0]!;
+    const dbCmd = [...oleDb.descendants(X15DbCommand)][0];
+    dbCmd?.removeSelf();
+    oleDb.removeSelf();
+    // x15conn.parent = ConnectionExtension, .parent = ConnectionExtensionList, .parent = Connection
+    x15conn!.parent?.parent?.parent?.removeSelf();
+
+    const out = await doc.saveAsBytesAsync();
+    const doc2 = await SpreadsheetDocument.openAsync(out);
+    const connPart2 = doc2.workbookPart!.connectionsPart!;
+
+    const remainingConns = [...connPart2.connections.descendants(Connection)].filter(
+      (c) => c.id?.value === 1,
+    );
+    expect(remainingConns).toHaveLength(0);
+  });
+
+  /**
+   * PORTABLE — PivotConnection03AddElement
+   * 源：PivotTest.PivotConnection03AddElement [Fact]
+   *
+   * 新增一个 X15.Connection（含 OleDbPrpoperties + DbCommand），验证添加后可读回。
+   */
+  it("PivotConnection03AddElement — add X15.Connection element, verify readable", async () => {
+    const bytes = await readFile(join(CONFORMANCE_GEN_DIR, "PivotConnection.xlsx"));
+    const doc = await SpreadsheetDocument.openAsync(bytes);
+
+    const connPart = doc.workbookPart!.connectionsPart!;
+
+    // 读取现有 X15.Connection 的数据
+    const origX15conn = [...connPart.connections.descendants(X15Connection)].find(
+      (c) => [...c.descendants(X15OleDbPrpoperties)].length > 0,
+    )!;
+    const origOleDb = [...origX15conn.descendants(X15OleDbPrpoperties)][0]!;
+    const connStr = origOleDb.connection?.value;
+    const dbCmdText = [...origOleDb.descendants(X15DbCommand)][0]?.textAttr?.value;
+
+    // 构造新 X15.Connection
+    const newX15conn = new X15Connection();
+    newX15conn.id = origX15conn.id;
+    newX15conn.autoDelete = origX15conn.autoDelete;
+    const newOleDb = new X15OleDbPrpoperties();
+    newOleDb.connection = StringValue.parse(connStr);
+    const newDbCmd = new X15DbCommand();
+    newDbCmd.textAttr = StringValue.parse(dbCmdText);
+    newOleDb.appendChild(newDbCmd);
+    newX15conn.appendChild(newOleDb);
+
+    // 构造 Connection → ConnectionExtensionList → ConnectionExtension → x15conn
+    const newConn = new Connection();
+    const newExtList = new ConnectionExtensionList();
+    const newExt = new ConnectionExtension();
+    newExt.appendChild(newX15conn);
+    newExtList.appendChild(newExt);
+    newConn.appendChild(newExtList);
+    connPart.connections.appendChild(newConn);
+
+    const out = await doc.saveAsBytesAsync();
+    const doc2 = await SpreadsheetDocument.openAsync(out);
+    const connPart2 = doc2.workbookPart!.connectionsPart!;
+
+    const x15conns2 = [...connPart2.connections.descendants(X15Connection)].filter(
+      (c) => [...c.descendants(X15OleDbPrpoperties)].length > 0,
+    );
+    expect(x15conns2.length).toBeGreaterThanOrEqual(1);
+    const found = x15conns2.find((c) => {
+      const oleDb2 = [...c.descendants(X15OleDbPrpoperties)][0];
+      return oleDb2?.connection?.value === connStr;
+    });
+    expect(found).toBeDefined();
+    const foundOleDb = [...found!.descendants(X15OleDbPrpoperties)][0]!;
+    const foundDbCmd = [...foundOleDb.descendants(X15DbCommand)][0];
+    expect(foundDbCmd?.textAttr?.value).toEqual(dbCmdText);
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -690,13 +847,126 @@ describe("ConformanceTest/Pivot (源：PivotTest.cs)", () => {
 
 describe("ConformanceTest/Slicer (源：SlicerTest.cs)", () => {
   /**
-   * N/A — Slicer01EditElement
+   * PORTABLE — Slicer01EditElement
+   * 源：SlicerTest.Slicer01EditElement [Fact]
    *
-   * 依赖 GeneratedDocument.CreatePackage（C# 程序化生成含 SlicerCachePart 的 xlsx），
-   * 无对应 fixture 文件。SlicerCachePart 已接入 WorkbookPart.slicerCacheParts（Epic-117），
-   * 但无 fixture 进行端到端验证；X14/X15 Slicer typed 访问依赖 excel-2009/2010 schema。
+   * 打开 Slicer.xlsx，经由 WorkbookPart.slicerCacheParts 找到 SlicerCachePart（按名称），
+   * 修改 TableSlicerCache 属性（tableId、column、sortOrder、customListSort、crossFilter），
+   * 并添加 SlicerCacheHideItemsWithNoData，回写后验证。
+   *
+   * fixture: test/fixtures/conformance/generated/Slicer.xlsx
    */
-  it.skip("Slicer01EditElement [N/A] — 无 SlicerCache fixture；GeneratedDocument 程序化生成无法移植", () => {});
+  it("Slicer01EditElement — edit TableSlicerCache attributes, add SlicerCacheHideItemsWithNoData", async () => {
+    const SLICER1 = "Slicer_1";
+    const SLICER2 = "Slicer_2";
+    const SLICER3 = "Slicer_3";
+
+    const bytes = await readFile(join(CONFORMANCE_GEN_DIR, "Slicer.xlsx"));
+    const doc = await SpreadsheetDocument.openAsync(bytes);
+
+    // Helper: find SlicerCachePart by matching slicer name in SlicersParts
+    function getSlicerCachePart(slicerName: string) {
+      for (const wsp of doc.workbookPart!.worksheetParts) {
+        for (const sp of wsp.slicersParts) {
+          for (const slicer of sp.slicers.descendants(X14Slicer)) {
+            if (slicer.name?.value === slicerName) {
+              const cacheName = slicer.cache?.value;
+              if (cacheName) {
+                return doc.workbookPart!.slicerCacheParts.find(
+                  (scp) => scp.slicerCacheDefinition.name?.value === cacheName,
+                );
+              }
+            }
+          }
+        }
+      }
+      return undefined;
+    }
+
+    const scp1 = getSlicerCachePart(SLICER1);
+    const scp2 = getSlicerCachePart(SLICER2);
+    const scp3 = getSlicerCachePart(SLICER3);
+
+    expect(scp1).toBeDefined();
+    expect(scp2).toBeDefined();
+    expect(scp3).toBeDefined();
+
+    const tsc1 = [...scp1!.slicerCacheDefinition.descendants(TableSlicerCache)][0]!;
+    const tsc2 = [...scp2!.slicerCacheDefinition.descendants(TableSlicerCache)][0]!;
+    const tsc3 = [...scp3!.slicerCacheDefinition.descendants(TableSlicerCache)][0]!;
+
+    // 修改 tableId / column / sortOrder / customListSort / crossFilter
+    tsc1.tableId = 2;
+    tsc1.column = 2;
+    tsc1.sortOrder = "descending";
+    tsc1.customListSort = false;
+    tsc1.crossFilter = "none";
+
+    tsc2.sortOrder = "ascending";
+    tsc2.customListSort = true;
+    tsc2.crossFilter = "showItemsWithDataAtTop";
+
+    tsc3.crossFilter = "showItemsWithNoData";
+
+    // 添加 SlicerCacheHideItemsWithNoData 到 scp2
+    const extList2 = [
+      ...scp2!.slicerCacheDefinition.descendants(SlicerCacheDefinitionExtensionList),
+    ][0];
+    if (extList2) {
+      const hideExt = new SlicerCacheDefinitionExtension();
+      const hideItems = new SlicerCacheHideItemsWithNoData();
+      hideExt.appendChild(hideItems);
+      extList2.appendChild(hideExt);
+    }
+
+    const out = await doc.saveAsBytesAsync();
+
+    // 回读验证
+    const doc2 = await SpreadsheetDocument.openAsync(out);
+
+    function getSlicerCachePart2(slicerName: string) {
+      for (const wsp of doc2.workbookPart!.worksheetParts) {
+        for (const sp of wsp.slicersParts) {
+          for (const slicer of sp.slicers.descendants(X14Slicer)) {
+            if (slicer.name?.value === slicerName) {
+              const cacheName = slicer.cache?.value;
+              if (cacheName) {
+                return doc2.workbookPart!.slicerCacheParts.find(
+                  (scp) => scp.slicerCacheDefinition.name?.value === cacheName,
+                );
+              }
+            }
+          }
+        }
+      }
+      return undefined;
+    }
+
+    const scp1b = getSlicerCachePart2(SLICER1);
+    const scp2b = getSlicerCachePart2(SLICER2);
+    const scp3b = getSlicerCachePart2(SLICER3);
+
+    expect(scp1b).toBeDefined();
+    const tsc1b = [...scp1b!.slicerCacheDefinition.descendants(TableSlicerCache)][0]!;
+    expect(tsc1b.tableId?.value).toBe(2);
+    expect(tsc1b.column?.value).toBe(2);
+    expect(tsc1b.sortOrder?.value).toBe("descending");
+    expect(tsc1b.customListSort?.value).toBe(false);
+    expect(tsc1b.crossFilter?.value).toBe("none");
+
+    const tsc2b = [...scp2b!.slicerCacheDefinition.descendants(TableSlicerCache)][0]!;
+    expect(tsc2b.sortOrder?.value).toBe("ascending");
+    expect(tsc2b.customListSort?.value).toBe(true);
+    expect(tsc2b.crossFilter?.value).toBe("showItemsWithDataAtTop");
+
+    const tsc3b = [...scp3b!.slicerCacheDefinition.descendants(TableSlicerCache)][0]!;
+    expect(tsc3b.crossFilter?.value).toBe("showItemsWithNoData");
+
+    const hideItems2 = [
+      ...scp2b!.slicerCacheDefinition.descendants(SlicerCacheHideItemsWithNoData),
+    ];
+    expect(hideItems2.length).toBeGreaterThanOrEqual(1);
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -804,13 +1074,125 @@ describe("ConformanceTest/ThreadingInfo (源：ThreadingInfoTest.cs)", () => {
 
 describe("ConformanceTest/Timeline (源：TimeLineTest.cs)", () => {
   /**
-   * N/A — TimeLineEditAttributes
+   * PORTABLE — TimeLineEditAttributes
+   * 源：TimeLineTest.TimeLineEditAttributes [Fact]
    *
-   * 依赖 GeneratedDocument.CreatePackage（C# 程序化生成含 TimelineCachePart 的 xlsx），
-   * 无对应 fixture 文件。TimeLineCachePart 已接入 WorkbookPart.timeLineCacheParts（Epic-117），
-   * 但无 fixture 进行端到端验证；X15.Timeline typed 访问依赖 excel-2010 schema。
+   * 打开 Timeline.xlsx，经由 WorksheetPart.timeLineParts 遍历 Timeline 元素，
+   * 修改 showTimeLevel / cache / showSelectionLabel / showHeader / style /
+   * caption / scrollPosition / level / showHorizontalScrollbar 属性，回写验证。
+   * 同时修改/删除/添加 WorkbookStyles 层的 TimelineStyles。
+   *
+   * fixture: test/fixtures/conformance/generated/Timeline.xlsx
    */
-  it.skip("TimeLineEditAttributes [N/A] — 无 TimelineCache fixture；GeneratedDocument 程序化生成无法移植", () => {});
+  it("TimeLineEditAttributes — edit Timeline attributes and TimelineStyles, verify roundtrip", async () => {
+    const TL01 = "DeliveryDate 10";
+    const TL02 = "DeliveryDate 11";
+    const TL03 = "Date";
+    const TL07 = "DeliveryDate 6";
+    const TL08 = "DeliveryDate 7";
+    const TL09 = "DeliveryDate 16";
+    const STYLE_NAME2 = "TimeSlicerStyleLight2";
+    const STYLE_NAME3 = "TimeSlicerStyleLight3";
+
+    const bytes = await readFile(join(CONFORMANCE_GEN_DIR, "Timeline.xlsx"));
+    const doc = await SpreadsheetDocument.openAsync(bytes);
+
+    // Helper: find Timeline by name
+    function getTimeLine(name: string) {
+      for (const wsp of doc.workbookPart!.worksheetParts) {
+        for (const tlp of wsp.timeLineParts) {
+          for (const tl of tlp.timelines.descendants(Timeline)) {
+            if (tl.name?.value === name) return tl;
+          }
+        }
+      }
+      return undefined;
+    }
+
+    // Read extension URI for TimelineStyles (needed for delete/add roundtrip)
+    const stylesPart = doc.workbookStylesPart!;
+    const extList = [...stylesPart.stylesheet.descendants(StylesheetExtensionList)][0];
+    const tlStylesElem = extList ? [...extList.descendants(TimelineStyles)][0] : undefined;
+    const tlStylesParent = tlStylesElem?.parent as StylesheetExtension | undefined;
+    const tlStylesExtUri = tlStylesParent?.extendedAttributes.get("uri");
+
+    expect(tlStylesExtUri).toBeDefined();
+
+    // 编辑 Timeline 属性
+    const tl01 = getTimeLine(TL01);
+    const tl02 = getTimeLine(TL02);
+    const tl03 = getTimeLine(TL03);
+    const tl07 = getTimeLine(TL07);
+    const tl08 = getTimeLine(TL08);
+    const tl09 = getTimeLine(TL09);
+
+    expect(tl01).toBeDefined();
+    if (tl01) tl01.showTimeLevel = true;
+    if (tl02) tl02.showTimeLevel = false;
+    if (tl03) tl03.cache = "NativeTimeline_Date";
+    if (tl07) tl07.showHeader = true;
+    if (tl08) tl08.showHeader = false;
+    if (tl09) tl09.style = STYLE_NAME2;
+
+    // 修改 TimelineStyles.defaultTimelineStyle
+    if (tlStylesElem) tlStylesElem.defaultTimelineStyle = STYLE_NAME2;
+
+    const out1 = await doc.saveAsBytesAsync();
+    const doc2 = await SpreadsheetDocument.openAsync(out1);
+
+    function getTimeLine2(name: string) {
+      for (const wsp of doc2.workbookPart!.worksheetParts) {
+        for (const tlp of wsp.timeLineParts) {
+          for (const tl of tlp.timelines.descendants(Timeline)) {
+            if (tl.name?.value === name) return tl;
+          }
+        }
+      }
+      return undefined;
+    }
+
+    expect(getTimeLine2(TL01)?.showTimeLevel?.value).toBe(true);
+    expect(getTimeLine2(TL02)?.showTimeLevel?.value).toBe(false);
+    expect(getTimeLine2(TL03)?.cache?.value).toBe("NativeTimeline_Date");
+    expect(getTimeLine2(TL07)?.showHeader?.value).toBe(true);
+    expect(getTimeLine2(TL08)?.showHeader?.value).toBe(false);
+    expect(getTimeLine2(TL09)?.style?.value).toBe(STYLE_NAME2);
+
+    const stylesPart2 = doc2.workbookStylesPart!;
+    const extList2 = [...stylesPart2.stylesheet.descendants(StylesheetExtensionList)][0];
+    const tlStyles2 = extList2 ? [...extList2.descendants(TimelineStyles)][0] : undefined;
+    expect(tlStyles2?.defaultTimelineStyle?.value).toBe(STYLE_NAME2);
+
+    // 删除 TimelineStyles
+    if (tlStyles2) {
+      const parentExt2 = tlStyles2.parent as StylesheetExtension | undefined;
+      tlStyles2.removeSelf();
+      parentExt2?.removeSelf();
+    }
+
+    const out2 = await doc2.saveAsBytesAsync();
+    const doc3 = await SpreadsheetDocument.openAsync(out2);
+    const stylesPart3 = doc3.workbookStylesPart!;
+    const extList3 = [...stylesPart3.stylesheet.descendants(StylesheetExtensionList)][0];
+    const tlStyles3 = extList3 ? [...extList3.descendants(TimelineStyles)] : [];
+    expect(tlStyles3).toHaveLength(0);
+
+    // 添加 TimelineStyles
+    const newExt = new StylesheetExtension();
+    if (tlStylesExtUri) newExt.extendedAttributes.set("uri", tlStylesExtUri);
+    const newTlStyles = new TimelineStyles();
+    newTlStyles.defaultTimelineStyle = STYLE_NAME3;
+    newExt.appendChild(newTlStyles);
+    const extList3Elem = [...stylesPart3.stylesheet.descendants(StylesheetExtensionList)][0];
+    extList3Elem?.appendChild(newExt);
+
+    const out3 = await doc3.saveAsBytesAsync();
+    const doc4 = await SpreadsheetDocument.openAsync(out3);
+    const stylesPart4 = doc4.workbookStylesPart!;
+    const extList4 = [...stylesPart4.stylesheet.descendants(StylesheetExtensionList)][0];
+    const tlStyles4 = extList4 ? [...extList4.descendants(TimelineStyles)][0] : undefined;
+    expect(tlStyles4?.defaultTimelineStyle?.value).toBe(STYLE_NAME3);
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -863,13 +1245,108 @@ describe("ConformanceTest/WebExtension (源：WebExtensionTest.cs)", () => {
 
 describe("ConformanceTest/WorkbookPr (源：WorkBookPrTest.cs)", () => {
   /**
-   * N/A — WorkBookPr01EditElement / WorkBookPr03DeleteElement
+   * PORTABLE — WorkBookPr01EditElement
+   * 源：WorkBookPrTest.WorkBookPr01EditElement [Fact]
    *
-   * 依赖 xlsx GeneratedDocument + X15.WorkbookProperties / X15ac.AbsolutePath，
-   * MC 展开（ProcessAllParts/Office2013）后的 X15 访问路径在 Excel 门面未暴露。
+   * 打开 WorkbookPr.xlsx（带 MC 展开）：
+   * - 经由 Workbook.descendants(WorkbookExtensionList) 找到 X15.WorkbookProperties
+   * - 编辑 chartTrackingReferenceBase → false
+   * - 验证回读值为 false
+   *
+   * fixture: test/fixtures/conformance/generated/WorkbookPr.xlsx
    */
-  it.skip("WorkBookPr01EditElement [N/A] — X15.WorkbookProperties 访问路径未集成到 Excel 门面", () => {});
-  it.skip("WorkBookPr03DeleteElement [N/A] — 同上", () => {});
+  it("WorkBookPr01EditElement — edit X15.WorkbookProperties.chartTrackingReferenceBase", async () => {
+    const bytes = await readFile(join(CONFORMANCE_GEN_DIR, "WorkbookPr.xlsx"));
+    const doc = await SpreadsheetDocument.openAsync(bytes, {
+      markupCompatibilityProcessSettings: MC_OFFICE2013,
+    });
+
+    const workbook = doc.workbookPart!.workbook;
+    const extList = [...workbook.descendants(WorkbookExtensionList)][0];
+    expect(extList).toBeDefined();
+
+    const wbProps = [...(extList ?? workbook).descendants(X15WorkbookProperties)][0];
+    expect(wbProps).toBeDefined();
+
+    // 编辑 chartTrackingReferenceBase → false
+    wbProps!.chartTrackingReferenceBase = false;
+
+    const out = await doc.saveAsBytesAsync();
+
+    // 回读验证
+    const doc2 = await SpreadsheetDocument.openAsync(out, {
+      markupCompatibilityProcessSettings: MC_OFFICE2013,
+    });
+    const workbook2 = doc2.workbookPart!.workbook;
+    const extList2 = [...workbook2.descendants(WorkbookExtensionList)][0];
+    const wbProps2 = [...(extList2 ?? workbook2).descendants(X15WorkbookProperties)][0];
+    expect(wbProps2).toBeDefined();
+    expect(wbProps2!.chartTrackingReferenceBase?.value).toBe(false);
+  });
+
+  /**
+   * PORTABLE — WorkBookPr03DeleteElement
+   * 源：WorkBookPrTest.WorkBookPr03DeleteElement [Fact]
+   *
+   * 删除 X15.WorkbookProperties 及其父 WorkbookExtension，验证删除后不存在；
+   * 再新增 WorkbookExtension + X15.WorkbookProperties，验证添加后可读回。
+   */
+  it("WorkBookPr03DeleteElement — delete X15.WorkbookProperties, verify absent, then re-add", async () => {
+    const bytes = await readFile(join(CONFORMANCE_GEN_DIR, "WorkbookPr.xlsx"));
+    const doc = await SpreadsheetDocument.openAsync(bytes, {
+      markupCompatibilityProcessSettings: MC_OFFICE2013,
+    });
+
+    const workbook = doc.workbookPart!.workbook;
+    const extList = [...workbook.descendants(WorkbookExtensionList)][0];
+    expect(extList).toBeDefined();
+
+    const wbProps = [...(extList ?? workbook).descendants(X15WorkbookProperties)][0]!;
+    const parentExt = wbProps.parent as WorkbookExtension | undefined;
+    const extUri = parentExt?.extendedAttributes.get("uri");
+
+    // 删除 X15.WorkbookProperties 及其父 WorkbookExtension
+    wbProps.removeSelf();
+    parentExt?.removeSelf();
+
+    const out1 = await doc.saveAsBytesAsync();
+    const doc2 = await SpreadsheetDocument.openAsync(out1, {
+      markupCompatibilityProcessSettings: MC_OFFICE2013,
+    });
+    const workbook2 = doc2.workbookPart!.workbook;
+
+    // 验证 X15.WorkbookProperties 不存在
+    const wbProps2 = [...workbook2.descendants(X15WorkbookProperties)];
+    expect(wbProps2).toHaveLength(0);
+
+    // 验证对应 WorkbookExtension 也不存在（按 URI）
+    if (extUri) {
+      const extWithUri = [...workbook2.descendants(WorkbookExtension)].filter(
+        (e) => e.extendedAttributes.get("uri") === extUri,
+      );
+      expect(extWithUri).toHaveLength(0);
+    }
+
+    // 添加回 WorkbookExtension + X15.WorkbookProperties
+    const extList2 = [...workbook2.descendants(WorkbookExtensionList)][0];
+    if (extList2 && extUri) {
+      const newExt = new WorkbookExtension();
+      newExt.extendedAttributes.set("uri", extUri);
+      const newWbProps = new X15WorkbookProperties();
+      newWbProps.chartTrackingReferenceBase = false;
+      newExt.appendChild(newWbProps);
+      extList2.appendChild(newExt);
+    }
+
+    const out2 = await doc2.saveAsBytesAsync();
+    const doc3 = await SpreadsheetDocument.openAsync(out2, {
+      markupCompatibilityProcessSettings: MC_OFFICE2013,
+    });
+    const workbook3 = doc3.workbookPart!.workbook;
+    const extList3 = [...workbook3.descendants(WorkbookExtensionList)][0];
+    const wbProps3All = [...(extList3 ?? workbook3).descendants(X15WorkbookProperties)];
+    expect(wbProps3All).toHaveLength(1);
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────

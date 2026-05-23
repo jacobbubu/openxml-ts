@@ -274,11 +274,15 @@ function processElement(
   }
 
   // 构建新的 ignorable / processContent / preserve sets（继承 + 本层追加）
+  // MC 规范：若目标版本「理解」某命名空间，则该命名空间不应被忽略，
+  // 即使文档将其声明在 mc:Ignorable 中（仅告知不理解该 ns 的处理器可忽略它）。
   const newIgnorable = new Set(ctx.ignorable);
   if (ignorableStr !== undefined) {
     for (const prefix of parsePrefixList(ignorableStr)) {
       const uri = mergedNsMap.get(prefix) ?? `__unknown__:${prefix}`;
-      newIgnorable.add(uri);
+      if (!isNamespaceUnderstood(uri, target)) {
+        newIgnorable.add(uri);
+      }
     }
   }
 
