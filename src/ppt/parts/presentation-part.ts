@@ -129,8 +129,7 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
    * @see DocumentFormat.OpenXml.Packaging.PresentationPart.authorsPart
    */
   get powerPointAuthorsPart(): PowerPointAuthorsPart | undefined {
-    if (this._powerPointAuthorsPart !== undefined)
-      return this._powerPointAuthorsPart ?? undefined;
+    if (this._powerPointAuthorsPart !== undefined) return this._powerPointAuthorsPart ?? undefined;
     const resolved = resolveSinglePart(
       this.part,
       this.pkg,

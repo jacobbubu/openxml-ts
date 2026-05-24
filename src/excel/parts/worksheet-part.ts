@@ -142,8 +142,7 @@ export class WorksheetPart extends TypedXmlPart<Worksheet> {
    * @see DocumentFormat.OpenXml.Packaging.WorksheetPart.WorksheetCommentsPart
    */
   get worksheetCommentsPart(): WorksheetCommentsPart | undefined {
-    if (this._worksheetCommentsPart !== undefined)
-      return this._worksheetCommentsPart ?? undefined;
+    if (this._worksheetCommentsPart !== undefined) return this._worksheetCommentsPart ?? undefined;
     const pkg = this.part.package;
     for (const rel of this.part.relationships) {
       if (rel.targetMode !== "internal") continue;
@@ -166,8 +165,7 @@ export class WorksheetPart extends TypedXmlPart<Worksheet> {
    * @see DocumentFormat.OpenXml.Packaging.WorksheetPart.WorksheetSortMapPart
    */
   get worksheetSortMapPart(): WorksheetSortMapPart | undefined {
-    if (this._worksheetSortMapPart !== undefined)
-      return this._worksheetSortMapPart ?? undefined;
+    if (this._worksheetSortMapPart !== undefined) return this._worksheetSortMapPart ?? undefined;
     const pkg = this.part.package;
     for (const rel of this.part.relationships) {
       if (rel.targetMode !== "internal") continue;

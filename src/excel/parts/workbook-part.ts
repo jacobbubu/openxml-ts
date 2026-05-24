@@ -82,7 +82,9 @@ export class WorkbookPart extends TypedXmlPart<Workbook> {
   /** 已解析的 rdSupportingPropertyBagParts 缓存。 */
   private _rdSupportingPropertyBagParts: RdSupportingPropertyBagPart[] | undefined;
   /** 已解析的 rdSupportingPropertyBagStructureParts 缓存。 */
-  private _rdSupportingPropertyBagStructureParts: RdSupportingPropertyBagStructurePart[] | undefined;
+  private _rdSupportingPropertyBagStructureParts:
+    | RdSupportingPropertyBagStructurePart[]
+    | undefined;
   /** 已解析的 richStylesParts 缓存。 */
   private _richStylesParts: RichStylesPart[] | undefined;
 
@@ -287,8 +289,7 @@ export class WorkbookPart extends TypedXmlPart<Workbook> {
       return this._workbookRevisionHeaderPart ?? undefined;
     for (const rel of this.part.relationships) {
       if (rel.targetMode !== "internal") continue;
-      if (!relationshipTypeMatches(rel.type, WorkbookRevisionHeaderPart.relationshipType))
-        continue;
+      if (!relationshipTypeMatches(rel.type, WorkbookRevisionHeaderPart.relationshipType)) continue;
       const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
       if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
       const p = new WorkbookRevisionHeaderPart(this.pkg.getPart(targetUri), this.registry);
@@ -500,8 +501,7 @@ export class WorkbookPart extends TypedXmlPart<Workbook> {
    * @see DocumentFormat.OpenXml.Packaging.WorkbookPart.RdSupportingPropertyBagParts
    */
   get rdSupportingPropertyBagParts(): readonly RdSupportingPropertyBagPart[] {
-    if (this._rdSupportingPropertyBagParts !== undefined)
-      return this._rdSupportingPropertyBagParts;
+    if (this._rdSupportingPropertyBagParts !== undefined) return this._rdSupportingPropertyBagParts;
     const out: RdSupportingPropertyBagPart[] = [];
     for (const rel of this.part.relationships) {
       if (rel.targetMode !== "internal") continue;
@@ -528,12 +528,7 @@ export class WorkbookPart extends TypedXmlPart<Workbook> {
     const out: RdSupportingPropertyBagStructurePart[] = [];
     for (const rel of this.part.relationships) {
       if (rel.targetMode !== "internal") continue;
-      if (
-        !relationshipTypeMatches(
-          rel.type,
-          RdSupportingPropertyBagStructurePart.relationshipType,
-        )
-      )
+      if (!relationshipTypeMatches(rel.type, RdSupportingPropertyBagStructurePart.relationshipType))
         continue;
       const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
       if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
