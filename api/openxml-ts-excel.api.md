@@ -1045,6 +1045,10 @@ export class SpreadsheetDocument {
     // Warning: (ae-forgotten-export) The symbol "MemoryOpenXmlPackage" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "MarkupCompatibilityProcessSettings" needs to be exported by the entry point index.d.ts
     constructor(pkg: MemoryOpenXmlPackage, mcSettings?: MarkupCompatibilityProcessSettings);
+    addAudioReferenceRelationship(contentType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
+        relId: string;
+    };
     addDefinedName(name: string, formula: string, opts?: {
         localSheetId?: number;
         hidden?: boolean;
@@ -1052,6 +1056,19 @@ export class SpreadsheetDocument {
     addImagePart(worksheet: WorksheetPart | number, bytes: Uint8Array, opts?: AddImagePartOptions): {
         part: ImagePart;
         drawingPart: DrawingPart;
+        relId: string;
+    };
+    // Warning: (ae-forgotten-export) The symbol "AddMediaDataPartOptions" needs to be exported by the entry point index.d.ts
+    addMediaDataPart(contentType: string, referenceRelationshipType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
+        relId: string;
+    };
+    addMediaReferenceRelationship(contentType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
+        relId: string;
+    };
+    addVideoReferenceRelationship(contentType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
         relId: string;
     };
     get calculationChainPart(): CalculationChainPart | undefined;
@@ -1458,6 +1475,10 @@ export class WorksheetThreadedCommentsPart extends TypedXmlPart<OpenXmlUnknownEl
     // (undocumented)
     static readonly relationshipType = "http://schemas.microsoft.com/office/2017/10/relationships/threadedComment";
 }
+
+// Warnings were encountered during analysis:
+//
+// src/excel/spreadsheet-document.ts:488:8 - (ae-forgotten-export) The symbol "MediaDataPart" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

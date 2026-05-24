@@ -281,13 +281,30 @@ export class PresentationDocument {
     // Warning: (ae-forgotten-export) The symbol "MemoryOpenXmlPackage" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "MarkupCompatibilityProcessSettings" needs to be exported by the entry point index.d.ts
     constructor(pkg: MemoryOpenXmlPackage, mcSettings?: MarkupCompatibilityProcessSettings);
+    addAudioReferenceRelationship(slide: SlidePart | number, contentType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
+        relId: string;
+    };
     addImagePart(slide: SlidePart | number, bytes: Uint8Array, opts?: AddImagePartOptions): {
         part: ImagePart;
+        relId: string;
+    };
+    // Warning: (ae-forgotten-export) The symbol "AddMediaDataPartOptions" needs to be exported by the entry point index.d.ts
+    addMediaDataPart(slide: SlidePart | number, contentType: string, referenceRelationshipType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
+        relId: string;
+    };
+    addMediaReferenceRelationship(slide: SlidePart | number, contentType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
         relId: string;
     };
     addSlide(options?: {
         layoutPart?: SlideLayoutPart;
     }): SlidePart;
+    addVideoReferenceRelationship(slide: SlidePart | number, contentType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
+        relId: string;
+    };
     changeDocumentType(newType: PresentationDocumentType): void;
     get coreProperties(): CoreProperties;
     static create(): PresentationDocument;
@@ -527,6 +544,10 @@ export class ViewPropertiesPart extends TypedXmlPart<OpenXmlUnknownElement> {
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/viewProps";
 }
+
+// Warnings were encountered during analysis:
+//
+// src/ppt/presentation-document.ts:307:8 - (ae-forgotten-export) The symbol "MediaDataPart" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
