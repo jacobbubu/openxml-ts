@@ -9,6 +9,36 @@ import {
   assertString,
 } from "../../element/index.js";
 
+// §14.4.9/§14.11.9 of ISO/IEC 29500-4: Strict boolean attributes collapse into a single
+// Transitional 12-char binary bitmask attribute w:val.
+const CNF_STYLE_STRICT_BIT_MAP: ReadonlyMap<string, number> = new Map([
+  ["w:firstRow", 0x800],
+  ["w:lastRow", 0x400],
+  ["w:firstColumn", 0x200],
+  ["w:lastColumn", 0x100],
+  ["w:oddVBand", 0x080],
+  ["w:evenVBand", 0x040],
+  ["w:oddHBand", 0x020],
+  ["w:evenHBand", 0x010],
+  ["w:firstRowLastColumn", 0x008],
+  ["w:firstRowFirstColumn", 0x004],
+  ["w:lastRowFirstColumn", 0x002],
+  ["w:lastRowLastColumn", 0x001],
+]);
+
+function cnfValToBin(n: number): string {
+  return n.toString(2).padStart(12, "0");
+}
+
+function cnfBinToVal(s: string | undefined): number {
+  if (!s) return 0;
+  try {
+    return Number.parseInt(s, 2);
+  } catch {
+    return 0;
+  }
+}
+
 /** Defines the ConditionalFormatStyle Class.
  *
  * Element: `w:cnfStyle` */
@@ -58,6 +88,15 @@ export class ConditionalFormatStyle extends OpenXmlLeafElement {
   lastRowLastColumn: BooleanValue | undefined;
 
   override applyAttribute(qname: string, value: string): void {
+    const bit = CNF_STYLE_STRICT_BIT_MAP.get(qname);
+    if (bit !== undefined) {
+      // §14.11.9: translate Strict boolean attribute into the Transitional 12-bit binary val
+      const isTrue = value === "true" || value === "1";
+      const current = cnfBinToVal(this.val?.toString());
+      const updated = isTrue ? (current | bit) : (current & ~bit);
+      this.val = StringValue.parse(cnfValToBin(updated));
+      return;
+    }
     switch (qname) {
       case "w:val": this.val = StringValue.parse(value); assertString(this.val, { maxLength: 12, minLength: 12 }, { attribute: "w:val", elementClass: "ConditionalFormatStyle" }); return;
       case "w:firstRow": this.firstRow = BooleanValue.parse(value); return;
