@@ -1,11 +1,19 @@
 name: npm publish (manual)
 
-# 手动补发入口——用于补发已有 tag（如某次自动发布失败后重试）。
-# 常规自动发布由 release-please.yml 的 publish job 完成（release-please
-# 用 GITHUB_TOKEN 创建 Release，`release: published` 事件不会触发独立
-# workflow，故发布必须在 release-please 同一个 workflow run 内进行）。
+# 唯一发 npm 的入口——手动 workflow_dispatch，需勾选 confirm=true。
+# release-please.yml 只负责开 release PR + 建 GitHub Release/tag，不再自动发 npm。
+# 默认 dry-run，避免误发；勾选 confirm 才真的 pnpm publish。
 on:
   workflow_dispatch:
+    inputs:
+      confirm:
+        description: "勾选才真发 npm。不勾选则跑 dry-run 给一个发版预览。"
+        type: boolean
+        default: false
+      tag:
+        description: "npm dist-tag（默认 latest）。预发版可填 next/beta。"
+        type: string
+        default: "latest"
 
 permissions:
   contents: read
@@ -32,7 +40,21 @@ jobs:
       - name: API report drift check
         run: pnpm api:check
 
-      - name: Publish to npm
-        run: pnpm publish --provenance --access public --no-git-checks
+      - name: Show what would be published
+        run: |
+          echo "=== package.json version ==="
+          node -p "require('./package.json').version"
+          echo "=== pnpm pack --dry-run ==="
+          pnpm pack --dry-run
+
+      - name: Publish to npm (dry-run)
+        if: ${{ inputs.confirm != true }}
+        run: |
+          echo "DRY RUN — set confirm=true to actually publish"
+          pnpm publish --provenance --access public --no-git-checks --tag ${{ inputs.tag }} --dry-run
+
+      - name: Publish to npm (real)
+        if: ${{ inputs.confirm == true }}
+        run: pnpm publish --provenance --access public --no-git-checks --tag ${{ inputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
