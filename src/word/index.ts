@@ -39,6 +39,7 @@ export {
 export {
   ChartPart,
   CommentsPart,
+  DocumentTasksPart,
   FontTablePart,
   FooterPart,
   FootnotesPart,
@@ -46,11 +47,15 @@ export {
   MainDocumentPart,
   SettingsPart,
   StylesPart,
+  StylesWithEffectsPart,
   ThemePart,
   type TypedXmlPart,
   WebSettingsPart,
+  WordCommentsExtensiblePart,
   WordprocessingCommentsExPart,
+  WordprocessingCommentsIdsPart,
   WordprocessingPeoplePart,
+  WordprocessingPrinterSettingsPart,
 } from "./parts/index.js";
 
 export { BinaryPart } from "../parts/binary-part.js";

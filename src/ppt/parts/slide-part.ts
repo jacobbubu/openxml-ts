@@ -19,7 +19,11 @@ import type { FormatScheme } from "../../drawing/generated/format-scheme.js";
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { PowerPointCommentPart } from "../../parts/generated/power-point-comment-part.js";
 import { SlideCommentsPart } from "../../parts/generated/slide-comments-part.js";
+import { SlideSyncDataPart } from "../../parts/generated/slide-sync-data-part.js";
+import { ThemeOverridePart } from "../../parts/generated/theme-override-part.js";
+import { UserDefinedTagsPart } from "../../parts/generated/user-defined-tags-part.js";
 import { ThemePart } from "../../parts/theme-part.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import {
@@ -28,7 +32,7 @@ import {
   resolveEffectiveFormatScheme,
 } from "../effective-resolver.js";
 import { Slide } from "../generated/slide.js";
-import { resolveSinglePart } from "./_helpers.js";
+import { resolveManyParts, resolveSinglePart } from "./_helpers.js";
 import { NotesSlidePart } from "./notes-slide-part.js";
 import { SlideLayoutPart } from "./slide-layout-part.js";
 
@@ -46,6 +50,14 @@ export class SlidePart extends TypedXmlPart<Slide> {
   private _slideCommentsPart: SlideCommentsPart | null | undefined;
   /** `themePart` 解析结果缓存。Slide 直接挂 theme 是 theme-override 场景。 */
   private _themePart: ThemePart | null | undefined;
+  /** `powerPointCommentParts` 缓存（现代批注，Office 2019+）。 */
+  private _powerPointCommentParts: PowerPointCommentPart[] | undefined;
+  /** `slideSyncDataPart` 缓存（null = 不存在）。 */
+  private _slideSyncDataPart: SlideSyncDataPart | null | undefined;
+  /** `themeOverridePart` 缓存（null = 不存在）。 */
+  private _themeOverridePart: ThemeOverridePart | null | undefined;
+  /** `userDefinedTagsParts` 缓存。 */
+  private _userDefinedTagsParts: UserDefinedTagsPart[] | undefined;
   /** effective* 缓存。三档独立 lazy。 */
   private _effectiveColorScheme: ColorScheme | null | undefined;
   private _effectiveFontScheme: FontScheme | null | undefined;
@@ -166,6 +178,78 @@ export class SlidePart extends TypedXmlPart<Slide> {
     const resolved = resolveEffectiveFormatScheme(this);
     this._effectiveFormatScheme = resolved ?? null;
     return resolved;
+  }
+
+  /**
+   * Slide 下属的所有 `PowerPointCommentPart`（现代批注，Office 2019+）。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.SlidePart.commentParts
+   */
+  get powerPointCommentParts(): readonly PowerPointCommentPart[] {
+    if (this._powerPointCommentParts !== undefined) return this._powerPointCommentParts;
+    this._powerPointCommentParts = resolveManyParts(
+      this.part,
+      this.pkg,
+      this.registry,
+      PowerPointCommentPart,
+      this.mcSettings,
+    );
+    return this._powerPointCommentParts;
+  }
+
+  /**
+   * Slide 的 `SlideSyncDataPart`（协同编辑同步数据）。
+   * 不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.SlidePart.SlideSyncDataPart
+   */
+  get slideSyncDataPart(): SlideSyncDataPart | undefined {
+    if (this._slideSyncDataPart !== undefined) return this._slideSyncDataPart ?? undefined;
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      SlideSyncDataPart,
+      this.mcSettings,
+    );
+    this._slideSyncDataPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * Slide 的 `ThemeOverridePart`（主题覆盖）。
+   * 不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.SlidePart.ThemeOverridePart
+   */
+  get themeOverridePart(): ThemeOverridePart | undefined {
+    if (this._themeOverridePart !== undefined) return this._themeOverridePart ?? undefined;
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      ThemeOverridePart,
+      this.mcSettings,
+    );
+    this._themeOverridePart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * Slide 下属的所有 `UserDefinedTagsPart`（用户标签）。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.SlidePart.UserDefinedTagsParts
+   */
+  get userDefinedTagsParts(): readonly UserDefinedTagsPart[] {
+    if (this._userDefinedTagsParts !== undefined) return this._userDefinedTagsParts;
+    this._userDefinedTagsParts = resolveManyParts(
+      this.part,
+      this.pkg,
+      this.registry,
+      UserDefinedTagsPart,
+      this.mcSettings,
+    );
+    return this._userDefinedTagsParts;
   }
 
   /**

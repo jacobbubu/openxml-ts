@@ -32,6 +32,18 @@ export class BinaryPart {
     writeAsync(bytes: Uint8Array): Promise<void>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "OpenXmlUnknownElement" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class CommentAuthorsPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    // Warning: (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.presentationml.commentAuthors+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/commentAuthors";
+}
+
 // @public (undocumented)
 export class CoreProperties {
     // Warning: (ae-forgotten-export) The symbol "OpenXmlElement" needs to be exported by the entry point index.d.ts
@@ -77,7 +89,6 @@ export class CoreProperties {
 
 // @public (undocumented)
 export class CorePropertiesPart extends TypedXmlPart<OpenXmlElement> {
-    // Warning: (ae-forgotten-export) The symbol "ElementRegistry" needs to be exported by the entry point index.d.ts
     constructor(part: IPackagePart, registry: ElementRegistry);
     // (undocumented)
     static readonly contentType = "application/vnd.openxmlformats-package.core-properties+xml";
@@ -87,8 +98,6 @@ export class CorePropertiesPart extends TypedXmlPart<OpenXmlElement> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties";
 }
 
-// Warning: (ae-forgotten-export) The symbol "OpenXmlUnknownElement" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function createImagePictureForPpt(relId: string, offsetEmu: {
     xEmu: number;
@@ -188,6 +197,15 @@ export function getSlideTableCellText(table: OpenXmlElement, row: number, col: n
 export function getSpeakerNotes(slide: Slide, doc: PresentationDocument): string | undefined;
 
 // @public (undocumented)
+export class HandoutMasterPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.presentationml.handoutMaster+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/handoutMaster";
+}
+
+// @public (undocumented)
 export class ImagePart extends BinaryPart {
     constructor(part: IPackagePart);
     readonly contentTypeAtCreation: string;
@@ -236,6 +254,24 @@ export interface PictureCrop {
     leftPct: number;
     rightPct: number;
     topPct: number;
+}
+
+// @public (undocumented)
+export class PowerPointAuthorsPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.ms-powerpoint.authors+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2018/10/relationships/authors";
+}
+
+// @public (undocumented)
+export class PowerPointCommentPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.ms-powerpoint.comments+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2018/10/relationships/comments";
 }
 
 // @public (undocumented)
@@ -290,8 +326,12 @@ export enum PresentationDocumentType {
 // @public (undocumented)
 export class PresentationPart extends TypedXmlPart<Presentation> {
     constructor(part: IPackagePart, registry: ElementRegistry, pkg: IPackage);
+    get commentAuthorsPart(): CommentAuthorsPart | undefined;
     // (undocumented)
     static readonly contentType = "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml";
+    get handoutMasterPart(): HandoutMasterPart | undefined;
+    get powerPointAuthorsPart(): PowerPointAuthorsPart | undefined;
+    get powerPointCommentParts(): readonly PowerPointCommentPart[];
     get presentation(): Presentation;
     set presentation(value: Presentation);
     get presentationPropertiesPart(): PresentationPropertiesPart | undefined;
@@ -299,6 +339,10 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
     get slideMasterParts(): readonly SlideMasterPart[];
     get slideParts(): readonly SlidePart[];
+    get tableStylesPart(): TableStylesPart | undefined;
+    get userDefinedTagsPart(): UserDefinedTagsPart | undefined;
+    get vbaProjectPart(): VbaProjectPart | undefined;
+    get viewPropertiesPart(): ViewPropertiesPart | undefined;
 }
 
 // Warning: (ae-forgotten-export) The symbol "PresentationProperties" needs to be exported by the entry point index.d.ts
@@ -323,6 +367,19 @@ export function setSlideTableCellText(table: OpenXmlElement, row: number, col: n
 
 // @public
 export function setSpeakerNotes(slide: Slide, doc: PresentationDocument, text: string | undefined): void;
+
+// Warning: (ae-forgotten-export) The symbol "CommentList" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class SlideCommentsPart extends TypedXmlPart<CommentList> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    get commentList(): CommentList;
+    set commentList(value: CommentList);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.presentationml.comments+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
+}
 
 // Warning: (ae-forgotten-export) The symbol "SlideLayout" needs to be exported by the entry point index.d.ts
 //
@@ -375,18 +432,48 @@ export class SlidePart extends TypedXmlPart<Slide> {
     invalidateEffectiveCache(): void;
     get notesSlidePart(): NotesSlidePart | undefined;
     readonly pkg: IPackage;
+    get powerPointCommentParts(): readonly PowerPointCommentPart[];
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slide";
     get slide(): Slide;
     set slide(value: Slide);
-    // Warning: (ae-forgotten-export) The symbol "SlideCommentsPart" needs to be exported by the entry point index.d.ts
     get slideCommentsPart(): SlideCommentsPart | undefined;
     get slideLayoutPart(): SlideLayoutPart | undefined;
+    get slideSyncDataPart(): SlideSyncDataPart | undefined;
+    get themeOverridePart(): ThemeOverridePart | undefined;
     get themePart(): ThemePart | undefined;
+    get userDefinedTagsParts(): readonly UserDefinedTagsPart[];
+}
+
+// @public (undocumented)
+export class SlideSyncDataPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.presentationml.slideUpdateInfo+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/slideUpdateInfo";
 }
 
 // @public
 export function sniffImageMime(bytes: Uint8Array): string | undefined;
+
+// @public (undocumented)
+export class TableStylesPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.presentationml.tableStyles+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tableStyles";
+}
+
+// @public (undocumented)
+export class ThemeOverridePart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.themeOverride+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/themeOverride";
+}
 
 // @public (undocumented)
 export abstract class TypedXmlPart<T extends OpenXmlElement> {
@@ -409,6 +496,35 @@ export abstract class TypedXmlPart<T extends OpenXmlElement> {
     // (undocumented)
     protected readonly RootCtor: new () => T;
     setMcSettings(settings: MarkupCompatibilityProcessSettings): void;
+}
+
+// @public (undocumented)
+export class UserDefinedTagsPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.presentationml.tags+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/tags";
+}
+
+// @public (undocumented)
+export class VbaProjectPart extends BinaryPart {
+    constructor(part: IPackagePart);
+    // (undocumented)
+    static readonly contentType = "application/vnd.ms-office.vbaProject";
+    // (undocumented)
+    static readonly extension = ".bin";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2006/relationships/vbaProject";
+}
+
+// @public (undocumented)
+export class ViewPropertiesPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.presentationml.viewProps+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/viewProps";
 }
 
 // (No @packageDocumentation comment for this package)

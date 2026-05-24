@@ -30,12 +30,24 @@ import "./extensions/slide-hidden.js";
 
 export { PresentationDocument, PresentationDocumentType } from "./presentation-document.js";
 export {
+  CommentAuthorsPart,
+  HandoutMasterPart,
   NotesMasterPart,
   NotesSlidePart,
+  PowerPointAuthorsPart,
+  PowerPointCommentPart,
   PresentationPart,
+  PresentationPropertiesPart,
+  SlideCommentsPart,
   SlideLayoutPart,
   SlideMasterPart,
   SlidePart,
+  SlideSyncDataPart,
+  TableStylesPart,
+  ThemeOverridePart,
+  UserDefinedTagsPart,
+  VbaProjectPart,
+  ViewPropertiesPart,
 } from "./parts/index.js";
 export { TypedXmlPart } from "../parts/typed-xml-part.js";
 
@@ -43,7 +55,6 @@ export { BinaryPart } from "../parts/binary-part.js";
 export { CoreProperties } from "../parts/core-properties.js";
 export { CorePropertiesPart } from "../parts/core-properties-part.js";
 export { ExtendedFilePropertiesPart } from "../parts/extended-file-properties-part.js";
-export { PresentationPropertiesPart } from "../parts/generated/presentation-properties-part.js";
 export { CustomFilePropertiesPart } from "../parts/custom-file-properties-part.js";
 export { CustomXmlPart } from "../parts/custom-xml-part.js";
 export { CustomXmlPropertiesPart } from "../parts/custom-xml-properties-part.js";
