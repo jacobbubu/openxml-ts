@@ -39,6 +39,42 @@ import type {
   VersionedRequiredAttr,
 } from "./types.js";
 
+// ---- Runtime type guards for validate() overload dispatch ----
+
+/** Returns true if the value is an OpenXmlElement (has localName + namespaceUri). */
+function isOpenXmlElement(value: unknown): value is OpenXmlElement {
+  return (
+    value !== null &&
+    typeof value === "object" &&
+    typeof (value as Record<string, unknown>).localName === "string" &&
+    typeof (value as Record<string, unknown>).namespaceUri === "string"
+  );
+}
+
+/** Returns true if the value is an OpcPackageLike (has contentTypes + parts method). */
+function isOpcPackageLike(value: unknown): value is OpcPackageLike {
+  return (
+    value !== null &&
+    typeof value === "object" &&
+    typeof (value as Record<string, unknown>).contentTypes === "object" &&
+    typeof (value as Record<string, unknown>).parts === "function"
+  );
+}
+
+/** Returns true if the value is a WordprocessingDocumentLike (has mainDocumentPart or other Word part props). */
+function isWordprocessingDocumentLike(value: unknown): value is WordprocessingDocumentLike {
+  if (value === null || typeof value !== "object") return false;
+  const obj = value as Record<string, unknown>;
+  // Must have at least one of the expected Word document part properties
+  return (
+    "mainDocumentPart" in obj ||
+    "commentsPart" in obj ||
+    "footnotesPart" in obj ||
+    "stylesPart" in obj ||
+    "numberingPart" in obj
+  );
+}
+
 // ---- Error builders (handles exactOptionalPropertyTypes) ----
 function makeError(
   id: string,
@@ -314,13 +350,32 @@ export interface OpenXmlValidatorOptions {
 /**
  * OpenXml structural + attribute validator (Phase 1).
  *
- * Usage:
- * ```ts
- * import { OpenXmlValidator, registerWordConstraints } from "openxml-ts";
+ * Mirrors .NET `DocumentFormat.OpenXml.Validation.OpenXmlValidator`.
  *
- * registerWordConstraints(); // once, registers word namespace constraints
- * const validator = new OpenXmlValidator();
- * const errors = validator.validate(paragraph);
+ * ## Constructors
+ *
+ * ```ts
+ * // Options object (original API — backward compatible)
+ * const v1 = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2013 });
+ *
+ * // Direct FileFormatVersions parameter (mirrors .NET constructor)
+ * const v2 = new OpenXmlValidator(FileFormatVersions.Office2013);
+ *
+ * // No-arg (conservative "modern Office" default, mirrors .NET no-arg)
+ * const v3 = new OpenXmlValidator();
+ * ```
+ *
+ * ## Three-mode validate() overloads
+ *
+ * ```ts
+ * // Validate a single element tree (Phase 1 + optional Phase 2)
+ * const errors1 = validator.validate(paragraphElement);
+ *
+ * // Validate a WordprocessingDocument (all parts)
+ * const errors2 = validator.validate(wordDoc);
+ *
+ * // Validate an OPC package (package-level OPC constraints)
+ * const errors3 = validator.validate(opcPackage);
  * ```
  */
 export class OpenXmlValidator {
@@ -328,7 +383,31 @@ export class OpenXmlValidator {
   private readonly includeSemantic: boolean;
   private readonly _fileFormat: FileFormatVersions | undefined;
 
-  constructor(options: OpenXmlValidatorOptions = {}) {
+  /**
+   * Creates an OpenXmlValidator with an options object.
+   * @param options Validation options (fileFormatVersions, skipUnknown, includeSemantic).
+   */
+  constructor(options?: OpenXmlValidatorOptions);
+
+  /**
+   * Creates an OpenXmlValidator targeting a specific Office version.
+   *
+   * Mirrors .NET `OpenXmlValidator(FileFormatVersions fileFormat)` constructor.
+   * Defaults to `FileFormatVersions.Office2007` when called with no arguments.
+   *
+   * @param fileFormat Target Office version for version-directed validation.
+   */
+  constructor(fileFormat?: FileFormatVersions);
+
+  constructor(optionsOrFileFormat?: OpenXmlValidatorOptions | FileFormatVersions) {
+    // Determine if the argument is a FileFormatVersions number or an options object
+    let options: OpenXmlValidatorOptions;
+    if (typeof optionsOrFileFormat === "number") {
+      // Direct FileFormatVersions value — mirrors .NET constructor
+      options = { fileFormatVersions: optionsOrFileFormat };
+    } else {
+      options = optionsOrFileFormat ?? {};
+    }
     this.skipUnknown = options.skipUnknown ?? true;
     this.includeSemantic = options.includeSemantic ?? false;
     this._fileFormat = options.fileFormatVersions;
@@ -345,15 +424,65 @@ export class OpenXmlValidator {
   }
 
   /**
-   * Validate an element tree recursively (Phase 1: structural + attribute).
+   * Validate a single element tree recursively (Phase 1: structural + attribute).
    * If `includeSemantic` option is true, also runs Phase 2 schematron checks.
-   * Returns all validation errors found. Never throws.
+   *
+   * Mirrors .NET `OpenXmlValidator.Validate(OpenXmlElement)`.
+   */
+  validate(
+    root: OpenXmlElement,
+    partUri?: string,
+    rels?: IRelationshipCollection,
+  ): ValidationError[];
+
+  /**
+   * Validate a WordprocessingDocument package (all parts + cross-part semantic rules).
+   *
+   * Mirrors .NET `OpenXmlValidator.Validate(OpenXmlPackage)`.
+   * Delegates to `validatePackage()` internally.
+   */
+  validate(doc: WordprocessingDocumentLike): ValidationError[];
+
+  /**
+   * Validate an OPC package for package-level (Pkg_*) constraints.
+   *
+   * Mirrors .NET `OpenXmlValidator.Validate(OpenXmlPackage)` at the OPC level.
+   * Delegates to `validateOpcPackage()` internally.
+   */
+  validate(pkg: OpcPackageLike): ValidationError[];
+
+  /**
+   * Unified validate() implementation.
+   * Dispatches to the appropriate internal method based on the argument type.
+   */
+  validate(
+    rootOrDocOrPkg: OpenXmlElement | WordprocessingDocumentLike | OpcPackageLike,
+    partUri?: string,
+    rels?: IRelationshipCollection,
+  ): ValidationError[] {
+    // Dispatch based on runtime type
+    if (isOpenXmlElement(rootOrDocOrPkg)) {
+      return this._validateElement(rootOrDocOrPkg, partUri, rels);
+    }
+    if (isOpcPackageLike(rootOrDocOrPkg)) {
+      return this.validateOpcPackage(rootOrDocOrPkg);
+    }
+    if (isWordprocessingDocumentLike(rootOrDocOrPkg)) {
+      return this.validatePackage(rootOrDocOrPkg);
+    }
+    // Fallback: treat as element if nothing else matched
+    return [];
+  }
+
+  /**
+   * Internal element validation (Phase 1: structural + attribute).
+   * Called by the unified validate() overload when the argument is an OpenXmlElement.
    *
    * @param root    Root element of the tree to validate.
    * @param partUri Optional part URI for error context (e.g. "/word/document.xml").
    * @param rels    Optional relationship collection for the part (enables Phase 2 relationship checks).
    */
-  validate(
+  private _validateElement(
     root: OpenXmlElement,
     partUri?: string,
     rels?: IRelationshipCollection,
