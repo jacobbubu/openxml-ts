@@ -10,6 +10,9 @@ import type { MarkupCompatibilityProcessSettings } from "../markup-compat/index.
 import type { OpenXmlPackage } from "./core/open-xml-package.js";
 import { OpenXmlPackageError } from "./errors.js";
 import type { AccessMode } from "./interfaces/types.js";
+import { OpenSettings } from "./open-settings.js";
+
+export { OpenSettings };
 
 /**
  * 创建一个空的内存 OPC 包。等同于「新建一个干净的 docx 容器」，但不写入任何文档族特有的 Part。
@@ -57,6 +60,23 @@ export interface OpenAsyncOptions {
 }
 
 /**
+ * 将 `OpenSettings` 或 `OpenAsyncOptions` 规范化为内部选项对象。
+ *
+ * 允许调用方使用新的 `OpenSettings` API，同时保持向后兼容的 `OpenAsyncOptions` 形态。
+ */
+function resolveOptions(optionsOrSettings: OpenAsyncOptions | OpenSettings = {}): OpenAsyncOptions {
+  if (optionsOrSettings instanceof OpenSettings) {
+    return {
+      markupCompatibilityProcessSettings:
+        optionsOrSettings.markupCompatibilityProcessSettings.processMode !== "NoProcess"
+          ? optionsOrSettings.markupCompatibilityProcessSettings
+          : undefined,
+    };
+  }
+  return optionsOrSettings;
+}
+
+/**
  * 异步打开一个 OPC 包。
  *
  * 支持的 source 类型：
@@ -65,14 +85,17 @@ export interface OpenAsyncOptions {
  * - `Blob`：浏览器友好；
  * - `ReadableStream<Uint8Array>`：流式读入到内存后再解析。
  *
+ * 第二参数可以是 {@link OpenAsyncOptions}（向后兼容）或 {@link OpenSettings}（新 API）。
+ *
  * 返回 {@link ZipOpenXmlPackage}（向上转型为 OpenXmlPackage 暴露给调用方），
  * 该实例支持 `saveAsBytesAsync()` / `saveAsAsync(path)`；当 source 是路径时
  * `saveAsync()` 默认回写到该路径。
  */
 export async function openAsync(
   source: ZipSource,
-  options: OpenAsyncOptions = {},
+  options: OpenAsyncOptions | OpenSettings = {},
 ): Promise<ZipOpenXmlPackage> {
+  const resolved = resolveOptions(options);
   const bytes = await readSourceToBytes(source);
   if (bytes.byteLength === 0) {
     throw new OpenXmlPackageError({
@@ -80,9 +103,9 @@ export async function openAsync(
       message: "Cannot open empty input as a ZIP package",
     });
   }
-  const parsed = await parseZipBytes(bytes, options.limits);
+  const parsed = await parseZipBytes(bytes, resolved.limits);
   return new ZipOpenXmlPackage(parsed, {
-    ...(options.accessMode !== undefined ? { accessMode: options.accessMode } : {}),
+    ...(resolved.accessMode !== undefined ? { accessMode: resolved.accessMode } : {}),
     ...(typeof source === "string" ? { originPath: source } : {}),
   });
 }

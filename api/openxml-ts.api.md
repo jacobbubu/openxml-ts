@@ -66,6 +66,16 @@ export type ChildMap = ReadonlyMap<string, ElementFactory>;
 export function collectValidationIssues(root: OpenXmlElement): ValidationIssue[];
 
 // @public
+export type CompatibilityLevel = "Default" | "Version_2_20" | "Version_3_0";
+
+// @public (undocumented)
+export const CompatibilityLevel: {
+    readonly Default: "Default";
+    readonly Version_2_20: "Version_2_20";
+    readonly Version_3_0: "Version_3_0";
+};
+
+// @public
 export type CompressionLevel = "none" | "fast" | "normal" | "max";
 
 // @public
@@ -241,6 +251,9 @@ export interface FlatOpcWriteOptions {
 export function fromFlatOpcAsync(xml: string): Promise<OpenXmlPackage>;
 
 // @public
+export function getOpenSettings<T extends PackageLike>(pkg: T): OpenSettings | undefined;
+
+// @public
 export function hasStrictOriginNamespace(el: {
     extendedAttributes: ReadonlyMap<string, string>;
 }): boolean;
@@ -313,6 +326,12 @@ export class IntegerValue {
 }
 
 // @public
+export interface IOpenXmlPackageBuilder<T extends PackageLike> {
+    build(): PackageDelegate<T>;
+    use(middleware: PackageMiddleware<T>): this;
+}
+
+// @public
 export interface IPackage extends Disposable, AsyncDisposable {
     [Symbol.asyncDispose](): Promise<void>;
     [Symbol.dispose](): void;
@@ -326,6 +345,14 @@ export interface IPackage extends Disposable, AsyncDisposable {
     readonly properties: IPackageProperties;
     readonly relationships: IRelationshipCollection;
     saveAsync(): Promise<void>;
+}
+
+// @public
+export interface IPackageFeatureCollection {
+    get<T>(key: abstract new (...args: never[]) => T): T | undefined;
+    readonly isReadOnly: boolean;
+    readonly revision: number;
+    set<T>(key: abstract new (...args: never[]) => T, value: T | undefined): void;
 }
 
 // @public
@@ -377,6 +404,11 @@ export interface IRelationshipCollection extends Iterable<IPackageRelationship> 
 }
 
 // @public
+export abstract class IRelationshipFilterFeature {
+    abstract isRelationshipVisible(relationshipId: string, relationshipType: string): boolean;
+}
+
+// @public
 export const isDebugEnabled: () => boolean;
 
 // @public
@@ -402,6 +434,16 @@ export class ListValue<T extends {
     toString(): string;
 }
 
+// @public
+export interface MarkupCompatibilityProcessSettings {
+    readonly processMode: McProcessMode;
+    // Warning: (ae-forgotten-export) The symbol "FileFormatVersions" needs to be exported by the entry point index.d.ts
+    readonly targetFileFormatVersions: FileFormatVersions;
+}
+
+// @public
+export type McProcessMode = "NoProcess" | "ProcessAllParts" | "ProcessLoadedPartsOnly";
+
 // @public (undocumented)
 export interface NumberValidatorOptions {
     // (undocumented)
@@ -422,7 +464,10 @@ export class OnOffValue {
 }
 
 // @public
-export function openAsync(source: ZipSource, options?: OpenAsyncOptions): Promise<ZipOpenXmlPackage>;
+export const OPEN_SETTINGS_FEATURE_KEY: unique symbol;
+
+// @public
+export function openAsync(source: ZipSource, options?: OpenAsyncOptions | OpenSettings): Promise<ZipOpenXmlPackage>;
 
 // @public
 export interface OpenAsyncOptions {
@@ -430,10 +475,28 @@ export interface OpenAsyncOptions {
     readonly accessMode?: AccessMode;
     // (undocumented)
     readonly limits?: Partial<ZipLimits>;
-    // Warning: (ae-forgotten-export) The symbol "MarkupCompatibilityProcessSettings" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     readonly markupCompatibilityProcessSettings?: MarkupCompatibilityProcessSettings;
+}
+
+// @public
+export class OpenSettings {
+    constructor(init?: OpenSettingsInit);
+    readonly autoSave: boolean;
+    readonly compatibilityLevel: CompatibilityLevel;
+    static readonly defaultMcSettings: MarkupCompatibilityProcessSettings;
+    static from(other: OpenSettings | OpenSettingsInit | undefined | null): OpenSettings;
+    readonly markupCompatibilityProcessSettings: MarkupCompatibilityProcessSettings;
+    readonly maxCharactersInPart: number;
+    get resolvedCompatibilityLevel(): Exclude<CompatibilityLevel, "Default">;
+}
+
+// @public
+export interface OpenSettingsInit {
+    readonly autoSave?: boolean;
+    readonly compatibilityLevel?: CompatibilityLevel;
+    readonly markupCompatibilityProcessSettings?: MarkupCompatibilityProcessSettings;
+    readonly maxCharactersInPart?: number;
 }
 
 // @public
@@ -556,6 +619,13 @@ export abstract class OpenXmlPackage implements IPackage {
 }
 
 // @public
+export class OpenXmlPackageBuilder<T extends PackageLike> implements IOpenXmlPackageBuilder<T> {
+    build(): PackageDelegate<T>;
+    clone(): OpenXmlPackageBuilder<T>;
+    use(middleware: PackageMiddleware<T>): this;
+}
+
+// @public
 export class OpenXmlPackageError extends Error {
     constructor(options: OpenXmlPackageErrorOptions);
     // (undocumented)
@@ -628,6 +698,9 @@ export interface OverrideEntry {
 export const PACKAGE_NAME: "openxml-ts";
 
 // @public
+export type PackageDelegate<T> = (pkg: T) => void;
+
+// @public
 export interface PackageDiagnostics {
     readonly elementCount: number;
     readonly partCount: number;
@@ -635,6 +708,29 @@ export interface PackageDiagnostics {
     readonly unknownElementCount: number;
     readonly warnings: readonly string[];
 }
+
+// @public
+export class PackageFeatureCollection implements IPackageFeatureCollection {
+    constructor();
+    constructor(defaults: IPackageFeatureCollection, isReadOnly?: boolean);
+    // (undocumented)
+    get<T>(key: abstract new (...args: never[]) => T): T | undefined;
+    // (undocumented)
+    readonly isReadOnly: boolean;
+    // (undocumented)
+    get revision(): number;
+    // (undocumented)
+    set<T>(key: abstract new (...args: never[]) => T, value: T | undefined): void;
+}
+
+// @public
+export interface PackageLike {
+    // (undocumented)
+    readonly features: IPackageFeatureCollection;
+}
+
+// @public
+export type PackageMiddleware<T> = (next: PackageDelegate<T>) => PackageDelegate<T>;
 
 // Warning: (ae-forgotten-export) The symbol "MemoryOpenXmlPackage" needs to be exported by the entry point index.d.ts
 //
@@ -832,6 +928,9 @@ export interface ValidationIssue {
     readonly message: string;
     readonly path: string;
 }
+
+// @public
+export function withOpenSettings<T extends PackageLike>(settings: OpenSettings): PackageMiddleware<T>;
 
 // @public (undocumented)
 export interface ZipLimits {
