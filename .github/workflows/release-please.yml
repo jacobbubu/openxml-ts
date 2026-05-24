@@ -21,35 +21,8 @@ jobs:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
 
-  # release-please 用 GITHUB_TOKEN 创建 Release，GitHub 防递归机制会让
-  # `release: published` 事件不触发其它 workflow——所以发布必须作为本
-  # workflow 的同 run job，由 release-please 的 releases_created 输出门控。
-  publish:
-    needs: release-please
-    if: ${{ needs.release-please.outputs.releases_created == 'true' }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write # npm provenance 需要
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: pnpm/action-setup@v6
-
-      - uses: actions/setup-node@v6
-        with:
-          node-version: "22"
-          cache: pnpm
-          registry-url: "https://registry.npmjs.org"
-
-      - run: pnpm install --frozen-lockfile
-
-      - run: pnpm build
-
-      - name: API report drift check
-        run: pnpm api:check
-
-      - name: Publish to npm
-        run: pnpm publish --provenance --access public --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+  # 发布到 npm 的自动 job 已被显式移除——release-please 仍会自动开 release
+  # PR + 在合并后自动建 GitHub Release/tag，但**不再自动发 npm**。
+  # 发 npm 必须由人手动触发 .github/workflows/npm-publish.yml（workflow_dispatch）。
+  #
+  # 决策原因：避免一发不可撤回（npm 24h 后 unpublish 受限）；要求显式人工确认。
