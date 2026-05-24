@@ -291,6 +291,7 @@ export class PresentationDocument {
     changeDocumentType(newType: PresentationDocumentType): void;
     get coreProperties(): CoreProperties;
     static create(): PresentationDocument;
+    static createFromTemplate(templateBytes: Uint8Array): Promise<PresentationDocument>;
     get customFileProperties(): CustomFilePropertiesPart;
     // (undocumented)
     dispose(): Promise<void>;

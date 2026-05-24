@@ -1697,6 +1697,7 @@ export class WordprocessingDocument {
     get commentsPart(): CommentsPart | undefined;
     get coreProperties(): CoreProperties;
     static create(): WordprocessingDocument;
+    static createFromTemplate(templateBytes: Uint8Array): Promise<WordprocessingDocument>;
     get customFileProperties(): CustomFilePropertiesPart;
     get customXmlParts(): readonly CustomXmlPart[];
     // (undocumented)

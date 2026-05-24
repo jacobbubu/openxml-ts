@@ -1058,6 +1058,7 @@ export class SpreadsheetDocument {
     changeDocumentType(newType: SpreadsheetDocumentType): void;
     get coreProperties(): CoreProperties;
     static create(): SpreadsheetDocument;
+    static createFromTemplate(templateBytes: Uint8Array): Promise<SpreadsheetDocument>;
     get customFileProperties(): CustomFilePropertiesPart;
     // (undocumented)
     dispose(): Promise<void>;

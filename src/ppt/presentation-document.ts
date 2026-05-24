@@ -529,6 +529,42 @@ export class PresentationDocument {
   }
 
   /**
+   * 从 PowerPoint 模板（.potx / .potm）字节创建可编辑演示文稿（Epic-123）。
+   *
+   * 对位 .NET `PresentationDocument.CreateFromTemplate(path)`：
+   * 1. 以字节形式读入模板包；
+   * 2. 找到主演示 Part 的 content-type（template 类型）；
+   * 3. 将 `[Content_Types].xml` Override 更新为对应 presentation 类型；
+   * 4. 返回新 `PresentationDocument` 实例。
+   *
+   * @param templateBytes .potx / .potm 模板文件的原始字节。
+   * @returns 以 Presentation（.pptx）类型打开的新文档实例。
+   * @throws {OpenXmlPackageError} 当模板缺少主演示 Part 时。
+   */
+  static async createFromTemplate(templateBytes: Uint8Array): Promise<PresentationDocument> {
+    const doc = await PresentationDocument.openAsync(templateBytes);
+    const pp = doc.presentationPart;
+    if (pp === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "createFromTemplate: template is missing presentation part",
+      });
+    }
+    const currentType = doc.documentType;
+    if (
+      currentType === PresentationDocumentType.Template ||
+      currentType === PresentationDocumentType.MacroEnabledTemplate
+    ) {
+      const targetType =
+        currentType === PresentationDocumentType.MacroEnabledTemplate
+          ? PresentationDocumentType.MacroEnabledPresentation
+          : PresentationDocumentType.Presentation;
+      doc.changeDocumentType(targetType);
+    }
+    return doc;
+  }
+
+  /**
    * 创建最小可用空白 pptx：
    * - 1 张 Slide + 1 个 Layout（blank）+ 1 个 Master + 1 个 Theme；
    * - `[Content_Types].xml` 含 Default rels + xml + Override 全部 Part；
