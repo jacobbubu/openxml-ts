@@ -327,6 +327,51 @@ export abstract class OpenXmlElement {
    * 对位 .NET `OpenXmlElement.CloneNode(bool deep)`。
    */
   abstract cloneNode(deep: boolean): OpenXmlElement;
+
+  // ---------------------------------------------------------------------------
+  // XPath（对位 .NET XmlPath / OpenXmlElement.GetXPathIndex）
+  // ---------------------------------------------------------------------------
+
+  /**
+   * 返回从文档根到当前元素的 XPath 字符串，例如 `/w:body[1]/w:p[2]/w:r[1]`。
+   *
+   * 算法对位 .NET `XmlPath(OpenXmlElement)` + `OpenXmlElementExtensionMethods.GetXPathIndex()`：
+   * - 从当前元素向根遍历，把每个祖先和自身推入栈；
+   * - 从根到叶依次拼接 `/{prefix}:{localName}[{index}]` 段；
+   * - 无 prefix 时改用 `/{namespaceUri}:{localName}[{index}]`；
+   * - index 规则：
+   *   - `OpenXmlUnknownElement` 按 namespaceUri + localName 匹配同级节点；
+   *   - 其他元素按构造器类型匹配同级节点；
+   *   - 无父节点时 index 固定为 1。
+   *
+   * 对位 .NET `XmlPath.XPath` / `XmlPath.GetXPath(OpenXmlElement)`。
+   */
+  getXPath(): string {
+    // Build stack: current element is last pushed, root is at top after reversal
+    const stack: OpenXmlElement[] = [];
+    let cur: OpenXmlElement | undefined = this;
+    while (cur !== undefined) {
+      stack.push(cur);
+      cur = cur.parent;
+    }
+
+    // stack[0] = this, stack[last] = root; iterate root→leaf
+    let xpath = "";
+    for (let i = stack.length - 1; i >= 0; i--) {
+      // biome-ignore lint/style/noNonNullAssertion: loop bounds guarantee stack[i] exists
+      const el = stack[i]!;
+      xpath += "/";
+      if (el.prefix.length > 0) {
+        xpath += `${el.prefix}:${el.localName}`;
+      } else if (el.namespaceUri.length > 0) {
+        xpath += `${el.namespaceUri}:${el.localName}`;
+      } else {
+        xpath += el.localName;
+      }
+      xpath += `[${getXPathIndex(el)}]`;
+    }
+    return xpath;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -753,6 +798,60 @@ function getDocumentOrder(a: OpenXmlElement, b: OpenXmlElement): DocOrder {
   }
 
   return "unrelated";
+}
+
+/**
+ * 计算 `element` 在同级同类节点中的 1-based 位置索引，对位 .NET
+ * `OpenXmlElementExtensionMethods.GetXPathIndex()`。
+ *
+ * - `OpenXmlUnknownElement` 按 namespaceUri + localName 匹配；
+ * - 其他元素按构造器类型匹配；
+ * - 无父节点时返回 1。
+ */
+function getXPathIndex(element: OpenXmlElement): number {
+  if (element.parent === undefined) {
+    return 1;
+  }
+
+  // Lazy import via instanceof check uses the class reference from this same module.
+  // We need a runtime check for OpenXmlUnknownElement without creating a circular dep.
+  // We detect it by checking if constructor name is "OpenXmlUnknownElement" or
+  // comparing prefix+localName+namespaceUri (unknown elements share a single class).
+  // The cleanest approach: check if the constructor === the concrete class at runtime.
+  // Since OpenXmlUnknownElement is defined in unknown-element.ts which imports from here,
+  // we use a structural check: element has no "abstract" methods and localName is dynamic.
+  // Actually the simplest: check constructor.name === "OpenXmlUnknownElement".
+  const isUnknown = element.constructor.name === "OpenXmlUnknownElement";
+
+  let count = 1;
+
+  if (isUnknown) {
+    for (const child of element.parent.children) {
+      if (element === child) {
+        return count;
+      }
+      if (
+        child.constructor.name === "OpenXmlUnknownElement" &&
+        child.namespaceUri === element.namespaceUri &&
+        child.localName === element.localName
+      ) {
+        count++;
+      }
+    }
+  } else {
+    const type = element.constructor;
+    for (const child of element.parent.children) {
+      if (element === child) {
+        return count;
+      }
+      if (child.constructor === type) {
+        count++;
+      }
+    }
+  }
+
+  // Should not reach here if element is actually in parent.children
+  return count;
 }
 
 /** Returns [element, parent, grandparent, …] */

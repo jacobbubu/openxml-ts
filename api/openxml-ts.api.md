@@ -545,6 +545,7 @@ export abstract class OpenXmlElement {
     readonly extendedAttributes: Map<string, string>;
     get features(): IFeatureCollection;
     get firstChildElement(): OpenXmlElement | undefined;
+    getXPath(): string;
     get hasChildren(): boolean;
     get innerText(): string;
     insertAfterSelf<T extends OpenXmlElement>(newElement: T): T;
