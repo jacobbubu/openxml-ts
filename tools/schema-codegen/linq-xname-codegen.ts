@@ -1,0 +1,308 @@
+#!/usr/bin/env -S bun run
+/**
+ * Epic-119: LINQ XName 命名空间常量 codegen。
+ *
+ * 跑法：`pnpm gen:linq-xname`
+ *
+ * 行为：
+ * - 扫描上游 Open-XML-SDK/generated/DocumentFormat.OpenXml.Linq/**\/Linq.*.g.cs（113 个文件）
+ * - 从每个 .cs 文件解析：className、namespace URI、XName 常量列表
+ * - 生成 src/linq/namespaces/generated/<ClassName>.ts
+ * - 生成 src/linq/namespaces/index.ts（re-export 所有 namespace 对象）
+ *
+ * 输出格式：
+ * ```ts
+ * export const W = { NamespaceName, abstractNum, body, ... } as const;
+ * ```
+ */
+
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const REPO_ROOT = resolve(HERE, "../..");
+
+function findLinqCsDir(): string {
+  const SUBPATH =
+    "generated/DocumentFormat.OpenXml.Linq/DocumentFormat.OpenXml.Generator/DocumentFormat.OpenXml.Generator.OpenXmlGenerator";
+  const candidates = [
+    resolve(REPO_ROOT, `../../github/Open-XML-SDK/${SUBPATH}`),
+    `/Users/rongshen/github/Open-XML-SDK/${SUBPATH}`,
+  ];
+  for (const c of candidates) {
+    try {
+      readdirSync(c);
+      return c;
+    } catch {
+      // try next
+    }
+  }
+  throw new Error(`Cannot find Linq CS dir. Tried:\n${candidates.join("\n")}`);
+}
+
+const LINQ_CS_DIR = findLinqCsDir();
+
+const OUT_DIR = resolve(REPO_ROOT, "src/linq/namespaces/generated");
+
+/**
+ * TypeScript reserved words / keywords that cannot be used as variable declarations.
+ * When a .NET XName constant uses one of these names, we suffix it with `_`.
+ */
+const TS_RESERVED = new Set([
+  "break",
+  "case",
+  "catch",
+  "class",
+  "const",
+  "continue",
+  "debugger",
+  "default",
+  "delete",
+  "do",
+  "else",
+  "enum",
+  "export",
+  "extends",
+  "false",
+  "finally",
+  "for",
+  "function",
+  "if",
+  "import",
+  "in",
+  "instanceof",
+  "new",
+  "null",
+  "return",
+  "super",
+  "switch",
+  "this",
+  "throw",
+  "true",
+  "try",
+  "typeof",
+  "var",
+  "void",
+  "while",
+  "with",
+  "as",
+  "implements",
+  "interface",
+  "let",
+  "package",
+  "private",
+  "protected",
+  "public",
+  "static",
+  "yield",
+  "any",
+  "boolean",
+  "constructor",
+  "declare",
+  "get",
+  "module",
+  "require",
+  "number",
+  "set",
+  "string",
+  "symbol",
+  "type",
+  "from",
+  "of",
+]);
+
+/** Returns a safe TS identifier, appending `_` if the name is a reserved word. */
+function safeName(name: string): string {
+  return TS_RESERVED.has(name) ? `${name}_` : name;
+}
+
+interface ParsedNamespace {
+  className: string;
+  /** Empty string for NoNamespace */
+  namespaceUri: string;
+  /** localName of the XNamespace field (e.g. "w" for class W), or null for NoNamespace */
+  nsFieldName: string | null;
+  constants: Array<{ name: string; localName: string }>;
+  sourceFile: string;
+}
+
+function parseFile(filePath: string): ParsedNamespace | null {
+  const src = readFileSync(filePath, "utf-8");
+
+  // Extract class name
+  const classMatch = /public static partial class (\w+)/.exec(src);
+  if (!classMatch) return null;
+  const className = classMatch[1] as string;
+
+  // Check for NoNamespace (no XNamespace field, constants assigned to bare string literals)
+  // Pattern: `public static readonly XName xxx = "localname";`
+  if (!/public static readonly XNamespace/.test(src)) {
+    const noNsPattern = /public static readonly XName (\w+) = "([^"]+)";/g;
+    const constants: Array<{ name: string; localName: string }> = [];
+    for (const m of src.matchAll(noNsPattern)) {
+      constants.push({ name: m[1] as string, localName: m[2] as string });
+    }
+    return {
+      className,
+      namespaceUri: "",
+      nsFieldName: null,
+      constants,
+      sourceFile: filePath,
+    };
+  }
+
+  // Extract XNamespace field: `public static readonly XNamespace <nsField> = "<uri>";`
+  const nsMatch = /public static readonly XNamespace (\w+) = "([^"]+)";/.exec(src);
+  if (!nsMatch) return null;
+  const nsFieldName = nsMatch[1] as string;
+  const namespaceUri = nsMatch[2] as string;
+
+  // Extract XName constants: `public static readonly XName <name> = <nsField> + "<localName>";`
+  const xnamePattern = new RegExp(
+    `public static readonly XName (\\w+) = ${nsFieldName} \\+ "([^"]+)";`,
+    "g",
+  );
+
+  const constants: Array<{ name: string; localName: string }> = [];
+  for (const m of src.matchAll(xnamePattern)) {
+    constants.push({ name: m[1] as string, localName: m[2] as string });
+  }
+
+  return {
+    className,
+    namespaceUri,
+    nsFieldName,
+    constants,
+    sourceFile: filePath,
+  };
+}
+
+function generateNamespaceObjectFile(ns: ParsedNamespace): string {
+  const relativeSource = ns.sourceFile.replace(`${REPO_ROOT}/`, "");
+  const lines: string[] = [];
+
+  const isNoNamespace = ns.nsFieldName === null;
+
+  lines.push(
+    "/**",
+    ` * \`${ns.className}\` — DocumentFormat.OpenXml.Linq.${ns.className}`,
+    " *",
+    " * Auto-generated by tools/schema-codegen/linq-xname-codegen.ts",
+    ` * Source: ${relativeSource}`,
+    " * DO NOT EDIT MANUALLY.",
+    " */",
+  );
+
+  if (isNoNamespace) {
+    lines.push(`import { XName } from "../core.js";`);
+  } else {
+    lines.push(`import { XName, XNamespace } from "../core.js";`);
+    lines.push("");
+    lines.push(
+      `const NamespaceName: XNamespace = XNamespace.Get(${JSON.stringify(ns.namespaceUri)});`,
+    );
+  }
+
+  lines.push("");
+
+  const members: string[] = [];
+  if (!isNoNamespace) {
+    members.push("NamespaceName");
+  }
+
+  for (const c of ns.constants) {
+    const varName = safeName(c.name);
+    if (isNoNamespace) {
+      lines.push(`const ${varName}: XName = XName.Get(${JSON.stringify(c.localName)});`);
+    } else {
+      lines.push(
+        `const ${varName}: XName = NamespaceName.GetName(${JSON.stringify(c.localName)});`,
+      );
+    }
+    // If renamed, use computed property syntax: [name_]: value aliased as name
+    if (varName !== c.name) {
+      members.push(`${c.name}: ${varName}`);
+    } else {
+      members.push(varName);
+    }
+  }
+
+  lines.push("");
+  lines.push(`export const ${ns.className} = {`);
+  for (const m of members) {
+    lines.push(`  ${m},`);
+  }
+  lines.push("} as const;");
+  lines.push("");
+
+  return lines.join("\n");
+}
+
+function main() {
+  // Find all Linq.*.g.cs files
+  const allFiles = readdirSync(LINQ_CS_DIR)
+    .filter((f) => f.startsWith("Linq.") && f.endsWith(".g.cs"))
+    .map((f) => join(LINQ_CS_DIR, f))
+    .sort();
+
+  console.log(`Found ${allFiles.length} Linq.*.g.cs files`);
+
+  mkdirSync(OUT_DIR, { recursive: true });
+
+  const parsed: ParsedNamespace[] = [];
+  const failed: string[] = [];
+
+  for (const f of allFiles) {
+    const ns = parseFile(f);
+    if (!ns) {
+      console.warn(`  WARN: could not parse ${f}`);
+      failed.push(f);
+      continue;
+    }
+    parsed.push(ns);
+  }
+
+  let totalConstants = 0;
+
+  for (const ns of parsed) {
+    const content = generateNamespaceObjectFile(ns);
+    const outPath = join(OUT_DIR, `${ns.className}.ts`);
+    writeFileSync(outPath, content, "utf-8");
+    totalConstants += ns.constants.length;
+  }
+
+  // Generate index.ts that re-exports all namespace objects
+  const indexLines: string[] = [
+    "/**",
+    " * Auto-generated LINQ XName namespace constants index.",
+    " * Re-exports all 113 namespace classes from DocumentFormat.OpenXml.Linq.",
+    " *",
+    " * Auto-generated by tools/schema-codegen/linq-xname-codegen.ts",
+    " * DO NOT EDIT MANUALLY.",
+    " */",
+    "",
+  ];
+
+  for (const ns of parsed) {
+    indexLines.push(`export { ${ns.className} } from "./generated/${ns.className}.js";`);
+  }
+  indexLines.push("");
+
+  const namespacesIndexPath = resolve(REPO_ROOT, "src/linq/namespaces/index.ts");
+  writeFileSync(namespacesIndexPath, indexLines.join("\n"), "utf-8");
+
+  // Summary
+  console.log("\nCodegen complete:");
+  console.log(`  Namespace classes: ${parsed.length}`);
+  console.log(`  Total XName constants: ${totalConstants}`);
+  console.log(`  Failed to parse: ${failed.length}`);
+  if (failed.length > 0) {
+    for (const f of failed) {
+      console.log(`    - ${f}`);
+    }
+  }
+  console.log(`  Output: ${OUT_DIR}`);
+}
+
+main();

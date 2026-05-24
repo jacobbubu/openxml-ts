@@ -23,3 +23,4 @@ export { XDocument } from "./x-document.js";
 export { XElement } from "./x-element.js";
 export { XName } from "./x-name.js";
 export { XNamespace } from "./x-namespace.js";
+export * as namespaces from "./namespaces/index.js";

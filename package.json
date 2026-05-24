@@ -275,7 +275,11 @@
       "types": "./dist/markup-compat/index.d.ts",
       "import": "./dist/markup-compat/index.js"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./linq/namespaces": {
+      "types": "./dist/linq/namespaces/index.d.ts",
+      "import": "./dist/linq/namespaces/index.js"
+    }
   },
   "files": [
     "dist",
@@ -340,7 +344,8 @@
     "size": "size-limit",
     "size:why": "size-limit --why",
     "api:check": "node scripts/api-check.mjs",
-    "api:update": "node scripts/api-check.mjs --update"
+    "api:update": "node scripts/api-check.mjs --update",
+    "gen:linq-xname": "bun run tools/schema-codegen/linq-xname-codegen.ts"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
