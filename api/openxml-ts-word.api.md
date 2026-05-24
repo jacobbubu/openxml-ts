@@ -496,6 +496,17 @@ export class Document extends OpenXmlCompositeElement {
     readonly prefix: "w";
 }
 
+// Warning: (ae-forgotten-export) The symbol "OpenXmlUnknownElement" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export class DocumentTasksPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.ms-office.documenttasks+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2019/05/relationships/documenttasks";
+}
+
 // @public
 export class Drawing extends OpenXmlCompositeElement {
     // (undocumented)
@@ -919,10 +930,15 @@ export class MainDocumentPart extends TypedXmlPart<Document> {
     static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
     get document(): Document;
     set document(value: Document);
+    get documentTasksPart(): DocumentTasksPart | undefined;
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument";
+    get stylesWithEffectsPart(): StylesWithEffectsPart | undefined;
+    get wordCommentsExtensiblePart(): WordCommentsExtensiblePart | undefined;
     get wordprocessingCommentsExPart(): WordprocessingCommentsExPart | undefined;
+    get wordprocessingCommentsIdsPart(): WordprocessingCommentsIdsPart | undefined;
     get wordprocessingPeoplePart(): WordprocessingPeoplePart | undefined;
+    get wordprocessingPrinterSettingsParts(): readonly WordprocessingPrinterSettingsPart[];
 }
 
 // @public
@@ -1363,6 +1379,15 @@ export class StylesPart extends TypedXmlPart<Styles> {
     set styles(value: Styles);
 }
 
+// @public (undocumented)
+export class StylesWithEffectsPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.ms-word.stylesWithEffects+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2007/relationships/stylesWithEffects";
+}
+
 // @public
 export class TabChar extends OpenXmlLeafElement {
     // (undocumented)
@@ -1599,8 +1624,15 @@ export class WebSettingsPart extends TypedXmlPart<WebSettings> {
     set webSettings(value: WebSettings);
 }
 
-// Warning: (ae-forgotten-export) The symbol "OpenXmlUnknownElement" needs to be exported by the entry point index.d.ts
-//
+// @public (undocumented)
+export class WordCommentsExtensiblePart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtensible+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible";
+}
+
 // @public (undocumented)
 export class WordprocessingCommentsExPart extends TypedXmlPart<OpenXmlUnknownElement> {
     constructor(part: IPackagePart, registry: ElementRegistry);
@@ -1608,6 +1640,15 @@ export class WordprocessingCommentsExPart extends TypedXmlPart<OpenXmlUnknownEle
     static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsExtended+xml";
     // (undocumented)
     static readonly relationshipType = "http://schemas.microsoft.com/office/2011/relationships/commentsExtended";
+}
+
+// @public (undocumented)
+export class WordprocessingCommentsIdsPart extends TypedXmlPart<OpenXmlUnknownElement> {
+    constructor(part: IPackagePart, registry: ElementRegistry);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.commentsIds+xml";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.microsoft.com/office/2016/09/relationships/commentsIds";
 }
 
 // @public (undocumented)
@@ -1710,6 +1751,17 @@ export class WordprocessingPeoplePart extends TypedXmlPart<People> {
     get people(): People;
     // (undocumented)
     static readonly relationshipType = "http://schemas.microsoft.com/office/2011/relationships/people";
+}
+
+// @public (undocumented)
+export class WordprocessingPrinterSettingsPart extends BinaryPart {
+    constructor(part: IPackagePart);
+    // (undocumented)
+    static readonly contentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.printerSettings";
+    // (undocumented)
+    static readonly extension = ".bin";
+    // (undocumented)
+    static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings";
 }
 
 // (No @packageDocumentation comment for this package)

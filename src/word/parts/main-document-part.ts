@@ -1,8 +1,13 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { DocumentTasksPart } from "../../parts/generated/document-tasks-part.js";
+import { StylesWithEffectsPart } from "../../parts/generated/styles-with-effects-part.js";
+import { WordCommentsExtensiblePart } from "../../parts/generated/word-comments-extensible-part.js";
 import { WordprocessingCommentsExPart } from "../../parts/generated/wordprocessing-comments-ex-part.js";
+import { WordprocessingCommentsIdsPart } from "../../parts/generated/wordprocessing-comments-ids-part.js";
 import { WordprocessingPeoplePart } from "../../parts/generated/wordprocessing-people-part.js";
+import { WordprocessingPrinterSettingsPart } from "../../parts/generated/wordprocessing-printer-settings-part.js";
 import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
@@ -21,6 +26,10 @@ export class MainDocumentPart extends TypedXmlPart<Document> {
 
   private _wordprocessingCommentsExPart: WordprocessingCommentsExPart | null | undefined;
   private _wordprocessingPeoplePart: WordprocessingPeoplePart | null | undefined;
+  private _wordprocessingCommentsIdsPart: WordprocessingCommentsIdsPart | null | undefined;
+  private _wordCommentsExtensiblePart: WordCommentsExtensiblePart | null | undefined;
+  private _documentTasksPart: DocumentTasksPart | null | undefined;
+  private _stylesWithEffectsPart: StylesWithEffectsPart | null | undefined;
 
   constructor(
     part: IPackagePart,
@@ -67,6 +76,87 @@ export class MainDocumentPart extends TypedXmlPart<Document> {
     const resolved = this._resolveSinglePart(WordprocessingPeoplePart);
     this._wordprocessingPeoplePart = resolved ?? null;
     return resolved;
+  }
+
+  /**
+   * W16CID WordprocessingCommentsIdsPart（批注 ID 映射，Office 2019+）。
+   * mainDocumentPart 的 part-level 关系；不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.WordprocessingCommentsIdsPart
+   */
+  get wordprocessingCommentsIdsPart(): WordprocessingCommentsIdsPart | undefined {
+    if (this._wordprocessingCommentsIdsPart !== undefined) {
+      return this._wordprocessingCommentsIdsPart ?? undefined;
+    }
+    const resolved = this._resolveSinglePart(WordprocessingCommentsIdsPart);
+    this._wordprocessingCommentsIdsPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * W16CID WordCommentsExtensiblePart（可扩展批注，Office 2019+）。
+   * mainDocumentPart 的 part-level 关系；不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.WordCommentsExtensiblePart
+   */
+  get wordCommentsExtensiblePart(): WordCommentsExtensiblePart | undefined {
+    if (this._wordCommentsExtensiblePart !== undefined) {
+      return this._wordCommentsExtensiblePart ?? undefined;
+    }
+    const resolved = this._resolveSinglePart(WordCommentsExtensiblePart);
+    this._wordCommentsExtensiblePart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * DocumentTasksPart（文档任务，Office 2019+）。
+   * mainDocumentPart 的 part-level 关系；不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.DocumentTasksPart
+   */
+  get documentTasksPart(): DocumentTasksPart | undefined {
+    if (this._documentTasksPart !== undefined) {
+      return this._documentTasksPart ?? undefined;
+    }
+    const resolved = this._resolveSinglePart(DocumentTasksPart);
+    this._documentTasksPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * StylesWithEffectsPart（含效果的样式，Compatibility Mode）。
+   * mainDocumentPart 的 part-level 关系；不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.StylesWithEffectsPart
+   */
+  get stylesWithEffectsPart(): StylesWithEffectsPart | undefined {
+    if (this._stylesWithEffectsPart !== undefined) {
+      return this._stylesWithEffectsPart ?? undefined;
+    }
+    const resolved = this._resolveSinglePart(StylesWithEffectsPart);
+    this._stylesWithEffectsPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * WordprocessingPrinterSettingsPart 集合（打印机设置，每节一个）。
+   * mainDocumentPart 的 part-level 关系；不存在时返空数组。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.MainDocumentPart.WordprocessingPrinterSettingsParts
+   */
+  get wordprocessingPrinterSettingsParts(): readonly WordprocessingPrinterSettingsPart[] {
+    const pkg = this._pkg;
+    if (pkg === undefined) return [];
+    const out: WordprocessingPrinterSettingsPart[] = [];
+    for (const rel of this.part.relationships) {
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, WordprocessingPrinterSettingsPart.relationshipType))
+        continue;
+      const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
+      if (targetUri === undefined || !pkg.hasPart(targetUri)) continue;
+      out.push(new WordprocessingPrinterSettingsPart(pkg.getPart(targetUri)));
+    }
+    return out;
   }
 
   private _resolveSinglePart<T>(Ctor: {

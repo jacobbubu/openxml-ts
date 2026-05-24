@@ -13,13 +13,22 @@
 import type { ElementRegistry } from "../../element/index.js";
 import type { IPackage } from "../../packaging/interfaces/package.js";
 import type { IPackagePart } from "../../packaging/interfaces/part.js";
+import { CommentAuthorsPart } from "../../parts/generated/comment-authors-part.js";
+import { HandoutMasterPart } from "../../parts/generated/handout-master-part.js";
+import { PowerPointAuthorsPart } from "../../parts/generated/power-point-authors-part.js";
+import { PowerPointCommentPart } from "../../parts/generated/power-point-comment-part.js";
 import { PresentationPropertiesPart } from "../../parts/generated/presentation-properties-part.js";
+import { TableStylesPart } from "../../parts/generated/table-styles-part.js";
+import { UserDefinedTagsPart } from "../../parts/generated/user-defined-tags-part.js";
+import { VbaProjectPart } from "../../parts/generated/vba-project-part.js";
+import { ViewPropertiesPart } from "../../parts/generated/view-properties-part.js";
 import { relationshipTypeMatches } from "../../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../../parts/relationship-uri.js";
 import { TypedXmlPart } from "../../parts/typed-xml-part.js";
 import { Presentation } from "../generated/presentation.js";
 import { SlideIdList } from "../generated/slide-id-list.js";
 import { SlideId } from "../generated/slide-id.js";
+import { resolveManyParts, resolveSinglePart } from "./_helpers.js";
 import { SlideMasterPart } from "./slide-master-part.js";
 import { SlidePart } from "./slide-part.js";
 
@@ -35,6 +44,22 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
   private _slideMasterParts: SlideMasterPart[] | undefined;
   /** presentationPropertiesPart 缓存（null = 已查无此 Part）。 */
   private _presentationPropertiesPart: PresentationPropertiesPart | null | undefined;
+  /** powerPointAuthorsPart 缓存（null = 不存在）。 */
+  private _powerPointAuthorsPart: PowerPointAuthorsPart | null | undefined;
+  /** commentAuthorsPart 缓存（null = 不存在）。 */
+  private _commentAuthorsPart: CommentAuthorsPart | null | undefined;
+  /** powerPointCommentParts 缓存。 */
+  private _powerPointCommentParts: PowerPointCommentPart[] | undefined;
+  /** handoutMasterPart 缓存（null = 不存在）。 */
+  private _handoutMasterPart: HandoutMasterPart | null | undefined;
+  /** tableStylesPart 缓存（null = 不存在）。 */
+  private _tableStylesPart: TableStylesPart | null | undefined;
+  /** viewPropertiesPart 缓存（null = 不存在）。 */
+  private _viewPropertiesPart: ViewPropertiesPart | null | undefined;
+  /** userDefinedTagsPart 缓存（null = 不存在）。 */
+  private _userDefinedTagsPart: UserDefinedTagsPart | null | undefined;
+  /** vbaProjectPart 缓存（null = 不存在）。 */
+  private _vbaProjectPart: VbaProjectPart | null | undefined;
 
   constructor(
     part: IPackagePart,
@@ -94,6 +119,158 @@ export class PresentationPart extends TypedXmlPart<Presentation> {
       return ppp;
     }
     this._presentationPropertiesPart = null;
+    return undefined;
+  }
+
+  /**
+   * 演示文稿的 `PowerPointAuthorsPart`（现代批注作者，Office 2019+）。
+   * 不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.PresentationPart.authorsPart
+   */
+  get powerPointAuthorsPart(): PowerPointAuthorsPart | undefined {
+    if (this._powerPointAuthorsPart !== undefined) return this._powerPointAuthorsPart ?? undefined;
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      PowerPointAuthorsPart,
+      this.mcSettings,
+    );
+    this._powerPointAuthorsPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * 演示文稿的 `CommentAuthorsPart`（经典批注作者）。
+   * 不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.PresentationPart.CommentAuthorsPart
+   */
+  get commentAuthorsPart(): CommentAuthorsPart | undefined {
+    if (this._commentAuthorsPart !== undefined) return this._commentAuthorsPart ?? undefined;
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      CommentAuthorsPart,
+      this.mcSettings,
+    );
+    this._commentAuthorsPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * 演示文稿下属的所有 `PowerPointCommentPart`（现代批注，Office 2019+）。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.PresentationPart.commentParts
+   */
+  get powerPointCommentParts(): readonly PowerPointCommentPart[] {
+    if (this._powerPointCommentParts !== undefined) return this._powerPointCommentParts;
+    this._powerPointCommentParts = resolveManyParts(
+      this.part,
+      this.pkg,
+      this.registry,
+      PowerPointCommentPart,
+      this.mcSettings,
+    );
+    return this._powerPointCommentParts;
+  }
+
+  /**
+   * 演示文稿的 `HandoutMasterPart`（讲义母版）。
+   * 不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.PresentationPart.HandoutMasterPart
+   */
+  get handoutMasterPart(): HandoutMasterPart | undefined {
+    if (this._handoutMasterPart !== undefined) return this._handoutMasterPart ?? undefined;
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      HandoutMasterPart,
+      this.mcSettings,
+    );
+    this._handoutMasterPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * 演示文稿的 `TableStylesPart`（表格样式）。
+   * 不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.PresentationPart.TableStylesPart
+   */
+  get tableStylesPart(): TableStylesPart | undefined {
+    if (this._tableStylesPart !== undefined) return this._tableStylesPart ?? undefined;
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      TableStylesPart,
+      this.mcSettings,
+    );
+    this._tableStylesPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * 演示文稿的 `ViewPropertiesPart`（视图属性）。
+   * 不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.PresentationPart.ViewPropertiesPart
+   */
+  get viewPropertiesPart(): ViewPropertiesPart | undefined {
+    if (this._viewPropertiesPart !== undefined) return this._viewPropertiesPart ?? undefined;
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      ViewPropertiesPart,
+      this.mcSettings,
+    );
+    this._viewPropertiesPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * 演示文稿的 `UserDefinedTagsPart`（用户标签）。
+   * 不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.PresentationPart.UserDefinedTagsPart
+   */
+  get userDefinedTagsPart(): UserDefinedTagsPart | undefined {
+    if (this._userDefinedTagsPart !== undefined) return this._userDefinedTagsPart ?? undefined;
+    const resolved = resolveSinglePart(
+      this.part,
+      this.pkg,
+      this.registry,
+      UserDefinedTagsPart,
+      this.mcSettings,
+    );
+    this._userDefinedTagsPart = resolved ?? null;
+    return resolved;
+  }
+
+  /**
+   * 演示文稿的 `VbaProjectPart`（VBA 宏项目）。
+   * 不存在时返 undefined。
+   *
+   * @see DocumentFormat.OpenXml.Packaging.PresentationPart.VbaProjectPart
+   */
+  get vbaProjectPart(): VbaProjectPart | undefined {
+    if (this._vbaProjectPart !== undefined) return this._vbaProjectPart ?? undefined;
+    for (const rel of this.part.relationships) {
+      if (rel.targetMode !== "internal") continue;
+      if (!relationshipTypeMatches(rel.type, VbaProjectPart.relationshipType)) continue;
+      const targetUri = resolveRelativePartUri(this.part.uri, rel.target);
+      if (targetUri === undefined || !this.pkg.hasPart(targetUri)) continue;
+      const p = new VbaProjectPart(this.pkg.getPart(targetUri));
+      this._vbaProjectPart = p;
+      return p;
+    }
+    this._vbaProjectPart = null;
     return undefined;
   }
 
