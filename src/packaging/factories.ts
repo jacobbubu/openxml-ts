@@ -66,12 +66,10 @@ export interface OpenAsyncOptions {
  */
 function resolveOptions(optionsOrSettings: OpenAsyncOptions | OpenSettings = {}): OpenAsyncOptions {
   if (optionsOrSettings instanceof OpenSettings) {
-    return {
-      markupCompatibilityProcessSettings:
-        optionsOrSettings.markupCompatibilityProcessSettings.processMode !== "NoProcess"
-          ? optionsOrSettings.markupCompatibilityProcessSettings
-          : undefined,
-    };
+    const mcSettings = optionsOrSettings.markupCompatibilityProcessSettings;
+    return mcSettings.processMode !== "NoProcess"
+      ? { markupCompatibilityProcessSettings: mcSettings }
+      : {};
   }
   return optionsOrSettings;
 }
