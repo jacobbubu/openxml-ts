@@ -72,9 +72,10 @@ Object.defineProperty(Paragraph.prototype, "indent", {
       pPr.appendChild(ind);
     }
     // Merge：仅在 value 显式带某字段时写入；其它字段保留
-    // Write to start/end (O14+ canonical) so round-trip through strict translation is stable.
-    if (value.leftDxa !== undefined) ind.start = StringValue.parse(String(value.leftDxa));
-    if (value.rightDxa !== undefined) ind.end = StringValue.parse(String(value.rightDxa));
+    // Write to left/right (Transitional w:left/w:right) for compatibility with .NET SDK readers.
+    // The getter reads start ?? left so strict-translated documents (which use w:start) also work.
+    if (value.leftDxa !== undefined) ind.left = StringValue.parse(String(value.leftDxa));
+    if (value.rightDxa !== undefined) ind.right = StringValue.parse(String(value.rightDxa));
     if (value.firstLineDxa !== undefined)
       ind.firstLine = StringValue.parse(String(value.firstLineDxa));
     if (value.hangingDxa !== undefined) ind.hanging = StringValue.parse(String(value.hangingDxa));
