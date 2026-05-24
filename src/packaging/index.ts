@@ -13,8 +13,30 @@ export {
   createInMemory,
   openAsync,
   openSync,
+  OpenSettings,
   type OpenAsyncOptions,
 } from "./factories.js";
+export type {
+  CompatibilityLevel,
+  McProcessMode,
+  MarkupCompatibilityProcessSettings,
+  OpenSettingsInit,
+} from "./open-settings.js";
+export {
+  IRelationshipFilterFeature,
+  PackageFeatureCollection,
+  type IPackageFeatureCollection,
+} from "./features/package-feature-collection.js";
+export {
+  OpenXmlPackageBuilder,
+  withOpenSettings,
+  getOpenSettings,
+  OPEN_SETTINGS_FEATURE_KEY,
+  type IOpenXmlPackageBuilder,
+  type PackageDelegate,
+  type PackageMiddleware,
+  type PackageLike,
+} from "./builder/open-xml-package-builder.js";
 export {
   packageToZipBytes,
   ZipOpenXmlPackage,
