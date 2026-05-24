@@ -8,6 +8,16 @@ import {
   assertRequired,
 } from "../../element/index.js";
 
+// §14.11.7 of ISO/IEC 29500-4: Strict→Transitional value translation for w:textDirection
+const TEXT_DIRECTION_STRICT_MAP: ReadonlyMap<string, string> = new Map([
+  ["lr", "btLr"],
+  ["tb", "lrTb"],
+  ["tbV", "lrTbV"],
+  ["lrV", "tbLrV"],
+  ["rl", "tbRl"],
+  ["rlV", "tbRlV"],
+]);
+
 /** Defines the TextDirection Class.
  *
  * Element: `w:textDirection` */
@@ -22,7 +32,11 @@ export class TextDirection extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = StringValue.parse(value); return;
+      case "w:val": {
+        const translated = TEXT_DIRECTION_STRICT_MAP.get(value);
+        this.val = StringValue.parse(translated ?? value);
+        return;
+      }
     }
     super.applyAttribute(qname, value);
   }

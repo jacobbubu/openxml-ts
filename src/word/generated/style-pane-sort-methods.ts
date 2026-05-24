@@ -4,7 +4,19 @@
 
 import {
   OpenXmlLeafElement,
+  StringValue,
+  assertRequired,
 } from "../../element/index.js";
+
+// §14.11.5 of ISO/IEC 29500-4: Strict→Transitional value translation for w:stylePaneSortMethod
+const STYLE_PANE_SORT_STRICT_MAP: ReadonlyMap<string, string> = new Map([
+  ["name", "0000"],
+  ["priority", "0001"],
+  ["default", "0002"],
+  ["font", "0003"],
+  ["basedOn", "0004"],
+  ["type", "0005"],
+]);
 
 /** Suggested Sorting for List of Document Styles.
  *
@@ -14,7 +26,29 @@ export class StylePaneSortMethods extends OpenXmlLeafElement {
   override readonly prefix = "w" as const;
   override readonly namespaceUri = "http://schemas.openxmlformats.org/wordprocessingml/2006/main" as const;
 
+  /** val (w:val) */
+  val: StringValue | undefined;
 
+  override applyAttribute(qname: string, value: string): void {
+    switch (qname) {
+      case "w:val": {
+        const translated = STYLE_PANE_SORT_STRICT_MAP.get(value);
+        this.val = StringValue.parse(translated ?? value);
+        return;
+      }
+    }
+    super.applyAttribute(qname, value);
+  }
 
+  protected override collectAttributes(): Array<[string, string]> {
+    const out: Array<[string, string]> = [];
+    for (const [k, v] of this.extendedAttributes) out.push([k, v]);
+    if (this.val !== undefined) out.push(["w:val", this.val.toString()]);
+    return out;
+  }
 
+  /** 校验所有 RequiredValidator 标注的属性都存在；缺失抛 REQUIRED_ATTR_MISSING。 */
+  validateRequired(): void {
+    assertRequired(this.val, { attribute: "w:val", elementClass: "StylePaneSortMethods" });
+  }
 }

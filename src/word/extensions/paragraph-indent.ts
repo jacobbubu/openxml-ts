@@ -39,8 +39,11 @@ Object.defineProperty(Paragraph.prototype, "indent", {
     const ind = pPr?.firstChild(Indentation);
     if (ind === undefined) return undefined;
     const out: { -readonly [K in keyof ParagraphIndent]: ParagraphIndent[K] } = {};
-    const l = ind.left?.toString();
-    const r = ind.right?.toString();
+    // §14.3.1.2: "start" is the O14+ canonical form; "left" is the O07 alias.
+    // After strict translation, w:left routes to ind.start. Read start first, fall back to left.
+    const l = (ind.start ?? ind.left)?.toString();
+    // Similarly "end" is the O14+ canonical form for "right".
+    const r = (ind.end ?? ind.right)?.toString();
     const f = ind.firstLine?.toString();
     const h = ind.hanging?.toString();
     if (l !== undefined) out.leftDxa = Number.parseInt(l, 10);
@@ -69,6 +72,8 @@ Object.defineProperty(Paragraph.prototype, "indent", {
       pPr.appendChild(ind);
     }
     // Merge：仅在 value 显式带某字段时写入；其它字段保留
+    // Write to left/right (Transitional w:left/w:right) for compatibility with .NET SDK readers.
+    // The getter reads start ?? left so strict-translated documents (which use w:start) also work.
     if (value.leftDxa !== undefined) ind.left = StringValue.parse(String(value.leftDxa));
     if (value.rightDxa !== undefined) ind.right = StringValue.parse(String(value.rightDxa));
     if (value.firstLineDxa !== undefined)

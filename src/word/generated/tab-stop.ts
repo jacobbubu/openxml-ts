@@ -10,6 +10,12 @@ import {
   assertRequired,
 } from "../../element/index.js";
 
+// §14.11.6 of ISO/IEC 29500-4: Strict→Transitional value translation for w:tab
+const TAB_STOP_STRICT_MAP: ReadonlyMap<string, string> = new Map([
+  ["start", "left"],
+  ["end", "right"],
+]);
+
 /** Custom Tab Stop.
  *
  * Element: `w:tab` */
@@ -30,7 +36,11 @@ export class TabStop extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = StringValue.parse(value); return;
+      case "w:val": {
+        const translated = TAB_STOP_STRICT_MAP.get(value);
+        this.val = StringValue.parse(translated ?? value);
+        return;
+      }
       case "w:leader": this.leader = StringValue.parse(value); return;
       case "w:pos": this.position = Int32Value.parse(value); assertNumber(this.position, { min: -31680, max: 31680 }, { attribute: "w:pos", elementClass: "TabStop" }); return;
     }

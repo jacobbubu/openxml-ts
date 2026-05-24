@@ -16,6 +16,12 @@ export class Document extends OpenXmlCompositeElement {
   override readonly namespaceUri = "http://schemas.openxmlformats.org/wordprocessingml/2006/main" as const;
   override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
 
-
-
+  override applyAttribute(qname: string, value: string): void {
+    // §14.11.1 of ISO/IEC 29500-4: drop conformance="strict" when translating
+    // from Strict to Transitional — this attribute has no meaning in Transitional.
+    if (qname === "conformance" && value === "strict") {
+      return;
+    }
+    super.applyAttribute(qname, value);
+  }
 }

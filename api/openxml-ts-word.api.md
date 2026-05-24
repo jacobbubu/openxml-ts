@@ -487,6 +487,8 @@ export class DeletedText extends OpenXmlLeafElement {
 // @public
 export class Document extends OpenXmlCompositeElement {
     // (undocumented)
+    applyAttribute(qname: string, value: string): void;
+    // (undocumented)
     readonly children: OpenXmlElementList;
     // (undocumented)
     readonly localName: "document";

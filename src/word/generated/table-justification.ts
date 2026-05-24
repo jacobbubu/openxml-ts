@@ -8,6 +8,12 @@ import {
   assertRequired,
 } from "../../element/index.js";
 
+// §14.11.3 of ISO/IEC 29500-4: Strict→Transitional value translation for w:tblJc
+const TABLE_JUSTIFICATION_STRICT_MAP: ReadonlyMap<string, string> = new Map([
+  ["start", "left"],
+  ["end", "right"],
+]);
+
 /** Defines the TableJustification Class.
  *
  * Element: `w:jc` */
@@ -22,7 +28,11 @@ export class TableJustification extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:val": this.val = StringValue.parse(value); return;
+      case "w:val": {
+        const translated = TABLE_JUSTIFICATION_STRICT_MAP.get(value);
+        this.val = StringValue.parse(translated ?? value);
+        return;
+      }
     }
     super.applyAttribute(qname, value);
   }

@@ -55,13 +55,15 @@ export class Indentation extends OpenXmlLeafElement {
 
   override applyAttribute(qname: string, value: string): void {
     switch (qname) {
-      case "w:left": this.left = StringValue.parse(value); return;
+      // §14.3.1.2 of ISO/IEC 29500-4: Strict uses "left"/"right" attribute names;
+      // translate to Transitional equivalents "start"/"end".
+      case "w:left": this.start = StringValue.parse(value); return;
+      case "w:leftChars": this.startCharacters = Int32Value.parse(value); return;
+      case "w:right": this.end = StringValue.parse(value); return;
+      case "w:rightChars": this.endCharacters = Int32Value.parse(value); return;
       case "w:start": this.start = StringValue.parse(value); return;
-      case "w:leftChars": this.leftChars = Int32Value.parse(value); return;
       case "w:startChars": this.startCharacters = Int32Value.parse(value); return;
-      case "w:right": this.right = StringValue.parse(value); return;
       case "w:end": this.end = StringValue.parse(value); return;
-      case "w:rightChars": this.rightChars = Int32Value.parse(value); return;
       case "w:endChars": this.endCharacters = Int32Value.parse(value); return;
       case "w:hanging": this.hanging = StringValue.parse(value); return;
       case "w:hangingChars": this.hangingChars = Int32Value.parse(value); return;
