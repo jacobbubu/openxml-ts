@@ -12,6 +12,18 @@ export { TypedXmlPart, isTypedPartLoading } from "./typed-xml-part.js";
 export { ChartPart } from "./chart-part.js";
 export { ThemePart } from "./theme-part.js";
 export { ImagePart } from "./image-part.js";
+export {
+  MediaDataPart,
+  addMediaDataPartTo,
+  MEDIA_MIME_TO_EXTENSION,
+  mediaExtensionForMime,
+  type AddMediaDataPartOptions,
+} from "./media-data-part.js";
+export {
+  VideoReferenceRelationship,
+  AudioReferenceRelationship,
+  MediaReferenceRelationship,
+} from "./reference-relationships.js";
 export { CorePropertiesPart } from "./core-properties-part.js";
 export { CustomFilePropertiesPart } from "./custom-file-properties-part.js";
 export { CustomXmlPart } from "./custom-xml-part.js";

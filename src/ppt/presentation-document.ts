@@ -47,6 +47,16 @@ import { getOrCreateCorePropertiesPart } from "../parts/get-or-create-core-prope
 import { getOrCreateCustomFilePropertiesPart } from "../parts/get-or-create-custom-file-properties.js";
 import { getOrCreateExtendedFilePropertiesPart } from "../parts/get-or-create-extended-file-properties.js";
 import { type AddImagePartOptions, type ImagePart, addImagePartTo } from "../parts/image-part.js";
+import {
+  type AddMediaDataPartOptions,
+  type MediaDataPart,
+  addMediaDataPartTo,
+} from "../parts/media-data-part.js";
+import {
+  AudioReferenceRelationship,
+  MediaReferenceRelationship,
+  VideoReferenceRelationship,
+} from "../parts/reference-relationships.js";
 import { relationshipTypeMatches } from "../parts/relationship-type-match.js";
 import { resolveRelativePartUri } from "../parts/relationship-uri.js";
 import { ThemePart } from "../parts/theme-part.js";
@@ -276,6 +286,92 @@ export class PresentationDocument {
       });
     }
     return addImagePartTo(this.pkg, slidePart.part, "/ppt/media", bytes, opts);
+  }
+
+  /**
+   * 在演示文稿包内创建一个媒体 Data Part（MediaDataPart）并把引用关系挂到指定
+   * SlidePart（Epic-128）。
+   *
+   * @param slide 目标 SlidePart 或下标（0-based）。
+   * @param contentType 媒体 MIME（如 `"video/mp4"`、`"audio/wav"`）。
+   * @param referenceRelationshipType 关系类型 URI。
+   * @param bytes 可选的初始二进制内容。
+   * @param opts 可选：`baseName` 自定义文件名。
+   */
+  addMediaDataPart(
+    slide: SlidePart | number,
+    contentType: string,
+    referenceRelationshipType: string,
+    bytes?: Uint8Array,
+    opts: AddMediaDataPartOptions = {},
+  ): { part: MediaDataPart; relId: string } {
+    const slidePart = this.resolveSlidePart(slide, "addMediaDataPart");
+    return addMediaDataPartTo(
+      this.pkg,
+      slidePart.part,
+      "/ppt/media",
+      contentType,
+      referenceRelationshipType,
+      bytes,
+      opts,
+    );
+  }
+
+  /**
+   * 在演示文稿包内创建视频 MediaDataPart 并把 VideoReferenceRelationship 挂到指定
+   * SlidePart（Epic-128）。
+   */
+  addVideoReferenceRelationship(
+    slide: SlidePart | number,
+    contentType: string,
+    bytes?: Uint8Array,
+    opts: AddMediaDataPartOptions = {},
+  ): { part: MediaDataPart; relId: string } {
+    return this.addMediaDataPart(
+      slide,
+      contentType,
+      VideoReferenceRelationship.relationshipType,
+      bytes,
+      opts,
+    );
+  }
+
+  /**
+   * 在演示文稿包内创建音频 MediaDataPart 并把 AudioReferenceRelationship 挂到指定
+   * SlidePart（Epic-128）。
+   */
+  addAudioReferenceRelationship(
+    slide: SlidePart | number,
+    contentType: string,
+    bytes?: Uint8Array,
+    opts: AddMediaDataPartOptions = {},
+  ): { part: MediaDataPart; relId: string } {
+    return this.addMediaDataPart(
+      slide,
+      contentType,
+      AudioReferenceRelationship.relationshipType,
+      bytes,
+      opts,
+    );
+  }
+
+  /**
+   * 在演示文稿包内创建媒体 MediaDataPart 并把 MediaReferenceRelationship 挂到指定
+   * SlidePart（Epic-128）。
+   */
+  addMediaReferenceRelationship(
+    slide: SlidePart | number,
+    contentType: string,
+    bytes?: Uint8Array,
+    opts: AddMediaDataPartOptions = {},
+  ): { part: MediaDataPart; relId: string } {
+    return this.addMediaDataPart(
+      slide,
+      contentType,
+      MediaReferenceRelationship.relationshipType,
+      bytes,
+      opts,
+    );
   }
 
   /**

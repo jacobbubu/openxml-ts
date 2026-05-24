@@ -1659,6 +1659,10 @@ export class WordprocessingDocument {
     [Symbol.asyncDispose](): Promise<void>;
     // Warning: (ae-forgotten-export) The symbol "MemoryOpenXmlPackage" needs to be exported by the entry point index.d.ts
     constructor(pkg: MemoryOpenXmlPackage, mcSettings?: MarkupCompatibilityProcessSettings);
+    addAudioReferenceRelationship(contentType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
+        relId: string;
+    };
     addComment(opts: {
         author: string;
         initials?: string;
@@ -1688,10 +1692,23 @@ export class WordprocessingDocument {
         part: ImagePart;
         relId: string;
     };
+    // Warning: (ae-forgotten-export) The symbol "AddMediaDataPartOptions" needs to be exported by the entry point index.d.ts
+    addMediaDataPart(contentType: string, referenceRelationshipType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
+        relId: string;
+    };
+    addMediaReferenceRelationship(contentType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
+        relId: string;
+    };
     addNumberingDefinition(opts: {
         type: "decimal" | "bullet";
     }): {
         numId: number;
+    };
+    addVideoReferenceRelationship(contentType: string, bytes?: Uint8Array, opts?: AddMediaDataPartOptions): {
+        part: MediaDataPart;
+        relId: string;
     };
     changeDocumentType(newType: WordprocessingDocumentType): void;
     get commentsPart(): CommentsPart | undefined;
@@ -1766,6 +1783,10 @@ export class WordprocessingPrinterSettingsPart extends BinaryPart {
     // (undocumented)
     static readonly relationshipType = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/printerSettings";
 }
+
+// Warnings were encountered during analysis:
+//
+// src/word/word-document.ts:765:8 - (ae-forgotten-export) The symbol "MediaDataPart" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
