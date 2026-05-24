@@ -19,6 +19,10 @@ on:
         description: "Try unpublish first; fall back to deprecate on failure"
         type: boolean
         default: true
+      force_unpublish:
+        description: "Pass --force to unpublish (needed for single-remaining version; 24h republish cooldown applies)"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -39,6 +43,7 @@ jobs:
           INPUT_VERSIONS: ${{ inputs.versions }}
           INPUT_MESSAGE: ${{ inputs.message }}
           INPUT_TRY_UNPUB: ${{ inputs.try_unpublish_first }}
+          INPUT_FORCE_UNPUB: ${{ inputs.force_unpublish }}
         run: |
           set -u
           IFS=',' read -ra VERS <<< "${INPUT_VERSIONS}"
@@ -51,8 +56,12 @@ jobs:
             echo "::group::openxml-ts@${v}"
             done_one=0
             if [ "${INPUT_TRY_UNPUB}" = "true" ]; then
-              echo "Trying: npm unpublish openxml-ts@${v}"
-              if npm unpublish "openxml-ts@${v}"; then
+              force_arg=""
+              if [ "${INPUT_FORCE_UNPUB}" = "true" ]; then
+                force_arg="--force"
+              fi
+              echo "Trying: npm unpublish ${force_arg} openxml-ts@${v}"
+              if npm unpublish ${force_arg} "openxml-ts@${v}"; then
                 echo "✓ unpublished ${v}"
                 unpubbed+=("$v")
                 done_one=1
