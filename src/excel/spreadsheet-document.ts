@@ -598,6 +598,42 @@ export class SpreadsheetDocument {
   }
 
   /**
+   * 从 Excel 模板（.xltx / .xltm）字节创建可编辑工作簿（Epic-123）。
+   *
+   * 对位 .NET `SpreadsheetDocument.CreateFromTemplate(path)`：
+   * 1. 以字节形式读入模板包；
+   * 2. 找到主工作簿 Part 的 content-type（template 类型）；
+   * 3. 将 `[Content_Types].xml` Override 更新为对应 workbook 类型；
+   * 4. 返回新 `SpreadsheetDocument` 实例。
+   *
+   * @param templateBytes .xltx / .xltm 模板文件的原始字节。
+   * @returns 以 Workbook（.xlsx）类型打开的新文档实例。
+   * @throws {OpenXmlPackageError} 当模板缺少主工作簿 Part 时。
+   */
+  static async createFromTemplate(templateBytes: Uint8Array): Promise<SpreadsheetDocument> {
+    const doc = await SpreadsheetDocument.openAsync(templateBytes);
+    const wp = doc.workbookPart;
+    if (wp === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "createFromTemplate: template is missing workbook part",
+      });
+    }
+    const currentType = doc.documentType;
+    if (
+      currentType === SpreadsheetDocumentType.Template ||
+      currentType === SpreadsheetDocumentType.MacroEnabledTemplate
+    ) {
+      const targetType =
+        currentType === SpreadsheetDocumentType.MacroEnabledTemplate
+          ? SpreadsheetDocumentType.MacroEnabledWorkbook
+          : SpreadsheetDocumentType.Workbook;
+      doc.changeDocumentType(targetType);
+    }
+    return doc;
+  }
+
+  /**
    * 创建最小可用空白 xlsx：
    * - `xl/workbook.xml`（1 个默认 Sheet1）
    * - `xl/worksheets/sheet1.xml`（空 sheetData）

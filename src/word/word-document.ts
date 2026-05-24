@@ -891,6 +891,45 @@ export class WordprocessingDocument {
   }
 
   /**
+   * 从 Word 模板（.dotx / .dotm）字节创建可编辑文档（Epic-123）。
+   *
+   * 对位 .NET `WordprocessingDocument.CreateFromTemplate(path)`：
+   * 1. 以字节形式读入模板包；
+   * 2. 找到主文档 Part 的 content-type（template 类型）；
+   * 3. 将 `[Content_Types].xml` Override 更新为对应 document 类型；
+   * 4. 返回新 `WordprocessingDocument` 实例。
+   *
+   * TS 端用 `Uint8Array` 输入替代 .NET 的 path-based API，符合浏览器 / Node
+   * 无文件系统假设的设计原则。
+   *
+   * @param templateBytes .dotx / .dotm 模板文件的原始字节。
+   * @returns 以 Document（.docx）类型打开的新文档实例。
+   * @throws {OpenXmlPackageError} 当模板缺少主文档 Part 或 content-type 不可识别时。
+   */
+  static async createFromTemplate(templateBytes: Uint8Array): Promise<WordprocessingDocument> {
+    const doc = await WordprocessingDocument.openAsync(templateBytes);
+    const main = doc.mainDocumentPart;
+    if (main === undefined) {
+      throw new OpenXmlPackageError({
+        code: "PART_NOT_FOUND",
+        message: "createFromTemplate: template is missing main document part",
+      });
+    }
+    const currentType = doc.documentType;
+    if (
+      currentType === WordprocessingDocumentType.Template ||
+      currentType === WordprocessingDocumentType.MacroEnabledTemplate
+    ) {
+      const targetType =
+        currentType === WordprocessingDocumentType.MacroEnabledTemplate
+          ? WordprocessingDocumentType.MacroEnabledDocument
+          : WordprocessingDocumentType.Document;
+      doc.changeDocumentType(targetType);
+    }
+    return doc;
+  }
+
+  /**
    * 创建一份最小可用的空白 docx：包含 `/word/document.xml` 主文档 Part +
    * 包级 officeDocument 关系 + Document/Body typed 根。
    *
