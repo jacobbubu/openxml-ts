@@ -269,9 +269,7 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    * 依赖 SpreadsheetDrawing.Shape（xdr:sp）粒子约束注册。
    * TS 无 spreadsheetDrawing 约束文件 → see issue #372
    */
-  it.todo(
-    "Bug423988 — SpreadsheetDrawing.Shape 粒子约束（依赖 xdr:sp 约束注册 → see issue #372）",
-  );
+  it.todo("Bug423988 — SpreadsheetDrawing.Shape 粒子约束（依赖 xdr:sp 约束注册 → see issue #372）");
 
   /**
    * .NET BugRegressionTest: Bug425476
@@ -342,10 +340,7 @@ describe("BugRegressionTest — NOT-APPLICABLE（.NET 特有）", () => {
    * .NET-specific: codegen 在 .NET SDK 为每个 typed child 生成 getter+setter；
    * TS codegen 不生成此类访问器。
    */
-  it.skip(
-    "Bug448241 [N/A] — .NET 特有：typed child property getter/setter（TableCellLeftMargin、BackgroundAnimation）TS 生成元素无此 API",
-    () => {},
-  );
+  it.skip("Bug448241 [N/A] — .NET 特有：typed child property getter/setter（TableCellLeftMargin、BackgroundAnimation）TS 生成元素无此 API", () => {});
 
   /**
    * .NET BugRegressionTest: Bug396358 [N/A]
@@ -354,10 +349,7 @@ describe("BugRegressionTest — NOT-APPLICABLE（.NET 特有）", () => {
    * .NET-specific: TS 端未实现 MailMergeRecipientDataPart 双类型根元素切换语义，
    * 且 fixture 文件不在 TS 测试资产中。
    */
-  it.skip(
-    "Bug396358 [N/A] — .NET 特有：MailMerge fixture + MailMergeRecipientDataPart part-type 切换语义",
-    () => {},
-  );
+  it.skip("Bug396358 [N/A] — .NET 特有：MailMerge fixture + MailMergeRecipientDataPart part-type 切换语义", () => {});
 
   /**
    * .NET BugRegressionTest: Bug537858 [N/A]
@@ -365,10 +357,7 @@ describe("BugRegressionTest — NOT-APPLICABLE（.NET 特有）", () => {
    * 属性扩展处理（验证 ExtendedAttributes 和 NamespaceDeclarations 数量）。
    * .NET-specific: TS MC 处理不保留已处理属性的 ExtendedAttributes 状态，无等价断言语义。
    */
-  it.skip(
-    "Bug537858 [N/A] — .NET 特有：Animation pptx fixture + PresentationDocument MC 流式处理 + ExtendedAttributes 状态验证",
-    () => {},
-  );
+  it.skip("Bug537858 [N/A] — .NET 特有：Animation pptx fixture + PresentationDocument MC 流式处理 + ExtendedAttributes 状态验证", () => {});
 
   /**
    * .NET BugRegressionTest: Bug544244 [N/A]
@@ -377,10 +366,7 @@ describe("BugRegressionTest — NOT-APPLICABLE（.NET 特有）", () => {
    * .NET-specific: TS PageMargins.header 是 StringValue（原始字符串），
    * 无 .Value 数值访问，无 InnerText 独立字段，语义不可等价。
    */
-  it.skip(
-    "Bug544244 [N/A] — .NET 特有：PageMargins.Header DoubleValue 双轨存储（InnerText 保留原始串 + Value 返回 double）TS 用 StringValue 无等价语义",
-    () => {},
-  );
+  it.skip("Bug544244 [N/A] — .NET 特有：PageMargins.Header DoubleValue 双轨存储（InnerText 保留原始串 + Value 返回 double）TS 用 StringValue 无等价语义", () => {});
 
   /**
    * .NET BugRegressionTest: Bug665268 [N/A]
@@ -389,8 +375,5 @@ describe("BugRegressionTest — NOT-APPLICABLE（.NET 特有）", () => {
    * .NET-specific: TS DateTimeValue 无 HasValue 属性，构造时即解析为 Date；
    * 不支持 InnerText 直接赋值模式；toString() 输出 ISO 格式而非原始字符串。
    */
-  it.skip(
-    "Bug665268 [N/A] — .NET 特有：DateTimeValue.InnerText 直接赋值 + HasValue + 原始字符串保留 TS 无等价语义",
-    () => {},
-  );
+  it.skip("Bug665268 [N/A] — .NET 特有：DateTimeValue.InnerText 直接赋值 + HasValue + 原始字符串保留 TS 无等价语义", () => {});
 });
