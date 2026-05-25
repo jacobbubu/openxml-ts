@@ -20,6 +20,8 @@ export interface ParticleLeaf {
   readonly min: number;
   /** Maximum occurrences; "unbounded" means no limit. */
   readonly max: number | "unbounded";
+  /** Minimum Office version required for this leaf to be valid (e.g. "Office2010"). */
+  readonly initialVersion?: string;
 }
 
 /** A composite particle (Sequence / Choice / All / Group). */
@@ -28,6 +30,8 @@ export interface ParticleComposite {
   readonly min: number;
   readonly max: number | "unbounded";
   readonly items: readonly ParticleNode[];
+  /** Minimum Office version required for this composite to be valid (e.g. "Office2010"). */
+  readonly initialVersion?: string;
 }
 
 export type ParticleNode = ParticleLeaf | ParticleComposite;

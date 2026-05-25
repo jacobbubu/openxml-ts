@@ -81,6 +81,11 @@ import { StatusText } from "../../src/word/generated/status-text.js";
 import { StylePaneSortMethods } from "../../src/word/generated/style-pane-sort-methods.js";
 import { Text } from "../../src/word/generated/text.js";
 import { WrapSquare } from "../../src/wordprocessing-drawing/generated/wrap-square.js";
+import { Color as XColor } from "../../src/excel/generated/color.js";
+import { ColorScale } from "../../src/excel/generated/color-scale.js";
+import { ConditionalFormatValueObject } from "../../src/excel/generated/conditional-format-value-object.js";
+import { EmbeddedObjectProperties } from "../../src/excel/generated/embedded-object-properties.js";
+import { OleObject } from "../../src/excel/generated/ole-object.js";
 
 // ─── Inline constraints for namespaces without constraint files ──────────────
 
@@ -199,12 +204,56 @@ describe("BugRegressionTest — PORTABLE 移植", () => {
 describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
   /**
    * .NET BugRegressionTest: Bug743591
-   * 依赖 XML 字符串构造器 `new ColorScale("<x:colorScale ...>")`。
-   * TS 无等价机制 → see issue #373
+   * Port via #373: ColorScale particle sequence validation with manual DOM construction
+   * (no XML string constructor needed).
+   *
+   * ColorScale particle: sequence{ cfvo(2,3), color(2,3) }.
+   * Smart sequence orderer now detects color appearing before min cfvo count is met.
    */
-  it.todo(
-    "Bug743591 — ColorScale XML 字符串构造 + 粒子序列校验（依赖 XML 字符串构造器 → see issue #373）",
-  );
+  it("Bug743591 — ColorScale 粒子序列校验（port from #373）", () => {
+    const validator = new OpenXmlValidator();
+    const makeCfvo = () => {
+      const c = new ConditionalFormatValueObject();
+      c.applyAttribute("type", "min");
+      c.applyAttribute("val", "0");
+      return c;
+    };
+
+    const cs = new ColorScale();
+    // Step 1: 1 cfvo + 2 colors — cfvo min=2 not met, colors out of order
+    cs.appendChild(makeCfvo());
+    cs.appendChild(new XColor());
+    cs.appendChild(new XColor());
+    let errors = validator.validate(cs);
+    expect(errors.length).toBe(3);
+    // Two colors out of sequence (required cfvo min=2 not satisfied yet)
+    expect(errors.filter((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex").length).toBe(2);
+    // Missing one cfvo
+    expect(errors.filter((e) => e.id === "Sch_IncompleteContentExpectingComplex").length).toBe(1);
+
+    // Step 2: 2 cfvo + 2 colors → 0 errors (min cfvos + min colors satisfied)
+    cs.prependChild(makeCfvo());
+    errors = validator.validate(cs);
+    expect(errors.length).toBe(0);
+
+    // Step 3: 3 cfvo + 2 colors → 0 errors
+    cs.prependChild(makeCfvo());
+    errors = validator.validate(cs);
+    expect(errors.length).toBe(0);
+
+    // Step 4: remove last color → 3 cfvo + 1 color → missing 1 color
+    const lastColor = cs.lastChildElement;
+    if (lastColor) cs.removeChild(lastColor);
+    errors = validator.validate(cs);
+    expect(errors.length).toBe(1);
+    expect(errors[0].id).toBe("Sch_IncompleteContentExpectingComplex");
+
+    // Step 5: 3 cfvo + 3 colors → 0 errors
+    cs.appendChild(new XColor());
+    cs.appendChild(new XColor());
+    errors = validator.validate(cs);
+    expect(errors.length).toBe(0);
+  });
 
   /**
    * .NET BugRegressionTest: Bug704004
@@ -321,13 +370,31 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
 
   /**
    * .NET BugRegressionTest: Bug643538
-   * 依赖版本条件子粒子（OleObject 在 Office2007 无子；Office2010 有 EmbeddedObjectProperties）。
-   * 及 XML 字符串构造器（无法直接构造 EmbeddedObjectProperties 并赋值）。
-   * → see issue #373
+   * Port via #373: OleObject version-conditional particle.
+   * objectPr (EmbeddedObjectProperties) only valid starting from Office2010.
+   * In Office2007, OleObject has no children — objectPr is filtered from particle.
    */
-  it.todo(
-    "Bug643538 — OleObject 版本条件子粒子（依赖 versionedParticle + XML 构造器 → see issue #373）",
-  );
+  it("Bug643538 — OleObject 版本条件子粒子（port from #373）", () => {
+    // --- Office2007: objectPr not allowed ---
+    const v2007 = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const ole = new OleObject();
+    ole.applyAttribute("shapeId", "1");
+    ole.appendChild(new EmbeddedObjectProperties());
+    const err2007 = v2007.validate(ole);
+    // objectPr is not in filtered (empty) particle → Sch_InvalidElementContentExpectingComplex
+    expect(err2007.some((e) => e.id === "Sch_InvalidElementContentExpectingComplex")).toBe(true);
+
+    // --- Office2010: objectPr allowed but incomplete ---
+    const v2010 = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2010 });
+    const ole2 = new OleObject();
+    ole2.applyAttribute("shapeId", "1");
+    const eop = new EmbeddedObjectProperties();
+    ole2.appendChild(eop);
+    const err2010 = v2010.validate(ole2);
+    expect(err2010.length).toBe(1);
+    expect(err2010[0].id).toBe("Sch_IncompleteContentExpectingComplex");
+    expect(err2010[0].node).toBe(eop);
+  });
 
   // Bug319778 — ported via issue #371 (UInt32 text content type validation)
   it("Bug319778 — WrapSquare.distL InnerText = 'Foo' UInt32 类型校验（port from #371）", () => {
@@ -381,8 +448,9 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    *
    * .NET expects: Shape + txBody → Sch_IncompleteContentExpectingComplex on txBody
    *               + Sch_UnexpectedElementContentExpectingComplex on Shape (relatedNode=txBody).
-   * TS behavior: Shape + txBody → 4 Sch_IncompleteContentExpectingComplex
-   *               (2 for Shape missing nvSpPr/spPr + 2 for TextBody missing bodyPr/p).
+   * TS matches: 1 Sch_UnexpectedElementContentExpectingComplex on Shape (relatedNode=txBody)
+   *             + 2 Sch_IncompleteContentExpectingComplex on Shape (missing nvSpPr, spPr)
+   *             + 2 Sch_IncompleteContentExpectingComplex on txBody (missing bodyPr, p).
    */
   it("Bug423988 — SpreadsheetDrawing.Shape 粒子约束（port from #372）", () => {
     const validator = new OpenXmlValidator();
@@ -391,14 +459,20 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
     shape.appendChild(txBody);
     const errors = validator.validate(shape);
 
-    // Shape is missing required nvSpPr + spPr; TextBody is missing required bodyPr + p
-    expect(errors.length).toBe(4);
+    expect(errors.length).toBe(5);
     expect(errors.every((e) => e.errorType === "Schema")).toBe(true);
-    expect(errors.every((e) => e.id === "Sch_IncompleteContentExpectingComplex")).toBe(true);
 
-    const shapeErrors = errors.filter((e) => e.node === shape);
+    // Sch_UnexpectedElementContentExpectingComplex on Shape with txBody as relatedNode
+    const posErr = errors.find((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex");
+    expect(posErr?.node).toBe(shape);
+    expect(posErr?.relatedNode).toBe(txBody);
+
+    // Two Sch_IncompleteContentExpectingComplex on Shape (missing nvSpPr, spPr)
+    const shapeIncomplete = errors.filter((e) => e.node === shape && e.id === "Sch_IncompleteContentExpectingComplex");
+    expect(shapeIncomplete.length).toBe(2);
+
+    // Two Sch_IncompleteContentExpectingComplex on txBody (missing bodyPr, p)
     const txBodyErrors = errors.filter((e) => e.node === txBody);
-    expect(shapeErrors.length).toBe(2);
     expect(txBodyErrors.length).toBe(2);
   });
 
@@ -440,7 +514,9 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    *
    * .NET expects: empty Shape → 1 error; add TextBody → 2 errors; both descriptions
    *               share the "List of possible elements expected:" prefix.
-   * TS behavior: empty Shape → 2 errors; add TextBody → 4 errors.
+   * TS behavior: empty Shape → 2 errors; add TextBody → 5 errors
+   *               (now includes Sch_UnexpectedElementContentExpectingComplex for txBody
+   *               appearing before required nvSpPr/spPr).
    */
   it("Bug423998 — SpreadsheetDrawing.Shape 添加子元素后错误列表（port from #372）", () => {
     const validator = new OpenXmlValidator();
@@ -455,12 +531,13 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
     const txBody = new TextBody();
     shape.appendChild(txBody);
     const errors2 = validator.validate(shape);
-    expect(errors2.length).toBe(4);
-    // All errors share the same id
-    expect(errors2.every((e) => e.id === "Sch_IncompleteContentExpectingComplex")).toBe(true);
-    // The two original Shape errors are still present
-    const shapeErrors2 = errors2.filter((e) => e.node === shape);
+    expect(errors2.length).toBe(5);
+    // The two original Shape incomplete errors are still present
+    const shapeErrors2 = errors2.filter((e) => e.node === shape && e.id === "Sch_IncompleteContentExpectingComplex");
     expect(shapeErrors2.length).toBe(2);
+    // Now includes Sch_UnexpectedElementContentExpectingComplex on Shape with txBody as relatedNode
+    const posErr = errors2.find((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex");
+    expect(posErr?.relatedNode).toBe(txBody);
   });
 
   /**
