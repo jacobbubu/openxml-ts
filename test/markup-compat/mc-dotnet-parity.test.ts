@@ -51,6 +51,7 @@
  */
 
 import { describe, expect, it } from "vitest";
+import { OpenXmlUnknownElement } from "../../src/element/index.js";
 import type { OpenXmlCompositeElement } from "../../src/element/index.js";
 import { deserialize } from "../../src/index.js";
 import {
@@ -59,6 +60,7 @@ import {
   type MarkupCompatibilityProcessSettings,
   processMarkupCompatibility,
 } from "../../src/markup-compat/index.js";
+import { OpenXmlValidator } from "../../src/validation/OpenXmlValidator.js";
 
 // ── namespace constants ───────────────────────────────────────────────────────
 const MC_NS = "http://schemas.openxmlformats.org/markup-compatibility/2006";
@@ -1497,4 +1499,204 @@ describe("Version matrix — multi-version Choice selection", () => {
       }
     });
   }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MC Validation — ported from .NET McValidationTest.cs
+// Tests the 7 MarkupCompatibility error codes (MC_InvalidXmlAttribute, etc.)
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("McValidationTest — ACB syntax & MC attributes", () => {
+  const validator = new OpenXmlValidator();
+
+  function acElm(name: string): OpenXmlUnknownElement {
+    return new OpenXmlUnknownElement("mc", name, MC_NS);
+  }
+
+  it("empty AlternateContent → Sch_IncompleteContentExpectingComplex", () => {
+    const ac = acElm("AlternateContent");
+    const errors = validator.validate(ac);
+    expect(errors.length).toBe(1);
+    expect(errors[0].errorType).toBe("MarkupCompatibility");
+    expect(errors[0].id).toBe("Sch_IncompleteContentExpectingComplex");
+  });
+
+  it("valid AlternateContent with Choice + Fallback → 0 errors", () => {
+    const ac = acElm("AlternateContent");
+    ac.extendedAttributes.set("xmlns:o15", "http://o15.com");
+    const choice = acElm("Choice");
+    choice.extendedAttributes.set("Requires", "o15");
+    const fallback = acElm("Fallback");
+    ac.appendChild(choice);
+    ac.appendChild(fallback);
+    const errors = validator.validate(ac);
+    expect(errors.length).toBe(0);
+  });
+
+  it("AlternateContent nested → Sch_InvalidElementContentExpectingComplex", () => {
+    const ac = acElm("AlternateContent");
+    const nested = acElm("AlternateContent");
+    ac.appendChild(nested);
+    const errors = validator.validate(ac);
+    const err = errors.find((e) => e.id === "Sch_InvalidElementContentExpectingComplex");
+    expect(err).toBeDefined();
+    expect(err!.errorType).toBe("MarkupCompatibility");
+  });
+
+  it("two Fallback children → Sch_InvalidElementContentExpectingComplex", () => {
+    const ac = acElm("AlternateContent");
+    ac.extendedAttributes.set("xmlns:o15", "http://o15.com");
+    const choice = acElm("Choice");
+    choice.extendedAttributes.set("Requires", "o15");
+    ac.appendChild(choice);
+    ac.appendChild(acElm("Fallback"));
+    ac.appendChild(acElm("Fallback"));
+    const errors = validator.validate(ac);
+    const err = errors.find(
+      (e) =>
+        e.id === "Sch_InvalidElementContentExpectingComplex" &&
+        e.description.includes("at most one Fallback"),
+    );
+    expect(err).toBeDefined();
+  });
+
+  it("Fallback before Choice → Sch_IncompleteContentExpectingComplex", () => {
+    const ac = acElm("AlternateContent");
+    ac.extendedAttributes.set("xmlns:o15", "http://o15.com");
+    const choice = acElm("Choice");
+    choice.extendedAttributes.set("Requires", "o15");
+    const fallback = acElm("Fallback");
+    ac.appendChild(fallback);
+    ac.appendChild(choice);
+    const errors = validator.validate(ac);
+    const err = errors.find((e) => e.id === "Sch_IncompleteContentExpectingComplex");
+    expect(err).toBeDefined();
+  });
+
+  it("xml:lang on AlternateContent → MC_InvalidXmlAttribute", () => {
+    const ac = acElm("AlternateContent");
+    ac.extendedAttributes.set("xmlns:o15", "http://o15.com");
+    ac.extendedAttributes.set("xml:lang", "en-us");
+    const choice = acElm("Choice");
+    choice.extendedAttributes.set("Requires", "o15");
+    ac.appendChild(choice);
+    ac.appendChild(acElm("Fallback"));
+    const errors = validator.validate(ac);
+    const err = errors.find(
+      (e) => e.id === "MC_InvalidXmlAttribute" && e.description.includes("AlternateContent"),
+    );
+    expect(err).toBeDefined();
+    expect(err!.errorType).toBe("MarkupCompatibility");
+  });
+
+  it("xml:lang on Choice → MC_InvalidXmlAttribute", () => {
+    const ac = acElm("AlternateContent");
+    ac.extendedAttributes.set("xmlns:o15", "http://o15.com");
+    const choice = acElm("Choice");
+    choice.extendedAttributes.set("Requires", "o15");
+    choice.extendedAttributes.set("xml:lang", "en-us");
+    ac.appendChild(choice);
+    ac.appendChild(acElm("Fallback"));
+    const errors = validator.validate(ac);
+    const err = errors.find(
+      (e) => e.id === "MC_InvalidXmlAttribute" && e.description.includes("Choice"),
+    );
+    expect(err).toBeDefined();
+  });
+
+  it("xml:space on Fallback → MC_InvalidXmlAttribute", () => {
+    const ac = acElm("AlternateContent");
+    ac.extendedAttributes.set("xmlns:o15", "http://o15.com");
+    const choice = acElm("Choice");
+    choice.extendedAttributes.set("Requires", "o15");
+    const fb = acElm("Fallback");
+    fb.extendedAttributes.set("xml:space", "preserve");
+    ac.appendChild(choice);
+    ac.appendChild(fb);
+    const errors = validator.validate(ac);
+    const err = errors.find(
+      (e) => e.id === "MC_InvalidXmlAttribute" && e.description.includes("Fallback"),
+    );
+    expect(err).toBeDefined();
+  });
+
+  it("undeclared prefix in Requires → MC_InvalidRequiresAttribute", () => {
+    const ac = acElm("AlternateContent");
+    const choice = acElm("Choice");
+    choice.extendedAttributes.set("Requires", "undeclaredPrefix");
+    ac.appendChild(choice);
+    const errors = validator.validate(ac);
+    const err = errors.find((e) => e.id === "MC_InvalidRequiresAttribute");
+    expect(err).toBeDefined();
+  });
+
+  it("missing Requires on Choice → MC_MissedRequiresAttribute", () => {
+    const ac = acElm("AlternateContent");
+    ac.extendedAttributes.set("xmlns:o15", "http://o15.com");
+    const choice = acElm("Choice");
+    const fb = acElm("Fallback");
+    ac.appendChild(choice);
+    ac.appendChild(fb);
+    const errors = validator.validate(ac);
+    const err = errors.find((e) => e.id === "MC_MissedRequiresAttribute");
+    expect(err).toBeDefined();
+  });
+
+  it("Ignorable with undeclared prefix → MC_InvalidIgnorableAttribute", () => {
+    const el = acElm("AlternateContent");
+    el.extendedAttributes.set("mc:Ignorable", "badPrefix");
+    const errors = validator.validate(el);
+    const err = errors.find((e) => e.id === "MC_InvalidIgnorableAttribute");
+    expect(err).toBeDefined();
+  });
+
+  it("Ignorable with declared prefix → 0 errors for Ignorable", () => {
+    const el = acElm("AlternateContent");
+    el.extendedAttributes.set("xmlns:good", "http://good.com");
+    el.extendedAttributes.set("mc:Ignorable", "good");
+    const errors = validator.validate(el);
+    const ignErr = errors.find((e) => e.id === "MC_InvalidIgnorableAttribute");
+    expect(ignErr).toBeUndefined();
+  });
+
+  it("PreserveElements not in Ignorable → MC_InvalidPreserveElementsAttribute", () => {
+    const el = acElm("AlternateContent");
+    el.extendedAttributes.set("xmlns:w15", "http://w15.com");
+    el.extendedAttributes.set("mc:Ignorable", "w15");
+    el.extendedAttributes.set("mc:PreserveElements", "x15:*");
+    const errors = validator.validate(el);
+    const err = errors.find((e) => e.id === "MC_InvalidPreserveElementsAttribute");
+    expect(err).toBeDefined();
+  });
+
+  it("PreserveElements in Ignorable → 0 errors", () => {
+    const el = acElm("AlternateContent");
+    el.extendedAttributes.set("xmlns:w15", "http://w15.com");
+    el.extendedAttributes.set("mc:Ignorable", "w15");
+    el.extendedAttributes.set("mc:PreserveElements", "w15:*");
+    const errors = validator.validate(el);
+    const err = errors.find((e) => e.id === "MC_InvalidPreserveElementsAttribute");
+    expect(err).toBeUndefined();
+  });
+
+  it("ProcessContent not in Ignorable → MC_InvalidProcessContentAttribute", () => {
+    const el = acElm("AlternateContent");
+    el.extendedAttributes.set("xmlns:w15", "http://w15.com");
+    el.extendedAttributes.set("mc:Ignorable", "w15");
+    el.extendedAttributes.set("mc:ProcessContent", "x15:*");
+    const errors = validator.validate(el);
+    const err = errors.find((e) => e.id === "MC_InvalidProcessContentAttribute");
+    expect(err).toBeDefined();
+  });
+
+  it("ProcessContent + xml:space → MC_InvalidXmlAttributeWithProcessContent", () => {
+    const el = acElm("AlternateContent");
+    el.extendedAttributes.set("xmlns:w15", "http://w15.com");
+    el.extendedAttributes.set("mc:Ignorable", "w15");
+    el.extendedAttributes.set("mc:ProcessContent", "w15:*");
+    el.extendedAttributes.set("xml:space", "preserve");
+    const errors = validator.validate(el);
+    const err = errors.find((e) => e.id === "MC_InvalidXmlAttributeWithProcessContent");
+    expect(err).toBeDefined();
+  });
 });

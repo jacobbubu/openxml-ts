@@ -696,6 +696,7 @@ describe("BugRegressionTest — PORTED（已移植）", () => {
 
     const mcNs = "http://schemas.openxmlformats.org/markup-compatibility/2006";
     const ac = new OpenXmlUnknownElement("mc", "AlternateContent", mcNs);
+    ac.extendedAttributes.set("xmlns:O15", "http://o15.com");
     const choice = new OpenXmlUnknownElement("mc", "Choice", mcNs);
     choice.extendedAttributes.set("Requires", "O15");
     const fallback = new OpenXmlUnknownElement("mc", "Fallback", mcNs);

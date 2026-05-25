@@ -29,6 +29,7 @@ import { OpenXmlCompositeElement, type OpenXmlElement } from "../element/element
 import { FileFormatVersions } from "../markup-compat/file-format-versions.js";
 import type { IRelationshipCollection } from "../packaging/interfaces/relationship.js";
 import type { ValidationError } from "./ValidationError.js";
+import { validateMcElement } from "./mc-validator.js";
 import type { PartResolver } from "./schematron/evaluator.js";
 import { SCHEMATRON_RULES, evaluateSchematron } from "./schematron/index.js";
 import type {
@@ -760,6 +761,10 @@ export class OpenXmlValidator {
     errors: ValidationError[],
     partUri: string | undefined,
   ): void {
+    // MC (Markup Compatibility) validation — CompatibilityRuleAttributes + AlternateContent.
+    // Runs for every element, independent of schema constraint lookup.
+    errors.push(...validateMcElement(el, path, partUri));
+
     const constraint = lookupConstraint(el);
 
     // --- Attribute validation ---
