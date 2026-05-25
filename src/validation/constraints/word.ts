@@ -6082,6 +6082,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "shd",
     requiredAttrs: ["w:val"],
     attrConstraints: [
+      // Union: w:color has EnumValidator (AutomaticColorValues = "auto")
+      // AND StringValidator(Length=3). Value passes if either check succeeds.
+      { qname: "w:color", typeHint: "enum", enumMembers: ["auto"] },
       { qname: "w:color", minLength: 3, maxLength: 3 },
       { qname: "w:themeTint", minLength: 1, maxLength: 2 },
       { qname: "w:themeShade", minLength: 1, maxLength: 2 },
@@ -6415,7 +6418,16 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "stylePaneSortMethod",
     requiredAttrs: ["w:val"],
     attrConstraints: [
-      { qname: "w:val", minLength: 2, maxLength: 2 },
+      // StringValidator(Length=2, Office2007) = hexBinary 2 bytes = 4 hex chars
+      // + EnumValidator(Office2010+) with 6 hex members
+      // When both typeHint "hexBinary" and enumMembers are set, the validator
+      // applies hexBinary check in Office2007 mode and enum check otherwise.
+      {
+        qname: "w:val",
+        typeHint: "hexBinary",
+        length: 2,
+        enumMembers: ["0000", "0001", "0002", "0003", "0004", "0005"],
+      },
     ],
   },
   {

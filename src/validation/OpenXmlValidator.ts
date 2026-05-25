@@ -26,12 +26,13 @@
  */
 
 import { OpenXmlCompositeElement, type OpenXmlElement } from "../element/element.js";
-import type { FileFormatVersions } from "../markup-compat/file-format-versions.js";
+import { FileFormatVersions } from "../markup-compat/file-format-versions.js";
 import type { IRelationshipCollection } from "../packaging/interfaces/relationship.js";
 import type { ValidationError } from "./ValidationError.js";
 import type { PartResolver } from "./schematron/evaluator.js";
 import { SCHEMATRON_RULES, evaluateSchematron } from "./schematron/index.js";
 import type {
+  AttrConstraint,
   ElementConstraint,
   NormalizedParticle,
   ParticleComposite,
@@ -99,6 +100,20 @@ function makeOpcError(id: string, description: string): ValidationError {
     node: undefined as unknown as OpenXmlElement,
     path: "",
   };
+}
+
+/**
+ * Check if a string is valid base64-encoded using strict canonical round-trip.
+ * Matches .NET behavior: the decoded-and-re-encoded value must equal the input.
+ */
+function isValidBase64(value: string): boolean {
+  if (value.length === 0) return false;
+  try {
+    const reencoded = Buffer.from(value, "base64").toString("base64");
+    return reencoded === value;
+  } catch {
+    return false;
+  }
 }
 
 // ---- Constraint registry ----
@@ -652,62 +667,264 @@ export class OpenXmlValidator {
       }
     }
 
-    // (e) Attribute value constraints
-    for (const ac of constraint.attrConstraints ?? []) {
-      const value = this.getAttrStringValue(el, ac.qname);
+    // (e) Attribute value constraints + type-specific validation
+    // Group by qname for union-aware processing
+    const constraintGroups = this.groupAttrConstraints(constraint.attrConstraints);
+    for (const [, attrs] of constraintGroups) {
+      const first = attrs[0];
+      if (first === undefined) continue;
+      const value = this.getAttrStringValue(el, first.qname);
       if (value === undefined) continue;
 
-      if (ac.maxLength !== undefined && value.length > ac.maxLength) {
-        errors.push(
-          makeError(
-            "Sch_AttributeValueDataTypeDetailed",
-            `Attribute '${ac.qname}' on <${el.qualifiedName}>: string length ${value.length} exceeds MaxLength ${ac.maxLength}.`,
-            el,
-            path,
-            partUri,
-          ),
-        );
-      }
-      if (ac.minLength !== undefined && value.length < ac.minLength) {
-        errors.push(
-          makeError(
-            "Sch_AttributeValueDataTypeDetailed",
-            `Attribute '${ac.qname}' on <${el.qualifiedName}>: string length ${value.length} is less than MinLength ${ac.minLength}.`,
-            el,
-            path,
-            partUri,
-          ),
-        );
+      // Evaluate all constraints for this attribute
+      // If ANY passes (union semantics), the attribute is valid
+      const attrErrors: ValidationError[] = [];
+      let anyPassed = false;
+
+      for (const ac of attrs) {
+        const ev = this.evaluateSingleConstraint(el, ac, value, path, partUri);
+        if (ev.length === 0) {
+          anyPassed = true;
+          break;
+        }
+        attrErrors.push(...ev);
       }
 
-      if (ac.maxValue !== undefined || ac.minValue !== undefined) {
-        const num = Number(value);
-        if (!Number.isNaN(num)) {
-          if (ac.minValue !== undefined && num < ac.minValue) {
-            errors.push(
-              makeError(
-                "Sch_AttributeValueDataTypeDetailed",
-                `Attribute '${ac.qname}' on <${el.qualifiedName}>: value ${num} is less than MinInclusive ${ac.minValue}.`,
-                el,
-                path,
-                partUri,
-              ),
-            );
-          }
-          if (ac.maxValue !== undefined && num > ac.maxValue) {
-            errors.push(
-              makeError(
-                "Sch_AttributeValueDataTypeDetailed",
-                `Attribute '${ac.qname}' on <${el.qualifiedName}>: value ${num} exceeds MaxInclusive ${ac.maxValue}.`,
-                el,
-                path,
-                partUri,
-              ),
-            );
-          }
+      if (anyPassed) continue; // Union or simple pass
+
+      // All constraints failed: report at most one error
+      const firstError = attrErrors[0];
+      if (firstError !== undefined) {
+        errors.push(firstError);
+      }
+    }
+  }
+
+  /**
+   * Group attrConstraints by qname, preserving order within each group.
+   */
+  private groupAttrConstraints(
+    attrs: readonly AttrConstraint[] | undefined,
+  ): Map<string, AttrConstraint[]> {
+    const groups = new Map<string, AttrConstraint[]>();
+    for (const ac of attrs ?? []) {
+      const arr = groups.get(ac.qname);
+      if (arr === undefined) {
+        groups.set(ac.qname, [ac]);
+      } else {
+        arr.push(ac);
+      }
+    }
+    return groups;
+  }
+
+  /**
+   * Evaluate a single AttrConstraint. Returns errors on failure, empty array on pass.
+   */
+  private evaluateSingleConstraint(
+    el: OpenXmlElement,
+    ac: AttrConstraint,
+    value: string,
+    path: string,
+    partUri: string | undefined,
+  ): ValidationError[] {
+    const errs: ValidationError[] = [];
+    const qname = ac.qname;
+    const qn = el.qualifiedName;
+
+    // ---- Version-aware: hexBinary + enumMembers (StylePaneSortMethods style) ----
+    // When a constraint has both typeHint "hexBinary" and non-empty enumMembers,
+    // the check is version-aware: hexBinary for Office2007, enum for Office2010+.
+    if (ac.typeHint === "hexBinary" && ac.enumMembers !== undefined && ac.enumMembers.length > 0) {
+      if (this._fileFormat === FileFormatVersions.Office2007) {
+        // hexBinary check (Office2007 mode)
+        if (!/^(?:[0-9a-fA-F]{2})*$/.test(value)) {
+          errs.push(
+            makeError(
+              "Sch_AttributeValueDataTypeDetailed",
+              `Attribute '${qname}' on <${qn}>: '${value}' is not a valid hexBinary value.`,
+              el,
+              path,
+              partUri,
+            ),
+          );
+        } else if (ac.length !== undefined && value.length !== ac.length * 2) {
+          errs.push(
+            makeError(
+              "Sch_AttributeValueDataTypeDetailed",
+              `Attribute '${qname}' on <${qn}>: hexBinary length ${value.length} does not match expected length ${ac.length * 2}.`,
+              el,
+              path,
+              partUri,
+            ),
+          );
+        }
+      } else {
+        // Enum check (Office2010+ mode, or conservative/undefined mode)
+        if (!ac.enumMembers.includes(value)) {
+          errs.push(
+            makeError(
+              "Sch_AttributeValueDataTypeDetailed",
+              `Attribute '${qname}' on <${qn}>: value '${value}' is not valid (Enumeration constraint failed).`,
+              el,
+              path,
+              partUri,
+            ),
+          );
+        }
+      }
+      return errs; // Version-aware constraint handled; exit early
+    }
+
+    // ---- String length checks ----
+    if (ac.maxLength !== undefined && value.length > ac.maxLength) {
+      errs.push(
+        makeError(
+          "Sch_AttributeValueDataTypeDetailed",
+          `Attribute '${qname}' on <${qn}>: string length ${value.length} exceeds MaxLength ${ac.maxLength}.`,
+          el,
+          path,
+          partUri,
+        ),
+      );
+    }
+    if (ac.minLength !== undefined && value.length < ac.minLength) {
+      errs.push(
+        makeError(
+          "Sch_AttributeValueDataTypeDetailed",
+          `Attribute '${qname}' on <${qn}>: string length ${value.length} is less than MinLength ${ac.minLength}.`,
+          el,
+          path,
+          partUri,
+        ),
+      );
+    }
+
+    // ---- Numeric range checks ----
+    if (ac.maxValue !== undefined || ac.minValue !== undefined) {
+      const num = Number(value);
+      if (!Number.isNaN(num)) {
+        if (ac.minValue !== undefined && num < ac.minValue) {
+          errs.push(
+            makeError(
+              "Sch_AttributeValueDataTypeDetailed",
+              `Attribute '${qname}' on <${qn}>: value ${num} is less than MinInclusive ${ac.minValue}.`,
+              el,
+              path,
+              partUri,
+            ),
+          );
+        }
+        if (ac.maxValue !== undefined && num > ac.maxValue) {
+          errs.push(
+            makeError(
+              "Sch_AttributeValueDataTypeDetailed",
+              `Attribute '${qname}' on <${qn}>: value ${num} exceeds MaxInclusive ${ac.maxValue}.`,
+              el,
+              path,
+              partUri,
+            ),
+          );
         }
       }
     }
+
+    // ---- Type-specific validation ----
+    if (ac.typeHint !== undefined) {
+      switch (ac.typeHint) {
+        case "hexBinary": {
+          if (!/^(?:[0-9a-fA-F]{2})*$/.test(value)) {
+            errs.push(
+              makeError(
+                "Sch_AttributeValueDataTypeDetailed",
+                `Attribute '${qname}' on <${qn}>: '${value}' is not a valid hexBinary value.`,
+                el,
+                path,
+                partUri,
+              ),
+            );
+          } else if (ac.length !== undefined && value.length !== ac.length * 2) {
+            errs.push(
+              makeError(
+                "Sch_AttributeValueDataTypeDetailed",
+                `Attribute '${qname}' on <${qn}>: hexBinary length ${value.length} does not match expected length ${ac.length * 2}.`,
+                el,
+                path,
+                partUri,
+              ),
+            );
+          }
+          break;
+        }
+        case "base64Binary": {
+          if (!isValidBase64(value)) {
+            errs.push(
+              makeError(
+                "Sch_AttributeValueDataTypeDetailed",
+                `Attribute '${qname}' on <${qn}>: '${value}' is not a valid base64Binary value.`,
+                el,
+                path,
+                partUri,
+              ),
+            );
+          }
+          break;
+        }
+        case "enum": {
+          if (ac.enumMembers !== undefined && !ac.enumMembers.includes(value)) {
+            errs.push(
+              makeError(
+                "Sch_AttributeValueDataTypeDetailed",
+                `Attribute '${qname}' on <${qn}>: value '${value}' is not valid (Enumeration constraint failed).`,
+                el,
+                path,
+                partUri,
+              ),
+            );
+          }
+          break;
+        }
+        case "uint32": {
+          const num = Number(value);
+          if (
+            Number.isNaN(num) ||
+            !Number.isInteger(num) ||
+            num < 0 ||
+            num > 4294967295 ||
+            !/^\d+$/.test(value)
+          ) {
+            errs.push(
+              makeError(
+                "Sch_AttributeValueDataTypeDetailed",
+                `Attribute '${qname}' on <${qn}>: '${value}' is not a valid UInt32 value.`,
+                el,
+                path,
+                partUri,
+              ),
+            );
+          }
+          break;
+        }
+        case "list": {
+          // Basic list validation: check for empty items
+          // Full item type validation requires schema type info not currently available
+          if (value.split(/\s+/).some((item) => item.length === 0)) {
+            errs.push(
+              makeError(
+                "Sch_AttributeValueDataTypeDetailed",
+                `Attribute '${qname}' on <${qn}>: '${value}' contains empty items.`,
+                el,
+                path,
+                partUri,
+              ),
+            );
+          }
+          break;
+        }
+      }
+    }
+
+    return errs;
   }
 
   /** Check attribute presence: extendedAttributes OR typed prop (via collectAttributes). */
