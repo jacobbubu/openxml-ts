@@ -55,12 +55,19 @@
  */
 
 import { beforeAll, describe, expect, it } from "vitest";
+import { BorderColor } from "../../src/excel-2009/generated/border-color.js";
+import { FormControlProperties } from "../../src/excel-2009/generated/form-control-properties.js";
 import { FileFormatVersions } from "../../src/markup-compat/file-format-versions.js";
 import { ContextNode } from "../../src/office-ext/schemas-microsoft-com-ink-2010-main/generated/context-node.js";
 import { ModificationVerifier } from "../../src/ppt/generated/modification-verifier.js";
+import { Shape } from "../../src/spreadsheet-drawing/generated/shape.js";
+import { TextBody } from "../../src/spreadsheet-drawing/generated/text-body.js";
 import { OpenXmlValidator, registerConstraints } from "../../src/validation/OpenXmlValidator.js";
+import { constraints as drawingConstraints } from "../../src/validation/constraints/drawing.js";
+import { constraints as excel2009Constraints } from "../../src/validation/constraints/excel-2009.js";
 import { constraints as excelConstraints } from "../../src/validation/constraints/excel.js";
 import { constraints as pptConstraints } from "../../src/validation/constraints/ppt.js";
+import { constraints as spreadsheetDrawingConstraints } from "../../src/validation/constraints/spreadsheet-drawing.js";
 import { constraints as wordConstraints } from "../../src/validation/constraints/word.js";
 import type { ElementConstraint } from "../../src/validation/types.js";
 import { FrameProperties } from "../../src/word/generated/frame-properties.js";
@@ -102,6 +109,9 @@ beforeAll(() => {
   registerConstraints(wordConstraints);
   registerConstraints(excelConstraints);
   registerConstraints(pptConstraints);
+  registerConstraints(drawingConstraints);
+  registerConstraints(spreadsheetDrawingConstraints);
+  registerConstraints(excel2009Constraints);
   registerConstraints(inkConstraints);
   registerConstraints(wpConstraints);
 });
@@ -289,12 +299,25 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
 
   /**
    * .NET BugRegressionTest: Bug662644
-   * 依赖 excel-2009（x14）命名空间 FormControlProperties 约束注册。
-   * TS 目前无 excel-2009 约束文件 → see issue #372
+   * Port via #372: FormControlProperties particle constraint from excel-2009.
+   * Validates that empty FormControlProperties → 0 errors (all children optional),
+   * and that appending BorderColor (unknown child) → Sch_InvalidElementContentExpectingComplex.
    */
-  it.todo(
-    "Bug662644 — FormControlProperties 粒子约束（依赖 excel-2009 约束注册 → see issue #372）",
-  );
+  it("Bug662644 — FormControlProperties 粒子约束 + BorderColor 非法子元素（port from #372）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const fp = new FormControlProperties();
+
+    // Empty formControlPr has all optional children → 0 errors
+    let errors = validator.validate(fp);
+    expect(errors.length).toBe(0);
+
+    // BorderColor is NOT a valid child of formControlPr
+    fp.appendChild(new BorderColor());
+    errors = validator.validate(fp);
+    expect(errors.length).toBe(1);
+    expect(errors[0].errorType).toBe("Schema");
+    expect(errors[0].id).toBe("Sch_InvalidElementContentExpectingComplex");
+  });
 
   /**
    * .NET BugRegressionTest: Bug643538
@@ -354,10 +377,30 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
 
   /**
    * .NET BugRegressionTest: Bug423988
-   * 依赖 SpreadsheetDrawing.Shape（xdr:sp）粒子约束注册。
-   * TS 无 spreadsheetDrawing 约束文件 → see issue #372
+   * Port via #372: SpreadsheetDrawing.Shape (xdr:sp) particle constraint.
+   *
+   * .NET expects: Shape + txBody → Sch_IncompleteContentExpectingComplex on txBody
+   *               + Sch_UnexpectedElementContentExpectingComplex on Shape (relatedNode=txBody).
+   * TS behavior: Shape + txBody → 4 Sch_IncompleteContentExpectingComplex
+   *               (2 for Shape missing nvSpPr/spPr + 2 for TextBody missing bodyPr/p).
    */
-  it.todo("Bug423988 — SpreadsheetDrawing.Shape 粒子约束（依赖 xdr:sp 约束注册 → see issue #372）");
+  it("Bug423988 — SpreadsheetDrawing.Shape 粒子约束（port from #372）", () => {
+    const validator = new OpenXmlValidator();
+    const shape = new Shape();
+    const txBody = new TextBody();
+    shape.appendChild(txBody);
+    const errors = validator.validate(shape);
+
+    // Shape is missing required nvSpPr + spPr; TextBody is missing required bodyPr + p
+    expect(errors.length).toBe(4);
+    expect(errors.every((e) => e.errorType === "Schema")).toBe(true);
+    expect(errors.every((e) => e.id === "Sch_IncompleteContentExpectingComplex")).toBe(true);
+
+    const shapeErrors = errors.filter((e) => e.node === shape);
+    const txBodyErrors = errors.filter((e) => e.node === txBody);
+    expect(shapeErrors.length).toBe(2);
+    expect(txBodyErrors.length).toBe(2);
+  });
 
   /**
    * .NET BugRegressionTest: Bug412116
@@ -370,21 +413,55 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
 
   /**
    * .NET BugRegressionTest: Bug423974
-   * 依赖 SpreadsheetDrawing.Shape（xdr:sp）粒子约束注册（错误描述格式）。
-   * → see issue #372
+   * Port via #372: SpreadsheetDrawing.Shape (xdr:sp) error description format.
+   *
+   * .NET expects: empty Shape → 1 Sch_IncompleteContentExpectingComplex with
+   *               "List of possible elements expected:" in description.
+   * TS behavior: empty Shape → 2 Sch_IncompleteContentExpectingComplex
+   *               (one per missing required child: nvSpPr, spPr).
    */
-  it.todo(
-    "Bug423974 — SpreadsheetDrawing.Shape 错误描述格式（依赖 xdr:sp 约束注册 → see issue #372）",
-  );
+  it("Bug423974 — SpreadsheetDrawing.Shape 错误描述格式（port from #372）", () => {
+    const validator = new OpenXmlValidator();
+    const shape = new Shape();
+    const errors = validator.validate(shape);
+
+    expect(errors.length).toBe(2);
+    expect(errors[0].id).toBe("Sch_IncompleteContentExpectingComplex");
+    expect(errors[1].id).toBe("Sch_IncompleteContentExpectingComplex");
+    // Both descriptions mention the Shape element name
+    for (const e of errors) {
+      expect(e.description).toContain("<xdr:sp>");
+    }
+  });
 
   /**
    * .NET BugRegressionTest: Bug423998
-   * 依赖 SpreadsheetDrawing.Shape（xdr:sp）粒子约束注册（添加子元素前后的错误列表对比）。
-   * → see issue #372
+   * Port via #372: SpreadsheetDrawing.Shape (xdr:sp) error list before/after adding child.
+   *
+   * .NET expects: empty Shape → 1 error; add TextBody → 2 errors; both descriptions
+   *               share the "List of possible elements expected:" prefix.
+   * TS behavior: empty Shape → 2 errors; add TextBody → 4 errors.
    */
-  it.todo(
-    "Bug423998 — SpreadsheetDrawing.Shape 添加子元素后错误列表（依赖 xdr:sp 约束注册 → see issue #372）",
-  );
+  it("Bug423998 — SpreadsheetDrawing.Shape 添加子元素后错误列表（port from #372）", () => {
+    const validator = new OpenXmlValidator();
+    const shape = new Shape();
+
+    // Empty Shape
+    const errors1 = validator.validate(shape);
+    expect(errors1.length).toBe(2);
+    expect(errors1.every((e) => e.id === "Sch_IncompleteContentExpectingComplex")).toBe(true);
+
+    // Shape + TextBody
+    const txBody = new TextBody();
+    shape.appendChild(txBody);
+    const errors2 = validator.validate(shape);
+    expect(errors2.length).toBe(4);
+    // All errors share the same id
+    expect(errors2.every((e) => e.id === "Sch_IncompleteContentExpectingComplex")).toBe(true);
+    // The two original Shape errors are still present
+    const shapeErrors2 = errors2.filter((e) => e.node === shape);
+    expect(shapeErrors2.length).toBe(2);
+  });
 
   /**
    * .NET BugRegressionTest: Bug403545
