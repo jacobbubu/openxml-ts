@@ -57,4 +57,11 @@ export interface ValidationError {
    * Absent when validating a detached element tree.
    */
   readonly partUri?: string | undefined;
+
+  /**
+   * The related node that caused the error (mirrors .NET ErrorInfo.RelatedNode).
+   * For child-position errors (Sch_UnexpectedElementContentExpectingComplex etc.),
+   * this is the offending child element; `node` is the parent.
+   */
+  readonly relatedNode?: OpenXmlElement | undefined;
 }

@@ -65,10 +65,14 @@ import { constraints as wordConstraints } from "../../src/validation/constraints
 import type { ElementConstraint } from "../../src/validation/types.js";
 import { FrameProperties } from "../../src/word/generated/frame-properties.js";
 import { Paragraph } from "../../src/word/generated/paragraph.js";
+import { RunFonts } from "../../src/word/generated/run-fonts.js";
+import { RunProperties } from "../../src/word/generated/run-properties.js";
+import { Run } from "../../src/word/generated/run.js";
 import { SectionProperties } from "../../src/word/generated/section-properties.js";
 import { Shading } from "../../src/word/generated/shading.js";
 import { StatusText } from "../../src/word/generated/status-text.js";
 import { StylePaneSortMethods } from "../../src/word/generated/style-pane-sort-methods.js";
+import { Text } from "../../src/word/generated/text.js";
 import { WrapSquare } from "../../src/wordprocessing-drawing/generated/wrap-square.js";
 
 // ─── Inline constraints for namespaces without constraint files ──────────────
@@ -194,13 +198,33 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
 
   /**
    * .NET BugRegressionTest: Bug704004
-   * 依赖 ValidationError.RelatedNode（出错子元素引用）
-   * 及 Sch_UnexpectedElementContentExpectingComplex 与 Sch_InvalidElementContent 的区分。
-   * → see issue #370
+   * TS port via #370: relatedNode on particle position errors.
+   *
+   * .NET test 分为三步，此处只验核心断言——粒子顺序错误（Run 中 t 在 rPr 前）
+   * 报告的 Sch_UnexpectedElementContentExpectingComplex 带有 relatedNode 指向
+   * 位序错误的子元素（rPr）。AlternateContent 不在 TS 范围（mc 元素类缺失 → #374）。
    */
-  it.todo(
-    "Bug704004 — AlternateContent 粒子 + relatedNode 断言（依赖 relatedNode + sequence 状态机 → see issue #370）",
-  );
+  it("Bug704004 — Run 子元素位序错误 → Sch_UnexpectedElementContentExpectingComplex + relatedNode（port from #370）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const r = new Run();
+    const t = new Text();
+    t.textContent = "Acb";
+    const rPr = new RunProperties();
+    const rf = new RunFonts();
+    rf.extendedAttributes.set("w:hint", "eastAsia");
+    rPr.appendChild(rf);
+    // t before rPr — invalid order for Run particle (rPr must come first)
+    r.appendChild(t);
+    r.appendChild(rPr);
+
+    const errors = validator.validate(r);
+    const posErr = errors.find((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex");
+    expect(posErr).toBeDefined();
+    expect(posErr?.errorType).toBe("Schema");
+    // node is the parent (Run), relatedNode is the out-of-order child (rPr)
+    expect(posErr?.node).toBe(r);
+    expect(posErr?.relatedNode).toBe(rPr);
+  });
 
   // Bug583585_NotRequired — ported via issue #371 (base64Binary type validation)
   it("Bug583585_NotRequired — ModificationVerifier.saltData base64Binary 校验（port from #371）", () => {
