@@ -83,9 +83,14 @@ function makeError(
   node: OpenXmlElement,
   path: string,
   partUri: string | undefined,
+  relatedNode?: OpenXmlElement,
 ): ValidationError {
   const base = { id, description, errorType: "Schema" as const, node, path };
-  if (partUri !== undefined) return { ...base, partUri };
+  if (partUri !== undefined) {
+    if (relatedNode !== undefined) return { ...base, partUri, relatedNode };
+    return { ...base, partUri };
+  }
+  if (relatedNode !== undefined) return { ...base, relatedNode };
   return base;
 }
 
@@ -1022,6 +1027,7 @@ export class OpenXmlValidator {
               parent,
               makePath(path, child, ci),
               partUri,
+              child,
             ),
           );
         }
@@ -1035,6 +1041,7 @@ export class OpenXmlValidator {
             parent,
             makePath(path, child, ci),
             partUri,
+            child,
           ),
         );
       } else if (outOfSequenceKeys?.has(key)) {
@@ -1048,6 +1055,7 @@ export class OpenXmlValidator {
             parent,
             makePath(path, child, ci),
             partUri,
+            child,
           ),
         );
       }
