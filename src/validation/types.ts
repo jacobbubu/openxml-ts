@@ -22,6 +22,9 @@ export interface ParticleLeaf {
   readonly max: number | "unbounded";
   /** Minimum Office version required for this leaf to be valid (e.g. "Office2010"). */
   readonly initialVersion?: string;
+  /** If set, only children whose constructor.name matches this class are accepted.
+   *  Used to distinguish elements that share the same tag (e.g. LeftMargin vs TableCellLeftMargin). */
+  readonly expectedClassName?: string;
 }
 
 /** A composite particle (Sequence / Choice / All / Group). */
@@ -34,7 +37,14 @@ export interface ParticleComposite {
   readonly initialVersion?: string;
 }
 
-export type ParticleNode = ParticleLeaf | ParticleComposite;
+/** A wildcard particle (xsd:any). Matches any element in the specified namespace. */
+export interface ParticleAny {
+  readonly kind: "any";
+  readonly min: number;
+  readonly max: number | "unbounded";
+}
+
+export type ParticleNode = ParticleLeaf | ParticleComposite | ParticleAny;
 
 /** Top-level particle constraint for an element. */
 export interface NormalizedParticle {

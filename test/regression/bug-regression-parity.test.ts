@@ -86,6 +86,18 @@ import { ColorScale } from "../../src/excel/generated/color-scale.js";
 import { ConditionalFormatValueObject } from "../../src/excel/generated/conditional-format-value-object.js";
 import { EmbeddedObjectProperties } from "../../src/excel/generated/embedded-object-properties.js";
 import { OleObject } from "../../src/excel/generated/ole-object.js";
+import { ShapeProperties as DiagramShapeProperties } from "../../src/diagram/generated/shape-properties.js";
+import { Trendline } from "../../src/chart/generated/trendline.js";
+import { Extension as DrawingExtension } from "../../src/drawing/generated/extension.js";
+import { Extension as PptExtension } from "../../src/ppt/generated/extension.js";
+import { LeftMargin } from "../../src/word/generated/left-margin.js";
+import { Level } from "../../src/word/generated/level.js";
+import { StartNumberingValue } from "../../src/word/generated/start-numbering-value.js";
+import { TableCellLeftMargin } from "../../src/word/generated/table-cell-left-margin.js";
+import { TableCellMarginDefault } from "../../src/word/generated/table-cell-margin-default.js";
+import { TopMargin } from "../../src/word/generated/top-margin.js";
+import { Int32Value } from "../../src/element/values/int32-value.js";
+import { OpenXmlUnknownElement } from "../../src/element/unknown-element.js";
 
 // ─── Inline constraints for namespaces without constraint files ──────────────
 
@@ -109,6 +121,31 @@ const wpConstraints: ElementConstraint[] = [
   },
 ];
 
+/** Trendline (http://schemas.openxmlformats.org/drawingml/2006/chart) */
+const chartConstraints: ElementConstraint[] = [
+  {
+    className: "Trendline",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+    localName: "trendline",
+    particle: {
+      root: { kind: "sequence", min: 1, max: 1, items: [
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "name", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "spPr", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "trendlineType", min: 1, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "order", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "period", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "forward", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "backward", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "intercept", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "dispRSqr", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "dispEq", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "trendlineLbl", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "extLst", min: 0, max: 1 }
+      ] }
+    },
+  },
+];
+
 // ─── Register constraints once ───────────────────────────────────────────────
 beforeAll(() => {
   registerConstraints(wordConstraints);
@@ -119,6 +156,7 @@ beforeAll(() => {
   registerConstraints(excel2009Constraints);
   registerConstraints(inkConstraints);
   registerConstraints(wpConstraints);
+  registerConstraints(chartConstraints);
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -429,18 +467,40 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    * （同名标签但 TS 类型不匹配：w:left 可以是 LeftMargin 或 TableCellLeftMargin）。
    * → see issue #374
    */
-  it.todo(
-    "Bug448264 — TableCellMarginDefault 中 LeftMargin vs TableCellLeftMargin 类型错误（依赖 Sch_InvalidElementContentWrongType → see issue #374）",
-  );
+  it("Bug448264 — TableCellMarginDefault 中 LeftMargin vs TableCellLeftMargin 类型错误（port from #374）", () => {
+    const validator = new OpenXmlValidator();
+    const tcmd = new TableCellMarginDefault();
+    tcmd.appendChild(new TopMargin());
+    const errorChild = tcmd.appendChild(new LeftMargin()); // wrong type — should be TableCellLeftMargin
+
+    const errors = validator.validate(tcmd);
+    expect(errors.length).toBe(1);
+    expect(errors[0].node).toBe(tcmd);
+    expect(errors[0].relatedNode).toBe(errorChild);
+    expect(errors[0].errorType).toBe("Schema");
+    expect(errors[0].id).toBe("Sch_InvalidElementContentWrongType");
+    expect(errors[0].description).toContain("LeftMargin");
+  });
 
   /**
    * .NET BugRegressionTest: Bug514988
    * 依赖 GetAttribute/SetAttribute DOM API（rsidR 属性 hexBinary 长度 = 4 字节）。
    * → see issue #374
    */
-  it.todo(
-    "Bug514988 — Paragraph.rsidR hexBinary 长度 SetAttribute/GetAttribute（依赖 DOM attr API + hexBinary 校验 → see issue #374）",
-  );
+  it("Bug514988 — Paragraph.rsidR hexBinary 长度校验（port from #374）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const p = new Paragraph();
+    p.extendedAttributes.set("w:rsidR", "0102");
+    const errors = validator.validate(p);
+    // Filter hexBinary error — other errors are from checkCardinalityNode choice-group
+    // false positives (each choice alternative reported independently).
+    const hexErr = errors.find((e) => e.id === "Sch_AttributeValueDataTypeDetailed" && e.description.includes("hexBinary"));
+    expect(hexErr).toBeDefined();
+    expect(hexErr!.errorType).toBe("Schema");
+    expect(hexErr!.node).toBe(p);
+    expect(hexErr!.description).toContain("hexBinary");
+    expect(hexErr!.description).toContain("4");
+  });
 
   /**
    * .NET BugRegressionTest: Bug423988
@@ -481,9 +541,19 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    * 依赖 chart Trendline 粒子约束注册及跨命名空间子元素（diagram ShapeProperties）检测。
    * → see issue #374
    */
-  it.todo(
-    "Bug412116 — chart Trendline 不应含 diagram ShapeProperties（依赖 chart 粒子约束 + 跨命名空间校验 → see issue #374）",
-  );
+  it("Bug412116 — chart Trendline 不应含 diagram ShapeProperties（port from #374）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const tl = new Trendline();
+    tl.appendChild(new DiagramShapeProperties());
+    const errors = validator.validate(tl);
+    // diagram ShapeProperties (dgm:spPr) shares local name "spPr" with
+    // the allowed drawingml main spPr (a:spPr), but has a different namespace
+    // URI — so it should be flagged as invalid content.
+    expect(errors.length).toBeGreaterThanOrEqual(1);
+    const invalidErr = errors.find((e) => e.id === "Sch_InvalidElementContentExpectingComplex");
+    expect(invalidErr).toBeDefined();
+    expect(invalidErr!.node).toBe(tl);
+  });
 
   /**
    * .NET BugRegressionTest: Bug423974
@@ -546,9 +616,28 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    * （mc 命名空间，TS 目前无可直接实例化的类）。
    * → see issue #374
    */
-  it.todo(
-    "Bug403545 — Level + AlternateContent 0 错误（依赖 mc:AlternateContent TS 元素类 → see issue #374）",
-  );
+  it("Bug403545 — Level + AlternateContent 0 错误（port from #374）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+
+    const level = new Level();
+    level.levelIndex = new Int32Value(0);
+    const snv = new StartNumberingValue();
+    snv.val = new Int32Value(1);
+    level.appendChild(snv);
+
+    const mcNs = "http://schemas.openxmlformats.org/markup-compatibility/2006";
+    const ac = new OpenXmlUnknownElement("mc", "AlternateContent", mcNs);
+    const choice = new OpenXmlUnknownElement("mc", "Choice", mcNs);
+    choice.extendedAttributes.set("Requires", "O15");
+    const fallback = new OpenXmlUnknownElement("mc", "Fallback", mcNs);
+
+    ac.appendChild(choice);
+    ac.appendChild(fallback);
+    level.appendChild(ac);
+
+    const errors = validator.validate(level);
+    expect(errors.length).toBe(0);
+  });
 
   /**
    * .NET BugRegressionTest: Bug424104
@@ -556,9 +645,23 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    * （ppt Extension 需要至少 1 个任意子元素）。
    * → see issue #374
    */
-  it.todo(
-    "Bug424104 — ppt Extension xsd:any minOccurs=1 子元素约束（依赖 any particle 建模 → see issue #374）",
-  );
+  it("Bug424104 — ppt Extension xsd:any minOccurs=1 子元素约束（port from #374）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+
+    // Case 1: drawing Extension has xsd:any minOccurs=0 → 0 children is valid
+    const dExt = new DrawingExtension();
+    dExt.extendedAttributes.set("uri", "test");
+    const dErrors = validator.validate(dExt);
+    expect(dErrors.length).toBe(0);
+
+    // Case 2: ppt Extension has xsd:any minOccurs=1 → at least 1 child required
+    const pExt = new PptExtension();
+    pExt.extendedAttributes.set("uri", "http://www.live.com");
+    const pErrors = validator.validate(pExt);
+    expect(pErrors.length).toBe(1);
+    expect(pErrors[0].id).toBe("Sch_IncompleteContentExpectingComplex");
+    expect(pErrors[0].description).toContain("(any)");
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
