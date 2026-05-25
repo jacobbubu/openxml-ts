@@ -1,12 +1,11 @@
 /**
- * Epic-124: BugRegressionTest — 28 个历史回归测试移植
+ * Epic-124: BugRegressionTest — 23 个历史回归测试移植
  *
  * 来源：Open-XML-SDK test/DocumentFormat.OpenXml.Tests/ofapiTest/BugRegressionTest.cs
- * 本文件将 28 个历史 [Fact]/[Theory] 注解（对应 20 个测试方法）按三类处理：
+ * 本文件将 23 个历史 [Fact]/[Theory] 注解（对应 15 个测试方法）按两类处理：
  *
  *   PORTABLE       — 完整移植并断言
  *   NEEDS-MECHANISM — 留 todo 占位，链接 follow-up issue
- *   NOT-APPLICABLE  — it.skip，写明 .NET 特有原因
  *
  * ## Phase 0 完整分类账
  *
@@ -39,15 +38,6 @@
  * | Bug423998              | xdr:sp（SpreadsheetDrawing.Shape）约束未注册           | #372            |
  * | Bug403545              | AlternateContent/Choice/Fallback TS 元素类缺失        | #374            |
  * | Bug424104              | xsd:any particle（minOccurs=1）约束系统未建模           | #374            |
- *
- * ### NOT-APPLICABLE (5 方法)
- * | .NET 方法  | 原因                                                                 |
- * |-----------|----------------------------------------------------------------------|
- * | Bug448241 | 依赖 typed child property getter/setter（TS 生成元素无此 API）         |
- * | Bug396358 | 依赖 MailMerge fixture 文件 + MailMergeRecipientDataPart 类型化 API   |
- * | Bug537858 | 依赖 Animation fixture 文件 + PresentationDocument streaming MC 处理  |
- * | Bug544244 | TS PageMargins 用 StringValue 而非 DoubleValue；InnerText round-trip 语义不同 |
- * | Bug665268 | TS DateTimeValue 无 HasValue 属性且不支持 InnerText 直接赋值模式        |
  *
  * ## 关联
  * - GitHub issue：#369
@@ -746,54 +736,4 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
     expect(pErrors[0].id).toBe("Sch_IncompleteContentExpectingComplex");
     expect(pErrors[0].description).toContain("(any)");
   });
-});
-
-// ─────────────────────────────────────────────────────────────────────────────
-// NOT-APPLICABLE — .NET 特有语义，TS 端不可等价
-// ─────────────────────────────────────────────────────────────────────────────
-
-describe("BugRegressionTest — NOT-APPLICABLE（.NET 特有）", () => {
-  /**
-   * .NET BugRegressionTest: Bug448241 [N/A]
-   * 测试 typed child property getters/setters（如 TableCellMarginDefault.TableCellLeftMargin、
-   * ShapeTarget.BackgroundAnimation）。TS 生成的复合元素类无此类 typed child 访问器 API。
-   * .NET-specific: codegen 在 .NET SDK 为每个 typed child 生成 getter+setter；
-   * TS codegen 不生成此类访问器。
-   */
-  it.skip("Bug448241 [N/A] — .NET 特有：typed child property getter/setter（TableCellLeftMargin、BackgroundAnimation）TS 生成元素无此 API", () => {});
-
-  /**
-   * .NET BugRegressionTest: Bug396358 [N/A]
-   * 依赖 mailmerge.docx fixture 文件 + MailMergeRecipientDataPart 类型化 API
-   * （part.MailMergeRecipients / part.Recipients 类型鉴别 + 赋值抛 InvalidOperationException）。
-   * .NET-specific: TS 端未实现 MailMergeRecipientDataPart 双类型根元素切换语义，
-   * 且 fixture 文件不在 TS 测试资产中。
-   */
-  it.skip("Bug396358 [N/A] — .NET 特有：MailMerge fixture + MailMergeRecipientDataPart part-type 切换语义", () => {});
-
-  /**
-   * .NET BugRegressionTest: Bug537858 [N/A]
-   * 依赖 animation.pptx fixture 文件 + PresentationDocument 流式打开 + MC（MarkupCompatibility）
-   * 属性扩展处理（验证 ExtendedAttributes 和 NamespaceDeclarations 数量）。
-   * .NET-specific: TS MC 处理不保留已处理属性的 ExtendedAttributes 状态，无等价断言语义。
-   */
-  it.skip("Bug537858 [N/A] — .NET 特有：Animation pptx fixture + PresentationDocument MC 流式处理 + ExtendedAttributes 状态验证", () => {});
-
-  /**
-   * .NET BugRegressionTest: Bug544244 [N/A]
-   * 测试 PageMargins.Header 为 DoubleValue 类型，同时保留 InnerText（原始字符串）
-   * 和 Value（double 精度值）的双轨存储语义。
-   * .NET-specific: TS PageMargins.header 是 StringValue（原始字符串），
-   * 无 .Value 数值访问，无 InnerText 独立字段，语义不可等价。
-   */
-  it.skip("Bug544244 [N/A] — .NET 特有：PageMargins.Header DoubleValue 双轨存储（InnerText 保留原始串 + Value 返回 double）TS 用 StringValue 无等价语义", () => {});
-
-  /**
-   * .NET BugRegressionTest: Bug665268 [N/A]
-   * 测试 Comment.Date（DateTimeValue）通过 InnerText 直接赋值后 HasValue 为 true，
-   * 且 InnerText 保留原始字符串（而非 toISOString() 格式）。
-   * .NET-specific: TS DateTimeValue 无 HasValue 属性，构造时即解析为 Date；
-   * 不支持 InnerText 直接赋值模式；toString() 输出 ISO 格式而非原始字符串。
-   */
-  it.skip("Bug665268 [N/A] — .NET 特有：DateTimeValue.InnerText 直接赋值 + HasValue + 原始字符串保留 TS 无等价语义", () => {});
 });
