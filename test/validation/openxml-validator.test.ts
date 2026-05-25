@@ -184,24 +184,25 @@ describe("OpenXmlValidator — Phase 1", () => {
   // ── (c) Sequence order violation ────────────────────────────────────────
 
   describe("(c) sequence order violation", () => {
-    it("out-of-order children in w:ruby → Sch_SequenceInterleaved", () => {
+    it("out-of-order children in w:ruby → Sch_UnexpectedElementContentExpectingComplex", () => {
       const ruby = makeComposite(W_NS, "ruby", "w");
       // Wrong order: rt before rubyPr
       ruby.appendChild(makeComposite(W_NS, "rt", "w"));
       ruby.appendChild(makeComposite(W_NS, "rubyPr", "w"));
       ruby.appendChild(makeComposite(W_NS, "rubyBase", "w"));
       const errors = validator.validate(ruby);
-      const seqErr = errors.find((e) => e.id === "Sch_SequenceInterleaved");
+      // Mirrors .NET: out-of-sequence allowed element → Sch_UnexpectedElementContentExpectingComplex
+      const seqErr = errors.find((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex");
       expect(seqErr).toBeDefined();
     });
 
-    it("Sch_SequenceInterleaved error description mentions out-of-order element", () => {
+    it("Sch_UnexpectedElementContentExpectingComplex description mentions out-of-order element", () => {
       const ruby = makeComposite(W_NS, "ruby", "w");
       ruby.appendChild(makeComposite(W_NS, "rt", "w")); // rubyPr should come first
       ruby.appendChild(makeComposite(W_NS, "rubyPr", "w"));
       ruby.appendChild(makeComposite(W_NS, "rubyBase", "w"));
       const errors = validator.validate(ruby);
-      const seqErr = errors.find((e) => e.id === "Sch_SequenceInterleaved");
+      const seqErr = errors.find((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex");
       expect(seqErr?.description).toContain("ruby");
     });
   });

@@ -232,6 +232,51 @@ function checkSequenceOrder(
   return errors;
 }
 
+/**
+ * Detect duplicate elements in an xsd:all particle (each allowed child may appear at most once).
+ * Returns a set of "ns::local" keys that appear more than once.
+ *
+ * Mirrors .NET AllParticleValidator: when a child with an already-visited type is encountered,
+ * emit Sch_AllElement.
+ */
+function detectAllDuplicates(
+  allNode: ParticleComposite,
+  children: readonly OpenXmlElement[],
+): Set<string> {
+  // Collect the set of element keys that are declared in the xsd:all particle
+  const declaredInAll = collectAllowedLeaves(allNode);
+
+  // Track which declared elements have been seen
+  const seen = new Set<string>();
+  const duplicates = new Set<string>();
+
+  for (const child of children) {
+    const key = `${child.namespaceUri}::${child.localName}`;
+    if (!declaredInAll.has(key)) continue; // not an all-member; reported elsewhere
+    if (seen.has(key)) {
+      duplicates.add(key);
+    } else {
+      seen.add(key);
+    }
+  }
+
+  return duplicates;
+}
+
+/**
+ * Build the "allowed children" message for error descriptions.
+ * Lists all leaf elements permitted under the given particle node.
+ */
+function buildExpectedChildrenMsg(node: ParticleNode): string {
+  const leaves = collectAllowedLeaves(node);
+  if (leaves.size === 0) return "(none)";
+  const names = [...leaves].map((k) => {
+    const colonPos = k.indexOf("::");
+    return colonPos >= 0 ? k.slice(colonPos + 2) : k;
+  });
+  return names.join(", ");
+}
+
 // ---- Version-conditional required attribute resolution ----
 
 /**
@@ -717,17 +762,72 @@ export class OpenXmlValidator {
     errors: ValidationError[],
     partUri: string | undefined,
   ): void {
-    const allowed = collectAllowedLeaves(particle.root);
+    const root = particle.root;
+    const allowed = collectAllowedLeaves(root);
+    const expectedMsg = buildExpectedChildrenMsg(root);
 
-    // (a) Every child must be in the allowed set
+    // --- xsd:all duplicate detection ---
+    // Mirrors .NET AllParticleValidator.EmitInvalidElementError:
+    // when a child whose type was already matched is encountered → Sch_AllElement.
+    let allDuplicates: Set<string> | undefined;
+    if (root.kind === "all") {
+      allDuplicates = detectAllDuplicates(root as ParticleComposite, children);
+    }
+
+    // --- Sequence order pre-computation ---
+    // For sequence particles, compute which children are out-of-order so we can emit
+    // Sch_UnexpectedElementContentExpectingComplex per-child (mirrors .NET EmitInvalidElementError
+    // which distinguishes "element IS known but wrong position" from "unknown element").
+    let outOfSequenceKeys: Set<string> | undefined;
+    if (root.kind === "sequence") {
+      const orderErrors = checkSequenceOrder(root as ParticleComposite, children);
+      if (orderErrors.length > 0) {
+        outOfSequenceKeys = new Set(orderErrors.map((e) => e.outOfOrderChild));
+      }
+    }
+
+    // (a) Per-child membership and position checks
     let ci = 0;
+    const reportedAllDups = new Set<string>(); // avoid double-reporting xsd:all duplicates
+
     for (const child of children) {
       const key = `${child.namespaceUri}::${child.localName}`;
-      if (!allowed.has(key)) {
+
+      if (root.kind === "all" && allDuplicates?.has(key)) {
+        // Sch_AllElement: element appears more than once in xsd:all.
+        // Mirrors .NET AllParticleValidator.EmitInvalidElementError Partial/Matched case.
+        if (!reportedAllDups.has(key)) {
+          reportedAllDups.add(key);
+          errors.push(
+            makeError(
+              "Sch_AllElement",
+              `Element <${child.qualifiedName}> appears more than once under <${parent.qualifiedName}>; xsd:all allows at most one occurrence.`,
+              parent,
+              makePath(path, child, ci),
+              partUri,
+            ),
+          );
+        }
+      } else if (!allowed.has(key)) {
+        // Sch_InvalidElementContentExpectingComplex: element tag not declared under parent at all.
+        // Mirrors .NET EmitInvalidElementError: !element.CanContainChild(child) path.
         errors.push(
           makeError(
             "Sch_InvalidElementContentExpectingComplex",
-            `Element <${child.qualifiedName}> is not allowed as a child of <${parent.qualifiedName}>.`,
+            `Element <${child.qualifiedName}> is not allowed as a child of <${parent.qualifiedName}>. Expected: ${expectedMsg}.`,
+            parent,
+            makePath(path, child, ci),
+            partUri,
+          ),
+        );
+      } else if (outOfSequenceKeys?.has(key)) {
+        // Sch_UnexpectedElementContentExpectingComplex: element IS declared under parent
+        // but appears in the wrong sequence position.
+        // Mirrors .NET EmitInvalidElementError: element.CanContainChild(child) path.
+        errors.push(
+          makeError(
+            "Sch_UnexpectedElementContentExpectingComplex",
+            `Element <${child.qualifiedName}> appears out of order under <${parent.qualifiedName}>. Expected: ${expectedMsg}.`,
             parent,
             makePath(path, child, ci),
             partUri,
@@ -737,9 +837,9 @@ export class OpenXmlValidator {
       ci += 1;
     }
 
-    // (b) Cardinality check
+    // (b) Cardinality check (min/max occurs)
     const counts = countChildren(children);
-    const cardErrors = checkCardinalityNode(particle.root, counts);
+    const cardErrors = checkCardinalityNode(root, counts);
     for (const ce of cardErrors) {
       const maxStr = ce.max === "unbounded" ? "unbounded" : String(ce.max);
       if (ce.actual < ce.min) {
@@ -749,26 +849,9 @@ export class OpenXmlValidator {
           makeError("Sch_IncompleteContentExpectingComplex", description, parent, path, partUri),
         );
       } else {
-        // Excess child (actual > max): mirrors .NET Sch_MinOccursInvalidElement for max violations
+        // Excess child (actual > max): mirrors .NET Sch_MinOccursInvalidElement
         const description = `Element <${parent.qualifiedName}> must contain at most ${maxStr} occurrence(s) of <${ce.local}> (found ${ce.actual}).`;
         errors.push(makeError("Sch_MinOccursInvalidElement", description, parent, path, partUri));
-      }
-    }
-
-    // (c) Sequence order check
-    const root = particle.root;
-    if (root.kind === "sequence") {
-      const orderErrors = checkSequenceOrder(root as ParticleComposite, children);
-      for (const oe of orderErrors) {
-        errors.push(
-          makeError(
-            "Sch_SequenceInterleaved",
-            `Element <${parent.qualifiedName}>: child '${oe.outOfOrderChild}' appears out of sequence (expected after '${oe.expectedAfter}').`,
-            parent,
-            path,
-            partUri,
-          ),
-        );
       }
     }
   }
