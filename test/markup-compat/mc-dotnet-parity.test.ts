@@ -78,34 +78,12 @@ function settings(
 const O12_2007 = settings("ProcessAllParts", FileFormatVersions.Office2007);
 const FULL_2007 = settings("NoProcess", FileFormatVersions.Office2007);
 
-// ── helper: find element by localName + ns ────────────────────────────────────
-function findChild(
-  el: OpenXmlCompositeElement,
-  localName: string,
-  ns?: string,
-): import("../../src/element/element.js").OpenXmlElement | undefined {
-  return el.children
-    .toArray()
-    .find((c) => c.localName === localName && (ns === undefined || c.namespaceUri === ns));
-}
-
 function childLocalNames(el: OpenXmlCompositeElement): string[] {
   return el.children.toArray().map((c) => c.localName);
 }
 
-function childNamespaces(el: OpenXmlCompositeElement): string[] {
-  return el.children.toArray().map((c) => c.namespaceUri);
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // §1  IgnorableTest
-//
-// Source: MarkupCompatibilityTest.cs #region IgnorableTest (lines 45–789)
-// Tests: NonIgnored_UnknownAttribute_*, Ignored_UnknownAttribute_*,
-//        Ignored_KnownAttribute_*, Ignored_UnknownElement_*, Ignored_KnownElement_*,
-//        Ignore_Whitespaces_*
-// ─────────────────────────────────────────────────────────────────────────────
-
 describe("IgnorableTest — .NET MarkupCompatibilityTest.cs §IgnorableTest", () => {
   // ── NonIgnored_UnknownAttribute_FullMode ──────────────────────────────────
   // .NET: target element has unknown attribute uns1:a1uk1 (from nsUnknown1).
@@ -332,7 +310,7 @@ describe("ProcessContentTest — .NET MarkupCompatibilityTest.cs §ProcessConten
     // The "uns1:*" format in ProcessContent should match all uns1:* elements
     // This tests namespace-level wildcard matching
     const result = processMarkupCompatibility(root, O12_2007);
-    const body = result as OpenXmlCompositeElement;
+    const _body = result as OpenXmlCompositeElement;
     // uns1:e1uk1 should be removed with children promoted (ProcessContent "uns1:*" matches)
     // Note: current implementation may match prefix-only. We verify the overall behavior.
     expect(result).toBeDefined();

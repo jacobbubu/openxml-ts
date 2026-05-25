@@ -39,22 +39,12 @@
 
 import { beforeAll, describe, expect, it } from "vitest";
 import { OpenXmlElementList } from "../../src/element/element-list.js";
-import { OpenXmlCompositeElement, OpenXmlLeafElement } from "../../src/element/element.js";
+import { OpenXmlCompositeElement } from "../../src/element/element.js";
 import { OpenXmlValidator, registerConstraints } from "../../src/validation/OpenXmlValidator.js";
 import type { ValidationError } from "../../src/validation/ValidationError.js";
 import { constraints as wordConstraints } from "../../src/validation/constraints/word.js";
 
 const W_NS = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
-
-// ── Test helpers ─────────────────────────────────────────────────────────────
-
-function makeLeaf(ns: string, local: string, prefix = "w"): OpenXmlLeafElement {
-  return new (class extends OpenXmlLeafElement {
-    override readonly localName = local;
-    override readonly prefix = prefix;
-    override readonly namespaceUri = ns;
-  })();
-}
 
 function makeComposite(ns: string, local: string, prefix = "w"): OpenXmlCompositeElement {
   return new (class extends OpenXmlCompositeElement {

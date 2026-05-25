@@ -382,7 +382,7 @@ describe("RemoveElementTest · ported from OpenXmlElementTest.cs", () => {
   });
 
   it("removeAllChildrenOfType(TRunProperties) clears rPr from r1", () => {
-    const { r1, t1, rPr } = makeRemoveTree();
+    const { r1, t1 } = makeRemoveTree();
     t1.removeSelf();
     r1.removeAllChildrenOfType(TRunProperties);
     expect(r1.firstChildElement).toBeUndefined();
@@ -398,6 +398,7 @@ describe("RemoveElementTest · ported from OpenXmlElementTest.cs", () => {
   });
 
   it("removeAllChildrenOfType(TRun) leaves only bkEnd", () => {
+    // biome-ignore lint/correctness/noUnusedVariables: used below
     const { para, t1, r1, bkStart, bkEnd } = makeRemoveTree();
     t1.removeSelf();
     r1.removeAllChildrenOfType(TRunProperties);
@@ -408,6 +409,7 @@ describe("RemoveElementTest · ported from OpenXmlElementTest.cs", () => {
   });
 
   it("removeAllChildrenOfType(TRun) on para with no Runs does nothing", () => {
+    // biome-ignore lint/correctness/noUnusedVariables: used below
     const { para, t1, r1, bkStart, bkEnd } = makeRemoveTree();
     t1.removeSelf();
     r1.removeAllChildrenOfType(TRunProperties);
@@ -749,7 +751,7 @@ describe("AppendChild parent-link · ported from OpenXmlCompositeElementTestClas
 
   it("insertAfter(child, undefined) prepends", () => {
     const p = new TParagraph();
-    const r1 = p.appendChild(new TRun());
+    const _r1 = p.appendChild(new TRun());
     const r0 = new TRun();
     p.insertAfter(r0, undefined);
     expect(p.firstChildElement).toBe(r0);
@@ -766,8 +768,8 @@ describe("AppendChild parent-link · ported from OpenXmlCompositeElementTestClas
 
   it("insertAt last position appends", () => {
     const p = new TParagraph();
-    const r1 = p.appendChild(new TRun());
-    const r2 = p.appendChild(new TRun());
+    const _r1 = p.appendChild(new TRun());
+    const _r2 = p.appendChild(new TRun());
     const r3 = new TRun();
     p.insertAt(r3, 2);
     expect(p.lastChildElement).toBe(r3);
@@ -1134,7 +1136,7 @@ describe("Element already on tree behavior · divergence note from OpenXmlCompos
     // .NET: throws InvalidOperationException
     // openxml-ts: element is moved (children.append removes from old parent)
     const p1 = new TParagraph();
-    const p2 = new TParagraph();
+    const _p2 = new TParagraph();
     const r = p1.appendChild(new TRun());
     // In openxml-ts, appending r to p2 moves it from p1
     // (this is documented intentional divergence from .NET behavior)
