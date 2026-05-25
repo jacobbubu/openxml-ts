@@ -105,6 +105,16 @@ const CORE_SCHEMAS: ReadonlyArray<{ file: string; outName: string; ns: string }>
     outName: "drawing",
     ns: "http://schemas.openxmlformats.org/drawingml/2006/main",
   },
+  {
+    file: "schemas_openxmlformats_org_drawingml_2006_spreadsheetDrawing.json",
+    outName: "spreadsheet-drawing",
+    ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing",
+  },
+  {
+    file: "schemas_microsoft_com_office_spreadsheetml_2009_9_main.json",
+    outName: "excel-2009",
+    ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+  },
 ];
 
 // ---- Version name → numeric value mapping (mirrors FileFormatVersions enum) ----

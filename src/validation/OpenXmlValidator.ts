@@ -125,19 +125,30 @@ function isValidBase64(value: string): boolean {
 // Maps (namespaceUri + "::" + localName) → ElementConstraint.
 // Populated lazily when constraint data is registered.
 const CONSTRAINT_MAP = new Map<string, ElementConstraint>();
+// Class-specific constraints keyed by className::namespaceUri::localName.
+// Looked up first; when not found, falls back to tag-based CONSTRAINT_MAP.
+const CLASS_CONSTRAINT_MAP = new Map<string, ElementConstraint>();
 
 /** Register constraint data for a namespace. Call once per namespace array. */
 export function registerConstraints(data: ReadonlyArray<ElementConstraint>): void {
   for (const c of data) {
-    const key = `${c.namespaceUri}::${c.localName}`;
+    const tagKey = `${c.namespaceUri}::${c.localName}`;
+    const classKey = `${c.className}::${c.namespaceUri}::${c.localName}`;
     // First registration wins (more specific takes priority)
-    if (!CONSTRAINT_MAP.has(key)) {
-      CONSTRAINT_MAP.set(key, c);
+    if (!CONSTRAINT_MAP.has(tagKey)) {
+      CONSTRAINT_MAP.set(tagKey, c);
+    }
+    if (!CLASS_CONSTRAINT_MAP.has(classKey)) {
+      CLASS_CONSTRAINT_MAP.set(classKey, c);
     }
   }
 }
 
 function lookupConstraint(el: OpenXmlElement): ElementConstraint | undefined {
+  // Try class-specific constraint first, fall back to tag-based
+  const classKey = `${el.constructor.name}::${el.namespaceUri}::${el.localName}`;
+  const found = CLASS_CONSTRAINT_MAP.get(classKey);
+  if (found) return found;
   return CONSTRAINT_MAP.get(`${el.namespaceUri}::${el.localName}`);
 }
 
@@ -164,8 +175,29 @@ function collectLeaves(node: ParticleNode, out: Set<string>): void {
     out.add(`${node.ns}::${node.local}`);
     return;
   }
+  if (node.kind === "any") return; // wildcard — no specific leaf keys
   for (const item of node.items) {
     collectLeaves(item, out);
+  }
+}
+
+/** Collect expected class names for leaves: key → expectedClassName (only when set). */
+function collectExpectedClassNames(node: ParticleNode): Map<string, string> {
+  const result = new Map<string, string>();
+  collectExpectedClassNameEntries(node, result);
+  return result;
+}
+
+function collectExpectedClassNameEntries(node: ParticleNode, out: Map<string, string>): void {
+  if (node.kind === "leaf") {
+    if (node.expectedClassName) {
+      out.set(`${node.ns}::${node.local}`, node.expectedClassName);
+    }
+    return;
+  }
+  if (node.kind === "any") return;
+  for (const item of node.items) {
+    collectExpectedClassNameEntries(item, out);
   }
 }
 
@@ -191,8 +223,27 @@ function countChildren(children: readonly OpenXmlElement[]): Map<string, number>
   return counts;
 }
 
-function checkCardinalityNode(node: ParticleNode, counts: Map<string, number>): CardinalityError[] {
+function checkCardinalityNode(
+  node: ParticleNode,
+  counts: Map<string, number>,
+  unmatchedCount?: number,
+): CardinalityError[] {
   const errors: CardinalityError[] = [];
+
+  if (node.kind === "any") {
+    const actual = unmatchedCount ?? 0;
+    if (actual < node.min) {
+      errors.push({
+        key: "##any",
+        local: "(any)",
+        ns: "##any",
+        actual,
+        min: node.min,
+        max: node.max,
+      });
+    }
+    return errors;
+  }
 
   if (node.kind === "leaf") {
     const key = `${node.ns}::${node.local}`;
@@ -208,7 +259,7 @@ function checkCardinalityNode(node: ParticleNode, counts: Map<string, number>): 
 
   // For composite nodes, recurse into items
   for (const item of node.items) {
-    errors.push(...checkCardinalityNode(item, counts));
+    errors.push(...checkCardinalityNode(item, counts, unmatchedCount));
   }
   return errors;
 }
@@ -218,38 +269,140 @@ interface SequenceOrderError {
   readonly expectedAfter: string;
 }
 
+/**
+ * Smart sequence order check that mirrors .NET SequenceParticleValidator behavior:
+ * a child is out-of-sequence when it appears before all required preceding siblings
+ * have been satisfied — not just when positions are non-monotonic.
+ */
 function checkSequenceOrder(
   sequenceNode: ParticleComposite,
   children: readonly OpenXmlElement[],
 ): SequenceOrderError[] {
-  // Build position map: "ns::local" → sequence index (the item index in sequence)
-  const posMap = new Map<string, number>();
-  let pos = 0;
-  for (const item of sequenceNode.items) {
+  const numSlots = sequenceNode.items.length;
+  if (numSlots === 0) return [];
+
+  // Effective min: a slot is only "required" if it has at least one required
+  // descendant leaf. Nested wrapper sequences with all-optional children are
+  // trivially satisfiable even when their own min=1.
+  const computeEffectiveMin = (item: ParticleNode): number => {
+    if (item.kind === "any") return item.min;
+    if (item.kind === "leaf") return item.min;
+    const maxChildMin = Math.max(0, ...item.items.map((c) => computeEffectiveMin(c)));
+    return maxChildMin > 0 ? item.min : 0;
+  };
+
+  // Build: key → slot index, mins/maxs per slot
+  const keyToSlot = new Map<string, number>();
+  const slotMins: number[] = [];
+  const slotEffectiveMins: number[] = [];
+  const slotMaxs: (number | "unbounded")[] = [];
+
+  for (let i = 0; i < numSlots; i++) {
+    const item = sequenceNode.items[i];
     const leaves = collectAllowedLeaves(item);
     for (const leaf of leaves) {
-      posMap.set(leaf, pos);
+      keyToSlot.set(leaf, i);
     }
-    pos += 1;
+    slotMins.push(item.min);
+    slotEffectiveMins.push(computeEffectiveMin(item));
+    slotMaxs.push(item.max);
   }
 
-  const errors: SequenceOrderError[] = [];
-  let lastPos = -1;
-  let lastKey = "";
+  const totalPerSlot = new Array<number>(numSlots).fill(0);
+  for (const child of children) {
+    const key = `${child.namespaceUri}::${child.localName}`;
+    const slot = keyToSlot.get(key);
+    if (slot !== undefined) totalPerSlot[slot]++;
+  }
+
+  const outOfOrder = new Set<string>();
+  let currentSlot = 0;
+  const runningPerSlot = new Array<number>(numSlots).fill(0);
+
+  // Advance past trivially-satisfiable empty slots
+  while (
+    currentSlot < numSlots &&
+    slotEffectiveMins[currentSlot] === 0 &&
+    totalPerSlot[currentSlot] === 0
+  ) {
+    currentSlot++;
+  }
 
   for (const child of children) {
     const key = `${child.namespaceUri}::${child.localName}`;
-    const childPos = posMap.get(key);
-    if (childPos === undefined) continue; // unknown child (reported elsewhere)
-    if (childPos < lastPos) {
-      errors.push({ outOfOrderChild: key, expectedAfter: lastKey });
+    const slot = keyToSlot.get(key);
+    if (slot === undefined) continue; // unknown child — reported elsewhere
+
+    if (slot < currentSlot) {
+      // Going backwards — child from a slot we already passed
+      outOfOrder.add(key);
+    } else if (slot === currentSlot) {
+      // Same slot — always fine; cardinality check handles excess
+      runningPerSlot[slot]++;
     } else {
-      lastPos = childPos;
-      lastKey = key;
+      // slot > currentSlot — skipping ahead.
+      // Only allow if all required slots between current and slot-1 are satisfied.
+      let canAdvance = true;
+      for (let i = currentSlot; i < slot; i++) {
+        if (runningPerSlot[i] < slotEffectiveMins[i]) {
+          canAdvance = false;
+          break;
+        }
+      }
+      if (canAdvance) {
+        currentSlot = slot;
+        runningPerSlot[slot]++;
+      } else {
+        outOfOrder.add(key);
+      }
     }
   }
 
+  const errors: SequenceOrderError[] = [];
+  for (const key of outOfOrder) {
+    errors.push({ outOfOrderChild: key, expectedAfter: "" });
+  }
   return errors;
+}
+
+/** Check whether the current format version meets or exceeds a required initial version. */
+function meetsInitialVersion(
+  currentVersion: number | undefined,
+  requiredVersion: string | undefined,
+): boolean {
+  if (!requiredVersion || !currentVersion) return true;
+  const versionMap: Record<string, number> = {
+    Office2007: 1,
+    Office2010: 2,
+    Office2013: 4,
+    Office2016: 8,
+    Office2019: 16,
+    Office2021: 32,
+    Microsoft365: 64,
+  };
+  const required = versionMap[requiredVersion];
+  return required === undefined || currentVersion >= required;
+}
+
+/**
+ * Recursively remove particle items whose initialVersion is not met by the current format version.
+ * Returns null if the entire node should be removed.
+ */
+function filterParticleByVersion(
+  node: ParticleNode,
+  version: number | undefined,
+): ParticleNode | null {
+  if (!version) return node;
+  if (node.kind === "any") return node; // wildcard — no version filtering
+  if (node.kind === "leaf") {
+    return meetsInitialVersion(version, node.initialVersion) ? node : null;
+  }
+  if (!meetsInitialVersion(version, node.initialVersion)) return null;
+  const filteredItems = node.items
+    .map((item) => filterParticleByVersion(item, version))
+    .filter((item): item is ParticleNode => item !== null);
+  // Cast needed: filtered items satisfy the readonly array type
+  return { ...node, items: filteredItems as unknown as readonly ParticleNode[] };
 }
 
 /**
@@ -289,12 +442,22 @@ function detectAllDuplicates(
  */
 function buildExpectedChildrenMsg(node: ParticleNode): string {
   const leaves = collectAllowedLeaves(node);
-  if (leaves.size === 0) return "(none)";
+  // Include "any element" hint if there's a wildcard particle
+  const hasAny = hasAnyParticle(node);
+  if (leaves.size === 0) return hasAny ? "(any element)" : "(none)";
   const names = [...leaves].map((k) => {
     const colonPos = k.indexOf("::");
     return colonPos >= 0 ? k.slice(colonPos + 2) : k;
   });
+  if (hasAny) names.push("(any element)");
   return names.join(", ");
+}
+
+/** Check whether a particle tree contains an xsd:any wildcard. */
+function hasAnyParticle(node: ParticleNode): boolean {
+  if (node.kind === "any") return true;
+  if (node.kind === "leaf") return false;
+  return node.items.some((item) => hasAnyParticle(item));
 }
 
 // ---- Version-conditional required attribute resolution ----
@@ -984,9 +1147,20 @@ export class OpenXmlValidator {
     errors: ValidationError[],
     partUri: string | undefined,
   ): void {
-    const root = particle.root;
+    // Apply version filter: remove particle items whose initialVersion is not met
+    const filteredRoot = filterParticleByVersion(particle.root, this._fileFormat);
+    const root =
+      filteredRoot ??
+      ({
+        kind: "sequence",
+        min: 1,
+        max: 1,
+        items: [],
+      } as ParticleComposite);
     const allowed = collectAllowedLeaves(root);
     const expectedMsg = buildExpectedChildrenMsg(root);
+    const hasAny = hasAnyParticle(root);
+    const expectedClassNameByKey = collectExpectedClassNames(root);
 
     // --- xsd:all duplicate detection ---
     // Mirrors .NET AllParticleValidator.EmitInvalidElementError:
@@ -1031,6 +1205,25 @@ export class OpenXmlValidator {
             ),
           );
         }
+      } else if (hasAny) {
+        // Skipped — accepted by xsd:any wildcard particle
+      } else if (expectedClassNameByKey.has(key)) {
+        const expectedCls = expectedClassNameByKey.get(key);
+        if (expectedCls !== undefined && expectedCls !== child.constructor.name) {
+          // Sch_InvalidElementContentWrongType: element tag is declared under parent
+          // but the child's TypeScript class does not match the expected class.
+          // Mirrors .NET EmitInvalidElementError when two classes share the same tag.
+          errors.push(
+            makeError(
+              "Sch_InvalidElementContentWrongType",
+              `Element <${child.qualifiedName}> appears under <${parent.qualifiedName}> but has wrong type '${child.constructor.name}' (expected '${expectedCls}').`,
+              parent,
+              makePath(path, child, ci),
+              partUri,
+              child,
+            ),
+          );
+        }
       } else if (!allowed.has(key)) {
         // Sch_InvalidElementContentExpectingComplex: element tag not declared under parent at all.
         // Mirrors .NET EmitInvalidElementError: !element.CanContainChild(child) path.
@@ -1064,7 +1257,15 @@ export class OpenXmlValidator {
 
     // (b) Cardinality check (min/max occurs)
     const counts = countChildren(children);
-    const cardErrors = checkCardinalityNode(root, counts);
+    // Count unmatched children for any particles (children not matching any explicit leaf)
+    let unmatchedCount = 0;
+    if (hasAny) {
+      for (const child of children) {
+        const key = `${child.namespaceUri}::${child.localName}`;
+        if (!allowed.has(key)) unmatchedCount++;
+      }
+    }
+    const cardErrors = checkCardinalityNode(root, counts, unmatchedCount);
     for (const ce of cardErrors) {
       const maxStr = ce.max === "unbounded" ? "unbounded" : String(ce.max);
       if (ce.actual < ce.min) {

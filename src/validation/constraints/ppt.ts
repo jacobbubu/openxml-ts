@@ -813,7 +813,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-
+        { kind: "any", min: 1, max: "unbounded" }
       ] }
     },
     requiredAttrs: [":uri"],

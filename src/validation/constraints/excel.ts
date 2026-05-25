@@ -2267,7 +2267,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "oleObject",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "objectPr", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "objectPr", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":shapeId"],

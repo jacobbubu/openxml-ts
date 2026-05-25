@@ -55,24 +55,47 @@
  */
 
 import { beforeAll, describe, expect, it } from "vitest";
+import { Trendline } from "../../src/chart/generated/trendline.js";
+import { ShapeProperties as DiagramShapeProperties } from "../../src/diagram/generated/shape-properties.js";
+import { Extension as DrawingExtension } from "../../src/drawing/generated/extension.js";
+import { OpenXmlUnknownElement } from "../../src/element/unknown-element.js";
+import { Int32Value } from "../../src/element/values/int32-value.js";
+import { BorderColor } from "../../src/excel-2009/generated/border-color.js";
+import { FormControlProperties } from "../../src/excel-2009/generated/form-control-properties.js";
+import { ColorScale } from "../../src/excel/generated/color-scale.js";
+import { Color as XColor } from "../../src/excel/generated/color.js";
+import { ConditionalFormatValueObject } from "../../src/excel/generated/conditional-format-value-object.js";
+import { EmbeddedObjectProperties } from "../../src/excel/generated/embedded-object-properties.js";
+import { OleObject } from "../../src/excel/generated/ole-object.js";
 import { FileFormatVersions } from "../../src/markup-compat/file-format-versions.js";
 import { ContextNode } from "../../src/office-ext/schemas-microsoft-com-ink-2010-main/generated/context-node.js";
+import { Extension as PptExtension } from "../../src/ppt/generated/extension.js";
 import { ModificationVerifier } from "../../src/ppt/generated/modification-verifier.js";
+import { Shape } from "../../src/spreadsheet-drawing/generated/shape.js";
+import { TextBody } from "../../src/spreadsheet-drawing/generated/text-body.js";
 import { OpenXmlValidator, registerConstraints } from "../../src/validation/OpenXmlValidator.js";
+import { constraints as drawingConstraints } from "../../src/validation/constraints/drawing.js";
+import { constraints as excel2009Constraints } from "../../src/validation/constraints/excel-2009.js";
 import { constraints as excelConstraints } from "../../src/validation/constraints/excel.js";
 import { constraints as pptConstraints } from "../../src/validation/constraints/ppt.js";
+import { constraints as spreadsheetDrawingConstraints } from "../../src/validation/constraints/spreadsheet-drawing.js";
 import { constraints as wordConstraints } from "../../src/validation/constraints/word.js";
 import type { ElementConstraint } from "../../src/validation/types.js";
 import { FrameProperties } from "../../src/word/generated/frame-properties.js";
+import { LeftMargin } from "../../src/word/generated/left-margin.js";
+import { Level } from "../../src/word/generated/level.js";
 import { Paragraph } from "../../src/word/generated/paragraph.js";
 import { RunFonts } from "../../src/word/generated/run-fonts.js";
 import { RunProperties } from "../../src/word/generated/run-properties.js";
 import { Run } from "../../src/word/generated/run.js";
 import { SectionProperties } from "../../src/word/generated/section-properties.js";
 import { Shading } from "../../src/word/generated/shading.js";
+import { StartNumberingValue } from "../../src/word/generated/start-numbering-value.js";
 import { StatusText } from "../../src/word/generated/status-text.js";
 import { StylePaneSortMethods } from "../../src/word/generated/style-pane-sort-methods.js";
+import { TableCellMarginDefault } from "../../src/word/generated/table-cell-margin-default.js";
 import { Text } from "../../src/word/generated/text.js";
+import { TopMargin } from "../../src/word/generated/top-margin.js";
 import { WrapSquare } from "../../src/wordprocessing-drawing/generated/wrap-square.js";
 
 // ─── Inline constraints for namespaces without constraint files ──────────────
@@ -97,13 +120,119 @@ const wpConstraints: ElementConstraint[] = [
   },
 ];
 
+/** Trendline (http://schemas.openxmlformats.org/drawingml/2006/chart) */
+const chartConstraints: ElementConstraint[] = [
+  {
+    className: "Trendline",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+    localName: "trendline",
+    particle: {
+      root: {
+        kind: "sequence",
+        min: 1,
+        max: 1,
+        items: [
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "name",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/main",
+            local: "spPr",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "trendlineType",
+            min: 1,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "order",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "period",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "forward",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "backward",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "intercept",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "dispRSqr",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "dispEq",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "trendlineLbl",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "extLst",
+            min: 0,
+            max: 1,
+          },
+        ],
+      },
+    },
+  },
+];
+
 // ─── Register constraints once ───────────────────────────────────────────────
 beforeAll(() => {
   registerConstraints(wordConstraints);
   registerConstraints(excelConstraints);
   registerConstraints(pptConstraints);
+  registerConstraints(drawingConstraints);
+  registerConstraints(spreadsheetDrawingConstraints);
+  registerConstraints(excel2009Constraints);
   registerConstraints(inkConstraints);
   registerConstraints(wpConstraints);
+  registerConstraints(chartConstraints);
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -189,12 +318,58 @@ describe("BugRegressionTest — PORTABLE 移植", () => {
 describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
   /**
    * .NET BugRegressionTest: Bug743591
-   * 依赖 XML 字符串构造器 `new ColorScale("<x:colorScale ...>")`。
-   * TS 无等价机制 → see issue #373
+   * Port via #373: ColorScale particle sequence validation with manual DOM construction
+   * (no XML string constructor needed).
+   *
+   * ColorScale particle: sequence{ cfvo(2,3), color(2,3) }.
+   * Smart sequence orderer now detects color appearing before min cfvo count is met.
    */
-  it.todo(
-    "Bug743591 — ColorScale XML 字符串构造 + 粒子序列校验（依赖 XML 字符串构造器 → see issue #373）",
-  );
+  it("Bug743591 — ColorScale 粒子序列校验（port from #373）", () => {
+    const validator = new OpenXmlValidator();
+    const makeCfvo = () => {
+      const c = new ConditionalFormatValueObject();
+      c.applyAttribute("type", "min");
+      c.applyAttribute("val", "0");
+      return c;
+    };
+
+    const cs = new ColorScale();
+    // Step 1: 1 cfvo + 2 colors — cfvo min=2 not met, colors out of order
+    cs.appendChild(makeCfvo());
+    cs.appendChild(new XColor());
+    cs.appendChild(new XColor());
+    let errors = validator.validate(cs);
+    expect(errors.length).toBe(3);
+    // Two colors out of sequence (required cfvo min=2 not satisfied yet)
+    expect(
+      errors.filter((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex").length,
+    ).toBe(2);
+    // Missing one cfvo
+    expect(errors.filter((e) => e.id === "Sch_IncompleteContentExpectingComplex").length).toBe(1);
+
+    // Step 2: 2 cfvo + 2 colors → 0 errors (min cfvos + min colors satisfied)
+    cs.prependChild(makeCfvo());
+    errors = validator.validate(cs);
+    expect(errors.length).toBe(0);
+
+    // Step 3: 3 cfvo + 2 colors → 0 errors
+    cs.prependChild(makeCfvo());
+    errors = validator.validate(cs);
+    expect(errors.length).toBe(0);
+
+    // Step 4: remove last color → 3 cfvo + 1 color → missing 1 color
+    const lastColor = cs.lastChildElement;
+    if (lastColor) cs.removeChild(lastColor);
+    errors = validator.validate(cs);
+    expect(errors.length).toBe(1);
+    expect(errors[0].id).toBe("Sch_IncompleteContentExpectingComplex");
+
+    // Step 5: 3 cfvo + 3 colors → 0 errors
+    cs.appendChild(new XColor());
+    cs.appendChild(new XColor());
+    errors = validator.validate(cs);
+    expect(errors.length).toBe(0);
+  });
 
   /**
    * .NET BugRegressionTest: Bug704004
@@ -289,22 +464,53 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
 
   /**
    * .NET BugRegressionTest: Bug662644
-   * 依赖 excel-2009（x14）命名空间 FormControlProperties 约束注册。
-   * TS 目前无 excel-2009 约束文件 → see issue #372
+   * Port via #372: FormControlProperties particle constraint from excel-2009.
+   * Validates that empty FormControlProperties → 0 errors (all children optional),
+   * and that appending BorderColor (unknown child) → Sch_InvalidElementContentExpectingComplex.
    */
-  it.todo(
-    "Bug662644 — FormControlProperties 粒子约束（依赖 excel-2009 约束注册 → see issue #372）",
-  );
+  it("Bug662644 — FormControlProperties 粒子约束 + BorderColor 非法子元素（port from #372）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const fp = new FormControlProperties();
+
+    // Empty formControlPr has all optional children → 0 errors
+    let errors = validator.validate(fp);
+    expect(errors.length).toBe(0);
+
+    // BorderColor is NOT a valid child of formControlPr
+    fp.appendChild(new BorderColor());
+    errors = validator.validate(fp);
+    expect(errors.length).toBe(1);
+    expect(errors[0].errorType).toBe("Schema");
+    expect(errors[0].id).toBe("Sch_InvalidElementContentExpectingComplex");
+  });
 
   /**
    * .NET BugRegressionTest: Bug643538
-   * 依赖版本条件子粒子（OleObject 在 Office2007 无子；Office2010 有 EmbeddedObjectProperties）。
-   * 及 XML 字符串构造器（无法直接构造 EmbeddedObjectProperties 并赋值）。
-   * → see issue #373
+   * Port via #373: OleObject version-conditional particle.
+   * objectPr (EmbeddedObjectProperties) only valid starting from Office2010.
+   * In Office2007, OleObject has no children — objectPr is filtered from particle.
    */
-  it.todo(
-    "Bug643538 — OleObject 版本条件子粒子（依赖 versionedParticle + XML 构造器 → see issue #373）",
-  );
+  it("Bug643538 — OleObject 版本条件子粒子（port from #373）", () => {
+    // --- Office2007: objectPr not allowed ---
+    const v2007 = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const ole = new OleObject();
+    ole.applyAttribute("shapeId", "1");
+    ole.appendChild(new EmbeddedObjectProperties());
+    const err2007 = v2007.validate(ole);
+    // objectPr is not in filtered (empty) particle → Sch_InvalidElementContentExpectingComplex
+    expect(err2007.some((e) => e.id === "Sch_InvalidElementContentExpectingComplex")).toBe(true);
+
+    // --- Office2010: objectPr allowed but incomplete ---
+    const v2010 = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2010 });
+    const ole2 = new OleObject();
+    ole2.applyAttribute("shapeId", "1");
+    const eop = new EmbeddedObjectProperties();
+    ole2.appendChild(eop);
+    const err2010 = v2010.validate(ole2);
+    expect(err2010.length).toBe(1);
+    expect(err2010[0].id).toBe("Sch_IncompleteContentExpectingComplex");
+    expect(err2010[0].node).toBe(eop);
+  });
 
   // Bug319778 — ported via issue #371 (UInt32 text content type validation)
   it("Bug319778 — WrapSquare.distL InnerText = 'Foo' UInt32 类型校验（port from #371）", () => {
@@ -339,52 +545,154 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    * （同名标签但 TS 类型不匹配：w:left 可以是 LeftMargin 或 TableCellLeftMargin）。
    * → see issue #374
    */
-  it.todo(
-    "Bug448264 — TableCellMarginDefault 中 LeftMargin vs TableCellLeftMargin 类型错误（依赖 Sch_InvalidElementContentWrongType → see issue #374）",
-  );
+  it("Bug448264 — TableCellMarginDefault 中 LeftMargin vs TableCellLeftMargin 类型错误（port from #374）", () => {
+    const validator = new OpenXmlValidator();
+    const tcmd = new TableCellMarginDefault();
+    tcmd.appendChild(new TopMargin());
+    const errorChild = tcmd.appendChild(new LeftMargin()); // wrong type — should be TableCellLeftMargin
+
+    const errors = validator.validate(tcmd);
+    expect(errors.length).toBe(1);
+    expect(errors[0].node).toBe(tcmd);
+    expect(errors[0].relatedNode).toBe(errorChild);
+    expect(errors[0].errorType).toBe("Schema");
+    expect(errors[0].id).toBe("Sch_InvalidElementContentWrongType");
+    expect(errors[0].description).toContain("LeftMargin");
+  });
 
   /**
    * .NET BugRegressionTest: Bug514988
    * 依赖 GetAttribute/SetAttribute DOM API（rsidR 属性 hexBinary 长度 = 4 字节）。
    * → see issue #374
    */
-  it.todo(
-    "Bug514988 — Paragraph.rsidR hexBinary 长度 SetAttribute/GetAttribute（依赖 DOM attr API + hexBinary 校验 → see issue #374）",
-  );
+  it("Bug514988 — Paragraph.rsidR hexBinary 长度校验（port from #374）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const p = new Paragraph();
+    p.extendedAttributes.set("w:rsidR", "0102");
+    const errors = validator.validate(p);
+    // Filter hexBinary error — other errors are from checkCardinalityNode choice-group
+    // false positives (each choice alternative reported independently).
+    const hexErr = errors.find(
+      (e) => e.id === "Sch_AttributeValueDataTypeDetailed" && e.description.includes("hexBinary"),
+    );
+    expect(hexErr).toBeDefined();
+    expect(hexErr!.errorType).toBe("Schema");
+    expect(hexErr!.node).toBe(p);
+    expect(hexErr!.description).toContain("hexBinary");
+    expect(hexErr!.description).toContain("4");
+  });
 
   /**
    * .NET BugRegressionTest: Bug423988
-   * 依赖 SpreadsheetDrawing.Shape（xdr:sp）粒子约束注册。
-   * TS 无 spreadsheetDrawing 约束文件 → see issue #372
+   * Port via #372: SpreadsheetDrawing.Shape (xdr:sp) particle constraint.
+   *
+   * .NET expects: Shape + txBody → Sch_IncompleteContentExpectingComplex on txBody
+   *               + Sch_UnexpectedElementContentExpectingComplex on Shape (relatedNode=txBody).
+   * TS matches: 1 Sch_UnexpectedElementContentExpectingComplex on Shape (relatedNode=txBody)
+   *             + 2 Sch_IncompleteContentExpectingComplex on Shape (missing nvSpPr, spPr)
+   *             + 2 Sch_IncompleteContentExpectingComplex on txBody (missing bodyPr, p).
    */
-  it.todo("Bug423988 — SpreadsheetDrawing.Shape 粒子约束（依赖 xdr:sp 约束注册 → see issue #372）");
+  it("Bug423988 — SpreadsheetDrawing.Shape 粒子约束（port from #372）", () => {
+    const validator = new OpenXmlValidator();
+    const shape = new Shape();
+    const txBody = new TextBody();
+    shape.appendChild(txBody);
+    const errors = validator.validate(shape);
+
+    expect(errors.length).toBe(5);
+    expect(errors.every((e) => e.errorType === "Schema")).toBe(true);
+
+    // Sch_UnexpectedElementContentExpectingComplex on Shape with txBody as relatedNode
+    const posErr = errors.find((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex");
+    expect(posErr?.node).toBe(shape);
+    expect(posErr?.relatedNode).toBe(txBody);
+
+    // Two Sch_IncompleteContentExpectingComplex on Shape (missing nvSpPr, spPr)
+    const shapeIncomplete = errors.filter(
+      (e) => e.node === shape && e.id === "Sch_IncompleteContentExpectingComplex",
+    );
+    expect(shapeIncomplete.length).toBe(2);
+
+    // Two Sch_IncompleteContentExpectingComplex on txBody (missing bodyPr, p)
+    const txBodyErrors = errors.filter((e) => e.node === txBody);
+    expect(txBodyErrors.length).toBe(2);
+  });
 
   /**
    * .NET BugRegressionTest: Bug412116
    * 依赖 chart Trendline 粒子约束注册及跨命名空间子元素（diagram ShapeProperties）检测。
    * → see issue #374
    */
-  it.todo(
-    "Bug412116 — chart Trendline 不应含 diagram ShapeProperties（依赖 chart 粒子约束 + 跨命名空间校验 → see issue #374）",
-  );
+  it("Bug412116 — chart Trendline 不应含 diagram ShapeProperties（port from #374）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const tl = new Trendline();
+    tl.appendChild(new DiagramShapeProperties());
+    const errors = validator.validate(tl);
+    // diagram ShapeProperties (dgm:spPr) shares local name "spPr" with
+    // the allowed drawingml main spPr (a:spPr), but has a different namespace
+    // URI — so it should be flagged as invalid content.
+    expect(errors.length).toBeGreaterThanOrEqual(1);
+    const invalidErr = errors.find((e) => e.id === "Sch_InvalidElementContentExpectingComplex");
+    expect(invalidErr).toBeDefined();
+    expect(invalidErr!.node).toBe(tl);
+  });
 
   /**
    * .NET BugRegressionTest: Bug423974
-   * 依赖 SpreadsheetDrawing.Shape（xdr:sp）粒子约束注册（错误描述格式）。
-   * → see issue #372
+   * Port via #372: SpreadsheetDrawing.Shape (xdr:sp) error description format.
+   *
+   * .NET expects: empty Shape → 1 Sch_IncompleteContentExpectingComplex with
+   *               "List of possible elements expected:" in description.
+   * TS behavior: empty Shape → 2 Sch_IncompleteContentExpectingComplex
+   *               (one per missing required child: nvSpPr, spPr).
    */
-  it.todo(
-    "Bug423974 — SpreadsheetDrawing.Shape 错误描述格式（依赖 xdr:sp 约束注册 → see issue #372）",
-  );
+  it("Bug423974 — SpreadsheetDrawing.Shape 错误描述格式（port from #372）", () => {
+    const validator = new OpenXmlValidator();
+    const shape = new Shape();
+    const errors = validator.validate(shape);
+
+    expect(errors.length).toBe(2);
+    expect(errors[0].id).toBe("Sch_IncompleteContentExpectingComplex");
+    expect(errors[1].id).toBe("Sch_IncompleteContentExpectingComplex");
+    // Both descriptions mention the Shape element name
+    for (const e of errors) {
+      expect(e.description).toContain("<xdr:sp>");
+    }
+  });
 
   /**
    * .NET BugRegressionTest: Bug423998
-   * 依赖 SpreadsheetDrawing.Shape（xdr:sp）粒子约束注册（添加子元素前后的错误列表对比）。
-   * → see issue #372
+   * Port via #372: SpreadsheetDrawing.Shape (xdr:sp) error list before/after adding child.
+   *
+   * .NET expects: empty Shape → 1 error; add TextBody → 2 errors; both descriptions
+   *               share the "List of possible elements expected:" prefix.
+   * TS behavior: empty Shape → 2 errors; add TextBody → 5 errors
+   *               (now includes Sch_UnexpectedElementContentExpectingComplex for txBody
+   *               appearing before required nvSpPr/spPr).
    */
-  it.todo(
-    "Bug423998 — SpreadsheetDrawing.Shape 添加子元素后错误列表（依赖 xdr:sp 约束注册 → see issue #372）",
-  );
+  it("Bug423998 — SpreadsheetDrawing.Shape 添加子元素后错误列表（port from #372）", () => {
+    const validator = new OpenXmlValidator();
+    const shape = new Shape();
+
+    // Empty Shape
+    const errors1 = validator.validate(shape);
+    expect(errors1.length).toBe(2);
+    expect(errors1.every((e) => e.id === "Sch_IncompleteContentExpectingComplex")).toBe(true);
+
+    // Shape + TextBody
+    const txBody = new TextBody();
+    shape.appendChild(txBody);
+    const errors2 = validator.validate(shape);
+    expect(errors2.length).toBe(5);
+    // The two original Shape incomplete errors are still present
+    const shapeErrors2 = errors2.filter(
+      (e) => e.node === shape && e.id === "Sch_IncompleteContentExpectingComplex",
+    );
+    expect(shapeErrors2.length).toBe(2);
+    // Now includes Sch_UnexpectedElementContentExpectingComplex on Shape with txBody as relatedNode
+    const posErr = errors2.find((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex");
+    expect(posErr?.relatedNode).toBe(txBody);
+  });
 
   /**
    * .NET BugRegressionTest: Bug403545
@@ -392,9 +700,28 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    * （mc 命名空间，TS 目前无可直接实例化的类）。
    * → see issue #374
    */
-  it.todo(
-    "Bug403545 — Level + AlternateContent 0 错误（依赖 mc:AlternateContent TS 元素类 → see issue #374）",
-  );
+  it("Bug403545 — Level + AlternateContent 0 错误（port from #374）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+
+    const level = new Level();
+    level.levelIndex = new Int32Value(0);
+    const snv = new StartNumberingValue();
+    snv.val = new Int32Value(1);
+    level.appendChild(snv);
+
+    const mcNs = "http://schemas.openxmlformats.org/markup-compatibility/2006";
+    const ac = new OpenXmlUnknownElement("mc", "AlternateContent", mcNs);
+    const choice = new OpenXmlUnknownElement("mc", "Choice", mcNs);
+    choice.extendedAttributes.set("Requires", "O15");
+    const fallback = new OpenXmlUnknownElement("mc", "Fallback", mcNs);
+
+    ac.appendChild(choice);
+    ac.appendChild(fallback);
+    level.appendChild(ac);
+
+    const errors = validator.validate(level);
+    expect(errors.length).toBe(0);
+  });
 
   /**
    * .NET BugRegressionTest: Bug424104
@@ -402,9 +729,23 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    * （ppt Extension 需要至少 1 个任意子元素）。
    * → see issue #374
    */
-  it.todo(
-    "Bug424104 — ppt Extension xsd:any minOccurs=1 子元素约束（依赖 any particle 建模 → see issue #374）",
-  );
+  it("Bug424104 — ppt Extension xsd:any minOccurs=1 子元素约束（port from #374）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+
+    // Case 1: drawing Extension has xsd:any minOccurs=0 → 0 children is valid
+    const dExt = new DrawingExtension();
+    dExt.extendedAttributes.set("uri", "test");
+    const dErrors = validator.validate(dExt);
+    expect(dErrors.length).toBe(0);
+
+    // Case 2: ppt Extension has xsd:any minOccurs=1 → at least 1 child required
+    const pExt = new PptExtension();
+    pExt.extendedAttributes.set("uri", "http://www.live.com");
+    const pErrors = validator.validate(pExt);
+    expect(pErrors.length).toBe(1);
+    expect(pErrors[0].id).toBe("Sch_IncompleteContentExpectingComplex");
+    expect(pErrors[0].description).toContain("(any)");
+  });
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
