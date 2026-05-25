@@ -1,14 +1,15 @@
 /**
- * Epic-78: OpenXmlValidator Phase 1 tests.
+ * Epic-78: OpenXmlValidator Phase 1 smoke tests.
  *
- * Covers:
- *  (a) Allowed child element validation (particle membership)
- *  (b) Cardinality (min/max occurs)
- *  (c) Sequence order
- *  (d) Required attributes
- *  (e) Attribute value constraints (string length / number range)
- *  (f) Known-good element trees → 0 errors
- *  (g) Real Office fixture documents → 0 schema errors
+ * Test suite intentionally minimal — detailed parity checks live in:
+ *   particle-automaton-parity.test.ts  (particle membership, cardinality, sequence order)
+ *   validator-dotnet-parity.test.ts    (required attributes, error model)
+ *
+ * Remaining tests cover only what parity files don't:
+ *  - Known-good element trees → 0 errors (leaf, numPr, paragraph)
+ *  - Attribute value constraints (maxLength on w:name)
+ *  - ValidationError.path
+ *  - Real Office fixture documents → 0 schema errors
  */
 
 import { readFile } from "node:fs/promises";
@@ -125,111 +126,16 @@ describe("OpenXmlValidator — Phase 1", () => {
       expect(disallowed).toHaveLength(0);
     });
 
-    it("element with no registered constraint → 0 errors (skipUnknown=true default)", () => {
-      const el = makeComposite("http://example.com/unknown", "foo", "x");
-      const errors = validator.validate(el);
-      expect(errors).toHaveLength(0);
-    });
+    // skipUnknown → covered by particle-automaton-parity.test.ts
   });
 
-  // ── (a) Disallowed child element ─────────────────────────────────────────
+  // (a) disallowed child element → covered by particle-automaton-parity.test.ts
 
-  describe("(a) disallowed child element", () => {
-    it("adding an unknown element under w:ruby surfaces Sch_InvalidElementContentExpectingComplex", () => {
-      const { ruby } = makeRuby();
-      // Inject a totally foreign element
-      const badChild = makeLeaf(W_NS, "TOTALLY_UNKNOWN_ELEMENT", "w");
-      ruby.appendChild(badChild);
-      const errors = validator.validate(ruby);
-      const schemaErr = errors.find((e) => e.id === "Sch_InvalidElementContentExpectingComplex");
-      expect(schemaErr).toBeDefined();
-      expect(schemaErr?.description).toContain("TOTALLY_UNKNOWN_ELEMENT");
-    });
+  // (b) cardinality violation → covered by particle-automaton-parity.test.ts
 
-    it("disallowed child description mentions parent element", () => {
-      const { ruby } = makeRuby();
-      ruby.appendChild(makeLeaf(W_NS, "INVALID", "w"));
-      const errors = validator.validate(ruby);
-      const err = errors.find((e) => e.id === "Sch_InvalidElementContentExpectingComplex");
-      expect(err?.description).toContain("ruby");
-    });
+  // (c) sequence order violation → covered by particle-automaton-parity.test.ts
 
-    it("disallowed child: node reference is the parent element", () => {
-      const { ruby } = makeRuby();
-      const badChild = makeLeaf(W_NS, "INVALID", "w");
-      ruby.appendChild(badChild);
-      const errors = validator.validate(ruby);
-      const err = errors.find((e) => e.id === "Sch_InvalidElementContentExpectingComplex");
-      // node is the parent (ruby), not the child
-      expect(err?.node).toBe(ruby);
-    });
-  });
-
-  // ── (b) Cardinality violation ────────────────────────────────────────────
-
-  describe("(b) cardinality violation (max occurs exceeded)", () => {
-    it("two w:rubyPr children in w:ruby → cardinality error (max=1)", () => {
-      const ruby = makeComposite(W_NS, "ruby", "w");
-      ruby.appendChild(makeComposite(W_NS, "rubyPr", "w"));
-      ruby.appendChild(makeComposite(W_NS, "rubyPr", "w")); // second! max=1
-      ruby.appendChild(makeComposite(W_NS, "rt", "w"));
-      ruby.appendChild(makeComposite(W_NS, "rubyBase", "w"));
-      const errors = validator.validate(ruby);
-      const cardErr = errors.find((e) => e.id === "Sch_MinOccursInvalidElement");
-      expect(cardErr).toBeDefined();
-      expect(cardErr?.description).toMatch(/at most 1/);
-    });
-  });
-
-  // ── (c) Sequence order violation ────────────────────────────────────────
-
-  describe("(c) sequence order violation", () => {
-    it("out-of-order children in w:ruby → Sch_UnexpectedElementContentExpectingComplex", () => {
-      const ruby = makeComposite(W_NS, "ruby", "w");
-      // Wrong order: rt before rubyPr
-      ruby.appendChild(makeComposite(W_NS, "rt", "w"));
-      ruby.appendChild(makeComposite(W_NS, "rubyPr", "w"));
-      ruby.appendChild(makeComposite(W_NS, "rubyBase", "w"));
-      const errors = validator.validate(ruby);
-      // Mirrors .NET: out-of-sequence allowed element → Sch_UnexpectedElementContentExpectingComplex
-      const seqErr = errors.find((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex");
-      expect(seqErr).toBeDefined();
-    });
-
-    it("Sch_UnexpectedElementContentExpectingComplex description mentions out-of-order element", () => {
-      const ruby = makeComposite(W_NS, "ruby", "w");
-      ruby.appendChild(makeComposite(W_NS, "rt", "w")); // rubyPr should come first
-      ruby.appendChild(makeComposite(W_NS, "rubyPr", "w"));
-      ruby.appendChild(makeComposite(W_NS, "rubyBase", "w"));
-      const errors = validator.validate(ruby);
-      const seqErr = errors.find((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex");
-      expect(seqErr?.description).toContain("ruby");
-    });
-  });
-
-  // ── (d) Required attributes ──────────────────────────────────────────────
-
-  describe("(d) required attributes missing", () => {
-    it("w:bookmarkStart without w:name → Sch_MissingRequiredAttribute", () => {
-      // BookmarkStart has requiredAttrs: ["w:name", "w:id"]
-      const bm = makeLeaf(W_NS, "bookmarkStart", "w");
-      // No attrs set — both name and id are required
-      const errors = validator.validate(bm);
-      const reqErr = errors.find((e) => e.id === "Sch_MissingRequiredAttribute");
-      expect(reqErr).toBeDefined();
-      expect(reqErr?.description).toContain("w:name");
-    });
-
-    it("required attr present in extendedAttributes → no error", () => {
-      const bm = makeLeaf(W_NS, "bookmarkStart", "w");
-      // Set both required attrs
-      bm.extendedAttributes.set("w:name", "myBookmark");
-      bm.extendedAttributes.set("w:id", "1");
-      const errors = validator.validate(bm);
-      const reqErrs = errors.filter((e) => e.id === "Sch_MissingRequiredAttribute");
-      expect(reqErrs).toHaveLength(0);
-    });
-  });
+  // (d) required attributes → covered by validator-dotnet-parity.test.ts
 
   // ── (e) Attribute value constraints ─────────────────────────────────────
 
@@ -262,16 +168,8 @@ describe("OpenXmlValidator — Phase 1", () => {
 
   // ── Error model ──────────────────────────────────────────────────────────
 
+  // errorType / node reference / never-throws → covered by validator-dotnet-parity.test.ts
   describe("ValidationError model", () => {
-    it("errors have correct errorType: Schema", () => {
-      const ruby = makeComposite(W_NS, "ruby", "w");
-      ruby.appendChild(makeLeaf(W_NS, "INVALID", "w"));
-      const errors = validator.validate(ruby);
-      for (const e of errors) {
-        expect(e.errorType).toBe("Schema");
-      }
-    });
-
     it("errors have path string", () => {
       const { ruby } = makeRuby();
       ruby.appendChild(makeLeaf(W_NS, "INVALID", "w"));
@@ -280,23 +178,6 @@ describe("OpenXmlValidator — Phase 1", () => {
         expect(typeof e.path).toBe("string");
         expect(e.path.length).toBeGreaterThan(0);
       }
-    });
-
-    it("errors have node reference", () => {
-      const { ruby } = makeRuby();
-      ruby.appendChild(makeLeaf(W_NS, "INVALID", "w"));
-      const errors = validator.validate(ruby);
-      for (const e of errors) {
-        expect(e.node).toBeDefined();
-      }
-    });
-
-    it("validate never throws on deeply invalid input", () => {
-      const root = makeComposite(W_NS, "INVALID", "w");
-      for (let i = 0; i < 5; i++) {
-        root.appendChild(makeLeaf(W_NS, `child${i}`, "w"));
-      }
-      expect(() => validator.validate(root)).not.toThrow();
     });
   });
 
