@@ -1097,6 +1097,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       { qname: ":hashData", minVersion: 1, maxVersion: 1 },
       { qname: ":hashData", minVersion: 2, optional: true },
     ],
+    attrConstraints: [
+      { qname: ":saltData", typeHint: "base64Binary" },
+    ],
   },
   {
     className: "NextConditionList",

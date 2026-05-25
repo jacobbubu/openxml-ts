@@ -37,7 +37,7 @@ export interface NormalizedParticle {
   readonly root: ParticleNode;
 }
 
-/** Per-attribute value constraint (string length / number range). */
+/** Per-attribute value constraint (string length / number range / type validation). */
 export interface AttrConstraint {
   /** The attribute qname as used in the element (e.g. "w:author", or "name"). */
   readonly qname: string;
@@ -45,6 +45,19 @@ export interface AttrConstraint {
   readonly maxLength?: number;
   readonly minValue?: number;
   readonly maxValue?: number;
+  /**
+   * Type hint for validating the attribute value's content type.
+   * - "hexBinary": validate hex string format and optional byte length
+   * - "base64Binary": validate base64 string format
+   * - "enum": validate value is in enumMembers list
+   * - "list": validate whitespace-separated list items
+   * - "uint32": validate value can be parsed as UInt32
+   */
+  readonly typeHint?: "hexBinary" | "base64Binary" | "enum" | "list" | "uint32";
+  /** Valid enum member values (used when typeHint is "enum"). */
+  readonly enumMembers?: readonly string[];
+  /** Exact byte length for hexBinary validation. */
+  readonly length?: number;
 }
 
 /**

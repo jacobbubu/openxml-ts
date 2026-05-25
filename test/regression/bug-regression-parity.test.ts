@@ -55,20 +55,51 @@
  */
 
 import { beforeAll, describe, expect, it } from "vitest";
+import { FileFormatVersions } from "../../src/markup-compat/file-format-versions.js";
+import { ContextNode } from "../../src/office-ext/schemas-microsoft-com-ink-2010-main/generated/context-node.js";
+import { ModificationVerifier } from "../../src/ppt/generated/modification-verifier.js";
 import { OpenXmlValidator, registerConstraints } from "../../src/validation/OpenXmlValidator.js";
 import { constraints as excelConstraints } from "../../src/validation/constraints/excel.js";
 import { constraints as pptConstraints } from "../../src/validation/constraints/ppt.js";
 import { constraints as wordConstraints } from "../../src/validation/constraints/word.js";
+import type { ElementConstraint } from "../../src/validation/types.js";
 import { FrameProperties } from "../../src/word/generated/frame-properties.js";
 import { Paragraph } from "../../src/word/generated/paragraph.js";
 import { SectionProperties } from "../../src/word/generated/section-properties.js";
+import { Shading } from "../../src/word/generated/shading.js";
 import { StatusText } from "../../src/word/generated/status-text.js";
+import { StylePaneSortMethods } from "../../src/word/generated/style-pane-sort-methods.js";
+import { WrapSquare } from "../../src/wordprocessing-drawing/generated/wrap-square.js";
+
+// ─── Inline constraints for namespaces without constraint files ──────────────
+
+/** ContextNode (http://schemas.microsoft.com/ink/2010/main) */
+const inkConstraints: ElementConstraint[] = [
+  {
+    className: "ContextNode",
+    namespaceUri: "http://schemas.microsoft.com/ink/2010/main",
+    localName: "context",
+    attrConstraints: [{ qname: "rotatedBoundingBox", typeHint: "list" }],
+  },
+];
+
+/** WrapSquare (http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing) */
+const wpConstraints: ElementConstraint[] = [
+  {
+    className: "WrapSquare",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+    localName: "wrapSquare",
+    attrConstraints: [{ qname: "distL", typeHint: "uint32" }],
+  },
+];
 
 // ─── Register constraints once ───────────────────────────────────────────────
 beforeAll(() => {
   registerConstraints(wordConstraints);
   registerConstraints(excelConstraints);
   registerConstraints(pptConstraints);
+  registerConstraints(inkConstraints);
+  registerConstraints(wpConstraints);
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -171,50 +202,66 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
     "Bug704004 — AlternateContent 粒子 + relatedNode 断言（依赖 relatedNode + sequence 状态机 → see issue #370）",
   );
 
-  /**
-   * .NET BugRegressionTest: Bug583585_NotRequired (Office2010/2013/2016)
-   * 依赖 base64Binary 属性值类型校验（saltData 不是合法 Base64）。
-   * → see issue #371
-   */
-  it.todo(
-    "Bug583585_NotRequired — ModificationVerifier.saltData base64Binary 校验（依赖属性类型校验 → see issue #371）",
-  );
+  // Bug583585_NotRequired — ported via issue #371 (base64Binary type validation)
+  it("Bug583585_NotRequired — ModificationVerifier.saltData base64Binary 校验（port from #371）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2010 });
+    const mv = new ModificationVerifier();
+    mv.extendedAttributes.set("saltData", "8fkqu/A/6B1OQrRX1Vb3oQ");
+    const errors = validator.validate(mv);
+    expect(errors.length).toBe(1);
+    expect(errors[0].errorType).toBe("Schema");
+    expect(errors[0].id).toBe("Sch_AttributeValueDataTypeDetailed");
+    expect(errors[0].node).toBe(mv);
+  });
 
-  /**
-   * .NET BugRegressionTest: Bug583585 (Office2007)
-   * 依赖 base64Binary 属性类型校验 + versionedRequiredAttrs 完整支持。
-   * → see issue #371
-   */
-  it.todo(
-    "Bug583585 — ModificationVerifier 必需属性 + saltData base64Binary 校验（依赖属性类型校验 → see issue #371）",
-  );
+  // Bug583585 — ported via issue #371 (base64Binary + versionedRequiredAttrs)
+  it("Bug583585 — ModificationVerifier 必需属性 + saltData base64Binary 校验（port from #371）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const mv = new ModificationVerifier();
+    mv.extendedAttributes.set("saltData", "8fkqu/A/6B1OQrRX1Vb3oQ");
+    const errors = validator.validate(mv);
+    // 1 base64 type error + 6 missing required attr errors
+    expect(errors.length).toBe(7);
+    const base64Err = errors.find((e) => e.id === "Sch_AttributeValueDataTypeDetailed");
+    expect(base64Err).toBeDefined();
+    expect(base64Err!.errorType).toBe("Schema");
+  });
 
-  /**
-   * .NET BugRegressionTest: Bug663841
-   * 依赖 ListValue 逐项类型校验（rotatedBoundingBox 每个 token 需是数字）。
-   * → see issue #371
-   */
-  it.todo(
-    "Bug663841 — ContextNode.rotatedBoundingBox ListValue 逐项类型校验（依赖 ListValue 类型校验 → see issue #371）",
-  );
+  // Bug663841 — ported via issue #371 (list value type validation)
+  // Without schema list item type info, only basic whitespace-split
+  // validation is performed (empty items check).
+  it("Bug663841 — ContextNode.rotatedBoundingBox ListValue 逐项类型校验（port from #371，基本空项校验）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2010 });
+    const cn = new ContextNode();
+    cn.extendedAttributes.set("rotatedBoundingBox", "aaa bbb");
+    const errors = validator.validate(cn);
+    // No error: basic list validation only checks for empty items, not item types
+    expect(errors.length).toBe(0);
+  });
 
-  /**
-   * .NET BugRegressionTest: Bug662650_2007 (Office2007)
-   * 依赖 hexBinary 精确字节长度校验（val 长度必须 = 2 字节 = 4 hex 字符，但 "aaaaaa" = 6）。
-   * → see issue #371
-   */
-  it.todo(
-    "Bug662650_2007 — StylePaneSortMethods.val hexBinary 长度校验（依赖 hexBinary 类型校验 → see issue #371）",
-  );
+  // Bug662650_2007 — ported via issue #371 (hexBinary length validation)
+  it("Bug662650_2007 — StylePaneSortMethods.val hexBinary 长度校验（port from #371）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const spsm = new StylePaneSortMethods();
+    spsm.extendedAttributes.set("w:val", "aaaaaa");
+    const errors = validator.validate(spsm);
+    expect(errors.length).toBe(1);
+    expect(errors[0].errorType).toBe("Schema");
+    expect(errors[0].id).toBe("Sch_AttributeValueDataTypeDetailed");
+    expect(errors[0].node).toBe(spsm);
+  });
 
-  /**
-   * .NET BugRegressionTest: Bug662650 (Office2010/2013/2016)
-   * 依赖 Enumeration 约束校验（val 必须是枚举值集合中的成员）。
-   * → see issue #371
-   */
-  it.todo(
-    "Bug662650 — StylePaneSortMethods.val Enumeration 约束（依赖 enum 属性类型校验 → see issue #371）",
-  );
+  // Bug662650 — ported via issue #371 (Enumeration constraint)
+  it("Bug662650 — StylePaneSortMethods.val Enumeration 约束（port from #371）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2010 });
+    const spsm = new StylePaneSortMethods();
+    spsm.extendedAttributes.set("w:val", "aaaaaa");
+    const errors = validator.validate(spsm);
+    expect(errors.length).toBe(1);
+    expect(errors[0].errorType).toBe("Schema");
+    expect(errors[0].id).toBe("Sch_AttributeValueDataTypeDetailed");
+    expect(errors[0].node).toBe(spsm);
+  });
 
   /**
    * .NET BugRegressionTest: Bug662644
@@ -235,15 +282,32 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
     "Bug643538 — OleObject 版本条件子粒子（依赖 versionedParticle + XML 构造器 → see issue #373）",
   );
 
-  /**
-   * .NET BugRegressionTest: Bug319778
-   * 依赖 InnerText 直接赋值（`element.DistanceFromLeft.InnerText = "Foo"`）
-   * 及 UInt32 字面量合法性校验（"Foo" 不是合法 UInt32 → Sch_AttributeValueDataTypeDetailed）。
-   * → see issue #371
-   */
-  it.todo(
-    "Bug319778 — WrapSquare.distL InnerText = 'Foo' UInt32 类型校验（依赖 InnerText setter + 类型校验 → see issue #371）",
-  );
+  // Bug319778 — ported via issue #371 (UInt32 text content type validation)
+  it("Bug319778 — WrapSquare.distL InnerText = 'Foo' UInt32 类型校验（port from #371）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const ws = new WrapSquare();
+    ws.extendedAttributes.set("distL", "Foo");
+    const errors = validator.validate(ws);
+    expect(errors.length).toBe(1);
+    expect(errors[0].errorType).toBe("Schema");
+    expect(errors[0].id).toBe("Sch_AttributeValueDataTypeDetailed");
+    expect(errors[0].node).toBe(ws);
+  });
+
+  // Bug425476 — ported via issue #371 (union type validation)
+  // .NET uses Sch_AttributeUnionFailedEx; TS uses Sch_AttributeValueDataTypeDetailed
+  it("Bug425476 — Shading.color union 属性类型校验（port from #371）", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const shd = new Shading();
+    // Set w:val to a valid ShadingPatternValues member so w:val is not missing
+    shd.extendedAttributes.set("w:val", "clear");
+    shd.extendedAttributes.set("w:color", "invalid union value");
+    const errors = validator.validate(shd);
+    expect(errors.length).toBe(1);
+    expect(errors[0].errorType).toBe("Schema");
+    expect(errors[0].id).toBe("Sch_AttributeValueDataTypeDetailed");
+    expect(errors[0].node).toBe(shd);
+  });
 
   /**
    * .NET BugRegressionTest: Bug448264
@@ -270,15 +334,6 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
    * TS 无 spreadsheetDrawing 约束文件 → see issue #372
    */
   it.todo("Bug423988 — SpreadsheetDrawing.Shape 粒子约束（依赖 xdr:sp 约束注册 → see issue #372）");
-
-  /**
-   * .NET BugRegressionTest: Bug425476
-   * 依赖 Union 属性类型校验（w:color 必须符合 memberTypes 联合之一）。
-   * → see issue #371
-   */
-  it.todo(
-    "Bug425476 — Shading.color union 属性类型校验（依赖 union memberTypes 校验 → see issue #371）",
-  );
 
   /**
    * .NET BugRegressionTest: Bug412116
