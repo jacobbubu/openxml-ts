@@ -2,42 +2,37 @@
  * Epic-124: BugRegressionTest — 23 个历史回归测试移植
  *
  * 来源：Open-XML-SDK test/DocumentFormat.OpenXml.Tests/ofapiTest/BugRegressionTest.cs
- * 本文件将 23 个历史 [Fact]/[Theory] 注解（对应 15 个测试方法）按两类处理：
+ * 全部 23 个可移植测试均已实现并断言。
  *
- *   PORTABLE       — 完整移植并断言
- *   NEEDS-MECHANISM — 留 todo 占位，链接 follow-up issue
+ * ## 移植状态
  *
- * ## Phase 0 完整分类账
+ * ### PORTABLE (3 方法) — 最初即可移植
+ * | Bug669663 | FrameProperties.h > 31680 → Sch_AttributeValueDataTypeDetailed  |
+ * | Bug663834 | StatusText.val 长度 141 > 140 → Sch_AttributeValueDataTypeDetailed |
+ * | Bug345436 | Paragraph 首子为 SectionProperties → 粒子错误，描述含 ":pPr>"   |
  *
- * ### PORTABLE (3 方法)
- * | .NET 方法   | 内容                                                             |
- * |------------|------------------------------------------------------------------|
- * | Bug669663  | FrameProperties.h > 31680 → Sch_AttributeValueDataTypeDetailed  |
- * | Bug663834  | StatusText.val 长度 141 > 140 → Sch_AttributeValueDataTypeDetailed |
- * | Bug345436  | Paragraph 首子为 SectionProperties → 粒子错误，描述含 ":pPr>"   |
- *
- * ### NEEDS-MECHANISM (17 方法，涉及 5 类缺失机制)
- * | .NET 方法              | 缺少机制                                              | follow-up issue |
- * |------------------------|------------------------------------------------------|-----------------|
- * | Bug743591              | XML 字符串构造器（`new ColorScale("<xml...>")`）         | #373            |
- * | Bug704004              | ValidationError.relatedNode + Sch_UnexpectedElement 区分 | #370          |
- * | Bug583585_NotRequired  | base64Binary 属性值类型校验                             | #371            |
- * | Bug583585              | base64Binary 属性值类型校验                             | #371            |
- * | Bug663841              | ListValue 逐项类型校验                                | #371            |
- * | Bug662650_2007         | hexBinary 精确长度校验                                | #371            |
- * | Bug662650              | Enumeration 约束校验                                  | #371            |
- * | Bug662644              | excel-2009 FormControlProperties 约束未注册           | #372            |
- * | Bug643538              | 版本条件子粒子（Office2007 vs Office2010）              | #373            |
- * | Bug319778              | InnerText setter + UInt32 类型字面量校验               | #371            |
- * | Bug448264              | Sch_InvalidElementContentWrongType                   | #374            |
- * | Bug514988              | GetAttribute/SetAttribute DOM API                    | #374            |
- * | Bug423988              | xdr:sp（SpreadsheetDrawing.Shape）约束未注册           | #372            |
- * | Bug425476              | Union 属性类型校验                                    | #371            |
- * | Bug412116              | 跨命名空间 chart Trendline 粒子校验                    | #374            |
- * | Bug423974              | xdr:sp（SpreadsheetDrawing.Shape）约束未注册           | #372            |
- * | Bug423998              | xdr:sp（SpreadsheetDrawing.Shape）约束未注册           | #372            |
- * | Bug403545              | AlternateContent/Choice/Fallback TS 元素类缺失        | #374            |
- * | Bug424104              | xsd:any particle（minOccurs=1）约束系统未建模           | #374            |
+ * ### PORTED (19 方法) — 通过 follow-up issue 移植
+ * | Bug ID     | 机制                                           | issue |
+ * |-----------|--------------------------------------------------|-------|
+ * | Bug704004 | relatedNode + Sch_UnexpectedElement 区分        | #370  |
+ * | Bug743591 | 智能序列顺序校验                                | #373  |
+ * | Bug643538 | 版本条件子粒子（initialVersion 过滤）            | #373  |
+ * | Bug662644 | excel-2009 FormControlProperties 约束注册        | #372  |
+ * | Bug423988 | xdr:sp (spreadsheetDrawing) 约束注册             | #372  |
+ * | Bug423974 | xdr:sp 约束注册                                 | #372  |
+ * | Bug423998 | xdr:sp 约束注册                                 | #372  |
+ * | Bug448264 | expectedClassName → Sch_InvalidElementContentWrongType | #374 |
+ * | Bug514988 | hexBinary length 约束                            | #374  |
+ * | Bug412116 | 跨命名空间 chart Trendline 粒子校验              | #374  |
+ * | Bug403545 | mc 命名空间跳过（markup compatibility 过滤）     | #374  |
+ * | Bug424104 | xsd:any particle (any 通配符)                   | #374  |
+ * | Bug583585_NotRequired | base64Binary 校验                        | #371  |
+ * | Bug583585 | base64Binary + requiredAttrs                    | #371  |
+ * | Bug663841 | ListValue 逐项校验                              | #371  |
+ * | Bug662650_2007 | hexBinary 长度校验                          | #371  |
+ * | Bug662650 | enumMembers 校验                                | #371  |
+ * | Bug319778 | typeHint: uint32 校验                           | #371  |
+ * | Bug425476 | Union 属性类型校验                              | #371  |
  *
  * ## 关联
  * - GitHub issue：#369
@@ -302,10 +297,10 @@ describe("BugRegressionTest — PORTABLE 移植", () => {
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
-// NEEDS-MECHANISM — todo 占位
+// 已移植 — 通过 follow-up issue 实现
 // ─────────────────────────────────────────────────────────────────────────────
 
-describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
+describe("BugRegressionTest — PORTED（已移植）", () => {
   /**
    * .NET BugRegressionTest: Bug743591
    * Port via #373: ColorScale particle sequence validation with manual DOM construction
