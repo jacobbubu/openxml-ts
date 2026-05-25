@@ -1186,7 +1186,13 @@ export class OpenXmlValidator {
     let ci = 0;
     const reportedAllDups = new Set<string>(); // avoid double-reporting xsd:all duplicates
 
+    const mcNs = "http://schemas.openxmlformats.org/markup-compatibility/2006";
+
     for (const child of children) {
+      // mc:* elements (AlternateContent, Choice, Fallback) are resolved by
+      // the markup compatibility layer — invisible to schema particle validation.
+      if (child.namespaceUri === mcNs) continue;
+
       const key = `${child.namespaceUri}::${child.localName}`;
 
       if (root.kind === "all" && allDuplicates?.has(key)) {

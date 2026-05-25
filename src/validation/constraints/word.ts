@@ -3087,8 +3087,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "legacy", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "lvlJc", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1, expectedClassName: "PreviousParagraphProperties" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1, expectedClassName: "NumberingSymbolRunProperties" },
-        { kind: "any", min: 0, max: "unbounded" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1, expectedClassName: "NumberingSymbolRunProperties" }
       ] }
     },
     requiredAttrs: ["w:ilvl"],
