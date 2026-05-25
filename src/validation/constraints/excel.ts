@@ -4,6 +4,15 @@ import type { ElementConstraint } from "../types.js";
 
 export const constraints: ReadonlyArray<ElementConstraint> = [
   {
+    className: "Alignment",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "alignment",
+    attrConstraints: [
+      { qname: ":horizontal", enumMembers: ["general", "left", "center", "right", "fill", "justify", "centerContinuous", "distributed"] },
+      { qname: ":vertical", enumMembers: ["top", "center", "bottom", "justify", "distributed"] },
+    ],
+  },
+  {
     className: "Authors",
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "authors",
@@ -62,8 +71,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "border",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "start", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "end", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "left", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "right", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "top", min: 0, max: 1 },
@@ -114,8 +123,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "cacheField", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "cachedUniqueNames", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "cacheField", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "cachedUniqueNames", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -169,8 +178,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "cacheHierarchy", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "cacheHierarchy", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "cacheHierarchy", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "cacheHierarchy", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -197,6 +206,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":type"],
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["worksheet", "external", "consolidation", "scenario"] },
+    ],
   },
   {
     className: "CacheSourceExtension",
@@ -204,7 +216,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "sourceConnection", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "sourceConnection", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -257,8 +269,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "calculatedMember", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "calculatedMember", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "calculatedMember", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "calculatedMember", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -301,6 +313,15 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "CalculationProperties",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "calcPr",
+    attrConstraints: [
+      { qname: ":calcMode", enumMembers: ["manual", "auto", "autoNoTable"] },
+      { qname: ":refMode", enumMembers: ["A1", "R1C1"] },
+    ],
+  },
+  {
     className: "Cell",
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "c",
@@ -334,6 +355,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "xf", min: 1, max: 65430 }
       ] }
     },
+  },
+  {
+    className: "CellFormula",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "f",
+    attrConstraints: [
+      { qname: ":t", enumMembers: ["normal", "array", "dataTable", "shared"] },
+    ],
   },
   {
     className: "CellMetadata",
@@ -435,12 +464,20 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "drawing", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "legacyDrawing", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "legacyDrawingHF", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "drawingHF", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "drawingHF", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "picture", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "webPublishItems", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+  },
+  {
+    className: "ChartSheetPageSetup",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "pageSetup",
+    attrConstraints: [
+      { qname: ":orientation", enumMembers: ["default", "portrait", "landscape"] },
+    ],
   },
   {
     className: "ChartSheetProperties",
@@ -457,7 +494,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "sheetProtection",
     attrConstraints: [
-      { qname: ":password", minLength: 2, maxLength: 2 },
+      { qname: ":password", typeHint: "hexBinary", length: 2 },
+      { qname: ":hashValue", typeHint: "base64Binary" },
+      { qname: ":saltValue", typeHint: "base64Binary" },
     ],
   },
   {
@@ -573,7 +612,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "text", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "commentPr", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "commentPr", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":ref", ":authorId"],
@@ -594,9 +633,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "commentPr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "anchor", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "anchor", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
+    attrConstraints: [
+      { qname: ":textHAlign", enumMembers: ["left", "center", "right", "justify", "distributed"] },
+      { qname: ":textVAlign", enumMembers: ["top", "center", "bottom", "justify", "distributed"] },
+    ],
   },
   {
     className: "Comments",
@@ -634,6 +677,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":priority"],
+    attrConstraints: [
+      { qname: ":scope", enumMembers: ["selection", "data", "field"] },
+      { qname: ":type", enumMembers: ["none", "all", "row", "column"] },
+    ],
   },
   {
     className: "ConditionalFormats",
@@ -655,6 +702,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":sqref", typeHint: "list" },
+    ],
   },
   {
     className: "ConditionalFormattingRule",
@@ -670,6 +720,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":type", ":priority"],
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["expression", "cellIs", "colorScale", "dataBar", "iconSet", "top10", "uniqueValues", "duplicateValues", "containsText", "notContainsText", "beginsWith", "endsWith", "containsBlanks", "notContainsBlanks", "containsErrors", "notContainsErrors", "timePeriod", "aboveAverage"] },
+      { qname: ":operator", enumMembers: ["lessThan", "lessThanOrEqual", "equal", "notEqual", "greaterThanOrEqual", "greaterThan", "between", "notBetween", "containsText", "notContains", "beginsWith", "endsWith"] },
+      { qname: ":timePeriod", enumMembers: ["today", "yesterday", "tomorrow", "last7Days", "thisMonth", "lastMonth", "nextMonth", "thisWeek", "lastWeek", "nextWeek"] },
+    ],
   },
   {
     className: "ConditionalFormattingRuleExtension",
@@ -677,7 +732,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "id", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "id", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -702,6 +757,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":type"],
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["num", "percent", "max", "min", "formula", "percentile"] },
+    ],
   },
   {
     className: "Connection",
@@ -718,6 +776,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id", ":refreshedVersion"],
+    attrConstraints: [
+      { qname: ":credentials", enumMembers: ["integrated", "none", "stored"] },
+    ],
   },
   {
     className: "ConnectionExtension",
@@ -725,8 +786,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "connection", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "connection", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "connection", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "connection", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -768,7 +829,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "control",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "controlPr", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "controlPr", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":shapeId", "r:id"],
@@ -779,7 +840,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "controlPr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "anchor", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "anchor", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
   },
@@ -805,6 +866,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":guid"],
+    attrConstraints: [
+      { qname: ":state", enumMembers: ["visible", "hidden", "veryHidden"] },
+    ],
   },
   {
     className: "CustomChartsheetViews",
@@ -815,6 +879,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "customSheetView", min: 0, max: "unbounded" }
       ] }
     },
+  },
+  {
+    className: "CustomFilter",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "customFilter",
+    attrConstraints: [
+      { qname: ":operator", enumMembers: ["equal", "lessThan", "lessThanOrEqual", "notEqual", "greaterThanOrEqual", "greaterThan"] },
+    ],
   },
   {
     className: "CustomFilters",
@@ -861,6 +933,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":guid"],
+    attrConstraints: [
+      { qname: ":state", enumMembers: ["visible", "hidden", "veryHidden"] },
+      { qname: ":view", enumMembers: ["normal", "pageBreakPreview", "pageLayout"] },
+    ],
   },
   {
     className: "CustomSheetViews",
@@ -882,6 +958,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name", ":guid", ":activeSheetId"],
+    attrConstraints: [
+      { qname: ":showComments", enumMembers: ["commNone", "commIndicator", "commIndAndComment"] },
+      { qname: ":showObjects", enumMembers: ["all", "placeholders", "none"] },
+    ],
   },
   {
     className: "CustomWorkbookViews",
@@ -930,6 +1010,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "dataRefs", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":function", enumMembers: ["average", "count", "countNums", "max", "min", "product", "stdDev", "stdDevp", "sum", "var", "varp"] },
+    ],
   },
   {
     className: "DataField",
@@ -941,6 +1024,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":fld"],
+    attrConstraints: [
+      { qname: ":subtotal", enumMembers: ["average", "count", "countNums", "max", "min", "product", "stdDev", "stdDevp", "sum", "var", "varp"] },
+      { qname: ":showDataAs", enumMembers: ["normal", "difference", "percent", "percentDiff", "runTotal", "percentOfRow", "percentOfCol", "percentOfTotal", "index"] },
+    ],
   },
   {
     className: "DataFieldExtension",
@@ -948,8 +1035,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "dataField", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "dataField", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "dataField", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "dataField", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -990,12 +1077,19 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "dataValidation",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "list", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "list", min: 0, max: 1, initialVersion: "Office2013" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "formula1", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "formula2", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":sqref"],
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["none", "whole", "decimal", "list", "date", "time", "textLength", "custom"] },
+      { qname: ":errorStyle", enumMembers: ["stop", "warning", "information"] },
+      { qname: ":imeMode", enumMembers: ["noControl", "off", "on", "disabled", "hiragana", "fullKatakana", "halfKatakana", "fullAlpha", "halfAlpha", "fullHangul", "halfHangul"] },
+      { qname: ":operator", enumMembers: ["between", "notBetween", "equal", "notEqual", "lessThan", "lessThanOrEqual", "greaterThan", "greaterThanOrEqual"] },
+      { qname: ":sqref", typeHint: "list" },
+    ],
   },
   {
     className: "DataValidations",
@@ -1012,6 +1106,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "dateGroupItem",
     requiredAttrs: [":year", ":dateTimeGrouping"],
+    attrConstraints: [
+      { qname: ":dateTimeGrouping", enumMembers: ["year", "month", "day", "hour", "minute", "second"] },
+    ],
   },
   {
     className: "DateTimeItem",
@@ -1105,9 +1202,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "drawing", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "legacyDrawing", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "legacyDrawingHF", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "drawingHF", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "drawingHF", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "oleObjects", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "controls", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "controls", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
@@ -1181,6 +1278,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "dynamicFilter",
     requiredAttrs: [":type"],
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["null", "aboveAverage", "belowAverage", "tomorrow", "today", "yesterday", "nextWeek", "thisWeek", "lastWeek", "nextMonth", "thisMonth", "lastMonth", "nextQuarter", "thisQuarter", "lastQuarter", "nextYear", "thisYear", "lastYear", "yearToDate", "Q1", "Q2", "Q3", "Q4", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12"] },
+    ],
   },
   {
     className: "EmbeddedObjectProperties",
@@ -1188,7 +1288,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "objectPr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "anchor", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "anchor", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
   },
@@ -1227,8 +1327,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
     requiredAttrs: [":v"],
     attrConstraints: [
-      { qname: ":bc", minLength: 4, maxLength: 4 },
-      { qname: ":fc", minLength: 4, maxLength: 4 },
+      { qname: ":bc", typeHint: "hexBinary", length: 4 },
+      { qname: ":fc", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -1262,7 +1362,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "externalBook",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "alternateUrls", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "alternateUrls", min: 0, max: 1, initialVersion: "Microsoft365" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "sheetNames", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "definedNames", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "sheetDataSet", min: 0, max: 1 }
@@ -1280,6 +1380,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":r"],
+    attrConstraints: [
+      { qname: ":t", enumMembers: ["b", "n", "e", "s", "str", "inlineStr"] },
+    ],
   },
   {
     className: "ExternalDefinedName",
@@ -1397,7 +1500,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "fileSharing",
     attrConstraints: [
-      { qname: ":reservationPassword", minLength: 2, maxLength: 2 },
+      { qname: ":reservationPassword", typeHint: "hexBinary", length: 2 },
+      { qname: ":hashValue", typeHint: "base64Binary" },
+      { qname: ":saltValue", typeHint: "base64Binary" },
     ],
   },
   {
@@ -1435,11 +1540,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "choice", min: 0, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "filters", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "top10", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "customFilters", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "customFilters", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "customFilters", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "dynamicFilter", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "colorFilter", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "iconFilter", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "iconFilter", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "iconFilter", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
@@ -1452,11 +1557,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "filters",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "filter", min: 0, max: "unbounded" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "filter", min: 0, max: "unbounded", initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "filter", min: 0, max: "unbounded" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "dateGroupItem", min: 0, max: "unbounded" }
       ] }
     },
+    attrConstraints: [
+      { qname: ":calendarType", enumMembers: ["none", "gregorian", "gregorianUs", "japan", "taiwan", "korea", "hijri", "thai", "hebrew", "gregorianMeFrench", "gregorianArabic", "gregorianXlitEnglish", "gregorianXlitFrench"] },
+    ],
   },
   {
     className: "Font",
@@ -1524,6 +1632,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "scheme",
     requiredAttrs: [":val"],
+    attrConstraints: [
+      { qname: ":val", enumMembers: ["none", "major", "minor"] },
+    ],
   },
   {
     className: "FontSize",
@@ -1541,6 +1652,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":action", enumMembers: ["blank", "formatting"] },
+    ],
   },
   {
     className: "Formats",
@@ -1612,6 +1726,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "stop", min: 0, max: "unbounded" }
       ] }
     },
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["linear", "path"] },
+    ],
   },
   {
     className: "GradientStop",
@@ -1768,6 +1885,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "iconFilter",
     requiredAttrs: [":iconSet"],
+    attrConstraints: [
+      { qname: ":iconSet", enumMembers: ["3Arrows", "3ArrowsGray", "3Flags", "3TrafficLights1", "3TrafficLights2", "3Signs", "3Symbols", "3Symbols2", "4Arrows", "4ArrowsGray", "4RedToBlack", "4Rating", "4TrafficLights", "5Arrows", "5ArrowsGray", "5Rating", "5Quarters"] },
+    ],
   },
   {
     className: "IconSet",
@@ -1778,12 +1898,18 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "cfvo", min: 2, max: "unbounded" }
       ] }
     },
+    attrConstraints: [
+      { qname: ":iconSet", enumMembers: ["3Arrows", "3ArrowsGray", "3Flags", "3TrafficLights1", "3TrafficLights2", "3Signs", "3Symbols", "3Symbols2", "4Arrows", "4ArrowsGray", "4RedToBlack", "4Rating", "4TrafficLights", "5Arrows", "5ArrowsGray", "5Rating", "5Quarters"] },
+    ],
   },
   {
     className: "IgnoredError",
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "ignoredError",
     requiredAttrs: [":sqref"],
+    attrConstraints: [
+      { qname: ":sqref", typeHint: "list" },
+    ],
   },
   {
     className: "IgnoredErrors",
@@ -1824,6 +1950,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "inputCells",
     requiredAttrs: [":r", ":val"],
+  },
+  {
+    className: "Item",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "item",
+    attrConstraints: [
+      { qname: ":t", enumMembers: ["data", "default", "sum", "countA", "avg", "max", "min", "product", "count", "stdDev", "stdDevP", "var", "varP", "grand", "blank"] },
+    ],
   },
   {
     className: "Items",
@@ -1924,12 +2058,18 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":n", ":f"],
+    attrConstraints: [
+      { qname: ":f", enumMembers: ["m", "v", "s", "c", "r", "p", "k"] },
+    ],
   },
   {
     className: "MdxKpi",
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "k",
     requiredAttrs: [":n", ":np", ":p"],
+    attrConstraints: [
+      { qname: ":p", enumMembers: ["v", "g", "s", "t", "w", "m"] },
+    ],
   },
   {
     className: "MdxMemberProp",
@@ -1957,6 +2097,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":ns"],
+    attrConstraints: [
+      { qname: ":o", enumMembers: ["u", "a", "d", "aa", "ad", "na", "nd"] },
+    ],
   },
   {
     className: "MdxTuple",
@@ -1968,8 +2111,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
-      { qname: ":bc", minLength: 4, maxLength: 4 },
-      { qname: ":fc", minLength: 4, maxLength: 4 },
+      { qname: ":bc", typeHint: "hexBinary", length: 4 },
+      { qname: ":fc", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -2111,8 +2254,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
-      { qname: ":bc", minLength: 4, maxLength: 4 },
-      { qname: ":fc", minLength: 4, maxLength: 4 },
+      { qname: ":bc", typeHint: "hexBinary", length: 4 },
+      { qname: ":fc", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -2144,6 +2287,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":r"],
+    attrConstraints: [
+      { qname: ":t", enumMembers: ["b", "n", "e", "s", "str", "inlineStr"] },
+    ],
   },
   {
     className: "NewDifferentialFormat",
@@ -2189,8 +2335,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
     requiredAttrs: [":v"],
     attrConstraints: [
-      { qname: ":bc", minLength: 4, maxLength: 4 },
-      { qname: ":fc", minLength: 4, maxLength: 4 },
+      { qname: ":bc", typeHint: "hexBinary", length: 4 },
+      { qname: ":fc", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -2199,8 +2345,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "anchor",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "from", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "to", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "from", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "to", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
   },
@@ -2246,7 +2392,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "choice", min: 0, max: "unbounded", items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "oleItem", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "oleItem", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "oleItem", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
   },
@@ -2271,6 +2417,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":shapeId"],
+    attrConstraints: [
+      { qname: ":dvAspect", enumMembers: ["DVASPECT_CONTENT", "DVASPECT_ICON"] },
+      { qname: ":oleUpdate", enumMembers: ["OLEUPDATE_ALWAYS", "OLEUPDATE_ONCALL"] },
+    ],
   },
   {
     className: "OleObjects",
@@ -2342,6 +2492,34 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "PageSetup",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "pageSetup",
+    attrConstraints: [
+      { qname: ":pageOrder", enumMembers: ["downThenOver", "overThenDown"] },
+      { qname: ":orientation", enumMembers: ["default", "portrait", "landscape"] },
+      { qname: ":cellComments", enumMembers: ["none", "asDisplayed", "atEnd"] },
+      { qname: ":errors", enumMembers: ["displayed", "blank", "dash", "NA"] },
+    ],
+  },
+  {
+    className: "Pane",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "pane",
+    attrConstraints: [
+      { qname: ":activePane", enumMembers: ["bottomRight", "topRight", "bottomLeft", "topLeft"] },
+      { qname: ":state", enumMembers: ["split", "frozen", "frozenSplit"] },
+    ],
+  },
+  {
+    className: "Parameter",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "parameter",
+    attrConstraints: [
+      { qname: ":parameterType", enumMembers: ["prompt", "value", "cell"] },
+    ],
+  },
+  {
     className: "Parameters",
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "parameters",
@@ -2361,12 +2539,19 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "bgColor", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":patternType", enumMembers: ["none", "solid", "mediumGray", "darkGray", "lightGray", "darkHorizontal", "darkVertical", "darkDown", "darkUp", "darkGrid", "darkTrellis", "lightHorizontal", "lightVertical", "lightDown", "lightUp", "lightGrid", "lightTrellis", "gray125", "gray0625"] },
+    ],
   },
   {
     className: "PhoneticProperties",
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "phoneticPr",
     requiredAttrs: [":fontId"],
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["halfwidthKatakana", "fullwidthKatakana", "Hiragana", "noConversion"] },
+      { qname: ":alignment", enumMembers: ["noControl", "left", "center", "distributed"] },
+    ],
   },
   {
     className: "PhoneticRun",
@@ -2395,6 +2580,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["none", "normal", "data", "all", "origin", "button", "topRight"] },
+      { qname: ":axis", enumMembers: ["axisRow", "axisCol", "axisPage", "axisValues"] },
+    ],
   },
   {
     className: "PivotAreaReference",
@@ -2459,15 +2648,15 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotCacheDefinition", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotCacheDecoupled", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "timelinePivotCacheDefinition", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotCacheIdVersion", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "implicitMeasureSupport", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "richInfo", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "cacheVersionInfo", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "autoRefresh", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "pivotCacheDynamicArray", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotCacheDefinition", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotCacheDecoupled", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "timelinePivotCacheDefinition", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotCacheIdVersion", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "implicitMeasureSupport", min: 1, max: 1, initialVersion: "Office2021" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "richInfo", min: 1, max: 1, initialVersion: "Microsoft365" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "cacheVersionInfo", min: 1, max: 1, initialVersion: "Microsoft365" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "autoRefresh", min: 1, max: 1, initialVersion: "Microsoft365" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "pivotCacheDynamicArray", min: 1, max: 1, initialVersion: "Microsoft365" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2530,6 +2719,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":axis", enumMembers: ["axisRow", "axisCol", "axisPage", "axisValues"] },
+      { qname: ":sortType", enumMembers: ["manual", "ascending", "descending"] },
+    ],
   },
   {
     className: "PivotFieldExtension",
@@ -2537,7 +2730,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotField", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotField", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2573,6 +2766,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":fld", ":type", ":id"],
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["unknown", "count", "percent", "sum", "captionEqual", "captionNotEqual", "captionBeginsWith", "captionNotBeginsWith", "captionEndsWith", "captionNotEndsWith", "captionContains", "captionNotContains", "captionGreaterThan", "captionGreaterThanOrEqual", "captionLessThan", "captionLessThanOrEqual", "captionBetween", "captionNotBetween", "valueEqual", "valueNotEqual", "valueGreaterThan", "valueGreaterThanOrEqual", "valueLessThan", "valueLessThanOrEqual", "valueBetween", "valueNotBetween", "dateEqual", "dateNotEqual", "dateOlderThan", "dateOlderThanOrEqual", "dateNewerThan", "dateNewerThanOrEqual", "dateBetween", "dateNotBetween", "tomorrow", "today", "yesterday", "nextWeek", "thisWeek", "lastWeek", "nextMonth", "thisMonth", "lastMonth", "nextQuarter", "thisQuarter", "lastQuarter", "nextYear", "thisYear", "lastYear", "yearToDate", "Q1", "Q2", "Q3", "Q4", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12"] },
+    ],
   },
   {
     className: "PivotFilterExtension",
@@ -2580,8 +2776,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotFilter", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "movingPeriodState", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotFilter", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "movingPeriodState", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2634,7 +2830,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotHierarchy", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotHierarchy", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2659,6 +2855,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:id"],
+    attrConstraints: [
+      { qname: ":pane", enumMembers: ["bottomRight", "topRight", "bottomLeft", "topLeft"] },
+      { qname: ":axis", enumMembers: ["axisRow", "axisCol", "axisPage", "axisValues"] },
+    ],
   },
   {
     className: "PivotTableDefinition",
@@ -2693,10 +2893,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotTableDefinition", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotTableData", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotTableUISettings", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "pivotVersionInfo", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotTableDefinition", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotTableData", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotTableUISettings", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "pivotVersionInfo", min: 1, max: 1, initialVersion: "Microsoft365" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2717,7 +2917,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "protectedRange",
     requiredAttrs: [":sqref", ":name"],
     attrConstraints: [
-      { qname: ":password", minLength: 2, maxLength: 2 },
+      { qname: ":password", typeHint: "hexBinary", length: 2 },
+      { qname: ":hashValue", typeHint: "base64Binary" },
+      { qname: ":saltValue", typeHint: "base64Binary" },
+      { qname: ":sqref", typeHint: "list" },
     ],
   },
   {
@@ -2762,6 +2965,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name", ":connectionId"],
+    attrConstraints: [
+      { qname: ":growShrinkType", enumMembers: ["insertDelete", "insertClear", "overwriteClear"] },
+    ],
   },
   {
     className: "QueryTableDeletedFields",
@@ -2779,7 +2985,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "queryTable", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "queryTable", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2827,6 +3033,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+  },
+  {
+    className: "RangeProperties",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "rangePr",
+    attrConstraints: [
+      { qname: ":groupBy", enumMembers: ["range", "seconds", "minutes", "hours", "days", "months", "quarters", "years"] },
+    ],
   },
   {
     className: "RangeSets",
@@ -2880,6 +3094,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "rcmt",
     requiredAttrs: [":sheetId", ":cell", ":guid", ":author"],
+    attrConstraints: [
+      { qname: ":action", enumMembers: ["add", "delete"] },
+    ],
   },
   {
     className: "RevisionConflict",
@@ -2892,6 +3109,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "rcv",
     requiredAttrs: [":guid", ":action"],
+    attrConstraints: [
+      { qname: ":action", enumMembers: ["add", "delete"] },
+    ],
   },
   {
     className: "RevisionDefinedName",
@@ -2917,6 +3137,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":sheetId", ":sqref"],
+    attrConstraints: [
+      { qname: ":sqref", typeHint: "list" },
+    ],
   },
   {
     className: "RevisionInsertSheet",
@@ -2955,6 +3178,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":rId", ":sId", ":ref", ":action"],
+    attrConstraints: [
+      { qname: ":action", enumMembers: ["insertRow", "deleteRow", "insertCol", "deleteCol"] },
+    ],
   },
   {
     className: "Revisions",
@@ -2993,7 +3219,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "rgbColor",
     attrConstraints: [
-      { qname: ":rgb", minLength: 4, maxLength: 4 },
+      { qname: ":rgb", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -3016,6 +3242,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":spans", typeHint: "list" },
+    ],
   },
   {
     className: "RowBreaks",
@@ -3056,6 +3285,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "x", min: 0, max: "unbounded" }
       ] }
     },
+    attrConstraints: [
+      { qname: ":t", enumMembers: ["data", "default", "sum", "countA", "avg", "max", "min", "product", "count", "stdDev", "stdDevP", "var", "varP", "grand", "blank"] },
+    ],
   },
   {
     className: "RowItems",
@@ -3128,6 +3360,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "scenario", min: 1, max: "unbounded" }
       ] }
     },
+    attrConstraints: [
+      { qname: ":sqref", typeHint: "list" },
+    ],
   },
   {
     className: "Schema",
@@ -3139,6 +3374,15 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":ID"],
+  },
+  {
+    className: "Selection",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "selection",
+    attrConstraints: [
+      { qname: ":pane", enumMembers: ["bottomRight", "topRight", "bottomLeft", "topLeft"] },
+      { qname: ":sqref", typeHint: "list" },
+    ],
   },
   {
     className: "ServerFormats",
@@ -3204,6 +3448,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "sheet",
     requiredAttrs: [":name", ":sheetId", "r:id"],
+    attrConstraints: [
+      { qname: ":state", enumMembers: ["visible", "hidden", "veryHidden"] },
+    ],
   },
   {
     className: "SheetData",
@@ -3280,7 +3527,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "sheetProtection",
     attrConstraints: [
-      { qname: ":password", minLength: 2, maxLength: 2 },
+      { qname: ":password", typeHint: "hexBinary", length: 2 },
+      { qname: ":hashValue", typeHint: "base64Binary" },
+      { qname: ":saltValue", typeHint: "base64Binary" },
     ],
   },
   {
@@ -3306,6 +3555,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":workbookViewId"],
+    attrConstraints: [
+      { qname: ":view", enumMembers: ["normal", "pageBreakPreview", "pageLayout"] },
+    ],
   },
   {
     className: "SheetViews",
@@ -3346,9 +3598,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "slicerCachePivotTables", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "tableSlicerCache", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "slicerCacheHideItemsWithNoData", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "slicerCachePivotTables", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "tableSlicerCache", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "slicerCacheHideItemsWithNoData", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -3368,6 +3620,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "sortCondition",
     requiredAttrs: [":ref"],
+    attrConstraints: [
+      { qname: ":sortBy", enumMembers: ["value", "cellColor", "fontColor", "icon"] },
+      { qname: ":iconSet", enumMembers: ["3Arrows", "3ArrowsGray", "3Flags", "3TrafficLights1", "3TrafficLights2", "3Signs", "3Symbols", "3Symbols2", "4Arrows", "4ArrowsGray", "4RedToBlack", "4Rating", "4TrafficLights", "5Arrows", "5ArrowsGray", "5Rating", "5Quarters"] },
+    ],
   },
   {
     className: "SortState",
@@ -3376,13 +3632,16 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "choice", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "sortCondition", min: 0, max: 64 },
+          { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "sortCondition", min: 0, max: 64, initialVersion: "Office2010" },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "sortCondition", min: 0, max: 64 }
         ] },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":ref"],
+    attrConstraints: [
+      { qname: ":sortMethod", enumMembers: ["stroke", "pinYin", "none"] },
+    ],
   },
   {
     className: "StartBorder",
@@ -3406,8 +3665,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
     requiredAttrs: [":v"],
     attrConstraints: [
-      { qname: ":bc", minLength: 4, maxLength: 4 },
-      { qname: ":fc", minLength: 4, maxLength: 4 },
+      { qname: ":bc", typeHint: "hexBinary", length: 4 },
+      { qname: ":fc", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -3436,10 +3695,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "dxfs", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "slicerStyles", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "dxfs", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "timelineStyles", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "dxfs", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "slicerStyles", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "dxfs", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "timelineStyles", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -3468,6 +3727,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id", ":displayName", ":ref"],
+    attrConstraints: [
+      { qname: ":tableType", enumMembers: ["worksheet", "xml", "queryTable"] },
+    ],
   },
   {
     className: "TableColumn",
@@ -3482,6 +3744,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id", ":name"],
+    attrConstraints: [
+      { qname: ":totalsRowFunction", enumMembers: ["none", "sum", "min", "max", "average", "count", "countNums", "stdDev", "var", "custom"] },
+    ],
   },
   {
     className: "TableColumns",
@@ -3499,8 +3764,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "table", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "msForm", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "table", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "msForm", min: 1, max: 1, initialVersion: "Microsoft365" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -3559,6 +3824,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "tableStyleElement",
     requiredAttrs: [":type"],
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["wholeTable", "headerRow", "totalRow", "firstColumn", "lastColumn", "firstRowStripe", "secondRowStripe", "firstColumnStripe", "secondColumnStripe", "firstHeaderCell", "lastHeaderCell", "firstTotalCell", "lastTotalCell", "firstSubtotalColumn", "secondSubtotalColumn", "thirdSubtotalColumn", "firstSubtotalRow", "secondSubtotalRow", "thirdSubtotalRow", "blankRow", "firstColumnSubheading", "secondColumnSubheading", "thirdColumnSubheading", "firstRowSubheading", "secondRowSubheading", "thirdRowSubheading", "pageFieldLabels", "pageFieldValues"] },
+    ],
   },
   {
     className: "TableStyles",
@@ -3569,6 +3837,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "tableStyle", min: 0, max: "unbounded" }
       ] }
     },
+  },
+  {
+    className: "TextField",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "textField",
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["general", "text", "MDY", "DMY", "YMD", "MYD", "DYM", "YDM", "skip", "EMD"] },
+    ],
   },
   {
     className: "TextFields",
@@ -3589,6 +3865,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "textFields", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":fileType", enumMembers: ["mac", "win", "dos"] },
+      { qname: ":qualifier", enumMembers: ["doubleQuote", "singleQuote", "none"] },
+    ],
   },
   {
     className: "ToMarker",
@@ -3630,6 +3910,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "tr", min: 1, max: "unbounded" }
       ] }
     },
+    attrConstraints: [
+      { qname: ":t", enumMembers: ["b", "n", "e", "s"] },
+    ],
   },
   {
     className: "TopicReferences",
@@ -3678,12 +3961,26 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":maxRank", ":setDefinition"],
+    attrConstraints: [
+      { qname: ":sortType", enumMembers: ["none", "ascending", "descending", "ascendingAlpha", "descendingAlpha", "ascendingNatural", "descendingNatural"] },
+    ],
+  },
+  {
+    className: "Underline",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "u",
+    attrConstraints: [
+      { qname: ":val", enumMembers: ["single", "double", "singleAccounting", "doubleAccounting", "none"] },
+    ],
   },
   {
     className: "Undo",
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "undo",
     requiredAttrs: [":index", ":exp", ":dr"],
+    attrConstraints: [
+      { qname: ":exp", enumMembers: ["ref", "refError", "area", "areaError", "computedArea"] },
+    ],
   },
   {
     className: "UserInfo",
@@ -3715,6 +4012,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "val", min: 1, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":t", enumMembers: ["nil", "b", "n", "e", "str"] },
+    ],
   },
   {
     className: "ValueMetadata",
@@ -3751,6 +4051,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "vertAlign",
     requiredAttrs: [":val"],
+    attrConstraints: [
+      { qname: ":val", enumMembers: ["baseline", "superscript", "subscript"] },
+    ],
   },
   {
     className: "VolatileType",
@@ -3762,6 +4065,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":type"],
+    attrConstraints: [
+      { qname: ":type", enumMembers: ["realTimeData", "olapFunctions"] },
+    ],
   },
   {
     className: "VolatileTypes",
@@ -3775,10 +4081,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "WebPublishing",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "webPublishing",
+    attrConstraints: [
+      { qname: ":targetScreenSize", enumMembers: ["544x376", "640x480", "720x512", "800x600", "1024x768", "1152x882", "1152x900", "1280x1024", "1600x1200", "1800x1440", "1920x1200"] },
+    ],
+  },
+  {
     className: "WebPublishItem",
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "webPublishItem",
     requiredAttrs: [":id", ":divId", ":sourceType", ":destinationFile"],
+    attrConstraints: [
+      { qname: ":sourceType", enumMembers: ["sheet", "printArea", "autoFilter", "range", "chart", "pivotTable", "query", "label"] },
+    ],
   },
   {
     className: "WebPublishItems",
@@ -3815,6 +4132,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "tables", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":htmlFormat", enumMembers: ["none", "rtf", "all"] },
+    ],
   },
   {
     className: "Workbook",
@@ -3825,7 +4145,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "fileVersion", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "fileSharing", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "workbookPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "absPath", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "absPath", min: 0, max: 1, initialVersion: "Office2013" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "workbookProtection", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "bookViews", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "sheets", min: 1, max: 1 },
@@ -3842,6 +4162,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":conformance", enumMembers: ["strict", "transitional"] },
+    ],
   },
   {
     className: "WorkbookExtension",
@@ -3849,20 +4172,20 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "definedNames", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotCaches", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "slicerCaches", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "slicerCaches", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "workbookPr", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotCaches", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotTableReferences", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "timelineCachePivotCaches", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "timelineCacheRefs", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "workbookPr", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "dataModel", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "externalCodeService", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "version", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "externalCodeServiceImageAsInput", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "definedNames", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotCaches", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "slicerCaches", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "slicerCaches", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "workbookPr", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotCaches", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "pivotTableReferences", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "timelineCachePivotCaches", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "timelineCacheRefs", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "workbookPr", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "dataModel", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "externalCodeService", min: 1, max: 1, initialVersion: "Microsoft365" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "version", min: 1, max: 1, initialVersion: "Microsoft365" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "externalCodeServiceImageAsInput", min: 1, max: 1, initialVersion: "Microsoft365" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -3878,12 +4201,25 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "WorkbookProperties",
+    namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
+    localName: "workbookPr",
+    attrConstraints: [
+      { qname: ":showObjects", enumMembers: ["all", "placeholders", "none"] },
+      { qname: ":updateLinks", enumMembers: ["userSet", "never", "always"] },
+    ],
+  },
+  {
     className: "WorkbookProtection",
     namespaceUri: "http://schemas.openxmlformats.org/spreadsheetml/2006/main",
     localName: "workbookProtection",
     attrConstraints: [
-      { qname: ":workbookPassword", minLength: 2, maxLength: 2 },
-      { qname: ":revisionsPassword", minLength: 2, maxLength: 2 },
+      { qname: ":workbookPassword", typeHint: "hexBinary", length: 2 },
+      { qname: ":revisionsPassword", typeHint: "hexBinary", length: 2 },
+      { qname: ":revisionsHashValue", typeHint: "base64Binary" },
+      { qname: ":revisionsSaltValue", typeHint: "base64Binary" },
+      { qname: ":workbookHashValue", typeHint: "base64Binary" },
+      { qname: ":workbookSaltValue", typeHint: "base64Binary" },
     ],
   },
   {
@@ -3895,6 +4231,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/spreadsheetml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":visibility", enumMembers: ["visible", "hidden", "veryHidden"] },
+    ],
   },
   {
     className: "Worksheet",
@@ -3949,14 +4288,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "conditionalFormattings", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "dataValidations", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "sparklineGroups", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "slicerList", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "protectedRanges", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "ignoredErrors", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "webExtensions", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "timelineRefs", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "conditionalFormattings", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "dataValidations", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "sparklineGroups", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "slicerList", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "protectedRanges", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "ignoredErrors", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "webExtensions", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main", local: "timelineRefs", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -3993,6 +4332,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":mapId", ":xpath", ":xmlDataType"],
+    attrConstraints: [
+      { qname: ":xmlDataType", enumMembers: ["string", "normalizedString", "token", "byte", "unsignedByte", "base64Binary", "hexBinary", "integer", "positiveInteger", "negativeInteger", "nonPositiveInteger", "nonNegativeInteger", "int", "unsignedInt", "long", "unsignedLong", "short", "unsignedShort", "decimal", "float", "double", "boolean", "time", "dateTime", "duration", "date", "gMonth", "gYear", "gYearMonth", "gDay", "gMonthDay", "Name", "QName", "NCName", "anyURI", "language", "ID", "IDREF", "IDREFS", "ENTITY", "ENTITIES", "NOTATION", "NMTOKEN", "NMTOKENS", "anyType"] },
+    ],
   },
   {
     className: "XmlProperties",
@@ -4004,5 +4346,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":mapId", ":xpath", ":xmlDataType"],
+    attrConstraints: [
+      { qname: ":xmlDataType", enumMembers: ["string", "normalizedString", "token", "byte", "unsignedByte", "base64Binary", "hexBinary", "integer", "positiveInteger", "negativeInteger", "nonPositiveInteger", "nonNegativeInteger", "int", "unsignedInt", "long", "unsignedLong", "short", "unsignedShort", "decimal", "float", "double", "boolean", "time", "dateTime", "duration", "date", "gMonth", "gYear", "gYearMonth", "gDay", "gMonthDay", "Name", "QName", "NCName", "anyURI", "language", "ID", "IDREF", "IDREFS", "ENTITY", "ENTITIES", "NOTATION", "NMTOKEN", "NMTOKENS", "anyType"] },
+    ],
   },
 ];

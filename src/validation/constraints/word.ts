@@ -31,6 +31,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     attrConstraints: [
       { qname: "w:lang", maxLength: 84 },
       { qname: "w:dllVersion", minValue: 0 },
+      { qname: "w:nlCheck", typeHint: "onOff" },
+      { qname: "w:checkStyle", typeHint: "onOff" },
     ],
   },
   {
@@ -78,6 +80,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "behavior",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["content", "p", "pg"] },
+    ],
   },
   {
     className: "Behaviors",
@@ -145,21 +150,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                 ] }
                               ] },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                           { kind: "group", min: 0, max: 1, items: [
                             { kind: "sequence", min: 1, max: 1, items: [
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] }
                         ] }
@@ -207,14 +212,17 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                 ] }
               ] },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
             ] }
           ] },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "subDoc", min: 1, max: 1 }
         ] }
       ] }
     },
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["ltr", "rtl"] },
+    ],
   },
   {
     className: "BidirectionalOverride",
@@ -272,21 +280,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                 ] }
                               ] },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                           { kind: "group", min: 0, max: 1, items: [
                             { kind: "sequence", min: 1, max: 1, items: [
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] }
                         ] }
@@ -334,14 +342,17 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                 ] }
               ] },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
             ] }
           ] },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "subDoc", min: 1, max: 1 }
         ] }
       ] }
     },
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["ltr", "rtl"] },
+    ],
   },
   {
     className: "Body",
@@ -403,21 +414,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                               ] }
                             ] },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                           ] }
                         ] },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                         { kind: "group", min: 0, max: 1, items: [
                           { kind: "sequence", min: 1, max: 1, items: [
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                           ] }
                         ] }
                       ] }
@@ -439,7 +450,25 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     requiredAttrs: ["w:name", "w:id"],
     attrConstraints: [
       { qname: "w:name", maxLength: 40 },
+      { qname: "w:displacedByCustomXml", enumMembers: ["next", "prev"] },
       { qname: "w:id", minValue: 0, maxValue: -2 },
+    ],
+  },
+  {
+    className: "Break",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "br",
+    attrConstraints: [
+      { qname: "w:type", enumMembers: ["page", "column", "textWrapping"] },
+      { qname: "w:clear", enumMembers: ["none", "left", "right", "all"] },
+    ],
+  },
+  {
+    className: "Calendar",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "calendar",
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["gregorian", "hijri", "hebrew", "taiwan", "japan", "thai", "korea", "saka", "gregorianXlitEnglish", "gregorianXlitFrench"] },
     ],
   },
   {
@@ -449,6 +478,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     requiredAttrs: ["w:name"],
     attrConstraints: [
       { qname: "w:name", maxLength: 255 },
+      { qname: "w:pos", enumMembers: ["above", "below"] },
+      { qname: "w:chapNum", typeHint: "onOff" },
+      { qname: "w:noLabel", typeHint: "onOff" },
+      { qname: "w:numFmt", enumMembers: ["decimal", "upperRoman", "lowerRoman", "upperLetter", "lowerLetter", "ordinal", "cardinalText", "ordinalText", "hex", "chicago", "ideographDigital", "japaneseCounting", "aiueo", "iroha", "decimalFullWidth", "decimalHalfWidth", "japaneseLegal", "japaneseDigitalTenThousand", "decimalEnclosedCircle", "decimalFullWidth2", "aiueoFullWidth", "irohaFullWidth", "decimalZero", "bullet", "ganada", "chosung", "decimalEnclosedFullstop", "decimalEnclosedParen", "decimalEnclosedCircleChinese", "ideographEnclosedCircle", "ideographTraditional", "ideographZodiac", "ideographZodiacTraditional", "taiwaneseCounting", "ideographLegalTraditional", "taiwaneseCountingThousand", "taiwaneseDigital", "chineseCounting", "chineseLegalSimplified", "chineseCountingThousand", "koreanDigital", "koreanCounting", "koreanLegal", "koreanDigital2", "vietnameseCounting", "russianLower", "russianUpper", "none", "numberInDash", "hebrew1", "hebrew2", "arabicAlpha", "arabicAbjad", "hindiVowels", "hindiConsonants", "hindiNumbers", "hindiCounting", "thaiLetters", "thaiNumbers", "thaiCounting"] },
+      { qname: "w:sep", enumMembers: ["hyphen", "period", "colon", "emDash", "enDash"] },
     ],
   },
   {
@@ -479,6 +513,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "cellMerge",
     requiredAttrs: ["w:author", "w:id"],
     attrConstraints: [
+      { qname: "w:vMerge", enumMembers: ["cont", "rest"] },
+      { qname: "w:vMergeOrig", enumMembers: ["cont", "rest"] },
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
     ],
@@ -496,6 +532,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "characterSpacingControl",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["doNotCompress", "compressPunctuation", "compressPunctuationAndJapaneseKana"] },
+    ],
   },
   {
     className: "CheckBox",
@@ -518,9 +557,29 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "color",
     requiredAttrs: ["w:val"],
     attrConstraints: [
-      { qname: "w:val", minLength: 3, maxLength: 3 },
+      { qname: "w:val", enumMembers: ["auto"], minLength: 3, maxLength: 3 },
+      { qname: "w:themeColor", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink", "none", "background1", "text1", "background2", "text2"] },
       { qname: "w:themeTint", minLength: 1, maxLength: 2 },
       { qname: "w:themeShade", minLength: 1, maxLength: 2 },
+    ],
+  },
+  {
+    className: "ColorSchemeMapping",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "clrSchemeMapping",
+    attrConstraints: [
+      { qname: "w:bg1", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:t1", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:bg2", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:t2", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:accent1", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:accent2", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:accent3", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:accent4", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:accent5", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:accent6", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:hyperlink", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
+      { qname: "w:followedHyperlink", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
     ],
   },
   {
@@ -533,7 +592,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
+      { qname: "w:equalWidth", typeHint: "onOff" },
       { qname: "w:num", minValue: 1, maxValue: 45 },
+      { qname: "w:sep", typeHint: "onOff" },
     ],
   },
   {
@@ -687,6 +748,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "compatSetting",
     requiredAttrs: ["w:name", "w:uri", "w:val"],
+    attrConstraints: [
+      { qname: "w:name", enumMembers: ["compatibilityMode", "overrideTableStyleFontSizeAndJustification", "enableOpenTypeFeatures", "doNotFlipMirrorIndents", "differentiateMultirowTableHeaders"] },
+    ],
   },
   {
     className: "ConditionalFormatStyle",
@@ -699,6 +763,18 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     ],
     attrConstraints: [
       { qname: "w:val", minLength: 12, maxLength: 12 },
+      { qname: "w:firstRow", typeHint: "onOff" },
+      { qname: "w:lastRow", typeHint: "onOff" },
+      { qname: "w:firstColumn", typeHint: "onOff" },
+      { qname: "w:lastColumn", typeHint: "onOff" },
+      { qname: "w:oddVBand", typeHint: "onOff" },
+      { qname: "w:evenVBand", typeHint: "onOff" },
+      { qname: "w:oddHBand", typeHint: "onOff" },
+      { qname: "w:evenHBand", typeHint: "onOff" },
+      { qname: "w:firstRowFirstColumn", typeHint: "onOff" },
+      { qname: "w:firstRowLastColumn", typeHint: "onOff" },
+      { qname: "w:lastRowFirstColumn", typeHint: "onOff" },
+      { qname: "w:lastRowLastColumn", typeHint: "onOff" },
     ],
   },
   {
@@ -782,21 +858,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                       ] }
                     ] },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                 { kind: "group", min: 0, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] }
               ] }
@@ -853,21 +929,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                       ] }
                     ] },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                 { kind: "group", min: 0, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] }
               ] }
@@ -935,21 +1011,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                       ] }
                     ] },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                 { kind: "group", min: 0, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] }
               ] }
@@ -1010,21 +1086,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                           ] }
                         ] },
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                       ] }
                     ] },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                     { kind: "group", min: 0, max: 1, items: [
                       { kind: "sequence", min: 1, max: 1, items: [
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                       ] }
                     ] }
                   ] }
@@ -1128,21 +1204,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                   ] }
                                 ] },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                               ] }
                             ] },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                             { kind: "group", min: 0, max: 1, items: [
                               { kind: "sequence", min: 1, max: 1, items: [
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                               ] }
                             ] }
                           ] }
@@ -1190,8 +1266,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                   ] }
                 ] },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
               ] }
             ] },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "subDoc", min: 1, max: 1 }
@@ -1228,6 +1304,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "dataType",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["textFile", "database", "spreadsheet", "query", "odbc", "native"] },
+    ],
   },
   {
     className: "DefaultDropDownListItemIndex",
@@ -1308,21 +1387,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                 ] }
                               ] },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                           { kind: "group", min: 0, max: 1, items: [
                             { kind: "sequence", min: 1, max: 1, items: [
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] }
                         ] }
@@ -1370,8 +1449,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                 ] }
               ] },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
             ] }
           ] }
         ] }
@@ -1383,6 +1462,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "destination",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["newDocument", "printer", "email", "fax"] },
+    ],
   },
   {
     className: "Div",
@@ -1459,6 +1541,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "DocGrid",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "docGrid",
+    attrConstraints: [
+      { qname: "w:type", enumMembers: ["default", "lines", "linesAndChars", "snapToChars"] },
+    ],
+  },
+  {
     className: "DocPart",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "docPart",
@@ -1529,21 +1619,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                               ] }
                             ] },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                           ] }
                         ] },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                         { kind: "group", min: 0, max: 1, items: [
                           { kind: "sequence", min: 1, max: 1, items: [
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                           ] }
                         ] }
                       ] }
@@ -1563,6 +1653,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "name",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:decorated", typeHint: "onOff" },
+    ],
   },
   {
     className: "DocPartProperties",
@@ -1595,6 +1688,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "type",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["none", "normal", "autoExp", "toolbar", "speller", "formFld", "bbPlcHdr"] },
+    ],
   },
   {
     className: "DocPartTypes",
@@ -1605,6 +1701,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "type", min: 1, max: "unbounded" }
       ] }
     },
+    attrConstraints: [
+      { qname: "w:all", typeHint: "onOff" },
+    ],
   },
   {
     className: "Document",
@@ -1620,6 +1719,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    attrConstraints: [
+      { qname: "w:conformance", enumMembers: ["transitional", "strict"] },
+    ],
   },
   {
     className: "DocumentBackground",
@@ -1631,7 +1733,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
-      { qname: "w:color", minLength: 3, maxLength: 3 },
+      { qname: "w:color", enumMembers: ["auto"], minLength: 3, maxLength: 3 },
+      { qname: "w:themeColor", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink", "none", "background1", "text1", "background2", "text2"] },
       { qname: "w:themeTint", minLength: 1, maxLength: 2 },
       { qname: "w:themeShade", minLength: 1, maxLength: 2 },
     ],
@@ -1641,9 +1744,19 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "documentProtection",
     attrConstraints: [
+      { qname: "w:edit", enumMembers: ["none", "readOnly", "comments", "trackedChanges", "forms"] },
+      { qname: "w:formatting", typeHint: "onOff" },
+      { qname: "w:enforcement", typeHint: "onOff" },
+      { qname: "w:cryptProviderType", enumMembers: ["rsaAES", "rsaFull"] },
+      { qname: "w:cryptAlgorithmClass", enumMembers: ["hash"] },
+      { qname: "w:cryptAlgorithmType", enumMembers: ["typeAny"] },
       { qname: "w:cryptSpinCount", maxValue: 5000000 },
-      { qname: "w:algIdExt", minLength: 4, maxLength: 4 },
-      { qname: "w:cryptProviderTypeExt", minLength: 4, maxLength: 4 },
+      { qname: "w:algIdExt", typeHint: "hexBinary", length: 4 },
+      { qname: "w:cryptProviderTypeExt", typeHint: "hexBinary", length: 4 },
+      { qname: "w:hash", typeHint: "base64Binary" },
+      { qname: "w:salt", typeHint: "base64Binary" },
+      { qname: "w:hashValue", typeHint: "base64Binary" },
+      { qname: "w:saltValue", typeHint: "base64Binary" },
     ],
   },
   {
@@ -1651,6 +1764,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "documentType",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["notSpecified", "letter", "eMail"] },
+    ],
   },
   {
     className: "DocumentVariable",
@@ -1696,6 +1812,17 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "EastAsianLayout",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "eastAsianLayout",
+    attrConstraints: [
+      { qname: "w:combine", typeHint: "onOff" },
+      { qname: "w:combineBrackets", enumMembers: ["none", "round", "square", "angle", "curly"] },
+      { qname: "w:vert", typeHint: "onOff" },
+      { qname: "w:vertCompress", typeHint: "onOff" },
+    ],
+  },
+  {
     className: "EmbeddedObject",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "object",
@@ -1730,7 +1857,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
-      { qname: "w14:anchorId", minLength: 4, maxLength: 4 },
+      { qname: "w14:anchorId", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -1738,6 +1865,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "em",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["none", "dot", "comma", "circle", "underDot"] },
+    ],
   },
   {
     className: "Endnote",
@@ -1799,21 +1929,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                               ] }
                             ] },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                           ] }
                         ] },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                         { kind: "group", min: 0, max: 1, items: [
                           { kind: "sequence", min: 1, max: 1, items: [
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                           ] }
                         ] }
                       ] }
@@ -1854,6 +1984,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "pos",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["sectEnd", "docEnd"] },
+    ],
   },
   {
     className: "EndnoteProperties",
@@ -1894,6 +2027,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:fldCharType"],
+    attrConstraints: [
+      { qname: "w:fldCharType", enumMembers: ["begin", "separate", "end"] },
+      { qname: "w:fldLock", typeHint: "onOff" },
+      { qname: "w:dirty", typeHint: "onOff" },
+    ],
   },
   {
     className: "FieldMapData",
@@ -1946,6 +2084,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "charset",
     attrConstraints: [
       { qname: "w:val", minLength: 1, maxLength: 2 },
+      { qname: "w:characterSet", enumMembers: ["iso-8859-1", "macintosh", "shift_jis", "ks_c-5601-1987", "KS_C-5601-1992", "GBK", "Big5", "windows-1253", "iso-8859-9", "windows-1258", "windows-1255", "windows-1256", "windows-1257", "windows-1251", "windows-874", "windows-1250"] },
     ],
   },
   {
@@ -1953,6 +2092,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "family",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["decorative", "modern", "roman", "script", "swiss", "auto"] },
+    ],
   },
   {
     className: "Fonts",
@@ -1970,12 +2112,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "sig",
     requiredAttrs: ["w:usb0", "w:usb1", "w:usb2", "w:usb3", "w:csb0", "w:csb1"],
     attrConstraints: [
-      { qname: "w:usb0", minLength: 4, maxLength: 4 },
-      { qname: "w:usb1", minLength: 4, maxLength: 4 },
-      { qname: "w:usb2", minLength: 4, maxLength: 4 },
-      { qname: "w:usb3", minLength: 4, maxLength: 4 },
-      { qname: "w:csb0", minLength: 4, maxLength: 4 },
-      { qname: "w:csb1", minLength: 4, maxLength: 4 },
+      { qname: "w:usb0", typeHint: "hexBinary", length: 4 },
+      { qname: "w:usb1", typeHint: "hexBinary", length: 4 },
+      { qname: "w:usb2", typeHint: "hexBinary", length: 4 },
+      { qname: "w:usb3", typeHint: "hexBinary", length: 4 },
+      { qname: "w:csb0", typeHint: "hexBinary", length: 4 },
+      { qname: "w:csb1", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -2037,21 +2179,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                             ] }
                           ] },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                         ] }
                       ] },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                      { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                       { kind: "group", min: 0, max: 1, items: [
                         { kind: "sequence", min: 1, max: 1, items: [
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                         ] }
                       ] }
                     ] }
@@ -2124,21 +2266,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                               ] }
                             ] },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                           ] }
                         ] },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                         { kind: "group", min: 0, max: 1, items: [
                           { kind: "sequence", min: 1, max: 1, items: [
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                           ] }
                         ] }
                       ] }
@@ -2179,6 +2321,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "pos",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["pageBottom", "beneathText", "sectEnd"] },
+    ],
   },
   {
     className: "FootnoteProperties",
@@ -2267,14 +2412,25 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "frameLayout",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["rows", "cols", "none"] },
+    ],
   },
   {
     className: "FrameProperties",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "framePr",
     attrConstraints: [
+      { qname: "w:dropCap", enumMembers: ["none", "drop", "margin"] },
       { qname: "w:lines", minValue: 1, maxValue: 10 },
       { qname: "w:h", maxValue: 31680 },
+      { qname: "w:wrap", enumMembers: ["auto", "notBeside", "around", "tight", "through", "none"] },
+      { qname: "w:hAnchor", enumMembers: ["text", "margin", "page"] },
+      { qname: "w:vAnchor", enumMembers: ["text", "margin", "page"] },
+      { qname: "w:xAlign", enumMembers: ["left", "center", "right", "inside", "outside"] },
+      { qname: "w:yAlign", enumMembers: ["inline", "top", "center", "bottom", "inside", "outside"] },
+      { qname: "w:hRule", enumMembers: ["auto", "exact", "atLeast"] },
+      { qname: "w:anchorLock", typeHint: "onOff" },
     ],
   },
   {
@@ -2313,6 +2469,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "gallery",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["placeholder", "any", "default", "docParts", "coverPg", "eq", "ftrs", "hdrs", "pgNum", "tbls", "watermarks", "autoTxt", "txtBox", "pgNumT", "pgNumB", "pgNumMargins", "tblOfContents", "bib", "custQuickParts", "custCoverPg", "custEq", "custFtrs", "custHdrs", "custPgNum", "custTbls", "custWatermarks", "custAutoTxt", "custTxtBox", "custPgNumT", "custPgNumB", "custPgNumMargins", "custTblOfContents", "custBib", "custom1", "custom2", "custom3", "custom4", "custom5"] },
+    ],
   },
   {
     className: "GlossaryDocument",
@@ -2388,21 +2547,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                             ] }
                           ] },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                         ] }
                       ] },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                      { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                       { kind: "group", min: 0, max: 1, items: [
                         { kind: "sequence", min: 1, max: 1, items: [
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                         ] }
                       ] }
                     ] }
@@ -2431,6 +2590,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "helpText",
     attrConstraints: [
+      { qname: "w:type", enumMembers: ["text", "autoText"] },
       { qname: "w:val", maxLength: 255 },
     ],
   },
@@ -2439,6 +2599,17 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "highlight",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["black", "blue", "cyan", "green", "magenta", "red", "yellow", "white", "darkBlue", "darkCyan", "darkGreen", "darkMagenta", "darkRed", "darkYellow", "darkGray", "lightGray", "none"] },
+    ],
+  },
+  {
+    className: "HorizontalMerge",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "hMerge",
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["continue", "restart"] },
+    ],
   },
   {
     className: "Hyperlink",
@@ -2496,21 +2667,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                 ] }
                               ] },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                           { kind: "group", min: 0, max: 1, items: [
                             { kind: "sequence", min: 1, max: 1, items: [
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] }
                         ] }
@@ -2558,8 +2729,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                 ] }
               ] },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
             ] }
           ] },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "subDoc", min: 1, max: 1 }
@@ -2570,6 +2741,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       { qname: "w:tgtFrame", maxLength: 255 },
       { qname: "w:tooltip", maxLength: 260 },
       { qname: "w:docLocation", maxLength: 255 },
+      { qname: "w:history", typeHint: "onOff" },
       { qname: "w:anchor", maxLength: 255 },
     ],
   },
@@ -2622,21 +2794,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                         ] }
                       ] },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                     ] }
                   ] },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                  { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                   { kind: "group", min: 0, max: 1, items: [
                     { kind: "sequence", min: 1, max: 1, items: [
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                     ] }
                   ] }
                 ] }
@@ -2684,6 +2856,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       { qname: "w:tgtFrame", maxLength: 255 },
       { qname: "w:tooltip", maxLength: 260 },
       { qname: "w:docLocation", maxLength: 255 },
+      { qname: "w:history", typeHint: "onOff" },
       { qname: "w:anchor", maxLength: 255 },
     ],
   },
@@ -2762,21 +2935,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                 ] }
                               ] },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                           { kind: "group", min: 0, max: 1, items: [
                             { kind: "sequence", min: 1, max: 1, items: [
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] }
                         ] }
@@ -2824,8 +2997,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                 ] }
               ] },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
             ] }
           ] }
         ] }
@@ -2837,6 +3010,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "jc",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["left", "center", "right", "both", "mediumKashida", "distribute", "numTab", "highKashida", "lowKashida", "thaiDistribute"] },
+    ],
   },
   {
     className: "Kern",
@@ -2862,7 +3038,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "lsdException",
     requiredAttrs: ["w:name"],
     attrConstraints: [
+      { qname: "w:locked", typeHint: "onOff" },
       { qname: "w:uiPriority", minValue: 0, maxValue: 99 },
+      { qname: "w:semiHidden", typeHint: "onOff" },
+      { qname: "w:unhideWhenUsed", typeHint: "onOff" },
+      { qname: "w:qFormat", typeHint: "onOff" },
     ],
   },
   {
@@ -2875,7 +3055,19 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
+      { qname: "w:defLockedState", typeHint: "onOff" },
       { qname: "w:defUIPriority", minValue: 0, maxValue: 99 },
+      { qname: "w:defSemiHidden", typeHint: "onOff" },
+      { qname: "w:defUnhideWhenUsed", typeHint: "onOff" },
+      { qname: "w:defQFormat", typeHint: "onOff" },
+    ],
+  },
+  {
+    className: "LegacyNumbering",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "legacy",
+    attrConstraints: [
+      { qname: "w:legacy", typeHint: "onOff" },
     ],
   },
   {
@@ -2901,7 +3093,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
     requiredAttrs: ["w:ilvl"],
     attrConstraints: [
-      { qname: "w:tplc", minLength: 4, maxLength: 4 },
+      { qname: "w:tplc", typeHint: "hexBinary", length: 4 },
+      { qname: "w:tentative", typeHint: "onOff" },
     ],
   },
   {
@@ -2909,6 +3102,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "lvlJc",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["left", "center", "right"] },
+    ],
   },
   {
     className: "LevelOverride",
@@ -2927,6 +3123,17 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "suff",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["tab", "space", "nothing"] },
+    ],
+  },
+  {
+    className: "LevelText",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "lvlText",
+    attrConstraints: [
+      { qname: "w:null", typeHint: "onOff" },
+    ],
   },
   {
     className: "LineNumberType",
@@ -2935,6 +3142,15 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     attrConstraints: [
       { qname: "w:countBy", minValue: 1, maxValue: 100 },
       { qname: "w:start", minValue: 0 },
+      { qname: "w:restart", enumMembers: ["newPage", "newSection", "continuous"] },
+    ],
+  },
+  {
+    className: "Lock",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "lock",
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["sdtLocked", "contentLocked", "unlocked", "sdtContentLocked"] },
     ],
   },
   {
@@ -2967,18 +3183,27 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "type",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["null", "dbColumn"] },
+    ],
   },
   {
     className: "MailMergeSource",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "type",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["database", "addressBook", "document1", "document2", "text", "email", "native", "legacy", "master"] },
+    ],
   },
   {
     className: "MainDocumentType",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "mainDocumentType",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["catalog", "envelopes", "mailingLabels", "formLetters", "email", "fax"] },
+    ],
   },
   {
     className: "MaxLength",
@@ -3064,21 +3289,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                 ] }
                               ] },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                           { kind: "group", min: 0, max: 1, items: [
                             { kind: "sequence", min: 1, max: 1, items: [
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] }
                         ] }
@@ -3126,8 +3351,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                 ] }
               ] },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
             ] }
           ] }
         ] }
@@ -3209,21 +3434,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                 ] }
                               ] },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                           { kind: "group", min: 0, max: 1, items: [
                             { kind: "sequence", min: 1, max: 1, items: [
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                             ] }
                           ] }
                         ] }
@@ -3271,8 +3496,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                 ] }
               ] },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
             ] }
           ] }
         ] }
@@ -3284,6 +3509,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "multiLevelType",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["singleLevel", "multilevel", "hybridMultilevel"] },
+    ],
   },
   {
     className: "NoLineBreaksAfterKinsoku",
@@ -3333,6 +3561,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "numFmt",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["decimal", "upperRoman", "lowerRoman", "upperLetter", "lowerLetter", "ordinal", "cardinalText", "ordinalText", "hex", "chicago", "ideographDigital", "japaneseCounting", "aiueo", "iroha", "decimalFullWidth", "decimalHalfWidth", "japaneseLegal", "japaneseDigitalTenThousand", "decimalEnclosedCircle", "decimalFullWidth2", "aiueoFullWidth", "irohaFullWidth", "decimalZero", "bullet", "ganada", "chosung", "decimalEnclosedFullstop", "decimalEnclosedParen", "decimalEnclosedCircleChinese", "ideographEnclosedCircle", "ideographTraditional", "ideographZodiac", "ideographZodiacTraditional", "taiwaneseCounting", "ideographLegalTraditional", "taiwaneseCountingThousand", "taiwaneseDigital", "chineseCounting", "chineseLegalSimplified", "chineseCountingThousand", "koreanDigital", "koreanCounting", "koreanLegal", "koreanDigital2", "vietnameseCounting", "russianLower", "russianUpper", "none", "numberInDash", "hebrew1", "hebrew2", "arabicAlpha", "arabicAbjad", "hindiVowels", "hindiConsonants", "hindiNumbers", "hindiCounting", "thaiLetters", "thaiNumbers", "thaiCounting"] },
+    ],
   },
   {
     className: "NumberingInstance",
@@ -3387,6 +3618,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "numRestart",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["continuous", "eachSect", "eachPage"] },
+    ],
   },
   {
     className: "NumberingStart",
@@ -3460,12 +3694,20 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "objectEmbed",
     requiredAttrs: ["r:id"],
+    attrConstraints: [
+      { qname: "w:drawAspect", enumMembers: ["content", "icon"] },
+    ],
   },
   {
     className: "ObjectLink",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "objectLink",
     requiredAttrs: ["w:updateMode", "r:id"],
+    attrConstraints: [
+      { qname: "w:updateMode", enumMembers: ["always", "onCall"] },
+      { qname: "w:lockedField", typeHint: "onOff" },
+      { qname: "w:drawAspect", enumMembers: ["content", "icon"] },
+    ],
   },
   {
     className: "PageBorders",
@@ -3479,6 +3721,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: "w:zOrder", enumMembers: ["front", "back"] },
+      { qname: "w:display", enumMembers: ["allPages", "firstPage", "notFirstPage"] },
+      { qname: "w:offsetFrom", enumMembers: ["page", "text"] },
+    ],
   },
   {
     className: "PageMargin",
@@ -3499,7 +3746,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "pgNumType",
     attrConstraints: [
+      { qname: "w:fmt", enumMembers: ["decimal", "upperRoman", "lowerRoman", "upperLetter", "lowerLetter", "ordinal", "cardinalText", "ordinalText", "hex", "chicago", "ideographDigital", "japaneseCounting", "aiueo", "iroha", "decimalFullWidth", "decimalHalfWidth", "japaneseLegal", "japaneseDigitalTenThousand", "decimalEnclosedCircle", "decimalFullWidth2", "aiueoFullWidth", "irohaFullWidth", "decimalZero", "bullet", "ganada", "chosung", "decimalEnclosedFullstop", "decimalEnclosedParen", "decimalEnclosedCircleChinese", "ideographEnclosedCircle", "ideographTraditional", "ideographZodiac", "ideographZodiacTraditional", "taiwaneseCounting", "ideographLegalTraditional", "taiwaneseCountingThousand", "taiwaneseDigital", "chineseCounting", "chineseLegalSimplified", "chineseCountingThousand", "koreanDigital", "koreanCounting", "koreanLegal", "koreanDigital2", "vietnameseCounting", "russianLower", "russianUpper", "none", "numberInDash", "hebrew1", "hebrew2", "arabicAlpha", "arabicAbjad", "hindiVowels", "hindiConsonants", "hindiNumbers", "hindiCounting", "thaiLetters", "thaiNumbers", "thaiCounting"] },
       { qname: "w:start", minValue: 0 },
+      { qname: "w:chapSep", enumMembers: ["hyphen", "period", "colon", "emDash", "enDash"] },
     ],
   },
   {
@@ -3509,6 +3758,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     attrConstraints: [
       { qname: "w:w", maxValue: 31680 },
       { qname: "w:h", maxValue: 31680 },
+      { qname: "w:orient", enumMembers: ["portrait", "landscape"] },
     ],
   },
   {
@@ -3517,7 +3767,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "panose1",
     requiredAttrs: ["w:val"],
     attrConstraints: [
-      { qname: "w:val", minLength: 10, maxLength: 10 },
+      { qname: "w:val", typeHint: "hexBinary", length: 10 },
     ],
   },
   {
@@ -3578,21 +3828,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                   ] }
                                 ] },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                               ] }
                             ] },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                             { kind: "group", min: 0, max: 1, items: [
                               { kind: "sequence", min: 1, max: 1, items: [
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                               ] }
                             ] }
                           ] }
@@ -3640,8 +3890,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                   ] }
                 ] },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
               ] }
             ] },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "subDoc", min: 1, max: 1 }
@@ -3650,13 +3900,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
-      { qname: "w:rsidRPr", minLength: 4, maxLength: 4 },
+      { qname: "w:rsidRPr", typeHint: "hexBinary", length: 4 },
       { qname: "w:rsidR", typeHint: "hexBinary", length: 4 },
-      { qname: "w:rsidDel", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidP", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidRDefault", minLength: 4, maxLength: 4 },
-      { qname: "w14:paraId", minLength: 4, maxLength: 4 },
-      { qname: "w14:textId", minLength: 4, maxLength: 4 },
+      { qname: "w:rsidDel", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidP", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidRDefault", typeHint: "hexBinary", length: 4 },
+      { qname: "w14:paraId", typeHint: "hexBinary", length: 4 },
+      { qname: "w14:textId", typeHint: "hexBinary", length: 4 },
+      { qname: "w14:noSpellErr", typeHint: "onOff" },
     ],
   },
   {
@@ -3688,8 +3939,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 0, max: 1 },
             { kind: "group", min: 0, max: 1, items: [
               { kind: "choice", min: 1, max: 1, items: [
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
               ] }
             ] }
           ] }
@@ -3762,22 +4013,22 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 ] },
                 { kind: "group", min: 1, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "glow", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "shadow", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "reflection", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textOutline", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textFill", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "scene3d", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "props3d", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "glow", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "shadow", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "reflection", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textOutline", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textFill", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "scene3d", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "props3d", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] },
                 { kind: "group", min: 1, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "ligatures", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numForm", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numSpacing", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "stylisticSets", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "cntxtAlts", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "ligatures", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numForm", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numSpacing", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "stylisticSets", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "cntxtAlts", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] }
               ] }
@@ -4000,6 +4251,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "permEnd",
     requiredAttrs: ["w:id"],
+    attrConstraints: [
+      { qname: "w:displacedByCustomXml", enumMembers: ["next", "prev"] },
+    ],
   },
   {
     className: "PermStart",
@@ -4007,8 +4261,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "permStart",
     requiredAttrs: ["w:id"],
     attrConstraints: [
+      { qname: "w:edGrp", enumMembers: ["none", "everyone", "administrators", "contributors", "editors", "owners", "current"] },
       { qname: "w:colFirst", minValue: 0 },
       { qname: "w:colLast", minValue: 0 },
+      { qname: "w:displacedByCustomXml", enumMembers: ["next", "prev"] },
     ],
   },
   {
@@ -4048,7 +4304,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
-      { qname: "w14:anchorId", minLength: 4, maxLength: 4 },
+      { qname: "w14:anchorId", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -4078,6 +4334,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "pitch",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["fixed", "variable", "default"] },
+    ],
   },
   {
     className: "Position",
@@ -4090,6 +4349,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "ptab",
     requiredAttrs: ["w:alignment", "w:relativeTo", "w:leader"],
+    attrConstraints: [
+      { qname: "w:alignment", enumMembers: ["left", "center", "right"] },
+      { qname: "w:relativeTo", enumMembers: ["margin", "indent"] },
+      { qname: "w:leader", enumMembers: ["none", "dot", "hyphen", "underscore", "middleDot"] },
+    ],
   },
   {
     className: "PreviousParagraphMarkRunProperties",
@@ -4105,8 +4369,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 0, max: 1 },
             { kind: "group", min: 0, max: 1, items: [
               { kind: "choice", min: 1, max: 1, items: [
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
               ] }
             ] }
           ] }
@@ -4179,22 +4443,22 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 ] },
                 { kind: "group", min: 1, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "glow", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "shadow", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "reflection", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textOutline", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textFill", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "scene3d", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "props3d", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "glow", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "shadow", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "reflection", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textOutline", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textFill", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "scene3d", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "props3d", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] },
                 { kind: "group", min: 1, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "ligatures", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numForm", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numSpacing", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "stylisticSets", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "cntxtAlts", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "ligatures", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numForm", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numSpacing", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "stylisticSets", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "cntxtAlts", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] }
               ] }
@@ -4325,22 +4589,22 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             ] },
             { kind: "group", min: 1, max: 1, items: [
               { kind: "sequence", min: 1, max: 1, items: [
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "glow", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "shadow", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "reflection", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textOutline", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textFill", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "scene3d", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "props3d", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "glow", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "shadow", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "reflection", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textOutline", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textFill", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "scene3d", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "props3d", min: 0, max: 1, initialVersion: "Office2010" }
               ] }
             ] },
             { kind: "group", min: 1, max: 1, items: [
               { kind: "sequence", min: 1, max: 1, items: [
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "ligatures", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numForm", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numSpacing", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "stylisticSets", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "cntxtAlts", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "ligatures", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numForm", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numSpacing", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "stylisticSets", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "cntxtAlts", min: 0, max: 1, initialVersion: "Office2010" }
               ] }
             ] }
           ] }
@@ -4375,16 +4639,16 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rtlGutter", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "docGrid", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "printerSettings", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "footnoteColumns", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "footnoteColumns", min: 0, max: 1, initialVersion: "Office2013" }
           ] }
         ] }
       ] }
     },
     attrConstraints: [
-      { qname: "w:rsidRPr", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidDel", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidR", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidSect", minLength: 4, maxLength: 4 },
+      { qname: "w:rsidRPr", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidDel", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidR", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidSect", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -4497,8 +4761,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblLook", min: 0, max: 1 }
           ] }
         ] },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblCaption", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblDescription", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblCaption", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblDescription", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
   },
@@ -4554,12 +4818,27 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "proofErr",
     requiredAttrs: ["w:type"],
+    attrConstraints: [
+      { qname: "w:type", enumMembers: ["spellStart", "spellEnd", "gramStart", "gramEnd"] },
+    ],
+  },
+  {
+    className: "ProofState",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "proofState",
+    attrConstraints: [
+      { qname: "w:spelling", enumMembers: ["clean", "dirty"] },
+      { qname: "w:grammar", enumMembers: ["clean", "dirty"] },
+    ],
   },
   {
     className: "ReadModeInkLockDown",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "readModeInkLockDown",
     requiredAttrs: ["w:w", "w:h", "w:fontSz"],
+    attrConstraints: [
+      { qname: "w:actualPg", typeHint: "onOff" },
+    ],
   },
   {
     className: "RecipientData",
@@ -4582,6 +4861,18 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "recipientData", min: 1, max: "unbounded" }
       ] }
     },
+  },
+  {
+    className: "RevisionView",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "revisionView",
+    attrConstraints: [
+      { qname: "w:markup", typeHint: "onOff" },
+      { qname: "w:comments", typeHint: "onOff" },
+      { qname: "w:insDel", typeHint: "onOff" },
+      { qname: "w:formatting", typeHint: "onOff" },
+      { qname: "w:inkAnnotations", typeHint: "onOff" },
+    ],
   },
   {
     className: "Rsids",
@@ -4611,6 +4902,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "rubyAlign",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["center", "distributeLetter", "distributeSpace", "left", "right", "rightVertical"] },
+    ],
   },
   {
     className: "RubyBase",
@@ -4661,21 +4955,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                         ] }
                       ] },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                     ] }
                   ] },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                  { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                   { kind: "group", min: 0, max: 1, items: [
                     { kind: "sequence", min: 1, max: 1, items: [
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                     ] }
                   ] }
                 ] }
@@ -4769,21 +5063,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                         ] }
                       ] },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                     ] }
                   ] },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                  { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                   { kind: "group", min: 0, max: 1, items: [
                     { kind: "sequence", min: 1, max: 1, items: [
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                     ] }
                   ] }
                 ] }
@@ -4893,9 +5187,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
-      { qname: "w:rsidRPr", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidDel", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidR", minLength: 4, maxLength: 4 },
+      { qname: "w:rsidRPr", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidDel", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidR", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -4903,10 +5197,15 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "rFonts",
     attrConstraints: [
+      { qname: "w:hint", enumMembers: ["default", "eastAsia", "cs"] },
       { qname: "w:ascii", maxLength: 31 },
       { qname: "w:hAnsi", maxLength: 31 },
       { qname: "w:eastAsia", maxLength: 31 },
       { qname: "w:cs", maxLength: 31 },
+      { qname: "w:asciiTheme", enumMembers: ["majorEastAsia", "majorBidi", "majorAscii", "majorHAnsi", "minorEastAsia", "minorBidi", "minorAscii", "minorHAnsi"] },
+      { qname: "w:hAnsiTheme", enumMembers: ["majorEastAsia", "majorBidi", "majorAscii", "majorHAnsi", "minorEastAsia", "minorBidi", "minorAscii", "minorHAnsi"] },
+      { qname: "w:eastAsiaTheme", enumMembers: ["majorEastAsia", "majorBidi", "majorAscii", "majorHAnsi", "minorEastAsia", "minorBidi", "minorAscii", "minorHAnsi"] },
+      { qname: "w:cstheme", enumMembers: ["majorEastAsia", "majorBidi", "majorAscii", "majorHAnsi", "minorEastAsia", "minorBidi", "minorAscii", "minorHAnsi"] },
     ],
   },
   {
@@ -4983,22 +5282,22 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 ] },
                 { kind: "group", min: 1, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "glow", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "shadow", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "reflection", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textOutline", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textFill", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "scene3d", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "props3d", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "glow", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "shadow", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "reflection", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textOutline", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "textFill", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "scene3d", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "props3d", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] },
                 { kind: "group", min: 1, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "ligatures", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numForm", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numSpacing", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "stylisticSets", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "cntxtAlts", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "ligatures", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numForm", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "numSpacing", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "stylisticSets", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "cntxtAlts", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] }
               ] }
@@ -5104,6 +5403,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "scrollbar",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["on", "off", "auto"] },
+    ],
   },
   {
     className: "SdtBlock",
@@ -5140,10 +5442,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
               ] }
             ] },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
           ] }
         ] }
       ] }
@@ -5184,10 +5486,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
               ] }
             ] },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
           ] }
         ] }
       ] }
@@ -5243,21 +5545,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                     ] }
                   ] },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                 ] }
               ] },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
               { kind: "group", min: 0, max: 1, items: [
                 { kind: "sequence", min: 1, max: 1, items: [
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                 ] }
               ] }
             ] }
@@ -5311,21 +5613,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                     ] }
                   ] },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                 ] }
               ] },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
               { kind: "group", min: 0, max: 1, items: [
                 { kind: "sequence", min: 1, max: 1, items: [
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                 ] }
               ] }
             ] }
@@ -5436,21 +5738,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                     ] }
                   ] },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                 ] }
               ] },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
               { kind: "group", min: 0, max: 1, items: [
                 { kind: "sequence", min: 1, max: 1, items: [
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                  { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                 ] }
               ] }
             ] }
@@ -5521,21 +5823,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                   ] }
                                 ] },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                               ] }
                             ] },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                             { kind: "group", min: 0, max: 1, items: [
                               { kind: "sequence", min: 1, max: 1, items: [
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                               ] }
                             ] }
                           ] }
@@ -5583,8 +5885,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                   ] }
                 ] },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
               ] }
             ] },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "subDoc", min: 1, max: 1 }
@@ -5642,21 +5944,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                         ] }
                       ] },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                     ] }
                   ] },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                   { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                  { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                  { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                   { kind: "group", min: 0, max: 1, items: [
                     { kind: "sequence", min: 1, max: 1, items: [
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                      { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                     ] }
                   ] }
                 ] }
@@ -5702,6 +6004,22 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "SdtContentText",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "text",
+    attrConstraints: [
+      { qname: "w:multiLine", typeHint: "onOff" },
+    ],
+  },
+  {
+    className: "SdtDateMappingType",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "storeMappedDataAs",
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["text", "date", "dateTime"] },
+    ],
+  },
+  {
     className: "SdtEndCharProperties",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "sdtEndPr",
@@ -5734,15 +6052,15 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "showingPlcHdr", min: 0, max: 1 },
         { kind: "choice", min: 0, max: 1, items: [
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dataBinding", min: 0, max: 1 },
-          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "dataBinding", min: 0, max: 1 }
+          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "dataBinding", min: 0, max: 1, initialVersion: "Office2013" }
         ] },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "temporary", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "id", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tag", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "color", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "appearance", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "webExtensionLinked", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "webExtensionCreated", min: 1, max: 1 },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "color", min: 0, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "appearance", min: 0, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "webExtensionLinked", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "webExtensionCreated", min: 1, max: 1, initialVersion: "Office2013" },
         { kind: "choice", min: 0, max: 1, items: [
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "equation", min: 1, max: 1 },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "comboBox", min: 1, max: 1 },
@@ -5756,10 +6074,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "citation", min: 1, max: 1 },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "group", min: 1, max: 1 },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bibliography", min: 1, max: 1 },
-          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "entityPicker", min: 1, max: 1 },
-          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "checkbox", min: 1, max: 1 },
-          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "repeatingSection", min: 1, max: 1 },
-          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "repeatingSectionItem", min: 1, max: 1 }
+          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "entityPicker", min: 1, max: 1, initialVersion: "Office2010" },
+          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "checkbox", min: 1, max: 1, initialVersion: "Office2010" },
+          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "repeatingSection", min: 1, max: 1, initialVersion: "Office2013" },
+          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "repeatingSectionItem", min: 1, max: 1, initialVersion: "Office2013" }
         ] }
       ] }
     },
@@ -5799,10 +6117,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
               ] }
             ] },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
           ] }
         ] }
       ] }
@@ -5843,10 +6161,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
               ] }
             ] },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
           ] }
         ] }
       ] }
@@ -5887,10 +6205,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
               ] }
             ] },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
           ] }
         ] }
       ] }
@@ -5929,17 +6247,17 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rtlGutter", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "docGrid", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "printerSettings", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "footnoteColumns", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "footnoteColumns", min: 0, max: 1, initialVersion: "Office2013" }
           ] }
         ] },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sectPrChange", min: 0, max: 1 }
       ] }
     },
     attrConstraints: [
-      { qname: "w:rsidRPr", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidDel", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidR", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidSect", minLength: 4, maxLength: 4 },
+      { qname: "w:rsidRPr", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidDel", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidR", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidSect", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -5964,6 +6282,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "type",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["nextPage", "nextColumn", "continuous", "evenPage", "oddPage"] },
+    ],
   },
   {
     className: "Settings",
@@ -6068,12 +6389,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "shapeDefaults", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "decimalSymbol", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "listSeparator", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "docId", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "discardImageEditingData", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "defaultImageDpi", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictMode", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "chartTrackingRefBased", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "docId", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "docId", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "discardImageEditingData", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "defaultImageDpi", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictMode", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "chartTrackingRefBased", min: 0, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2012/wordml", local: "docId", min: 0, max: 1, initialVersion: "Office2013" }
       ] }
     },
   },
@@ -6083,13 +6404,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "shd",
     requiredAttrs: ["w:val"],
     attrConstraints: [
-      // Union: w:color has EnumValidator (AutomaticColorValues = "auto")
-      // AND StringValidator(Length=3). Value passes if either check succeeds.
-      { qname: "w:color", typeHint: "enum", enumMembers: ["auto"] },
-      { qname: "w:color", minLength: 3, maxLength: 3 },
+      { qname: "w:val", enumMembers: ["nil", "clear", "solid", "horzStripe", "vertStripe", "reverseDiagStripe", "diagStripe", "horzCross", "diagCross", "thinHorzStripe", "thinVertStripe", "thinReverseDiagStripe", "thinDiagStripe", "thinHorzCross", "thinDiagCross", "pct5", "pct10", "pct12", "pct15", "pct20", "pct25", "pct30", "pct35", "pct37", "pct40", "pct45", "pct50", "pct55", "pct60", "pct62", "pct65", "pct70", "pct75", "pct80", "pct85", "pct87", "pct90", "pct95"] },
+      { qname: "w:color", enumMembers: ["auto"], minLength: 3, maxLength: 3 },
+      { qname: "w:themeColor", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink", "none", "background1", "text1", "background2", "text2"] },
       { qname: "w:themeTint", minLength: 1, maxLength: 2 },
       { qname: "w:themeShade", minLength: 1, maxLength: 2 },
-      { qname: "w:fill", minLength: 3, maxLength: 3 },
+      { qname: "w:fill", enumMembers: ["auto"], minLength: 3, maxLength: 3 },
+      { qname: "w:themeFill", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink", "none", "background1", "text1", "background2", "text2"] },
       { qname: "w:themeFillTint", minLength: 1, maxLength: 2 },
       { qname: "w:themeFillShade", minLength: 1, maxLength: 2 },
     ],
@@ -6163,21 +6484,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                                   ] }
                                 ] },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                               ] }
                             ] },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                             { kind: "group", min: 0, max: 1, items: [
                               { kind: "sequence", min: 1, max: 1, items: [
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                                { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                               ] }
                             ] }
                           ] }
@@ -6225,8 +6546,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "r", min: 1, max: 1 }
                   ] }
                 ] },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bdo", min: 0, max: 1, initialVersion: "Office2010" },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "dir", min: 0, max: 1, initialVersion: "Office2010" }
               ] }
             ] },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "subDoc", min: 1, max: 1 }
@@ -6235,6 +6556,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:instr"],
+    attrConstraints: [
+      { qname: "w:fldLock", typeHint: "onOff" },
+      { qname: "w:dirty", typeHint: "onOff" },
+    ],
   },
   {
     className: "SimpleFieldRuby",
@@ -6287,21 +6612,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                           ] }
                         ] },
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                       ] }
                     ] },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                     { kind: "group", min: 0, max: 1, items: [
                       { kind: "sequence", min: 1, max: 1, items: [
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                        { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                       ] }
                     ] }
                   ] }
@@ -6347,6 +6672,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:instr"],
+    attrConstraints: [
+      { qname: "w:fldLock", typeHint: "onOff" },
+      { qname: "w:dirty", typeHint: "onOff" },
+    ],
   },
   {
     className: "Spacing",
@@ -6358,10 +6687,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     ],
   },
   {
+    className: "SpacingBetweenLines",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "spacing",
+    attrConstraints: [
+      { qname: "w:beforeAutospacing", typeHint: "onOff" },
+      { qname: "w:afterAutospacing", typeHint: "onOff" },
+      { qname: "w:lineRule", enumMembers: ["auto", "exact", "atLeast"] },
+    ],
+  },
+  {
     className: "StatusText",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "statusText",
     attrConstraints: [
+      { qname: "w:type", enumMembers: ["text", "autoText"] },
       { qname: "w:val", maxLength: 140 },
     ],
   },
@@ -6396,7 +6736,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
+      { qname: "w:type", enumMembers: ["paragraph", "character", "table", "numbering"] },
       { qname: "w:styleId", maxLength: 253 },
+      { qname: "w:default", typeHint: "onOff" },
+      { qname: "w:customStyle", typeHint: "onOff" },
     ],
   },
   {
@@ -6410,7 +6753,22 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "stylePaneFormatFilter",
     attrConstraints: [
-      { qname: "w:val", minLength: 2, maxLength: 2 },
+      { qname: "w:val", typeHint: "hexBinary", length: 2 },
+      { qname: "w:allStyles", typeHint: "onOff" },
+      { qname: "w:customStyles", typeHint: "onOff" },
+      { qname: "w:latentStyles", typeHint: "onOff" },
+      { qname: "w:stylesInUse", typeHint: "onOff" },
+      { qname: "w:headingStyles", typeHint: "onOff" },
+      { qname: "w:numberingStyles", typeHint: "onOff" },
+      { qname: "w:tableStyles", typeHint: "onOff" },
+      { qname: "w:directFormattingOnRuns", typeHint: "onOff" },
+      { qname: "w:directFormattingOnParagraphs", typeHint: "onOff" },
+      { qname: "w:directFormattingOnNumbering", typeHint: "onOff" },
+      { qname: "w:directFormattingOnTables", typeHint: "onOff" },
+      { qname: "w:clearFormatting", typeHint: "onOff" },
+      { qname: "w:top3HeadingStyles", typeHint: "onOff" },
+      { qname: "w:visibleStyles", typeHint: "onOff" },
+      { qname: "w:alternateStyleNames", typeHint: "onOff" },
     ],
   },
   {
@@ -6419,16 +6777,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "stylePaneSortMethod",
     requiredAttrs: ["w:val"],
     attrConstraints: [
-      // StringValidator(Length=2, Office2007) = hexBinary 2 bytes = 4 hex chars
-      // + EnumValidator(Office2010+) with 6 hex members
-      // When both typeHint "hexBinary" and enumMembers are set, the validator
-      // applies hexBinary check in Office2007 mode and enum check otherwise.
-      {
-        qname: "w:val",
-        typeHint: "hexBinary",
-        length: 2,
-        enumMembers: ["0000", "0001", "0002", "0003", "0004", "0005"],
-      },
+      { qname: "w:val", enumMembers: ["0000", "name", "0001", "priority", "0002", "font", "0003", "basedOn", "0004", "type", "0005", "default"], minLength: 2, maxLength: 2 },
     ],
   },
   {
@@ -6628,7 +6977,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "sym",
     attrConstraints: [
       { qname: "w:font", maxLength: 31 },
-      { qname: "w:char", minLength: 2, maxLength: 2 },
+      { qname: "w:char", typeHint: "hexBinary", length: 2 },
     ],
   },
   {
@@ -6663,10 +7012,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
               ] }
             ] },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
           ] }
         ] },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPr", min: 1, max: 1 },
@@ -6711,21 +7060,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                       ] }
                     ] },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                 { kind: "group", min: 0, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] }
               ] }
@@ -6743,10 +7092,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "insideH", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "insideV", min: 0, max: 1 }
       ] }
@@ -6813,21 +7162,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                               ] }
                             ] },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                           ] }
                         ] },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                         { kind: "group", min: 0, max: 1, items: [
                           { kind: "sequence", min: 1, max: 1, items: [
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                            { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                           ] }
                         ] }
                       ] }
@@ -6849,10 +7198,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "insideH", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "insideV", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tl2br", min: 0, max: 1 },
@@ -6868,10 +7217,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
   },
@@ -6883,10 +7232,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1, expectedClassName: "TopMargin" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1, expectedClassName: "TableCellLeftMargin" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, expectedClassName: "StartMargin" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "StartMargin" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1, expectedClassName: "BottomMargin" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1, expectedClassName: "RightMargin" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, expectedClassName: "EndMargin" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "EndMargin" }
       ] }
     },
   },
@@ -6974,6 +7323,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "vAlign",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["top", "center", "bottom"] },
+    ],
   },
   {
     className: "TableGrid",
@@ -7007,17 +7359,42 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     ],
   },
   {
+    className: "TableIndentation",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "tblInd",
+    attrConstraints: [
+      { qname: "w:type", enumMembers: ["nil", "pct", "dxa", "auto"] },
+    ],
+  },
+  {
     className: "TableJustification",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "jc",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["left", "center", "right"] },
+    ],
+  },
+  {
+    className: "TableLayout",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "tblLayout",
+    attrConstraints: [
+      { qname: "w:type", enumMembers: ["fixed", "autofit"] },
+    ],
   },
   {
     className: "TableLook",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "tblLook",
     attrConstraints: [
-      { qname: "w:val", minLength: 2, maxLength: 2 },
+      { qname: "w:val", typeHint: "hexBinary", length: 2 },
+      { qname: "w:firstRow", typeHint: "onOff" },
+      { qname: "w:lastRow", typeHint: "onOff" },
+      { qname: "w:firstColumn", typeHint: "onOff" },
+      { qname: "w:lastColumn", typeHint: "onOff" },
+      { qname: "w:noHBand", typeHint: "onOff" },
+      { qname: "w:noVBand", typeHint: "onOff" },
     ],
   },
   {
@@ -7025,6 +7402,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "tblOverlap",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["never", "overlap"] },
+    ],
   },
   {
     className: "TablePositionProperties",
@@ -7035,7 +7415,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       { qname: "w:rightFromText", minValue: 0 },
       { qname: "w:topFromText", minValue: 0 },
       { qname: "w:bottomFromText", minValue: 0 },
+      { qname: "w:vertAnchor", enumMembers: ["text", "margin", "page"] },
+      { qname: "w:horzAnchor", enumMembers: ["text", "margin", "page"] },
+      { qname: "w:tblpXSpec", enumMembers: ["left", "center", "right", "inside", "outside"] },
       { qname: "w:tblpX", minValue: -31680, maxValue: 31680 },
+      { qname: "w:tblpYSpec", enumMembers: ["inline", "top", "center", "bottom", "inside", "outside"] },
       { qname: "w:tblpY", minValue: -31680, maxValue: 31680 },
     ],
   },
@@ -7083,8 +7467,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblLook", min: 0, max: 1 }
             ] }
           ] },
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblCaption", min: 0, max: 1 },
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblDescription", min: 0, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblCaption", min: 0, max: 1, initialVersion: "Office2010" },
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblDescription", min: 0, max: 1, initialVersion: "Office2010" }
         ] },
         { kind: "sequence", min: 1, max: 1, items: [
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPrChange", min: 0, max: 1 }
@@ -7197,21 +7581,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                       ] }
                     ] },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                 { kind: "group", min: 0, max: 1, items: [
                   { kind: "sequence", min: 1, max: 1, items: [
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                    { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                   ] }
                 ] }
               ] }
@@ -7221,12 +7605,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
-      { qname: "w:rsidRPr", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidR", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidDel", minLength: 4, maxLength: 4 },
-      { qname: "w:rsidTr", minLength: 4, maxLength: 4 },
-      { qname: "w14:paraId", minLength: 4, maxLength: 4 },
-      { qname: "w14:textId", minLength: 4, maxLength: 4 },
+      { qname: "w:rsidRPr", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidR", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidDel", typeHint: "hexBinary", length: 4 },
+      { qname: "w:rsidTr", typeHint: "hexBinary", length: 4 },
+      { qname: "w14:paraId", typeHint: "hexBinary", length: 4 },
+      { qname: "w14:textId", typeHint: "hexBinary", length: 4 },
     ],
   },
   {
@@ -7235,6 +7619,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "trHeight",
     attrConstraints: [
       { qname: "w:val", maxValue: 31680 },
+      { qname: "w:hRule", enumMembers: ["auto", "exact", "atLeast"] },
     ],
   },
   {
@@ -7271,8 +7656,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "trPrChange", min: 0, max: 1 },
           { kind: "group", min: 0, max: 1, items: [
             { kind: "choice", min: 1, max: 1, items: [
-              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+              { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
             ] }
           ] }
         ] }
@@ -7377,6 +7762,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:type"],
+    attrConstraints: [
+      { qname: "w:type", enumMembers: ["wholeTable", "firstRow", "lastRow", "firstCol", "lastCol", "band1Vert", "band2Vert", "band1Horz", "band2Horz", "neCell", "nwCell", "seCell", "swCell"] },
+    ],
   },
   {
     className: "Tabs",
@@ -7394,6 +7782,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "tab",
     requiredAttrs: ["w:val", "w:pos"],
     attrConstraints: [
+      { qname: "w:val", enumMembers: ["clear", "left", "start", "center", "right", "end", "decimal", "bar", "num"] },
+      { qname: "w:leader", enumMembers: ["none", "dot", "hyphen", "underscore", "heavy", "middleDot"] },
       { qname: "w:pos", minValue: -31680, maxValue: 31680 },
     ],
   },
@@ -7402,12 +7792,18 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "targetScreenSz",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["544x376", "640x480", "720x512", "800x600", "1024x768", "1152x882", "1152x900", "1280x1024", "1600x1200", "1800x1440", "1920x1200"] },
+    ],
   },
   {
     className: "TextAlignment",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "textAlignment",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["top", "center", "baseline", "bottom", "auto"] },
+    ],
   },
   {
     className: "TextBoxContent",
@@ -7468,21 +7864,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "customXmlMoveToRangeEnd", min: 1, max: 1 }
                             ] }
                           ] },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1 }
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictInsRangeEnd", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeStart", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "customXmlConflictDelRangeEnd", min: 0, max: 1, initialVersion: "Office2010" }
                         ] }
                       ] },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 1, max: 1 },
                       { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 1, max: 1 },
-                      { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded" },
+                      { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contentPart", min: 0, max: "unbounded", initialVersion: "Office2010" },
                       { kind: "group", min: 0, max: 1, items: [
                         { kind: "sequence", min: 1, max: 1, items: [
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1 },
-                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1 }
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
+                          { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictDel", min: 0, max: 1, initialVersion: "Office2010" }
                         ] }
                       ] }
                     ] }
@@ -7500,24 +7896,36 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "type",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["regular", "number", "date", "currentTime", "currentDate", "calculated"] },
+    ],
   },
   {
     className: "TextBoxTightWrap",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "textboxTightWrap",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["none", "allLines", "firstAndLastLine", "firstLineOnly", "lastLineOnly"] },
+    ],
   },
   {
     className: "TextDirection",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "textDirection",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["lrTb", "tbRl", "btLr", "lrTbV", "tbRlV", "tbLrV"] },
+    ],
   },
   {
     className: "TextEffect",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "effect",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["blinkBackground", "lights", "antsBlack", "antsRed", "shimmer", "sparkle", "none"] },
+    ],
   },
   {
     className: "TextInput",
@@ -7546,7 +7954,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "u",
     attrConstraints: [
-      { qname: "w:color", minLength: 3, maxLength: 3 },
+      { qname: "w:val", enumMembers: ["single", "words", "double", "thick", "dotted", "dottedHeavy", "dash", "dashedHeavy", "dashLong", "dashLongHeavy", "dotDash", "dashDotHeavy", "dotDotDash", "dashDotDotHeavy", "wave", "wavyHeavy", "wavyDouble", "none"] },
+      { qname: "w:color", enumMembers: ["auto"], minLength: 3, maxLength: 3 },
+      { qname: "w:themeColor", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink", "none", "background1", "text1", "background2", "text2"] },
       { qname: "w:themeTint", minLength: 1, maxLength: 2 },
       { qname: "w:themeShade", minLength: 1, maxLength: 2 },
     ],
@@ -7556,24 +7966,44 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "uniqueTag",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", typeHint: "base64Binary" },
+    ],
+  },
+  {
+    className: "VerticalMerge",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "vMerge",
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["continue", "restart"] },
+    ],
   },
   {
     className: "VerticalTextAlignment",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "vertAlign",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["baseline", "superscript", "subscript"] },
+    ],
   },
   {
     className: "VerticalTextAlignmentOnPage",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "vAlign",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["top", "center", "both", "bottom"] },
+    ],
   },
   {
     className: "View",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "view",
     requiredAttrs: ["w:val"],
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["none", "print", "outline", "masterPages", "normal", "web"] },
+    ],
   },
   {
     className: "WebSettings",
@@ -7601,9 +8031,25 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "writeProtection",
     attrConstraints: [
+      { qname: "w:recommended", typeHint: "onOff" },
+      { qname: "w:cryptProviderType", enumMembers: ["rsaAES", "rsaFull"] },
+      { qname: "w:cryptAlgorithmClass", enumMembers: ["hash"] },
+      { qname: "w:cryptAlgorithmType", enumMembers: ["typeAny"] },
       { qname: "w:cryptSpinCount", maxValue: 5000000 },
-      { qname: "w:algIdExt", minLength: 4, maxLength: 4 },
-      { qname: "w:cryptProviderTypeExt", minLength: 4, maxLength: 4 },
+      { qname: "w:algIdExt", typeHint: "hexBinary", length: 4 },
+      { qname: "w:cryptProviderTypeExt", typeHint: "hexBinary", length: 4 },
+      { qname: "w:hash", typeHint: "base64Binary" },
+      { qname: "w:salt", typeHint: "base64Binary" },
+      { qname: "w:hashValue", typeHint: "base64Binary" },
+      { qname: "w:saltValue", typeHint: "base64Binary" },
+    ],
+  },
+  {
+    className: "Zoom",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "zoom",
+    attrConstraints: [
+      { qname: "w:val", enumMembers: ["none", "fullPage", "bestFit", "textFit"] },
     ],
   },
 ];

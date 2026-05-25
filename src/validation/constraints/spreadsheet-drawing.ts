@@ -19,7 +19,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "graphicFrame", min: 1, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "cxnSp", min: 1, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "pic", min: 1, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "contentPart", min: 1, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "contentPart", min: 1, max: 1, initialVersion: "Office2010" }
             ] }
           ] }
         ] },
@@ -62,10 +62,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "contentPart",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "nvContentPartPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "nvPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "xfrm", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "nvContentPartPr", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "nvPr", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "xfrm", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: ["r:id"],
@@ -119,7 +119,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "graphicFrame", min: 1, max: 1 },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "cxnSp", min: 1, max: 1 },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "pic", min: 1, max: 1 },
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "contentPart", min: 1, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "contentPart", min: 1, max: 1, initialVersion: "Office2010" }
         ] }
       ] }
     },
@@ -293,7 +293,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "graphicFrame", min: 1, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "cxnSp", min: 1, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "pic", min: 1, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "contentPart", min: 1, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "contentPart", min: 1, max: 1, initialVersion: "Office2010" }
             ] }
           ] }
         ] },
@@ -438,13 +438,16 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "graphicFrame", min: 1, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "cxnSp", min: 1, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "pic", min: 1, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "contentPart", min: 1, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "contentPart", min: 1, max: 1, initialVersion: "Office2010" }
             ] }
           ] }
         ] },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "clientData", min: 1, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":editAs", enumMembers: ["twoCell", "oneCell", "absolute"] },
+    ],
   },
   {
     className: "WorksheetDrawing",

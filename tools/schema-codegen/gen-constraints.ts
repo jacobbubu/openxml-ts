@@ -157,6 +157,15 @@ interface SchemaParticle {
   readonly Occurs?: ReadonlyArray<{ readonly Min?: number; readonly Max?: number }>;
   readonly Items: readonly ParticleItem[];
 }
+interface SchemaEnumFacet {
+  readonly Value: string;
+  readonly Version?: string;
+}
+interface SchemaEnum {
+  readonly Type: string;
+  readonly Name: string;
+  readonly Facets: readonly SchemaEnumFacet[];
+}
 interface SchemaType {
   readonly Name: string;
   readonly ClassName: string;
@@ -169,6 +178,7 @@ interface SchemaType {
 interface SchemaFile {
   readonly TargetNamespace: string;
   readonly Types: readonly SchemaType[];
+  readonly Enums?: readonly SchemaEnum[];
 }
 
 // ---- Normalized constraint types (emitted into generated files) ----
@@ -184,6 +194,7 @@ interface NormalizedLeaf {
   readonly local: string;
   readonly min: number;
   readonly max: number | "unbounded";
+  readonly initialVersion?: string;
 }
 
 /** A composite particle node. */
@@ -206,6 +217,9 @@ interface AttrConstraint {
   readonly maxLength?: number;
   readonly minValue?: number;
   readonly maxValue?: number;
+  readonly typeHint?: string;
+  readonly enumMembers?: readonly string[];
+  readonly length?: number;
 }
 
 /** A version-scoped required attribute entry (matches VersionedRequiredAttr in types.ts). */
@@ -271,7 +285,15 @@ function normalizeParticleItem(item: ParticleItem, targetNs: string): Normalized
     const parsed = parseItemName(item.Name);
     if (parsed === null) return null;
     const ns = resolveNs(parsed.prefix, targetNs);
-    return { kind: "leaf", ns, local: parsed.local, min, max };
+    const initialVersion = item.InitialVersion;
+    return {
+      kind: "leaf",
+      ns,
+      local: parsed.local,
+      min,
+      max,
+      ...(initialVersion !== undefined ? { initialVersion } : {}),
+    };
   }
 
   if (item.Kind !== undefined && item.Items !== undefined) {
@@ -299,7 +321,42 @@ function normalizeParticle(particle: SchemaParticle, targetNs: string): Normaliz
   return { root };
 }
 
-function extractAttrConstraints(attrs: readonly SchemaAttribute[]): {
+function buildEnumMap(enums: readonly SchemaEnum[]): Map<string, string[]> {
+  const map = new Map<string, string[]>();
+  for (const e of enums) {
+    // Only include facets without version gating (base values)
+    // Version-gated facets are ignored for now
+    const values = e.Facets.filter((f) => f.Version === undefined).map((f) => f.Value);
+    if (values.length > 0) {
+      map.set(e.Name, values);
+    }
+    // Also index by Type (e.g. "w:ST_HexColorAuto")
+    if (e.Type !== undefined) {
+      map.set(e.Type, values);
+    }
+  }
+  return map;
+}
+
+function extractTypeHint(attrType: string): string | undefined {
+  if (attrType.includes("HexBinaryValue")) return "hexBinary";
+  if (attrType.includes("Base64BinaryValue")) return "base64Binary";
+  if (attrType.includes("ListValue")) return "list";
+  if (attrType.includes("OnOffValue")) return "onOff";
+  return undefined;
+}
+
+/** Parse the short enum name from a .NET EnumValue<T> type string.
+ *  e.g. "EnumValue<DocumentFormat.OpenXml.Wordprocessing.JustificationValues>" → "JustificationValues" */
+function parseEnumValueName(attrType: string): string | undefined {
+  const m = attrType.match(/EnumValue<[^>]*\.(\w+)>/);
+  return m ? m[1] : undefined;
+}
+
+function extractAttrConstraints(
+  attrs: readonly SchemaAttribute[],
+  enumMap: Map<string, string[]>,
+): {
   required: string[];
   versionedRequired: VersionedRequiredAttr[];
   constraints: AttrConstraint[];
@@ -361,21 +418,46 @@ function extractAttrConstraints(attrs: readonly SchemaAttribute[]): {
       }
     }
 
+    // typeHint from attribute type
+    const typeHint = extractTypeHint(attr.Type);
+    if (typeHint !== undefined) {
+      c.typeHint = typeHint;
+      hasConstraint = true;
+    }
+
+    // EnumValue<T> → enumMembers from enum map
+    const enumValueName = parseEnumValueName(attr.Type);
+    if (enumValueName !== undefined) {
+      const members = enumMap.get(enumValueName);
+      if (members !== undefined && members.length > 0) {
+        c.enumMembers = members;
+        hasConstraint = true;
+      }
+    }
+
+    const isHexBinary = c.typeHint === "hexBinary";
+
     for (const v of attr.Validators ?? []) {
       if (v.Name === "StringValidator") {
         const args = argsToMap(v.Arguments);
-        if (args.MaxLength !== undefined) {
-          c.maxLength = Number(args.MaxLength);
+        if (isHexBinary && args.Length !== undefined) {
+          // hexBinary length in bytes (not characters)
+          c.length = Number(args.Length);
           hasConstraint = true;
-        }
-        if (args.MinLength !== undefined) {
-          c.minLength = Number(args.MinLength);
-          hasConstraint = true;
-        }
-        if (args.Length !== undefined) {
-          c.maxLength = Number(args.Length);
-          c.minLength = Number(args.Length);
-          hasConstraint = true;
+        } else {
+          if (args.MaxLength !== undefined) {
+            c.maxLength = Number(args.MaxLength);
+            hasConstraint = true;
+          }
+          if (args.MinLength !== undefined) {
+            c.minLength = Number(args.MinLength);
+            hasConstraint = true;
+          }
+          if (args.Length !== undefined) {
+            c.maxLength = Number(args.Length);
+            c.minLength = Number(args.Length);
+            hasConstraint = true;
+          }
         }
       } else if (v.Name === "NumberValidator") {
         const args = argsToMap(v.Arguments);
@@ -386,6 +468,16 @@ function extractAttrConstraints(attrs: readonly SchemaAttribute[]): {
         if (args.MaxInclusive !== undefined) {
           c.maxValue = Number(args.MaxInclusive);
           hasConstraint = true;
+        }
+      } else if (v.Name === "EnumValidator") {
+        // Explicit EnumValidator: look up by type name (e.g. "w:ST_HexColorAuto")
+        const enumType = (v as { Type?: string }).Type;
+        if (enumType !== undefined) {
+          const members = enumMap.get(enumType);
+          if (members !== undefined && members.length > 0) {
+            c.enumMembers = members;
+            hasConstraint = true;
+          }
         }
       }
     }
@@ -422,6 +514,7 @@ function parseTypeName(name: string): { prefix: string; local: string } | null {
 
 function processSchema(schemaData: SchemaFile): ElementConstraint[] {
   const targetNs = schemaData.TargetNamespace;
+  const enumMap = buildEnumMap(schemaData.Enums ?? []);
   const constraints: ElementConstraint[] = [];
 
   for (const type of schemaData.Types) {
@@ -454,7 +547,7 @@ function processSchema(schemaData: SchemaFile): ElementConstraint[] {
         required,
         versionedRequired,
         constraints: attrC,
-      } = extractAttrConstraints(type.Attributes);
+      } = extractAttrConstraints(type.Attributes, enumMap);
       if (required.length > 0) constraint.requiredAttrs = required;
       if (versionedRequired.length > 0) constraint.versionedRequiredAttrs = versionedRequired;
       if (attrC.length > 0) constraint.attrConstraints = attrC;
@@ -480,7 +573,11 @@ function nodeToTs(node: NormalizedNode, indent: number): string {
   const pad = "  ".repeat(indent);
   if (node.kind === "leaf") {
     const maxStr = node.max === "unbounded" ? '"unbounded"' : String(node.max);
-    return `${pad}{ kind: "leaf", ns: ${JSON.stringify(node.ns)}, local: ${JSON.stringify(node.local)}, min: ${node.min}, max: ${maxStr} }`;
+    const iv =
+      node.initialVersion !== undefined
+        ? `, initialVersion: ${JSON.stringify(node.initialVersion)}`
+        : "";
+    return `${pad}{ kind: "leaf", ns: ${JSON.stringify(node.ns)}, local: ${JSON.stringify(node.local)}, min: ${node.min}, max: ${maxStr}${iv} }`;
   }
   const itemsStr = node.items.map((item) => nodeToTs(item, indent + 1)).join(",\n");
   const maxStr = node.max === "unbounded" ? '"unbounded"' : String(node.max);
@@ -530,6 +627,11 @@ function buildOutput(constraints: ElementConstraint[], sourcePath: string): stri
       lines.push("    attrConstraints: [");
       for (const ac of c.attrConstraints) {
         const parts: string[] = [`qname: ${JSON.stringify(ac.qname)}`];
+        if (ac.typeHint !== undefined) parts.push(`typeHint: ${JSON.stringify(ac.typeHint)}`);
+        if (ac.enumMembers !== undefined && ac.enumMembers.length > 0) {
+          parts.push(`enumMembers: [${ac.enumMembers.map((m) => JSON.stringify(m)).join(", ")}]`);
+        }
+        if (ac.length !== undefined) parts.push(`length: ${ac.length}`);
         if (ac.minLength !== undefined) parts.push(`minLength: ${ac.minLength}`);
         if (ac.maxLength !== undefined) parts.push(`maxLength: ${ac.maxLength}`);
         if (ac.minValue !== undefined) parts.push(`minValue: ${ac.minValue}`);

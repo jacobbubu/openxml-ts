@@ -260,6 +260,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "buAutoNum",
     requiredAttrs: [":type"],
     attrConstraints: [
+      { qname: ":type", enumMembers: ["alphaLcParenBoth", "alphaUcParenBoth", "alphaLcParenR", "alphaUcParenR", "alphaLcPeriod", "alphaUcPeriod", "arabicParenBoth", "arabicParenR", "arabicPeriod", "arabicPlain", "romanLcParenBoth", "romanUcParenBoth", "romanLcParenR", "romanUcParenR", "romanLcPeriod", "romanUcPeriod", "circleNumDbPlain", "circleNumWdBlackPlain", "circleNumWdWhitePlain", "arabicDbPeriod", "arabicDbPlain", "ea1ChsPeriod", "ea1ChsPlain", "ea1ChtPeriod", "ea1ChtPlain", "ea1JpnChsDbPeriod", "ea1JpnKorPlain", "ea1JpnKorPeriod", "arabic1Minus", "arabic2Minus", "hebrew2Minus", "thaiAlphaPeriod", "thaiAlphaParenR", "thaiAlphaParenBoth", "thaiNumPeriod", "thaiNumParenR", "thaiNumParenBoth", "hindiAlphaPeriod", "hindiNumPeriod", "hindiNumParenR", "hindiAlpha1Period"] },
       { qname: ":startAt", minValue: 1, maxValue: 32767 },
     ],
   },
@@ -377,6 +378,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":blend"],
+    attrConstraints: [
+      { qname: ":blend", enumMembers: ["over", "mult", "screen", "darken", "lighten"] },
+    ],
   },
   {
     className: "Blip",
@@ -406,6 +410,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":cstate", enumMembers: ["email", "screen", "print", "hqprint", "none"] },
+    ],
   },
   {
     className: "BlipExtension",
@@ -413,13 +420,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "imgProps", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "useLocalDpi", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "webVideoPr", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "svgBlip", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "picAttrSrcUrl", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "oembed", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "oembedShared", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "imgProps", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "useLocalDpi", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "webVideoPr", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "svgBlip", min: 1, max: 1, initialVersion: "Office2019" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "picAttrSrcUrl", min: 1, max: 1, initialVersion: "Office2016" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "oembed", min: 1, max: 1, initialVersion: "Microsoft365" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "oembedShared", min: 1, max: 1, initialVersion: "Microsoft365" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -484,8 +491,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     attrConstraints: [
+      { qname: ":vertOverflow", enumMembers: ["overflow", "ellipsis", "clip"] },
+      { qname: ":horzOverflow", enumMembers: ["overflow", "clip"] },
+      { qname: ":vert", enumMembers: ["horz", "vert", "vert270", "wordArtVert", "eaVert", "mongolianVert", "wordArtVertRtl"] },
+      { qname: ":wrap", enumMembers: ["none", "square"] },
       { qname: ":numCol", minValue: 1, maxValue: 16 },
       { qname: ":spcCol", minValue: 0 },
+      { qname: ":anchor", enumMembers: ["t", "ctr", "b"] },
     ],
   },
   {
@@ -576,6 +588,22 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "BuildChart",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
+    localName: "bldChart",
+    attrConstraints: [
+      { qname: ":bld", enumMembers: ["series", "category", "seriesEl", "categoryEl"] },
+    ],
+  },
+  {
+    className: "BuildDiagram",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
+    localName: "bldDgm",
+    attrConstraints: [
+      { qname: ":bld", enumMembers: ["one", "lvlOne", "lvlAtOnce"] },
+    ],
+  },
+  {
     className: "BulletColor",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "buClr",
@@ -623,6 +651,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
     requiredAttrs: [":prst"],
     attrConstraints: [
+      { qname: ":prst", enumMembers: ["legacyObliqueTopLeft", "legacyObliqueTop", "legacyObliqueTopRight", "legacyObliqueLeft", "legacyObliqueFront", "legacyObliqueRight", "legacyObliqueBottomLeft", "legacyObliqueBottom", "legacyObliqueBottomRight", "legacyPerspectiveTopLeft", "legacyPerspectiveTop", "legacyPerspectiveTopRight", "legacyPerspectiveLeft", "legacyPerspectiveFront", "legacyPerspectiveRight", "legacyPerspectiveBottomLeft", "legacyPerspectiveBottom", "legacyPerspectiveBottomRight", "orthographicFront", "isometricTopUp", "isometricTopDown", "isometricBottomUp", "isometricBottomDown", "isometricLeftUp", "isometricLeftDown", "isometricRightUp", "isometricRightDown", "isometricOffAxis1Left", "isometricOffAxis1Right", "isometricOffAxis1Top", "isometricOffAxis2Left", "isometricOffAxis2Right", "isometricOffAxis2Top", "isometricOffAxis3Left", "isometricOffAxis3Right", "isometricOffAxis3Bottom", "isometricOffAxis4Left", "isometricOffAxis4Right", "isometricOffAxis4Bottom", "obliqueTopLeft", "obliqueTop", "obliqueTopRight", "obliqueLeft", "obliqueRight", "obliqueBottomLeft", "obliqueBottom", "obliqueBottomRight", "perspectiveFront", "perspectiveLeft", "perspectiveRight", "perspectiveAbove", "perspectiveBelow", "perspectiveAboveLeftFacing", "perspectiveAboveRightFacing", "perspectiveContrastingLeftFacing", "perspectiveContrastingRightFacing", "perspectiveHeroicLeftFacing", "perspectiveHeroicRightFacing", "perspectiveHeroicExtremeLeftFacing", "perspectiveHeroicExtremeRightFacing", "perspectiveRelaxed", "perspectiveRelaxedModerately"] },
       { qname: ":fov", minValue: 0, maxValue: 10800000 },
       { qname: ":zoom", minValue: 0 },
     ],
@@ -638,6 +667,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":prstMaterial", enumMembers: ["legacyMatte", "legacyPlastic", "legacyMetal", "legacyWireframe", "matte", "plastic", "metal", "warmMatte", "translucentPowder", "powder", "dkEdge", "softEdge", "clear", "flat", "softmetal"] },
+    ],
   },
   {
     className: "CharacterBullet",
@@ -650,6 +682,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "chart",
     requiredAttrs: [":bldStep"],
+    attrConstraints: [
+      { qname: ":bldStep", enumMembers: ["category", "ptInCategory", "series", "ptInSeries", "allPts", "gridLegend"] },
+    ],
   },
   {
     className: "ColorChange",
@@ -802,7 +837,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "graphic", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "graphic", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -944,8 +979,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "dataModelExt", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "recolorImg", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "dataModelExt", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "recolorImg", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -1038,6 +1073,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+  },
+  {
+    className: "Diagram",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
+    localName: "dgm",
+    attrConstraints: [
+      { qname: ":bldStep", enumMembers: ["sp", "bg"] },
+    ],
   },
   {
     className: "Duotone",
@@ -1380,6 +1423,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":blend"],
+    attrConstraints: [
+      { qname: ":blend", enumMembers: ["over", "mult", "screen", "darken", "lighten"] },
+    ],
   },
   {
     className: "FillProperties",
@@ -1501,6 +1547,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":idx"],
+    attrConstraints: [
+      { qname: ":idx", enumMembers: ["major", "minor", "none"] },
+    ],
   },
   {
     className: "Fonts",
@@ -1599,6 +1648,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "tileRect", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":flip", enumMembers: ["none", "x", "y", "xy"] },
+    ],
   },
   {
     className: "GradientStop",
@@ -1704,7 +1756,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "sp", min: 1, max: 1 },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "cxnSp", min: 1, max: 1 },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "pic", min: 1, max: 1 },
-          { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "contentPart", min: 1, max: 1 },
+          { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "contentPart", min: 1, max: 1, initialVersion: "Office2010" },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "graphicFrame", min: 1, max: 1 },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "grpSp", min: 1, max: 1 }
         ] },
@@ -1728,7 +1780,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "isCanvas", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "isCanvas", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -1852,7 +1904,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "hlinkClr", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "hlinkClr", min: 1, max: 1, initialVersion: "Office2019" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2428,6 +2480,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":rig", ":dir"],
+    attrConstraints: [
+      { qname: ":rig", enumMembers: ["legacyFlat1", "legacyFlat2", "legacyFlat3", "legacyFlat4", "legacyNormal1", "legacyNormal2", "legacyNormal3", "legacyNormal4", "legacyHarsh1", "legacyHarsh2", "legacyHarsh3", "legacyHarsh4", "threePt", "balanced", "soft", "harsh", "flood", "contrasting", "morning", "sunrise", "sunset", "chilly", "freezing", "flat", "twoPt", "glow", "brightRoom"] },
+      { qname: ":dir", enumMembers: ["tl", "t", "tr", "l", "r", "bl", "b", "br"] },
+    ],
   },
   {
     className: "LinearGradientFill",
@@ -2457,7 +2513,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lineSketchStyleProps", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lineSketchStyleProps", min: 1, max: 1, initialVersion: "Office2021" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2640,13 +2696,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "compatExt", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "backgroundPr", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "creationId", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "predDERef", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "decorative", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "classification", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "scriptLink", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "compatExt", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "backgroundPr", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "creationId", min: 1, max: 1, initialVersion: "Office2016" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "predDERef", min: 1, max: 1, initialVersion: "Office2016" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "decorative", min: 1, max: 1, initialVersion: "Office2019" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "classification", min: 1, max: 1, initialVersion: "Office2021" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "scriptLink", min: 1, max: 1, initialVersion: "Microsoft365" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2689,7 +2745,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "nonVisualGroupProps", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "nonVisualGroupProps", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2754,11 +2810,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "cameraTool", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "signatureLine", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "objectPr", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "liveFeedProps", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "imageFormula", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "cameraTool", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "signatureLine", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "objectPr", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "liveFeedProps", min: 1, max: 1, initialVersion: "Microsoft365" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "imageFormula", min: 1, max: 1, initialVersion: "Microsoft365" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2845,7 +2901,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "themeFamily", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "themeFamily", min: 1, max: 1, initialVersion: "Office2013" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2882,6 +2938,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       { qname: ":blurRad", minValue: 0, maxValue: 2147483647 },
       { qname: ":dist", minValue: 0, maxValue: 2147483647 },
       { qname: ":dir", minValue: 0 },
+      { qname: ":algn", enumMembers: ["tl", "t", "tr", "l", "ctr", "r", "bl", "b", "br"] },
     ],
   },
   {
@@ -2939,7 +2996,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "r", min: 1, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "br", min: 1, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "fld", min: 1, max: 1 },
-            { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "m", min: 1, max: 1 }
+            { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "m", min: 1, max: 1, initialVersion: "Office2010" }
           ] }
         ] },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "endParaRPr", min: 0, max: 1 }
@@ -3005,6 +3062,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     attrConstraints: [
       { qname: ":w", minValue: 0, maxValue: 2147483647 },
       { qname: ":h", minValue: 0, maxValue: 2147483647 },
+      { qname: ":fill", enumMembers: ["none", "norm", "lighten", "lightenLess", "darken", "darkenLess"] },
     ],
   },
   {
@@ -3016,6 +3074,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "fillToRect", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":path", enumMembers: ["shape", "circle", "rect"] },
+    ],
   },
   {
     className: "PathList",
@@ -3037,6 +3098,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "bgClr", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":prst", enumMembers: ["pct5", "pct10", "pct20", "pct25", "pct30", "pct40", "pct50", "pct60", "pct70", "pct75", "pct80", "pct90", "horz", "vert", "ltHorz", "ltVert", "dkHorz", "dkVert", "narHorz", "narVert", "dashHorz", "dashVert", "cross", "dnDiag", "upDiag", "ltDnDiag", "ltUpDiag", "dkDnDiag", "dkUpDiag", "wdDnDiag", "wdUpDiag", "dashDnDiag", "dashUpDiag", "diagCross", "smCheck", "lgCheck", "smGrid", "lgGrid", "dotGrid", "smConfetti", "lgConfetti", "horzBrick", "diagBrick", "solidDmnd", "openDmnd", "dotDmnd", "plaid", "sphere", "weave", "divot", "shingle", "wave", "trellis", "zigZag"] },
+    ],
   },
   {
     className: "Picture",
@@ -3113,6 +3177,17 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":val"],
+    attrConstraints: [
+      { qname: ":val", enumMembers: ["aliceBlue", "antiqueWhite", "aqua", "aquamarine", "azure", "beige", "bisque", "black", "blanchedAlmond", "blue", "blueViolet", "brown", "burlyWood", "cadetBlue", "chartreuse", "chocolate", "coral", "cornflowerBlue", "cornsilk", "crimson", "cyan", "dkBlue", "dkCyan", "dkGoldenrod", "dkGray", "dkGreen", "dkKhaki", "dkMagenta", "dkOliveGreen", "dkOrange", "dkOrchid", "dkRed", "dkSalmon", "dkSeaGreen", "dkSlateBlue", "dkSlateGray", "dkTurquoise", "dkViolet", "deepPink", "deepSkyBlue", "dimGray", "dodgerBlue", "firebrick", "floralWhite", "forestGreen", "fuchsia", "gainsboro", "ghostWhite", "gold", "goldenrod", "gray", "green", "greenYellow", "honeydew", "hotPink", "indianRed", "indigo", "ivory", "khaki", "lavender", "lavenderBlush", "lawnGreen", "lemonChiffon", "ltBlue", "ltCoral", "ltCyan", "ltGoldenrodYellow", "ltGray", "ltGreen", "ltPink", "ltSalmon", "ltSeaGreen", "ltSkyBlue", "ltSlateGray", "ltSteelBlue", "ltYellow", "lime", "limeGreen", "linen", "magenta", "maroon", "medAquamarine", "medBlue", "medOrchid", "medPurple", "medSeaGreen", "medSlateBlue", "medSpringGreen", "medTurquoise", "medVioletRed", "midnightBlue", "mintCream", "mistyRose", "moccasin", "navajoWhite", "navy", "oldLace", "olive", "oliveDrab", "orange", "orangeRed", "orchid", "paleGoldenrod", "paleGreen", "paleTurquoise", "paleVioletRed", "papayaWhip", "peachPuff", "peru", "pink", "plum", "powderBlue", "purple", "red", "rosyBrown", "royalBlue", "saddleBrown", "salmon", "sandyBrown", "seaGreen", "seaShell", "sienna", "silver", "skyBlue", "slateBlue", "slateGray", "snow", "springGreen", "steelBlue", "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat", "white", "whiteSmoke", "yellow", "yellowGreen"] },
+    ],
+  },
+  {
+    className: "PresetDash",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
+    localName: "prstDash",
+    attrConstraints: [
+      { qname: ":val", enumMembers: ["solid", "dot", "dash", "lgDash", "dashDot", "lgDashDot", "lgDashDotDot", "sysDash", "sysDot", "sysDashDot", "sysDashDotDot"] },
+    ],
   },
   {
     className: "PresetGeometry",
@@ -3124,6 +3199,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":prst"],
+    attrConstraints: [
+      { qname: ":prst", enumMembers: ["line", "lineInv", "triangle", "rtTriangle", "rect", "diamond", "parallelogram", "trapezoid", "nonIsoscelesTrapezoid", "pentagon", "hexagon", "heptagon", "octagon", "decagon", "dodecagon", "star4", "star5", "star6", "star7", "star8", "star10", "star12", "star16", "star24", "star32", "roundRect", "round1Rect", "round2SameRect", "round2DiagRect", "snipRoundRect", "snip1Rect", "snip2SameRect", "snip2DiagRect", "plaque", "ellipse", "teardrop", "homePlate", "chevron", "pieWedge", "pie", "blockArc", "donut", "noSmoking", "rightArrow", "leftArrow", "upArrow", "downArrow", "stripedRightArrow", "notchedRightArrow", "bentUpArrow", "leftRightArrow", "upDownArrow", "leftUpArrow", "leftRightUpArrow", "quadArrow", "leftArrowCallout", "rightArrowCallout", "upArrowCallout", "downArrowCallout", "leftRightArrowCallout", "upDownArrowCallout", "quadArrowCallout", "bentArrow", "uturnArrow", "circularArrow", "leftCircularArrow", "leftRightCircularArrow", "curvedRightArrow", "curvedLeftArrow", "curvedUpArrow", "curvedDownArrow", "swooshArrow", "cube", "can", "lightningBolt", "heart", "sun", "moon", "smileyFace", "irregularSeal1", "irregularSeal2", "foldedCorner", "bevel", "frame", "halfFrame", "corner", "diagStripe", "chord", "arc", "leftBracket", "rightBracket", "leftBrace", "rightBrace", "bracketPair", "bracePair", "straightConnector1", "bentConnector2", "bentConnector3", "bentConnector4", "bentConnector5", "curvedConnector2", "curvedConnector3", "curvedConnector4", "curvedConnector5", "callout1", "callout2", "callout3", "accentCallout1", "accentCallout2", "accentCallout3", "borderCallout1", "borderCallout2", "borderCallout3", "accentBorderCallout1", "accentBorderCallout2", "accentBorderCallout3", "wedgeRectCallout", "wedgeRoundRectCallout", "wedgeEllipseCallout", "cloudCallout", "cloud", "ribbon", "ribbon2", "ellipseRibbon", "ellipseRibbon2", "leftRightRibbon", "verticalScroll", "horizontalScroll", "wave", "doubleWave", "plus", "flowChartProcess", "flowChartDecision", "flowChartInputOutput", "flowChartPredefinedProcess", "flowChartInternalStorage", "flowChartDocument", "flowChartMultidocument", "flowChartTerminator", "flowChartPreparation", "flowChartManualInput", "flowChartManualOperation", "flowChartConnector", "flowChartPunchedCard", "flowChartPunchedTape", "flowChartSummingJunction", "flowChartOr", "flowChartCollate", "flowChartSort", "flowChartExtract", "flowChartMerge", "flowChartOfflineStorage", "flowChartOnlineStorage", "flowChartMagneticTape", "flowChartMagneticDisk", "flowChartMagneticDrum", "flowChartDisplay", "flowChartDelay", "flowChartAlternateProcess", "flowChartOffpageConnector", "actionButtonBlank", "actionButtonHome", "actionButtonHelp", "actionButtonInformation", "actionButtonForwardNext", "actionButtonBackPrevious", "actionButtonEnd", "actionButtonBeginning", "actionButtonReturn", "actionButtonDocument", "actionButtonSound", "actionButtonMovie", "gear6", "gear9", "funnel", "mathPlus", "mathMinus", "mathMultiply", "mathDivide", "mathEqual", "mathNotEqual", "cornerTabs", "squareTabs", "plaqueTabs", "chartX", "chartStar", "chartPlus"] },
+    ],
   },
   {
     className: "PresetShadow",
@@ -3145,6 +3223,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
     requiredAttrs: [":prst"],
     attrConstraints: [
+      { qname: ":prst", enumMembers: ["shdw1", "shdw2", "shdw3", "shdw4", "shdw5", "shdw6", "shdw7", "shdw8", "shdw9", "shdw10", "shdw11", "shdw12", "shdw13", "shdw14", "shdw15", "shdw16", "shdw17", "shdw18", "shdw19", "shdw20"] },
       { qname: ":dist", minValue: 0, maxValue: 2147483647 },
       { qname: ":dir", minValue: 0 },
     ],
@@ -3159,6 +3238,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":prst"],
+    attrConstraints: [
+      { qname: ":prst", enumMembers: ["textNoShape", "textPlain", "textStop", "textTriangle", "textTriangleInverted", "textChevron", "textChevronInverted", "textRingInside", "textRingOutside", "textArchUp", "textArchDown", "textCircle", "textButton", "textArchUpPour", "textArchDownPour", "textCirclePour", "textButtonPour", "textCurveUp", "textCurveDown", "textCanUp", "textCanDown", "textWave1", "textWave2", "textDoubleWave1", "textWave4", "textInflate", "textDeflate", "textInflateBottom", "textDeflateBottom", "textInflateTop", "textDeflateTop", "textDeflateInflate", "textDeflateInflateDeflate", "textFadeRight", "textFadeLeft", "textFadeUp", "textFadeDown", "textSlantUp", "textSlantDown", "textCascadeUp", "textCascadeDown"] },
+    ],
   },
   {
     className: "PtExtension",
@@ -3166,7 +3248,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "cNvPr", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "cNvPr", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -3217,6 +3299,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       { qname: ":dist", minValue: 0, maxValue: 2147483647 },
       { qname: ":dir", minValue: 0 },
       { qname: ":fadeDir", minValue: 0 },
+      { qname: ":algn", enumMembers: ["tl", "t", "tr", "l", "ctr", "r", "bl", "b", "br"] },
     ],
   },
   {
@@ -3261,7 +3344,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
     requiredAttrs: [":val"],
     attrConstraints: [
-      { qname: ":val", minLength: 3, maxLength: 3 },
+      { qname: ":val", typeHint: "hexBinary", length: 3 },
       { qname: "a14:legacySpreadsheetColorIndex", minValue: 0, maxValue: 80 },
     ],
   },
@@ -3474,6 +3557,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":val"],
+    attrConstraints: [
+      { qname: ":val", enumMembers: ["bg1", "tx1", "bg2", "tx2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hlink", "folHlink", "phClr", "dk1", "lt1", "dk2", "lt2"] },
+    ],
   },
   {
     className: "Shape",
@@ -3506,6 +3592,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       { qname: ":z", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":extrusionH", minValue: 0, maxValue: 2147483647 },
       { qname: ":contourW", minValue: 0, maxValue: 2147483647 },
+      { qname: ":prstMaterial", enumMembers: ["legacyMatte", "legacyPlastic", "legacyMetal", "legacyWireframe", "matte", "plastic", "metal", "warmMatte", "translucentPowder", "powder", "dkEdge", "softEdge", "clear", "flat", "softmetal"] },
     ],
   },
   {
@@ -3583,6 +3670,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":bwMode", enumMembers: ["clr", "auto", "gray", "ltGray", "invGray", "grayWhite", "blackGray", "blackWhite", "black", "white", "hidden"] },
+    ],
   },
   {
     className: "ShapePropertiesExtension",
@@ -3590,12 +3680,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenFill", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenLine", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenEffects", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenScene3d", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenSp3d", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "shadowObscured", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenFill", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenLine", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenEffects", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenScene3d", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenSp3d", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "shadowObscured", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -3771,7 +3861,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
     requiredAttrs: [":val"],
     attrConstraints: [
-      { qname: ":lastClr", minLength: 3, maxLength: 3 },
+      { qname: ":val", enumMembers: ["scrollBar", "background", "activeCaption", "inactiveCaption", "menu", "window", "windowFrame", "menuText", "windowText", "captionText", "activeBorder", "inactiveBorder", "appWorkspace", "highlight", "highlightText", "btnFace", "btnShadow", "grayText", "btnText", "inactiveCaptionText", "btnHighlight", "3dDkShadow", "3dLight", "infoText", "infoBk", "hotLight", "gradientActiveCaption", "gradientInactiveCaption", "menuHighlight", "menuBar"] },
+      { qname: ":lastClr", typeHint: "hexBinary", length: 3 },
     ],
   },
   {
@@ -3863,6 +3954,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":vert", enumMembers: ["horz", "vert", "vert270", "wordArtVert", "eaVert", "mongolianVert", "wordArtVertRtl"] },
+      { qname: ":anchor", enumMembers: ["t", "ctr", "b"] },
+      { qname: ":horzOverflow", enumMembers: ["overflow", "clip"] },
+    ],
   },
   {
     className: "TableCellStyle",
@@ -3906,6 +4002,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":b", enumMembers: ["on", "off", "def"] },
+      { qname: ":i", enumMembers: ["on", "off", "def"] },
+    ],
   },
   {
     className: "TableGrid",
@@ -4022,6 +4122,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     requiredAttrs: [":def"],
   },
   {
+    className: "TabStop",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
+    localName: "tab",
+    attrConstraints: [
+      { qname: ":algn", enumMembers: ["l", "ctr", "r", "dec"] },
+    ],
+  },
+  {
     className: "TabStopList",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "tabLst",
@@ -4118,6 +4226,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     attrConstraints: [
       { qname: ":tx", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":ty", minValue: -27273042329600, maxValue: 27273042316900 },
+      { qname: ":flip", enumMembers: ["none", "x", "y", "xy"] },
+      { qname: ":algn", enumMembers: ["tl", "t", "tr", "l", "ctr", "r", "bl", "b", "br"] },
     ],
   },
   {
@@ -4349,6 +4459,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    attrConstraints: [
+      { qname: ":bwMode", enumMembers: ["clr", "auto", "gray", "ltGray", "invGray", "grayWhite", "blackGray", "blackWhite", "black", "white", "hidden"] },
+    ],
   },
   {
     className: "WholeTable",
