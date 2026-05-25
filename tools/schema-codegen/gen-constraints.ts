@@ -147,10 +147,14 @@ interface SchemaAttribute {
 }
 interface ParticleItem {
   readonly Name?: string; // "prefix:TypeName/prefix:localName"
-  readonly Kind?: "Sequence" | "Choice" | "All" | "Group";
+  readonly Kind?: "Sequence" | "Choice" | "All" | "Group" | "Any";
   readonly Occurs?: ReadonlyArray<{ readonly Min?: number; readonly Max?: number }>;
   readonly Items?: readonly ParticleItem[];
   readonly InitialVersion?: string;
+}
+interface SchemaChild {
+  readonly Name: string;
+  readonly PropertyName?: string;
 }
 interface SchemaParticle {
   readonly Kind: "Sequence" | "Choice" | "All" | "Group";
@@ -173,6 +177,7 @@ interface SchemaType {
   readonly IsLeafElement?: boolean;
   readonly IsLeafText?: boolean;
   readonly Attributes?: readonly SchemaAttribute[];
+  readonly Children?: readonly SchemaChild[];
   readonly Particle?: SchemaParticle;
 }
 interface SchemaFile {
@@ -195,6 +200,14 @@ interface NormalizedLeaf {
   readonly min: number;
   readonly max: number | "unbounded";
   readonly initialVersion?: string;
+  readonly expectedClassName?: string;
+}
+
+/** An xsd:any wildcard particle. */
+interface NormalizedAny {
+  readonly kind: "any";
+  readonly min: number;
+  readonly max: number | "unbounded";
 }
 
 /** A composite particle node. */
@@ -205,7 +218,7 @@ interface NormalizedComposite {
   readonly items: readonly NormalizedNode[];
 }
 
-type NormalizedNode = NormalizedLeaf | NormalizedComposite;
+type NormalizedNode = NormalizedLeaf | NormalizedAny | NormalizedComposite;
 
 interface NormalizedParticle {
   readonly root: NormalizedNode;
@@ -277,8 +290,21 @@ function occursToMinMax(
   return { min, max: max === 0 ? "unbounded" : max };
 }
 
-function normalizeParticleItem(item: ParticleItem, targetNs: string): NormalizedNode | null {
+function normalizeParticleItem(
+  item: ParticleItem,
+  targetNs: string,
+  expectedClassMap: ReadonlyMap<string, string>,
+): NormalizedNode | null {
   const { min, max } = occursToMinMax(item.Occurs);
+
+  // xsd:any wildcard
+  if (item.Kind === "Any") {
+    // noOccurs → min=1 max=unbounded (per xsd:any with minOccurs="1")
+    if (!item.Occurs || item.Occurs.length === 0) {
+      return { kind: "any", min: 1, max: "unbounded" };
+    }
+    return { kind: "any", min, max };
+  }
 
   if (item.Name !== undefined) {
     // Leaf element reference
@@ -286,6 +312,7 @@ function normalizeParticleItem(item: ParticleItem, targetNs: string): Normalized
     if (parsed === null) return null;
     const ns = resolveNs(parsed.prefix, targetNs);
     const initialVersion = item.InitialVersion;
+    const expectedClassName = expectedClassMap.get(item.Name);
     return {
       kind: "leaf",
       ns,
@@ -293,13 +320,14 @@ function normalizeParticleItem(item: ParticleItem, targetNs: string): Normalized
       min,
       max,
       ...(initialVersion !== undefined ? { initialVersion } : {}),
+      ...(expectedClassName !== undefined ? { expectedClassName } : {}),
     };
   }
 
   if (item.Kind !== undefined && item.Items !== undefined) {
     const subItems: NormalizedNode[] = [];
     for (const sub of item.Items) {
-      const n = normalizeParticleItem(sub, targetNs);
+      const n = normalizeParticleItem(sub, targetNs, expectedClassMap);
       if (n !== null) subItems.push(n);
     }
     const kind = item.Kind.toLowerCase() as "sequence" | "choice" | "all" | "group";
@@ -309,11 +337,15 @@ function normalizeParticleItem(item: ParticleItem, targetNs: string): Normalized
   return null;
 }
 
-function normalizeParticle(particle: SchemaParticle, targetNs: string): NormalizedParticle | null {
+function normalizeParticle(
+  particle: SchemaParticle,
+  targetNs: string,
+  expectedClassMap: ReadonlyMap<string, string>,
+): NormalizedParticle | null {
   const { min, max } = occursToMinMax(particle.Occurs);
   const items: NormalizedNode[] = [];
   for (const item of particle.Items) {
-    const n = normalizeParticleItem(item, targetNs);
+    const n = normalizeParticleItem(item, targetNs, expectedClassMap);
     if (n !== null) items.push(n);
   }
   const kind = particle.Kind.toLowerCase() as "sequence" | "choice" | "all" | "group";
@@ -517,6 +549,19 @@ function processSchema(schemaData: SchemaFile): ElementConstraint[] {
   const enumMap = buildEnumMap(schemaData.Enums ?? []);
   const constraints: ElementConstraint[] = [];
 
+  // Build set of ambiguous local names (localName shared by >1 type)
+  const localNameCounts = new Map<string, number>();
+  for (const type of schemaData.Types) {
+    const p = parseTypeName(type.Name);
+    if (p !== null) {
+      localNameCounts.set(p.local, (localNameCounts.get(p.local) ?? 0) + 1);
+    }
+  }
+  const ambiguousLocals = new Set<string>();
+  for (const [local, count] of localNameCounts) {
+    if (count > 1) ambiguousLocals.add(local);
+  }
+
   for (const type of schemaData.Types) {
     if (type.ClassName.length === 0) continue;
     if (type.IsAbstract === true) continue;
@@ -533,9 +578,18 @@ function processSchema(schemaData: SchemaFile): ElementConstraint[] {
       localName,
     };
 
+    // Build expectedClassMap from Children for ambiguous localNames
+    const expectedClassMap = new Map<string, string>();
+    for (const child of type.Children ?? []) {
+      const cp = parseItemName(child.Name);
+      if (cp !== null && ambiguousLocals.has(cp.local) && child.PropertyName !== undefined) {
+        expectedClassMap.set(child.Name, child.PropertyName);
+      }
+    }
+
     // Particle constraints (only composite elements have particles)
     if (type.Particle !== undefined && type.IsLeafElement !== true && type.IsLeafText !== true) {
-      const norm = normalizeParticle(type.Particle, targetNs);
+      const norm = normalizeParticle(type.Particle, targetNs, expectedClassMap);
       if (norm !== null) {
         constraint.particle = norm;
       }
@@ -571,13 +625,21 @@ function processSchema(schemaData: SchemaFile): ElementConstraint[] {
 
 function nodeToTs(node: NormalizedNode, indent: number): string {
   const pad = "  ".repeat(indent);
+  if (node.kind === "any") {
+    const maxStr = node.max === "unbounded" ? '"unbounded"' : String(node.max);
+    return `${pad}{ kind: "any", min: ${node.min}, max: ${maxStr} }`;
+  }
   if (node.kind === "leaf") {
     const maxStr = node.max === "unbounded" ? '"unbounded"' : String(node.max);
     const iv =
       node.initialVersion !== undefined
         ? `, initialVersion: ${JSON.stringify(node.initialVersion)}`
         : "";
-    return `${pad}{ kind: "leaf", ns: ${JSON.stringify(node.ns)}, local: ${JSON.stringify(node.local)}, min: ${node.min}, max: ${maxStr}${iv} }`;
+    const ec =
+      node.expectedClassName !== undefined
+        ? `, expectedClassName: ${JSON.stringify(node.expectedClassName)}`
+        : "";
+    return `${pad}{ kind: "leaf", ns: ${JSON.stringify(node.ns)}, local: ${JSON.stringify(node.local)}, min: ${node.min}, max: ${maxStr}${iv}${ec} }`;
   }
   const itemsStr = node.items.map((item) => nodeToTs(item, indent + 1)).join(",\n");
   const maxStr = node.max === "unbounded" ? '"unbounded"' : String(node.max);
@@ -674,6 +736,8 @@ async function main(): Promise<void> {
     'export { constraints as excelConstraints } from "./excel.js";',
     'export { constraints as pptConstraints } from "./ppt.js";',
     'export { constraints as drawingConstraints } from "./drawing.js";',
+    'export { constraints as spreadsheetDrawingConstraints } from "./spreadsheet-drawing.js";',
+    'export { constraints as excel2009Constraints } from "./excel-2009.js";',
     "",
   ].join("\n");
 

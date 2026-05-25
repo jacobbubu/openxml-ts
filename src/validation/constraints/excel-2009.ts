@@ -67,7 +67,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotAreas", min: 0, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: [":id"],
@@ -132,7 +132,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "f", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: [":type"],
@@ -178,7 +178,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "datastoreItem",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: [":id"],
@@ -278,7 +278,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "alignment", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "border", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "protection", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -303,7 +303,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "itemLst", min: 0, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -370,7 +370,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "levels", min: 1, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "selections", min: 1, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: [":pivotCacheId"],
@@ -473,7 +473,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "references", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -505,7 +505,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "editValue", min: 1, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "tupleItems", min: 1, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -528,7 +528,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "userEdit", min: 1, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "tupleItems", min: 1, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotArea", min: 1, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -619,7 +619,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "slicer",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: [":name", ":cache", ":rowHeight"],
@@ -649,7 +649,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotTables", min: 0, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "data", min: 0, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "SlicerCacheDefinitionExtensionList" }
       ] }
     },
     requiredAttrs: [":name", ":sourceName"],
@@ -823,7 +823,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "items", min: 1, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: [":pivotCacheId"],

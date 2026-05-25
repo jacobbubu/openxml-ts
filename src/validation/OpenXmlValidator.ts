@@ -1209,14 +1209,33 @@ export class OpenXmlValidator {
         // Skipped — accepted by xsd:any wildcard particle
       } else if (expectedClassNameByKey.has(key)) {
         const expectedCls = expectedClassNameByKey.get(key);
-        if (expectedCls !== undefined && expectedCls !== child.constructor.name) {
-          // Sch_InvalidElementContentWrongType: element tag is declared under parent
-          // but the child's TypeScript class does not match the expected class.
-          // Mirrors .NET EmitInvalidElementError when two classes share the same tag.
+        // Only reject typed elements that don't match; generic/anonymous elements pass through.
+        // A typed child whose class differs from expected → Sch_InvalidElementContentWrongType.
+        // A generic child (anonymous class, OpenXmlUnknownElement, etc.) → accepted.
+        const childClass = child.constructor.name;
+        if (
+          expectedCls !== undefined &&
+          expectedCls !== childClass &&
+          childClass.length > 0 &&
+          childClass !== "OpenXmlUnknownElement"
+        ) {
           errors.push(
             makeError(
               "Sch_InvalidElementContentWrongType",
               `Element <${child.qualifiedName}> appears under <${parent.qualifiedName}> but has wrong type '${child.constructor.name}' (expected '${expectedCls}').`,
+              parent,
+              makePath(path, child, ci),
+              partUri,
+              child,
+            ),
+          );
+        }
+        // Even when type matches, still check position (rPr after t in Run, etc.)
+        if (outOfSequenceKeys?.has(key)) {
+          errors.push(
+            makeError(
+              "Sch_UnexpectedElementContentExpectingComplex",
+              `Element <${child.qualifiedName}> appears out of order under <${parent.qualifiedName}>. Expected: ${expectedMsg}.`,
               parent,
               makePath(path, child, ci),
               partUri,

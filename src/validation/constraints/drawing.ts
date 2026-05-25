@@ -239,7 +239,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "st", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "end", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -249,7 +249,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "audioFile",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: ["r:link"],
@@ -273,7 +273,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "anchor", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "norm", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "up", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -426,7 +426,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "svgBlip", min: 1, max: 1, initialVersion: "Office2019" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "picAttrSrcUrl", min: 1, max: 1, initialVersion: "Office2016" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "oembed", min: 1, max: 1, initialVersion: "Microsoft365" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "oembedShared", min: 1, max: 1, initialVersion: "Microsoft365" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "oembedShared", min: 1, max: 1, initialVersion: "Microsoft365" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -662,9 +663,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "cell3D",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "bevel", min: 1, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "bevel", min: 1, max: 1, expectedClassName: "Bevel" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lightRig", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
     attrConstraints: [
@@ -722,7 +723,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "clrMap",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -763,7 +764,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "accent6", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "hlink", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "folHlink", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: [":name"],
@@ -796,7 +797,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "nvCxnSpPr", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "spPr", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "style", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -806,7 +807,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "cxnSpLocks",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ConnectorLockingExtensionList" }
       ] }
     },
   },
@@ -837,7 +838,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "graphic", min: 1, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "graphic", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -980,7 +982,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "dataModelExt", min: 1, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "recolorImg", min: 1, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "recolorImg", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -1314,7 +1317,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
   },
@@ -1573,7 +1576,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "majorFont", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "minorFont", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: [":name"],
@@ -1701,7 +1704,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "graphicData",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-
+        { kind: "any", min: 0, max: "unbounded" }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -1714,8 +1717,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "nvGraphicFramePr", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "graphic", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "xfrm", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "xfrm", min: 1, max: 1, expectedClassName: "Transform2D" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -1725,7 +1728,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "graphicFrameLocks",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -1735,7 +1738,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "gridCol",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: [":w"],
@@ -1770,7 +1773,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "grpSpLocks",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -1780,7 +1783,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "isCanvas", min: 1, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "isCanvas", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -1904,7 +1908,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "hlinkClr", min: 1, max: 1, initialVersion: "Office2019" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "hlinkClr", min: 1, max: 1, initialVersion: "Office2019" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -1926,7 +1931,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "snd", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "HyperlinkExtensionList" }
       ] }
     },
   },
@@ -1937,7 +1942,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "snd", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "HyperlinkExtensionList" }
       ] }
     },
   },
@@ -1948,7 +1953,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "snd", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "HyperlinkExtensionList" }
       ] }
     },
   },
@@ -2503,7 +2508,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "bodyPr", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lstStyle", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "style", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -2513,7 +2518,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lineSketchStyleProps", min: 1, max: 1, initialVersion: "Office2021" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lineSketchStyleProps", min: 1, max: 1, initialVersion: "Office2021" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2594,7 +2600,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lvl7pPr", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lvl8pPr", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lvl9pPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -2673,7 +2679,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "cxnSpLocks", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "stCxn", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "endCxn", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -2685,7 +2691,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "hlinkClick", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "hlinkHover", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "NonVisualDrawingPropertiesExtensionList" }
       ] }
     },
     requiredAttrs: [":id", ":name"],
@@ -2702,7 +2708,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "predDERef", min: 1, max: 1, initialVersion: "Office2016" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "decorative", min: 1, max: 1, initialVersion: "Office2019" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "classification", min: 1, max: 1, initialVersion: "Office2021" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "scriptLink", min: 1, max: 1, initialVersion: "Microsoft365" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "scriptLink", min: 1, max: 1, initialVersion: "Microsoft365" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2724,7 +2731,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "graphicFrameLocks", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -2745,7 +2752,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "nonVisualGroupProps", min: 1, max: 1, initialVersion: "Office2013" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "nonVisualGroupProps", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2767,7 +2775,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "grpSpLocks", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "NonVisualGroupDrawingShapePropsExtensionList" }
       ] }
     },
   },
@@ -2789,7 +2797,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "picLocks", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "NonVisualPicturePropertiesExtensionList" }
       ] }
     },
   },
@@ -2814,7 +2822,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "signatureLine", min: 1, max: 1, initialVersion: "Office2013" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "objectPr", min: 1, max: 1, initialVersion: "Office2013" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "liveFeedProps", min: 1, max: 1, initialVersion: "Microsoft365" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "imageFormula", min: 1, max: 1, initialVersion: "Microsoft365" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "imageFormula", min: 1, max: 1, initialVersion: "Microsoft365" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2836,7 +2845,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "spLocks", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -2891,7 +2900,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "spDef", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lnDef", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "txDef", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -2901,7 +2910,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "themeFamily", min: 1, max: 1, initialVersion: "Office2013" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "themeFamily", min: 1, max: 1, initialVersion: "Office2013" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -2980,7 +2990,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "overrideClrMapping",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -3112,7 +3122,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "blipFill", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "spPr", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "style", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -3132,7 +3142,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "picLocks",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -3248,7 +3258,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "ext",
     particle: {
       root: { kind: "choice", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "cNvPr", min: 1, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "cNvPr", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -3269,7 +3280,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "quickTimeFile",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: ["r:link"],
@@ -3512,7 +3523,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "camera", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lightRig", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "backdrop", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -3571,7 +3582,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "spPr", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "txSp", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "style", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -3585,7 +3596,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "bevelB", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extrusionClr", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "contourClr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
     attrConstraints: [
@@ -3605,7 +3616,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "bodyPr", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lstStyle", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "style", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -3631,7 +3642,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "spLocks",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -3641,7 +3652,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "spPr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "xfrm", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "xfrm", min: 0, max: 1, expectedClassName: "Transform2D" },
         { kind: "group", min: 0, max: 1, items: [
           { kind: "choice", min: 1, max: 1, items: [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "custGeom", min: 1, max: 1 },
@@ -3685,7 +3696,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenEffects", min: 1, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenScene3d", min: 1, max: 1, initialVersion: "Office2010" },
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "hiddenSp3d", min: 1, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "shadowObscured", min: 1, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.microsoft.com/office/drawing/2010/main", local: "shadowObscured", min: 1, max: 1, initialVersion: "Office2010" },
+        { kind: "any", min: 0, max: 1 }
       ] }
     },
     requiredAttrs: [":uri"],
@@ -3906,7 +3918,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "txBody", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "tcPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -3924,7 +3936,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "insideV", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "tl2br", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "tr2bl", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -4082,7 +4094,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "firstRow", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "neCell", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "nwCell", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -4106,7 +4118,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "firstRow", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "neCell", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "nwCell", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -4161,7 +4173,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "bodyPr", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "lstStyle", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "style", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -4190,7 +4202,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "objectDefaults", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extraClrSchemeLst", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "custClrLst", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "OfficeStyleSheetExtensionList" }
       ] }
     },
   },
@@ -4203,7 +4215,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "clrScheme", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "fontScheme", min: 1, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "fmtScheme", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
   },
@@ -4345,7 +4357,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "off", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "ext", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "ext", min: 0, max: 1, expectedClassName: "Extents" }
       ] }
     },
   },
@@ -4365,7 +4377,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "off", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "ext", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "ext", min: 0, max: 1, expectedClassName: "Extents" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "chOff", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "chExt", min: 0, max: 1 }
       ] }
@@ -4427,7 +4439,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "videoFile",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
     requiredAttrs: ["r:link"],
@@ -4438,7 +4450,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "grpSpPr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "xfrm", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "xfrm", min: 0, max: 1, expectedClassName: "TransformGroup" },
         { kind: "group", min: 0, max: 1, items: [
           { kind: "choice", min: 1, max: 1, items: [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "noFill", min: 1, max: 1 },

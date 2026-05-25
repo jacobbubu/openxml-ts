@@ -12,7 +12,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "nsid", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "multiLevelType", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tmpl", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 0, max: 1, expectedClassName: "AbstractNumDefinitionName" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "styleLink", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "numStyleLink", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "lvl", min: 0, max: 9 }
@@ -502,7 +502,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "category",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 1, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 1, max: 1, expectedClassName: "Name" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "gallery", min: 1, max: 1 }
       ] }
     },
@@ -959,7 +959,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "customXmlPr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "placeholder", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "placeholder", min: 0, max: 1, expectedClassName: "CustomXmlPlaceholder" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "attr", min: 0, max: "unbounded" }
       ] }
     },
@@ -1292,7 +1292,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "table", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "src", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "colDelim", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "type", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "type", min: 0, max: 1, expectedClassName: "MailMergeSource" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "fHdr", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "fieldMapData", min: 0, max: "unbounded" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "recipientData", min: 0, max: 1 }
@@ -1493,10 +1493,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "divBdr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1, expectedClassName: "TopBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1, expectedClassName: "LeftBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1, expectedClassName: "BottomBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1, expectedClassName: "RightBorder" }
       ] }
     },
   },
@@ -1663,8 +1663,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "docPartPr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "style", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 0, max: 1, expectedClassName: "DocPartName" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "style", min: 0, max: 1, expectedClassName: "StyleId" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "category", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "types", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "behaviors", min: 0, max: 1 },
@@ -1806,7 +1806,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "result", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "default", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "default", min: 0, max: 1, expectedClassName: "DefaultDropDownListItemIndex" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "listEntry", min: 0, max: 25 }
       ] }
     },
@@ -1964,7 +1964,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pos", min: 0, max: 1 },
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pos", min: 0, max: 1, expectedClassName: "EndnotePosition" },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "numFmt", min: 0, max: 1 },
           { kind: "group", min: 0, max: 1, items: [
             { kind: "sequence", min: 1, max: 1, items: [
@@ -1994,7 +1994,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "endnotePr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pos", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pos", min: 0, max: 1, expectedClassName: "EndnotePosition" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "numFmt", min: 0, max: 1 },
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
@@ -2039,8 +2039,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "fieldMapData",
     particle: {
       root: { kind: "all", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "type", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "type", min: 0, max: 1, expectedClassName: "MailMergeFieldType" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 0, max: 1, expectedClassName: "Name" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "mappedName", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "column", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "lid", min: 0, max: 1 },
@@ -2301,7 +2301,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pos", min: 0, max: 1 },
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pos", min: 0, max: 1, expectedClassName: "FootnotePosition" },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "numFmt", min: 0, max: 1 },
           { kind: "group", min: 0, max: 1, items: [
             { kind: "sequence", min: 1, max: 1, items: [
@@ -2331,7 +2331,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "footnotePr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pos", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pos", min: 0, max: 1, expectedClassName: "FootnotePosition" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "numFmt", min: 0, max: 1 },
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
@@ -2396,8 +2396,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "frame",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1, expectedClassName: "FrameSize" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 0, max: 1, expectedClassName: "FrameName" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sourceFileName", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "marW", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "marH", min: 0, max: 1 },
@@ -2439,7 +2439,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "frameset",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1, expectedClassName: "FrameSize" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "framesetSplitbar", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "frameLayout", min: 0, max: 1 },
         { kind: "sequence", min: 1, max: "unbounded", items: [
@@ -2457,7 +2457,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "framesetSplitbar",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "w", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "w", min: 0, max: 1, expectedClassName: "Width" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "color", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "noBorder", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "flatBorders", min: 0, max: 1 }
@@ -3076,18 +3076,18 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "lvl",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, expectedClassName: "StartNumberingValue" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "numFmt", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "lvlRestart", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pStyle", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pStyle", min: 0, max: 1, expectedClassName: "ParagraphStyleIdInLevel" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "isLgl", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "suff", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "lvlText", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "lvlPicBulletId", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "legacy", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "lvlJc", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1, expectedClassName: "PreviousParagraphProperties" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1, expectedClassName: "NumberingSymbolRunProperties" },
         { kind: "any", min: 0, max: "unbounded" }
       ] }
     },
@@ -3593,7 +3593,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "choice", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pict", min: 1, max: 1 },
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pict", min: 1, max: 1, expectedClassName: "PictureBulletBase" },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "drawing", min: 1, max: 1 }
         ] }
       ] }
@@ -3609,7 +3609,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ilvl", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "numId", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "numberingChange", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1, expectedClassName: "Inserted" }
       ] }
     },
   },
@@ -3654,11 +3654,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vanish", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "webHidden", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "color", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "w", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1, expectedClassName: "Spacing" },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "w", min: 0, max: 1, expectedClassName: "CharacterScale" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "kern", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "position", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1, expectedClassName: "FontSize" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "szCs", min: 0, max: 1 }
           ] }
         ] },
@@ -3715,10 +3715,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "pgBorders",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1, expectedClassName: "TopBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1, expectedClassName: "LeftBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1, expectedClassName: "BottomBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1, expectedClassName: "RightBorder" }
       ] }
     },
     attrConstraints: [
@@ -3776,7 +3776,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "p",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1, expectedClassName: "ParagraphProperties" },
         { kind: "group", min: 0, max: "unbounded", items: [
           { kind: "choice", min: 1, max: 1, items: [
             { kind: "group", min: 0, max: "unbounded", items: [
@@ -3916,10 +3916,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "pBdr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1, expectedClassName: "TopBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1, expectedClassName: "LeftBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1, expectedClassName: "BottomBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1, expectedClassName: "RightBorder" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "between", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bar", min: 0, max: 1 }
       ] }
@@ -3933,10 +3933,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1, expectedClassName: "Inserted" },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1, expectedClassName: "Deleted" },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 0, max: 1, expectedClassName: "MoveFrom" },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 0, max: 1, expectedClassName: "MoveTo" },
             { kind: "group", min: 0, max: 1, items: [
               { kind: "choice", min: 1, max: 1, items: [
                 { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
@@ -4047,7 +4047,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 1, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 1, max: 1, expectedClassName: "PreviousParagraphMarkRunProperties" }
         ] }
       ] }
     },
@@ -4067,7 +4067,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
           { kind: "sequence", min: 1, max: 1, items: [
             { kind: "group", min: 0, max: 1, items: [
               { kind: "sequence", min: 1, max: 1, items: [
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pStyle", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pStyle", min: 0, max: 1, expectedClassName: "ParagraphStyleId" }
               ] }
             ] },
             { kind: "group", min: 0, max: 1, items: [
@@ -4092,12 +4092,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bidi", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "adjustRightInd", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "snapToGrid", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1 },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1, expectedClassName: "SpacingBetweenLines" },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ind", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contextualSpacing", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "mirrorIndents", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "suppressOverlap", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "Justification" },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textDirection", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textAlignment", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textboxTightWrap", min: 0, max: 1 },
@@ -4111,8 +4111,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
           ] }
         ] },
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1 },
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sectPr", min: 0, max: 1 },
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1, expectedClassName: "ParagraphMarkRunProperties" },
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sectPr", min: 0, max: 1, expectedClassName: "SectionProperties" },
           { kind: "group", min: 0, max: 1, items: [
             { kind: "sequence", min: 1, max: 1, items: [
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPrChange", min: 0, max: 1 }
@@ -4150,12 +4150,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bidi", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "adjustRightInd", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "snapToGrid", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1, expectedClassName: "SpacingBetweenLines" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ind", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contextualSpacing", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "mirrorIndents", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "suppressOverlap", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "Justification" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textDirection", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textAlignment", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textboxTightWrap", min: 0, max: 1 },
@@ -4172,7 +4172,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 1, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 1, max: 1, expectedClassName: "ParagraphPropertiesExtended" }
         ] }
       ] }
     },
@@ -4188,7 +4188,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "pPrDefault",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1, expectedClassName: "ParagraphPropertiesBaseStyle" }
       ] }
     },
   },
@@ -4201,7 +4201,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "sequence", min: 1, max: 1, items: [
           { kind: "group", min: 0, max: 1, items: [
             { kind: "sequence", min: 1, max: 1, items: [
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pStyle", min: 0, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pStyle", min: 0, max: 1, expectedClassName: "ParagraphStyleId" }
             ] }
           ] },
           { kind: "group", min: 0, max: 1, items: [
@@ -4226,12 +4226,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bidi", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "adjustRightInd", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "snapToGrid", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1 },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1, expectedClassName: "SpacingBetweenLines" },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ind", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contextualSpacing", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "mirrorIndents", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "suppressOverlap", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "Justification" },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textDirection", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textAlignment", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textboxTightWrap", min: 0, max: 1 },
@@ -4363,10 +4363,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ins", min: 0, max: 1, expectedClassName: "Inserted" },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "del", min: 0, max: 1, expectedClassName: "Deleted" },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveFrom", min: 0, max: 1, expectedClassName: "MoveFrom" },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "moveTo", min: 0, max: 1, expectedClassName: "MoveTo" },
             { kind: "group", min: 0, max: 1, items: [
               { kind: "choice", min: 1, max: 1, items: [
                 { kind: "leaf", ns: "http://schemas.microsoft.com/office/word/2010/wordml", local: "conflictIns", min: 0, max: 1, initialVersion: "Office2010" },
@@ -4477,7 +4477,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pStyle", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pStyle", min: 0, max: 1, expectedClassName: "ParagraphStyleId" }
           ] }
         ] },
         { kind: "group", min: 0, max: 1, items: [
@@ -4502,12 +4502,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bidi", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "adjustRightInd", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "snapToGrid", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1, expectedClassName: "SpacingBetweenLines" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ind", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contextualSpacing", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "mirrorIndents", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "suppressOverlap", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "Justification" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textDirection", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textAlignment", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textboxTightWrap", min: 0, max: 1 },
@@ -4620,9 +4620,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "footnotePr", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "endnotePr", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "type", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "footnotePr", min: 0, max: 1, expectedClassName: "FootnoteProperties" },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "endnotePr", min: 0, max: 1, expectedClassName: "EndnoteProperties" },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "type", min: 0, max: 1, expectedClassName: "SectionType" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pgSz", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pgMar", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "paperSrc", min: 0, max: 1 },
@@ -4631,7 +4631,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pgNumType", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "cols", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "formProt", min: 0, max: 1 },
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vAlign", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vAlign", min: 0, max: 1, expectedClassName: "VerticalTextAlignmentOnPage" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "noEndnote", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "titlePg", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textDirection", min: 0, max: 1 },
@@ -4687,7 +4687,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
           ] },
           { kind: "group", min: 0, max: 1, items: [
             { kind: "sequence", min: 1, max: 1, items: [
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vAlign", min: 0, max: 1 }
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vAlign", min: 0, max: 1, expectedClassName: "TableCellVerticalAlignment" }
             ] }
           ] },
           { kind: "group", min: 0, max: 1, items: [
@@ -4739,7 +4739,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] },
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "TableJustification" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblCellSpacing", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblInd", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblBorders", min: 0, max: 1 },
@@ -4773,7 +4773,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblW", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "TableJustification" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblCellSpacing", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblInd", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblBorders", min: 0, max: 1 },
@@ -5145,7 +5145,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1, expectedClassName: "RunProperties" }
           ] }
         ] },
         { kind: "group", min: 0, max: "unbounded", items: [
@@ -5243,11 +5243,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vanish", min: 0, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "webHidden", min: 0, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "color", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "w", min: 0, max: 1 },
+                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1, expectedClassName: "Spacing" },
+                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "w", min: 0, max: 1, expectedClassName: "CharacterScale" },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "kern", min: 0, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "position", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1 },
+                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1, expectedClassName: "FontSize" },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "szCs", min: 0, max: 1 }
                   ] }
                 ] },
@@ -5304,7 +5304,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             ] },
             { kind: "group", min: 0, max: 1, items: [
               { kind: "sequence", min: 1, max: 1, items: [
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPrChange", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPrChange", min: 0, max: 1, expectedClassName: "RunPropertiesChange" }
               ] }
             ] }
           ] }
@@ -5340,11 +5340,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vanish", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "webHidden", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "color", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "w", min: 0, max: 1 },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1, expectedClassName: "Spacing" },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "w", min: 0, max: 1, expectedClassName: "CharacterScale" },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "kern", min: 0, max: 1 },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "position", min: 0, max: 1 },
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1 },
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1, expectedClassName: "FontSize" },
                 { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "szCs", min: 0, max: 1 }
               ] }
             ] },
@@ -5378,7 +5378,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 1, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 1, max: 1, expectedClassName: "PreviousRunProperties" }
         ] }
       ] }
     },
@@ -5394,7 +5394,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "rPrDefault",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1, expectedClassName: "RunPropertiesBaseStyle" }
       ] }
     },
   },
@@ -5415,7 +5415,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtPr", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtEndPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtContent", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtContent", min: 0, max: 1, expectedClassName: "SdtContentBlock" },
         { kind: "group", min: 0, max: "unbounded", items: [
           { kind: "choice", min: 1, max: 1, items: [
             { kind: "group", min: 0, max: "unbounded", items: [
@@ -5459,7 +5459,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtPr", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtEndPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtContent", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtContent", min: 0, max: 1, expectedClassName: "SdtContentCell" },
         { kind: "group", min: 0, max: "unbounded", items: [
           { kind: "choice", min: 1, max: 1, items: [
             { kind: "group", min: 0, max: "unbounded", items: [
@@ -6035,7 +6035,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "placeholder",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "docPart", min: 1, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "docPart", min: 1, max: 1, expectedClassName: "DocPartReference" }
       ] }
     },
   },
@@ -6090,7 +6090,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtPr", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtEndPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtContent", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtContent", min: 0, max: 1, expectedClassName: "SdtContentRow" },
         { kind: "group", min: 0, max: "unbounded", items: [
           { kind: "choice", min: 1, max: 1, items: [
             { kind: "group", min: 0, max: "unbounded", items: [
@@ -6134,7 +6134,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtPr", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtEndPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtContent", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtContent", min: 0, max: 1, expectedClassName: "SdtContentRun" },
         { kind: "group", min: 0, max: "unbounded", items: [
           { kind: "choice", min: 1, max: 1, items: [
             { kind: "group", min: 0, max: "unbounded", items: [
@@ -6178,7 +6178,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtPr", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtEndPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtContent", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sdtContent", min: 0, max: 1, expectedClassName: "SdtContentRunRuby" },
         { kind: "group", min: 0, max: "unbounded", items: [
           { kind: "choice", min: 1, max: 1, items: [
             { kind: "group", min: 0, max: "unbounded", items: [
@@ -6267,7 +6267,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sectPr", min: 0, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sectPr", min: 0, max: 1, expectedClassName: "PreviousSectionProperties" }
         ] }
       ] }
     },
@@ -6711,13 +6711,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "style",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "name", min: 0, max: 1, expectedClassName: "StyleName" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "aliases", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "basedOn", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "next", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "link", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "autoRedefine", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "hidden", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "hidden", min: 0, max: 1, expectedClassName: "StyleHidden" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "uiPriority", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "semiHidden", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "unhideWhenUsed", min: 0, max: 1 },
@@ -6727,11 +6727,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "personalCompose", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "personalReply", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rsid", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "trPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tcPr", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1, expectedClassName: "StyleParagraphProperties" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1, expectedClassName: "StyleRunProperties" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPr", min: 0, max: 1, expectedClassName: "StyleTableProperties" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "trPr", min: 0, max: 1, expectedClassName: "TableStyleConditionalFormattingTableRowProperties" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tcPr", min: 0, max: 1, expectedClassName: "StyleTableCellProperties" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblStylePr", min: 0, max: "unbounded" }
       ] }
     },
@@ -6809,12 +6809,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bidi", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "adjustRightInd", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "snapToGrid", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1 },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1, expectedClassName: "SpacingBetweenLines" },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "ind", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "contextualSpacing", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "mirrorIndents", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "suppressOverlap", min: 0, max: 1 },
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "Justification" },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textDirection", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textAlignment", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "textboxTightWrap", min: 0, max: 1 },
@@ -6862,11 +6862,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vanish", min: 0, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "webHidden", min: 0, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "color", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "w", min: 0, max: 1 },
+                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "spacing", min: 0, max: 1, expectedClassName: "Spacing" },
+                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "w", min: 0, max: 1, expectedClassName: "CharacterScale" },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "kern", min: 0, max: 1 },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "position", min: 0, max: 1 },
-                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1 },
+                    { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sz", min: 0, max: 1, expectedClassName: "FontSize" },
                     { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "szCs", min: 0, max: 1 }
                   ] }
                 ] },
@@ -6892,7 +6892,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             ] },
             { kind: "group", min: 0, max: 1, items: [
               { kind: "sequence", min: 1, max: 1, items: [
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPrChange", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPrChange", min: 0, max: 1, expectedClassName: "RunPropertiesChange" }
               ] }
             ] }
           ] }
@@ -6927,7 +6927,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] },
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vAlign", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vAlign", min: 0, max: 1, expectedClassName: "TableCellVerticalAlignment" }
           ] }
         ] }
       ] }
@@ -6947,7 +6947,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] },
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "TableJustification" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblCellSpacing", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblInd", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblBorders", min: 0, max: 1 },
@@ -7090,12 +7090,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "tblBorders",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1, expectedClassName: "TopBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1, expectedClassName: "LeftBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "StartBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1, expectedClassName: "BottomBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1, expectedClassName: "RightBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "EndBorder" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "insideH", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "insideV", min: 0, max: 1 }
       ] }
@@ -7107,7 +7107,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "tc",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tcPr", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tcPr", min: 0, max: 1, expectedClassName: "TableCellProperties" },
         { kind: "group", min: 1, max: "unbounded", items: [
           { kind: "choice", min: 1, max: 1, items: [
             { kind: "group", min: 0, max: "unbounded", items: [
@@ -7196,12 +7196,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "tcBorders",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1, expectedClassName: "TopBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1, expectedClassName: "LeftBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "StartBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1, expectedClassName: "BottomBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1, expectedClassName: "RightBorder" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "EndBorder" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "insideH", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "insideV", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tl2br", min: 0, max: 1 },
@@ -7215,12 +7215,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "tcMar",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010" }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "top", min: 0, max: 1, expectedClassName: "TopMargin" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1, expectedClassName: "LeftMargin" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "StartMargin" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1, expectedClassName: "BottomMargin" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1, expectedClassName: "RightMargin" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "EndMargin" }
       ] }
     },
   },
@@ -7234,7 +7234,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "left", min: 0, max: 1, expectedClassName: "TableCellLeftMargin" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "start", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "StartMargin" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "bottom", min: 0, max: 1, expectedClassName: "BottomMargin" },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1, expectedClassName: "RightMargin" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1, expectedClassName: "TableCellRightMargin" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "end", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "EndMargin" }
       ] }
     },
@@ -7276,7 +7276,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
             ] },
             { kind: "group", min: 0, max: 1, items: [
               { kind: "sequence", min: 1, max: 1, items: [
-                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vAlign", min: 0, max: 1 }
+                { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vAlign", min: 0, max: 1, expectedClassName: "TableCellVerticalAlignment" }
               ] }
             ] },
             { kind: "group", min: 0, max: 1, items: [
@@ -7308,7 +7308,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tcPr", min: 1, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tcPr", min: 1, max: 1, expectedClassName: "PreviousTableCellProperties" }
         ] }
       ] }
     },
@@ -7349,7 +7349,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblGrid", min: 1, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblGrid", min: 1, max: 1, expectedClassName: "PreviousTableGrid" }
         ] }
       ] }
     },
@@ -7445,7 +7445,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
           ] },
           { kind: "group", min: 0, max: 1, items: [
             { kind: "sequence", min: 1, max: 1, items: [
-              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+              { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "TableJustification" },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblCellSpacing", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblInd", min: 0, max: 1 },
               { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblBorders", min: 0, max: 1 },
@@ -7483,7 +7483,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPr", min: 1, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPr", min: 1, max: 1, expectedClassName: "PreviousTableProperties" }
         ] }
       ] }
     },
@@ -7501,7 +7501,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblW", min: 0, max: 1 },
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "TableJustification" },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblCellSpacing", min: 0, max: 1 },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblInd", min: 0, max: 1 },
           { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblBorders", min: 0, max: 1 },
@@ -7523,7 +7523,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPrEx", min: 1, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPrEx", min: 1, max: 1, expectedClassName: "PreviousTablePropertyExceptions" }
         ] }
       ] }
     },
@@ -7539,8 +7539,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "tr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPrEx", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "trPr", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPrEx", min: 0, max: 1, expectedClassName: "TablePropertyExceptions" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "trPr", min: 0, max: 1, expectedClassName: "TableRowProperties" },
         { kind: "group", min: 1, max: "unbounded", items: [
           { kind: "choice", min: 1, max: 1, items: [
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tc", min: 0, max: "unbounded" },
@@ -7671,7 +7671,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "sequence", min: 1, max: 1, items: [
-          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "trPr", min: 1, max: 1 }
+          { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "trPr", min: 1, max: 1, expectedClassName: "PreviousTableRowProperties" }
         ] }
       ] }
     },
@@ -7701,7 +7701,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] },
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vAlign", min: 0, max: 1 }
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "vAlign", min: 0, max: 1, expectedClassName: "TableCellVerticalAlignment" }
           ] }
         ] }
       ] }
@@ -7715,7 +7715,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       root: { kind: "sequence", min: 1, max: 1, items: [
         { kind: "group", min: 0, max: 1, items: [
           { kind: "sequence", min: 1, max: 1, items: [
-            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1 },
+            { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "jc", min: 0, max: 1, expectedClassName: "TableJustification" },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblCellSpacing", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblInd", min: 0, max: 1 },
             { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblBorders", min: 0, max: 1 },
@@ -7754,11 +7754,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "tblStylePr",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "trPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tcPr", min: 0, max: 1 }
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "pPr", min: 0, max: 1, expectedClassName: "StyleParagraphProperties" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "rPr", min: 0, max: 1, expectedClassName: "RunPropertiesBaseStyle" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblPr", min: 0, max: 1, expectedClassName: "TableStyleConditionalFormattingTableProperties" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "trPr", min: 0, max: 1, expectedClassName: "TableStyleConditionalFormattingTableRowProperties" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tcPr", min: 0, max: 1, expectedClassName: "TableStyleConditionalFormattingTableCellProperties" }
       ] }
     },
     requiredAttrs: ["w:type"],
@@ -7933,8 +7933,8 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     localName: "textInput",
     particle: {
       root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "type", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "default", min: 0, max: 1 },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "type", min: 0, max: 1, expectedClassName: "TextBoxFormFieldType" },
+        { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "default", min: 0, max: 1, expectedClassName: "DefaultTextBoxFormFieldString" },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "maxLength", min: 0, max: 1 },
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "format", min: 0, max: 1 }
       ] }
