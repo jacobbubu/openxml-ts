@@ -476,3 +476,57 @@ describe("Backward compatibility — existing validate(element, partUri?, rels?)
     expect(Array.isArray(errors)).toBe(true);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// MaxNumberOfErrors — mirrors .NET OpenXmlValidator.MaxErrorsTest
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("MaxNumberOfErrors — limits collected errors", () => {
+  function makeRuby(): Ruby {
+    const ruby = new Ruby();
+    // Missing all required children: rubyPr, rt, rubyBase → 3 errors
+    return ruby;
+  }
+
+  it("default (1000) returns all errors since count << limit", () => {
+    const v = new OpenXmlValidator();
+    const ruby = makeRuby();
+    const errors = v.validate(ruby);
+    expect(errors.length).toBeGreaterThan(0);
+    expect(errors.length).toBeLessThan(1000);
+  });
+
+  it("maxNumberOfErrors=2 truncates to first 2 errors", () => {
+    const v = new OpenXmlValidator({ maxNumberOfErrors: 2 });
+    const ruby = makeRuby();
+    const errors = v.validate(ruby);
+    expect(errors.length).toBe(2);
+  });
+
+  it("maxNumberOfErrors=1 returns exactly 1 error", () => {
+    const v = new OpenXmlValidator({ maxNumberOfErrors: 1 });
+    const ruby = makeRuby();
+    const errors = v.validate(ruby);
+    expect(errors.length).toBe(1);
+  });
+
+  it("maxNumberOfErrors=0 returns empty array", () => {
+    const v = new OpenXmlValidator({ maxNumberOfErrors: 0 });
+    const ruby = makeRuby();
+    const errors = v.validate(ruby);
+    expect(errors.length).toBe(0);
+  });
+
+  it("maxNumberOfErrors setter works after construction", () => {
+    const v = new OpenXmlValidator();
+    const ruby = makeRuby();
+    expect(v.maxNumberOfErrors).toBe(1000);
+
+    v.maxNumberOfErrors = 1;
+    expect(v.maxNumberOfErrors).toBe(1);
+    const errors = v.validate(ruby);
+    expect(errors.length).toBe(1);
+
+    v.maxNumberOfErrors = 1000; // restore
+  });
+});

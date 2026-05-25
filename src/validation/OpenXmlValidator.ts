@@ -574,6 +574,13 @@ export interface OpenXmlValidatorOptions {
    * Mirrors .NET `OpenXmlValidator(FileFormatVersions fileFormat)` constructor.
    */
   readonly fileFormatVersions?: FileFormatVersions;
+
+  /**
+   * Maximum number of validation errors to collect.
+   * Once this limit is reached, further errors are silently dropped.
+   * Default: 1000 (mirrors .NET SDK default).
+   */
+  readonly maxNumberOfErrors?: number;
 }
 
 /**
@@ -611,6 +618,7 @@ export class OpenXmlValidator {
   private readonly skipUnknown: boolean;
   private readonly includeSemantic: boolean;
   private readonly _fileFormat: FileFormatVersions | undefined;
+  private _maxNumberOfErrors: number;
 
   /**
    * Creates an OpenXmlValidator with an options object.
@@ -640,6 +648,7 @@ export class OpenXmlValidator {
     this.skipUnknown = options.skipUnknown ?? true;
     this.includeSemantic = options.includeSemantic ?? false;
     this._fileFormat = options.fileFormatVersions;
+    this._maxNumberOfErrors = options.maxNumberOfErrors ?? 1000;
   }
 
   /**
@@ -650,6 +659,19 @@ export class OpenXmlValidator {
    */
   get fileFormat(): FileFormatVersions | undefined {
     return this._fileFormat;
+  }
+
+  /**
+   * Maximum number of validation errors to collect before stopping.
+   * Mirrors .NET `OpenXmlValidator.MaxNumberOfErrors`.
+   * Default: 1000.
+   */
+  get maxNumberOfErrors(): number {
+    return this._maxNumberOfErrors;
+  }
+
+  set maxNumberOfErrors(value: number) {
+    this._maxNumberOfErrors = value;
   }
 
   /**
@@ -728,6 +750,13 @@ export class OpenXmlValidator {
     if (this.includeSemantic) {
       const semanticErrors = this.validateSemantic(root, partUri, rels);
       errors.push(...semanticErrors);
+    }
+    return errors.slice(0, this._maxNumberOfErrors);
+  }
+
+  private _enforceLimit(errors: ValidationError[]): ValidationError[] {
+    if (errors.length > this._maxNumberOfErrors) {
+      return errors.slice(0, this._maxNumberOfErrors);
     }
     return errors;
   }
@@ -1364,7 +1393,7 @@ export class OpenXmlValidator {
     } catch {
       // Safety net
     }
-    return errors;
+    return this._enforceLimit(errors);
   }
 
   /**
@@ -1413,7 +1442,7 @@ export class OpenXmlValidator {
     } catch {
       // Safety net
     }
-    return errors;
+    return this._enforceLimit(errors);
   }
 
   /** Check that all internal relationship targets exist in the package. */
