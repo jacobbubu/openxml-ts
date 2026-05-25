@@ -55,10 +55,21 @@
  */
 
 import { beforeAll, describe, expect, it } from "vitest";
+import { Trendline } from "../../src/chart/generated/trendline.js";
+import { ShapeProperties as DiagramShapeProperties } from "../../src/diagram/generated/shape-properties.js";
+import { Extension as DrawingExtension } from "../../src/drawing/generated/extension.js";
+import { OpenXmlUnknownElement } from "../../src/element/unknown-element.js";
+import { Int32Value } from "../../src/element/values/int32-value.js";
 import { BorderColor } from "../../src/excel-2009/generated/border-color.js";
 import { FormControlProperties } from "../../src/excel-2009/generated/form-control-properties.js";
+import { ColorScale } from "../../src/excel/generated/color-scale.js";
+import { Color as XColor } from "../../src/excel/generated/color.js";
+import { ConditionalFormatValueObject } from "../../src/excel/generated/conditional-format-value-object.js";
+import { EmbeddedObjectProperties } from "../../src/excel/generated/embedded-object-properties.js";
+import { OleObject } from "../../src/excel/generated/ole-object.js";
 import { FileFormatVersions } from "../../src/markup-compat/file-format-versions.js";
 import { ContextNode } from "../../src/office-ext/schemas-microsoft-com-ink-2010-main/generated/context-node.js";
+import { Extension as PptExtension } from "../../src/ppt/generated/extension.js";
 import { ModificationVerifier } from "../../src/ppt/generated/modification-verifier.js";
 import { Shape } from "../../src/spreadsheet-drawing/generated/shape.js";
 import { TextBody } from "../../src/spreadsheet-drawing/generated/text-body.js";
@@ -71,33 +82,21 @@ import { constraints as spreadsheetDrawingConstraints } from "../../src/validati
 import { constraints as wordConstraints } from "../../src/validation/constraints/word.js";
 import type { ElementConstraint } from "../../src/validation/types.js";
 import { FrameProperties } from "../../src/word/generated/frame-properties.js";
+import { LeftMargin } from "../../src/word/generated/left-margin.js";
+import { Level } from "../../src/word/generated/level.js";
 import { Paragraph } from "../../src/word/generated/paragraph.js";
 import { RunFonts } from "../../src/word/generated/run-fonts.js";
 import { RunProperties } from "../../src/word/generated/run-properties.js";
 import { Run } from "../../src/word/generated/run.js";
 import { SectionProperties } from "../../src/word/generated/section-properties.js";
 import { Shading } from "../../src/word/generated/shading.js";
+import { StartNumberingValue } from "../../src/word/generated/start-numbering-value.js";
 import { StatusText } from "../../src/word/generated/status-text.js";
 import { StylePaneSortMethods } from "../../src/word/generated/style-pane-sort-methods.js";
-import { Text } from "../../src/word/generated/text.js";
-import { WrapSquare } from "../../src/wordprocessing-drawing/generated/wrap-square.js";
-import { Color as XColor } from "../../src/excel/generated/color.js";
-import { ColorScale } from "../../src/excel/generated/color-scale.js";
-import { ConditionalFormatValueObject } from "../../src/excel/generated/conditional-format-value-object.js";
-import { EmbeddedObjectProperties } from "../../src/excel/generated/embedded-object-properties.js";
-import { OleObject } from "../../src/excel/generated/ole-object.js";
-import { ShapeProperties as DiagramShapeProperties } from "../../src/diagram/generated/shape-properties.js";
-import { Trendline } from "../../src/chart/generated/trendline.js";
-import { Extension as DrawingExtension } from "../../src/drawing/generated/extension.js";
-import { Extension as PptExtension } from "../../src/ppt/generated/extension.js";
-import { LeftMargin } from "../../src/word/generated/left-margin.js";
-import { Level } from "../../src/word/generated/level.js";
-import { StartNumberingValue } from "../../src/word/generated/start-numbering-value.js";
-import { TableCellLeftMargin } from "../../src/word/generated/table-cell-left-margin.js";
 import { TableCellMarginDefault } from "../../src/word/generated/table-cell-margin-default.js";
+import { Text } from "../../src/word/generated/text.js";
 import { TopMargin } from "../../src/word/generated/top-margin.js";
-import { Int32Value } from "../../src/element/values/int32-value.js";
-import { OpenXmlUnknownElement } from "../../src/element/unknown-element.js";
+import { WrapSquare } from "../../src/wordprocessing-drawing/generated/wrap-square.js";
 
 // ─── Inline constraints for namespaces without constraint files ──────────────
 
@@ -128,20 +127,97 @@ const chartConstraints: ElementConstraint[] = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/chart",
     localName: "trendline",
     particle: {
-      root: { kind: "sequence", min: 1, max: 1, items: [
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "name", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "spPr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "trendlineType", min: 1, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "order", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "period", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "forward", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "backward", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "intercept", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "dispRSqr", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "dispEq", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "trendlineLbl", min: 0, max: 1 },
-        { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/chart", local: "extLst", min: 0, max: 1 }
-      ] }
+      root: {
+        kind: "sequence",
+        min: 1,
+        max: 1,
+        items: [
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "name",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/main",
+            local: "spPr",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "trendlineType",
+            min: 1,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "order",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "period",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "forward",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "backward",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "intercept",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "dispRSqr",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "dispEq",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "trendlineLbl",
+            min: 0,
+            max: 1,
+          },
+          {
+            kind: "leaf",
+            ns: "http://schemas.openxmlformats.org/drawingml/2006/chart",
+            local: "extLst",
+            min: 0,
+            max: 1,
+          },
+        ],
+      },
     },
   },
 ];
@@ -265,7 +341,9 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
     let errors = validator.validate(cs);
     expect(errors.length).toBe(3);
     // Two colors out of sequence (required cfvo min=2 not satisfied yet)
-    expect(errors.filter((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex").length).toBe(2);
+    expect(
+      errors.filter((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex").length,
+    ).toBe(2);
     // Missing one cfvo
     expect(errors.filter((e) => e.id === "Sch_IncompleteContentExpectingComplex").length).toBe(1);
 
@@ -494,7 +572,9 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
     const errors = validator.validate(p);
     // Filter hexBinary error — other errors are from checkCardinalityNode choice-group
     // false positives (each choice alternative reported independently).
-    const hexErr = errors.find((e) => e.id === "Sch_AttributeValueDataTypeDetailed" && e.description.includes("hexBinary"));
+    const hexErr = errors.find(
+      (e) => e.id === "Sch_AttributeValueDataTypeDetailed" && e.description.includes("hexBinary"),
+    );
     expect(hexErr).toBeDefined();
     expect(hexErr!.errorType).toBe("Schema");
     expect(hexErr!.node).toBe(p);
@@ -528,7 +608,9 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
     expect(posErr?.relatedNode).toBe(txBody);
 
     // Two Sch_IncompleteContentExpectingComplex on Shape (missing nvSpPr, spPr)
-    const shapeIncomplete = errors.filter((e) => e.node === shape && e.id === "Sch_IncompleteContentExpectingComplex");
+    const shapeIncomplete = errors.filter(
+      (e) => e.node === shape && e.id === "Sch_IncompleteContentExpectingComplex",
+    );
     expect(shapeIncomplete.length).toBe(2);
 
     // Two Sch_IncompleteContentExpectingComplex on txBody (missing bodyPr, p)
@@ -603,7 +685,9 @@ describe("BugRegressionTest — NEEDS-MECHANISM（待机制支持）", () => {
     const errors2 = validator.validate(shape);
     expect(errors2.length).toBe(5);
     // The two original Shape incomplete errors are still present
-    const shapeErrors2 = errors2.filter((e) => e.node === shape && e.id === "Sch_IncompleteContentExpectingComplex");
+    const shapeErrors2 = errors2.filter(
+      (e) => e.node === shape && e.id === "Sch_IncompleteContentExpectingComplex",
+    );
     expect(shapeErrors2.length).toBe(2);
     // Now includes Sch_UnexpectedElementContentExpectingComplex on Shape with txBody as relatedNode
     const posErr = errors2.find((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex");

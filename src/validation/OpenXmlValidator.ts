@@ -223,13 +223,24 @@ function countChildren(children: readonly OpenXmlElement[]): Map<string, number>
   return counts;
 }
 
-function checkCardinalityNode(node: ParticleNode, counts: Map<string, number>, unmatchedCount?: number): CardinalityError[] {
+function checkCardinalityNode(
+  node: ParticleNode,
+  counts: Map<string, number>,
+  unmatchedCount?: number,
+): CardinalityError[] {
   const errors: CardinalityError[] = [];
 
   if (node.kind === "any") {
     const actual = unmatchedCount ?? 0;
     if (actual < node.min) {
-      errors.push({ key: "##any", local: "(any)", ns: "##any", actual, min: node.min, max: node.max });
+      errors.push({
+        key: "##any",
+        local: "(any)",
+        ns: "##any",
+        actual,
+        min: node.min,
+        max: node.max,
+      });
     }
     return errors;
   }
@@ -309,7 +320,11 @@ function checkSequenceOrder(
   const runningPerSlot = new Array<number>(numSlots).fill(0);
 
   // Advance past trivially-satisfiable empty slots
-  while (currentSlot < numSlots && slotEffectiveMins[currentSlot] === 0 && totalPerSlot[currentSlot] === 0) {
+  while (
+    currentSlot < numSlots &&
+    slotEffectiveMins[currentSlot] === 0 &&
+    totalPerSlot[currentSlot] === 0
+  ) {
     currentSlot++;
   }
 
@@ -357,13 +372,13 @@ function meetsInitialVersion(
 ): boolean {
   if (!requiredVersion || !currentVersion) return true;
   const versionMap: Record<string, number> = {
-    "Office2007": 1,
-    "Office2010": 2,
-    "Office2013": 4,
-    "Office2016": 8,
-    "Office2019": 16,
-    "Office2021": 32,
-    "Microsoft365": 64,
+    Office2007: 1,
+    Office2010: 2,
+    Office2013: 4,
+    Office2016: 8,
+    Office2019: 16,
+    Office2021: 32,
+    Microsoft365: 64,
   };
   const required = versionMap[requiredVersion];
   return required === undefined || currentVersion >= required;
@@ -1134,12 +1149,14 @@ export class OpenXmlValidator {
   ): void {
     // Apply version filter: remove particle items whose initialVersion is not met
     const filteredRoot = filterParticleByVersion(particle.root, this._fileFormat);
-    const root = filteredRoot ?? ({
-      kind: "sequence",
-      min: 1,
-      max: 1,
-      items: [],
-    } as ParticleComposite);
+    const root =
+      filteredRoot ??
+      ({
+        kind: "sequence",
+        min: 1,
+        max: 1,
+        items: [],
+      } as ParticleComposite);
     const allowed = collectAllowedLeaves(root);
     const expectedMsg = buildExpectedChildrenMsg(root);
     const hasAny = hasAnyParticle(root);
@@ -1190,21 +1207,23 @@ export class OpenXmlValidator {
         }
       } else if (hasAny) {
         // Skipped — accepted by xsd:any wildcard particle
-      } else if (expectedClassNameByKey.has(key) && expectedClassNameByKey.get(key) !== child.constructor.name) {
-        // Sch_InvalidElementContentWrongType: element tag is declared under parent
-        // but the child's TypeScript class does not match the expected class.
-        // Mirrors .NET EmitInvalidElementError when two classes share the same tag.
-        const expectedCls = expectedClassNameByKey.get(key)!;
-        errors.push(
-          makeError(
-            "Sch_InvalidElementContentWrongType",
-            `Element <${child.qualifiedName}> appears under <${parent.qualifiedName}> but has wrong type '${child.constructor.name}' (expected '${expectedCls}').`,
-            parent,
-            makePath(path, child, ci),
-            partUri,
-            child,
-          ),
-        );
+      } else if (expectedClassNameByKey.has(key)) {
+        const expectedCls = expectedClassNameByKey.get(key);
+        if (expectedCls !== undefined && expectedCls !== child.constructor.name) {
+          // Sch_InvalidElementContentWrongType: element tag is declared under parent
+          // but the child's TypeScript class does not match the expected class.
+          // Mirrors .NET EmitInvalidElementError when two classes share the same tag.
+          errors.push(
+            makeError(
+              "Sch_InvalidElementContentWrongType",
+              `Element <${child.qualifiedName}> appears under <${parent.qualifiedName}> but has wrong type '${child.constructor.name}' (expected '${expectedCls}').`,
+              parent,
+              makePath(path, child, ci),
+              partUri,
+              child,
+            ),
+          );
+        }
       } else if (!allowed.has(key)) {
         // Sch_InvalidElementContentExpectingComplex: element tag not declared under parent at all.
         // Mirrors .NET EmitInvalidElementError: !element.CanContainChild(child) path.
