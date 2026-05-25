@@ -30,13 +30,12 @@
  *   The .NET tests assert `Errors[0].RelatedNode` (the offending child element).
  *   openxml-ts only has `node` (the parent). We assert `node === parent` instead.
  *
- * NOTE-UNEXPECTED: .NET emits Sch_UnexpectedElementContentExpectingComplex when a
- *   valid-but-wrong-position element appears in a sequence. openxml-ts uses a flat
- *   allowed-set check and emits Sch_InvalidElementContentExpectingComplex for any
- *   disallowed child. Tests specifically asserting Sch_UnexpectedElementContentExpectingComplex
- *   are skipped with TODO(#325).
- *   TODO(#325): Implement full particle state machine to distinguish
- *   Sch_UnexpectedElementContentExpectingComplex vs Sch_InvalidElementContentExpectingComplex.
+ * NOTE-UNEXPECTED: Epic-130 implemented Sch_UnexpectedElementContentExpectingComplex for
+ *   valid-but-wrong-position elements in a sequence. openxml-ts now distinguishes:
+ *   - Sch_UnexpectedElementContentExpectingComplex: element IS declared under parent but out of order
+ *   - Sch_InvalidElementContentExpectingComplex: element NOT declared under parent at all
+ *   - Sch_AllElement: element appears more than once in an xsd:all particle
+ *   This fully resolves TODO(#325).
  *
  * NOTE-ATTRTYPE: .NET tests assert detailed per-type attribute validation messages
  *   (boolean, sbyte, byte, int, enum, pattern, hexBinary, base64, NCName, token, dateTime).
@@ -50,7 +49,7 @@
  *   Ported — particle validators (particle membership, cardinality, missing children): 32
  *   Ported — required attribute validation: 2
  *   Ported — safety / error model: 4
- *   Skipped (TODO #325 — Sch_UnexpectedElementContentExpectingComplex): ~20
+ *   Epic-130 — Sch_UnexpectedElementContentExpectingComplex + Sch_AllElement: see particle-automaton-parity.test.ts
  *   Skipped (TODO #326 — per-type attr validation): ~40
  */
 
