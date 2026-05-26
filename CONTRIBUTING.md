@@ -8,8 +8,7 @@
 - **是什么**：Microsoft Open-XML-SDK 的 TypeScript 重写，ECMA-376 兼容；
 - **跑在哪**：Node ≥ 20、Bun ≥ 1.1、现代浏览器（chromium / safari，**Web Streams**
   作为唯一 IO 抽象）；
-- **不是什么**：不是 Office 文档渲染引擎；不是模板引擎；schema validator 在 backlog 里
-  但优先级最低。
+- **不是什么**：不是 Office 文档渲染引擎；不是模板引擎。
 
 ## 开发环境
 

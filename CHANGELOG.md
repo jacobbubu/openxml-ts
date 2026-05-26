@@ -1,5 +1,40 @@
 # Changelog
 
+## [Unreleased]
+
+### Features
+
+* **validation:** Sch_UndeclaredAttribute — 版本条件属性声明检测（knownAttrs + versionedKnownAttrs）
+* **validation:** MC 验证器 — 7 个 MarkupCompatibility 错误码（MC_InvalidXmlAttribute 等）
+* **validation:** MaxNumberOfErrors 选项 — 限制收集的验证错误数量
+* **validation:** Pkg_PartIsNotAllowed — OPC 自引用关系检查
+* **validation:** Sch_InvalidChildinLeafElement — 叶元素含子元素检测
+* **validation:** choice/any/blip 粒子边缘用例全覆盖（29 个新测试）
+* **validation:** group 级 maxOccurs cardinality 检查
+* **validation:** 错误描述自动附加 Fix 建议（15 个常见错误码）
+* **values:** 补齐 7 个缺失 XSD 值类（NonNegativeInteger / PositiveInteger / AnyUri / NcName / Token / Id / QName）
+* **cli:** openxml-ts validate 命令 — 自动检测格式并执行全包校验
+* **docs:** onboarding.md 入门指南 + recipes.md 场景速查
+* **docs:** typedoc API 文档生成（`pnpm docs`，571 页）
+* **docs:** README 校验文档大幅扩展（错误码速查 / 三种模式 / 选项说明）
+
+### Bug Fixes
+
+* **validation:** 修复 expectedClassName 位序检查被类型检查跳过的 bug
+* **validation:** 验证器跳过 mc 命名空间元素，删除 Level 的假 any particle
+* **validation:** 修复重复序列 cardinality 误报（祖先 multiplier）
+* **validation:** 修复 choice max 语义（choice max=1 是每类型一次，非总计数）
+* **validation:** onOff typeHint 在 evaluateSingleConstraint 中缺失实现
+* **build:** 修复 typeHint "onOff" 类型 + TS2532 undefined 索引访问
+
+### Performance / Cleanup
+
+* **test:** 删除 5 个 .NET 特有 NOT-APPLICABLE skip 测试
+* **test:** 精简 Phase 1 validator 测试（-12 个被 parity 覆盖的重复）
+* **test:** 8 个 it.todo → 全启用（#327 重复序列 cardinality 已修复）
+* **test:** BugRegression 分类标签更正为 PORTED
+* **test:** 属性值类型校验测试覆盖所有 typeHint（39 个测试）
+
 ## [1.7.0](https://github.com/jacobbubu/openxml-ts/compare/v1.6.0...v1.7.0) (2026-05-23)
 
 
