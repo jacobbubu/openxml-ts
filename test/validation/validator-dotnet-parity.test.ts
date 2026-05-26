@@ -846,3 +846,84 @@ describe("Sch_InvalidChildinLeafElement — leaf element containing children", (
     expect(leafErr).toBeUndefined();
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GroupParticleValidator — group-level maxOccurs (TestSimpleGroup2)
+// .NET tests EG_HdrFtrReferences group with max=6.
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("GroupParticleValidator — group-level maxOccurs", () => {
+  const GRP_NS = "http://test.group-max.local";
+
+  // Inline constraint: group with 3 optional leaf types, max=2 total
+  const groupConstraint: ElementConstraint = {
+    className: "GroupMaxTest",
+    namespaceUri: GRP_NS,
+    localName: "groupEl",
+    particle: {
+      root: {
+        kind: "sequence",
+        min: 1,
+        max: 1,
+        items: [
+          {
+            kind: "group",
+            min: 0,
+            max: 2,
+            items: [
+              { kind: "leaf", ns: GRP_NS, local: "refA", min: 0, max: 1 },
+              { kind: "leaf", ns: GRP_NS, local: "refB", min: 0, max: 1 },
+              { kind: "leaf", ns: GRP_NS, local: "refC", min: 0, max: 1 },
+            ],
+          },
+        ],
+      },
+    },
+  };
+
+  beforeAll(() => {
+    registerConstraints([groupConstraint]);
+  });
+
+  it("2 total children (at group max) → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(GRP_NS, "groupEl", "");
+    el.appendChild(makeComposite(GRP_NS, "refA", ""));
+    el.appendChild(makeComposite(GRP_NS, "refB", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("3 total children (exceeds group max=2) → Sch_UnexpectedElementContentExpectingComplex", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(GRP_NS, "groupEl", "");
+    el.appendChild(makeComposite(GRP_NS, "refA", ""));
+    el.appendChild(makeComposite(GRP_NS, "refB", ""));
+    el.appendChild(makeComposite(GRP_NS, "refC", ""));
+    const errors = v.validate(el);
+    const groupErr = errors.find(
+      (e) =>
+        e.id === "Sch_UnexpectedElementContentExpectingComplex" && e.description.includes("group"),
+    );
+    expect(groupErr).toBeDefined();
+    expect(groupErr?.node).toBe(el);
+  });
+
+  it("duplicate of same leaf type within group (leaf max=1 exceeded) → error", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(GRP_NS, "groupEl", "");
+    el.appendChild(makeComposite(GRP_NS, "refA", ""));
+    el.appendChild(makeComposite(GRP_NS, "refA", "")); // duplicate
+    const errors = v.validate(el);
+    const dupErr = errors.find((e) => e.id === "Sch_MinOccursInvalidElement" && e.node === el);
+    expect(dupErr).toBeDefined();
+    expect(dupErr?.description).toContain("refA");
+  });
+
+  it("0 children (group min=0) → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(GRP_NS, "groupEl", "");
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+});

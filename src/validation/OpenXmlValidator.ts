@@ -273,6 +273,37 @@ function checkCardinalityNode(
   for (const item of node.items) {
     errors.push(...checkCardinalityNode(item, counts, unmatchedCount, newMul));
   }
+
+  // Group-level maxOccurs check: for group nodes with a finite max,
+  // the total count of all children from all leaves within the group
+  // must respect the group's max bound.
+  // (e.g. EG_HdrFtrReferences group with 6 ref types, max=6 total).
+  if (node.kind === "group" && node.max !== "unbounded") {
+    let totalLeafCount = 0;
+    const collectLeafKeys = (n: ParticleNode): void => {
+      if (n.kind === "leaf") {
+        totalLeafCount += counts.get(`${n.ns}::${n.local}`) ?? 0;
+      } else if (n.kind !== "any") {
+        for (const item of n.items) collectLeafKeys(item);
+      }
+    };
+    for (const item of node.items) collectLeafKeys(item);
+    if (totalLeafCount < node.min) {
+      // Composite node's min not met by total leaf occurrences
+      // (error already reported per-leaf; skip duplicate here)
+    }
+    if (totalLeafCount > node.max) {
+      errors.push({
+        key: `##group-${node.kind}`,
+        local: `(group ${node.kind})`,
+        ns: "##group",
+        actual: totalLeafCount,
+        min: node.min,
+        max: node.max,
+      });
+    }
+  }
+
   return errors;
 }
 
@@ -1410,16 +1441,25 @@ export class OpenXmlValidator {
     const cardErrors = checkCardinalityNode(root, counts, unmatchedCount);
     for (const ce of cardErrors) {
       const maxStr = ce.max === "unbounded" ? "unbounded" : String(ce.max);
+      const isGroupError = ce.ns === "##group";
       if (ce.actual < ce.min) {
         // Missing required child: mirrors .NET Sch_IncompleteContentExpectingComplex
-        const description = `Element <${parent.qualifiedName}> is missing required child element <${ce.local}> (expected at least ${ce.min}, found ${ce.actual}).`;
+        const description = isGroupError
+          ? `Element <${parent.qualifiedName}> is missing required children in <${ce.local}> (expected at least ${ce.min}, found ${ce.actual}).`
+          : `Element <${parent.qualifiedName}> is missing required child element <${ce.local}> (expected at least ${ce.min}, found ${ce.actual}).`;
         errors.push(
           makeError("Sch_IncompleteContentExpectingComplex", description, parent, path, partUri),
         );
       } else {
         // Excess child (actual > max): mirrors .NET Sch_MinOccursInvalidElement
-        const description = `Element <${parent.qualifiedName}> must contain at most ${maxStr} occurrence(s) of <${ce.local}> (found ${ce.actual}).`;
-        errors.push(makeError("Sch_MinOccursInvalidElement", description, parent, path, partUri));
+        // For group-level max violations, use Sch_UnexpectedElementContentExpectingComplex
+        const errorId = isGroupError
+          ? "Sch_UnexpectedElementContentExpectingComplex"
+          : "Sch_MinOccursInvalidElement";
+        const description = isGroupError
+          ? `Element <${parent.qualifiedName}> must contain at most ${maxStr} occurrence(s) in <${ce.local}> (found ${ce.actual}).`
+          : `Element <${parent.qualifiedName}> must contain at most ${maxStr} occurrence(s) of <${ce.local}> (found ${ce.actual}).`;
+        errors.push(makeError(errorId, description, parent, path, partUri));
       }
     }
   }
