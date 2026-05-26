@@ -1598,7 +1598,26 @@ export class OpenXmlValidator {
       this.checkRelationshipTargets(pkg.relationships, partUris, errors);
       for (const part of pkg.parts()) {
         try {
+          const partUriLower = part.uri.toLowerCase();
           this.checkRelationshipTargets(part.relationships, partUris, errors);
+          // Pkg_PartIsNotAllowed: a part cannot have a relationship to itself
+          for (const rel of part.relationships) {
+            if (rel.targetMode !== "internal") continue;
+            if (rel.target.startsWith("#")) continue;
+            const resolvedTarget = resolveOpcTarget(
+              rel.sourceUri,
+              rel.target.includes("#") ? rel.target.slice(0, rel.target.indexOf("#")) : rel.target,
+            );
+            if (resolvedTarget.length === 0) continue;
+            if (resolvedTarget.toLowerCase() === partUriLower) {
+              errors.push(
+                makeOpcError(
+                  "Pkg_PartIsNotAllowed",
+                  `The package/part '${part.uri}' cannot have a relationship that targets itself.`,
+                ),
+              );
+            }
+          }
         } catch {
           // Part relationship read must not crash the validator
         }

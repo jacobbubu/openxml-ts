@@ -149,6 +149,48 @@ describe("OPC package validation (Pkg_* errors)", () => {
     const pkg = makeOpcPackage();
     expect(() => validator.validateOpcPackage(pkg)).not.toThrow();
   });
+
+  it("part with self-referencing relationship → Pkg_PartIsNotAllowed", () => {
+    const pkg = makeOpcPackage();
+    pkg.contentTypes.addDefault("rels", "application/vnd.openxmlformats-package.relationships+xml");
+    const part = pkg.createPart(
+      "/word/document.xml",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+    );
+    // Self-referencing: the part has a relationship to itself
+    part.relationships.create({
+      id: "rIdSelf",
+      type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument",
+      target: "/word/document.xml",
+      targetMode: "internal",
+    });
+    const errors = validator.validateOpcPackage(pkg);
+    const selfRef = errors.find((e) => e.id === "Pkg_PartIsNotAllowed");
+    expect(selfRef).toBeDefined();
+    expect(selfRef?.errorType).toBe("Package");
+  });
+
+  it("part with no self-reference → no Pkg_PartIsNotAllowed", () => {
+    const pkg = makeOpcPackage();
+    pkg.contentTypes.addDefault("rels", "application/vnd.openxmlformats-package.relationships+xml");
+    const mainPart = pkg.createPart(
+      "/word/document.xml",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml",
+    );
+    const comments = pkg.createPart(
+      "/word/comments.xml",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml",
+    );
+    mainPart.relationships.create({
+      id: "rId1",
+      type: "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments",
+      target: "/word/comments.xml",
+      targetMode: "internal",
+    });
+    const errors = validator.validateOpcPackage(pkg);
+    const selfRef = errors.find((e) => e.id === "Pkg_PartIsNotAllowed");
+    expect(selfRef).toBeUndefined();
+  });
 });
 
 // ---- 2. Missing required child element (Sch_IncompleteContentExpectingComplex) ----
