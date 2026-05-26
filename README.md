@@ -219,18 +219,89 @@ const flatXml = pkg.toFlatOpc({ progId: "Word.Document" });
 
 ## 校验（`openxml-ts/validation`）
 
-`OpenXmlValidator` 做三层校验，永不抛错——只返回 `ValidationError[]`：结构（schema Particle：子元素合法性 / cardinality / 顺序）、属性（必填 / 长度 / 数值范围）、schematron 语义规则（943/948 条，对齐 .NET SDK 的 18 类语义约束）。
+`OpenXmlValidator` 执行三层校验，永不抛错——只返回 `ValidationError[]`：
+
+| 层 | 检查内容 | 典型错误码 |
+| --- | --- | --- |
+| 结构（Particle） | 子元素是否允许出现在父元素下、cardinality（min/max）、顺序 | `Sch_InvalidElementContentExpectingComplex` `Sch_UnexpectedElementContentExpectingComplex` |
+| 属性 | 必填属性缺失、字符串长度超限、数值越界、枚举值 | `Sch_MissingRequiredAttribute` `Sch_AttributeValueDataTypeDetailed` |
+| 语义（Schematron） | 跨元素约束（"如果 A=1 则 B 不能存在"）、引用完整性、唯一性 | `Sem_AttributeAbsentConditionToValue` |
+
+额外检查 Markup Compatibility（`mc:AlternateContent` 结构 + `mc:Ignorable` 等属性，7 个 `MC_*` 错误码）和 OPC 包级约束（`Pkg_PartIsNotAllowed` 等）。
+
+### 快速开始
 
 ```ts
 import { OpenXmlValidator } from "openxml-ts/validation";
 import { WordprocessingDocument } from "openxml-ts/word";
 
 const doc = await WordprocessingDocument.openAsync("./report.docx");
-const errors = new OpenXmlValidator().validatePackage(doc);
+const validator = new OpenXmlValidator();
+const errors = validator.validatePackage(doc);
+
 for (const e of errors) {
-  console.log(`[${e.errorType}] ${e.description}`);
+  console.log(`[${e.errorType}] ${e.id}: ${e.description}`);
 }
 ```
+
+### 三种校验模式
+
+```ts
+const v = new OpenXmlValidator();
+
+// 1. 校验单个元素树（最轻量）
+const elErrors = v.validate(paragraphElement);
+
+// 2. 校验整个 Word 包（所有 Part + 跨 Part 语义）
+const docErrors = v.validate(wordDoc);
+
+// 3. 校验 OPC 包结构（Content_Types 缺失、关系目标断裂等）
+const pkgErrors = v.validate(opcPackage);
+```
+
+### 错误对象
+
+```ts
+interface ValidationError {
+  id: string;           // 机器可读错误码，如 "Sch_InvalidElementContentExpectingComplex"
+  description: string;  // 人类可读描述
+  errorType: "Schema" | "Semantic" | "Package" | "MarkupCompatibility";
+  node: OpenXmlElement; // 导致错误的元素（子元素错误时为父元素）
+  path: string;         // XPath-like 路径，如 "/document/body/p[0]/r[1]"
+  partUri?: string;     // 所在 Part URI（包校验时有值）
+  relatedNode?: OpenXmlElement; // 位置错误时的违规子元素
+}
+```
+
+### 常见错误码速查
+
+| 错误码 | 含义 | 典型修复 |
+| --- | --- | --- |
+| `Sch_InvalidElementContentExpectingComplex` | 子元素不应出现在父元素下 | 把子元素放到正确的父容器（如 `<w:r>` 只能放在 `<w:p>` 内） |
+| `Sch_UnexpectedElementContentExpectingComplex` | 子元素合法但顺序错误 | 调整子元素顺序（如 `w:rPr` 必须在 `w:t` 之前） |
+| `Sch_IncompleteContentExpectingComplex` | 缺少必需子元素 | 补充缺失的子元素 |
+| `Sch_MissingRequiredAttribute` | 缺少必需属性 | 添加缺失的属性（如 `w:bookmarkStart` 必须有 `w:name`） |
+| `Sch_AttributeValueDataTypeDetailed` | 属性值类型不正确 | 修正属性值（长度、数值范围、枚举值等） |
+| `Sch_UndeclaredAttribute` | 属性未在 schema 中声明 | 移除未知属性或升级目标 Office 版本 |
+| `Sch_InvalidChildinLeafElement` | 叶元素不能含子元素 | 移除叶元素内的非法子节点 |
+| `MC_InvalidRequiresAttribute` | `mc:Choice` 的 `Requires` 前缀未声明 | 在父元素上添加 `xmlns:` 命名空间声明 |
+| `Sem_AttributeAbsentConditionToValue` | 语义规则：当 A=某值时 B 不能存在 | 检查业务数据是否满足关联约束 |
+| `Pkg_RequiredPartDoNotExist` | 包中引用的 Part 不存在 | 确保所有关系目标都对应实际 Part |
+
+### 构造器选项
+
+```ts
+const v = new OpenXmlValidator({
+  // 目标 Office 版本（影响版本条件元素/属性）
+  fileFormatVersions: FileFormatVersions.Office2010,
+  // 限制收集的错误数量（默认 1000）
+  maxNumberOfErrors: 100,
+  // 启用 Phase 2 schematron 语义校验
+  includeSemantic: true,
+});
+```
+
+也支持 .NET 风格的直接传版本号：`new OpenXmlValidator(FileFormatVersions.Office2007)`。
 
 校验是开发期质量门禁，不是打开文档的前置条件——反序列化对 schema 越界一律宽容。真实 Office 文件经全套校验零误报。
 
