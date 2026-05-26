@@ -156,7 +156,8 @@ async function cmdValidate(file: string): Promise<void> {
     const { SpreadsheetDocument } = await import("../excel/index.js");
     const doc = await SpreadsheetDocument.openAsync(bytes);
     process.stderr.write(`Validating ${file} as Excel...\n`);
-    errors = validator.validate(doc);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    errors = validator.validate(doc as any);
   } else {
     const { constraints: ppt } = await import("../validation/constraints/ppt.js");
     const { constraints: drawing } = await import("../validation/constraints/drawing.js");
@@ -165,7 +166,8 @@ async function cmdValidate(file: string): Promise<void> {
     const { PresentationDocument } = await import("../ppt/index.js");
     const doc = await PresentationDocument.openAsync(bytes);
     process.stderr.write(`Validating ${file} as PPT...\n`);
-    errors = validator.validate(doc);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    errors = validator.validate(doc as any);
   }
 
   if (errors.length === 0) {
