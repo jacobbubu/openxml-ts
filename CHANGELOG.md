@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased]
+## [1.8.0](https://github.com/jacobbubu/openxml-ts/compare/v1.7.0...v1.8.0) (2026-05-26)
 
 ### Features
 
