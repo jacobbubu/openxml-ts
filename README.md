@@ -6,6 +6,8 @@
 pnpm add openxml-ts
 ```
 
+**初来乍到？** → [docs/onboarding.md](./docs/onboarding.md)（5 分钟看懂核心概念 + 常见错误修复）。
+
 **Live demo**：<https://jacobbubu.github.io/openxml-ts/>（拖入 docx/xlsx/pptx 在浏览器里直接读、改、下载）。
 
 ## 30 秒上手
