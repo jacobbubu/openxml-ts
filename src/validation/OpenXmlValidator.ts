@@ -1145,6 +1145,20 @@ export class OpenXmlValidator {
           }
           break;
         }
+        case "onOff": {
+          if (!/^(?:true|false|on|off|1|0)$/i.test(value)) {
+            errs.push(
+              makeError(
+                "Sch_AttributeValueDataTypeDetailed",
+                `Attribute '${qname}' on <${qn}>: '${value}' is not a valid onOff value (expected true/false/on/off/1/0).`,
+                el,
+                path,
+                partUri,
+              ),
+            );
+          }
+          break;
+        }
         case "list": {
           // Basic list validation: check for empty items
           // Full item type validation requires schema type info not currently available
