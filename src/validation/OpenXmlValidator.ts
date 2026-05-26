@@ -228,6 +228,7 @@ function checkCardinalityNode(
   node: ParticleNode,
   counts: Map<string, number>,
   unmatchedCount?: number,
+  ancMaxMul = 1,
 ): CardinalityError[] {
   const errors: CardinalityError[] = [];
 
@@ -252,15 +253,25 @@ function checkCardinalityNode(
     if (actual < node.min) {
       errors.push({ key, local: node.local, ns: node.ns, actual, min: node.min, max: node.max });
     }
-    if (node.max !== "unbounded" && actual > node.max) {
+    // Max check respects ancestor multiplier: if the parent sequence repeats
+    // unbounded, the leaf's effective max is also unbounded.
+    const effMax =
+      node.max === "unbounded" || ancMaxMul >= Number.POSITIVE_INFINITY
+        ? Number.POSITIVE_INFINITY
+        : node.max;
+    if (effMax < Number.POSITIVE_INFINITY && actual > effMax) {
       errors.push({ key, local: node.local, ns: node.ns, actual, min: node.min, max: node.max });
     }
     return errors;
   }
 
-  // For composite nodes, recurse into items
+  // For composite nodes, recurse into items with updated ancestor multiplier.
+  // When this node's max is unbounded, its children can repeat infinitely.
+  const nodeMax = node.max === "unbounded" ? Number.POSITIVE_INFINITY : node.max;
+  const newMul =
+    ancMaxMul >= Number.POSITIVE_INFINITY ? Number.POSITIVE_INFINITY : ancMaxMul * nodeMax;
   for (const item of node.items) {
-    errors.push(...checkCardinalityNode(item, counts, unmatchedCount));
+    errors.push(...checkCardinalityNode(item, counts, unmatchedCount, newMul));
   }
   return errors;
 }
@@ -795,6 +806,26 @@ export class OpenXmlValidator {
     errors.push(...validateMcElement(el, path, partUri));
 
     const constraint = lookupConstraint(el);
+
+    // Sch_InvalidChildinLeafElement: an element that is known to be a leaf
+    // (no particle in its constraint) must not contain children.
+    // Mirrors .NET DocumentValidator.LeafElementValidateTest.
+    if (
+      constraint !== undefined &&
+      constraint.particle === undefined &&
+      el instanceof OpenXmlCompositeElement &&
+      el.children.count > 0
+    ) {
+      errors.push(
+        makeError(
+          "Sch_InvalidChildinLeafElement",
+          `The element <${el.qualifiedName}> is a leaf element and cannot contain children.`,
+          el,
+          path,
+          partUri,
+        ),
+      );
+    }
 
     // --- Attribute validation ---
     // Strict-format documents are canonicalized to Transitional URIs at

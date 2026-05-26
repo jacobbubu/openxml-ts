@@ -310,6 +310,7 @@ describe("NamespaceTest — Sch_UndeclaredAttribute for version-conditional attr
       override readonly namespaceUri = "http://ns-test.local";
       override readonly localName = "custom";
       override readonly prefix = "";
+      override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
       constructor() {
         super();
         this.extendedAttributes.set("w:rsidR", "00A35C47");
@@ -332,6 +333,7 @@ describe("NamespaceTest — Sch_UndeclaredAttribute for version-conditional attr
       override readonly namespaceUri = "http://ns-test.local";
       override readonly localName = "custom";
       override readonly prefix = "";
+      override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
       constructor() {
         super();
         this.extendedAttributes.set("w:rsidR", "00A35C47");
@@ -350,6 +352,7 @@ describe("NamespaceTest — Sch_UndeclaredAttribute for version-conditional attr
       override readonly namespaceUri = "http://ns-test.local";
       override readonly localName = "custom";
       override readonly prefix = "";
+      override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
       constructor() {
         super();
         this.extendedAttributes.set("w:rsidR", "00A35C47");
@@ -371,6 +374,7 @@ describe("NamespaceTest — Sch_UndeclaredAttribute for version-conditional attr
       override readonly namespaceUri = "http://ns-test.local";
       override readonly localName = "custom";
       override readonly prefix = "";
+      override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
       constructor() {
         super();
         this.extendedAttributes.set("w:rsidR", "00A35C47");

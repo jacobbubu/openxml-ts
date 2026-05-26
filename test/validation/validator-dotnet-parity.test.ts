@@ -60,7 +60,9 @@ import { OpenXmlValidator, registerConstraints } from "../../src/validation/Open
 import type { ValidationError } from "../../src/validation/ValidationError.js";
 import { constraints as drawingConstraints } from "../../src/validation/constraints/drawing.js";
 import { constraints as wordConstraints } from "../../src/validation/constraints/word.js";
+import type { ElementConstraint } from "../../src/validation/types.js";
 
+import { AltChunk } from "../../src/word/generated/alt-chunk.js";
 import { Body } from "../../src/word/generated/body.js";
 import { DefaultDropDownListItemIndex } from "../../src/word/generated/default-drop-down-list-item-index.js";
 import { Div } from "../../src/word/generated/div.js";
@@ -70,6 +72,7 @@ import { DropDownListSelection } from "../../src/word/generated/drop-down-list-s
 import { FieldChar } from "../../src/word/generated/field-char.js";
 import { FieldData } from "../../src/word/generated/field-data.js";
 import { ListEntryFormField } from "../../src/word/generated/list-entry-form-field.js";
+import { MoveFromRun } from "../../src/word/generated/move-from-run.js";
 import { NumberingChange } from "../../src/word/generated/numbering-change.js";
 import { ParagraphPropertiesChange } from "../../src/word/generated/paragraph-properties-change.js";
 import { ParagraphProperties } from "../../src/word/generated/paragraph-properties.js";
@@ -270,13 +273,16 @@ describe("SequenceParticleValidator — TestSimpleSequence3 (CT_Divs / Divs)", (
     expect(errors).toHaveLength(0);
   });
 
-  // TODO(#327): The Divs constraint uses `{ kind: "sequence", min:1, max:"unbounded", items:[{div, min:1, max:1}] }`.
-  // The flat checkCardinalityNode sees actual=3 for div against max=1 and incorrectly fires
-  // Sch_MinOccursInvalidElement. The unbounded repetition lives on the sequence node, not the leaf.
-  // Skip until the cardinality checker understands repeating sequences.
-  it.todo(
-    "good: Divs with multiple Div children has no parent-level errors (TODO #327: repeating sequence cardinality)",
-  );
+  it("good: Divs with multiple Div children has no parent-level errors", () => {
+    const divs = new Divs();
+    divs.appendChild(new Div());
+    divs.appendChild(new Div());
+    divs.appendChild(new Div());
+    const errors = validator.validate(divs);
+    // No cardinality error from repeating sequence
+    const cardErr = findErrorOnNode(errors, "Sch_MinOccursInvalidElement", divs);
+    expect(cardErr).toBeUndefined();
+  });
 
   it("error: Paragraph appended to Divs → Sch_InvalidElementContentExpectingComplex on divs", () => {
     const divs = new Divs();
@@ -335,11 +341,15 @@ describe("SequenceParticleValidator — TestSimpleSequence3 (CT_Divs / Divs)", (
 // The intent being ported: "invalid child anywhere in an unbounded sequence → error".
 
 describe("SequenceParticleValidator — TestSimpleSequence4 (unbounded sequence, invalid child at various positions)", () => {
-  // TODO(#327): Same repeating-sequence cardinality issue as TestSimpleSequence3.
-  // Flat checkCardinalityNode sees actual=3 div against max=1 → false Sch_MinOccursInvalidElement.
-  it.todo(
-    "good: Divs with 3 valid Div children has no parent-level errors (TODO #327: repeating sequence cardinality)",
-  );
+  it("good: Divs with 3 valid Div children has no cardinality errors", () => {
+    const divs = new Divs();
+    divs.appendChild(new Div());
+    divs.appendChild(new Div());
+    divs.appendChild(new Div());
+    const errors = validator.validate(divs);
+    const cardErr = findErrorOnNode(errors, "Sch_MinOccursInvalidElement", divs);
+    expect(cardErr).toBeUndefined();
+  });
 
   it("error: Paragraph in the middle of Divs → Sch_InvalidElementContentExpectingComplex", () => {
     const divs = new Divs();
@@ -468,18 +478,56 @@ describe("ChoiceParticleValidator — TestSimpleChoice (CT_FldChar / FieldChar)"
 // All "good" Body tests are skipped until TODO #327 (repeating/choice-aware cardinality) is fixed.
 
 describe("CompositeParticleValidator — ValidateBody (CT_Body / Body)", () => {
-  // TODO(#327): flat cardinality checker fires on min:1 leaves inside optional choice/group nodes.
-  // An empty Body is valid (all block-level children optional), but the checker emits ~20 errors.
-  it.todo("good: empty Body has no parent-level particle errors (TODO #327)");
-  it.todo("good: Body with only SectionProperties has no parent-level errors (TODO #327)");
-  it.todo(
-    "good: Body with AltChunk before SectionProperties has no parent-level errors (TODO #327)",
-  );
-  it.todo("good: Body with multiple AltChunks has no parent-level errors (TODO #327)");
-  it.todo("good: Body with Paragraph and SectionProperties has no parent-level errors (TODO #327)");
-  it.todo(
-    "good: Body with MoveFromRangeStart + moveFrom child has no parent-level errors (TODO #327)",
-  );
+  it("good: empty Body has no structural errors (disallowed-child)", () => {
+    const body = new Body();
+    const errors = validator.validate(body);
+    // No Sch_InvalidElementContentExpectingComplex on empty body
+    const disallowed = findErrorOnNode(errors, "Sch_InvalidElementContentExpectingComplex", body);
+    expect(disallowed).toBeUndefined();
+  });
+
+  it("good: Body with only SectionProperties has no structural errors", () => {
+    const body = new Body();
+    body.appendChild(new SectionProperties());
+    const errors = validator.validate(body);
+    const disallowed = findErrorOnNode(errors, "Sch_InvalidElementContentExpectingComplex", body);
+    expect(disallowed).toBeUndefined();
+  });
+
+  it("good: Body with AltChunk before SectionProperties has no structural errors", () => {
+    const body = new Body();
+    body.appendChild(new AltChunk());
+    body.appendChild(new SectionProperties());
+    const errors = validator.validate(body);
+    const disallowed = findErrorOnNode(errors, "Sch_InvalidElementContentExpectingComplex", body);
+    expect(disallowed).toBeUndefined();
+  });
+
+  it("good: Body with multiple AltChunks has no structural errors", () => {
+    const body = new Body();
+    body.appendChild(new AltChunk());
+    body.appendChild(new AltChunk());
+    const errors = validator.validate(body);
+    const disallowed = findErrorOnNode(errors, "Sch_InvalidElementContentExpectingComplex", body);
+    expect(disallowed).toBeUndefined();
+  });
+
+  it("good: Body with Paragraph and SectionProperties has no structural errors", () => {
+    const body = new Body();
+    body.appendChild(new Paragraph());
+    body.appendChild(new SectionProperties());
+    const errors = validator.validate(body);
+    const disallowed = findErrorOnNode(errors, "Sch_InvalidElementContentExpectingComplex", body);
+    expect(disallowed).toBeUndefined();
+  });
+
+  it("good: Body with moveFrom child has no structural errors", () => {
+    const body = new Body();
+    body.appendChild(new MoveFromRun());
+    const errors = validator.validate(body);
+    const disallowed = findErrorOnNode(errors, "Sch_InvalidElementContentExpectingComplex", body);
+    expect(disallowed).toBeUndefined();
+  });
 
   it("error: Run (w:r) as first child of Body → Sch_InvalidElementContentExpectingComplex", () => {
     // w:r is NOT a valid direct child of w:body
@@ -733,5 +781,68 @@ describe("GroupParticleValidator — group membership and invalid child detectio
     const err = findErrorOnNode(errors, "Sch_MinOccursInvalidElement", body);
     expect(err).toBeDefined();
     expect(err?.errorType).toBe("Schema");
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Sch_InvalidChildinLeafElement — .NET DocumentValidatorTests.LeafElementValidateTest
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("Sch_InvalidChildinLeafElement — leaf element containing children", () => {
+  const LEAF_NS = "http://test.leaf-validation.local";
+
+  // Inline constraint: leaf element (no particle) with knownAttrs
+  const leafConstraint: ElementConstraint = {
+    className: "LeafTest",
+    namespaceUri: LEAF_NS,
+    localName: "leafEl",
+    knownAttrs: ["x:val"],
+  };
+
+  beforeAll(() => {
+    registerConstraints([leafConstraint]);
+  });
+
+  function makeLeafComposite(className: string, localName: string): OpenXmlCompositeElement {
+    return new (class extends OpenXmlCompositeElement {
+      override readonly className = className;
+      override readonly namespaceUri = LEAF_NS;
+      override readonly localName = localName;
+      override readonly prefix = "";
+      override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
+    })();
+  }
+
+  it("leaf element with children → Sch_InvalidChildinLeafElement", () => {
+    const v = new OpenXmlValidator();
+    const el = makeLeafComposite("LeafTest", "leafEl");
+    const child = makeLeafComposite("BadChild", "badChild");
+    el.appendChild(child);
+
+    const errors = v.validate(el);
+    const leafErr = errors.find((e) => e.id === "Sch_InvalidChildinLeafElement");
+    expect(leafErr).toBeDefined();
+    expect(leafErr?.errorType).toBe("Schema");
+    expect(leafErr?.node).toBe(el);
+    expect(leafErr?.description).toContain("leaf element");
+  });
+
+  it("leaf element without children → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeLeafComposite("LeafTest", "leafEl");
+    el.extendedAttributes.set("x:val", "ok");
+    const errors = v.validate(el);
+    const leafErr = errors.find((e) => e.id === "Sch_InvalidChildinLeafElement");
+    expect(leafErr).toBeUndefined();
+  });
+
+  it("element with particle constraint + children → no leaf error", () => {
+    // Body has a particle → it's NOT a leaf element
+    const v = new OpenXmlValidator();
+    const body = new Body();
+    body.appendChild(makeComposite(W_NS, "p", "w"));
+    const errors = v.validate(body);
+    const leafErr = errors.find((e) => e.id === "Sch_InvalidChildinLeafElement");
+    expect(leafErr).toBeUndefined();
   });
 });

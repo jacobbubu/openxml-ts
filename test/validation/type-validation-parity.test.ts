@@ -7,6 +7,7 @@
  */
 
 import { beforeAll, describe, expect, it } from "vitest";
+import { OpenXmlElementList } from "../../src/element/element-list.js";
 import { OpenXmlCompositeElement } from "../../src/element/element.js";
 import { FileFormatVersions } from "../../src/markup-compat/file-format-versions.js";
 import { OpenXmlValidator, registerConstraints } from "../../src/validation/OpenXmlValidator.js";
@@ -135,6 +136,7 @@ function makeComposite(className: string, localName: string): OpenXmlCompositeEl
     override readonly namespaceUri = NS;
     override readonly localName = localName;
     override readonly prefix = "";
+    override readonly children: OpenXmlElementList = new OpenXmlElementList(this);
   })();
 }
 
