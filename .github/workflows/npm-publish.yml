@@ -44,8 +44,8 @@ jobs:
         run: |
           echo "=== package.json version ==="
           node -p "require('./package.json').version"
-          echo "=== pnpm pack --dry-run ==="
-          pnpm pack --dry-run
+          echo "=== pnpm pack (preview) ==="
+          pnpm pack
 
       - name: Publish to npm (dry-run)
         if: ${{ inputs.confirm != true }}
