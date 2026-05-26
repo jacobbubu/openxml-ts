@@ -305,6 +305,7 @@
     "test:browser": "vitest run --config vitest.browser.config.ts",
     "test:browser:install": "playwright install chromium",
     "bench": "vitest bench --run",
+    "docs": "typedoc",
     "golden:gen": "bun run tools/golden-generator/generate.ts",
     "gen:word": "bun run tools/schema-codegen/generate.ts",
     "gen:excel": "bun run tools/schema-codegen/generate.ts --input ../../github/Open-XML-SDK/data/schemas/schemas_openxmlformats_org_spreadsheetml_2006_main.json --output src/excel/generated",
@@ -358,6 +359,7 @@
     "bmad-method": "^6.6.0",
     "playwright": "^1.60.0",
     "size-limit": "^12.1.0",
+    "typedoc": "^0.28.19",
     "typescript": "^5.7.3",
     "vitest": "^2.1.8"
   },

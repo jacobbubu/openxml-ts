@@ -1,0 +1,29 @@
+{
+  "entryPoints": [
+    "src/index.ts",
+    "src/word/index.ts",
+    "src/excel/index.ts",
+    "src/ppt/index.ts",
+    "src/validation/OpenXmlValidator.ts",
+    "src/validation/ValidationError.ts",
+    "src/streaming/index.ts",
+    "src/markup-compat/index.ts",
+    "src/linq/index.ts",
+    "src/packaging/index.ts"
+  ],
+  "out": "docs/api",
+  "name": "openxml-ts",
+  "includeVersion": true,
+  "readme": "none",
+  "excludePrivate": true,
+  "excludeExternals": true,
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": true
+  },
+  "categorizeByGroup": true,
+  "visibilityFilters": {
+    "protected": false,
+    "inherited": true
+  }
+}

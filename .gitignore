@@ -7,6 +7,7 @@ dist/
 build/
 *.tsbuildinfo
 coverage/
+docs/api/
 .tmp/
 # api-extractor 在 check 模式下写入的临时报告
 temp/
