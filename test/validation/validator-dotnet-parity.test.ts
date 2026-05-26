@@ -927,3 +927,452 @@ describe("GroupParticleValidator — group-level maxOccurs", () => {
     expect(errors).toHaveLength(0);
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ChoiceParticleValidator — TestSimpleChoice2 (required choice)
+// .NET: CT_AnimationGraphicalObjectBuildProperties — choice min=1 between bldDgm and bldChart.
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("ChoiceParticleValidator — TestSimpleChoice2 (required choice, min=1)", () => {
+  const CH2_NS = "http://test.choice2.local";
+
+  const choice2Constraint: ElementConstraint = {
+    className: "Choice2Test",
+    namespaceUri: CH2_NS,
+    localName: "choice2El",
+    particle: {
+      root: {
+        kind: "sequence",
+        min: 1,
+        max: 1,
+        items: [
+          {
+            kind: "choice",
+            min: 1,
+            max: 1,
+            items: [
+              { kind: "leaf", ns: CH2_NS, local: "bldDgm", min: 1, max: 1 },
+              { kind: "leaf", ns: CH2_NS, local: "bldChart", min: 1, max: 1 },
+            ],
+          },
+        ],
+      },
+    },
+  };
+
+  beforeAll(() => registerConstraints([choice2Constraint]));
+
+  it("empty required choice → Sch_IncompleteContentExpectingComplex", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH2_NS, "choice2El", "");
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors.some((e) => e.id === "Sch_IncompleteContentExpectingComplex")).toBe(true);
+  });
+
+  it("one valid choice child → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH2_NS, "choice2El", "");
+    el.appendChild(makeComposite(CH2_NS, "bldDgm", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("both choice children → Sch_UnexpectedElementContentExpectingComplex", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH2_NS, "choice2El", "");
+    el.appendChild(makeComposite(CH2_NS, "bldDgm", ""));
+    el.appendChild(makeComposite(CH2_NS, "bldChart", ""));
+    const errors = v.validate(el);
+    expect(errors.some((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex")).toBe(true);
+  });
+
+  it("invalid child in required choice → Sch_InvalidElementContentExpectingComplex", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH2_NS, "choice2El", "");
+    el.appendChild(makeComposite(CH2_NS, "INVALID", ""));
+    const errors = v.validate(el);
+    expect(errors.some((e) => e.id === "Sch_InvalidElementContentExpectingComplex")).toBe(true);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ChoiceParticleValidator — TestSimpleChoice3 (nested choice, 11 items)
+// .NET: CT_FFData (FormFieldData) — choice with nested choice containing 11 items
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("ChoiceParticleValidator — TestSimpleChoice3 (nested choice)", () => {
+  const CH3_NS = "http://test.choice3.local";
+
+  const choice3Constraint: ElementConstraint = {
+    className: "Choice3Test",
+    namespaceUri: CH3_NS,
+    localName: "choice3El",
+    particle: {
+      root: {
+        kind: "sequence",
+        min: 1,
+        max: 1,
+        items: [
+          {
+            kind: "choice",
+            min: 0,
+            max: "unbounded",
+            items: [
+              { kind: "leaf", ns: CH3_NS, local: "name", min: 1, max: 1 },
+              { kind: "leaf", ns: CH3_NS, local: "enabled", min: 1, max: 1 },
+              {
+                kind: "choice",
+                min: 1,
+                max: 1,
+                items: [
+                  { kind: "leaf", ns: CH3_NS, local: "calc", min: 1, max: 1 },
+                  { kind: "leaf", ns: CH3_NS, local: "list", min: 1, max: 1 },
+                  { kind: "leaf", ns: CH3_NS, local: "text", min: 1, max: 1 },
+                ],
+              },
+              { kind: "leaf", ns: CH3_NS, local: "status", min: 1, max: 1 },
+            ],
+          },
+        ],
+      },
+    },
+  };
+
+  beforeAll(() => registerConstraints([choice3Constraint]));
+
+  it("empty → 0 errors (choice min=0)", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH3_NS, "choice3El", "");
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("one leaf → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH3_NS, "choice3El", "");
+    el.appendChild(makeComposite(CH3_NS, "name", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("nested choice selection → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH3_NS, "choice3El", "");
+    el.appendChild(makeComposite(CH3_NS, "calc", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("two choices from inner nested choice (max=1) → error", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH3_NS, "choice3El", "");
+    el.appendChild(makeComposite(CH3_NS, "calc", ""));
+    el.appendChild(makeComposite(CH3_NS, "text", ""));
+    const errors = v.validate(el);
+    expect(
+      errors.some(
+        (e) =>
+          e.id === "Sch_UnexpectedElementContentExpectingComplex" ||
+          e.id === "Sch_MinOccursInvalidElement",
+      ),
+    ).toBe(true);
+  });
+
+  it("one from each choice level (outer + inner) → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH3_NS, "choice3El", "");
+    el.appendChild(makeComposite(CH3_NS, "name", "")); // outer choice leaf
+    el.appendChild(makeComposite(CH3_NS, "calc", "")); // inner choice leaf
+    el.appendChild(makeComposite(CH3_NS, "status", "")); // outer choice leaf
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("invalid child → Sch_InvalidElementContentExpectingComplex", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH3_NS, "choice3El", "");
+    el.appendChild(makeComposite(CH3_NS, "INVALID", ""));
+    const errors = v.validate(el);
+    expect(errors.some((e) => e.id === "Sch_InvalidElementContentExpectingComplex")).toBe(true);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ChoiceParticleValidator — TestSimpleChoice4 (unbounded choice)
+// .NET: CT_RevisionRowColumn — choice min=0 max=unbounded with 3 leaf types
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("ChoiceParticleValidator — TestSimpleChoice4 (unbounded choice)", () => {
+  const CH4_NS = "http://test.choice4.local";
+
+  const choice4Constraint: ElementConstraint = {
+    className: "Choice4Test",
+    namespaceUri: CH4_NS,
+    localName: "choice4El",
+    particle: {
+      root: {
+        kind: "sequence",
+        min: 1,
+        max: 1,
+        items: [
+          {
+            kind: "choice",
+            min: 0,
+            max: "unbounded",
+            items: [
+              { kind: "leaf", ns: CH4_NS, local: "rcc", min: 1, max: 1 },
+              { kind: "leaf", ns: CH4_NS, local: "rfmt", min: 1, max: 1 },
+              { kind: "leaf", ns: CH4_NS, local: "undo", min: 1, max: 1 },
+            ],
+          },
+        ],
+      },
+    },
+  };
+
+  beforeAll(() => registerConstraints([choice4Constraint]));
+
+  it("empty → 0 errors (choice min=0)", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH4_NS, "choice4El", "");
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("one child → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH4_NS, "choice4El", "");
+    el.appendChild(makeComposite(CH4_NS, "rcc", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("duplicate is ok (unbounded)", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH4_NS, "choice4El", "");
+    el.appendChild(makeComposite(CH4_NS, "rcc", ""));
+    el.appendChild(makeComposite(CH4_NS, "rcc", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("mixed types → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH4_NS, "choice4El", "");
+    el.appendChild(makeComposite(CH4_NS, "rcc", ""));
+    el.appendChild(makeComposite(CH4_NS, "rfmt", ""));
+    el.appendChild(makeComposite(CH4_NS, "undo", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("invalid child in middle → Sch_InvalidElementContentExpectingComplex", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(CH4_NS, "choice4El", "");
+    el.appendChild(makeComposite(CH4_NS, "rcc", ""));
+    el.appendChild(makeComposite(CH4_NS, "INVALID", ""));
+    el.appendChild(makeComposite(CH4_NS, "rfmt", ""));
+    const errors = v.validate(el);
+    const invErr = errors.find(
+      (e) => e.id === "Sch_InvalidElementContentExpectingComplex" && e.node === el,
+    );
+    expect(invErr).toBeDefined();
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// AnyParticleValidator — TestSimpleAny (##local namespace matching)
+// .NET: CT_Textbox choice(txbxContent, any namespace="##local")
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("AnyParticleValidator — ##local namespace matching", () => {
+  const ANY_NS = "http://test.any.local";
+
+  const anyConstraint: ElementConstraint = {
+    className: "AnyTest",
+    namespaceUri: ANY_NS,
+    localName: "anyEl",
+    particle: {
+      root: {
+        kind: "sequence",
+        min: 1,
+        max: 1,
+        items: [
+          {
+            kind: "choice",
+            min: 0,
+            max: 1,
+            items: [
+              { kind: "leaf", ns: ANY_NS, local: "known", min: 0, max: 1 },
+              { kind: "any", min: 0, max: 1 },
+            ],
+          },
+        ],
+      },
+    },
+  };
+
+  beforeAll(() => registerConstraints([anyConstraint]));
+
+  it("empty choice → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(ANY_NS, "anyEl", "");
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("known leaf child → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(ANY_NS, "anyEl", "");
+    el.appendChild(makeComposite(ANY_NS, "known", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("any namespace child accepted by wildcard → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(ANY_NS, "anyEl", "");
+    el.appendChild(makeComposite("http://other.ns", "other", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("second child exceeds any max=1 → error", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(ANY_NS, "anyEl", "");
+    el.appendChild(makeComposite("http://other.ns", "other", ""));
+    el.appendChild(makeComposite("http://other2.ns", "other2", ""));
+    const errors = v.validate(el);
+    expect(
+      errors.some(
+        (e) =>
+          e.id === "Sch_UnexpectedElementContentExpectingComplex" ||
+          e.id === "Sch_MinOccursInvalidElement",
+      ),
+    ).toBe(true);
+  });
+
+  it("known + any child combined → error (choice max=1, only one allowed)", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(ANY_NS, "anyEl", "");
+    el.appendChild(makeComposite(ANY_NS, "known", ""));
+    el.appendChild(makeComposite("http://other.ns", "other", ""));
+    const errors = v.validate(el);
+    expect(
+      errors.some(
+        (e) =>
+          e.id === "Sch_UnexpectedElementContentExpectingComplex" ||
+          e.id === "Sch_MinOccursInvalidElement",
+      ),
+    ).toBe(true);
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CompositeParticleValidator — ValidateBlip (deep nesting)
+// .NET: CT_Blip sequence(choice(17 effects, min=0, unbounded), extLst(0, 1))
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("CompositeParticleValidator — ValidateBlip (sequence-with-choice nesting)", () => {
+  const BLIP_NS = "http://test.blip.local";
+
+  const blipConstraint: ElementConstraint = {
+    className: "BlipTest",
+    namespaceUri: BLIP_NS,
+    localName: "blipEl",
+    particle: {
+      root: {
+        kind: "sequence",
+        min: 1,
+        max: 1,
+        items: [
+          {
+            kind: "choice",
+            min: 0,
+            max: "unbounded",
+            items: [
+              { kind: "leaf", ns: BLIP_NS, local: "alpha", min: 1, max: 1 },
+              { kind: "leaf", ns: BLIP_NS, local: "duotone", min: 1, max: 1 },
+              { kind: "leaf", ns: BLIP_NS, local: "blur", min: 1, max: 1 },
+              { kind: "leaf", ns: BLIP_NS, local: "biLevel", min: 1, max: 1 },
+              { kind: "leaf", ns: BLIP_NS, local: "lum", min: 1, max: 1 },
+            ],
+          },
+          { kind: "leaf", ns: BLIP_NS, local: "extLst", min: 0, max: 1 },
+        ],
+      },
+    },
+  };
+
+  beforeAll(() => registerConstraints([blipConstraint]));
+
+  it("empty blip → 0 errors (all optional)", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(BLIP_NS, "blipEl", "");
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("one effect → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(BLIP_NS, "blipEl", "");
+    el.appendChild(makeComposite(BLIP_NS, "alpha", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("multiple same effects (unbounded) → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(BLIP_NS, "blipEl", "");
+    el.appendChild(makeComposite(BLIP_NS, "lum", ""));
+    el.appendChild(makeComposite(BLIP_NS, "lum", "")); // repeating is OK
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("mixed effects + extLst at end → 0 errors", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(BLIP_NS, "blipEl", "");
+    el.appendChild(makeComposite(BLIP_NS, "alpha", ""));
+    el.appendChild(makeComposite(BLIP_NS, "blur", ""));
+    el.appendChild(makeComposite(BLIP_NS, "duotone", ""));
+    el.appendChild(makeComposite(BLIP_NS, "biLevel", ""));
+    el.appendChild(makeComposite(BLIP_NS, "extLst", ""));
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
+  });
+
+  it("extLst not at end → Sch_UnexpectedElementContentExpectingComplex", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(BLIP_NS, "blipEl", "");
+    el.appendChild(makeComposite(BLIP_NS, "alpha", ""));
+    el.appendChild(makeComposite(BLIP_NS, "extLst", "")); // extLst too early
+    el.appendChild(makeComposite(BLIP_NS, "blur", "")); // effect after extLst
+    const errors = v.validate(el);
+    expect(errors.some((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex")).toBe(true);
+  });
+
+  it("duplicate extLst → error", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(BLIP_NS, "blipEl", "");
+    el.appendChild(makeComposite(BLIP_NS, "alpha", ""));
+    el.appendChild(makeComposite(BLIP_NS, "extLst", ""));
+    el.appendChild(makeComposite(BLIP_NS, "extLst", "")); // second extLst — max=1 exceeded
+    const errors = v.validate(el);
+    expect(
+      errors.some(
+        (e) =>
+          e.id === "Sch_MinOccursInvalidElement" ||
+          e.id === "Sch_UnexpectedElementContentExpectingComplex",
+      ),
+    ).toBe(true);
+  });
+
+  it("invalid child → Sch_InvalidElementContentExpectingComplex", () => {
+    const v = new OpenXmlValidator();
+    const el = makeComposite(BLIP_NS, "blipEl", "");
+    el.appendChild(makeComposite(BLIP_NS, "INVALID", ""));
+    const errors = v.validate(el);
+    expect(errors.some((e) => e.id === "Sch_InvalidElementContentExpectingComplex")).toBe(true);
+  });
+});

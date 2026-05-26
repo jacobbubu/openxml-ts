@@ -229,6 +229,7 @@ function checkCardinalityNode(
   counts: Map<string, number>,
   unmatchedCount?: number,
   ancMaxMul = 1,
+  ancMinOptional = false,
 ): CardinalityError[] {
   const errors: CardinalityError[] = [];
 
@@ -244,13 +245,25 @@ function checkCardinalityNode(
         max: node.max,
       });
     }
+    if (node.max !== "unbounded" && actual > node.max) {
+      errors.push({
+        key: "##any",
+        local: "(any)",
+        ns: "##any",
+        actual,
+        min: node.min,
+        max: node.max,
+      });
+    }
     return errors;
   }
 
   if (node.kind === "leaf") {
     const key = `${node.ns}::${node.local}`;
     const actual = counts.get(key) ?? 0;
-    if (actual < node.min) {
+    // Min check: suppressed if an ancestor (choice/group) is optional (min=0)
+    // or explicitly marked as optional (choice branch not taken).
+    if (!ancMinOptional && actual < node.min) {
       errors.push({ key, local: node.local, ns: node.ns, actual, min: node.min, max: node.max });
     }
     // Max check respects ancestor multiplier: if the parent sequence repeats
@@ -265,38 +278,66 @@ function checkCardinalityNode(
     return errors;
   }
 
+  // Children of choice nodes are always optional at the leaf level:
+  // the choice's own semantics (pick-one-of-N) mean individual leaves
+  // don't have independent min requirements — the choice's total count
+  // handles the collective min/max.
+  // Children of other nodes are optional only when ancestor is optional or
+  // this node has min=0.
+  const isChildrenOptional = ancMinOptional || node.kind === "choice" || node.min === 0;
+
   // For composite nodes, recurse into items with updated ancestor multiplier.
   // When this node's max is unbounded, its children can repeat infinitely.
   const nodeMax = node.max === "unbounded" ? Number.POSITIVE_INFINITY : node.max;
   const newMul =
     ancMaxMul >= Number.POSITIVE_INFINITY ? Number.POSITIVE_INFINITY : ancMaxMul * nodeMax;
   for (const item of node.items) {
-    errors.push(...checkCardinalityNode(item, counts, unmatchedCount, newMul));
+    errors.push(...checkCardinalityNode(item, counts, unmatchedCount, newMul, isChildrenOptional));
   }
 
-  // Group-level maxOccurs check: for group nodes with a finite max,
-  // the total count of all children from all leaves within the group
-  // must respect the group's max bound.
-  // (e.g. EG_HdrFtrReferences group with 6 ref types, max=6 total).
-  if (node.kind === "group" && node.max !== "unbounded") {
+  // Choice/Group-level cardinality check: when a choice or group has
+  // a finite min or max, the total count across all leaves + any
+  // within it must respect the node's min/max.
+  if (node.kind === "group" || node.kind === "choice") {
     let totalLeafCount = 0;
+    let hasAny = false;
     const collectLeafKeys = (n: ParticleNode): void => {
       if (n.kind === "leaf") {
         totalLeafCount += counts.get(`${n.ns}::${n.local}`) ?? 0;
-      } else if (n.kind !== "any") {
+      } else if (n.kind === "any") {
+        hasAny = true;
+      } else {
         for (const item of n.items) collectLeafKeys(item);
       }
     };
     for (const item of node.items) collectLeafKeys(item);
-    if (totalLeafCount < node.min) {
-      // Composite node's min not met by total leaf occurrences
-      // (error already reported per-leaf; skip duplicate here)
-    }
-    if (totalLeafCount > node.max) {
+    // Include unmatched children for any wildcards within the node
+    if (hasAny) totalLeafCount += unmatchedCount ?? 0;
+
+    // Only fire min error when at least one leaf/any child has a non-zero min
+    // (otherwise the composite's min=1 is likely a codegen default, not schema data).
+    const hasRequiredChild = (n: ParticleNode): boolean => {
+      if (n.kind === "any") return n.min > 0;
+      if (n.kind === "leaf") return n.min > 0;
+      return n.items.some(hasRequiredChild);
+    };
+    // Suppress min check if ancestor is optional (e.g. choice inside choice(min=0))
+    const effectiveMin = ancMinOptional ? 0 : hasRequiredChild(node) ? node.min : 0;
+    if (totalLeafCount < effectiveMin) {
       errors.push({
-        key: `##group-${node.kind}`,
-        local: `(group ${node.kind})`,
-        ns: "##group",
+        key: `##comp-${node.kind}`,
+        local: `(${node.kind})`,
+        ns: "##comp",
+        actual: totalLeafCount,
+        min: node.min,
+        max: node.max,
+      });
+    }
+    if (node.max !== "unbounded" && totalLeafCount > node.max) {
+      errors.push({
+        key: `##comp-${node.kind}`,
+        local: `(${node.kind})`,
+        ns: "##comp",
         actual: totalLeafCount,
         min: node.min,
         max: node.max,
@@ -1441,7 +1482,7 @@ export class OpenXmlValidator {
     const cardErrors = checkCardinalityNode(root, counts, unmatchedCount);
     for (const ce of cardErrors) {
       const maxStr = ce.max === "unbounded" ? "unbounded" : String(ce.max);
-      const isGroupError = ce.ns === "##group";
+      const isGroupError = ce.ns === "##comp" || ce.ns === "##group";
       if (ce.actual < ce.min) {
         // Missing required child: mirrors .NET Sch_IncompleteContentExpectingComplex
         const description = isGroupError
