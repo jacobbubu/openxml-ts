@@ -78,6 +78,41 @@ function isWordprocessingDocumentLike(value: unknown): value is WordprocessingDo
 }
 
 // ---- Error builders (handles exactOptionalPropertyTypes) ----
+
+/** Fix suggestions for common error codes. Appended to error descriptions. */
+const FIX_SUGGESTIONS: Record<string, string> = {
+  Sch_InvalidElementContentExpectingComplex:
+    "Fix: check that the child element is placed under the correct parent container (e.g. <w:r> must be inside <w:p>).",
+  Sch_UnexpectedElementContentExpectingComplex:
+    "Fix: reorder child elements to match the required sequence (e.g. <w:rPr> must appear before <w:t> inside a Run).",
+  Sch_IncompleteContentExpectingComplex:
+    "Fix: add the missing required child element(s) listed in the error description.",
+  Sch_MissingRequiredAttribute:
+    "Fix: set the required attribute via element.extendedAttributes.set('qname', value).",
+  Sch_AttributeValueDataTypeDetailed:
+    "Fix: ensure the attribute value matches the expected type (length, range, enum values).",
+  Sch_UndeclaredAttribute:
+    "Fix: remove the undeclared attribute or upgrade the target Office version (e.g. Office2010 for w14:* attrs).",
+  Sch_InvalidChildinLeafElement:
+    "Fix: leaf elements (like <w:t>) cannot contain child elements — remove the child or wrap it in a composite parent.",
+  Sch_AllElement:
+    "Fix: in an xsd:all particle, each child element can appear at most once. Remove duplicates.",
+  Sch_MinOccursInvalidElement:
+    "Fix: reduce the number of occurrences to respect the maxOccurs limit, or remove the excess child.",
+  Pkg_RequiredPartDoNotExist:
+    "Fix: add the missing [Content_Types].xml Default entry for 'rels', or create the missing Part referenced by relationships.",
+  Pkg_PartIsNotAllowed:
+    "Fix: remove the self-referencing relationship or point it to a different Part.",
+  MC_InvalidXmlAttribute:
+    "Fix: remove xml:lang or xml:space from AlternateContent / Choice / Fallback elements.",
+  MC_MissedRequiresAttribute:
+    "Fix: add a Requires attribute to the Choice element (e.g. choice.extendedAttributes.set('Requires', 'prefix')).",
+  MC_InvalidRequiresAttribute:
+    "Fix: add an xmlns declaration for the prefix used in Requires (e.g. ac.extendedAttributes.set('xmlns:prefix', 'http://...')).",
+  MC_InvalidIgnorableAttribute:
+    "Fix: add an xmlns declaration for each prefix listed in mc:Ignorable.",
+};
+
 function makeError(
   id: string,
   description: string,
@@ -86,7 +121,9 @@ function makeError(
   partUri: string | undefined,
   relatedNode?: OpenXmlElement,
 ): ValidationError {
-  const base = { id, description, errorType: "Schema" as const, node, path };
+  const fix = FIX_SUGGESTIONS[id];
+  const desc = fix !== undefined ? `${description} ${fix}` : description;
+  const base = { id, description: desc, errorType: "Schema" as const, node, path };
   if (partUri !== undefined) {
     if (relatedNode !== undefined) return { ...base, partUri, relatedNode };
     return { ...base, partUri };
