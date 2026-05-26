@@ -126,4 +126,4 @@ openxml-ts **不会自动保存**。修改元素树后必须调用 `doc.saveAsAs
 - 浏览 [README](../README.md) 获取完整 API 表
 - 查看 [examples/](../examples/) 了解 67 个场景化的代码示例
 - 需要校验时参考 README 中的校验文档
-- 遇到问题？查看 [常见问题](#)（WIP）
+- 遇到问题？查看 [recipes.md](./recipes.md)（CI 集成 / 调试误报 / 性能 / 浏览器用法等）
