@@ -26,4 +26,12 @@ export { UInt16Value } from "./uint16-value.js";
 export { UInt64Value } from "./uint64-value.js";
 export { IntegerValue } from "./integer-value.js";
 export { ListValue } from "./list-value.js";
+// Epic-137: 补齐 7 个剩余 XSD 值类
+export { NonNegativeIntegerValue } from "./non-negative-integer-value.js";
+export { PositiveIntegerValue } from "./positive-integer-value.js";
+export { AnyUriValue } from "./any-uri-value.js";
+export { NcNameValue } from "./ncname-value.js";
+export { TokenValue } from "./token-value.js";
+export { IdValue } from "./id-value.js";
+export { QNameValue } from "./qname-value.js";
 export { parseUniversalMeasureToTwips } from "./universal-measure.js";

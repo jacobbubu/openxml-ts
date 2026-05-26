@@ -1,13 +1,20 @@
 import { describe, expect, it } from "vitest";
 import {
+  AnyUriValue,
   BooleanValue,
   DateTimeValue,
   DecimalValue,
   EnumValue,
   HexBinaryValue,
+  IdValue,
   Int32Value,
   Int64Value,
+  NcNameValue,
+  NonNegativeIntegerValue,
+  PositiveIntegerValue,
+  QNameValue,
   StringValue,
+  TokenValue,
   UInt32Value,
 } from "../../src/index.js";
 
@@ -200,5 +207,126 @@ describe("整体导出契约", () => {
     expect(HexBinaryValue).toBeTypeOf("function");
     expect(DateTimeValue).toBeTypeOf("function");
     expect(EnumValue).toBeTypeOf("function");
+  });
+});
+
+// ── Epic-137: 补齐 7 个缺失 XSD 值类 ──────────────────────────────────────────
+
+describe("NonNegativeIntegerValue", () => {
+  it("accepts zero", () => {
+    const v = new NonNegativeIntegerValue(0);
+    expect(v.value).toBe(0);
+    expect(v.toString()).toBe("0");
+  });
+
+  it("accepts positive integer", () => {
+    const v = new NonNegativeIntegerValue(42);
+    expect(v.value).toBe(42);
+  });
+
+  it("rejects negative", () => {
+    expect(() => new NonNegativeIntegerValue(-1)).toThrow();
+  });
+
+  it("fromString parses valid input", () => {
+    const v = NonNegativeIntegerValue.fromString("7");
+    expect(v.value).toBe(7);
+  });
+
+  it("fromString rejects invalid input", () => {
+    expect(() => NonNegativeIntegerValue.fromString("abc")).toThrow();
+  });
+});
+
+describe("PositiveIntegerValue", () => {
+  it("accepts 1", () => {
+    const v = new PositiveIntegerValue(1);
+    expect(v.value).toBe(1);
+  });
+
+  it("rejects zero", () => {
+    expect(() => new PositiveIntegerValue(0)).toThrow();
+  });
+
+  it("rejects negative", () => {
+    expect(() => new PositiveIntegerValue(-5)).toThrow();
+  });
+});
+
+describe("AnyUriValue", () => {
+  it("accepts URI string", () => {
+    const v = new AnyUriValue("http://example.com");
+    expect(v.value).toBe("http://example.com");
+  });
+
+  it("rejects empty string", () => {
+    expect(() => new AnyUriValue("")).toThrow();
+  });
+});
+
+describe("NcNameValue", () => {
+  it("accepts valid NCName", () => {
+    const v = new NcNameValue("myName_1");
+    expect(v.value).toBe("myName_1");
+  });
+
+  it("rejects colon in name", () => {
+    expect(() => new NcNameValue("ns:name")).toThrow();
+  });
+
+  it("rejects empty string", () => {
+    expect(() => new NcNameValue("")).toThrow();
+  });
+});
+
+describe("TokenValue", () => {
+  it("accepts simple token", () => {
+    const v = new TokenValue("hello");
+    expect(v.value).toBe("hello");
+  });
+
+  it("collapses internal whitespace", () => {
+    const v = new TokenValue("hello   world");
+    expect(v.value).toBe("hello world");
+  });
+
+  it("trims leading/trailing whitespace", () => {
+    const v = new TokenValue("  hello  ");
+    expect(v.value).toBe("hello");
+  });
+
+  it("rejects empty string", () => {
+    expect(() => new TokenValue("")).toThrow();
+  });
+});
+
+describe("IdValue", () => {
+  it("accepts valid XML ID", () => {
+    const v = new IdValue("_myId1");
+    expect(v.value).toBe("_myId1");
+  });
+
+  it("rejects numeric start", () => {
+    expect(() => new IdValue("1bad")).toThrow();
+  });
+
+  it("rejects empty string", () => {
+    expect(() => new IdValue("")).toThrow();
+  });
+});
+
+describe("QNameValue", () => {
+  it("accepts qualified name", () => {
+    const v = new QNameValue("w:body");
+    expect(v.value).toBe("w:body");
+  });
+
+  it("accepts unprefixed name", () => {
+    const v = new QNameValue("body");
+    expect(v.value).toBe("body");
+  });
+
+  it("rejects empty string", () => {
+    expect(() => new QNameValue("")).toThrow();
   });
 });
