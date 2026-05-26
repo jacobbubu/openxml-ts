@@ -67,7 +67,7 @@ export interface AttrConstraint {
    * - "list": validate whitespace-separated list items
    * - "uint32": validate value can be parsed as UInt32
    */
-  readonly typeHint?: "hexBinary" | "base64Binary" | "enum" | "list" | "uint32";
+  readonly typeHint?: "hexBinary" | "base64Binary" | "enum" | "list" | "uint32" | "onOff";
   /** Valid enum member values (used when typeHint is "enum"). */
   readonly enumMembers?: readonly string[];
   /** Exact byte length for hexBinary validation. */

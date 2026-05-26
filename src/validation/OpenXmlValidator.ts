@@ -382,7 +382,7 @@ function checkSequenceOrder(
   const slotMaxs: (number | "unbounded")[] = [];
 
   for (let i = 0; i < numSlots; i++) {
-    const item = sequenceNode.items[i];
+    const item = sequenceNode.items[i]!;
     const leaves = collectAllowedLeaves(item);
     for (const leaf of leaves) {
       keyToSlot.set(leaf, i);
@@ -396,7 +396,7 @@ function checkSequenceOrder(
   for (const child of children) {
     const key = `${child.namespaceUri}::${child.localName}`;
     const slot = keyToSlot.get(key);
-    if (slot !== undefined) totalPerSlot[slot]++;
+    if (slot !== undefined) totalPerSlot[slot] = (totalPerSlot[slot] ?? 0) + 1;
   }
 
   const outOfOrder = new Set<string>();
@@ -422,20 +422,20 @@ function checkSequenceOrder(
       outOfOrder.add(key);
     } else if (slot === currentSlot) {
       // Same slot — always fine; cardinality check handles excess
-      runningPerSlot[slot]++;
+      runningPerSlot[slot] = (runningPerSlot[slot as number] ?? 0) + 1;
     } else {
       // slot > currentSlot — skipping ahead.
       // Only allow if all required slots between current and slot-1 are satisfied.
       let canAdvance = true;
       for (let i = currentSlot; i < slot; i++) {
-        if (runningPerSlot[i] < slotEffectiveMins[i]) {
+        if ((runningPerSlot[i] ?? 0) < (slotEffectiveMins[i] ?? 0)) {
           canAdvance = false;
           break;
         }
       }
       if (canAdvance) {
         currentSlot = slot;
-        runningPerSlot[slot]++;
+        runningPerSlot[slot] = (runningPerSlot[slot as number] ?? 0) + 1;
       } else {
         outOfOrder.add(key);
       }

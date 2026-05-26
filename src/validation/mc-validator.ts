@@ -8,7 +8,7 @@
  * Reference: ECMA-376 Part 5: Markup Compatibility and Extensibility.
  */
 
-import type { OpenXmlElement } from "../element/element.js";
+import { OpenXmlCompositeElement, type OpenXmlElement } from "../element/element.js";
 import type { ValidationError } from "./ValidationError.js";
 
 const MC_NS = "http://schemas.openxmlformats.org/markup-compatibility/2006";
@@ -271,7 +271,10 @@ function validateAcb(el: OpenXmlElement, ctx: McContext): void {
   }
 
   // Filter to direct mc:* children only (non-mc children may exist)
-  const mcChildren = [...el.children].filter((c) => c.namespaceUri === MC_NS);
+  const mcChildren =
+    el instanceof OpenXmlCompositeElement
+      ? el.children.toArray().filter((c) => c.namespaceUri === MC_NS)
+      : [];
 
   if (mcChildren.length === 0) {
     push(
