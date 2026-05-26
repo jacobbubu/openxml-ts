@@ -977,13 +977,13 @@ describe("ChoiceParticleValidator — TestSimpleChoice2 (required choice, min=1)
     expect(errors).toHaveLength(0);
   });
 
-  it("both choice children → Sch_UnexpectedElementContentExpectingComplex", () => {
+  it("both choice children (choice max=1 per-type) → 0 errors", () => {
     const v = new OpenXmlValidator();
     const el = makeComposite(CH2_NS, "choice2El", "");
     el.appendChild(makeComposite(CH2_NS, "bldDgm", ""));
     el.appendChild(makeComposite(CH2_NS, "bldChart", ""));
-    const errors = v.validate(el);
-    expect(errors.some((e) => e.id === "Sch_UnexpectedElementContentExpectingComplex")).toBe(true);
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
   });
 
   it("invalid child in required choice → Sch_InvalidElementContentExpectingComplex", () => {
@@ -1063,19 +1063,13 @@ describe("ChoiceParticleValidator — TestSimpleChoice3 (nested choice)", () => 
     expect(errors).toHaveLength(0);
   });
 
-  it("two choices from inner nested choice (max=1) → error", () => {
+  it("two different children in inner nested choice (per-type max=1) → 0 errors", () => {
     const v = new OpenXmlValidator();
     const el = makeComposite(CH3_NS, "choice3El", "");
     el.appendChild(makeComposite(CH3_NS, "calc", ""));
     el.appendChild(makeComposite(CH3_NS, "text", ""));
-    const errors = v.validate(el);
-    expect(
-      errors.some(
-        (e) =>
-          e.id === "Sch_UnexpectedElementContentExpectingComplex" ||
-          e.id === "Sch_MinOccursInvalidElement",
-      ),
-    ).toBe(true);
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
   });
 
   it("one from each choice level (outer + inner) → 0 errors", () => {
@@ -1252,19 +1246,13 @@ describe("AnyParticleValidator — ##local namespace matching", () => {
     ).toBe(true);
   });
 
-  it("known + any child combined → error (choice max=1, only one allowed)", () => {
+  it("known + any child combined (choice per-type max=1) → 0 errors", () => {
     const v = new OpenXmlValidator();
     const el = makeComposite(ANY_NS, "anyEl", "");
     el.appendChild(makeComposite(ANY_NS, "known", ""));
     el.appendChild(makeComposite("http://other.ns", "other", ""));
-    const errors = v.validate(el);
-    expect(
-      errors.some(
-        (e) =>
-          e.id === "Sch_UnexpectedElementContentExpectingComplex" ||
-          e.id === "Sch_MinOccursInvalidElement",
-      ),
-    ).toBe(true);
+    const errors = schemaErrorsOnNode(v.validate(el), el);
+    expect(errors).toHaveLength(0);
   });
 });
 

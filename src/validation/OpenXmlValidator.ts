@@ -295,9 +295,10 @@ function checkCardinalityNode(
     errors.push(...checkCardinalityNode(item, counts, unmatchedCount, newMul, isChildrenOptional));
   }
 
-  // Choice/Group-level cardinality check: when a choice or group has
-  // a finite min or max, the total count across all leaves + any
-  // within it must respect the node's min/max.
+  // Composite-level min/max check: for groups and choices,
+  // the total count across all leaves (min check only) must satisfy
+  // the node's min. Max check is only for groups — choice max=1
+  // means each leaf type can appear at most once, not total ≤ 1.
   if (node.kind === "group" || node.kind === "choice") {
     let totalLeafCount = 0;
     let hasAny = false;
@@ -333,7 +334,8 @@ function checkCardinalityNode(
         max: node.max,
       });
     }
-    if (node.max !== "unbounded" && totalLeafCount > node.max) {
+    // Max check only for groups (choice max means per-leaf-type, not total)
+    if (node.kind === "group" && node.max !== "unbounded" && totalLeafCount > node.max) {
       errors.push({
         key: `##comp-${node.kind}`,
         local: `(${node.kind})`,
