@@ -43,6 +43,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: [":rotWithShape"],
+  },
+  {
+    className: "ClientData",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing",
+    localName: "clientData",
+    knownAttrs: [":fLocksWithSheet", ":fPrintsWithSheet"],
   },
   {
     className: "ConnectionShape",
@@ -55,6 +62,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "style", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":macro", ":fPublished"],
   },
   {
     className: "ContentPart",
@@ -69,12 +77,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id", ":bwMode"],
   },
   {
     className: "Extent",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing",
     localName: "ext",
     requiredAttrs: [":cx", ":cy"],
+    knownAttrs: [":cx", ":cy"],
     attrConstraints: [
       { qname: ":cx", minValue: 0, maxValue: 2147483647 },
       { qname: ":cy", minValue: 0, maxValue: 2147483647 },
@@ -104,6 +114,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "graphic", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":macro", ":fPublished"],
   },
   {
     className: "GroupShape",
@@ -151,6 +162,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":bwMode"],
   },
   {
     className: "NonVisualConnectionShapeProperties",
@@ -188,6 +200,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id", ":name"],
+    knownAttrs: [":id", ":name", ":descr", ":hidden", ":title"],
   },
   {
     className: "NonVisualGraphicFrameDrawingProperties",
@@ -243,6 +256,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":preferRelativeResize"],
   },
   {
     className: "NonVisualPictureProperties",
@@ -265,6 +279,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":txBox"],
   },
   {
     className: "NonVisualShapeProperties",
@@ -313,12 +328,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "style", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":macro", ":fPublished"],
   },
   {
     className: "Position",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing",
     localName: "pos",
     requiredAttrs: [":x", ":y"],
+    knownAttrs: [":x", ":y"],
     attrConstraints: [
       { qname: ":x", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":y", minValue: -27273042329600, maxValue: 27273042316900 },
@@ -336,6 +353,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "txBody", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":macro", ":textlink", ":fLocksText", ":fPublished"],
   },
   {
     className: "ShapeProperties",
@@ -372,6 +390,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":bwMode"],
   },
   {
     className: "ShapeStyle",
@@ -421,6 +440,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "ext", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":rot", ":flipH", ":flipV"],
   },
   {
     className: "TwoCellAnchor",
@@ -445,6 +465,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing", local: "clientData", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":editAs"],
     attrConstraints: [
       { qname: ":editAs", enumMembers: ["twoCell", "oneCell", "absolute"] },
     ],

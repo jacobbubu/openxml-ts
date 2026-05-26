@@ -8,6 +8,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "argumentDescription",
     requiredAttrs: [":index"],
+    knownAttrs: [":index"],
   },
   {
     className: "ArgumentDescriptions",
@@ -18,6 +19,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "argumentDescription", min: 1, max: "unbounded", initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":count"],
+  },
+  {
+    className: "CacheField",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "cacheField",
+    knownAttrs: [":ignore"],
   },
   {
     className: "CacheHierarchy",
@@ -28,6 +36,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "setLevels", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":flattenHierarchies", ":measuresSet", ":hierarchizeDistinct", ":ignore"],
   },
   {
     className: "CalculatedMember",
@@ -38,6 +47,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "tupleSet", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":displayFolder", ":flattenHierarchies", ":dynamicSet", ":hierarchizeDistinct", ":mdxLong"],
   },
   {
     className: "CalculatedMembers",
@@ -48,6 +58,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "calculatedMember", min: 1, max: "unbounded" }
       ] }
     },
+    knownAttrs: [":count"],
   },
   {
     className: "ColorScale",
@@ -71,6 +82,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id"],
+    knownAttrs: [":scope", ":type", ":priority", ":id"],
   },
   {
     className: "ConditionalFormats",
@@ -81,6 +93,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "conditionalFormat", min: 1, max: "unbounded", initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":count"],
   },
   {
     className: "ConditionalFormatting",
@@ -93,12 +106,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":pivot"],
   },
   {
     className: "ConditionalFormattingIcon",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "cfIcon",
     requiredAttrs: [":iconSet", ":iconId"],
+    knownAttrs: [":iconSet", ":iconId"],
   },
   {
     className: "ConditionalFormattingRule",
@@ -114,6 +129,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":type", ":priority", ":stopIfTrue", ":aboveAverage", ":percent", ":bottom", ":operator", ":text", ":timePeriod", ":rank", ":stdDev", ":equalAverage", ":activePresent", ":id"],
   },
   {
     className: "ConditionalFormattings",
@@ -136,6 +152,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":type"],
+    knownAttrs: [":type", ":gte"],
   },
   {
     className: "Connection",
@@ -146,6 +163,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "calculatedMembers", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":culture", ":embeddedDataId"],
+  },
+  {
+    className: "CustomFilter",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "customFilter",
+    knownAttrs: [":operator", ":val"],
   },
   {
     className: "CustomFilters",
@@ -156,6 +180,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "customFilter", min: 1, max: 2, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":and"],
   },
   {
     className: "DataBar",
@@ -171,6 +196,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "axisColor", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":minLength", ":maxLength", ":showValue", ":border", ":gradient", ":direction", ":negativeBarColorSameAsPositive", ":negativeBarBorderColorSameAsPositive", ":axisPosition"],
+  },
+  {
+    className: "DataField",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "dataField",
+    knownAttrs: [":pivotShowAs", ":sourceField", ":uniqueName"],
   },
   {
     className: "DatastoreItem",
@@ -182,6 +214,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id"],
+    knownAttrs: [":id"],
   },
   {
     className: "DataValidation",
@@ -194,6 +227,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "sqref", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":type", ":errorStyle", ":imeMode", ":operator", ":allowBlank", ":showDropDown", ":showInputMessage", ":showErrorMessage", ":errorTitle", ":error", ":promptTitle", ":prompt"],
   },
   {
     className: "DataValidationForumla1",
@@ -224,6 +258,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "dataValidation", min: 1, max: "unbounded", initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":disablePrompts", ":xWindow", ":yWindow", ":count"],
   },
   {
     className: "DdeValues",
@@ -234,6 +269,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "value", min: 1, max: "unbounded" }
       ] }
     },
+    knownAttrs: [":rows", ":cols"],
   },
   {
     className: "DefinedName",
@@ -245,6 +281,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name"],
+    knownAttrs: [":name"],
   },
   {
     className: "DefinedNames",
@@ -265,6 +302,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "dxf", min: 0, max: "unbounded" }
       ] }
     },
+    knownAttrs: [":count"],
   },
   {
     className: "DifferentialType",
@@ -297,6 +335,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "Filter",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "filter",
+    knownAttrs: [":val"],
+  },
+  {
     className: "FormControlProperties",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "formControlPr",
@@ -306,12 +350,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":objectType", ":checked", ":colored", ":dropLines", ":dropStyle", ":dx", ":firstButton", ":fmlaGroup", ":fmlaLink", ":fmlaRange", ":fmlaTxbx", ":horiz", ":inc", ":justLastX", ":lockText", ":max", ":min", ":multiSel", ":noThreeD", ":noThreeD2", ":page", ":sel", ":seltype", ":textHAlign", ":textVAlign", ":val", ":widthMin", ":editVal", ":multiLine", ":verticalBar", ":passwordEdit"],
   },
   {
     className: "IconFilter",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "iconFilter",
     requiredAttrs: [":iconSet", ":iconId"],
+    knownAttrs: [":iconSet", ":iconId"],
   },
   {
     className: "IconSet",
@@ -323,6 +369,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "cfIcon", min: 0, max: 5, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":iconSet", ":showValue", ":percent", ":reverse", ":custom"],
   },
   {
     className: "IgnoredError",
@@ -333,6 +380,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "sqref", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":evalError", ":twoDigitTextYear", ":numberStoredAsText", ":formula", ":formulaRange", ":unlockedFormula", ":emptyCellReference", ":listDataValidation", ":calculatedColumn"],
   },
   {
     className: "IgnoredErrors",
@@ -350,6 +398,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "item",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
   },
   {
     className: "ListItems",
@@ -374,6 +423,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":pivotCacheId"],
+    knownAttrs: [":pivotCacheId"],
   },
   {
     className: "OlapSlicerCacheItem",
@@ -385,12 +435,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":n"],
+    knownAttrs: [":n", ":c", ":nd"],
   },
   {
     className: "OlapSlicerCacheItemParent",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "p",
     requiredAttrs: [":n"],
+    knownAttrs: [":n"],
   },
   {
     className: "OlapSlicerCacheLevelData",
@@ -402,6 +454,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uniqueName", ":count"],
+    knownAttrs: [":uniqueName", ":sourceCaption", ":count", ":sortOrder", ":crossFilter"],
   },
   {
     className: "OlapSlicerCacheLevelsData",
@@ -412,6 +465,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "level", min: 1, max: "unbounded", initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":count"],
   },
   {
     className: "OlapSlicerCacheRange",
@@ -423,6 +477,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":startItem"],
+    knownAttrs: [":startItem"],
   },
   {
     className: "OlapSlicerCacheRanges",
@@ -444,6 +499,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":n"],
+    knownAttrs: [":n"],
   },
   {
     className: "OlapSlicerCacheSelections",
@@ -454,6 +510,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "selection", min: 1, max: "unbounded", initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":count"],
   },
   {
     className: "OleItem",
@@ -465,6 +522,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name"],
+    knownAttrs: [":name", ":icon", ":advise", ":preferPic"],
   },
   {
     className: "PivotArea",
@@ -476,6 +534,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":field", ":type", ":dataOnly", ":labelOnly", ":grandRow", ":grandCol", ":cacheIndex", ":outline", ":offset", ":collapsedLevelsAreSubtotals", ":axis", ":fieldPosition"],
   },
   {
     className: "PivotAreas",
@@ -486,6 +545,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "pivotArea", min: 0, max: "unbounded" }
       ] }
     },
+    knownAttrs: [":count"],
+  },
+  {
+    className: "PivotCacheDefinition",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "pivotCacheDefinition",
+    knownAttrs: [":slicerData", ":pivotCacheId", ":supportSubqueryNonVisual", ":supportSubqueryCalcMem", ":supportAddCalcMems"],
   },
   {
     className: "PivotCaches",
@@ -508,6 +574,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "extLst", min: 0, max: 1, initialVersion: "Office2010", expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":allocationMethod", ":weightExpression"],
   },
   {
     className: "PivotChanges",
@@ -547,6 +614,19 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "editValue",
     requiredAttrs: [":valueType"],
+    knownAttrs: [":valueType"],
+  },
+  {
+    className: "PivotField",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "pivotField",
+    knownAttrs: [":fillDownLabels", ":ignore"],
+  },
+  {
+    className: "PivotHierarchy",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "pivotHierarchy",
+    knownAttrs: [":ignore"],
   },
   {
     className: "PivotTableDefinition",
@@ -559,6 +639,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "conditionalFormats", min: 0, max: 1, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":fillDownLabelsDefault", ":visualTotalsForSets", ":calculatedMembersInFilters", ":altText", ":altTextSummary", ":enableEdit", ":autoApply", ":allocationMethod", ":weightExpression", ":hideValuesRow"],
   },
   {
     className: "PivotUserEdit",
@@ -581,6 +662,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name"],
+    knownAttrs: [":password", ":algorithmName", ":hashValue", ":saltValue", ":spinCount", ":name", ":securityDescriptor"],
     attrConstraints: [
       { qname: ":password", typeHint: "hexBinary", length: 2 },
       { qname: ":hashValue", typeHint: "base64Binary" },
@@ -602,6 +684,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "setLevel",
     requiredAttrs: [":hierarchy"],
+    knownAttrs: [":hierarchy"],
   },
   {
     className: "SetLevels",
@@ -612,6 +695,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "setLevel", min: 1, max: "unbounded", initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":count"],
   },
   {
     className: "Slicer",
@@ -623,12 +707,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name", ":cache", ":rowHeight"],
+    knownAttrs: [":name", ":cache", ":caption", ":startItem", ":columnCount", ":showCaption", ":level", ":style", ":lockedPosition", ":rowHeight"],
   },
   {
     className: "SlicerCache",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "slicerCache",
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id"],
   },
   {
     className: "SlicerCacheData",
@@ -653,6 +739,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name", ":sourceName"],
+    knownAttrs: [":name", ":sourceName"],
   },
   {
     className: "SlicerCacheDefinitionExtensionList",
@@ -669,6 +756,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "pivotTable",
     requiredAttrs: [":tabId", ":name"],
+    knownAttrs: [":tabId", ":name"],
   },
   {
     className: "SlicerCachePivotTables",
@@ -705,6 +793,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "slicer",
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id"],
   },
   {
     className: "Slicers",
@@ -726,12 +815,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name"],
+    knownAttrs: [":name"],
   },
   {
     className: "SlicerStyleElement",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "slicerStyleElement",
     requiredAttrs: [":type"],
+    knownAttrs: [":type", ":dxfId"],
   },
   {
     className: "SlicerStyleElements",
@@ -753,18 +844,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":defaultSlicerStyle"],
+    knownAttrs: [":defaultSlicerStyle"],
   },
   {
     className: "SortCondition",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "sortCondition",
     requiredAttrs: [":ref"],
+    knownAttrs: [":descending", ":sortBy", ":ref", ":customList", ":dxfId", ":iconSet", ":iconId"],
   },
   {
     className: "SourceConnection",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "sourceConnection",
     requiredAttrs: [":name"],
+    knownAttrs: [":name"],
   },
   {
     className: "Sparkline",
@@ -795,6 +889,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "sparklines", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":manualMax", ":manualMin", ":lineWeight", ":type", ":dateAxis", ":displayEmptyCellsAs", ":markers", ":high", ":low", ":first", ":last", ":negative", ":displayXAxis", ":displayHidden", ":minAxisType", ":maxAxisType", ":rightToLeft"],
   },
   {
     className: "SparklineGroups",
@@ -817,6 +912,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "Table",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "table",
+    knownAttrs: [":altText", ":altTextSummary"],
+  },
+  {
     className: "TabularSlicerCache",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "tabular",
@@ -827,12 +928,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":pivotCacheId"],
+    knownAttrs: [":pivotCacheId", ":sortOrder", ":customListSort", ":showMissing", ":crossFilter"],
   },
   {
     className: "TabularSlicerCacheItem",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "i",
     requiredAttrs: [":x"],
+    knownAttrs: [":x", ":s", ":nd"],
   },
   {
     className: "TabularSlicerCacheItems",
@@ -843,6 +946,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "i", min: 1, max: "unbounded", initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":count"],
   },
   {
     className: "TupleItems",
@@ -864,6 +968,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "rows", min: 1, max: 1, initialVersion: "Office2010" }
       ] }
     },
+    knownAttrs: [":rowCount", ":columnCount"],
+  },
+  {
+    className: "TupleSetHeader",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "header",
+    knownAttrs: [":uniqueName", ":hierarchyName"],
   },
   {
     className: "TupleSetHeaders",
@@ -886,6 +997,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "TupleSetRowItem",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "rowItem",
+    knownAttrs: [":u", ":d"],
+  },
+  {
     className: "TupleSetRows",
     namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
     localName: "rows",
@@ -894,5 +1011,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main", local: "row", min: 1, max: "unbounded", initialVersion: "Office2010" }
       ] }
     },
+  },
+  {
+    className: "WorkbookProperties",
+    namespaceUri: "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main",
+    localName: "workbookPr",
+    knownAttrs: [":defaultImageDpi", ":discardImageEditData", ":accuracyVersion"],
   },
 ];

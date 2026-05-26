@@ -128,6 +128,22 @@ export interface ElementConstraint {
    * Each entry specifies which versions the required constraint applies to.
    */
   readonly versionedRequiredAttrs?: readonly VersionedRequiredAttr[];
+  /**
+   * Complete list of known legal attribute qnames for this element.
+   * When present, enables Sch_UndeclaredAttribute checking: any extended attribute
+   * not in this list (or in requiredAttrs/attrConstraints/versionedKnownAttrs)
+   * is reported as undeclared.
+   */
+  readonly knownAttrs?: readonly string[];
+  /**
+   * Version-conditional known attribute qnames.
+   * Attributes only declared for this element starting from a specific Office version.
+   * When the target version does not meet initialVersion, the attribute is treated as undeclared.
+   */
+  readonly versionedKnownAttrs?: readonly {
+    readonly qname: string;
+    readonly initialVersion: string;
+  }[];
   /** Per-attribute value constraints (string length / number range). */
   readonly attrConstraints?: readonly AttrConstraint[];
 }

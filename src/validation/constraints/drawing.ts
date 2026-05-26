@@ -107,6 +107,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "pos", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":gdRefR", ":minR", ":maxR", ":gdRefAng", ":minAng", ":maxAng"],
     attrConstraints: [
       { qname: ":minR", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":maxR", minValue: -27273042329600, maxValue: 27273042316900 },
@@ -121,6 +122,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "pos", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":gdRefX", ":minX", ":maxX", ":gdRefY", ":minY", ":maxY"],
     attrConstraints: [
       { qname: ":minX", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":maxX", minValue: -27273042329600, maxValue: 27273042316900 },
@@ -143,6 +145,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "alphaBiLevel",
     requiredAttrs: [":thresh"],
+    knownAttrs: [":thresh"],
     attrConstraints: [
       { qname: ":thresh", minValue: 0, maxValue: 100000 },
     ],
@@ -180,6 +183,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "AlphaModulationFixed",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "alphaModFix",
+    knownAttrs: [":amt"],
     attrConstraints: [
       { qname: ":amt", minValue: 0 },
     ],
@@ -189,6 +193,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "alphaOff",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", minValue: -100000, maxValue: 100000 },
     ],
@@ -197,6 +202,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "AlphaOutset",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "alphaOutset",
+    knownAttrs: [":rad"],
     attrConstraints: [
       { qname: ":rad", minValue: -27273042329600, maxValue: 27273042316900 },
     ],
@@ -206,6 +212,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "alphaRepl",
     requiredAttrs: [":a"],
+    knownAttrs: [":a"],
     attrConstraints: [
       { qname: ":a", minValue: 0, maxValue: 100000 },
     ],
@@ -215,6 +222,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "anchor",
     requiredAttrs: [":x", ":y", ":z"],
+    knownAttrs: [":x", ":y", ":z"],
     attrConstraints: [
       { qname: ":x", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":y", minValue: -27273042329600, maxValue: 27273042316900 },
@@ -226,6 +234,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "arcTo",
     requiredAttrs: [":wR", ":hR", ":stAng", ":swAng"],
+    knownAttrs: [":wR", ":hR", ":stAng", ":swAng"],
     attrConstraints: [
       { qname: ":wR", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":hR", minValue: -27273042329600, maxValue: 27273042316900 },
@@ -253,12 +262,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:link"],
+    knownAttrs: ["r:link"],
   },
   {
     className: "AutoNumberedBullet",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "buAutoNum",
     requiredAttrs: [":type"],
+    knownAttrs: [":type", ":startAt"],
     attrConstraints: [
       { qname: ":type", enumMembers: ["alphaLcParenBoth", "alphaUcParenBoth", "alphaLcParenR", "alphaUcParenR", "alphaLcPeriod", "alphaUcPeriod", "arabicParenBoth", "arabicParenR", "arabicPeriod", "arabicPlain", "romanLcParenBoth", "romanUcParenBoth", "romanLcParenR", "romanUcParenR", "romanLcPeriod", "romanUcPeriod", "circleNumDbPlain", "circleNumWdBlackPlain", "circleNumWdWhitePlain", "arabicDbPeriod", "arabicDbPlain", "ea1ChsPeriod", "ea1ChsPlain", "ea1ChtPeriod", "ea1ChtPlain", "ea1JpnChsDbPeriod", "ea1JpnKorPlain", "ea1JpnKorPeriod", "arabic1Minus", "arabic2Minus", "hebrew2Minus", "thaiAlphaPeriod", "thaiAlphaParenR", "thaiAlphaParenBoth", "thaiNumPeriod", "thaiNumParenR", "thaiNumParenBoth", "hindiAlphaPeriod", "hindiNumPeriod", "hindiNumParenR", "hindiAlpha1Period"] },
       { qname: ":startAt", minValue: 1, maxValue: 32767 },
@@ -364,6 +375,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "biLevel",
     requiredAttrs: [":thresh"],
+    knownAttrs: [":thresh"],
     attrConstraints: [
       { qname: ":thresh", minValue: 0, maxValue: 100000 },
     ],
@@ -378,6 +390,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":blend"],
+    knownAttrs: [":blend"],
     attrConstraints: [
       { qname: ":blend", enumMembers: ["over", "mult", "screen", "darken", "lighten"] },
     ],
@@ -410,6 +423,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: ["r:embed", "r:link", ":cstate"],
     attrConstraints: [
       { qname: ":cstate", enumMembers: ["email", "screen", "print", "hqprint", "none"] },
     ],
@@ -431,6 +445,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "BlipExtensionList",
@@ -458,11 +473,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: [":dpi", ":rotWithShape"],
   },
   {
     className: "Blur",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "blur",
+    knownAttrs: [":rad", ":grow"],
     attrConstraints: [
       { qname: ":rad", minValue: 0, maxValue: 2147483647 },
     ],
@@ -491,6 +508,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":rot", ":spcFirstLastPara", ":vertOverflow", ":horzOverflow", ":vert", ":wrap", ":lIns", ":tIns", ":rIns", ":bIns", ":numCol", ":spcCol", ":rtlCol", ":fromWordArt", ":anchor", ":anchorCtr", ":forceAA", ":upright", ":compatLnSpc"],
     attrConstraints: [
       { qname: ":vertOverflow", enumMembers: ["overflow", "ellipsis", "clip"] },
       { qname: ":horzOverflow", enumMembers: ["overflow", "clip"] },
@@ -592,6 +610,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "BuildChart",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "bldChart",
+    knownAttrs: [":bld", ":animBg"],
     attrConstraints: [
       { qname: ":bld", enumMembers: ["series", "category", "seriesEl", "categoryEl"] },
     ],
@@ -600,6 +619,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "BuildDiagram",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "bldDgm",
+    knownAttrs: [":bld", ":rev"],
     attrConstraints: [
       { qname: ":bld", enumMembers: ["one", "lvlOne", "lvlAtOnce"] },
     ],
@@ -628,6 +648,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "buSzPct",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", minValue: 25000, maxValue: 400000 },
     ],
@@ -637,6 +658,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "buSzPts",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", minValue: 100, maxValue: 400000 },
     ],
@@ -651,6 +673,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":prst"],
+    knownAttrs: [":prst", ":fov", ":zoom"],
     attrConstraints: [
       { qname: ":prst", enumMembers: ["legacyObliqueTopLeft", "legacyObliqueTop", "legacyObliqueTopRight", "legacyObliqueLeft", "legacyObliqueFront", "legacyObliqueRight", "legacyObliqueBottomLeft", "legacyObliqueBottom", "legacyObliqueBottomRight", "legacyPerspectiveTopLeft", "legacyPerspectiveTop", "legacyPerspectiveTopRight", "legacyPerspectiveLeft", "legacyPerspectiveFront", "legacyPerspectiveRight", "legacyPerspectiveBottomLeft", "legacyPerspectiveBottom", "legacyPerspectiveBottomRight", "orthographicFront", "isometricTopUp", "isometricTopDown", "isometricBottomUp", "isometricBottomDown", "isometricLeftUp", "isometricLeftDown", "isometricRightUp", "isometricRightDown", "isometricOffAxis1Left", "isometricOffAxis1Right", "isometricOffAxis1Top", "isometricOffAxis2Left", "isometricOffAxis2Right", "isometricOffAxis2Top", "isometricOffAxis3Left", "isometricOffAxis3Right", "isometricOffAxis3Bottom", "isometricOffAxis4Left", "isometricOffAxis4Right", "isometricOffAxis4Bottom", "obliqueTopLeft", "obliqueTop", "obliqueTopRight", "obliqueLeft", "obliqueRight", "obliqueBottomLeft", "obliqueBottom", "obliqueBottomRight", "perspectiveFront", "perspectiveLeft", "perspectiveRight", "perspectiveAbove", "perspectiveBelow", "perspectiveAboveLeftFacing", "perspectiveAboveRightFacing", "perspectiveContrastingLeftFacing", "perspectiveContrastingRightFacing", "perspectiveHeroicLeftFacing", "perspectiveHeroicRightFacing", "perspectiveHeroicExtremeLeftFacing", "perspectiveHeroicExtremeRightFacing", "perspectiveRelaxed", "perspectiveRelaxedModerately"] },
       { qname: ":fov", minValue: 0, maxValue: 10800000 },
@@ -668,6 +691,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":prstMaterial"],
     attrConstraints: [
       { qname: ":prstMaterial", enumMembers: ["legacyMatte", "legacyPlastic", "legacyMetal", "legacyWireframe", "matte", "plastic", "metal", "warmMatte", "translucentPowder", "powder", "dkEdge", "softEdge", "clear", "flat", "softmetal"] },
     ],
@@ -677,12 +701,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "buChar",
     requiredAttrs: [":char"],
+    knownAttrs: [":char"],
   },
   {
     className: "Chart",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "chart",
     requiredAttrs: [":bldStep"],
+    knownAttrs: [":seriesIdx", ":categoryIdx", ":bldStep"],
     attrConstraints: [
       { qname: ":bldStep", enumMembers: ["category", "ptInCategory", "series", "ptInSeries", "allPts", "gridLegend"] },
     ],
@@ -697,6 +723,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "clrTo", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":useA"],
   },
   {
     className: "ColorFrom",
@@ -768,6 +795,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name"],
+    knownAttrs: [":name"],
   },
   {
     className: "ColorTo",
@@ -810,6 +838,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ConnectorLockingExtensionList" }
       ] }
     },
+    knownAttrs: [":noGrp", ":noSelect", ":noRot", ":noChangeAspect", ":noMove", ":noResize", ":noEditPoints", ":noAdjustHandles", ":noChangeArrowheads", ":noChangeShapeType"],
   },
   {
     className: "ConnectionSite",
@@ -821,6 +850,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":ang"],
+    knownAttrs: [":ang"],
   },
   {
     className: "ConnectionSiteList",
@@ -843,6 +873,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "ConnectorLockingExtensionList",
@@ -901,6 +932,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: [":name"],
   },
   {
     className: "CustomColorList",
@@ -970,6 +1002,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "ds",
     requiredAttrs: [":d", ":sp"],
+    knownAttrs: [":d", ":sp"],
     attrConstraints: [
       { qname: ":d", minValue: 0 },
       { qname: ":sp", minValue: 0 },
@@ -987,6 +1020,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "DefaultParagraphProperties",
@@ -1081,6 +1115,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "Diagram",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "dgm",
+    knownAttrs: [":id", ":bldStep"],
     attrConstraints: [
       { qname: ":bldStep", enumMembers: ["sp", "bg"] },
     ],
@@ -1103,6 +1138,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+  },
+  {
+    className: "Effect",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
+    localName: "effect",
+    knownAttrs: [":ref"],
   },
   {
     className: "EffectContainer",
@@ -1320,6 +1361,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "any", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":uri"],
   },
   {
     className: "ExtensionList",
@@ -1387,6 +1429,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id"],
+    knownAttrs: [":id", ":type"],
   },
   {
     className: "Fill",
@@ -1426,6 +1469,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":blend"],
+    knownAttrs: [":blend"],
     attrConstraints: [
       { qname: ":blend", enumMembers: ["over", "mult", "screen", "darken", "lighten"] },
     ],
@@ -1513,6 +1557,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "FlatText",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "flatTx",
+    knownAttrs: [":z"],
     attrConstraints: [
       { qname: ":z", minValue: -27273042329600, maxValue: 27273042316900 },
     ],
@@ -1550,6 +1595,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":idx"],
+    knownAttrs: [":idx"],
     attrConstraints: [
       { qname: ":idx", enumMembers: ["major", "minor", "none"] },
     ],
@@ -1580,6 +1626,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name"],
+    knownAttrs: [":name"],
   },
   {
     className: "ForegroundColor",
@@ -1612,6 +1659,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "bgFillStyleLst", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":name"],
   },
   {
     className: "Glow",
@@ -1631,6 +1679,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: [":rad"],
     attrConstraints: [
       { qname: ":rad", minValue: 0, maxValue: 2147483647 },
     ],
@@ -1651,6 +1700,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "tileRect", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":flip", ":rotWithShape"],
     attrConstraints: [
       { qname: ":flip", enumMembers: ["none", "x", "y", "xy"] },
     ],
@@ -1674,6 +1724,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":pos"],
+    knownAttrs: [":pos"],
     attrConstraints: [
       { qname: ":pos", minValue: 0, maxValue: 100000 },
     ],
@@ -1708,6 +1759,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "GraphicFrame",
@@ -1731,6 +1783,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":noGrp", ":noDrilldown", ":noSelect", ":noChangeAspect", ":noMove", ":noResize"],
   },
   {
     className: "GridColumn",
@@ -1742,6 +1795,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":w"],
+    knownAttrs: [":w"],
     attrConstraints: [
       { qname: ":w", minValue: -27273042329600, maxValue: 27273042316900 },
     ],
@@ -1776,6 +1830,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":noGrp", ":noUngrp", ":noSelect", ":noRot", ":noChangeAspect", ":noMove", ":noResize"],
   },
   {
     className: "GvmlGroupShapeExtension",
@@ -1788,6 +1843,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "GvmlGroupShapeExtensionList",
@@ -1822,6 +1878,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "Hsl",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "hsl",
+    knownAttrs: [":hue", ":sat", ":lum"],
     attrConstraints: [
       { qname: ":hue", minValue: 0 },
       { qname: ":sat", minValue: -100000, maxValue: 100000 },
@@ -1869,6 +1926,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":hue", ":sat", ":lum"],
+    knownAttrs: [":hue", ":sat", ":lum"],
     attrConstraints: [
       { qname: ":hue", minValue: 0 },
     ],
@@ -1878,6 +1936,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "hue",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", minValue: 0 },
     ],
@@ -1887,6 +1946,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "hueOff",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
   },
   {
     className: "Hyperlink",
@@ -1913,6 +1973,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "HyperlinkExtensionList",
@@ -1975,6 +2036,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: [":blurRad", ":dist", ":dir"],
     attrConstraints: [
       { qname: ":blurRad", minValue: 0, maxValue: 2147483647 },
       { qname: ":dist", minValue: 0, maxValue: 2147483647 },
@@ -2485,6 +2547,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":rig", ":dir"],
+    knownAttrs: [":rig", ":dir"],
     attrConstraints: [
       { qname: ":rig", enumMembers: ["legacyFlat1", "legacyFlat2", "legacyFlat3", "legacyFlat4", "legacyNormal1", "legacyNormal2", "legacyNormal3", "legacyNormal4", "legacyHarsh1", "legacyHarsh2", "legacyHarsh3", "legacyHarsh4", "threePt", "balanced", "soft", "harsh", "flood", "contrasting", "morning", "sunrise", "sunset", "chilly", "freezing", "flat", "twoPt", "glow", "brightRoom"] },
       { qname: ":dir", enumMembers: ["tl", "t", "tr", "l", "r", "bl", "b", "br"] },
@@ -2494,6 +2557,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "LinearGradientFill",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "lin",
+    knownAttrs: [":ang", ":scaled"],
     attrConstraints: [
       { qname: ":ang", minValue: 0 },
     ],
@@ -2523,6 +2587,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "LinePropertiesExtensionList",
@@ -2608,6 +2673,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "LuminanceEffect",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "lum",
+    knownAttrs: [":bright", ":contrast"],
     attrConstraints: [
       { qname: ":bright", minValue: -100000, maxValue: 100000 },
       { qname: ":contrast", minValue: -100000, maxValue: 100000 },
@@ -2645,6 +2711,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "Miter",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "miter",
+    knownAttrs: [":lim"],
     attrConstraints: [
       { qname: ":lim", minValue: 0 },
     ],
@@ -2695,6 +2762,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id", ":name"],
+    knownAttrs: [":id", ":name", ":descr", ":hidden", ":title"],
   },
   {
     className: "NonVisualDrawingPropertiesExtension",
@@ -2713,6 +2781,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "NonVisualDrawingPropertiesExtensionList",
@@ -2757,6 +2826,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "NonVisualGroupDrawingShapePropsExtensionList",
@@ -2800,6 +2870,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "NonVisualPicturePropertiesExtensionList" }
       ] }
     },
+    knownAttrs: [":preferRelativeResize"],
   },
   {
     className: "NonVisualPictureProperties",
@@ -2827,6 +2898,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "NonVisualPicturePropertiesExtensionList",
@@ -2848,6 +2920,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":txBox"],
   },
   {
     className: "NonVisualShapeProperties",
@@ -2864,6 +2937,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "NormalAutoFit",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "normAutofit",
+    knownAttrs: [":fontScale", ":lnSpcReduction"],
     attrConstraints: [
       { qname: ":fontScale", minValue: 1000, maxValue: 100000 },
       { qname: ":lnSpcReduction", minValue: 0, maxValue: 13200000 },
@@ -2915,6 +2989,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "OfficeStyleSheetExtensionList",
@@ -2944,6 +3019,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: [":blurRad", ":dist", ":dir", ":sx", ":sy", ":kx", ":ky", ":algn", ":rotWithShape"],
     attrConstraints: [
       { qname: ":blurRad", minValue: 0, maxValue: 2147483647 },
       { qname: ":dist", minValue: 0, maxValue: 2147483647 },
@@ -3069,6 +3145,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "cubicBezTo", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":w", ":h", ":fill", ":stroke", ":extrusionOk"],
     attrConstraints: [
       { qname: ":w", minValue: 0, maxValue: 2147483647 },
       { qname: ":h", minValue: 0, maxValue: 2147483647 },
@@ -3084,6 +3161,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "fillToRect", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":path"],
     attrConstraints: [
       { qname: ":path", enumMembers: ["shape", "circle", "rect"] },
     ],
@@ -3108,6 +3186,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "bgClr", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":prst"],
     attrConstraints: [
       { qname: ":prst", enumMembers: ["pct5", "pct10", "pct20", "pct25", "pct30", "pct40", "pct50", "pct60", "pct70", "pct75", "pct80", "pct90", "horz", "vert", "ltHorz", "ltVert", "dkHorz", "dkVert", "narHorz", "narVert", "dashHorz", "dashVert", "cross", "dnDiag", "upDiag", "ltDnDiag", "ltUpDiag", "dkDnDiag", "dkUpDiag", "wdDnDiag", "wdUpDiag", "dashDnDiag", "dashUpDiag", "diagCross", "smCheck", "lgCheck", "smGrid", "lgGrid", "dotGrid", "smConfetti", "lgConfetti", "horzBrick", "diagBrick", "solidDmnd", "openDmnd", "dotDmnd", "plaid", "sphere", "weave", "divot", "shingle", "wave", "trellis", "zigZag"] },
     ],
@@ -3145,6 +3224,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":noGrp", ":noSelect", ":noRot", ":noChangeAspect", ":noMove", ":noResize", ":noEditPoints", ":noAdjustHandles", ":noChangeArrowheads", ":noChangeShapeType", ":noCrop"],
   },
   {
     className: "PresetColor",
@@ -3187,6 +3267,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", enumMembers: ["aliceBlue", "antiqueWhite", "aqua", "aquamarine", "azure", "beige", "bisque", "black", "blanchedAlmond", "blue", "blueViolet", "brown", "burlyWood", "cadetBlue", "chartreuse", "chocolate", "coral", "cornflowerBlue", "cornsilk", "crimson", "cyan", "dkBlue", "dkCyan", "dkGoldenrod", "dkGray", "dkGreen", "dkKhaki", "dkMagenta", "dkOliveGreen", "dkOrange", "dkOrchid", "dkRed", "dkSalmon", "dkSeaGreen", "dkSlateBlue", "dkSlateGray", "dkTurquoise", "dkViolet", "deepPink", "deepSkyBlue", "dimGray", "dodgerBlue", "firebrick", "floralWhite", "forestGreen", "fuchsia", "gainsboro", "ghostWhite", "gold", "goldenrod", "gray", "green", "greenYellow", "honeydew", "hotPink", "indianRed", "indigo", "ivory", "khaki", "lavender", "lavenderBlush", "lawnGreen", "lemonChiffon", "ltBlue", "ltCoral", "ltCyan", "ltGoldenrodYellow", "ltGray", "ltGreen", "ltPink", "ltSalmon", "ltSeaGreen", "ltSkyBlue", "ltSlateGray", "ltSteelBlue", "ltYellow", "lime", "limeGreen", "linen", "magenta", "maroon", "medAquamarine", "medBlue", "medOrchid", "medPurple", "medSeaGreen", "medSlateBlue", "medSpringGreen", "medTurquoise", "medVioletRed", "midnightBlue", "mintCream", "mistyRose", "moccasin", "navajoWhite", "navy", "oldLace", "olive", "oliveDrab", "orange", "orangeRed", "orchid", "paleGoldenrod", "paleGreen", "paleTurquoise", "paleVioletRed", "papayaWhip", "peachPuff", "peru", "pink", "plum", "powderBlue", "purple", "red", "rosyBrown", "royalBlue", "saddleBrown", "salmon", "sandyBrown", "seaGreen", "seaShell", "sienna", "silver", "skyBlue", "slateBlue", "slateGray", "snow", "springGreen", "steelBlue", "tan", "teal", "thistle", "tomato", "turquoise", "violet", "wheat", "white", "whiteSmoke", "yellow", "yellowGreen"] },
     ],
@@ -3195,6 +3276,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "PresetDash",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "prstDash",
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", enumMembers: ["solid", "dot", "dash", "lgDash", "dashDot", "lgDashDot", "lgDashDotDot", "sysDash", "sysDot", "sysDashDot", "sysDashDotDot"] },
     ],
@@ -3209,6 +3291,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":prst"],
+    knownAttrs: [":prst"],
     attrConstraints: [
       { qname: ":prst", enumMembers: ["line", "lineInv", "triangle", "rtTriangle", "rect", "diamond", "parallelogram", "trapezoid", "nonIsoscelesTrapezoid", "pentagon", "hexagon", "heptagon", "octagon", "decagon", "dodecagon", "star4", "star5", "star6", "star7", "star8", "star10", "star12", "star16", "star24", "star32", "roundRect", "round1Rect", "round2SameRect", "round2DiagRect", "snipRoundRect", "snip1Rect", "snip2SameRect", "snip2DiagRect", "plaque", "ellipse", "teardrop", "homePlate", "chevron", "pieWedge", "pie", "blockArc", "donut", "noSmoking", "rightArrow", "leftArrow", "upArrow", "downArrow", "stripedRightArrow", "notchedRightArrow", "bentUpArrow", "leftRightArrow", "upDownArrow", "leftUpArrow", "leftRightUpArrow", "quadArrow", "leftArrowCallout", "rightArrowCallout", "upArrowCallout", "downArrowCallout", "leftRightArrowCallout", "upDownArrowCallout", "quadArrowCallout", "bentArrow", "uturnArrow", "circularArrow", "leftCircularArrow", "leftRightCircularArrow", "curvedRightArrow", "curvedLeftArrow", "curvedUpArrow", "curvedDownArrow", "swooshArrow", "cube", "can", "lightningBolt", "heart", "sun", "moon", "smileyFace", "irregularSeal1", "irregularSeal2", "foldedCorner", "bevel", "frame", "halfFrame", "corner", "diagStripe", "chord", "arc", "leftBracket", "rightBracket", "leftBrace", "rightBrace", "bracketPair", "bracePair", "straightConnector1", "bentConnector2", "bentConnector3", "bentConnector4", "bentConnector5", "curvedConnector2", "curvedConnector3", "curvedConnector4", "curvedConnector5", "callout1", "callout2", "callout3", "accentCallout1", "accentCallout2", "accentCallout3", "borderCallout1", "borderCallout2", "borderCallout3", "accentBorderCallout1", "accentBorderCallout2", "accentBorderCallout3", "wedgeRectCallout", "wedgeRoundRectCallout", "wedgeEllipseCallout", "cloudCallout", "cloud", "ribbon", "ribbon2", "ellipseRibbon", "ellipseRibbon2", "leftRightRibbon", "verticalScroll", "horizontalScroll", "wave", "doubleWave", "plus", "flowChartProcess", "flowChartDecision", "flowChartInputOutput", "flowChartPredefinedProcess", "flowChartInternalStorage", "flowChartDocument", "flowChartMultidocument", "flowChartTerminator", "flowChartPreparation", "flowChartManualInput", "flowChartManualOperation", "flowChartConnector", "flowChartPunchedCard", "flowChartPunchedTape", "flowChartSummingJunction", "flowChartOr", "flowChartCollate", "flowChartSort", "flowChartExtract", "flowChartMerge", "flowChartOfflineStorage", "flowChartOnlineStorage", "flowChartMagneticTape", "flowChartMagneticDisk", "flowChartMagneticDrum", "flowChartDisplay", "flowChartDelay", "flowChartAlternateProcess", "flowChartOffpageConnector", "actionButtonBlank", "actionButtonHome", "actionButtonHelp", "actionButtonInformation", "actionButtonForwardNext", "actionButtonBackPrevious", "actionButtonEnd", "actionButtonBeginning", "actionButtonReturn", "actionButtonDocument", "actionButtonSound", "actionButtonMovie", "gear6", "gear9", "funnel", "mathPlus", "mathMinus", "mathMultiply", "mathDivide", "mathEqual", "mathNotEqual", "cornerTabs", "squareTabs", "plaqueTabs", "chartX", "chartStar", "chartPlus"] },
     ],
@@ -3232,6 +3315,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":prst"],
+    knownAttrs: [":prst", ":dist", ":dir"],
     attrConstraints: [
       { qname: ":prst", enumMembers: ["shdw1", "shdw2", "shdw3", "shdw4", "shdw5", "shdw6", "shdw7", "shdw8", "shdw9", "shdw10", "shdw11", "shdw12", "shdw13", "shdw14", "shdw15", "shdw16", "shdw17", "shdw18", "shdw19", "shdw20"] },
       { qname: ":dist", minValue: 0, maxValue: 2147483647 },
@@ -3248,6 +3332,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":prst"],
+    knownAttrs: [":prst"],
     attrConstraints: [
       { qname: ":prst", enumMembers: ["textNoShape", "textPlain", "textStop", "textTriangle", "textTriangleInverted", "textChevron", "textChevronInverted", "textRingInside", "textRingOutside", "textArchUp", "textArchDown", "textCircle", "textButton", "textArchUpPour", "textArchDownPour", "textCirclePour", "textButtonPour", "textCurveUp", "textCurveDown", "textCanUp", "textCanDown", "textWave1", "textWave2", "textDoubleWave1", "textWave4", "textInflate", "textDeflate", "textInflateBottom", "textDeflateBottom", "textInflateTop", "textDeflateTop", "textDeflateInflate", "textDeflateInflateDeflate", "textFadeRight", "textFadeLeft", "textFadeUp", "textFadeDown", "textSlantUp", "textSlantDown", "textCascadeUp", "textCascadeDown"] },
     ],
@@ -3263,6 +3348,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "QuadraticBezierCurveTo",
@@ -3284,12 +3370,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:link"],
+    knownAttrs: ["r:link"],
   },
   {
     className: "Rectangle",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "rect",
     requiredAttrs: [":l", ":t", ":r", ":b"],
+    knownAttrs: [":l", ":t", ":r", ":b"],
     attrConstraints: [
       { qname: ":l", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":t", minValue: -27273042329600, maxValue: 27273042316900 },
@@ -3301,6 +3389,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "Reflection",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "reflection",
+    knownAttrs: [":blurRad", ":stA", ":stPos", ":endA", ":endPos", ":dist", ":dir", ":fadeDir", ":sx", ":sy", ":kx", ":ky", ":algn", ":rotWithShape"],
     attrConstraints: [
       { qname: ":blurRad", minValue: 0, maxValue: 2147483647 },
       { qname: ":stA", minValue: 0, maxValue: 100000 },
@@ -3312,6 +3401,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       { qname: ":fadeDir", minValue: 0 },
       { qname: ":algn", enumMembers: ["tl", "t", "tr", "l", "ctr", "r", "bl", "b", "br"] },
     ],
+  },
+  {
+    className: "RelativeOffset",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
+    localName: "relOff",
+    knownAttrs: [":tx", ":ty"],
   },
   {
     className: "RgbColorModelHex",
@@ -3354,6 +3449,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
+    versionedKnownAttrs: [
+      { qname: "a14:legacySpreadsheetColorIndex", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: ":val", typeHint: "hexBinary", length: 3 },
       { qname: "a14:legacySpreadsheetColorIndex", minValue: 0, maxValue: 80 },
@@ -3400,6 +3499,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":r", ":g", ":b"],
+    knownAttrs: [":r", ":g", ":b"],
   },
   {
     className: "RightBorder",
@@ -3446,10 +3546,17 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "RightToLeft",
+    namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
+    localName: "rtl",
+    knownAttrs: [":val"],
+  },
+  {
     className: "Rotation",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "rot",
     requiredAttrs: [":lat", ":lon", ":rev"],
+    knownAttrs: [":lat", ":lon", ":rev"],
     attrConstraints: [
       { qname: ":lat", minValue: 0 },
       { qname: ":lon", minValue: 0 },
@@ -3568,6 +3675,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", enumMembers: ["bg1", "tx1", "bg2", "tx2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hlink", "folHlink", "phClr", "dk1", "lt1", "dk2", "lt2"] },
     ],
@@ -3599,6 +3707,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":z", ":extrusionH", ":contourW", ":prstMaterial"],
     attrConstraints: [
       { qname: ":z", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":extrusionH", minValue: 0, maxValue: 2147483647 },
@@ -3625,6 +3734,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "gd",
     requiredAttrs: [":name", ":fmla"],
+    knownAttrs: [":name", ":fmla"],
   },
   {
     className: "ShapeGuideList",
@@ -3645,6 +3755,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":noGrp", ":noSelect", ":noRot", ":noChangeAspect", ":noMove", ":noResize", ":noEditPoints", ":noAdjustHandles", ":noChangeArrowheads", ":noChangeShapeType", ":noTextEdit"],
   },
   {
     className: "ShapeProperties",
@@ -3681,6 +3792,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":bwMode"],
     attrConstraints: [
       { qname: ":bwMode", enumMembers: ["clr", "auto", "gray", "ltGray", "invGray", "grayWhite", "blackGray", "blackWhite", "black", "white", "hidden"] },
     ],
@@ -3701,6 +3813,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "ShapePropertiesExtensionList",
@@ -3730,6 +3843,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "softEdge",
     requiredAttrs: [":rad"],
+    knownAttrs: [":rad"],
     attrConstraints: [
       { qname: ":rad", minValue: 0, maxValue: 2147483647 },
     ],
@@ -3802,6 +3916,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "spcPct",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", minValue: 0, maxValue: 13200000 },
     ],
@@ -3811,6 +3926,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "spcPts",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", minValue: 0, maxValue: 158400 },
     ],
@@ -3830,6 +3946,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "font",
     requiredAttrs: [":script", ":typeface"],
+    knownAttrs: [":script", ":typeface"],
   },
   {
     className: "SystemColor",
@@ -3872,6 +3989,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":val"],
+    knownAttrs: [":val", ":lastClr"],
     attrConstraints: [
       { qname: ":val", enumMembers: ["scrollBar", "background", "activeCaption", "inactiveCaption", "menu", "window", "windowFrame", "menuText", "windowText", "captionText", "activeBorder", "inactiveBorder", "appWorkspace", "highlight", "highlightText", "btnFace", "btnShadow", "grayText", "btnText", "inactiveCaptionText", "btnHighlight", "3dDkShadow", "3dLight", "infoText", "infoBk", "hotLight", "gradientActiveCaption", "gradientInactiveCaption", "menuHighlight", "menuBar"] },
       { qname: ":lastClr", typeHint: "hexBinary", length: 3 },
@@ -3921,6 +4039,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":rowSpan", ":gridSpan", ":hMerge", ":vMerge"],
   },
   {
     className: "TableCellBorders",
@@ -3966,6 +4085,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":marL", ":marR", ":marT", ":marB", ":vert", ":anchor", ":anchorCtr", ":horzOverflow"],
     attrConstraints: [
       { qname: ":vert", enumMembers: ["horz", "vert", "vert270", "wordArtVert", "eaVert", "mongolianVert", "wordArtVertRtl"] },
       { qname: ":anchor", enumMembers: ["t", "ctr", "b"] },
@@ -4014,6 +4134,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":b", ":i"],
     attrConstraints: [
       { qname: ":b", enumMembers: ["on", "off", "def"] },
       { qname: ":i", enumMembers: ["on", "off", "def"] },
@@ -4058,6 +4179,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":rtl", ":firstRow", ":firstCol", ":lastRow", ":lastCol", ":bandRow", ":bandCol"],
   },
   {
     className: "TableRow",
@@ -4070,6 +4192,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":h"],
+    knownAttrs: [":h"],
     attrConstraints: [
       { qname: ":h", minValue: -27273042329600, maxValue: 27273042316900 },
     ],
@@ -4132,11 +4255,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":def"],
+    knownAttrs: [":def"],
   },
   {
     className: "TabStop",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "tab",
+    knownAttrs: [":pos", ":algn"],
     attrConstraints: [
       { qname: ":algn", enumMembers: ["l", "ctr", "r", "dec"] },
     ],
@@ -4205,6 +4330,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "OfficeStyleSheetExtensionList" }
       ] }
     },
+    knownAttrs: [":name"],
+    versionedKnownAttrs: [
+      { qname: "thm15:id", initialVersion: "Office2013" },
+    ],
   },
   {
     className: "ThemeElements",
@@ -4235,6 +4364,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "Tile",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "tile",
+    knownAttrs: [":tx", ":ty", ":sx", ":sy", ":flip", ":algn"],
     attrConstraints: [
       { qname: ":tx", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":ty", minValue: -27273042329600, maxValue: 27273042316900 },
@@ -4246,6 +4376,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "TintEffect",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "tint",
+    knownAttrs: [":hue", ":amt"],
     attrConstraints: [
       { qname: ":hue", minValue: 0 },
       { qname: ":amt", minValue: -100000, maxValue: 100000 },
@@ -4360,11 +4491,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "ext", min: 0, max: 1, expectedClassName: "Extents" }
       ] }
     },
+    knownAttrs: [":rot", ":flipH", ":flipV"],
   },
   {
     className: "TransformEffect",
     namespaceUri: "http://schemas.openxmlformats.org/drawingml/2006/main",
     localName: "xfrm",
+    knownAttrs: [":sx", ":sy", ":kx", ":ky", ":tx", ":ty"],
     attrConstraints: [
       { qname: ":tx", minValue: -27273042329600, maxValue: 27273042316900 },
       { qname: ":ty", minValue: -27273042329600, maxValue: 27273042316900 },
@@ -4382,6 +4515,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "chExt", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":rot", ":flipH", ":flipV"],
   },
   {
     className: "Underline",
@@ -4443,6 +4577,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:link"],
+    knownAttrs: ["r:link"],
   },
   {
     className: "VisualGroupShapeProperties",
@@ -4471,6 +4606,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":bwMode"],
     attrConstraints: [
       { qname: ":bwMode", enumMembers: ["clr", "auto", "gray", "ltGray", "invGray", "grayWhite", "blackGray", "blackWhite", "black", "white", "hidden"] },
     ],

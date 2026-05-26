@@ -251,6 +251,11 @@ interface ElementConstraint {
   readonly requiredAttrs?: readonly string[];
   readonly versionedRequiredAttrs?: readonly VersionedRequiredAttr[];
   readonly attrConstraints?: readonly AttrConstraint[];
+  readonly knownAttrs?: readonly string[];
+  readonly versionedKnownAttrs?: readonly {
+    readonly qname: string;
+    readonly initialVersion: string;
+  }[];
 }
 
 /**
@@ -605,6 +610,27 @@ function processSchema(schemaData: SchemaFile): ElementConstraint[] {
       if (required.length > 0) constraint.requiredAttrs = required;
       if (versionedRequired.length > 0) constraint.versionedRequiredAttrs = versionedRequired;
       if (attrC.length > 0) constraint.attrConstraints = attrC;
+
+      // Build knownAttrs — the complete set of known attribute qnames for this element
+      const known: string[] = [];
+      const versionedKnown: { qname: string; initialVersion: string }[] = [];
+      for (const attr of type.Attributes) {
+        const hasVersion = attr.Validators?.some((v) => v.Name === "OfficeVersionValidator");
+        if (hasVersion) {
+          const versionVal = attr.Validators?.find(
+            (v) => v.Name === "OfficeVersionValidator",
+          )?.Arguments?.find((a) => a.Type === "Version")?.Value;
+          if (versionVal) {
+            versionedKnown.push({ qname: attr.QName, initialVersion: versionVal });
+          } else {
+            known.push(attr.QName);
+          }
+        } else {
+          known.push(attr.QName);
+        }
+      }
+      if (known.length > 0) constraint.knownAttrs = known;
+      if (versionedKnown.length > 0) constraint.versionedKnownAttrs = versionedKnown;
     }
 
     // Only emit if we have some constraint data
@@ -612,7 +638,9 @@ function processSchema(schemaData: SchemaFile): ElementConstraint[] {
       constraint.particle !== undefined ||
       constraint.requiredAttrs !== undefined ||
       constraint.versionedRequiredAttrs !== undefined ||
-      constraint.attrConstraints !== undefined
+      constraint.attrConstraints !== undefined ||
+      constraint.knownAttrs !== undefined ||
+      constraint.versionedKnownAttrs !== undefined
     ) {
       constraints.push(constraint as ElementConstraint);
     }
@@ -681,6 +709,20 @@ function buildOutput(constraints: ElementConstraint[], sourcePath: string): stri
         if (vr.maxVersion !== undefined) parts.push(`maxVersion: ${vr.maxVersion}`);
         if (vr.optional === true) parts.push("optional: true");
         lines.push(`      { ${parts.join(", ")} },`);
+      }
+      lines.push("    ],");
+    }
+
+    if (c.knownAttrs !== undefined && c.knownAttrs.length > 0) {
+      lines.push(`    knownAttrs: [${c.knownAttrs.map((a) => JSON.stringify(a)).join(", ")}],`);
+    }
+
+    if (c.versionedKnownAttrs !== undefined && c.versionedKnownAttrs.length > 0) {
+      lines.push("    versionedKnownAttrs: [");
+      for (const vk of c.versionedKnownAttrs) {
+        lines.push(
+          `      { qname: ${JSON.stringify(vk.qname)}, initialVersion: ${JSON.stringify(vk.initialVersion)} },`,
+        );
       }
       lines.push("    ],");
     }

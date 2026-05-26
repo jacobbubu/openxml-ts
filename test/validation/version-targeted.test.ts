@@ -280,3 +280,106 @@ describe("OpenXmlValidator — Epic-93 version-targeted validation", () => {
     }
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// NamespaceTest — mirrors .NET OpenXmlValidatorTest.NamespaceTest
+// Tests Sch_UndeclaredAttribute for version-conditional known attributes.
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe("NamespaceTest — Sch_UndeclaredAttribute for version-conditional attrs", () => {
+  const _W14_NS = "http://schemas.microsoft.com/office/word/2010/wordml";
+
+  // Inline constraint for a test element: standard attrs declared unconditionally,
+  // while w14:paraId is only declared for Office2010+.
+  const nsTestConstraint: ElementConstraint = {
+    className: "NsTestElement",
+    namespaceUri: "http://ns-test.local",
+    localName: "custom",
+    knownAttrs: ["w:rsidR", "w:rsidRDefault"],
+    versionedKnownAttrs: [{ qname: "w14:paraId", initialVersion: "Office2010" }],
+  };
+
+  beforeAll(() => {
+    registerConstraints([nsTestConstraint]);
+  });
+
+  it("O12: w14:paraId (beta namespace) → Sch_UndeclaredAttribute", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const el = new (class extends OpenXmlCompositeElement {
+      override readonly className = "NsTestElement";
+      override readonly namespaceUri = "http://ns-test.local";
+      override readonly localName = "custom";
+      override readonly prefix = "";
+      constructor() {
+        super();
+        this.extendedAttributes.set("w:rsidR", "00A35C47");
+        this.extendedAttributes.set("w14:paraId", "017B6C57");
+      }
+    })();
+
+    const errors = validator.validate(el);
+    const undeclared = errors.find((e) => e.id === "Sch_UndeclaredAttribute");
+    expect(undeclared).toBeDefined();
+    expect(undeclared!.errorType).toBe("Schema");
+    expect(undeclared!.node).toBe(el);
+    expect(undeclared!.description).toContain("w14:paraId");
+  });
+
+  it("O14: w14:paraId is declared → 0 errors", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2010 });
+    const el = new (class extends OpenXmlCompositeElement {
+      override readonly className = "NsTestElement";
+      override readonly namespaceUri = "http://ns-test.local";
+      override readonly localName = "custom";
+      override readonly prefix = "";
+      constructor() {
+        super();
+        this.extendedAttributes.set("w:rsidR", "00A35C47");
+        this.extendedAttributes.set("w14:paraId", "017B6C57");
+      }
+    })();
+
+    const errors = validator.validate(el);
+    expect(errors.length).toBe(0);
+  });
+
+  it("undeclared attr from known namespace → Sch_UndeclaredAttribute regardless of version", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const el = new (class extends OpenXmlCompositeElement {
+      override readonly className = "NsTestElement";
+      override readonly namespaceUri = "http://ns-test.local";
+      override readonly localName = "custom";
+      override readonly prefix = "";
+      constructor() {
+        super();
+        this.extendedAttributes.set("w:rsidR", "00A35C47");
+        this.extendedAttributes.set("w:completelyUnknown", "value");
+      }
+    })();
+
+    const errors = validator.validate(el);
+    const undeclared = errors.find(
+      (e) => e.id === "Sch_UndeclaredAttribute" && e.description.includes("w:completelyUnknown"),
+    );
+    expect(undeclared).toBeDefined();
+  });
+
+  it("declared attr in knownAttrs → no Sch_UndeclaredAttribute", () => {
+    const validator = new OpenXmlValidator({ fileFormatVersions: FileFormatVersions.Office2007 });
+    const el = new (class extends OpenXmlCompositeElement {
+      override readonly className = "NsTestElement";
+      override readonly namespaceUri = "http://ns-test.local";
+      override readonly localName = "custom";
+      override readonly prefix = "";
+      constructor() {
+        super();
+        this.extendedAttributes.set("w:rsidR", "00A35C47");
+        this.extendedAttributes.set("w:rsidRDefault", "00F26B31");
+      }
+    })();
+
+    const errors = validator.validate(el);
+    const undeclared = errors.filter((e) => e.id === "Sch_UndeclaredAttribute");
+    expect(undeclared).toHaveLength(0);
+  });
+});

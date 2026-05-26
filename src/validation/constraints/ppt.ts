@@ -13,6 +13,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "tavLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":by", ":from", ":to", ":calcmode", ":valueType"],
+    versionedKnownAttrs: [
+      { qname: "p14:bounceEnd", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: ":calcmode", enumMembers: ["discrete", "lin", "fmla"] },
       { qname: ":valueType", enumMembers: ["str", "num", "clr"] },
@@ -31,6 +35,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "to", min: 0, max: 1, expectedClassName: "ToColor" }
       ] }
     },
+    knownAttrs: [":clrSpc", ":dir"],
     attrConstraints: [
       { qname: ":clrSpc", enumMembers: ["rgb", "hsl"] },
       { qname: ":dir", enumMembers: ["cw", "ccw"] },
@@ -46,6 +51,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "progress", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":transition", ":filter", ":prLst"],
     attrConstraints: [
       { qname: ":transition", enumMembers: ["in", "out", "none"] },
     ],
@@ -63,6 +69,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "rCtr", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":origin", ":path", ":pathEditMode", ":rAng", ":ptsTypes"],
+    versionedKnownAttrs: [
+      { qname: "p14:bounceEnd", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: ":origin", enumMembers: ["parent", "layout"] },
       { qname: ":pathEditMode", enumMembers: ["relative", "fixed"] },
@@ -78,6 +88,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "cBhvr", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":by", ":from", ":to"],
+    versionedKnownAttrs: [
+      { qname: "p14:bounceEnd", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "p14:bounceEnd", minValue: 0, maxValue: 100000 },
     ],
@@ -94,6 +108,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "to", min: 0, max: 1, expectedClassName: "ToPosition" }
       ] }
     },
+    knownAttrs: [":zoomContents"],
+    versionedKnownAttrs: [
+      { qname: "p14:bounceEnd", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "p14:bounceEnd", minValue: 0, maxValue: 100000 },
     ],
@@ -118,6 +136,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":isPhoto", ":userDrawn"],
   },
   {
     className: "ApplicationNonVisualDrawingPropertiesExtension",
@@ -131,6 +150,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "ApplicationNonVisualDrawingPropertiesExtensionList",
@@ -161,6 +181,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "cMediaNode", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":isNarration"],
   },
   {
     className: "Background",
@@ -176,6 +197,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: [":bwMode"],
   },
   {
     className: "BackgroundProperties",
@@ -201,6 +223,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":shadeToTitle"],
   },
   {
     className: "BackgroundStyleReference",
@@ -221,6 +244,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":idx"],
+    knownAttrs: [":idx"],
   },
   {
     className: "BlipFill",
@@ -238,6 +262,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: [":dpi", ":rotWithShape"],
   },
   {
     className: "BodyStyle",
@@ -264,12 +289,20 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "boolVal",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
+  },
+  {
+    className: "BrowseSlideMode",
+    namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
+    localName: "browse",
+    knownAttrs: [":showScrollbar"],
   },
   {
     className: "BuildDiagram",
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "bldDgm",
     requiredAttrs: [":spid", ":grpId"],
+    knownAttrs: [":spid", ":grpId", ":uiExpand", ":bld"],
     attrConstraints: [
       { qname: ":bld", enumMembers: ["whole", "depthByNode", "depthByBranch", "breadthByNode", "breadthByLvl", "cw", "cwIn", "cwOut", "ccw", "ccwIn", "ccwOut", "inByRing", "outByRing", "up", "down", "allAtOnce", "cust"] },
     ],
@@ -285,6 +318,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":spid", ":grpId"],
+    knownAttrs: [":spid", ":grpId", ":uiExpand"],
   },
   {
     className: "BuildList",
@@ -304,6 +338,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "bldOleChart",
     requiredAttrs: [":spid", ":grpId"],
+    knownAttrs: [":spid", ":grpId", ":uiExpand", ":bld", ":animBg"],
     attrConstraints: [
       { qname: ":bld", enumMembers: ["allAtOnce", "series", "category", "seriesEl", "categoryEl"] },
     ],
@@ -318,6 +353,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":spid", ":grpId"],
+    knownAttrs: [":spid", ":grpId", ":uiExpand", ":build", ":bldLvl", ":animBg", ":autoUpdateAnimBg", ":rev", ":advAuto"],
     attrConstraints: [
       { qname: ":build", enumMembers: ["allAtOnce", "p", "cust", "whole"] },
       { qname: ":advAuto", enumMembers: ["indefinite"] },
@@ -377,6 +413,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":bg1", ":tx1", ":bg2", ":tx2", ":accent1", ":accent2", ":accent3", ":accent4", ":accent5", ":accent6", ":hlink", ":folHlink"],
+    knownAttrs: [":bg1", ":tx1", ":bg2", ":tx2", ":accent1", ":accent2", ":accent3", ":accent4", ":accent5", ":accent6", ":hlink", ":folHlink"],
   },
   {
     className: "ColorMapOverride",
@@ -438,6 +475,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "cBhvr", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":type", ":cmd"],
     attrConstraints: [
       { qname: ":type", enumMembers: ["evt", "call", "verb"] },
     ],
@@ -454,6 +492,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":authorId", ":idx"],
+    knownAttrs: [":authorId", ":dt", ":idx"],
   },
   {
     className: "CommentAuthor",
@@ -465,6 +504,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id", ":name", ":initials", ":lastIdx", ":clrIdx"],
+    knownAttrs: [":id", ":name", ":initials", ":lastIdx", ":clrIdx"],
   },
   {
     className: "CommentAuthorExtension",
@@ -477,6 +517,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "CommentAuthorExtensionList",
@@ -509,6 +550,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "CommentExtensionList",
@@ -552,6 +594,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "attrNameLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":additive", ":accumulate", ":xfrmType", ":from", ":to", ":by", ":rctx", ":override"],
     attrConstraints: [
       { qname: ":additive", enumMembers: ["base", "sum", "repl", "mult", "none"] },
       { qname: ":accumulate", enumMembers: ["none", "always"] },
@@ -569,6 +612,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "tgtEl", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":vol", ":mute", ":numSld", ":showWhenStopped"],
     attrConstraints: [
       { qname: ":vol", minValue: 0, maxValue: 100000 },
     ],
@@ -586,6 +630,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "CommonSlideDataExtensionList" }
       ] }
     },
+    knownAttrs: [":name"],
   },
   {
     className: "CommonSlideDataExtension",
@@ -598,6 +643,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "CommonSlideDataExtensionList",
@@ -619,6 +665,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "guideLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":snapToGrid", ":snapToObjects", ":showGuides"],
   },
   {
     className: "CommonTimeNode",
@@ -634,6 +681,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "subTnLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":id", ":presetID", ":presetClass", ":presetSubtype", ":dur", ":repeatCount", ":repeatDur", ":spd", ":accel", ":decel", ":autoRev", ":restart", ":fill", ":syncBehavior", ":tmFilter", ":evtFilter", ":display", ":masterRel", ":bldLvl", ":grpId", ":afterEffect", ":nodeType", ":nodePh"],
+    versionedKnownAttrs: [
+      { qname: "p14:presetBounceEnd", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: ":presetClass", enumMembers: ["entr", "exit", "emph", "path", "verb", "mediacall"] },
       { qname: ":accel", minValue: 0, maxValue: 100000 },
@@ -656,6 +707,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "origin", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":varScale"],
   },
   {
     className: "Condition",
@@ -694,6 +746,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id"],
+    versionedKnownAttrs: [
+      { qname: "p14:bwMode", initialVersion: "Office2010" },
+    ],
   },
   {
     className: "Control",
@@ -705,6 +761,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "pic", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":spid", ":name", ":showAsIcon", "r:id", ":imgW", ":imgH"],
     attrConstraints: [
       { qname: ":imgW", minValue: 0 },
       { qname: ":imgH", minValue: 0 },
@@ -725,6 +782,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "custData",
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id"],
   },
   {
     className: "CustomerDataList",
@@ -742,6 +800,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "tags",
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id"],
   },
   {
     className: "CustomShow",
@@ -754,6 +813,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":name", ":id"],
+    knownAttrs: [":name", ":id"],
   },
   {
     className: "CustomShowList",
@@ -770,6 +830,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "custShow",
     requiredAttrs: [":id"],
+    knownAttrs: [":id"],
   },
   {
     className: "DefaultTextStyle",
@@ -857,6 +918,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "ExtensionList",
@@ -885,17 +947,20 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: [":mod"],
   },
   {
     className: "FloatVariantValue",
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "fltVal",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
   },
   {
     className: "Font",
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "font",
+    knownAttrs: [":typeface", ":panose", ":pitchFamily", ":charset"],
     attrConstraints: [
       { qname: ":panose", typeHint: "hexBinary", length: 10 },
     ],
@@ -986,11 +1051,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":bwMode"],
   },
   {
     className: "Guide",
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "guide",
+    knownAttrs: [":orient", ":pos"],
     attrConstraints: [
       { qname: ":orient", enumMembers: ["horz", "vert"] },
     ],
@@ -1033,6 +1100,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "HandoutMasterExtensionList",
@@ -1054,6 +1122,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id"],
   },
   {
     className: "HandoutMasterIdList",
@@ -1074,12 +1143,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionListWithModification" }
       ] }
     },
+    knownAttrs: [":sldNum", ":hdr", ":ftr", ":dt"],
   },
   {
     className: "HslColor",
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "hsl",
     requiredAttrs: [":h", ":s", ":l"],
+    knownAttrs: [":h", ":s", ":l"],
     attrConstraints: [
       { qname: ":s", minValue: -100000, maxValue: 100000 },
       { qname: ":l", minValue: -100000, maxValue: 100000 },
@@ -1102,6 +1173,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:id"],
+    knownAttrs: [":showSpeakerNotes", ":pubBrowser", "r:id"],
     attrConstraints: [
       { qname: ":pubBrowser", enumMembers: ["v4", "v3", "v3v4"] },
     ],
@@ -1111,6 +1183,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "intVal",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
   },
   {
     className: "Iterate",
@@ -1122,6 +1195,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "tmPct", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":type", ":backwards"],
     attrConstraints: [
       { qname: ":type", enumMembers: ["el", "wd", "lt"] },
     ],
@@ -1131,6 +1205,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "kinsoku",
     requiredAttrs: [":invalStChars", ":invalEndChars"],
+    knownAttrs: [":lang", ":invalStChars", ":invalEndChars"],
+  },
+  {
+    className: "KioskSlideMode",
+    namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
+    localName: "kiosk",
+    knownAttrs: [":restart"],
   },
   {
     className: "ModificationVerifier",
@@ -1151,6 +1232,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       { qname: ":saltData", minVersion: 2, optional: true },
       { qname: ":hashData", minVersion: 1, maxVersion: 1 },
       { qname: ":hashData", minVersion: 2, optional: true },
+    ],
+    knownAttrs: [":cryptProviderType", ":cryptAlgorithmClass", ":cryptAlgorithmType", ":cryptAlgorithmSid", ":spinCount", ":saltData", ":hashData", ":cryptProvider", ":algIdExt", ":algIdExtSource", ":cryptProviderTypeExt", ":cryptProviderTypeExtSource"],
+    versionedKnownAttrs: [
+      { qname: ":algorithmName", initialVersion: "Office2010" },
+      { qname: ":hashValue", initialVersion: "Office2010" },
+      { qname: ":saltValue", initialVersion: "Office2010" },
+      { qname: ":spinValue", initialVersion: "Office2010" },
     ],
     attrConstraints: [
       { qname: ":cryptProviderType", enumMembers: ["rsaAES", "rsaFull", "invalid"] },
@@ -1208,6 +1296,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id", ":name"],
+    knownAttrs: [":id", ":name", ":descr", ":hidden", ":title"],
   },
   {
     className: "NonVisualGraphicFrameDrawingProperties",
@@ -1265,6 +1354,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "NonVisualPicturePropertiesExtensionList" }
       ] }
     },
+    knownAttrs: [":preferRelativeResize"],
   },
   {
     className: "NonVisualPictureProperties",
@@ -1288,6 +1378,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":txBox"],
   },
   {
     className: "NonVisualShapeProperties",
@@ -1312,6 +1403,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":showOutlineIcons", ":snapVertSplitter", ":vertBarState", ":horzBarState", ":preferSingleView"],
     attrConstraints: [
       { qname: ":vertBarState", enumMembers: ["minimized", "restored", "maximized"] },
       { qname: ":horzBarState", enumMembers: ["minimized", "restored", "maximized"] },
@@ -1346,6 +1438,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "NotesMasterExtensionList",
@@ -1367,6 +1460,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id"],
   },
   {
     className: "NotesMasterIdList",
@@ -1393,6 +1487,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionListWithModification" }
       ] }
     },
+    knownAttrs: [":showMasterSp", ":showMasterPhAnim"],
   },
   {
     className: "NotesStyle",
@@ -1441,6 +1536,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "oleChartEl",
     requiredAttrs: [":type"],
+    knownAttrs: [":type", ":lvl"],
     attrConstraints: [
       { qname: ":type", enumMembers: ["gridLegend", "series", "category", "ptInSeries", "ptInCategory"] },
     ],
@@ -1458,6 +1554,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "pic", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":spid", ":name", ":showAsIcon", "r:id", ":imgW", ":imgH", ":progId"],
     attrConstraints: [
       { qname: ":imgW", minValue: 0 },
       { qname: ":imgH", minValue: 0 },
@@ -1472,6 +1569,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":followColorScheme"],
     attrConstraints: [
       { qname: ":followColorScheme", enumMembers: ["none", "full", "textAndBackground"] },
     ],
@@ -1485,6 +1583,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":updateAutomatic"],
   },
   {
     className: "OtherStyle",
@@ -1533,6 +1632,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "sld",
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id", ":collapse"],
   },
   {
     className: "ParallelTimeNode",
@@ -1572,6 +1672,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":bw", ":showCaptions", ":layout", ":frame"],
     attrConstraints: [
       { qname: ":layout", enumMembers: ["fitToSlide", "1pic", "2pic", "4pic", "1picTitle", "2picTitle", "4picTitle"] },
       { qname: ":frame", enumMembers: ["frameStyle1", "frameStyle2", "frameStyle3", "frameStyle4", "frameStyle5", "frameStyle6", "frameStyle7"] },
@@ -1610,6 +1711,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionListWithModification" }
       ] }
     },
+    knownAttrs: [":type", ":orient", ":sz", ":idx", ":hasCustomPrompt"],
     attrConstraints: [
       { qname: ":type", enumMembers: ["title", "body", "ctrTitle", "subTitle", "dt", "sldNum", "ftr", "hdr", "obj", "chart", "tbl", "clipArt", "dgm", "media", "sldImg", "pic"] },
       { qname: ":orient", enumMembers: ["horz", "vert"] },
@@ -1638,6 +1740,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "PresentationExtensionList" }
       ] }
     },
+    knownAttrs: [":serverZoom", ":firstSlideNum", ":showSpecialPlsOnTitleSld", ":rtl", ":removePersonalInfoOnSave", ":compatMode", ":strictFirstAndLastChars", ":embedTrueTypeFonts", ":saveSubsetFonts", ":autoCompressPictures", ":bookmarkIdSeed", ":conformance"],
     attrConstraints: [
       { qname: ":bookmarkIdSeed", minValue: 1 },
       { qname: ":conformance", enumMembers: ["strict", "transitional"] },
@@ -1657,6 +1760,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "PresentationExtensionList",
@@ -1697,6 +1801,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "PresentationPropertiesExtensionList",
@@ -1727,6 +1832,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":prnWhat", ":clrMode", ":hiddenSlides", ":scaleToFitPaper", ":frameSlides"],
     attrConstraints: [
       { qname: ":prnWhat", enumMembers: ["slides", "handouts1", "handouts2", "handouts3", "handouts4", "handouts6", "handouts9", "notes", "outline"] },
       { qname: ":clrMode", enumMembers: ["bw", "gray", "clr"] },
@@ -1747,6 +1853,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "rgb",
     requiredAttrs: [":r", ":g", ":b"],
+    knownAttrs: [":r", ":g", ":b"],
     attrConstraints: [
       { qname: ":r", minValue: -100000, maxValue: 100000 },
       { qname: ":g", minValue: -100000, maxValue: 100000 },
@@ -1758,6 +1865,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "rtn",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", enumMembers: ["first", "last", "all"] },
     ],
@@ -1784,6 +1892,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "nextCondLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":concurrent", ":prevAc", ":nextAc"],
     attrConstraints: [
       { qname: ":prevAc", enumMembers: ["none", "skipTimed"] },
       { qname: ":nextAc", enumMembers: ["none", "seek"] },
@@ -1813,6 +1922,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionListWithModification" }
       ] }
     },
+    knownAttrs: [":useBgFill"],
   },
   {
     className: "ShapeProperties",
@@ -1849,6 +1959,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":bwMode"],
   },
   {
     className: "ShapeStyle",
@@ -1877,6 +1988,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":spid"],
+    knownAttrs: [":spid"],
   },
   {
     className: "ShapeTree",
@@ -1922,6 +2034,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":loop", ":showNarration", ":showAnimation", ":useTimings"],
   },
   {
     className: "ShowPropertiesExtension",
@@ -1936,6 +2049,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "ShowPropertiesExtensionList",
@@ -1964,6 +2078,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "SlideExtensionList" }
       ] }
     },
+    knownAttrs: [":showMasterSp", ":showMasterPhAnim", ":show"],
   },
   {
     className: "SlideExtension",
@@ -1978,6 +2093,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "SlideExtensionList",
@@ -1999,6 +2115,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":id", "r:id"],
+    knownAttrs: [":id", "r:id"],
     attrConstraints: [
       { qname: ":id", minValue: 256 },
     ],
@@ -2031,6 +2148,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "SlideLayoutExtensionList" }
       ] }
     },
+    knownAttrs: [":showMasterSp", ":showMasterPhAnim", ":matchingName", ":type", ":preserve", ":userDrawn"],
     attrConstraints: [
       { qname: ":type", enumMembers: ["title", "tx", "twoColTx", "tbl", "txAndChart", "chartAndTx", "dgm", "chart", "txAndClipArt", "clipArtAndTx", "titleOnly", "blank", "txAndObj", "objAndTx", "objOnly", "obj", "txAndMedia", "mediaAndTx", "objOverTx", "txOverObj", "txAndTwoObj", "twoObjAndTx", "twoObjOverTx", "fourObj", "vertTx", "clipArtAndVertTx", "vertTitleAndTx", "vertTitleAndTxOverChart", "twoObj", "objAndTwoObj", "twoObjAndObj", "cust", "secHead", "twoTxTwoObj", "objTx", "picTx"] },
     ],
@@ -2046,6 +2164,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "SlideLayoutExtensionList",
@@ -2067,6 +2186,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:id"],
+    knownAttrs: [":id", "r:id"],
     attrConstraints: [
       { qname: ":id", minValue: 2147483648 },
     ],
@@ -2096,6 +2216,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "sld",
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id"],
   },
   {
     className: "SlideMaster",
@@ -2117,6 +2238,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "SlideMasterExtensionList" }
       ] }
     },
+    knownAttrs: [":preserve"],
   },
   {
     className: "SlideMasterExtension",
@@ -2129,6 +2251,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":uri"],
+    knownAttrs: [":uri"],
   },
   {
     className: "SlideMasterExtensionList",
@@ -2150,6 +2273,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["r:id"],
+    knownAttrs: [":id", "r:id"],
     attrConstraints: [
       { qname: ":id", minValue: 2147483648 },
     ],
@@ -2169,6 +2293,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "sldSz",
     requiredAttrs: [":cx", ":cy"],
+    knownAttrs: [":cx", ":cy", ":type"],
     attrConstraints: [
       { qname: ":cx", minValue: 914400, maxValue: 51206400 },
       { qname: ":cy", minValue: 914400, maxValue: 51206400 },
@@ -2185,6 +2310,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: [":serverSldId", ":serverSldModifiedTime", ":clientInsertedTime"],
+    knownAttrs: [":serverSldId", ":serverSldModifiedTime", ":clientInsertedTime"],
   },
   {
     className: "SlideViewProperties",
@@ -2207,6 +2333,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":showFormatting"],
   },
   {
     className: "SoundAction",
@@ -2223,6 +2350,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "SplitTransition",
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "split",
+    knownAttrs: [":orient", ":dir"],
     attrConstraints: [
       { qname: ":orient", enumMembers: ["horz", "vert"] },
       { qname: ":dir", enumMembers: ["out", "in"] },
@@ -2247,17 +2375,20 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "snd", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":loop"],
   },
   {
     className: "StringVariantValue",
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "strVal",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
   },
   {
     className: "StripsTransition",
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "strips",
+    knownAttrs: [":dir"],
     attrConstraints: [
       { qname: ":dir", enumMembers: ["lu", "ru", "ld", "rd"] },
     ],
@@ -2289,6 +2420,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "tag",
     requiredAttrs: [":name", ":val"],
+    knownAttrs: [":name", ":val"],
   },
   {
     className: "TagList",
@@ -2323,6 +2455,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "tnLst", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":lvl"],
   },
   {
     className: "TemplateList",
@@ -2375,6 +2508,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "tmAbs",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", enumMembers: ["indefinite"] },
     ],
@@ -2388,6 +2522,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "val", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":tm", ":fmla"],
     attrConstraints: [
       { qname: ":tm", enumMembers: ["indefinite"], minValue: 0, maxValue: 100000 },
     ],
@@ -2407,6 +2542,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "tn",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
   },
   {
     className: "TimeNodeList",
@@ -2423,6 +2559,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "tmPct",
     requiredAttrs: [":val"],
+    knownAttrs: [":val"],
     attrConstraints: [
       { qname: ":val", minValue: 0 },
     ],
@@ -2498,6 +2635,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/drawingml/2006/main", local: "ext", min: 0, max: 1, expectedClassName: "Extents" }
       ] }
     },
+    knownAttrs: [":rot", ":flipH", ":flipV"],
   },
   {
     className: "Transition",
@@ -2552,6 +2690,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: [":spd", ":advClick", ":advTm"],
+    versionedKnownAttrs: [
+      { qname: "p14:dur", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: ":spd", enumMembers: ["slow", "med", "fast"] },
     ],
@@ -2579,6 +2721,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "cMediaNode", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: [":fullScrn"],
   },
   {
     className: "ViewProperties",
@@ -2596,6 +2739,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":lastView", ":showComments"],
     attrConstraints: [
       { qname: ":lastView", enumMembers: ["sldView", "sldMasterView", "notesView", "handoutView", "notesMasterView", "outlineView", "sldSorterView", "sldThumbnailView"] },
     ],
@@ -2609,15 +2753,23 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/presentationml/2006/main", local: "extLst", min: 0, max: 1, expectedClassName: "ExtensionList" }
       ] }
     },
+    knownAttrs: [":showAnimation", ":resizeGraphics", ":allowPng", ":relyOnVml", ":organizeInFolders", ":useLongFilenames", ":imgSz", ":encoding", ":clr"],
     attrConstraints: [
       { qname: ":imgSz", enumMembers: ["544x376", "640x480", "720x512", "800x600", "1024x768", "1152x882", "1152x900", "1280x1024", "1600x1200", "1800x1400", "1920x1200"] },
       { qname: ":clr", enumMembers: ["none", "browser", "presentationText", "presentationAccent", "whiteTextOnBlack", "blackTextOnWhite"] },
     ],
   },
   {
+    className: "WheelTransition",
+    namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
+    localName: "wheel",
+    knownAttrs: [":spokes"],
+  },
+  {
     className: "ZoomTransition",
     namespaceUri: "http://schemas.openxmlformats.org/presentationml/2006/main",
     localName: "zoom",
+    knownAttrs: [":dir"],
     attrConstraints: [
       { qname: ":dir", enumMembers: ["out", "in"] },
     ],

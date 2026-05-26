@@ -900,6 +900,44 @@ export class OpenXmlValidator {
         errors.push(firstError);
       }
     }
+
+    // (g) Sch_UndeclaredAttribute: attributes present on the element but not
+    // declared for this element at the current target version.
+    // Only runs when knownAttrs is present on the constraint.
+    if (constraint.knownAttrs !== undefined) {
+      // Normalize qname: schema uses ":localName" for unprefixed attributes,
+      // but extendedAttributes stores them without the leading colon.
+      const normalizeQname = (q: string): string => (q.startsWith(":") ? q.slice(1) : q);
+
+      const declaredSet = new Set(constraint.knownAttrs.map(normalizeQname));
+      if (constraint.versionedKnownAttrs !== undefined) {
+        for (const vk of constraint.versionedKnownAttrs) {
+          if (meetsInitialVersion(this._fileFormat, vk.initialVersion)) {
+            declaredSet.add(normalizeQname(vk.qname));
+          }
+        }
+      }
+      for (const ac of constraint.attrConstraints ?? []) declaredSet.add(normalizeQname(ac.qname));
+      for (const ra of constraint.requiredAttrs ?? []) declaredSet.add(normalizeQname(ra));
+      for (const vra of constraint.versionedRequiredAttrs ?? [])
+        declaredSet.add(normalizeQname(vra.qname));
+
+      for (const [key] of el.extendedAttributes) {
+        if (key === "xmlns" || key.startsWith("xmlns:")) continue;
+        if (key.startsWith("mc:")) continue;
+        if (!declaredSet.has(key)) {
+          errors.push(
+            makeError(
+              "Sch_UndeclaredAttribute",
+              `The attribute '${key}' is not declared for element <${el.qualifiedName}>.`,
+              el,
+              path,
+              partUri,
+            ),
+          );
+        }
+      }
+    }
   }
 
   /**

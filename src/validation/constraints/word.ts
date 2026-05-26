@@ -19,6 +19,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:abstractNumId"],
+    knownAttrs: ["w:abstractNumId"],
     attrConstraints: [
       { qname: "w:abstractNumId", minValue: 0 },
     ],
@@ -28,6 +29,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "activeWritingStyle",
     requiredAttrs: ["w:lang", "w:vendorID", "w:dllVersion", "w:checkStyle", "w:appName"],
+    knownAttrs: ["w:lang", "w:vendorID", "w:dllVersion", "w:nlCheck", "w:checkStyle", "w:appName"],
     attrConstraints: [
       { qname: "w:lang", maxLength: 84 },
       { qname: "w:dllVersion", minValue: 0 },
@@ -44,6 +46,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "altChunkPr", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: ["r:id"],
   },
   {
     className: "AltChunkProperties",
@@ -60,6 +63,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "autoCaption",
     requiredAttrs: ["w:name", "w:caption"],
+    knownAttrs: ["w:name", "w:caption"],
     attrConstraints: [
       { qname: "w:name", maxLength: 255 },
       { qname: "w:caption", maxLength: 255 },
@@ -80,6 +84,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "behavior",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["content", "p", "pg"] },
     ],
@@ -220,6 +225,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["ltr", "rtl"] },
     ],
@@ -350,6 +356,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["ltr", "rtl"] },
     ],
@@ -448,6 +455,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "bookmarkStart",
     requiredAttrs: ["w:name", "w:id"],
+    knownAttrs: ["w:name", "w:colFirst", "w:colLast", "w:displacedByCustomXml", "w:id"],
     attrConstraints: [
       { qname: "w:name", maxLength: 40 },
       { qname: "w:displacedByCustomXml", enumMembers: ["next", "prev"] },
@@ -458,6 +466,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "Break",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "br",
+    knownAttrs: ["w:type", "w:clear"],
     attrConstraints: [
       { qname: "w:type", enumMembers: ["page", "column", "textWrapping"] },
       { qname: "w:clear", enumMembers: ["none", "left", "right", "all"] },
@@ -467,6 +476,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "Calendar",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "calendar",
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["gregorian", "hijri", "hebrew", "taiwan", "japan", "thai", "korea", "saka", "gregorianXlitEnglish", "gregorianXlitFrench"] },
     ],
@@ -476,6 +486,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "caption",
     requiredAttrs: ["w:name"],
+    knownAttrs: ["w:name", "w:pos", "w:chapNum", "w:heading", "w:noLabel", "w:numFmt", "w:sep"],
     attrConstraints: [
       { qname: "w:name", maxLength: 255 },
       { qname: "w:pos", enumMembers: ["above", "below"] },
@@ -512,6 +523,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "cellMerge",
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:vMerge", "w:vMergeOrig", "w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:vMerge", enumMembers: ["cont", "rest"] },
       { qname: "w:vMergeOrig", enumMembers: ["cont", "rest"] },
@@ -523,6 +538,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "CharacterScale",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "w",
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", minValue: 1, maxValue: 600 },
     ],
@@ -532,6 +548,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "characterSpacingControl",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["doNotCompress", "compressPunctuation", "compressPunctuationAndJapaneseKana"] },
     ],
@@ -556,6 +573,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "color",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val", "w:themeColor", "w:themeTint", "w:themeShade"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["auto"], minLength: 3, maxLength: 3 },
       { qname: "w:themeColor", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink", "none", "background1", "text1", "background2", "text2"] },
@@ -567,6 +585,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "ColorSchemeMapping",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "clrSchemeMapping",
+    knownAttrs: ["w:bg1", "w:t1", "w:bg2", "w:t2", "w:accent1", "w:accent2", "w:accent3", "w:accent4", "w:accent5", "w:accent6", "w:hyperlink", "w:followedHyperlink"],
     attrConstraints: [
       { qname: "w:bg1", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
       { qname: "w:t1", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink"] },
@@ -583,6 +602,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     ],
   },
   {
+    className: "Column",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "col",
+    knownAttrs: ["w:w", "w:space"],
+  },
+  {
     className: "Columns",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "cols",
@@ -591,6 +616,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "col", min: 1, max: 45 }
       ] }
     },
+    knownAttrs: ["w:equalWidth", "w:space", "w:num", "w:sep"],
     attrConstraints: [
       { qname: "w:equalWidth", typeHint: "onOff" },
       { qname: "w:num", minValue: 1, maxValue: 45 },
@@ -652,6 +678,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:initials", "w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:initials", maxLength: 9 },
       { qname: "w:author", maxLength: 255 },
@@ -748,6 +778,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "compatSetting",
     requiredAttrs: ["w:name", "w:uri", "w:val"],
+    knownAttrs: ["w:name", "w:uri", "w:val"],
     attrConstraints: [
       { qname: "w:name", enumMembers: ["compatibilityMode", "overrideTableStyleFontSizeAndJustification", "enableOpenTypeFeatures", "doNotFlipMirrorIndents", "differentiateMultirowTableHeaders"] },
     ],
@@ -760,6 +791,21 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       { qname: "w:val", minVersion: 1, maxVersion: 1 },
       { qname: "w:val", minVersion: 2, optional: true },
       { qname: "w:val", minVersion: 4, maxVersion: 4 },
+    ],
+    knownAttrs: ["w:val"],
+    versionedKnownAttrs: [
+      { qname: "w:firstRow", initialVersion: "Office2010" },
+      { qname: "w:lastRow", initialVersion: "Office2010" },
+      { qname: "w:firstColumn", initialVersion: "Office2010" },
+      { qname: "w:lastColumn", initialVersion: "Office2010" },
+      { qname: "w:oddVBand", initialVersion: "Office2010" },
+      { qname: "w:evenVBand", initialVersion: "Office2010" },
+      { qname: "w:oddHBand", initialVersion: "Office2010" },
+      { qname: "w:evenHBand", initialVersion: "Office2010" },
+      { qname: "w:firstRowFirstColumn", initialVersion: "Office2010" },
+      { qname: "w:firstRowLastColumn", initialVersion: "Office2010" },
+      { qname: "w:lastRowFirstColumn", initialVersion: "Office2010" },
+      { qname: "w:lastRowLastColumn", initialVersion: "Office2010" },
     ],
     attrConstraints: [
       { qname: "w:val", minLength: 12, maxLength: 12 },
@@ -782,17 +828,20 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "consecutiveHyphenLimit",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
   },
   {
     className: "ContentPart",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "contentPart",
     requiredAttrs: ["r:id"],
+    knownAttrs: ["r:id"],
   },
   {
     className: "Control",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "control",
+    knownAttrs: ["w:name", "w:shapeid", "r:id"],
     attrConstraints: [
       { qname: "w:shapeid", maxLength: 254 },
     ],
@@ -802,6 +851,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "attr",
     requiredAttrs: ["w:name", "w:val"],
+    knownAttrs: ["w:uri", "w:name", "w:val"],
     attrConstraints: [
       { qname: "w:name", maxLength: 255 },
     ],
@@ -1281,6 +1331,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "dataBinding",
     requiredAttrs: ["w:xpath", "w:storeItemID"],
+    knownAttrs: ["w:prefixMappings", "w:xpath", "w:storeItemID"],
   },
   {
     className: "DataSourceObject",
@@ -1304,6 +1355,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "dataType",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["textFile", "database", "spreadsheet", "query", "odbc", "native"] },
     ],
@@ -1313,6 +1365,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "default",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", minValue: 0, maxValue: 24 },
     ],
@@ -1333,6 +1386,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -1462,6 +1519,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "destination",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["newDocument", "printer", "email", "fax"] },
     ],
@@ -1483,6 +1541,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:id"],
+    knownAttrs: ["w:id"],
     attrConstraints: [
       { qname: "w:id", minValue: 1, maxValue: -1 },
     ],
@@ -1505,6 +1564,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "divId",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", minValue: 1, maxValue: -1 },
     ],
@@ -1544,6 +1604,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "DocGrid",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "docGrid",
+    knownAttrs: ["w:type", "w:linePitch", "w:charSpace"],
     attrConstraints: [
       { qname: "w:type", enumMembers: ["default", "lines", "linesAndChars", "snapToChars"] },
     ],
@@ -1649,10 +1710,17 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "DocPartId",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "guid",
+    knownAttrs: ["w:val"],
+  },
+  {
     className: "DocPartName",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "name",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val", "w:decorated"],
     attrConstraints: [
       { qname: "w:decorated", typeHint: "onOff" },
     ],
@@ -1688,6 +1756,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "type",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["none", "normal", "autoExp", "toolbar", "speller", "formFld", "bbPlcHdr"] },
     ],
@@ -1701,6 +1770,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "type", min: 1, max: "unbounded" }
       ] }
     },
+    knownAttrs: ["w:all"],
     attrConstraints: [
       { qname: "w:all", typeHint: "onOff" },
     ],
@@ -1719,6 +1789,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: ["w:conformance"],
     attrConstraints: [
       { qname: "w:conformance", enumMembers: ["transitional", "strict"] },
     ],
@@ -1732,6 +1803,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "urn:schemas-microsoft-com:vml", local: "background", min: 1, max: 1 }
       ] }
     },
+    knownAttrs: ["w:color", "w:themeColor", "w:themeTint", "w:themeShade"],
     attrConstraints: [
       { qname: "w:color", enumMembers: ["auto"], minLength: 3, maxLength: 3 },
       { qname: "w:themeColor", enumMembers: ["dark1", "light1", "dark2", "light2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hyperlink", "followedHyperlink", "none", "background1", "text1", "background2", "text2"] },
@@ -1743,6 +1815,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "DocumentProtection",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "documentProtection",
+    knownAttrs: ["w:edit", "w:formatting", "w:enforcement", "w:cryptProviderType", "w:cryptAlgorithmClass", "w:cryptAlgorithmType", "w:cryptAlgorithmSid", "w:cryptSpinCount", "w:cryptProvider", "w:algIdExt", "w:algIdExtSource", "w:cryptProviderTypeExt", "w:cryptProviderTypeExtSource", "w:hash", "w:salt"],
+    versionedKnownAttrs: [
+      { qname: "w:algorithmName", initialVersion: "Office2010" },
+      { qname: "w:hashValue", initialVersion: "Office2010" },
+      { qname: "w:saltValue", initialVersion: "Office2010" },
+      { qname: "w:spinCount", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "w:edit", enumMembers: ["none", "readOnly", "comments", "trackedChanges", "forms"] },
       { qname: "w:formatting", typeHint: "onOff" },
@@ -1764,6 +1843,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "documentType",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["notSpecified", "letter", "eMail"] },
     ],
@@ -1773,6 +1853,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "docVar",
     requiredAttrs: ["w:name", "w:val"],
+    knownAttrs: ["w:name", "w:val"],
     attrConstraints: [
       { qname: "w:name", minLength: 1, maxLength: 255 },
       { qname: "w:val", minLength: 0, maxLength: 65280 },
@@ -1815,6 +1896,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "EastAsianLayout",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "eastAsianLayout",
+    knownAttrs: ["w:id", "w:combine", "w:combineBrackets", "w:vert", "w:vertCompress"],
     attrConstraints: [
       { qname: "w:combine", typeHint: "onOff" },
       { qname: "w:combineBrackets", enumMembers: ["none", "round", "square", "angle", "curly"] },
@@ -1856,6 +1938,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: ["w:dxaOrig", "w:dyaOrig"],
+    versionedKnownAttrs: [
+      { qname: "w14:anchorId", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "w14:anchorId", typeHint: "hexBinary", length: 4 },
     ],
@@ -1865,6 +1951,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "em",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["none", "dot", "comma", "circle", "underDot"] },
     ],
@@ -1984,6 +2071,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "pos",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["sectEnd", "docEnd"] },
     ],
@@ -2027,6 +2115,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:fldCharType"],
+    knownAttrs: ["w:fldCharType", "w:fldLock", "w:dirty"],
     attrConstraints: [
       { qname: "w:fldCharType", enumMembers: ["begin", "separate", "end"] },
       { qname: "w:fldLock", typeHint: "onOff" },
@@ -2053,6 +2142,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "fitText",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val", "w:id"],
     attrConstraints: [
       { qname: "w:val", maxValue: 31680 },
     ],
@@ -2077,11 +2167,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:name"],
+    knownAttrs: ["w:name"],
   },
   {
     className: "FontCharSet",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "charset",
+    knownAttrs: ["w:val", "w:characterSet"],
     attrConstraints: [
       { qname: "w:val", minLength: 1, maxLength: 2 },
       { qname: "w:characterSet", enumMembers: ["iso-8859-1", "macintosh", "shift_jis", "ks_c-5601-1987", "KS_C-5601-1992", "GBK", "Big5", "windows-1253", "iso-8859-9", "windows-1258", "windows-1255", "windows-1256", "windows-1257", "windows-1251", "windows-874", "windows-1250"] },
@@ -2092,6 +2184,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "family",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["decorative", "modern", "roman", "script", "swiss", "auto"] },
     ],
@@ -2111,6 +2204,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "sig",
     requiredAttrs: ["w:usb0", "w:usb1", "w:usb2", "w:usb3", "w:csb0", "w:csb1"],
+    knownAttrs: ["w:usb0", "w:usb1", "w:usb2", "w:usb3", "w:csb0", "w:csb1"],
     attrConstraints: [
       { qname: "w:usb0", typeHint: "hexBinary", length: 4 },
       { qname: "w:usb1", typeHint: "hexBinary", length: 4 },
@@ -2321,6 +2415,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "pos",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["pageBottom", "beneathText", "sectEnd"] },
     ],
@@ -2357,6 +2452,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "format",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", maxLength: 64 },
     ],
@@ -2386,6 +2482,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "FormFieldName",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "name",
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", maxLength: 20 },
     ],
@@ -2412,6 +2509,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "frameLayout",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["rows", "cols", "none"] },
     ],
@@ -2420,6 +2518,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "FrameProperties",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "framePr",
+    knownAttrs: ["w:dropCap", "w:lines", "w:w", "w:h", "w:vSpace", "w:hSpace", "w:wrap", "w:hAnchor", "w:vAnchor", "w:x", "w:xAlign", "w:y", "w:yAlign", "w:hRule", "w:anchorLock"],
     attrConstraints: [
       { qname: "w:dropCap", enumMembers: ["none", "drop", "margin"] },
       { qname: "w:lines", minValue: 1, maxValue: 10 },
@@ -2469,6 +2568,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "gallery",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["placeholder", "any", "default", "docParts", "coverPg", "eq", "ftrs", "hdrs", "pgNum", "tbls", "watermarks", "autoTxt", "txtBox", "pgNumT", "pgNumB", "pgNumMargins", "tblOfContents", "bib", "custQuickParts", "custCoverPg", "custEq", "custFtrs", "custHdrs", "custPgNum", "custTbls", "custWatermarks", "custAutoTxt", "custTxtBox", "custPgNumT", "custPgNumB", "custPgNumMargins", "custTblOfContents", "custBib", "custom1", "custom2", "custom3", "custom4", "custom5"] },
     ],
@@ -2487,6 +2587,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+  },
+  {
+    className: "GridColumn",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "gridCol",
+    knownAttrs: ["w:w"],
   },
   {
     className: "Header",
@@ -2589,6 +2695,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "HelpText",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "helpText",
+    knownAttrs: ["w:type", "w:val"],
     attrConstraints: [
       { qname: "w:type", enumMembers: ["text", "autoText"] },
       { qname: "w:val", maxLength: 255 },
@@ -2599,6 +2706,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "highlight",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["black", "blue", "cyan", "green", "magenta", "red", "yellow", "white", "darkBlue", "darkCyan", "darkGreen", "darkMagenta", "darkRed", "darkYellow", "darkGray", "lightGray", "none"] },
     ],
@@ -2607,6 +2715,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "HorizontalMerge",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "hMerge",
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["continue", "restart"] },
     ],
@@ -2737,6 +2846,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: ["w:tgtFrame", "w:tooltip", "w:docLocation", "w:history", "w:anchor", "r:id"],
     attrConstraints: [
       { qname: "w:tgtFrame", maxLength: 255 },
       { qname: "w:tooltip", maxLength: 260 },
@@ -2852,12 +2962,25 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: ["w:tgtFrame", "w:tooltip", "w:docLocation", "w:history", "w:anchor", "r:id"],
     attrConstraints: [
       { qname: "w:tgtFrame", maxLength: 255 },
       { qname: "w:tooltip", maxLength: 260 },
       { qname: "w:docLocation", maxLength: 255 },
       { qname: "w:history", typeHint: "onOff" },
       { qname: "w:anchor", maxLength: 255 },
+    ],
+  },
+  {
+    className: "Indentation",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "ind",
+    knownAttrs: ["w:left", "w:leftChars", "w:right", "w:rightChars", "w:hanging", "w:hangingChars", "w:firstLine", "w:firstLineChars"],
+    versionedKnownAttrs: [
+      { qname: "w:start", initialVersion: "Office2010" },
+      { qname: "w:startChars", initialVersion: "Office2010" },
+      { qname: "w:end", initialVersion: "Office2010" },
+      { qname: "w:endChars", initialVersion: "Office2010" },
     ],
   },
   {
@@ -2881,6 +3004,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -3010,6 +3137,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "jc",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["left", "center", "right", "both", "mediumKashida", "distribute", "numTab", "highKashida", "lowKashida", "thaiDistribute"] },
     ],
@@ -3019,6 +3147,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "kern",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", minValue: 0, maxValue: 3277 },
     ],
@@ -3028,6 +3157,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "lid",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", maxLength: 84 },
     ],
@@ -3037,6 +3167,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "lsdException",
     requiredAttrs: ["w:name"],
+    knownAttrs: ["w:name", "w:locked", "w:uiPriority", "w:semiHidden", "w:unhideWhenUsed", "w:qFormat"],
     attrConstraints: [
       { qname: "w:locked", typeHint: "onOff" },
       { qname: "w:uiPriority", minValue: 0, maxValue: 99 },
@@ -3054,6 +3185,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "lsdException", min: 0, max: "unbounded" }
       ] }
     },
+    knownAttrs: ["w:defLockedState", "w:defUIPriority", "w:defSemiHidden", "w:defUnhideWhenUsed", "w:defQFormat", "w:count"],
     attrConstraints: [
       { qname: "w:defLockedState", typeHint: "onOff" },
       { qname: "w:defUIPriority", minValue: 0, maxValue: 99 },
@@ -3066,6 +3198,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "LegacyNumbering",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "legacy",
+    knownAttrs: ["w:legacy", "w:legacySpace", "w:legacyIndent"],
     attrConstraints: [
       { qname: "w:legacy", typeHint: "onOff" },
     ],
@@ -3091,6 +3224,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:ilvl"],
+    knownAttrs: ["w:ilvl", "w:tplc", "w:tentative"],
     attrConstraints: [
       { qname: "w:tplc", typeHint: "hexBinary", length: 4 },
       { qname: "w:tentative", typeHint: "onOff" },
@@ -3101,6 +3235,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "lvlJc",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["left", "center", "right"] },
     ],
@@ -3116,12 +3251,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:ilvl"],
+    knownAttrs: ["w:ilvl"],
   },
   {
     className: "LevelSuffix",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "suff",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["tab", "space", "nothing"] },
     ],
@@ -3130,6 +3267,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "LevelText",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "lvlText",
+    knownAttrs: ["w:val", "w:null"],
     attrConstraints: [
       { qname: "w:null", typeHint: "onOff" },
     ],
@@ -3138,6 +3276,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "LineNumberType",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "lnNumType",
+    knownAttrs: ["w:countBy", "w:start", "w:distance", "w:restart"],
     attrConstraints: [
       { qname: "w:countBy", minValue: 1, maxValue: 100 },
       { qname: "w:start", minValue: 0 },
@@ -3145,9 +3284,16 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     ],
   },
   {
+    className: "ListItem",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "listItem",
+    knownAttrs: ["w:displayText", "w:value"],
+  },
+  {
     className: "Lock",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "lock",
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["sdtLocked", "contentLocked", "unlocked", "sdtContentLocked"] },
     ],
@@ -3182,6 +3328,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "type",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["null", "dbColumn"] },
     ],
@@ -3191,6 +3338,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "type",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["database", "addressBook", "document1", "document2", "text", "email", "native", "legacy", "master"] },
     ],
@@ -3200,6 +3348,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "mainDocumentType",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["catalog", "envelopes", "mailingLabels", "formLetters", "email", "fax"] },
     ],
@@ -3209,6 +3358,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "maxLength",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", minValue: 1 },
     ],
@@ -3508,6 +3658,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "multiLevelType",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["singleLevel", "multilevel", "hybridMultilevel"] },
     ],
@@ -3517,6 +3668,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "noLineBreaksAfter",
     requiredAttrs: ["w:lang", "w:val"],
+    knownAttrs: ["w:lang", "w:val"],
     attrConstraints: [
       { qname: "w:lang", maxLength: 84 },
       { qname: "w:val", maxLength: 50 },
@@ -3527,6 +3679,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "noLineBreaksBefore",
     requiredAttrs: ["w:lang", "w:val"],
+    knownAttrs: ["w:lang", "w:val"],
     attrConstraints: [
       { qname: "w:lang", maxLength: 84 },
       { qname: "w:val", maxLength: 100 },
@@ -3550,6 +3703,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "numberingChange",
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:original", "w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -3560,6 +3717,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "numFmt",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
+    versionedKnownAttrs: [
+      { qname: "w:format", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["decimal", "upperRoman", "lowerRoman", "upperLetter", "lowerLetter", "ordinal", "cardinalText", "ordinalText", "hex", "chicago", "ideographDigital", "japaneseCounting", "aiueo", "iroha", "decimalFullWidth", "decimalHalfWidth", "japaneseLegal", "japaneseDigitalTenThousand", "decimalEnclosedCircle", "decimalFullWidth2", "aiueoFullWidth", "irohaFullWidth", "decimalZero", "bullet", "ganada", "chosung", "decimalEnclosedFullstop", "decimalEnclosedParen", "decimalEnclosedCircleChinese", "ideographEnclosedCircle", "ideographTraditional", "ideographZodiac", "ideographZodiacTraditional", "taiwaneseCounting", "ideographLegalTraditional", "taiwaneseCountingThousand", "taiwaneseDigital", "chineseCounting", "chineseLegalSimplified", "chineseCountingThousand", "koreanDigital", "koreanCounting", "koreanLegal", "koreanDigital2", "vietnameseCounting", "russianLower", "russianUpper", "none", "numberInDash", "hebrew1", "hebrew2", "arabicAlpha", "arabicAbjad", "hindiVowels", "hindiConsonants", "hindiNumbers", "hindiCounting", "thaiLetters", "thaiNumbers", "thaiCounting"] },
     ],
@@ -3575,12 +3736,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:numId"],
+    knownAttrs: ["w:numId", "w:durableId"],
   },
   {
     className: "NumberingLevelReference",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "ilvl",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", minValue: 0, maxValue: 255 },
     ],
@@ -3598,6 +3761,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:numPicBulletId"],
+    knownAttrs: ["w:numPicBulletId"],
   },
   {
     className: "NumberingProperties",
@@ -3617,6 +3781,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "numRestart",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["continuous", "eachSect", "eachPage"] },
     ],
@@ -3626,6 +3791,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "numStart",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
   },
   {
     className: "NumberingSymbolRunProperties",
@@ -3693,6 +3859,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "objectEmbed",
     requiredAttrs: ["r:id"],
+    knownAttrs: ["w:drawAspect", "r:id", "w:progId", "w:shapeId", "w:fieldCodes"],
     attrConstraints: [
       { qname: "w:drawAspect", enumMembers: ["content", "icon"] },
     ],
@@ -3702,6 +3869,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "objectLink",
     requiredAttrs: ["w:updateMode", "r:id"],
+    knownAttrs: ["w:updateMode", "w:lockedField", "w:drawAspect", "r:id", "w:progId", "w:shapeId", "w:fieldCodes"],
     attrConstraints: [
       { qname: "w:updateMode", enumMembers: ["always", "onCall"] },
       { qname: "w:lockedField", typeHint: "onOff" },
@@ -3720,6 +3888,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "right", min: 0, max: 1, expectedClassName: "RightBorder" }
       ] }
     },
+    knownAttrs: ["w:zOrder", "w:display", "w:offsetFrom"],
     attrConstraints: [
       { qname: "w:zOrder", enumMembers: ["front", "back"] },
       { qname: "w:display", enumMembers: ["allPages", "firstPage", "notFirstPage"] },
@@ -3730,6 +3899,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "PageMargin",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "pgMar",
+    knownAttrs: ["w:top", "w:right", "w:bottom", "w:left", "w:header", "w:footer", "w:gutter"],
     attrConstraints: [
       { qname: "w:top", minValue: -31680, maxValue: 31680 },
       { qname: "w:right", maxValue: 31680 },
@@ -3744,6 +3914,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "PageNumberType",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "pgNumType",
+    knownAttrs: ["w:fmt", "w:start", "w:chapStyle", "w:chapSep"],
     attrConstraints: [
       { qname: "w:fmt", enumMembers: ["decimal", "upperRoman", "lowerRoman", "upperLetter", "lowerLetter", "ordinal", "cardinalText", "ordinalText", "hex", "chicago", "ideographDigital", "japaneseCounting", "aiueo", "iroha", "decimalFullWidth", "decimalHalfWidth", "japaneseLegal", "japaneseDigitalTenThousand", "decimalEnclosedCircle", "decimalFullWidth2", "aiueoFullWidth", "irohaFullWidth", "decimalZero", "bullet", "ganada", "chosung", "decimalEnclosedFullstop", "decimalEnclosedParen", "decimalEnclosedCircleChinese", "ideographEnclosedCircle", "ideographTraditional", "ideographZodiac", "ideographZodiacTraditional", "taiwaneseCounting", "ideographLegalTraditional", "taiwaneseCountingThousand", "taiwaneseDigital", "chineseCounting", "chineseLegalSimplified", "chineseCountingThousand", "koreanDigital", "koreanCounting", "koreanLegal", "koreanDigital2", "vietnameseCounting", "russianLower", "russianUpper", "none", "numberInDash", "hebrew1", "hebrew2", "arabicAlpha", "arabicAbjad", "hindiVowels", "hindiConsonants", "hindiNumbers", "hindiCounting", "thaiLetters", "thaiNumbers", "thaiCounting"] },
       { qname: "w:start", minValue: 0 },
@@ -3754,6 +3925,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "PageSize",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "pgSz",
+    knownAttrs: ["w:w", "w:h", "w:orient", "w:code"],
     attrConstraints: [
       { qname: "w:w", maxValue: 31680 },
       { qname: "w:h", maxValue: 31680 },
@@ -3765,9 +3937,16 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "panose1",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", typeHint: "hexBinary", length: 10 },
     ],
+  },
+  {
+    className: "PaperSource",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "paperSrc",
+    knownAttrs: ["w:first", "w:other"],
   },
   {
     className: "Paragraph",
@@ -3898,6 +4077,12 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: ["w:rsidRPr", "w:rsidR", "w:rsidDel", "w:rsidP", "w:rsidRDefault"],
+    versionedKnownAttrs: [
+      { qname: "w14:paraId", initialVersion: "Office2010" },
+      { qname: "w14:textId", initialVersion: "Office2010" },
+      { qname: "w14:noSpellErr", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "w:rsidRPr", typeHint: "hexBinary", length: 4 },
       { qname: "w:rsidR", typeHint: "hexBinary", length: 4 },
@@ -4051,6 +4236,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -4176,6 +4365,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -4250,6 +4443,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "permEnd",
     requiredAttrs: ["w:id"],
+    knownAttrs: ["w:id", "w:displacedByCustomXml"],
     attrConstraints: [
       { qname: "w:displacedByCustomXml", enumMembers: ["next", "prev"] },
     ],
@@ -4259,6 +4453,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "permStart",
     requiredAttrs: ["w:id"],
+    knownAttrs: ["w:edGrp", "w:ed", "w:colFirst", "w:colLast", "w:id", "w:displacedByCustomXml"],
     attrConstraints: [
       { qname: "w:edGrp", enumMembers: ["none", "everyone", "administrators", "contributors", "editors", "owners", "current"] },
       { qname: "w:colFirst", minValue: 0 },
@@ -4271,6 +4466,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "hpsRaise",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
   },
   {
     className: "Picture",
@@ -4302,6 +4498,9 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    versionedKnownAttrs: [
+      { qname: "w14:anchorId", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "w14:anchorId", typeHint: "hexBinary", length: 4 },
     ],
@@ -4333,6 +4532,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "pitch",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["fixed", "variable", "default"] },
     ],
@@ -4342,12 +4542,14 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "position",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
   },
   {
     className: "PositionalTab",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "ptab",
     requiredAttrs: ["w:alignment", "w:relativeTo", "w:leader"],
+    knownAttrs: ["w:alignment", "w:relativeTo", "w:leader"],
     attrConstraints: [
       { qname: "w:alignment", enumMembers: ["left", "center", "right"] },
       { qname: "w:relativeTo", enumMembers: ["margin", "indent"] },
@@ -4643,6 +4845,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: ["w:rsidRPr", "w:rsidDel", "w:rsidR", "w:rsidSect"],
     attrConstraints: [
       { qname: "w:rsidRPr", typeHint: "hexBinary", length: 4 },
       { qname: "w:rsidDel", typeHint: "hexBinary", length: 4 },
@@ -4817,6 +5020,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "proofErr",
     requiredAttrs: ["w:type"],
+    knownAttrs: ["w:type"],
     attrConstraints: [
       { qname: "w:type", enumMembers: ["spellStart", "spellEnd", "gramStart", "gramEnd"] },
     ],
@@ -4825,6 +5029,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "ProofState",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "proofState",
+    knownAttrs: ["w:spelling", "w:grammar"],
     attrConstraints: [
       { qname: "w:spelling", enumMembers: ["clean", "dirty"] },
       { qname: "w:grammar", enumMembers: ["clean", "dirty"] },
@@ -4835,6 +5040,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "readModeInkLockDown",
     requiredAttrs: ["w:w", "w:h", "w:fontSz"],
+    knownAttrs: ["w:actualPg", "w:w", "w:h", "w:fontSz"],
     attrConstraints: [
       { qname: "w:actualPg", typeHint: "onOff" },
     ],
@@ -4865,6 +5071,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "RevisionView",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "revisionView",
+    knownAttrs: ["w:markup", "w:comments", "w:insDel", "w:formatting", "w:inkAnnotations"],
     attrConstraints: [
       { qname: "w:markup", typeHint: "onOff" },
       { qname: "w:comments", typeHint: "onOff" },
@@ -4901,6 +5108,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "rubyAlign",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["center", "distributeLetter", "distributeSpace", "left", "right", "rightVertical"] },
     ],
@@ -5185,6 +5393,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: ["w:rsidRPr", "w:rsidDel", "w:rsidR"],
     attrConstraints: [
       { qname: "w:rsidRPr", typeHint: "hexBinary", length: 4 },
       { qname: "w:rsidDel", typeHint: "hexBinary", length: 4 },
@@ -5195,6 +5404,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "RunFonts",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "rFonts",
+    knownAttrs: ["w:hint", "w:ascii", "w:hAnsi", "w:eastAsia", "w:cs", "w:asciiTheme", "w:hAnsiTheme", "w:eastAsiaTheme", "w:cstheme"],
     attrConstraints: [
       { qname: "w:hint", enumMembers: ["default", "eastAsia", "cs"] },
       { qname: "w:ascii", maxLength: 31 },
@@ -5382,6 +5592,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -5398,10 +5612,17 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     },
   },
   {
+    className: "SaveThroughXslt",
+    namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    localName: "saveThroughXslt",
+    knownAttrs: ["r:id", "w:solutionID"],
+  },
+  {
     className: "ScrollbarVisibility",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "scrollbar",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["on", "off", "auto"] },
     ],
@@ -5644,6 +5865,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "listItem", min: 0, max: "unbounded" }
       ] }
     },
+    knownAttrs: ["w:lastValue"],
   },
   {
     className: "SdtContentDate",
@@ -5657,6 +5879,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "calendar", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: ["w:fullDate"],
   },
   {
     className: "SdtContentDocPartList",
@@ -5691,6 +5914,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "listItem", min: 0, max: "unbounded" }
       ] }
     },
+    knownAttrs: ["w:lastValue"],
   },
   {
     className: "SdtContentRow",
@@ -6006,6 +6230,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "SdtContentText",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "text",
+    knownAttrs: ["w:multiLine"],
     attrConstraints: [
       { qname: "w:multiLine", typeHint: "onOff" },
     ],
@@ -6014,6 +6239,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "SdtDateMappingType",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "storeMappedDataAs",
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["text", "date", "dateTime"] },
     ],
@@ -6252,6 +6478,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "sectPrChange", min: 0, max: 1 }
       ] }
     },
+    knownAttrs: ["w:rsidRPr", "w:rsidDel", "w:rsidR", "w:rsidSect"],
     attrConstraints: [
       { qname: "w:rsidRPr", typeHint: "hexBinary", length: 4 },
       { qname: "w:rsidDel", typeHint: "hexBinary", length: 4 },
@@ -6271,6 +6498,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -6281,6 +6512,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "type",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["nextPage", "nextColumn", "continuous", "evenPage", "oddPage"] },
     ],
@@ -6402,6 +6634,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "shd",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val", "w:color", "w:themeColor", "w:themeTint", "w:themeShade", "w:fill", "w:themeFill", "w:themeFillTint", "w:themeFillShade"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["nil", "clear", "solid", "horzStripe", "vertStripe", "reverseDiagStripe", "diagStripe", "horzCross", "diagCross", "thinHorzStripe", "thinVertStripe", "thinReverseDiagStripe", "thinDiagStripe", "thinHorzCross", "thinDiagCross", "pct5", "pct10", "pct12", "pct15", "pct20", "pct25", "pct30", "pct35", "pct37", "pct40", "pct45", "pct50", "pct55", "pct60", "pct62", "pct65", "pct70", "pct75", "pct80", "pct85", "pct87", "pct90", "pct95"] },
       { qname: "w:color", enumMembers: ["auto"], minLength: 3, maxLength: 3 },
@@ -6555,6 +6788,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:instr"],
+    knownAttrs: ["w:instr", "w:fldLock", "w:dirty"],
     attrConstraints: [
       { qname: "w:fldLock", typeHint: "onOff" },
       { qname: "w:dirty", typeHint: "onOff" },
@@ -6671,6 +6905,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:instr"],
+    knownAttrs: ["w:instr", "w:fldLock", "w:dirty"],
     attrConstraints: [
       { qname: "w:fldLock", typeHint: "onOff" },
       { qname: "w:dirty", typeHint: "onOff" },
@@ -6681,6 +6916,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "spacing",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", minValue: -31680, maxValue: 31680 },
     ],
@@ -6689,6 +6925,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "SpacingBetweenLines",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "spacing",
+    knownAttrs: ["w:before", "w:beforeLines", "w:beforeAutospacing", "w:after", "w:afterLines", "w:afterAutospacing", "w:line", "w:lineRule"],
     attrConstraints: [
       { qname: "w:beforeAutospacing", typeHint: "onOff" },
       { qname: "w:afterAutospacing", typeHint: "onOff" },
@@ -6699,6 +6936,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "StatusText",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "statusText",
+    knownAttrs: ["w:type", "w:val"],
     attrConstraints: [
       { qname: "w:type", enumMembers: ["text", "autoText"] },
       { qname: "w:val", maxLength: 140 },
@@ -6734,6 +6972,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         { kind: "leaf", ns: "http://schemas.openxmlformats.org/wordprocessingml/2006/main", local: "tblStylePr", min: 0, max: "unbounded" }
       ] }
     },
+    knownAttrs: ["w:type", "w:styleId", "w:default", "w:customStyle"],
     attrConstraints: [
       { qname: "w:type", enumMembers: ["paragraph", "character", "table", "numbering"] },
       { qname: "w:styleId", maxLength: 253 },
@@ -6746,11 +6985,30 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "name",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
   },
   {
     className: "StylePaneFormatFilter",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "stylePaneFormatFilter",
+    knownAttrs: ["w:val"],
+    versionedKnownAttrs: [
+      { qname: "w:allStyles", initialVersion: "Office2010" },
+      { qname: "w:customStyles", initialVersion: "Office2010" },
+      { qname: "w:latentStyles", initialVersion: "Office2010" },
+      { qname: "w:stylesInUse", initialVersion: "Office2010" },
+      { qname: "w:headingStyles", initialVersion: "Office2010" },
+      { qname: "w:numberingStyles", initialVersion: "Office2010" },
+      { qname: "w:tableStyles", initialVersion: "Office2010" },
+      { qname: "w:directFormattingOnRuns", initialVersion: "Office2010" },
+      { qname: "w:directFormattingOnParagraphs", initialVersion: "Office2010" },
+      { qname: "w:directFormattingOnNumbering", initialVersion: "Office2010" },
+      { qname: "w:directFormattingOnTables", initialVersion: "Office2010" },
+      { qname: "w:clearFormatting", initialVersion: "Office2010" },
+      { qname: "w:top3HeadingStyles", initialVersion: "Office2010" },
+      { qname: "w:visibleStyles", initialVersion: "Office2010" },
+      { qname: "w:alternateStyleNames", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "w:val", typeHint: "hexBinary", length: 2 },
       { qname: "w:allStyles", typeHint: "onOff" },
@@ -6775,6 +7033,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "stylePaneSortMethod",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["0000", "name", "0001", "priority", "0002", "font", "0003", "basedOn", "0004", "type", "0005", "default"], minLength: 2, maxLength: 2 },
     ],
@@ -6966,6 +7225,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "summaryLength",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", minValue: 0, maxValue: 100 },
     ],
@@ -6974,6 +7234,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "SymbolChar",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "sym",
+    knownAttrs: ["w:font", "w:char"],
     attrConstraints: [
       { qname: "w:font", maxLength: 31 },
       { qname: "w:char", typeHint: "hexBinary", length: 2 },
@@ -7312,6 +7573,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -7322,6 +7587,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "vAlign",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["top", "center", "bottom"] },
     ],
@@ -7353,6 +7619,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:id"],
+    knownAttrs: ["w:id"],
     attrConstraints: [
       { qname: "w:id", minValue: 0, maxValue: -2 },
     ],
@@ -7361,6 +7628,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "TableIndentation",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "tblInd",
+    knownAttrs: ["w:w", "w:type"],
     attrConstraints: [
       { qname: "w:type", enumMembers: ["nil", "pct", "dxa", "auto"] },
     ],
@@ -7370,6 +7638,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "jc",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["left", "center", "right"] },
     ],
@@ -7378,6 +7647,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "TableLayout",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "tblLayout",
+    knownAttrs: ["w:type"],
     attrConstraints: [
       { qname: "w:type", enumMembers: ["fixed", "autofit"] },
     ],
@@ -7386,6 +7656,15 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "TableLook",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "tblLook",
+    knownAttrs: ["w:val"],
+    versionedKnownAttrs: [
+      { qname: "w:firstRow", initialVersion: "Office2010" },
+      { qname: "w:lastRow", initialVersion: "Office2010" },
+      { qname: "w:firstColumn", initialVersion: "Office2010" },
+      { qname: "w:lastColumn", initialVersion: "Office2010" },
+      { qname: "w:noHBand", initialVersion: "Office2010" },
+      { qname: "w:noVBand", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "w:val", typeHint: "hexBinary", length: 2 },
       { qname: "w:firstRow", typeHint: "onOff" },
@@ -7401,6 +7680,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "tblOverlap",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["never", "overlap"] },
     ],
@@ -7409,6 +7689,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "TablePositionProperties",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "tblpPr",
+    knownAttrs: ["w:leftFromText", "w:rightFromText", "w:topFromText", "w:bottomFromText", "w:vertAnchor", "w:horzAnchor", "w:tblpXSpec", "w:tblpX", "w:tblpYSpec", "w:tblpY"],
     attrConstraints: [
       { qname: "w:leftFromText", minValue: 0 },
       { qname: "w:rightFromText", minValue: 0 },
@@ -7487,6 +7768,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -7527,6 +7812,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -7603,6 +7892,11 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
         ] }
       ] }
     },
+    knownAttrs: ["w:rsidRPr", "w:rsidR", "w:rsidDel", "w:rsidTr"],
+    versionedKnownAttrs: [
+      { qname: "w14:paraId", initialVersion: "Office2010" },
+      { qname: "w14:textId", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "w:rsidRPr", typeHint: "hexBinary", length: 4 },
       { qname: "w:rsidR", typeHint: "hexBinary", length: 4 },
@@ -7616,6 +7910,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "TableRowHeight",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "trHeight",
+    knownAttrs: ["w:val", "w:hRule"],
     attrConstraints: [
       { qname: "w:val", maxValue: 31680 },
       { qname: "w:hRule", enumMembers: ["auto", "exact", "atLeast"] },
@@ -7675,6 +7970,10 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:author", "w:id"],
+    knownAttrs: ["w:author", "w:date", "w:id"],
+    versionedKnownAttrs: [
+      { qname: "w16du:dateUtc", initialVersion: "Microsoft365" },
+    ],
     attrConstraints: [
       { qname: "w:author", maxLength: 255 },
       { qname: "w:id", minValue: 0, maxValue: -2 },
@@ -7761,6 +8060,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
       ] }
     },
     requiredAttrs: ["w:type"],
+    knownAttrs: ["w:type"],
     attrConstraints: [
       { qname: "w:type", enumMembers: ["wholeTable", "firstRow", "lastRow", "firstCol", "lastCol", "band1Vert", "band2Vert", "band1Horz", "band2Horz", "neCell", "nwCell", "seCell", "swCell"] },
     ],
@@ -7780,6 +8080,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "tab",
     requiredAttrs: ["w:val", "w:pos"],
+    knownAttrs: ["w:val", "w:leader", "w:pos"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["clear", "left", "start", "center", "right", "end", "decimal", "bar", "num"] },
       { qname: "w:leader", enumMembers: ["none", "dot", "hyphen", "underscore", "heavy", "middleDot"] },
@@ -7791,6 +8092,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "targetScreenSz",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["544x376", "640x480", "720x512", "800x600", "1024x768", "1152x882", "1152x900", "1280x1024", "1600x1200", "1800x1440", "1920x1200"] },
     ],
@@ -7800,6 +8102,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "textAlignment",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["top", "center", "baseline", "bottom", "auto"] },
     ],
@@ -7895,6 +8198,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "type",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["regular", "number", "date", "currentTime", "currentDate", "calculated"] },
     ],
@@ -7904,6 +8208,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "textboxTightWrap",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["none", "allLines", "firstAndLastLine", "firstLineOnly", "lastLineOnly"] },
     ],
@@ -7913,6 +8218,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "textDirection",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["lrTb", "tbRl", "btLr", "lrTbV", "tbRlV", "tbLrV"] },
     ],
@@ -7922,6 +8228,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "effect",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["blinkBackground", "lights", "antsBlack", "antsRed", "shimmer", "sparkle", "none"] },
     ],
@@ -7944,6 +8251,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "uiPriority",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", minValue: 0, maxValue: 99 },
     ],
@@ -7952,6 +8260,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "Underline",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "u",
+    knownAttrs: ["w:val", "w:color", "w:themeColor", "w:themeTint", "w:themeShade"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["single", "words", "double", "thick", "dotted", "dottedHeavy", "dash", "dashedHeavy", "dashLong", "dashLongHeavy", "dotDash", "dashDotHeavy", "dotDotDash", "dashDotDotHeavy", "wave", "wavyHeavy", "wavyDouble", "none"] },
       { qname: "w:color", enumMembers: ["auto"], minLength: 3, maxLength: 3 },
@@ -7965,6 +8274,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "uniqueTag",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", typeHint: "base64Binary" },
     ],
@@ -7973,6 +8283,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "VerticalMerge",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "vMerge",
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["continue", "restart"] },
     ],
@@ -7982,6 +8293,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "vertAlign",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["baseline", "superscript", "subscript"] },
     ],
@@ -7991,6 +8303,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "vAlign",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["top", "center", "both", "bottom"] },
     ],
@@ -8000,6 +8313,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "view",
     requiredAttrs: ["w:val"],
+    knownAttrs: ["w:val"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["none", "print", "outline", "masterPages", "normal", "web"] },
     ],
@@ -8029,6 +8343,13 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "WriteProtection",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "writeProtection",
+    knownAttrs: ["w:recommended", "w:cryptProviderType", "w:cryptAlgorithmClass", "w:cryptAlgorithmType", "w:cryptAlgorithmSid", "w:cryptSpinCount", "w:cryptProvider", "w:algIdExt", "w:algIdExtSource", "w:cryptProviderTypeExt", "w:cryptProviderTypeExtSource", "w:hash", "w:salt"],
+    versionedKnownAttrs: [
+      { qname: "w:algorithmName", initialVersion: "Office2010" },
+      { qname: "w:hashValue", initialVersion: "Office2010" },
+      { qname: "w:saltValue", initialVersion: "Office2010" },
+      { qname: "w:spinCount", initialVersion: "Office2010" },
+    ],
     attrConstraints: [
       { qname: "w:recommended", typeHint: "onOff" },
       { qname: "w:cryptProviderType", enumMembers: ["rsaAES", "rsaFull"] },
@@ -8047,6 +8368,7 @@ export const constraints: ReadonlyArray<ElementConstraint> = [
     className: "Zoom",
     namespaceUri: "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
     localName: "zoom",
+    knownAttrs: ["w:val", "w:percent"],
     attrConstraints: [
       { qname: "w:val", enumMembers: ["none", "fullPage", "bestFit", "textFit"] },
     ],
