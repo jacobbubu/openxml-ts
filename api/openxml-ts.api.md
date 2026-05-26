@@ -8,6 +8,17 @@
 export type AccessMode = "read" | "readWrite";
 
 // @public
+export class AnyUriValue {
+    constructor(value: string);
+    // (undocumented)
+    static fromString(s: string): AnyUriValue;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: string;
+}
+
+// @public
 export function assertEnum<T extends string>(value: {
     value: string;
 } | undefined, members: readonly T[], context: ValidationContext): void;
@@ -275,6 +286,17 @@ export class HexBinaryValue {
 export const HYPERLINK_RELATIONSHIP_TYPE = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink";
 
 // @public
+export class IdValue {
+    constructor(value: string);
+    // (undocumented)
+    static fromString(s: string): IdValue;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: string;
+}
+
+// @public
 export interface IFeatureCollection {
     get<T>(key: abstract new (...args: never[]) => T): T | undefined;
     readonly isReadOnly: boolean;
@@ -443,6 +465,28 @@ export interface MarkupCompatibilityProcessSettings {
 
 // @public
 export type McProcessMode = "NoProcess" | "ProcessAllParts" | "ProcessLoadedPartsOnly";
+
+// @public
+export class NcNameValue {
+    constructor(value: string);
+    // (undocumented)
+    static fromString(s: string): NcNameValue;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: string;
+}
+
+// @public
+export class NonNegativeIntegerValue {
+    constructor(value: number);
+    // (undocumented)
+    static fromString(s: string): NonNegativeIntegerValue;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: number;
+}
 
 // @public (undocumented)
 export interface NumberValidatorOptions {
@@ -777,6 +821,28 @@ export type PartUri = string & {
 export type PartWriteInput = Uint8Array | ReadableStream<Uint8Array> | Blob | string;
 
 // @public
+export class PositiveIntegerValue {
+    constructor(value: number);
+    // (undocumented)
+    static fromString(s: string): PositiveIntegerValue;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: number;
+}
+
+// @public
+export class QNameValue {
+    constructor(value: string);
+    // (undocumented)
+    static fromString(s: string): QNameValue;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: string;
+}
+
+// @public
 export class RelationshipCollection implements IRelationshipCollection {
     // (undocumented)
     [Symbol.iterator](): IterableIterator<IPackageRelationship>;
@@ -856,6 +922,17 @@ export class StringValue {
 
 // @public
 export type TargetMode = "internal" | "external";
+
+// @public
+export class TokenValue {
+    constructor(value: string);
+    // (undocumented)
+    static fromString(s: string): TokenValue;
+    // (undocumented)
+    toString(): string;
+    // (undocumented)
+    readonly value: string;
+}
 
 // @public
 export function transitionalToStrict(uri: string): string;
