@@ -1,5 +1,76 @@
 # Changelog
 
+## [1.8.0](https://github.com/jacobbubu/openxml-ts/compare/v1.7.0...v1.8.0) (2026-05-27)
+
+
+### Features
+
+* **cli:** openxml-ts validate 命令 + README 校验文档扩展 + choice 语义修正 ([0d286bd](https://github.com/jacobbubu/openxml-ts/commit/0d286bd5a472d897d9ddca287120e5b1f5fd30e0))
+* **element:** Epic-126 OpenXmlElement.getXPath() + XmlPathTest 8 个 Fact 移植 ([c8f0764](https://github.com/jacobbubu/openxml-ts/commit/c8f07649fd16fbf2f2c0a6f507f38d8a83071840))
+* **element:** Epic-126 OpenXmlElement.getXPath() + XmlPathTest 8 个 Fact 移植 ([#380](https://github.com/jacobbubu/openxml-ts/issues/380)) ([bdcf9c6](https://github.com/jacobbubu/openxml-ts/commit/bdcf9c67881072aff7a8699ae5705c936931a3c4))
+* Epic-123 CreateFromTemplate (.dotx/.xltx/.potx) 模板创建 ([410fd77](https://github.com/jacobbubu/openxml-ts/commit/410fd77c9528733345a54e59cdee96b226edf7ce))
+* Epic-123 CreateFromTemplate (.dotx/.xltx/.potx) 模板创建 ([#367](https://github.com/jacobbubu/openxml-ts/issues/367)) ([756a1e6](https://github.com/jacobbubu/openxml-ts/commit/756a1e64634eac17f4d35b52d24f2683f2af891c))
+* **examples:** Epic-125 Microsoft 上游 samples/ 8 个高级 demo 1:1 TypeScript 移植 ([cb39b51](https://github.com/jacobbubu/openxml-ts/commit/cb39b5179b38061aa277365de584ac17285eecd0))
+* **examples:** Epic-125 Microsoft 上游 samples/ 8 个高级 demo 1:1 TypeScript 移植 ([d4dabbc](https://github.com/jacobbubu/openxml-ts/commit/d4dabbcd0ac901e3c8c14614dccb98d16cbb2c68))
+* **linq:** Epic-119 LINQ XName 6000+ 命名空间常量 codegen（113 namespace 类） ([16f64e1](https://github.com/jacobbubu/openxml-ts/commit/16f64e105082ef569d63ef7ea6e0226405d5c698))
+* **linq:** Epic-119 LINQ XName 6000+ 命名空间常量 codegen（113 个 namespace 类）([#356](https://github.com/jacobbubu/openxml-ts/issues/356)) ([d6969ee](https://github.com/jacobbubu/openxml-ts/commit/d6969ee0cc6cc8a997438e166898079b5176214f))
+* **packaging:** Epic-121 Framework 抽象层（OpenSettings + Feature DI + Builder） ([57035ae](https://github.com/jacobbubu/openxml-ts/commit/57035ae8c7ebee74356dd5fbcd1783536c2ca224))
+* **packaging:** Epic-121 Framework 抽象层（OpenSettings + Feature DI + Builder）([#363](https://github.com/jacobbubu/openxml-ts/issues/363)) ([e9f8493](https://github.com/jacobbubu/openxml-ts/commit/e9f849321ba06f405e41ea8a77801390d3ff3701))
+* **packaging:** Epic-128 MediaDataPart / VideoReferenceRelationship + CreateMediaDataPart facade ([cbad778](https://github.com/jacobbubu/openxml-ts/commit/cbad77879730db3c5d529c1b7aa6289a203510ae))
+* **packaging:** Epic-128 MediaDataPart / VideoReferenceRelationship + CreateMediaDataPart facade ([#384](https://github.com/jacobbubu/openxml-ts/issues/384)) ([61412b5](https://github.com/jacobbubu/openxml-ts/commit/61412b5dc116699e7012f589a4c748c132c5dc6b))
+* **packaging:** ZipOpenXmlPackage.toBlob() — 浏览器一键下载 ([4f3e398](https://github.com/jacobbubu/openxml-ts/commit/4f3e39857e568748f8fcf3fe64ee29facc00f38c))
+* **parts:** Epic-120 W15/P15/X15 扩展 typed Part facade 完整接通 ([27e60e9](https://github.com/jacobbubu/openxml-ts/commit/27e60e984e423398a7c4e9919635a6d2273c99a6))
+* **parts:** Epic-120 W15/P15/X15 扩展 typed Part facade 完整接通 ([#359](https://github.com/jacobbubu/openxml-ts/issues/359)) ([a2fb94b](https://github.com/jacobbubu/openxml-ts/commit/a2fb94bd420f0311abba8e2a0f4f29dc5f1b9029))
+* **validation:** [#372](https://github.com/jacobbubu/openxml-ts/issues/372) [#373](https://github.com/jacobbubu/openxml-ts/issues/373) [#374](https://github.com/jacobbubu/openxml-ts/issues/374) 统一分支 — BugRegression NEEDS-MECHANISM 全部归零 ([e076504](https://github.com/jacobbubu/openxml-ts/commit/e076504e9901b1d06e6b0e9c5eeee9e7e4ba08b2))
+* **validation:** Choice/Any/Blip 粒子边缘用例全覆盖 ([0f9ab01](https://github.com/jacobbubu/openxml-ts/commit/0f9ab018cb9daab15f27d1f127183dca73f8bdbf))
+* **validation:** Epic-127 OpenXmlValidator 三态重载 + FileFormatVersions 直接构造器 ([3fce153](https://github.com/jacobbubu/openxml-ts/commit/3fce153d76ef13c05db6ddac5fc8e082274ba6c9))
+* **validation:** Epic-127 OpenXmlValidator 三态重载 + FileFormatVersions 直接构造器 ([#382](https://github.com/jacobbubu/openxml-ts/issues/382)) ([c678d5a](https://github.com/jacobbubu/openxml-ts/commit/c678d5a24eadef6da41593b93453b0a7e6201031))
+* **validation:** Epic-130 particle automaton validator — .NET 错误码精确对齐 ([05e3eaf](https://github.com/jacobbubu/openxml-ts/commit/05e3eaf099fe6859e7a59056abc1d8fed50bb581))
+* **validation:** Epic-130 particle automaton validator — .NET 错误码精确对齐 ([#389](https://github.com/jacobbubu/openxml-ts/issues/389)) ([48e02dc](https://github.com/jacobbubu/openxml-ts/commit/48e02dc0cc4d654dd8909e36e9e9803efde5e5b2))
+* **validation:** Epic-131 BugRegression [#371](https://github.com/jacobbubu/openxml-ts/issues/371) 多属性值类型校验 ([#391](https://github.com/jacobbubu/openxml-ts/issues/391)) ([16e4c2c](https://github.com/jacobbubu/openxml-ts/commit/16e4c2cbe4182e82c84dde09a166c4d0c2740b9d))
+* **validation:** Epic-132 BugRegression [#370](https://github.com/jacobbubu/openxml-ts/issues/370) ValidationError.relatedNode + 粒子位序错误子元素引用 ([#392](https://github.com/jacobbubu/openxml-ts/issues/392)) ([5850cca](https://github.com/jacobbubu/openxml-ts/commit/5850ccad749036c969e386c9263fa4900123f5e6))
+* **validation:** Epic-133 注册 x14(excel-2009) 和 xdr(spreadsheetDrawing) 命名空间约束 ([#372](https://github.com/jacobbubu/openxml-ts/issues/372)) ([f2634f3](https://github.com/jacobbubu/openxml-ts/commit/f2634f340ca1fb1e77b7fe686fc5d109ee3c9b5e))
+* **validation:** Epic-134 智能序列顺序校验 + 版本条件粒子 ([#373](https://github.com/jacobbubu/openxml-ts/issues/373)) ([03e15ff](https://github.com/jacobbubu/openxml-ts/commit/03e15ff018d23bcc5f844f88fb1dd02f2e676403))
+* **validation:** Epic-135 BugRegression [#374](https://github.com/jacobbubu/openxml-ts/issues/374) — any particle + expectedClassName + className-based constraint lookup ([f743ae4](https://github.com/jacobbubu/openxml-ts/commit/f743ae4c21fb672b3b82845494e3c216ee4337b4))
+* **validation:** group 级 maxOccurs cardinality 检查 ([5bf59d9](https://github.com/jacobbubu/openxml-ts/commit/5bf59d9ca6828752f6a3f00b7a5f32141204f04c))
+* **validation:** MaxNumberOfErrors 选项 — 限制收集的验证错误数量 ([c3ac0f0](https://github.com/jacobbubu/openxml-ts/commit/c3ac0f0b6f23dab3f089b03dac27ac6e4375c96e))
+* **validation:** MC 验证器 — 7 个 MarkupCompatibility 错误码 ([25a29a6](https://github.com/jacobbubu/openxml-ts/commit/25a29a67b2018db3b48011422ef9e6d3caa489a9))
+* **validation:** Pkg_PartIsNotAllowed OPC 自引用关系检查 ([40efaaa](https://github.com/jacobbubu/openxml-ts/commit/40efaaabc2ef43107a1f03723688710dcff87777))
+* **validation:** Sch_InvalidChildinLeafElement + 修复重复序列 cardinality ([fea469d](https://github.com/jacobbubu/openxml-ts/commit/fea469d14bcef4d9851952c9769b07f0dbf44d87))
+* **validation:** Sch_UndeclaredAttribute — 版本条件属性声明检测 ([d0df70f](https://github.com/jacobbubu/openxml-ts/commit/d0df70fa3a14311386a662c9a15903ee1cc790e7))
+* **validation:** 代码生成自动提取 enumMembers/typeHint/length/initialVersion ([f872ef6](https://github.com/jacobbubu/openxml-ts/commit/f872ef6c44e2f631cc2e3a224a7a42691d74383d))
+* **validation:** 属性值类型校验测试 + onOff typeHint 实现 ([cba83a1](https://github.com/jacobbubu/openxml-ts/commit/cba83a1afc04d8fa774905dc5285ae097d738b03))
+* **validation:** 错误描述附加 Fix 建议 ([be59297](https://github.com/jacobbubu/openxml-ts/commit/be592979fcfed7aa858bc6edce1c15780fd36eab))
+* **values:** 补齐 7 个缺失 XSD 值类 ([d8c4760](https://github.com/jacobbubu/openxml-ts/commit/d8c476003ec5eec80a95daa3776094a801636480))
+* **word:** Epic-122 Strict↔Transitional 元素/属性翻译完整移植 ([5fde5b6](https://github.com/jacobbubu/openxml-ts/commit/5fde5b6dcef05bbf7dd3245189877bd3a96937b8))
+* **word:** Epic-122 Strict↔Transitional 元素/属性翻译完整移植 ([#365](https://github.com/jacobbubu/openxml-ts/issues/365)) ([1c0bdbb](https://github.com/jacobbubu/openxml-ts/commit/1c0bdbb1fd1f407372d2aa40cfeddf99ba84ca3d))
+
+
+### Bug Fixes
+
+* **build:** 修复 typeHint "onOff" 类型 + TS2532 undefined 索引访问 ([3f32ba1](https://github.com/jacobbubu/openxml-ts/commit/3f32ba13ae6b472015cac23aa5c11f4856db556f))
+* **ci:** pnpm pack --dry-run → pnpm pack (v10 兼容) ([c911140](https://github.com/jacobbubu/openxml-ts/commit/c91114026750dd8d3ab4497551e3444403abf6e9))
+* **cli:** 修复 Excel/PPT 校验类型错误 ([1f24308](https://github.com/jacobbubu/openxml-ts/commit/1f24308fd9fcb4e69b05d08b73de944e2bce4cb6))
+* **format:** biome 格式化 Epic-120 新增文件 ([#359](https://github.com/jacobbubu/openxml-ts/issues/359)) ([d6d366d](https://github.com/jacobbubu/openxml-ts/commit/d6d366d46ab0d713dcd4ea295f5545ff88e492af))
+* **lint:** biome format + noNonNullAssertion fix ([#374](https://github.com/jacobbubu/openxml-ts/issues/374) follow-up) ([1c20757](https://github.com/jacobbubu/openxml-ts/commit/1c207572ab79a9a48b05baddebdd6f8907fd10a7))
+* **lint:** biome format bug-regression-parity.test.ts（it.todo/skip 单行格式） ([8af8494](https://github.com/jacobbubu/openxml-ts/commit/8af8494d3ebbe8967275107c5598a91718fd021c)), closes [#369](https://github.com/jacobbubu/openxml-ts/issues/369)
+* **packaging:** 修复 exactOptionalPropertyTypes 下的 factories.ts 类型错误 ([#363](https://github.com/jacobbubu/openxml-ts/issues/363)) ([c231636](https://github.com/jacobbubu/openxml-ts/commit/c231636acca04fcad84a002e4a6bdd6702c9c12e))
+* **validation:** expectedClassName 元素的位置检查不被类型检查跳过 ([0e89c18](https://github.com/jacobbubu/openxml-ts/commit/0e89c1835c5b8ce002dc402d4a679f857ffafc9d))
+* **validation:** isValidBase64 用 atob/btoa 替代 Buffer.from（浏览器兼容） ([0417f91](https://github.com/jacobbubu/openxml-ts/commit/0417f9123ac008521b87bd6bbce5d8e1fde75a4b))
+* **validation:** 验证器跳过 mc 命名空间元素，删除 Level 的假 any particle ([a935917](https://github.com/jacobbubu/openxml-ts/commit/a935917938f48f4ae9f437825391ef586f17d023))
+* **word:** paragraph-indent setter 改回写 w:left 保持 cross-SDK 兼容性 ([#365](https://github.com/jacobbubu/openxml-ts/issues/365)) ([78c21cd](https://github.com/jacobbubu/openxml-ts/commit/78c21cda1b8eaa60f75392d7f55e118a3f1e030d))
+
+
+### Documentation
+
+* **README:** 大幅扩展校验文档 — 错误码速查、三种模式、选项说明 ([19b04e4](https://github.com/jacobbubu/openxml-ts/commit/19b04e4fb274ff0453953d7b72c00af0397279d9))
+* recipes.md — CI 集成、调试误报、性能优化等场景指南 ([d9dee32](https://github.com/jacobbubu/openxml-ts/commit/d9dee3291e1e21fa1ece348d8bcabd7c12ba89ea))
+* **recipes:** 浏览器完整使用指南（6 个场景 + 差异速查表） ([01bf83c](https://github.com/jacobbubu/openxml-ts/commit/01bf83c7037a5a6ffbe81b4bf4abe6001287f0e0))
+* **test:** 更正 BugRegressionTest 分类标签为 PORTED ([45c2bc3](https://github.com/jacobbubu/openxml-ts/commit/45c2bc32b252bababe0975c72621c0ec5c69a165))
+* typedoc API 文档生成（571 页，`pnpm docs`） ([1e27e84](https://github.com/jacobbubu/openxml-ts/commit/1e27e84ca6246f7af72ade712b22c6c4d70f34b5))
+* 入门指南 — onboarding.md + README 顶部链接 ([c533d39](https://github.com/jacobbubu/openxml-ts/commit/c533d39f2320a059945f4885e482568b39a4ed7f))
+* 更新 CONTRIBUTING（移除过时的 validator backlog 描述）+ CHANGELOG ([c3a27f7](https://github.com/jacobbubu/openxml-ts/commit/c3a27f758921cda1f66a84a81bbe3dc457f25aaf))
+
 ## [1.8.0](https://github.com/jacobbubu/openxml-ts/compare/v1.7.0...v1.8.0) (2026-05-26)
 
 ### Features
