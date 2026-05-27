@@ -97,6 +97,41 @@ export class ZipOpenXmlPackage extends MemoryOpenXmlPackage {
     return packageToZipBytes(this);
   }
 
+  /**
+   * 序列化为浏览器可直接下载的 Blob（三端兼容）。
+   *
+   * MIME type 自动从主文档 Part 的 content-type 推断。如果推断失败，
+   * 回退到通用的 OPC 包 MIME。Node 18+ 也原生支持 Blob。
+   *
+   * @example
+   * const blob = await doc.toBlob();
+   * const url = URL.createObjectURL(blob);
+   * const a = document.createElement("a");
+   * a.href = url; a.download = "out.docx"; a.click();
+   * URL.revokeObjectURL(url);
+   */
+  async toBlob(): Promise<Blob> {
+    const bytes = await this.saveAsBytesAsync();
+    // Try to detect MIME from the main document part
+    let mime = "application/vnd.openxmlformats-officedocument";
+    for (const part of this.parts()) {
+      const ct = part.contentType;
+      if (ct.includes("wordprocessingml")) {
+        mime = "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml";
+        break;
+      }
+      if (ct.includes("spreadsheetml")) {
+        mime = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml";
+        break;
+      }
+      if (ct.includes("presentationml")) {
+        mime = "application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml";
+        break;
+      }
+    }
+    return new Blob([bytes], { type: mime });
+  }
+
   /** 写到原 open 路径；若 open 时不是路径则抛 UNSUPPORTED_OPERATION。 */
   override async saveAsync(): Promise<void> {
     if (this.originPath === undefined) {
