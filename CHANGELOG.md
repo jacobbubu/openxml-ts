@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.8.1](https://github.com/jacobbubu/openxml-ts/compare/v1.8.0...v1.8.1) (2026-05-27)
+
+### Features
+
+* **packaging:** ZipOpenXmlPackage.toBlob() — 浏览器一键下载
+* **docs:** recipes.md 浏览器完整使用指南（6 个场景 + 差异速查表）
+* **examples:** 3 个可直接运行的浏览器 HTML 示例（replace/create/validate）
+
+### Bug Fixes
+
+* **validation:** isValidBase64 用 atob/btoa 替代 Buffer.from（浏览器兼容）
+* **ci:** pnpm pack --dry-run → pnpm pack（pnpm v10 兼容）
+
 ## [1.8.0](https://github.com/jacobbubu/openxml-ts/compare/v1.7.0...v1.8.0) (2026-05-26)
 
 ### Features

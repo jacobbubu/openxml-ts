@@ -1,6 +1,6 @@
 {
   "name": "openxml-ts",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "TypeScript port of Microsoft Open-XML-SDK; pnpm-managed, Bun-first, Node>=20 ESM",
   "license": "MIT",
   "type": "module",
