@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>validate — openxml-ts 浏览器示例</title>
+<style>
+  body { font-family: system-ui; max-width: 640px; margin: 2rem auto; padding: 0 1rem; }
+  .drop { border: 2px dashed #ccc; border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; }
+  .drop.dragover { border-color: #4a90d9; background: #f0f5ff; }
+  .error { background: #fff3f0; border-left: 3px solid #e74c3c; padding: .5rem 1rem; margin: .5rem 0; }
+  .error-id { font-weight: 700; }
+  .error-path { color: #999; font-size: .85rem; }
+  .error-fix { color: #2e7d32; margin-top: .25rem; }
+  .ok { color: #2e7d32; font-weight: 700; }
+  .summary { margin: 1rem 0; }
+</style>
+</head>
+<body>
+<h1>校验 Word 文档</h1>
+<div class="drop" id="dropZone">拖拽 .docx 到这里，或点击选择文件</div>
+<input type="file" id="fileInput" accept=".docx" hidden>
+<div class="summary" id="summary"></div>
+<div id="errors"></div>
+
+<script type="module">
+  import { WordprocessingDocument } from "../../dist/word/index.js";
+  import {
+    OpenXmlValidator, registerConstraints
+  } from "../../dist/validation/OpenXmlValidator.js";
+  import { constraints as wordConstraints } from "../../dist/validation/constraints/word.js";
+  import { constraints as drawingConstraints } from "../../dist/validation/constraints/drawing.js";
+
+  registerConstraints(wordConstraints);
+  registerConstraints(drawingConstraints);
+
+  const dropZone = document.getElementById("dropZone");
+  const fileInput = document.getElementById("fileInput");
+  const summary = document.getElementById("summary");
+  const errorsDiv = document.getElementById("errors");
+
+  dropZone.addEventListener("click", () => fileInput.click());
+  dropZone.addEventListener("dragover", (e) => { e.preventDefault(); dropZone.classList.add("dragover"); });
+  dropZone.addEventListener("dragleave", () => dropZone.classList.remove("dragover"));
+  dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("dragover");
+    if (e.dataTransfer.files[0]) validateFile(e.dataTransfer.files[0]);
+  });
+  fileInput.addEventListener("change", () => {
+    if (fileInput.files[0]) validateFile(fileInput.files[0]);
+  });
+
+  async function validateFile(file) {
+    summary.textContent = `校验中: ${file.name}...`;
+    errorsDiv.innerHTML = "";
+
+    const doc = await WordprocessingDocument.openAsync(file);
+    const validator = new OpenXmlValidator();
+    const errors = validator.validate(doc);
+
+    if (errors.length === 0) {
+      summary.innerHTML = `<span class="ok">${file.name}: 没有发现校验错误</span>`;
+      return;
+    }
+
+    summary.textContent = `${file.name}: ${errors.length} 个错误`;
+
+    for (const e of errors) {
+      const div = document.createElement("div");
+      div.className = "error";
+      div.innerHTML = [
+        `<span class="error-id">[${e.errorType}] ${e.id}</span>`,
+        `<div>${e.description}</div>`,
+        `<div class="error-path">path: ${e.path}</div>`,
+      ].join("");
+      errorsDiv.appendChild(div);
+    }
+  }
+</script>
+</body>
+</html>

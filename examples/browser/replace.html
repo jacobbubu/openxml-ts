@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>replace — openxml-ts 浏览器示例</title>
+<style>
+  body { font-family: system-ui; max-width: 600px; margin: 2rem auto; padding: 0 1rem; }
+  label { display: block; margin: .5rem 0 .2rem; font-weight: 600; }
+  input { width: 100%; padding: .4rem; box-sizing: border-box; }
+  button { margin-top: 1rem; padding: .5rem 1.5rem; cursor: pointer; }
+  .note { color: #666; font-size: .85rem; margin-top: 1rem; }
+</style>
+</head>
+<body>
+<h1>替换模板占位符</h1>
+<p>上传一个 docx 模板（含 {{name}} / {{company}} 占位符），填写替换值，下载结果。</p>
+
+<label>模板文件</label>
+<input type="file" id="fileInput" accept=".docx">
+
+<label>{{name}}</label>
+<input type="text" id="nameInput" value="张三">
+
+<label>{{company}}</label>
+<input type="text" id="companyInput" value="Example Inc.">
+
+<button id="processBtn" disabled>处理并下载</button>
+<div class="note" id="status"></div>
+
+<script type="module">
+  // === 本地运行：pnpm build && npx serve . ===
+  // 替换为 CDN 版本：
+  // import { WordprocessingDocument, Text } from "https://esm.sh/openxml-ts/word";
+  // import { Paragraph, Run } from "https://esm.sh/openxml-ts/word";
+
+  import { WordprocessingDocument, Text } from "../../dist/word/index.js";
+  import { Paragraph, Run } from "../../dist/word/index.js";
+
+  const fileInput = document.getElementById("fileInput");
+  const nameInput = document.getElementById("nameInput");
+  const companyInput = document.getElementById("companyInput");
+  const processBtn = document.getElementById("processBtn");
+  const status = document.getElementById("status");
+
+  fileInput.addEventListener("change", () => {
+    processBtn.disabled = !fileInput.files[0];
+  });
+
+  processBtn.addEventListener("click", async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+
+    status.textContent = "处理中...";
+
+    const doc = await WordprocessingDocument.openAsync(file);
+    const replacements = {
+      "{{name}}": nameInput.value,
+      "{{company}}": companyInput.value,
+    };
+
+    for (const t of doc.mainDocumentPart.document.descendants(Text)) {
+      const match = Object.keys(replacements).find((k) => t.text.includes(k));
+      if (match) t.text = t.text.replace(match, replacements[match]);
+    }
+
+    const blob = await doc.toBlob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = file.name.replace(/\.docx$/, "-filled.docx");
+    a.click();
+    URL.revokeObjectURL(url);
+
+    status.textContent = "已下载！";
+  });
+</script>
+</body>
+</html>
