@@ -1025,6 +1025,7 @@ export class ZipOpenXmlPackage extends MemoryOpenXmlPackage {
     saveAsAsync(targetPath: string): Promise<void>;
     saveAsBytesAsync(): Promise<Uint8Array>;
     saveAsync(): Promise<void>;
+    toBlob(): Promise<Blob>;
 }
 
 // @public (undocumented)
