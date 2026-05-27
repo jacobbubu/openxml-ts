@@ -152,7 +152,8 @@ function makeOpcError(id: string, description: string): ValidationError {
 function isValidBase64(value: string): boolean {
   if (value.length === 0) return false;
   try {
-    const reencoded = Buffer.from(value, "base64").toString("base64");
+    // Cross-runtime: atob / btoa are available on all modern JS runtimes.
+    const reencoded = globalThis.btoa(globalThis.atob(value));
     return reencoded === value;
   } catch {
     return false;
